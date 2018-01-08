@@ -1,0 +1,90 @@
+.my-drawer {
+    position: relative;
+    overflow: auto;
+    -webkit-overflow-scrolling: touch;
+}
+
+.my-drawer .am-drawer-sidebar {
+    background-color: #fff;
+    overflow: auto;
+    -webkit-overflow-scrolling: touch;
+}
+
+.my-drawer .am-drawer-sidebar .am-list {
+    width: 300px;
+    padding: 0;
+}
+
+.noomCkeckBox .am-checkbox {
+    width: 20% !important;
+}
+
+.my_drawer{
+    font-size: 14px;
+}
+.my_drawer .am-tabs-default-bar-tab-active{
+    color: #EE9D36;
+}
+.my_drawer .am-tabs-default-bar-underline{
+    border:1px #EE9D36 solid
+}
+.my_drawer .am-drawer-draghandle{
+    right: -10px !important;
+}
+.my_flex{
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+}
+.flex_1{
+    -webkit-box-flex: 1;
+    -webkit-flex: 1;
+    -ms-flex: 1;
+    flex: 1;
+}
+.flex_70{
+    max-width:70px;
+    margin: 4px 0 0 10px;
+    text-align: right;
+}
+.h_blue_btn{
+    color:#4990E2;
+    border-radius: 4px;
+    border: 1px solid #4990E2;
+    padding: 2px 4px;
+    font-size: 14px;
+}
+.h_orange_btn{
+    color:#F6A623;
+    border-radius: 4px;
+    border: 1px solid #F6A623;
+    padding: 2px 4px;
+    font-size: 14px;
+}
+.h_red_btn{
+    color:#F56A55;
+    border-radius: 4px;
+    border: 1px solid #F56A55;
+    padding: 2px 4px;
+    font-size: 14px;
+}
+.h_green_btn{
+    color:#6BA52B;
+    border-radius: 4px;
+    border: 1px solid #6BA52B;
+    padding: 2px 4px;
+    font-size: 14px;
+}
+.exercises_cont div div{
+    padding:0 !important
+}
+.exercises_cont div div p{
+    margin: 0;
+}
+.exercises_line .am-list-line{
+    padding:8px 15px 8px 0;
+}
+.exercises_line .am-checkbox-inner{
+    top: 15px !important
+}
