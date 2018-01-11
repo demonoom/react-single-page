@@ -28,7 +28,7 @@
     border:1px #EE9D36 solid
 }
 .my_drawer .am-pull-to-refresh-content-wrapper{
-    height: 100vh;
+    min-height: 100vh;
 }
 .my_drawer .am-drawer-draghandle{
     width:0 !important;
@@ -92,12 +92,16 @@
     margin: 0;
     width: 100% !important;
 }
+.exercises_cont div div p img, .question_detil div div p img{
+    max-width: 100%;
+}
 .exercises_line .am-list-line{
     padding:8px 15px 8px 0;
 }
 .exercises_line .am-checkbox-inner{
     top: 15px !important
 }
+.exercises_line .
 .am-list-body div:not(:last-child) .am-list-line::after{
     height:0 !important
 }
