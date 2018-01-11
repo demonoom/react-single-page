@@ -65,9 +65,9 @@ export default class Demo extends React.Component {
 
     render() {
         return (
-            <div style={{marginBottom: 30}}>
+            <div className="question_detil_cont">
                 <h3>【{this.state.questionDetil.typeName}】</h3>
-                <div dangerouslySetInnerHTML={{__html: this.state.questionDetil.content}}></div>
+                <div dangerouslySetInnerHTML={{__html: this.state.questionDetil.content}} className="question_detil"></div>
                 <hr/>
                 <h3>【正确答案】</h3>
                 <div dangerouslySetInnerHTML={{__html: this.state.questionDetil.answer}}></div>

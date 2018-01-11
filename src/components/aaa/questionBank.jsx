@@ -94,7 +94,7 @@ export default class questionBank extends React.Component {
     componentWillMount() {
         //地址:    http://localhost:8000/#/questionBank?ident=54208&pointId=4339
 
-        var locationHref = window.location.href;
+        /*var locationHref = window.location.href;
         var locationSearch = locationHref.substr(locationHref.indexOf("?") + 1);
         var searchArray = locationSearch.split("&");
         var ident = searchArray[0].split('=')[1];
@@ -105,12 +105,13 @@ export default class questionBank extends React.Component {
             "ident": ident,
             "pointId": pointId,
             "title": title,
-        };
+        };*/
 
-        // var loginUser = {
-        //     "ident": 54208,
-        //     "pointId": 4339,
-        // };
+        var loginUser = {
+            "ident": 54208,
+            "pointId": 4339,
+            "tittle":'你好'
+        };
         localStorage.setItem("loginUser", JSON.stringify(loginUser));
     }
 
@@ -331,7 +332,7 @@ export default class questionBank extends React.Component {
     rowOnClick(res) {
         var subjectId = res.id;
         var subjectType = res.subjectType;
-        // window.open("/#/questionDetil?courseId=" + subjectId + "&subjectType=" + subjectType);
+        window.open("/#/questionDetil?courseId=" + subjectId + "&subjectType=" + subjectType);
         var url = "http://192.168.1.30:8000/#/questionDetil?courseId=" + subjectId + "&subjectType=" + subjectType;
         var data = {};
         data.method = 'openNewPage';
@@ -650,27 +651,25 @@ export default class questionBank extends React.Component {
             <div
                 key={`${sectionID}-${rowID}`}
                 style={{
-                    backgroundColor: '#F5F5F9',
-                    height: 4,
+                    height: 1,
                     borderTop: '1px solid #ECECED',
-                    borderBottom: '1px solid #ECECED',
                 }}
             />
         );
         //左边每一道题的div
         const row = (rowData, sectionID, rowID) => {
             return (
-                <div key={rowID} style={{padding: '0 15px'}}>
+                <div key={rowID} className="exercises_line">
                     <CheckboxItem
                         key={rowData.id}
                         onChange={() => this.checkBoxOnChange(event, rowData.id, rowID)}
                         className="noomCkeckBox"
                     >
-                        <div style={{display: '-webkit-box', display: 'flex', padding: '15px 0'}}
+                        <div style={{display: '-webkit-box', display: 'flex'}}
                              onClick={this.rowOnClick.bind(this, rowData)}>
-                            <div style={{lineHeight: 1}}>
-                                <div dangerouslySetInnerHTML={{__html: rowData.content}}></div>
-                                <div style={{fontWeight: 'bold'}}>{rowData.typeName}</div>
+                            <div style={{lineHeight: 1}}  className="flex_1 my_flex">
+                                <div dangerouslySetInnerHTML={{__html: rowData.content}} className="flex_1 exercises_cont"></div>
+                                <div className="flex_70"><span className="h_green_btn">{rowData.typeName}</span></div>
                             </div>
                         </div>
                     </CheckboxItem>
@@ -681,17 +680,17 @@ export default class questionBank extends React.Component {
         //右边每一道题的div(暂时废弃)
         const rowRight = (rowData, sectionID, rowID) => {
             return (
-                <div key={rowID} style={{padding: '0 15px'}}>
+                <div key={rowID} className="exercises_line">
                     <CheckboxItem
                         key={rowData.id}
                         onChange={() => this.checkBoxOnChange(event, rowData.id, rowID)}
                         className="noomCkeckBoxOther"
                     >
-                        <div style={{display: '-webkit-box', display: 'flex', padding: '15px 0'}}
+                        <div style={{display: '-webkit-box', display: 'flex'}}
                              onClick={this.rowOnClick.bind(this, rowData)}>
-                            <div style={{lineHeight: 1}}>
-                                <div dangerouslySetInnerHTML={{__html: rowData.content}}></div>
-                                <div style={{fontWeight: 'bold'}}>{rowData.typeName}</div>
+                            <div style={{lineHeight: 1}} className="flex_1 my_flex">
+                                <div dangerouslySetInnerHTML={{__html: rowData.content}} className="flex_1 exercises_cont"></div>
+                                <div className="flex_70"><span className="h_blue_btn">{rowData.typeName}</span></div>
                             </div>
                         </div>
                     </CheckboxItem>
@@ -702,7 +701,7 @@ export default class questionBank extends React.Component {
         return (
             <div>
                 <Drawer
-                    className="my-drawer"
+                    className="my-drawer my_drawer"
                     style={{minHeight: document.documentElement.clientHeight}}
                     enableDragHandle
                     // contentStyle={{color: '#A6A6A6', textAlign: 'center', paddingTop: 42}}
@@ -779,19 +778,15 @@ export default class questionBank extends React.Component {
                     {/*悬浮按钮*/}
                     <WingBlank
                         style={{
-                            width: 48,
+                            width: 40,
                             position: 'fixed',
                             bottom: 20,
-                            right: 20,
+                            right: 5,
                         }}
                     >
-                        <Button
-                            onClick={this.showActionSheet}
-                            style={{
-                                backgroundColor: 'yellow',
-                                borderRadius: '50%',
-                            }}
-                        >...</Button>
+                        <Button onClick={this.showActionSheet} className="btn_homework btn_no_b" >
+                            <img src={require('./homework_icon.png')} />
+                        </Button>
                     </WingBlank>
                 </Drawer>
             </div>
