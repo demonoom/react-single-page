@@ -9,6 +9,7 @@ import {
     Drawer,
     List,
     Toast,
+    PullToRefresh,
 } from 'antd-mobile';
 import {StickyContainer, Sticky} from 'react-sticky';
 import fetch from 'dva/fetch'
@@ -58,7 +59,7 @@ const tabs = [
 // }
 var knowledge;
 
-export default class Demo extends React.Component {
+export default class questionBank extends React.Component {
 
     constructor(props) {
         super(props);
@@ -82,31 +83,34 @@ export default class Demo extends React.Component {
             defaultPageNo: 1,
             defaultPageNoOther: 1,
             clicked: 'none',
-            // checkBoxChecked: false,
             checkBoxCheckedArr: [],    //勾选中的题目id
             delCheckBoxCheckedArr: [],    //需要删除的勾选中的题目id
             open: false,
             tabOnClick: 0,
+            refreshing: false,   //下拉刷新状态
         };
     }
 
     componentWillMount() {
-        //地址:    http://localhost:8000/#/questionBank2?ident=54208&pointId=4339
+        //地址:    http://localhost:8000/#/questionBank?ident=54208&pointId=4339
 
-        /*var locationHref = window.location.href;
+        var locationHref = window.location.href;
         var locationSearch = locationHref.substr(locationHref.indexOf("?") + 1);
         var searchArray = locationSearch.split("&");
         var ident = searchArray[0].split('=')[1];
         var pointId = searchArray[1].split('=')[1];
+        var title = searchArray[2].split('=')[1];
+        document.title = title;   //设置title
         var loginUser = {
             "ident": ident,
             "pointId": pointId,
-        };*/
-
-        var loginUser = {
-            "ident": 54208,
-            "pointId": 4339,
+            "title": title,
         };
+
+        // var loginUser = {
+        //     "ident": 54208,
+        //     "pointId": 4339,
+        // };
         localStorage.setItem("loginUser", JSON.stringify(loginUser));
     }
 
@@ -322,17 +326,24 @@ export default class Demo extends React.Component {
     /**
      *  点击查看详情页
      */
-    rowOnClick(data) {
-        var subjectId = data.id;
-        var subjectType = data.subjectType;
-        window.open("/#/s7?courseId=" + subjectId + "&subjectType=" + subjectType);
+    rowOnClick(res) {
+        var subjectId = res.id;
+        var subjectType = res.subjectType;
+        // window.open("/#/questionDetil?courseId=" + subjectId + "&subjectType=" + subjectType);
+        var url = "http://192.168.1.30:8000/#/questionDetil?courseId=" + subjectId + "&subjectType=" + subjectType;
+        var data = {};
+        data.method = 'openNewPage';
+        data.url = url;
+        Bridge.callHandler(data, null, function (error) {
+            window.location.href = url;
+        });
     }
 
     //动作面板被点击
     showActionSheet = () => {
         var _this = this;
         if (this.state.tabOnClick == 0) {
-            var BUTTONS = ['全选', '取消全选', '使用', '删除'];
+            var BUTTONS = ['全选', '取消全选', '使用', '删除', '添加题目'];
         } else {
             var BUTTONS = ['全选', '取消全选', '使用'];
         }
@@ -342,7 +353,6 @@ export default class Demo extends React.Component {
                 maskClosable: true,
             },
             (buttonIndex) => {
-                console.log(buttonIndex);
                 this.setState({clicked: BUTTONS[buttonIndex]});
                 //0>>全选  1>>取消  2>>使用  3>>删除
                 if (buttonIndex == 0) {
@@ -387,8 +397,68 @@ export default class Demo extends React.Component {
                         return
                     }
                     this.delClass()
+                } else if (buttonIndex == 4) {
+                    this.addQuestion()
                 }
             });
+    };
+
+    /**
+     * 增加新题
+     */
+    addQuestion = () => {
+        const BUTTONS = ['单选题', '简答题', '判断题', '多选题'];
+        ActionSheet.showActionSheetWithOptions({
+                options: BUTTONS,
+                maskClosable: true,
+            },
+            (buttonIndex) => {
+                this.setState({clicked: BUTTONS[buttonIndex]});
+                //0>>单选题  1>>简答题  2>>判断题  3>>多选题
+                this.postMesToMob(buttonIndex);
+            });
+    };
+
+    /**
+     * 发送消息给客户端
+     * @param buttonIndex
+     */
+    postMesToMob(buttonIndex) {
+        if (buttonIndex == -1) {
+            //遮罩层被点击,不执行通信
+            return
+        }
+        var _this = this;
+        var loginUser = JSON.parse(localStorage.getItem('loginUser'));
+        //0>>单选题  1>>简答题  2>>判断题  3>>多选题
+        var data = {
+            pointId: loginUser.pointId,
+            title: loginUser.title,
+        };
+        if (buttonIndex == 0) {
+            data.method = 'singleChoice';
+        } else if (buttonIndex == 1) {
+            data.method = 'shortAnswer';
+        } else if (buttonIndex == 2) {
+            data.method = 'trueOrFalse';
+        } else if (buttonIndex == 3) {
+            data.method = 'multipleChoice';
+        }
+        Bridge.callHandler(data, function (mes) {
+            if (mes == 'refresh') {
+                //刷新页面
+                Toast.success('题目添加成功', 1);
+                _this.initData.splice(0);
+                _this.state.dataSource = [];
+                _this.state.dataSource = new ListView.DataSource({
+                    rowHasChanged: (row1, row2) => row1 !== row2,
+                });
+                _this.setState({defaultPageNo: 1});
+                _this.getSubjectDataByKnowledge();
+            }
+        }, function (error) {
+            Toast.fail(error, 1);
+        });
     };
 
     /**
@@ -535,6 +605,28 @@ export default class Demo extends React.Component {
         knowledge.setState({tabOnClick: index});
     }
 
+    //左侧下拉刷新
+    onRefresh = () => {
+        this.initData.splice(0);
+        this.state.dataSource = [];
+        this.state.dataSource = new ListView.DataSource({
+            rowHasChanged: (row1, row2) => row1 !== row2,
+        });
+        this.getSubjectDataByKnowledge();
+        this.setState({defaultPageNo: 1, refreshing: false});
+    };
+
+    //右侧下拉刷新
+    onRefreshOther = () => {
+        this.initDataOther.splice(0);
+        this.state.dataSourceOther = [];
+        this.state.dataSourceOther = new ListView.DataSource({
+            rowHasChanged: (row1, row2) => row1 !== row2,
+        });
+        this.getSubjectDataByKnowledgeOther();
+        this.setState({defaultPageNoOther: 1, refreshing: false});
+    };
+
     render() {
         var scheduleNameArr = [];
         if (Util.isEmpty(this.state.scheduleNameArr) == false) {
@@ -648,6 +740,10 @@ export default class Demo extends React.Component {
                                 style={{
                                     height: document.body.clientHeight,
                                 }}
+                                pullToRefresh={<PullToRefresh
+                                    refreshing={this.state.refreshing}
+                                    onRefresh={this.onRefresh}
+                                />}
                             />
 
                             {/*其他老师上传的 ListView*/}
@@ -671,6 +767,10 @@ export default class Demo extends React.Component {
                                 style={{
                                     height: document.body.clientHeight,
                                 }}
+                                pullToRefresh={<PullToRefresh
+                                    refreshing={this.state.refreshing}
+                                    onRefresh={this.onRefreshOther}
+                                />}
                             />
                         </Tabs>
                     </StickyContainer>

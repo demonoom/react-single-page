@@ -1,19 +1,23 @@
 import React from 'react';
-import {
-    SearchBar, Tabs, Steps,
-} from 'antd-mobile';
 import fetch from 'dva/fetch'
 
 const mobileUrl = 'http://www.maaee.com/Excoord_For_Education/webservice';
 
 export default class Demo extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            questionDetil: {},
+        };
+    }
+
     componentDidMount() {
+        document.title = '题目详情';
         var locationHref = window.location.href;
         var locationSearch = locationHref.substr(locationHref.indexOf("?") + 1);
         var searchArray = locationSearch.split("&");
         var id = searchArray[0].split('=')[1];
-        var type = searchArray[1].split('=')[1];
-        this.subjectDetailShow(id, type);
+        this.getSubjectLineById(id);
     }
 
     parseJSON(response) {
@@ -30,15 +34,11 @@ export default class Demo extends React.Component {
         throw error;
     }
 
-    subjectDetailShow(id, type) {
+    getSubjectLineById(id) {
         var _this = this;
-        const dataBlob = {};
         var param = {
-            "method": 'subjectDetailShow',
-            "ident": '54208',
+            "method": 'getSubjectLineById',
             "sid": id,
-            "fid": id,
-            "type": type
         };
 
         var requestParams = encodeURI("params=" + JSON.stringify(param));
@@ -54,23 +54,24 @@ export default class Demo extends React.Component {
             .then(data => ({data}))
             .catch(err => ({err}))
             .then(function (result) {
-                console.log(result);
-                var response = result.data.response;
-                // for (let i = 0; i < response.length; i++) {
-                //     var topic = response[i];
-                //     dataBlob[`${i}`] = topic;
-                // }
-                // _this.initData = _this.initData.concat(response);
-                // _this.setState({
-                //     dataSource: _this.state.dataSource.cloneWithRows(_this.initData),
-                //     isLoading: false,
-                // })
+                var ret = result.data;
+                if (ret.msg == '调用成功' && ret.success == true) {
+                    var data = ret.response;
+                    // console.log(data);
+                    _this.setState({questionDetil: data})
+                }
             });
     }
 
     render() {
-        return (<div style={{marginBottom: 30}}>
-            课程详情页面
-        </div>);
+        return (
+            <div style={{marginBottom: 30}}>
+                <h3>【{this.state.questionDetil.typeName}】</h3>
+                <div dangerouslySetInnerHTML={{__html: this.state.questionDetil.content}}></div>
+                <hr/>
+                <h3>【正确答案】</h3>
+                <div dangerouslySetInnerHTML={{__html: this.state.questionDetil.answer}}></div>
+            </div>
+        );
     }
 }
