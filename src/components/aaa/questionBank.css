@@ -28,7 +28,7 @@
     border:1px #EE9D36 solid
 }
 .my_drawer .am-pull-to-refresh-content-wrapper{
-    height: 100vh;
+    min-height: 100vh;
 }
 .my_drawer .am-drawer-draghandle{
     width:0 !important;

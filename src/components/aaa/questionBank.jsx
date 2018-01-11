@@ -94,7 +94,7 @@ export default class questionBank extends React.Component {
     componentWillMount() {
         //地址:    http://localhost:8000/#/questionBank?ident=54208&pointId=4339
 
-        /*var locationHref = window.location.href;
+        var locationHref = window.location.href;
         var locationSearch = locationHref.substr(locationHref.indexOf("?") + 1);
         var searchArray = locationSearch.split("&");
         var ident = searchArray[0].split('=')[1];
@@ -105,13 +105,13 @@ export default class questionBank extends React.Component {
             "ident": ident,
             "pointId": pointId,
             "title": title,
-        };*/
-
-        var loginUser = {
-            "ident": 54208,
-            "pointId": 4339,
-            "tittle":'你好'
         };
+
+        // var loginUser = {
+        //     "ident": 54208,
+        //     "pointId": 4339,
+        //     "tittle":'你好'
+        // };
         localStorage.setItem("loginUser", JSON.stringify(loginUser));
     }
 
@@ -332,8 +332,8 @@ export default class questionBank extends React.Component {
     rowOnClick(res) {
         var subjectId = res.id;
         var subjectType = res.subjectType;
-        window.open("/#/questionDetil?courseId=" + subjectId + "&subjectType=" + subjectType);
-        var url = "http://192.168.1.30:8000/#/questionDetil?courseId=" + subjectId + "&subjectType=" + subjectType;
+        // window.open("/#/questionDetil?courseId=" + subjectId + "&subjectType=" + subjectType);
+        var url = "http://192.168.1.30:8091/#/questionDetil?courseId=" + subjectId + "&subjectType=" + subjectType;
         var data = {};
         data.method = 'openNewPage';
         data.url = url;
