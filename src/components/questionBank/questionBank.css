@@ -28,9 +28,6 @@
 .my_drawer .am-tabs-default-bar-underline{
     border:1px #EE9D36 solid
 }
-.my_drawer .am-drawer-draghandle{
-    right: -10px !important;
-}
 .my_flex{
     display: -webkit-box;
     display: -webkit-flex;
