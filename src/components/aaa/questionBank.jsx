@@ -92,7 +92,7 @@ export default class questionBank extends React.Component {
     }
 
     componentWillMount() {
-        //地址:    http://localhost:8000/#/questionBank?ident=54208&pointId=4339
+        //地址:    http://localhost:8091/#/questionBank?ident=54208&pointId=4339
 
         var locationHref = window.location.href;
         var locationSearch = locationHref.substr(locationHref.indexOf("?") + 1);
