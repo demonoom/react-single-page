@@ -181,6 +181,7 @@ export default class questionBank extends React.Component {
                 _this.setState({
                     dataSource: _this.state.dataSource.cloneWithRows(_this.initData),
                     isLoading: false,
+                    refreshing: false
                 })
             });
     }
@@ -224,6 +225,7 @@ export default class questionBank extends React.Component {
                 _this.setState({
                     dataSourceOther: _this.state.dataSourceOther.cloneWithRows(_this.initDataOther),
                     isLoading: false,
+                    refreshing: false
                 })
             });
     }
@@ -612,8 +614,8 @@ export default class questionBank extends React.Component {
         this.state.dataSource = new ListView.DataSource({
             rowHasChanged: (row1, row2) => row1 !== row2,
         });
+        this.setState({defaultPageNo: 1});
         this.getSubjectDataByKnowledge();
-        this.setState({defaultPageNo: 1, refreshing: false});
     };
 
     //右侧下拉刷新
@@ -623,8 +625,8 @@ export default class questionBank extends React.Component {
         this.state.dataSourceOther = new ListView.DataSource({
             rowHasChanged: (row1, row2) => row1 !== row2,
         });
+        this.setState({defaultPageNoOther: 1});
         this.getSubjectDataByKnowledgeOther();
-        this.setState({defaultPageNoOther: 1, refreshing: false});
     };
 
     render() {
@@ -724,7 +726,7 @@ export default class questionBank extends React.Component {
                                 renderFooter={() => (<div style={{padding: 10, textAlign: 'center'}}>
                                     {this.state.isLoading ? '正在加载' : '没有更多课了'}
                                 </div>)}
-                                renderRow={row}   //不知道是干嘛的,需要的参数包括一行数据等,会返回一个可渲染的组件为这行数据渲染  返回renderable
+                                renderRow={row}   //需要的参数包括一行数据等,会返回一个可渲染的组件为这行数据渲染  返回renderable
                                 renderSeparator={separator}   //可以不设置的属性  行间距
                                 className="am-list"
                                 pageSize={5}    //每次事件循环（每帧）渲染的行数
@@ -752,7 +754,7 @@ export default class questionBank extends React.Component {
                                 renderFooter={() => (<div style={{padding: 30, textAlign: 'center'}}>
                                     {this.state.isLoading ? '正在加载' : '没有更多课了'}
                                 </div>)}
-                                renderRow={rowRight}   //不知道是干嘛的,需要的参数包括一行数据等,会返回一个可渲染的组件为这行数据渲染  返回renderable
+                                renderRow={rowRight}   //需要的参数包括一行数据等,会返回一个可渲染的组件为这行数据渲染  返回renderable
                                 renderSeparator={separator}   //可以不设置的属性  行间距
                                 className="am-list"
                                 pageSize={5}    //每次事件循环（每帧）渲染的行数

@@ -101,5 +101,6 @@ class Util {
             return false;
         }
     }
+
 }
 export default new Util()
