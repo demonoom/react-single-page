@@ -93,6 +93,7 @@ export default class questionBank extends React.Component {
 
     componentWillMount() {
         //地址:    http://localhost:8091/#/questionBank?ident=54208&pointId=4339
+        //   http://jiaoxue.maaee.com:8091
 
         var locationHref = window.location.href;
         var locationSearch = locationHref.substr(locationHref.indexOf("?") + 1);
@@ -333,7 +334,7 @@ export default class questionBank extends React.Component {
         var subjectId = res.id;
         var subjectType = res.subjectType;
         // window.open("/#/questionDetil?courseId=" + subjectId + "&subjectType=" + subjectType);
-        var url = "http://192.168.1.30:8091/#/questionDetil?courseId=" + subjectId + "&subjectType=" + subjectType;
+        var url = "http://jiaoxue.maaee.com:8091/#/questionDetil?courseId=" + subjectId + "&subjectType=" + subjectType;
         var data = {};
         data.method = 'openNewPage';
         data.url = url;
