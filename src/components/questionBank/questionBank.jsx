@@ -640,8 +640,9 @@ export default class questionBank extends React.Component {
         const sidebar = (<List>
             {scheduleNameArr.map((i) => {
                 return (<List.Item key={i.split('#')[0]}
-                                   thumb="https://zos.alipayobjects.com/rmsportal/eOZidTabPoEbPeU.png"
+                                   thumb={require('./icon_check_homework.png')}
                                    onClick={() => this.scheduleOnClick(i.split('#')[0])}
+                                   className="icon_homework_check"
                 >{i.split('#')[1]}</List.Item>);
             })}
         </List>);

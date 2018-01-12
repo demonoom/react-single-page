@@ -107,6 +107,9 @@
 .exercises_line .am-list-line::after, .my_drawer .am-list-body::before{
     background-color: #fff !important;
 }
+.exercises_line .am-list-line{
+    border-bottom:none !important;
+}
 .btn_homework{
     width:40px;
     height:40px;
@@ -159,4 +162,33 @@
 .btn_homework_cont .am-button.am-button-active{
     background: none !important;
 
+}
+.my_drawer .am-tabs-default-bar-top .am-tabs-default-bar-tab{
+    border-bottom: none;
+}
+.icon_homework_check .am-list-thumb img{
+    width:26px;
+    height:26px;
+}
+.my_drawer .am-drawer-sidebar .am-list .am-list-line {
+    border-bottom: none !important;
+}
+.my_drawer .am-drawer-sidebar .am-list .am-list-line::after {
+    content: '';
+    position: absolute;
+    background-color: #ddd;
+    display: block;
+    z-index: 1;
+    top: auto;
+    right: auto;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 1PX;
+    -webkit-transform-origin: 50% 100%;
+    -ms-transform-origin: 50% 100%;
+    transform-origin: 50% 100%;
+    -webkit-transform: scaleY(0.5);
+    -ms-transform: scaleY(0.5);
+    transform: scaleY(0.5);
 }
