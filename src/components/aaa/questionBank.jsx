@@ -637,7 +637,7 @@ export default class questionBank extends React.Component {
     render() {
         var scheduleNameArr = [];
         // if (Util.isEmpty(this.state.scheduleNameArr) == false) {
-        if (typeof(this.state.scheduleNameArr) != 'undenfined') {
+        if (typeof(this.state.scheduleNameArr) != 'undefined') {
             scheduleNameArr = this.state.scheduleNameArr;
         }
 
