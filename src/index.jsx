@@ -7,7 +7,6 @@ import Stage1 from './components/Stage1';
 import Stage2 from './components/Stage2';
 import Stage3 from './components/Stage3';
 import Stage4 from './components/Stage4';
-import Stage5 from './components/Stage5';
 import questionBank from './components/questionBank/questionBank';
 import questionDetil from './components/questionBank/questionDetil';
 import Stage8 from './components/Stage8';
@@ -25,8 +24,7 @@ class Index extends React.Component {
                     <li><Link to="/s3">Form + ...</Link></li>
                     <li><Link to="/s4" style={{fontSize: '24px'}}>蚁巢</Link></li>
                     <li><Link to="/questionBank" style={{fontSize: '24px'}}>题库</Link></li>
-                    <li><Link to="/s5">例子</Link></li>
-                    <li><Link to="/s8" style={{fontSize: '24px'}}>抽屉</Link></li>
+                    <li><Link to="/s8" style={{fontSize: '24px'}}>下拉刷新</Link></li>
                 </ul>
             </div>
         );
@@ -41,7 +39,6 @@ ReactDOM.render(
             <Route path="s2" component={Stage2}/>
             <Route path="s3" component={Stage3}/>
             <Route path="s4" component={Stage4}/>
-            <Route path="s5" component={Stage5}/>
             <Route path="questionBank" component={questionBank}/>
             <Route path="questionDetil" component={questionDetil}/>
             <Route path="s8" component={Stage8}/>

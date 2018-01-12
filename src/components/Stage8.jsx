@@ -1,59 +1,60 @@
 import React from 'react';
-import {Toast, WhiteSpace, WingBlank, Button} from 'antd-mobile';
+import {PullToRefresh} from 'antd-mobile';
+
+function genData() {
+    const dataArr = [];
+    for (let i = 0; i < 20; i++) {
+        dataArr.push(i);
+    }
+    return dataArr;
+}
 
 export default class Demo extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            refreshing: false,
+            down: true,
+            height: document.documentElement.clientHeight,
+            data: [],
+        };
+    }
+
     componentDidMount() {
-
+        const hei = this.state.height - ReactDOM.findDOMNode(this.ptr).offsetTop;
+        setTimeout(() => this.setState({
+            height: hei,
+            data: genData(),
+        }), 0);
     }
-
-    showToast() {
-        Toast.info('This is a toast tips !!!', 1);
-    }
-
-    // showToastNoMask() {
-    //     Toast.info('Toast without mask !!!', 2, null, false);
-    // }
-    //
-    // successToast() {
-    //     Toast.success('Load success !!!', 1);
-    // }
-    //
-    failToast() {
-        Toast.fail('Load failed !!!', 1);
-    }
-
-    //
-    // offline() {
-    //     Toast.offline('Network connection failed !!!', 1);
-    // }
-    //
-    // loadingToast() {
-    //     Toast.loading('Loading...', 1, () => {
-    //         console.log('Load complete !!!');
-    //     });
-    // }
 
     render() {
+
         return (
-            <WingBlank>
-                <WhiteSpace/>
-                <Button onClick={this.showToast}>text only</Button>
-                <WhiteSpace/>
-                {/*<Button onClick={this.showToastNoMask}>without mask</Button>*/}
-                {/*<WhiteSpace/>*/}
-                {/*<Button onClick={() => Toast.info(customIcon(), 1)}>*/}
-                {/*cumstom icon*/}
-                {/*</Button>*/}
-                {/*<WhiteSpace/>*/}
-                {/*<Button onClick={this.successToast}>success</Button>*/}
-                {/*<WhiteSpace/>*/}
-                <Button onClick={this.failToast}>fail</Button>
-                {/*<WhiteSpace/>*/}
-                {/*<Button onClick={this.offline}>network failure</Button>*/}
-                {/*<WhiteSpace/>*/}
-                {/*<Button onClick={this.loadingToast}>loading</Button>*/}
-                {/*<WhiteSpace/>*/}
-            </WingBlank>
-        );
+            <div>
+                <PullToRefresh
+                    ref={el => this.ptr = el}
+                    style={{
+                        height: document.documentElement.clientHeight,
+                        overflow: 'auto',
+                    }}
+                    distanceToRefresh={50}
+                    direction={'down'}
+                    refreshing={this.state.refreshing}
+                    onRefresh={() => {
+                        this.setState({refreshing: true});
+                        setTimeout(() => {
+                            this.setState({refreshing: false});
+                        }, 1000);
+                    }}
+                >
+                    {this.state.data.map(i => (
+                        <div key={i} style={{textAlign: 'center', padding: 20}}>
+                            {this.state.down ? 'pull down' : 'pull up'} {i}
+                        </div>
+                    ))}
+                </PullToRefresh>
+            </div>
+        )
     }
 }
