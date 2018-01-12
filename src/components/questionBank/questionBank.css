@@ -172,6 +172,7 @@
 }
 .my_drawer .am-drawer-sidebar .am-list .am-list-line {
     border-bottom: none !important;
+    padding:6px 0;
 }
 .my_drawer .am-drawer-sidebar .am-list .am-list-line::after {
     content: '';
@@ -191,4 +192,10 @@
     -webkit-transform: scaleY(0.5);
     -ms-transform: scaleY(0.5);
     transform: scaleY(0.5);
+}
+@media screen and (min-width:750px){
+    .btn_homework{
+        width: 50px;
+        height: 50px !important;
+    }
 }

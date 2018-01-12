@@ -116,8 +116,8 @@ export default class questionBank extends React.Component {
     }
 
     componentDidMount() {
-        this.getSubjectDataByKnowledge();
-        this.getSubjectDataByKnowledgeOther();
+        this.getSubjectDataByKnowledge(false);
+        this.getSubjectDataByKnowledgeOther(false);
         this.getTeachScheduleByIdent();
 
         // setTimeout(() => {
@@ -146,7 +146,7 @@ export default class questionBank extends React.Component {
     /**
      * 根据资源库的知识点id获取知识点下的题目
      */
-    getSubjectDataByKnowledge() {
+    getSubjectDataByKnowledge(pullFalg) {
         var loginUser = JSON.parse(localStorage.getItem('loginUser'));
         var _this = this;
         const dataBlob = {};
@@ -178,6 +178,13 @@ export default class questionBank extends React.Component {
                     topic.checkBoxChecked = false;
                     dataBlob[`${i}`] = topic;
                 }
+                if (pullFalg) {    //拉动刷新  获取数据之后再清除原有数据
+                    _this.initData.splice(0);
+                    _this.state.dataSource = [];
+                    _this.state.dataSource = new ListView.DataSource({
+                        rowHasChanged: (row1, row2) => row1 !== row2,
+                    });
+                }
                 _this.initData = _this.initData.concat(response);
                 _this.setState({
                     dataSource: _this.state.dataSource.cloneWithRows(_this.initData),
@@ -190,7 +197,7 @@ export default class questionBank extends React.Component {
     /**
      * 根据资源库的知识点id获取知识点下的题目(其他老师上传的)
      */
-    getSubjectDataByKnowledgeOther() {
+    getSubjectDataByKnowledgeOther(pullFalg) {
         var loginUser = JSON.parse(localStorage.getItem('loginUser'));
         var _this = this;
         const dataBlob = {};
@@ -221,6 +228,13 @@ export default class questionBank extends React.Component {
                     var topic = response[i];
                     topic.checkBoxChecked = false;
                     dataBlob[`${i}`] = topic;
+                }
+                if (pullFalg) {    //拉动刷新  获取数据之后再清除原有数据
+                    _this.initDataOther.splice(0);
+                    _this.state.dataSourceOther = [];
+                    _this.state.dataSourceOther = new ListView.DataSource({
+                        rowHasChanged: (row1, row2) => row1 !== row2,
+                    });
                 }
                 _this.initDataOther = _this.initDataOther.concat(response);
                 _this.setState({
@@ -298,7 +312,7 @@ export default class questionBank extends React.Component {
         //     });
         // }, 1000);
         // _this.initData = _this.initData.concat();
-        _this.getSubjectDataByKnowledge();
+        _this.getSubjectDataByKnowledge(false);
         this.setState({
             dataSource: this.state.dataSource.cloneWithRows(this.initData),
             isLoading: false,
@@ -319,7 +333,7 @@ export default class questionBank extends React.Component {
         }
         currentPageNo += 1;
         this.setState({isLoading: true, defaultPageNoOther: currentPageNo});
-        _this.getSubjectDataByKnowledgeOther();
+        _this.getSubjectDataByKnowledgeOther(false);
         this.setState({
             dataSourceOther: this.state.dataSourceOther.cloneWithRows(this.initDataOther),
             isLoading: false,
@@ -457,7 +471,7 @@ export default class questionBank extends React.Component {
                     rowHasChanged: (row1, row2) => row1 !== row2,
                 });
                 _this.setState({defaultPageNo: 1});
-                _this.getSubjectDataByKnowledge();
+                _this.getSubjectDataByKnowledge(false);
             }
         }, function (error) {
             Toast.fail(error, 1);
@@ -610,24 +624,14 @@ export default class questionBank extends React.Component {
 
     //左侧下拉刷新
     onRefresh = () => {
-        this.initData.splice(0);
-        this.state.dataSource = [];
-        this.state.dataSource = new ListView.DataSource({
-            rowHasChanged: (row1, row2) => row1 !== row2,
-        });
         this.setState({defaultPageNo: 1});
-        this.getSubjectDataByKnowledge();
+        this.getSubjectDataByKnowledge(true);
     };
 
     //右侧下拉刷新
     onRefreshOther = () => {
-        this.initDataOther.splice(0);
-        this.state.dataSourceOther = [];
-        this.state.dataSourceOther = new ListView.DataSource({
-            rowHasChanged: (row1, row2) => row1 !== row2,
-        });
         this.setState({defaultPageNoOther: 1});
-        this.getSubjectDataByKnowledgeOther();
+        this.getSubjectDataByKnowledgeOther(true);
     };
 
     render() {
@@ -709,7 +713,6 @@ export default class questionBank extends React.Component {
                     className="my-drawer my_drawer"
                     style={{minHeight: document.documentElement.clientHeight}}
                     enableDragHandle
-                    // contentStyle={{color: '#A6A6A6', textAlign: 'center', paddingTop: 42}}
                     sidebar={sidebar}
                     open={this.state.open}
                     onOpenChange={this.onOpenChange}
@@ -813,7 +816,6 @@ export default class questionBank extends React.Component {
                                    right: 5,
 
                                }}
-
                     >
                         <Button onClick={this.showActionSheet} className="btn_homework btn_no_b">
                             <img src={require('./homework_icon.png')}/>
