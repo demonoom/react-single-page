@@ -28,6 +28,7 @@
     border:1px #EE9D36 solid
 }
 .my_drawer .am-pull-to-refresh-content-wrapper{
+    /*background-color: #6BA52B;*/
     min-height: 100vh;
 }
 .my_drawer .am-drawer-draghandle{
