@@ -81,6 +81,8 @@
 .exercises_cont{
     max-width: calc(100% - 80px) !important;
     display: inline-flex;
+    max-height: 80px;
+    overflow: hidden;
 }
 .exercises_cont div div, .question_detil div div{
     padding:0 !important;
@@ -95,15 +97,15 @@
 .exercises_cont div div p img, .question_detil div div p img{
     max-width: 100%;
 }
+
 .exercises_line .am-list-line{
     padding:8px 15px 8px 0;
 }
 .exercises_line .am-checkbox-inner{
     top: 15px !important
 }
-.exercises_line .
-.am-list-body div:not(:last-child) .am-list-line::after{
-    height:0 !important
+.exercises_line .am-list-line::after, .my_drawer .am-list-body::before{
+    background-color: #fff !important;
 }
 .btn_homework{
     width:40px;
@@ -153,4 +155,8 @@
 }
 .exercises_line .am-checkbox-input{
     width: 40px;
+}
+.btn_homework_cont .am-button.am-button-active{
+    background: none !important;
+
 }

@@ -91,7 +91,7 @@ export default class questionBank extends React.Component {
     }
 
     componentWillMount() {
-        //地址:    http://localhost:8091/#/questionBank?ident=54208&pointId=4339
+        //地址:    http://localhost:8091/#/questionBank?ident=54208&pointId=4339&title=nihao
         //   http://jiaoxue.maaee.com:8091
 
         var locationHref = window.location.href;
@@ -332,7 +332,7 @@ export default class questionBank extends React.Component {
     rowOnClick(res) {
         var subjectId = res.id;
         var subjectType = res.subjectType;
-        // window.open("/#/questionDetil?courseId=" + subjectId + "&subjectType=" + subjectType);
+        window.open("/#/questionDetil?courseId=" + subjectId + "&subjectType=" + subjectType);
         var url = "http://jiaoxue.maaee.com:8091/#/questionDetil?courseId=" + subjectId + "&subjectType=" + subjectType;
         var data = {};
         data.method = 'openNewPage';
@@ -780,13 +780,15 @@ export default class questionBank extends React.Component {
                         </Tabs>
                     </StickyContainer>
                     {/*悬浮按钮*/}
-                    <WingBlank
+                    <WingBlank className="btn_homework_cont"
                         style={{
                             width: 40,
                             position: 'fixed',
                             bottom: 20,
                             right: 5,
+
                         }}
+
                     >
                         <Button onClick={this.showActionSheet} className="btn_homework btn_no_b">
                             <img src={require('./homework_icon.png')}/>
