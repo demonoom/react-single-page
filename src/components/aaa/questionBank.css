@@ -50,28 +50,28 @@
     margin: 4px 0 0 10px;
     text-align: right;
 }
-.h_blue_btn{
+.h_blue_btn, .J{
     color:#4990E2;
     border-radius: 4px;
     border: 1px solid #4990E2;
     padding: 2px 4px;
     font-size: 14px;
 }
-.h_orange_btn{
+.h_orange_btn, .MC{
     color:#F6A623;
     border-radius: 4px;
     border: 1px solid #F6A623;
     padding: 2px 4px;
     font-size: 14px;
 }
-.h_red_btn{
+.h_red_btn, .S{
     color:#F56A55;
     border-radius: 4px;
     border: 1px solid #F56A55;
     padding: 2px 4px;
     font-size: 14px;
 }
-.h_green_btn{
+.h_green_btn, .C{
     color:#6BA52B;
     border-radius: 4px;
     border: 1px solid #6BA52B;

@@ -14,7 +14,6 @@ import {
 import {StickyContainer, Sticky} from 'react-sticky';
 import fetch from 'dva/fetch'
 import './questionBank.css'
-// import Util from '../../helpers/util'
 
 /*请求地址*/
 const mobileUrl = 'http://www.maaee.com/Excoord_For_Education/webservice';
@@ -258,8 +257,7 @@ export default class questionBank extends React.Component {
             .catch(err => ({err}))
             .then(function (result) {
                 var response = result.data.response;
-                // if (Util.isEmpty(response) == false) {
-                if (response.length != 0) {
+                if (typeof (response) != 'undefined' && response.length != 0) {
                     response.forEach(function (v) {
                         arr.push(v);
                     });
@@ -364,8 +362,7 @@ export default class questionBank extends React.Component {
                     var ids = [];
                     if (this.state.tabOnClick == 0) {
                         var arr = document.getElementsByClassName('noomCkeckBox');
-                        // if (Util.isEmpty(_this.initData) == false) {
-                        if (_this.initData.length != 0) {
+                        if (typeof (_this.initData) != 'undefined' && _this.initData.length != 0) {
                             _this.initData.forEach(function (v, i) {
                                 ids.push(v.id);
                             });
@@ -373,8 +370,7 @@ export default class questionBank extends React.Component {
                         }
                     } else {
                         var arr = document.getElementsByClassName('noomCkeckBoxOther');
-                        // if (Util.isEmpty(_this.initDataOther) == false) {
-                        if (_this.initDataOther.length != 0) {
+                        if (typeof (_this.initDataOther) != 'undefined' && _this.initDataOther.length != 0) {
                             _this.initDataOther.forEach(function (v, i) {
                                 ids.push(v.id);
                             });
@@ -636,7 +632,6 @@ export default class questionBank extends React.Component {
 
     render() {
         var scheduleNameArr = [];
-        // if (Util.isEmpty(this.state.scheduleNameArr) == false) {
         if (typeof(this.state.scheduleNameArr) != 'undefined') {
             scheduleNameArr = this.state.scheduleNameArr;
         }
@@ -675,7 +670,8 @@ export default class questionBank extends React.Component {
                             <div style={{lineHeight: 1}} className="flex_1 my_flex">
                                 <div dangerouslySetInnerHTML={{__html: rowData.content}}
                                      className="flex_1 exercises_cont"></div>
-                                <div className="flex_70"><span className="h_green_btn">{rowData.typeName}</span></div>
+                                <div className="flex_70"><span className={rowData.subjectType}>{rowData.typeName}</span>
+                                </div>
                             </div>
                         </div>
                     </CheckboxItem>
@@ -697,7 +693,8 @@ export default class questionBank extends React.Component {
                             <div style={{lineHeight: 1}} className="flex_1 my_flex">
                                 <div dangerouslySetInnerHTML={{__html: rowData.content}}
                                      className="flex_1 exercises_cont"></div>
-                                <div className="flex_70"><span className="h_blue_btn">{rowData.typeName}</span></div>
+                                <div className="flex_70"><span className={rowData.subjectType}>{rowData.typeName}</span>
+                                </div>
                             </div>
                         </div>
                     </CheckboxItem>
