@@ -112,15 +112,15 @@
 }
 .btn_homework{
     width:40px;
-    height:40px;
+    height:40px !important;
 }
 .btn_homework img{
     width: 100%;
     height:100%;
 }
 .btn_no_b{
-    border: none;
-    background: none;
+    border: none !important;
+    background: none !important;
 }
 .btn_no_b:before{
     border: none !important;
