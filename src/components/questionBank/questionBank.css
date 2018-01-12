@@ -155,6 +155,8 @@
 }
 .question_detil{
     color:#666;
+    width: 96%;
+    margin: 0 2%;
 }
 .exercises_line .am-checkbox-input{
     width: 40px;
