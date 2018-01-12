@@ -9,11 +9,11 @@ import {
     Drawer,
     List,
     Toast,
+    PullToRefresh,
 } from 'antd-mobile';
 import {StickyContainer, Sticky} from 'react-sticky';
 import fetch from 'dva/fetch'
 import './questionBank.css'
-import Util from '../../helpers/util'
 
 /*请求地址*/
 const mobileUrl = 'http://www.maaee.com/Excoord_For_Education/webservice';
@@ -82,31 +82,36 @@ export default class questionBank extends React.Component {
             defaultPageNo: 1,
             defaultPageNoOther: 1,
             clicked: 'none',
-            // checkBoxChecked: false,
             checkBoxCheckedArr: [],    //勾选中的题目id
             delCheckBoxCheckedArr: [],    //需要删除的勾选中的题目id
             open: false,
             tabOnClick: 0,
+            refreshing: false,   //下拉刷新状态
         };
     }
 
     componentWillMount() {
-        //地址:    http://localhost:8000/#/questionBank2?ident=54208&pointId=4339
+        //地址:    http://localhost:8091/#/questionBank?ident=54208&pointId=4339&title=nihao
+        //   http://jiaoxue.maaee.com:8091
 
-        /*var locationHref = window.location.href;
+        var locationHref = window.location.href;
         var locationSearch = locationHref.substr(locationHref.indexOf("?") + 1);
         var searchArray = locationSearch.split("&");
         var ident = searchArray[0].split('=')[1];
         var pointId = searchArray[1].split('=')[1];
+        var title = searchArray[2].split('=')[1];
+        document.title = title;   //设置title
         var loginUser = {
             "ident": ident,
             "pointId": pointId,
-        };*/
-
-        var loginUser = {
-            "ident": 54208,
-            "pointId": 4339,
+            "title": title,
         };
+
+        // var loginUser = {
+        //     "ident": 54208,
+        //     "pointId": 4339,
+        //     "tittle":'你好'
+        // };
         localStorage.setItem("loginUser", JSON.stringify(loginUser));
     }
 
@@ -177,6 +182,7 @@ export default class questionBank extends React.Component {
                 _this.setState({
                     dataSource: _this.state.dataSource.cloneWithRows(_this.initData),
                     isLoading: false,
+                    refreshing: false
                 })
             });
     }
@@ -220,6 +226,7 @@ export default class questionBank extends React.Component {
                 _this.setState({
                     dataSourceOther: _this.state.dataSourceOther.cloneWithRows(_this.initDataOther),
                     isLoading: false,
+                    refreshing: false
                 })
             });
     }
@@ -250,7 +257,7 @@ export default class questionBank extends React.Component {
             .catch(err => ({err}))
             .then(function (result) {
                 var response = result.data.response;
-                if (Util.isEmpty(response) == false) {
+                if (typeof (response) != 'undefined' && response.length != 0) {
                     response.forEach(function (v) {
                         arr.push(v);
                     });
@@ -322,17 +329,24 @@ export default class questionBank extends React.Component {
     /**
      *  点击查看详情页
      */
-    rowOnClick(data) {
-        var subjectId = data.id;
-        var subjectType = data.subjectType;
-        window.open("/#/s7?courseId=" + subjectId + "&subjectType=" + subjectType);
+    rowOnClick(res) {
+        var subjectId = res.id;
+        var subjectType = res.subjectType;
+        // window.open("/#/questionDetil?courseId=" + subjectId + "&subjectType=" + subjectType);
+        var url = "http://jiaoxue.maaee.com:8091/#/questionDetil?courseId=" + subjectId + "&subjectType=" + subjectType;
+        var data = {};
+        data.method = 'openNewPage';
+        data.url = url;
+        Bridge.callHandler(data, null, function (error) {
+            window.location.href = url;
+        });
     }
 
     //动作面板被点击
     showActionSheet = () => {
         var _this = this;
         if (this.state.tabOnClick == 0) {
-            var BUTTONS = ['全选', '取消全选', '使用', '删除'];
+            var BUTTONS = ['全选', '取消全选', '使用', '删除', '添加题目'];
         } else {
             var BUTTONS = ['全选', '取消全选', '使用'];
         }
@@ -342,14 +356,13 @@ export default class questionBank extends React.Component {
                 maskClosable: true,
             },
             (buttonIndex) => {
-                console.log(buttonIndex);
                 this.setState({clicked: BUTTONS[buttonIndex]});
                 //0>>全选  1>>取消  2>>使用  3>>删除
                 if (buttonIndex == 0) {
                     var ids = [];
                     if (this.state.tabOnClick == 0) {
                         var arr = document.getElementsByClassName('noomCkeckBox');
-                        if (Util.isEmpty(_this.initData) == false) {
+                        if (typeof (_this.initData) != 'undefined' && _this.initData.length != 0) {
                             _this.initData.forEach(function (v, i) {
                                 ids.push(v.id);
                             });
@@ -357,7 +370,7 @@ export default class questionBank extends React.Component {
                         }
                     } else {
                         var arr = document.getElementsByClassName('noomCkeckBoxOther');
-                        if (Util.isEmpty(_this.initDataOther) == false) {
+                        if (typeof (_this.initDataOther) != 'undefined' && _this.initDataOther.length != 0) {
                             _this.initDataOther.forEach(function (v, i) {
                                 ids.push(v.id);
                             });
@@ -387,8 +400,68 @@ export default class questionBank extends React.Component {
                         return
                     }
                     this.delClass()
+                } else if (buttonIndex == 4) {
+                    this.addQuestion()
                 }
             });
+    };
+
+    /**
+     * 增加新题
+     */
+    addQuestion = () => {
+        const BUTTONS = ['单选题', '简答题', '判断题', '多选题'];
+        ActionSheet.showActionSheetWithOptions({
+                options: BUTTONS,
+                maskClosable: true,
+            },
+            (buttonIndex) => {
+                this.setState({clicked: BUTTONS[buttonIndex]});
+                //0>>单选题  1>>简答题  2>>判断题  3>>多选题
+                this.postMesToMob(buttonIndex);
+            });
+    };
+
+    /**
+     * 发送消息给客户端
+     * @param buttonIndex
+     */
+    postMesToMob(buttonIndex) {
+        if (buttonIndex == -1) {
+            //遮罩层被点击,不执行通信
+            return
+        }
+        var _this = this;
+        var loginUser = JSON.parse(localStorage.getItem('loginUser'));
+        //0>>单选题  1>>简答题  2>>判断题  3>>多选题
+        var data = {
+            pointId: loginUser.pointId,
+            title: loginUser.title,
+        };
+        if (buttonIndex == 0) {
+            data.method = 'singleChoice';
+        } else if (buttonIndex == 1) {
+            data.method = 'shortAnswer';
+        } else if (buttonIndex == 2) {
+            data.method = 'trueOrFalse';
+        } else if (buttonIndex == 3) {
+            data.method = 'multipleChoice';
+        }
+        Bridge.callHandler(data, function (mes) {
+            if (mes == 'refresh') {
+                //刷新页面
+                Toast.success('题目添加成功', 1);
+                _this.initData.splice(0);
+                _this.state.dataSource = [];
+                _this.state.dataSource = new ListView.DataSource({
+                    rowHasChanged: (row1, row2) => row1 !== row2,
+                });
+                _this.setState({defaultPageNo: 1});
+                _this.getSubjectDataByKnowledge();
+            }
+        }, function (error) {
+            Toast.fail(error, 1);
+        });
     };
 
     /**
@@ -535,9 +608,31 @@ export default class questionBank extends React.Component {
         knowledge.setState({tabOnClick: index});
     }
 
+    //左侧下拉刷新
+    onRefresh = () => {
+        this.initData.splice(0);
+        this.state.dataSource = [];
+        this.state.dataSource = new ListView.DataSource({
+            rowHasChanged: (row1, row2) => row1 !== row2,
+        });
+        this.setState({defaultPageNo: 1});
+        this.getSubjectDataByKnowledge();
+    };
+
+    //右侧下拉刷新
+    onRefreshOther = () => {
+        this.initDataOther.splice(0);
+        this.state.dataSourceOther = [];
+        this.state.dataSourceOther = new ListView.DataSource({
+            rowHasChanged: (row1, row2) => row1 !== row2,
+        });
+        this.setState({defaultPageNoOther: 1});
+        this.getSubjectDataByKnowledgeOther();
+    };
+
     render() {
         var scheduleNameArr = [];
-        if (Util.isEmpty(this.state.scheduleNameArr) == false) {
+        if (typeof(this.state.scheduleNameArr) != 'undefined') {
             scheduleNameArr = this.state.scheduleNameArr;
         }
 
@@ -556,7 +651,8 @@ export default class questionBank extends React.Component {
             <div
                 key={`${sectionID}-${rowID}`}
                 style={{
-                    backgroundColor: '#F5F5F9',
+                    height: 1,
+                    borderTop: '1px solid #ECECED',
                 }}
             />
         );
@@ -574,7 +670,8 @@ export default class questionBank extends React.Component {
                             <div style={{lineHeight: 1}} className="flex_1 my_flex">
                                 <div dangerouslySetInnerHTML={{__html: rowData.content}}
                                      className="flex_1 exercises_cont"></div>
-                                <div className="flex_70"><span className="h_blue_btn">{rowData.typeName}</span></div>
+                                <div className="flex_70"><span className={rowData.subjectType}>{rowData.typeName}</span>
+                                </div>
                             </div>
                         </div>
                     </CheckboxItem>
@@ -596,7 +693,8 @@ export default class questionBank extends React.Component {
                             <div style={{lineHeight: 1}} className="flex_1 my_flex">
                                 <div dangerouslySetInnerHTML={{__html: rowData.content}}
                                      className="flex_1 exercises_cont"></div>
-                                <div className="flex_70"><span className="h_blue_btn">{rowData.typeName}</span></div>
+                                <div className="flex_70"><span className={rowData.subjectType}>{rowData.typeName}</span>
+                                </div>
                             </div>
                         </div>
                     </CheckboxItem>
@@ -631,7 +729,7 @@ export default class questionBank extends React.Component {
                                 renderFooter={() => (<div style={{padding: 10, textAlign: 'center'}}>
                                     {this.state.isLoading ? '正在加载' : '没有更多课了'}
                                 </div>)}
-                                renderRow={row}   //不知道是干嘛的,需要的参数包括一行数据等,会返回一个可渲染的组件为这行数据渲染  返回renderable
+                                renderRow={row}   //需要的参数包括一行数据等,会返回一个可渲染的组件为这行数据渲染  返回renderable
                                 renderSeparator={separator}   //可以不设置的属性  行间距
                                 className="am-list"
                                 pageSize={5}    //每次事件循环（每帧）渲染的行数
@@ -647,6 +745,10 @@ export default class questionBank extends React.Component {
                                 style={{
                                     height: document.body.clientHeight,
                                 }}
+                                pullToRefresh={<PullToRefresh
+                                    refreshing={this.state.refreshing}
+                                    onRefresh={this.onRefresh}
+                                />}
                             />
 
                             {/*其他老师上传的 ListView*/}
@@ -655,7 +757,7 @@ export default class questionBank extends React.Component {
                                 renderFooter={() => (<div style={{padding: 30, textAlign: 'center'}}>
                                     {this.state.isLoading ? '正在加载' : '没有更多课了'}
                                 </div>)}
-                                renderRow={rowRight}   //不知道是干嘛的,需要的参数包括一行数据等,会返回一个可渲染的组件为这行数据渲染  返回renderable
+                                renderRow={rowRight}   //需要的参数包括一行数据等,会返回一个可渲染的组件为这行数据渲染  返回renderable
                                 renderSeparator={separator}   //可以不设置的属性  行间距
                                 className="am-list"
                                 pageSize={5}    //每次事件循环（每帧）渲染的行数
@@ -670,25 +772,27 @@ export default class questionBank extends React.Component {
                                 style={{
                                     height: document.body.clientHeight,
                                 }}
+                                pullToRefresh={<PullToRefresh
+                                    refreshing={this.state.refreshing}
+                                    onRefresh={this.onRefreshOther}
+                                />}
                             />
                         </Tabs>
                     </StickyContainer>
                     {/*悬浮按钮*/}
-                    <WingBlank
+                    <WingBlank className="btn_homework_cont"
                         style={{
-                            width: 48,
+                            width: 40,
                             position: 'fixed',
                             bottom: 20,
-                            right: 20,
+                            right: 5,
+
                         }}
+
                     >
-                        <Button
-                            onClick={this.showActionSheet}
-                            style={{
-                                backgroundColor: 'yellow',
-                                borderRadius: '50%',
-                            }}
-                        >...</Button>
+                        <Button onClick={this.showActionSheet} className="btn_homework btn_no_b">
+                            <img src={require('./homework_icon.png')}/>
+                        </Button>
                     </WingBlank>
                 </Drawer>
             </div>
