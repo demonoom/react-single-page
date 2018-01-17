@@ -61,6 +61,25 @@ hr.line:before{
 .userinfo_wrap .am-list-body::before, .userinfo_wrap .am-list-body div:not(:last-child) .am-list-line::after, .userinfo_wrap .am-list-body::after{
     background-color: #fff !important;
 }
+.user_info_line{
+    position:relative;
+}
+.user_info_line:before{
+    content: "";
+    pointer-events: none;
+    box-sizing: border-box;
+    border: none;
+    border-bottom: 1px solid #e5e5e5;
+    height: 200%;
+    transform: scaleY(0.5);
+    transform-origin: 0 0;
+    -webkit-transform: scaleY(0.5);
+    -webkit-transform-origin: 0 0;
+    position: absolute;
+    width: 100%;
+    top: 0;
+    left:0;
+}
 .icon_del{
     width: 14px;
     height: 14px;
@@ -78,4 +97,18 @@ hr.line:before{
 }
 .user_height{
     height: 100%;
+}
+.am-drawer-content{
+    overflow: hidden !important;
+}
+.user_more{
+    font-size: 12px;
+    color: #999;
+    text-align: center;
+    height: 30px;
+    line-height: 30px;
+}
+.user_bottom{
+    margin-bottom: 10px;
+    padding-bottom: 10px;
 }

@@ -201,6 +201,7 @@ export default class searchUserLocationInfo extends React.Component {
         // var isShowUserList=this.state.isShowUserList;
         var _this = this;
         var searchValue = this.state.searchValue;
+
         const search=()=>{
             return (<div>搜索</div>);
         }
@@ -253,13 +254,12 @@ export default class searchUserLocationInfo extends React.Component {
                         </div>
                     </div>
                     <div className="userinfo_info font_14">
-                        <div className="color_9" style={isAndroidShow}>
-                        <div><span className="color_9 userinfo_left">设备名称</span><span className="userinfo_right">{isAndroidEmpty?rowData.androidLoginRecord.deviceName:"暂无数据"}</span></div>
+                        <div className="color_9 user_info_line" style={isAndroidShow}>
+                            <div><span className="color_9 userinfo_left">设备名称</span><span className="userinfo_right">{isAndroidEmpty?rowData.androidLoginRecord.deviceName:"暂无数据"}</span></div>
                             <div><span className="color_9 userinfo_left">设备类型</span><span className="userinfo_right"><img className="icon_ios" src={require('./icon_android.png')}/>{isAndroidEmpty?rowData.androidLoginRecord.machineType:"暂无数据"}</span></div>
-                        <div><span className="color_9 userinfo_left">地址</span><span className="userinfo_right">{isAndroidEmpty?rowData.androidLoginRecord.address:""}</span></div>
-                        <div><span className="color_9 userinfo_left">登录时间</span><span className="userinfo_right">{isAndroidEmpty?rowData.androidLoginRecord.accessTime:"暂无数据"}</span></div>
+                            <div><span className="color_9 userinfo_left">地址</span><span className="userinfo_right">{isAndroidEmpty?rowData.androidLoginRecord.address:""}</span></div>
+                            <div className="user_bottom"><span className="color_9 userinfo_left">登录时间</span><span className="userinfo_right">{isAndroidEmpty?rowData.androidLoginRecord.accessTime:"暂无数据"}</span></div>
                         </div>
-                        <hr className="line"></hr>
                             <div className="color_9" style={isIosShow}>
                             <div><span className="color_9 userinfo_left">设备名称</span><span className="userinfo_right">{isIosEmpty?rowData.iosLoginRecord.deviceName:"暂无数据"}</span></div>
                             <div><span className="color_9 userinfo_left">设备类型</span><span className="userinfo_right"><img className="icon_ios" src={require('./icon_ios.png')}/>{isIosEmpty?rowData.iosLoginRecord.machineType:"暂无数据"}</span></div>
