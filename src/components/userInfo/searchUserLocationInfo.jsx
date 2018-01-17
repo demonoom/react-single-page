@@ -1,5 +1,6 @@
 import React from 'react';
 import fetch from 'dva/fetch'
+import './userinfo.css'
 import {
     ListView,SearchBar, Button, WhiteSpace, WingBlank,List
 } from 'antd-mobile';
@@ -167,21 +168,58 @@ export default class searchUserLocationInfo extends React.Component {
         }
         //右边每一道题的div(暂时废弃)
         const rowRight = (rowData, sectionID, rowID) => {
-            return (
-                <div key={rowID} className="exercises_line">
-                    <div>{rowData.user.userName}</div>
-                    <div><img src={rowData.user.avatar}></img></div>
-                    <div>{rowData.user.colAccount}</div>
-                    <div>{rowData.user.schoolName}</div>
-                    <div><span>设备名称:</span><span>{rowData.androidLoginRecord.deviceName}</span></div>
-                    <div><span>设备类型:</span><span>{rowData.androidLoginRecord.machineType}</span></div>
-                    <div><span>地址:</span><span>{rowData.androidLoginRecord.address}</span></div>
-                    <div><span>登录时间:</span><span>{rowData.androidLoginRecord.accessTime}</span></div>
+            var androidLoginRecord=rowData.androidLoginRecord;
+            var iosLoginRecord=rowData.iosLoginRecord;
+            var isAndroidEmpty=false;
+            var isIosEmpty=false;
+            var isAndroidShow={display:'none'};
+            var isIosShow={display:'none'};
+            var iosEmptyInfo;
+            var androidEmptyInfo;
+            if(androidLoginRecord!=undefined){
+                isAndroidEmpty=true;
+                isAndroidShow={display:'block'};
+            }else{
+                androidEmptyInfo='暂无安卓登录信息';
 
-                    <div><span>设备名称:</span><span>{rowData.iosLoginRecord.deviceName}</span></div>
-                    <div><span>设备类型:</span><span>{rowData.iosLoginRecord.machineType}</span></div>
-                    <div><span>地址:</span><span>{rowData.iosLoginRecord.address}</span></div>
-                    <div><span>登录时间:</span><span>{rowData.iosLoginRecord.accessTime}</span></div>
+            }
+            if(iosLoginRecord!=undefined){
+                isIosEmpty=true;
+                isIosShow={display:'block'};
+            }else{
+                iosEmptyInfo='暂无苹果系统登录信息';
+            }
+            return (
+                <div key={rowID} className="exercises_line userinfo_cont">
+                    <div className="my_flex flex_1">
+                        <div className="user_face">
+                            <img src={rowData.user.avatar}></img>
+                        </div>
+                        <div className="flex_auto">
+                            <div className="font_15 user_name">
+                                <span>{rowData.user.userName}</span>
+                                <span>（{rowData.user.colAccount}）</span>
+                            </div>
+                            <div className="font_13 color_6 user_name">{rowData.user.schoolName}</div>
+                        </div>
+                    </div>
+                    <hr className="line"></hr>
+                    <div className="userinfo_info font_14">
+                        <div>{androidEmptyInfo}</div>
+                        <div style={isAndroidShow}>
+                        <div><span className="color_9 userinfo_left">设备名称</span><span className="userinfo_right">{isAndroidEmpty?rowData.androidLoginRecord.deviceName:"暂无数据"}</span></div>
+                        <div><span className="color_9 userinfo_left">设备类型</span><span className="userinfo_right">{isAndroidEmpty?rowData.androidLoginRecord.machineType:"暂无数据"}</span></div>
+                        <div><span className="color_9 userinfo_left">地址</span><span className="userinfo_right">{isAndroidEmpty?rowData.androidLoginRecord.address:""}</span></div>
+                        <div><span className="color_9 userinfo_left">登录时间</span><span className="userinfo_right">{isAndroidEmpty?rowData.androidLoginRecord.accessTime:"暂无数据"}</span></div>
+                        </div>
+                        <div>{iosEmptyInfo}</div>
+                        <div style={isIosShow}>
+                        <div><span className="color_9 userinfo_left">设备名称</span><span className="userinfo_right">{isIosEmpty?rowData.iosLoginRecord.deviceName:"暂无数据"}</span></div>
+                        <div><span className="color_9 userinfo_left">设备类型</span><span className="userinfo_right">{isIosEmpty?rowData.iosLoginRecord.machineType:"暂无数据"}</span></div>
+                        <div><span className="color_9 userinfo_left">地址</span><span className="userinfo_right">{isIosEmpty?rowData.iosLoginRecord.address:"暂无数据"}</span></div>
+                        <div><span className="color_9 userinfo_left">登录时间</span><span className="userinfo_right">{isIosEmpty?rowData.iosLoginRecord.accessTime:"暂无数据"}</span></div>
+                        </div>
+                    </div>
 
                 </div>
             );
@@ -213,14 +251,12 @@ export default class searchUserLocationInfo extends React.Component {
 
         return (
             <div >
-                <WingBlank></WingBlank>
                 <SearchBar placeholder="搜索" maxLength={8}
                            onSubmit={this.getUserLocationInfo}
                            value={searchValue}
                            onChange={_this.handleChange} />
-                <WhiteSpace />
                 <div style={isShowHistoryRecord}>
-                <div className="color_6 color_6_p">搜索历史</div>
+                <div className="color_8 color_6_p">搜索历史</div>
                     {historyRecord}
                 </div>
             <ListView
