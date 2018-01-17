@@ -73,3 +73,6 @@ hr.line:before{
     max-height: 100%;
     max-width: 100%;
 }
+.userinfo_wrap .am-search{
+    background: #eee;
+}
