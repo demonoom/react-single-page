@@ -164,15 +164,15 @@ export default class searchUserLocationInfo extends React.Component {
                     <div><img src={rowData.user.avatar}></img></div>
                     <div>{rowData.user.colAccount}</div>
                     <div>{rowData.user.schoolName}</div>
-                    <div>设备名称:{rowData.androidLoginRecord.deviceName}</div>
-                    <div>设备类型:{rowData.androidLoginRecord.machineType}</div>
-                    <div>地址:{rowData.androidLoginRecord.address}</div>
-                    <div>登录时间:{rowData.androidLoginRecord.accessTime}</div>
+                    <div><span>设备名称:</span><span>{rowData.androidLoginRecord.deviceName}</span></div>
+                    <div><span>设备类型:</span><span>{rowData.androidLoginRecord.machineType}</span></div>
+                    <div><span>地址:</span><span>{rowData.androidLoginRecord.address}</span></div>
+                    <div><span>登录时间:</span><span>{rowData.androidLoginRecord.accessTime}</span></div>
 
-                    <div>设备名称:{rowData.iosLoginRecord.deviceName}</div>
-                    <div>设备类型:{rowData.iosLoginRecord.machineType}</div>
-                    <div>地址:{rowData.iosLoginRecord.address}</div>
-                    <div>登录时间:{rowData.iosLoginRecord.accessTime}</div>
+                    <div><span>设备名称:</span><span>{rowData.iosLoginRecord.deviceName}</span></div>
+                    <div><span>设备类型:</span><span>{rowData.iosLoginRecord.machineType}</span></div>
+                    <div><span>地址:</span><span>{rowData.iosLoginRecord.address}</span></div>
+                    <div><span>登录时间:</span><span>{rowData.iosLoginRecord.accessTime}</span></div>
 
                 </div>
             );
@@ -189,15 +189,18 @@ export default class searchUserLocationInfo extends React.Component {
             />
         );
         //历史记录
-        const historyRecord = (<List>
-            {historyUser.map((i) => {
-                return (<List.Item
+        var historyRecord;
+        if(historyUser!=null&&typeof (historyUser)!=undefined) {
+            historyRecord = (<List>
+                {historyUser.map((i) => {
+                    return (<List.Item
 
-                                   onClick={() => this.scheduleOnClick(i)}
-                                   className="icon_homework_check"
-                >{i}</List.Item>);
-            })}
-        </List>);
+                        onClick={() => this.scheduleOnClick(i)}
+                        className="icon_homework_check"
+                    >{i}</List.Item>);
+                })}
+            </List>);
+        }
 
         return (
             <div >
@@ -208,7 +211,7 @@ export default class searchUserLocationInfo extends React.Component {
                            onChange={_this.handleChange} />
                 <WhiteSpace />
                 <div style={isShowHistoryRecord}>
-                <div>搜索历史</div>
+                <div className="color_6 color_6_p">搜索历史</div>
                     {historyRecord}
                 </div>
             <ListView
