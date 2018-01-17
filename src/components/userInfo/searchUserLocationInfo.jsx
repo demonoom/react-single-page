@@ -208,7 +208,7 @@ export default class searchUserLocationInfo extends React.Component {
                            onChange={_this.handleChange} />
                 <WhiteSpace />
                 <div style={isShowHistoryRecord}>
-                <div>搜索指定内容</div>
+                <div>搜索历史</div>
                     {historyRecord}
                 </div>
             <ListView
