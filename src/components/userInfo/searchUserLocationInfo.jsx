@@ -24,7 +24,7 @@ export default class searchUserLocationInfo extends React.Component {
             defaultPageNoOther: 1,
             historyUserArray:JSON.parse(localStorage.getItem('historyUserArray')),
             isShowHistoryRecord:{display:'none'},
-            isShowUserList:{display:'block'},
+            isShowUserList:'none',
             // clicked: 'none',
             // open: false,
             // tabOnClick: 0,
@@ -96,6 +96,7 @@ export default class searchUserLocationInfo extends React.Component {
     cancelSearch=()=>{
         this.setState({searchValue:""});
         this.setState({isShowHistoryRecord:{display:'block'}});
+        this.setState({isShowUserList:  'none'});
         this.initDataOther.splice(0);
         this.state.dataSourceOther = [];
         this.state.dataSourceOther = new ListView.DataSource({
@@ -124,13 +125,16 @@ export default class searchUserLocationInfo extends React.Component {
         this.setState({historyUserArray:historyUserArray});
         if(searchKeyWords==''||searchKeyWords==undefined){
             this.setState({isShowHistoryRecord: {display: 'block'}});
+            this.setState({isShowUserList:  'none'});
         }else {
             this.setState({isShowHistoryRecord: {display: 'none'}});
+            this.setState({isShowUserList: 'block'});
         }
     }
     clearHistoryRecord=()=>{
         this.setState({historyUserArray:new Array() });
         localStorage.setItem("historyUserArray", null);
+
     }
     /**
      *
@@ -191,8 +195,10 @@ export default class searchUserLocationInfo extends React.Component {
 
 
     render() {
+        var _this = this;
         var historyUserArray = this.state.historyUserArray;
         var isShowHistoryRecord=this.state.isShowHistoryRecord;
+        // var isShowUserList=this.state.isShowUserList;
         var _this = this;
         var searchValue = this.state.searchValue;
         var loadInfo='';
@@ -204,6 +210,12 @@ export default class searchUserLocationInfo extends React.Component {
         }else if(isLoading==2){
             loadInfo='没有更多数据了';
         }
+
+        var listStyle={
+            height: document.body.clientHeight,
+            display:_this.state.isShowUserList,
+        }
+
         //右边每一道题的div(暂时废弃)
         const rowRight = (rowData, sectionID, rowID) => {
             if(!rowData){
@@ -254,20 +266,11 @@ export default class searchUserLocationInfo extends React.Component {
                         <div><span className="color_9 userinfo_left">登录时间</span><span className="userinfo_right">{isAndroidEmpty?rowData.androidLoginRecord.accessTime:"暂无数据"}</span></div>
                         </div>
                         <hr className="line"></hr>
-<<<<<<< HEAD
                             <div className="color_9" style={isIosShow}>
                             <div><span className="color_9 userinfo_left">设备名称</span><span className="userinfo_right">{isIosEmpty?rowData.iosLoginRecord.deviceName:"暂无数据"}</span></div>
                             <div><span className="color_9 userinfo_left">设备类型</span><span className="userinfo_right"><img className="icon_ios" src={require('./icon_ios.png')}/>{isIosEmpty?rowData.iosLoginRecord.machineType:"暂无数据"}</span></div>
                             <div><span className="color_9 userinfo_left">地址</span><span className="userinfo_right">{isIosEmpty?rowData.iosLoginRecord.address:"暂无数据"}</span></div>
                             <div><span className="color_9 userinfo_left">登录时间</span><span className="userinfo_right">{isIosEmpty?rowData.iosLoginRecord.accessTime:"暂无数据"}</span></div>
-=======
-                        <div className="color_9">{iosEmptyInfo}</div>
-                        <div className="color_9" style={isIosShow}>
-                        <div><span className="color_9 userinfo_left">设备名称</span><span className="userinfo_right">{isIosEmpty?rowData.iosLoginRecord.deviceName:"暂无数据"}</span></div>
-                        <div><span className="color_9 userinfo_left">设备类型</span><span className="userinfo_right"><img className="icon_ios" src={require('./icon_ios.png')}/>{isIosEmpty?rowData.iosLoginRecord.machineType:"暂无数据"}</span></div>
-                        <div><span className="color_9 userinfo_left">登录地址</span><span className="userinfo_right">{isIosEmpty?rowData.iosLoginRecord.address:"暂无数据"}</span></div>
-                        <div><span className="color_9 userinfo_left">登录时间</span><span className="userinfo_right">{isIosEmpty?rowData.iosLoginRecord.accessTime:"暂无数据"}</span></div>
->>>>>>> d120de2857ecb083eed659b270b77282ac3a287c
                         </div>
                     </div>
 
@@ -282,6 +285,7 @@ export default class searchUserLocationInfo extends React.Component {
                 className="line_item"
             />
         );
+
         //历史记录
         var historyRecord;
         if(historyUserArray!=null&&typeof (historyUserArray)!=undefined) {
@@ -326,9 +330,7 @@ export default class searchUserLocationInfo extends React.Component {
                 onEndReachedThreshold={10}  //调用onEndReached之前的临界值，单位是像素  number类型
                 initialListSize={30}
                 scrollEventThrottle={20}
-                style={{
-                    height: document.body.clientHeight,
-                }}
+                style={listStyle}
                 // pullToRefresh={<PullToRefresh
                 //     onRefresh={this.onRefreshOther}
                 //     distanceToRefresh={80}
