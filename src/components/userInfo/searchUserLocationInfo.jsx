@@ -4,7 +4,7 @@ import './userinfo.css'
 import {
     ListView,SearchBar, Button, WhiteSpace, WingBlank,List
 } from 'antd-mobile';
-const debug=true;
+const debug=false;
 const mobileUrl = debug?'http://192.168.1.16:9006/Excoord_ApiServer/webservice':'http://www.maaee.com/Excoord_For_Education/webservice';
 export default class searchUserLocationInfo extends React.Component {
     constructor(props) {
@@ -19,7 +19,7 @@ export default class searchUserLocationInfo extends React.Component {
         this.state = {
             userDataSource: userDataSource.cloneWithRows(this.initDataOther),
             searchValue:"",
-            isLoading: true,   //为true显示'加载'  false显示'没有跟多课程'
+            isLoading: 0,   //为true显示'加载'  false显示'没有跟多课程'
             defaultPageNo: 1,
             defaultPageNoOther: 1,
             historyUserArray:JSON.parse(localStorage.getItem('historyUserArray')),
@@ -58,15 +58,15 @@ export default class searchUserLocationInfo extends React.Component {
         // load new data
         // hasMore: from backend data, indicates whether it is the last page, here is false
         //这个if没有成立过
-        if (this.state.isLoading && !this.state.hasMore) {
+        if (this.state.isLoading==1 && !this.state.hasMore) {
             return;
         }
         currentPageNo += 1;
-        this.setState({isLoading: true, defaultPageNoOther: currentPageNo});
+        this.setState({isLoading: 1, defaultPageNoOther: currentPageNo});
         _this.getUserLocationInfo(false);
         this.setState({
             userDataSource: this.state.userDataSource.cloneWithRows(this.initDataOther),
-            isLoading: false,
+            isLoading: 2,
         });
     };
     searchHistoryRecord=(i)=>{
@@ -176,7 +176,7 @@ export default class searchUserLocationInfo extends React.Component {
                 _this.initDataOther = _this.initDataOther.concat(response);
                 _this.setState({
                     userDataSource: _this.state.userDataSource.cloneWithRows(_this.initDataOther),
-                    isLoading: false,
+                    isLoading: 2,
                     refreshing: false
                 })
             });
@@ -188,8 +188,14 @@ export default class searchUserLocationInfo extends React.Component {
         var isShowHistoryRecord=this.state.isShowHistoryRecord;
         var _this = this;
         var searchValue = this.state.searchValue;
-        const search=()=>{
-            return (<div>搜索</div>);
+        var loadInfo='';
+        var isLoading=this.state.isLoading;
+        if(isLoading==0){
+            loadInfo='';
+        }else if(isLoading==1){
+            loadInfo='正在加载';
+        }else if(isLoading==2){
+            loadInfo='没有更多数据了';
         }
         //右边每一道题的div(暂时废弃)
         const rowRight = (rowData, sectionID, rowID) => {
@@ -237,15 +243,24 @@ export default class searchUserLocationInfo extends React.Component {
                         <div className="color_9" style={isAndroidShow}>
                         <div><span className="color_9 userinfo_left">设备名称</span><span className="userinfo_right">{isAndroidEmpty?rowData.androidLoginRecord.deviceName:"暂无数据"}</span></div>
                             <div><span className="color_9 userinfo_left">设备类型</span><span className="userinfo_right"><img className="icon_ios" src={require('./icon_android.png')}/>{isAndroidEmpty?rowData.androidLoginRecord.machineType:"暂无数据"}</span></div>
-                        <div><span className="color_9 userinfo_left">地址</span><span className="userinfo_right">{isAndroidEmpty?rowData.androidLoginRecord.address:""}</span></div>
+                        <div><span className="color_9 userinfo_left">登录地址</span><span className="userinfo_right">{isAndroidEmpty?rowData.androidLoginRecord.address:""}</span></div>
                         <div><span className="color_9 userinfo_left">登录时间</span><span className="userinfo_right">{isAndroidEmpty?rowData.androidLoginRecord.accessTime:"暂无数据"}</span></div>
                         </div>
                         <hr className="line"></hr>
+<<<<<<< HEAD
                             <div className="color_9" style={isIosShow}>
                             <div><span className="color_9 userinfo_left">设备名称</span><span className="userinfo_right">{isIosEmpty?rowData.iosLoginRecord.deviceName:"暂无数据"}</span></div>
                             <div><span className="color_9 userinfo_left">设备类型</span><span className="userinfo_right"><img className="icon_ios" src={require('./icon_ios.png')}/>{isIosEmpty?rowData.iosLoginRecord.machineType:"暂无数据"}</span></div>
                             <div><span className="color_9 userinfo_left">地址</span><span className="userinfo_right">{isIosEmpty?rowData.iosLoginRecord.address:"暂无数据"}</span></div>
                             <div><span className="color_9 userinfo_left">登录时间</span><span className="userinfo_right">{isIosEmpty?rowData.iosLoginRecord.accessTime:"暂无数据"}</span></div>
+=======
+                        <div className="color_9">{iosEmptyInfo}</div>
+                        <div className="color_9" style={isIosShow}>
+                        <div><span className="color_9 userinfo_left">设备名称</span><span className="userinfo_right">{isIosEmpty?rowData.iosLoginRecord.deviceName:"暂无数据"}</span></div>
+                        <div><span className="color_9 userinfo_left">设备类型</span><span className="userinfo_right"><img className="icon_ios" src={require('./icon_ios.png')}/>{isIosEmpty?rowData.iosLoginRecord.machineType:"暂无数据"}</span></div>
+                        <div><span className="color_9 userinfo_left">登录地址</span><span className="userinfo_right">{isIosEmpty?rowData.iosLoginRecord.address:"暂无数据"}</span></div>
+                        <div><span className="color_9 userinfo_left">登录时间</span><span className="userinfo_right">{isIosEmpty?rowData.iosLoginRecord.accessTime:"暂无数据"}</span></div>
+>>>>>>> d120de2857ecb083eed659b270b77282ac3a287c
                         </div>
                     </div>
 
@@ -288,7 +303,7 @@ export default class searchUserLocationInfo extends React.Component {
             <ListView
                 dataSource={this.state.userDataSource}    //数据类型是 ListViewDataSource
                 renderFooter={() => (<div style={{padding: 30, textAlign: 'center'}}>
-                    {this.state.isLoading ? '正在加载' : '没有更多数据了'}
+                    {loadInfo}
                 </div>)}
                 renderRow={rowRight}   //需要的参数包括一行数据等,会返回一个可渲染的组件为这行数据渲染  返回renderable
                 renderSeparator={separator}   //可以不设置的属性  行间距
