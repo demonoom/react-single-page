@@ -4,7 +4,7 @@ import './userinfo.css'
 import {
     ListView,SearchBar, Button, WhiteSpace, WingBlank,List
 } from 'antd-mobile';
-const debug=false;
+const debug=true;
 const mobileUrl = debug?'http://192.168.1.16:9006/Excoord_ApiServer/webservice':'http://www.maaee.com/Excoord_For_Education/webservice';
 export default class searchUserLocationInfo extends React.Component {
     constructor(props) {
@@ -38,6 +38,9 @@ export default class searchUserLocationInfo extends React.Component {
         var historyUserArray = this.state.historyUserArray;
         var isShowHistoryRecord=historyUserArray!=undefined&&historyUserArray.length>0?{display:'block'}:{display:'none'};
         this.setState({isShowHistoryRecord:isShowHistoryRecord});
+        document.title = '搜索查看用户位置信息';
+        Bridge.setShareAble("false");
+        Bridge.setRefreshAble("false");
     }
     //右侧下拉刷新
     onRefreshOther = () => {
@@ -91,6 +94,7 @@ export default class searchUserLocationInfo extends React.Component {
         this.setState({searchValue:value});
     }
     cancelSearch=()=>{
+        this.setState({searchValue:""});
         this.setState({isShowHistoryRecord:{display:'block'}});
         this.initDataOther.splice(0);
         this.state.dataSourceOther = [];
@@ -108,10 +112,12 @@ export default class searchUserLocationInfo extends React.Component {
                 historyUserArray = new Array();
                 historyUserArray.unshift(this.state.searchValue);
             } else {
-                if (historyUserArray.length == 10) {
-                    historyUserArray.pop();
+                if(historyUserArray[0]!=searchKeyWords) {
+                    if (historyUserArray.length == 10) {
+                        historyUserArray.pop();
+                    }
+                    historyUserArray.unshift(this.state.searchValue);
                 }
-                historyUserArray.unshift(this.state.searchValue);
             }
         }
         localStorage.setItem("historyUserArray", JSON.stringify(historyUserArray));
@@ -124,6 +130,7 @@ export default class searchUserLocationInfo extends React.Component {
     }
     clearHistoryRecord=()=>{
         this.setState({historyUserArray:new Array() });
+        localStorage.setItem("historyUserArray", null);
     }
     /**
      *
@@ -287,7 +294,9 @@ export default class searchUserLocationInfo extends React.Component {
                            onSubmit={this.getUserLocationInfo.bind(this,true)}
                            value={searchValue}
                            className="search_top"
+                           onCancel={() => this.cancelSearch()}
                            onChange={_this.handleChange} />
+
                 <div style={isShowHistoryRecord}>
                 <div className="color_9 color_6_p font_14">搜索历史<span className="icon_del" onClick={() => this.clearHistoryRecord()}><img src={require('./icon_del_n.png')}/></span></div>
                     {historyRecord}
