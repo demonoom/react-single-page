@@ -175,15 +175,14 @@ export default class searchUserLocationInfo extends React.Component {
                     </div>
                     <hr className="line"></hr>
                     <div className="userinfo_info font_14">
-                        <div><span className="color_9 userinfo_left">设备名称</span><span className="userinfo_right">{rowData.androidLoginRecord.deviceName}</span></div>
-                        <div><span className="color_9 userinfo_left">设备类型</span><span className="userinfo_right">{rowData.androidLoginRecord.machineType}</span></div>
-                        <div><span className="color_9 userinfo_left">地址</span><span className="userinfo_right">{rowData.androidLoginRecord.address}</span></div>
-                        <div><span className="color_9 userinfo_left">登录时间</span><span className="userinfo_right">{rowData.androidLoginRecord.accessTime}</span></div>
-
-                        <div><span className="color_9 userinfo_left">设备名称</span><span className="userinfo_right">{rowData.iosLoginRecord.deviceName}</span></div>
-                        <div><span className="color_9 userinfo_left">设备类型</span><span className="userinfo_right">{rowData.iosLoginRecord.machineType}</span></div>
-                        <div><span className="color_9 userinfo_left">地址</span><span className="userinfo_right">{rowData.iosLoginRecord.address}</span></div>
-                        <div><span className="color_9 userinfo_left">登录时间</span><span className="userinfo_right">{rowData.iosLoginRecord.accessTime}</span></div>
+                        <div className="my_flex"><span className="color_9 userinfo_left">设备名称</span><span className="userinfo_right flex_1">{rowData.androidLoginRecord.deviceName}</span></div>
+                        <div className="my_flex"><span className="color_9 userinfo_left">设备类型</span><span className="userinfo_right flex_1">{rowData.androidLoginRecord.machineType}</span></div>
+                        <div className="my_flex"><span className="color_9 userinfo_left">地址</span><span className="userinfo_right flex_1">{rowData.androidLoginRecord.address}</span></div>
+                        <div className="my_flex"><span className="color_9 userinfo_left">登录时间</span><span className="userinfo_right flex_1">{rowData.androidLoginRecord.accessTime}</span></div>
+                        <div className="my_flex"><span className="color_9 userinfo_left">设备名称</span><span className="userinfo_right flex_1">{rowData.iosLoginRecord.deviceName}</span></div>
+                        <div className="my_flex"><span className="color_9 userinfo_left">设备类型</span><span className="userinfo_right flex_1">{rowData.iosLoginRecord.machineType}</span></div>
+                        <div className="my_flex"><span className="color_9 userinfo_left">地址</span><span className="userinfo_right flex_1">{rowData.iosLoginRecord.address}</span></div>
+                        <div className="my_flex"><span className="color_9 userinfo_left">登录时间</span><span className="userinfo_right flex_1">{rowData.iosLoginRecord.accessTime}</span></div>
                     </div>
 
                 </div>
