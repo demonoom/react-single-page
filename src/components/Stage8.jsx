@@ -3,7 +3,7 @@ import {PullToRefresh} from 'antd-mobile';
 
 function genData() {
     const dataArr = [];
-    for (let i = 0; i < 20; i++) {
+    for (let i = 0; i < 40; i++) {
         dataArr.push(i);
     }
     return dataArr;
