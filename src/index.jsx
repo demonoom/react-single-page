@@ -9,6 +9,7 @@ import Stage3 from './components/Stage3';
 import Stage4 from './components/Stage4';
 import questionBank from './components/questionBank/questionBank';
 import questionDetil from './components/questionBank/questionDetil';
+import searchUserLocationInfo from './components/userInfo/searchUserLocationInfo'
 import Stage8 from './components/Stage8';
 
 import './index.less';
@@ -25,6 +26,7 @@ class Index extends React.Component {
                     <li><Link to="/s4" style={{fontSize: '24px'}}>蚁巢</Link></li>
                     <li><Link to="/questionBank" style={{fontSize: '24px'}}>题库</Link></li>
                     <li><Link to="/s8" style={{fontSize: '24px'}}>下拉刷新</Link></li>
+                    <li><Link to="/searchUserLocationInfo" style={{fontSize: '24px'}}>搜索查看用户位置信息</Link></li>
                 </ul>
             </div>
         );
@@ -42,6 +44,7 @@ ReactDOM.render(
             <Route path="questionBank" component={questionBank}/>
             <Route path="questionDetil" component={questionDetil}/>
             <Route path="s8" component={Stage8}/>
+            <Route path="searchUserLocationInfo" component={searchUserLocationInfo}/>
         </Route>
     </Router>
     , document.getElementById('example'));
