@@ -24,6 +24,7 @@ export default class searchUserLocationInfo extends React.Component {
             defaultPageNoOther: 1,
             historyUserArray:JSON.parse(localStorage.getItem('historyUserArray')),
             isShowHistoryRecord:{display:'none'},
+            isShowUserList:{display:'block'},
             // clicked: 'none',
             // open: false,
             // tabOnClick: 0,
@@ -40,8 +41,8 @@ export default class searchUserLocationInfo extends React.Component {
     }
     //右侧下拉刷新
     onRefreshOther = () => {
-        this.setState({defaultPageNoOther: 1, refreshing: true});
-        this.getUserLocationInfo(true);
+        // this.setState({defaultPageNoOther: 1, refreshing: true});
+        // this.getUserLocationInfo(true);
     };
 
     parseJSON(response) {
@@ -73,7 +74,7 @@ export default class searchUserLocationInfo extends React.Component {
         this.setState({searchValue:i});
 
         setTimeout(function () {
-            _this.getUserLocationInfo(false);
+            _this.getUserLocationInfo(true);
         },300)
     }
     checkStatus(response) {
@@ -87,34 +88,55 @@ export default class searchUserLocationInfo extends React.Component {
     }
 
     handleChange=(value)=> {
-        this.setState({searchValue:value})
+        this.setState({searchValue:value});
+    }
+    cancelSearch=()=>{
+        this.setState({isShowHistoryRecord:{display:'block'}});
+        this.initDataOther.splice(0);
+        this.state.dataSourceOther = [];
+        this.state.dataSourceOther = new ListView.DataSource({
+            rowHasChanged: (row1, row2) => row1 !== row2,
+        })
     }
     clear = () => {
         this.setState({ value: '' });
     };
-    /**
-     *
-     */
-    getUserLocationInfo=(pullFalg)=> {
-
-        var searchKeyWords=this.state.searchValue;
+    saveHistoryRecord=(searchKeyWords)=>{
         var historyUserArray=JSON.parse(localStorage.getItem('historyUserArray'));
-        if(historyUserArray==undefined||historyUserArray.length==0){
-            historyUserArray=new Array();
-            historyUserArray.unshift(this.state.searchValue);
-        }else{
-            if(historyUserArray.length==10) {
-                historyUserArray.pop();
+        if(searchKeyWords!=""&&searchKeyWords!=undefined) {
+            if (historyUserArray == undefined || historyUserArray.length == 0) {
+                historyUserArray = new Array();
+                historyUserArray.unshift(this.state.searchValue);
+            } else {
+                if (historyUserArray.length == 10) {
+                    historyUserArray.pop();
+                }
+                historyUserArray.unshift(this.state.searchValue);
             }
-            historyUserArray.unshift(this.state.searchValue);
         }
         localStorage.setItem("historyUserArray", JSON.stringify(historyUserArray));
         this.setState({historyUserArray:historyUserArray});
-        this.setState({isShowHistoryRecord:{display:'none'}});
+        if(searchKeyWords==''||searchKeyWords==undefined){
+            this.setState({isShowHistoryRecord: {display: 'block'}});
+        }else {
+            this.setState({isShowHistoryRecord: {display: 'none'}});
+        }
+    }
+    /**
+     *
+     */
+    getUserLocationInfo=(isSearch)=> {
+        var searchKeyWords=this.state.searchValue;
+        this.saveHistoryRecord(searchKeyWords);
         var loginUser = JSON.parse(localStorage.getItem('loginUser'));
         var _this = this;
         const dataBlob = {};
-        var PageNo = this.state.defaultPageNoOther;
+        var PageNo ;
+        if(isSearch){
+            PageNo=1;
+        }else{
+            PageNo = this.state.defaultPageNoOther;
+        }
         var param = {
             "method": 'searchUserLocationInfo',
             "pageNo": PageNo,
@@ -141,10 +163,10 @@ export default class searchUserLocationInfo extends React.Component {
                     topic.checkBoxChecked = false;
                     dataBlob[`${i}`] = topic;
                 }
-                if (pullFalg) {    //拉动刷新  获取数据之后再清除原有数据
+                if (isSearch) {    //拉动刷新  获取数据之后再清除原有数据
                     _this.initDataOther.splice(0);
-                    _this.state.userDataSource = [];
-                    _this.state.userDataSource = new ListView.DataSource({
+                    _this.state.dataSourceOther = [];
+                    _this.state.dataSourceOther = new ListView.DataSource({
                         rowHasChanged: (row1, row2) => row1 !== row2,
                     });
                 }
@@ -168,6 +190,9 @@ export default class searchUserLocationInfo extends React.Component {
         }
         //右边每一道题的div(暂时废弃)
         const rowRight = (rowData, sectionID, rowID) => {
+            if(!rowData){
+                return (<div></div>)
+            }
             var androidLoginRecord=rowData.androidLoginRecord;
             var iosLoginRecord=rowData.iosLoginRecord;
             var isAndroidEmpty=false;
@@ -252,8 +277,9 @@ export default class searchUserLocationInfo extends React.Component {
         return (
             <div >
                 <SearchBar placeholder="搜索" maxLength={8}
-                           onSubmit={this.getUserLocationInfo}
+                           onSubmit={this.getUserLocationInfo.bind(this,true)}
                            value={searchValue}
+
                            onChange={_this.handleChange} />
                 <div style={isShowHistoryRecord}>
                 <div className="color_8 color_6_p">搜索历史</div>
