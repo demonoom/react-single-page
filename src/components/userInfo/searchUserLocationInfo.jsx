@@ -240,6 +240,7 @@ export default class searchUserLocationInfo extends React.Component {
                         <div><span className="color_9 userinfo_left">地址</span><span className="userinfo_right">{isAndroidEmpty?rowData.androidLoginRecord.address:""}</span></div>
                         <div><span className="color_9 userinfo_left">登录时间</span><span className="userinfo_right">{isAndroidEmpty?rowData.androidLoginRecord.accessTime:"暂无数据"}</span></div>
                         </div>
+                        <hr className="line"></hr>
                         <div className="color_9">{iosEmptyInfo}</div>
                         <div className="color_9" style={isIosShow}>
                         <div><span className="color_9 userinfo_left">设备名称</span><span className="userinfo_right">{isIosEmpty?rowData.iosLoginRecord.deviceName:"暂无数据"}</span></div>
