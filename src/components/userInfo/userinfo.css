@@ -1,0 +1,47 @@
+.user_face img{
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    margin-right: 12px;
+}
+.userinfo_cont{
+    padding: 15px;
+}
+.userinfo_info{
+    line-height: 34px;
+}
+.userinfo_left{
+    width: 60px;
+    display: inline-block;
+    text-align: right;
+}
+.userinfo_right{
+    color: #333;
+    margin-left: 10px;
+}
+.user_name{
+    padding:3px 0;
+}
+hr.line{
+    height: 1px;
+    margin: 10px 0;
+    border: none;
+    width:100%;
+    position:relative;
+}
+hr.line:before{
+    content: "";
+    pointer-events: none;
+    box-sizing: border-box;
+    border: none;
+    border-top: 1px solid #e5e5e5;
+    height: 1px;
+    transform: scaleY(0.5);
+    transform-origin: 0 0;
+    -webkit-transform: scaleY(0.5);
+    -webkit-transform-origin: 0 0;
+    position: absolute;
+    width: 100%;
+    top: 0;
+    left:0;
+}

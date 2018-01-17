@@ -1,5 +1,6 @@
 import React from 'react';
 import fetch from 'dva/fetch'
+import './userinfo.css'
 import {
     ListView,SearchBar, Button, WhiteSpace, WingBlank,List
 } from 'antd-mobile';
@@ -159,20 +160,31 @@ export default class searchUserLocationInfo extends React.Component {
         //右边每一道题的div(暂时废弃)
         const rowRight = (rowData, sectionID, rowID) => {
             return (
-                <div key={rowID} className="exercises_line">
-                    <div>{rowData.user.userName}</div>
-                    <div><img src={rowData.user.avatar}></img></div>
-                    <div>{rowData.user.colAccount}</div>
-                    <div>{rowData.user.schoolName}</div>
-                    <div><span>设备名称:</span><span>{rowData.androidLoginRecord.deviceName}</span></div>
-                    <div><span>设备类型:</span><span>{rowData.androidLoginRecord.machineType}</span></div>
-                    <div><span>地址:</span><span>{rowData.androidLoginRecord.address}</span></div>
-                    <div><span>登录时间:</span><span>{rowData.androidLoginRecord.accessTime}</span></div>
+                <div key={rowID} className="exercises_line userinfo_cont">
+                    <div className="my_flex flex_1">
+                        <div className="user_face">
+                            <img src={rowData.user.avatar}></img>
+                        </div>
+                        <div className="flex_auto">
+                            <div className="font_15 user_name">
+                                <span>{rowData.user.userName}</span>
+                                <span>（{rowData.user.colAccount}）</span>
+                            </div>
+                            <div className="font_13 color_6 user_name">{rowData.user.schoolName}</div>
+                        </div>
+                    </div>
+                    <hr className="line"></hr>
+                    <div className="userinfo_info font_14">
+                        <div><span className="color_9 userinfo_left">设备名称</span><span className="userinfo_right">{rowData.androidLoginRecord.deviceName}</span></div>
+                        <div><span className="color_9 userinfo_left">设备类型</span><span className="userinfo_right">{rowData.androidLoginRecord.machineType}</span></div>
+                        <div><span className="color_9 userinfo_left">地址</span><span className="userinfo_right">{rowData.androidLoginRecord.address}</span></div>
+                        <div><span className="color_9 userinfo_left">登录时间</span><span className="userinfo_right">{rowData.androidLoginRecord.accessTime}</span></div>
 
-                    <div><span>设备名称:</span><span>{rowData.iosLoginRecord.deviceName}</span></div>
-                    <div><span>设备类型:</span><span>{rowData.iosLoginRecord.machineType}</span></div>
-                    <div><span>地址:</span><span>{rowData.iosLoginRecord.address}</span></div>
-                    <div><span>登录时间:</span><span>{rowData.iosLoginRecord.accessTime}</span></div>
+                        <div><span className="color_9 userinfo_left">设备名称</span><span className="userinfo_right">{rowData.iosLoginRecord.deviceName}</span></div>
+                        <div><span className="color_9 userinfo_left">设备类型</span><span className="userinfo_right">{rowData.iosLoginRecord.machineType}</span></div>
+                        <div><span className="color_9 userinfo_left">地址</span><span className="userinfo_right">{rowData.iosLoginRecord.address}</span></div>
+                        <div><span className="color_9 userinfo_left">登录时间</span><span className="userinfo_right">{rowData.iosLoginRecord.accessTime}</span></div>
+                    </div>
 
                 </div>
             );
@@ -204,14 +216,11 @@ export default class searchUserLocationInfo extends React.Component {
 
         return (
             <div >
-
-                <WingBlank></WingBlank>
                 <SearchBar placeholder="搜索" maxLength={8}
                            onSubmit={this.getUserLocationInfo}
                            onChange={_this.handleChange} />
-                <WhiteSpace />
                 <div style={isShowHistoryRecord}>
-                <div className="color_6 color_6_p">搜索历史</div>
+                <div className="color_8 color_6_p">搜索历史</div>
                     {historyRecord}
                 </div>
             <ListView
