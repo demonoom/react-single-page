@@ -21,7 +21,7 @@ export default class searchUserLocationInfo extends React.Component {
             isLoading: true,   //为true显示'加载'  false显示'没有跟多课程'
             defaultPageNo: 1,
             defaultPageNoOther: 1,
-            historyUser:JSON.parse(localStorage.getItem('historyUser')),
+            historyUserArray:JSON.parse(localStorage.getItem('historyUserArray')),
             isShowHistoryRecord:{display:'none'},
             // clicked: 'none',
             // open: false,
@@ -33,8 +33,8 @@ export default class searchUserLocationInfo extends React.Component {
 
     }
     componentDidMount() {
-        var historyUser = this.state.historyUser;
-        var isShowHistoryRecord=historyUser!=undefined&&historyUser.length>0?{display:'block'}:{display:'none'};
+        var historyUserArray = this.state.historyUserArray;
+        var isShowHistoryRecord=historyUserArray!=undefined&&historyUserArray.length>0?{display:'block'}:{display:'none'};
         this.setState({isShowHistoryRecord:isShowHistoryRecord});
     }
     //右侧下拉刷新
@@ -67,7 +67,14 @@ export default class searchUserLocationInfo extends React.Component {
             isLoading: false,
         });
     };
+    searchHistoryRecord=(i)=>{
+        var _this = this;
+        this.setState({searchValue:i});
 
+        setTimeout(function () {
+            _this.getUserLocationInfo(false);
+        },300)
+    }
     checkStatus(response) {
         if (response.status >= 200 && response.status < 300) {
             return response;
@@ -88,18 +95,20 @@ export default class searchUserLocationInfo extends React.Component {
      *
      */
     getUserLocationInfo=(pullFalg)=> {
-        var historyUser=JSON.parse(localStorage.getItem('historyUser'));
-        if(historyUser==undefined||historyUser.length==0){
-            historyUser=new Array();
-            historyUser.unshift(this.state.searchValue);
+
+        var searchKeyWords=this.state.searchValue;
+        var historyUserArray=JSON.parse(localStorage.getItem('historyUserArray'));
+        if(historyUserArray==undefined||historyUserArray.length==0){
+            historyUserArray=new Array();
+            historyUserArray.unshift(this.state.searchValue);
         }else{
-            if(historyUser.length==10) {
-                historyUser.pop();
+            if(historyUserArray.length==10) {
+                historyUserArray.pop();
             }
-            historyUser.unshift(this.state.searchValue);
+            historyUserArray.unshift(this.state.searchValue);
         }
-        localStorage.setItem("historyUser", JSON.stringify(historyUser));
-        this.setState({historyUser:historyUser});
+        localStorage.setItem("historyUserArray", JSON.stringify(historyUserArray));
+        this.setState({historyUserArray:historyUserArray});
         this.setState({isShowHistoryRecord:{display:'none'}});
         var loginUser = JSON.parse(localStorage.getItem('loginUser'));
         var _this = this;
@@ -109,7 +118,7 @@ export default class searchUserLocationInfo extends React.Component {
             "method": 'searchUserLocationInfo',
             "pageNo": PageNo,
             "userId": '',
-            "searchKeyWords": this.state.searchValue,
+            "searchKeyWords":searchKeyWords ,
         };
 
         var requestParams = encodeURI("params=" + JSON.stringify(param));
@@ -149,7 +158,7 @@ export default class searchUserLocationInfo extends React.Component {
 
 
     render() {
-        var historyUser = this.state.historyUser;
+        var historyUserArray = this.state.historyUserArray;
         var isShowHistoryRecord=this.state.isShowHistoryRecord;
         var _this = this;
         var searchValue = this.state.searchValue;
@@ -190,12 +199,12 @@ export default class searchUserLocationInfo extends React.Component {
         );
         //历史记录
         var historyRecord;
-        if(historyUser!=null&&typeof (historyUser)!=undefined) {
+        if(historyUserArray!=null&&typeof (historyUserArray)!=undefined) {
             historyRecord = (<List>
-                {historyUser.map((i) => {
+                {historyUserArray.map((i) => {
                     return (<List.Item
 
-                        onClick={() => this.scheduleOnClick(i)}
+                        onClick={() => this.searchHistoryRecord(i)}
                         className="icon_homework_check"
                     >{i}</List.Item>);
                 })}
@@ -204,10 +213,10 @@ export default class searchUserLocationInfo extends React.Component {
 
         return (
             <div >
-
                 <WingBlank></WingBlank>
                 <SearchBar placeholder="搜索" maxLength={8}
                            onSubmit={this.getUserLocationInfo}
+                           value={searchValue}
                            onChange={_this.handleChange} />
                 <WhiteSpace />
                 <div style={isShowHistoryRecord}>
