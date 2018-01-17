@@ -24,7 +24,7 @@ export default class searchUserLocationInfo extends React.Component {
             defaultPageNoOther: 1,
             historyUserArray:JSON.parse(localStorage.getItem('historyUserArray')),
             isShowHistoryRecord:{display:'none'},
-            isShowUserList:{display:'block'},
+            isShowUserList:'none',
             // clicked: 'none',
             // open: false,
             // tabOnClick: 0,
@@ -38,6 +38,9 @@ export default class searchUserLocationInfo extends React.Component {
         var historyUserArray = this.state.historyUserArray;
         var isShowHistoryRecord=historyUserArray!=undefined&&historyUserArray.length>0?{display:'block'}:{display:'none'};
         this.setState({isShowHistoryRecord:isShowHistoryRecord});
+        document.title = '搜索查看用户位置信息';
+        Bridge.setShareAble("false");
+        Bridge.setRefreshAble("false");
     }
     //右侧下拉刷新
     onRefreshOther = () => {
@@ -91,7 +94,9 @@ export default class searchUserLocationInfo extends React.Component {
         this.setState({searchValue:value});
     }
     cancelSearch=()=>{
+        this.setState({searchValue:""});
         this.setState({isShowHistoryRecord:{display:'block'}});
+        this.setState({isShowUserList:  'none'});
         this.initDataOther.splice(0);
         this.state.dataSourceOther = [];
         this.state.dataSourceOther = new ListView.DataSource({
@@ -108,22 +113,28 @@ export default class searchUserLocationInfo extends React.Component {
                 historyUserArray = new Array();
                 historyUserArray.unshift(this.state.searchValue);
             } else {
-                if (historyUserArray.length == 10) {
-                    historyUserArray.pop();
+                if(historyUserArray[0]!=searchKeyWords) {
+                    if (historyUserArray.length == 10) {
+                        historyUserArray.pop();
+                    }
+                    historyUserArray.unshift(this.state.searchValue);
                 }
-                historyUserArray.unshift(this.state.searchValue);
             }
         }
         localStorage.setItem("historyUserArray", JSON.stringify(historyUserArray));
         this.setState({historyUserArray:historyUserArray});
         if(searchKeyWords==''||searchKeyWords==undefined){
             this.setState({isShowHistoryRecord: {display: 'block'}});
+            this.setState({isShowUserList:  'none'});
         }else {
             this.setState({isShowHistoryRecord: {display: 'none'}});
+            this.setState({isShowUserList: 'block'});
         }
     }
     clearHistoryRecord=()=>{
         this.setState({historyUserArray:new Array() });
+        localStorage.setItem("historyUserArray", null);
+
     }
     /**
      *
@@ -184,13 +195,21 @@ export default class searchUserLocationInfo extends React.Component {
 
 
     render() {
+        var _this = this;
         var historyUserArray = this.state.historyUserArray;
         var isShowHistoryRecord=this.state.isShowHistoryRecord;
+        // var isShowUserList=this.state.isShowUserList;
         var _this = this;
         var searchValue = this.state.searchValue;
         const search=()=>{
             return (<div>搜索</div>);
         }
+
+        var listStyle={
+            height: document.body.clientHeight,
+            display:_this.state.isShowUserList,
+        }
+
         //右边每一道题的div(暂时废弃)
         const rowRight = (rowData, sectionID, rowID) => {
             if(!rowData){
@@ -260,6 +279,7 @@ export default class searchUserLocationInfo extends React.Component {
                 className="line_item"
             />
         );
+
         //历史记录
         var historyRecord;
         if(historyUserArray!=null&&typeof (historyUserArray)!=undefined) {
@@ -280,7 +300,9 @@ export default class searchUserLocationInfo extends React.Component {
                            onSubmit={this.getUserLocationInfo.bind(this,true)}
                            value={searchValue}
                            className="search_top"
+                           onCancel={() => this.cancelSearch()}
                            onChange={_this.handleChange} />
+
                 <div style={isShowHistoryRecord}>
                 <div className="color_9 color_6_p font_14">搜索历史<span className="icon_del" onClick={() => this.clearHistoryRecord()}><img src={require('./icon_del_n.png')}/></span></div>
                     {historyRecord}
@@ -302,9 +324,7 @@ export default class searchUserLocationInfo extends React.Component {
                 onEndReachedThreshold={10}  //调用onEndReached之前的临界值，单位是像素  number类型
                 initialListSize={30}
                 scrollEventThrottle={20}
-                style={{
-                    height: document.body.clientHeight,
-                }}
+                style={listStyle}
                 // pullToRefresh={<PullToRefresh
                 //     onRefresh={this.onRefreshOther}
                 //     distanceToRefresh={80}
