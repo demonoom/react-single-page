@@ -4,7 +4,7 @@ import './userinfo.css'
 import {
     ListView,SearchBar, Button, WhiteSpace, WingBlank,List
 } from 'antd-mobile';
-const debug=true;
+const debug=false;
 const mobileUrl = debug?'http://192.168.1.16:9006/Excoord_ApiServer/webservice':'http://www.maaee.com/Excoord_For_Education/webservice';
 export default class searchUserLocationInfo extends React.Component {
     constructor(props) {
