@@ -205,15 +205,15 @@ export default class searchUserLocationInfo extends React.Component {
                     </div>
                     <hr className="line"></hr>
                     <div className="userinfo_info font_14">
-                        <div>{androidEmptyInfo}</div>
-                        <div style={isAndroidShow}>
+                        <div className="color_9">{androidEmptyInfo}</div>
+                        <div className="color_9" style={isAndroidShow}>
                         <div><span className="color_9 userinfo_left">设备名称</span><span className="userinfo_right">{isAndroidEmpty?rowData.androidLoginRecord.deviceName:"暂无数据"}</span></div>
-                        <div><span className="color_9 userinfo_left">设备类型</span><span className="userinfo_right">{isAndroidEmpty?rowData.androidLoginRecord.machineType:"暂无数据"}</span></div>
+                            <div><span className="color_9 userinfo_left">设备类型</span><span className="userinfo_right"><img className="icon_ios" src={require('./icon_android.png')}/>{isAndroidEmpty?rowData.androidLoginRecord.machineType:"暂无数据"}</span></div>
                         <div><span className="color_9 userinfo_left">地址</span><span className="userinfo_right">{isAndroidEmpty?rowData.androidLoginRecord.address:""}</span></div>
                         <div><span className="color_9 userinfo_left">登录时间</span><span className="userinfo_right">{isAndroidEmpty?rowData.androidLoginRecord.accessTime:"暂无数据"}</span></div>
                         </div>
-                        <div>{iosEmptyInfo}</div>
-                        <div style={isIosShow}>
+                        <div className="color_9">{iosEmptyInfo}</div>
+                        <div className="color_9" style={isIosShow}>
                         <div><span className="color_9 userinfo_left">设备名称</span><span className="userinfo_right">{isIosEmpty?rowData.iosLoginRecord.deviceName:"暂无数据"}</span></div>
                         <div><span className="color_9 userinfo_left">设备类型</span><span className="userinfo_right">{isIosEmpty?rowData.iosLoginRecord.machineType:"暂无数据"}</span></div>
                         <div><span className="color_9 userinfo_left">地址</span><span className="userinfo_right">{isIosEmpty?rowData.iosLoginRecord.address:"暂无数据"}</span></div>
@@ -229,10 +229,7 @@ export default class searchUserLocationInfo extends React.Component {
         const separator = (sectionID, rowID) => (
             <div
                 key={`${sectionID}-${rowID}`}
-                style={{
-                    height: 1,
-                    borderTop: '1px solid #ECECED',
-                }}
+                className="line_item"
             />
         );
         //历史记录
@@ -243,20 +240,21 @@ export default class searchUserLocationInfo extends React.Component {
                     return (<List.Item
 
                         onClick={() => this.searchHistoryRecord(i)}
-                        className="icon_homework_check"
+                        className="search_list_item"
                     >{i}</List.Item>);
                 })}
             </List>);
         }
 
         return (
-            <div >
+            <div className="userinfo_wrap">
                 <SearchBar placeholder="搜索" maxLength={8}
                            onSubmit={this.getUserLocationInfo}
                            value={searchValue}
+                           className="search_top"
                            onChange={_this.handleChange} />
                 <div style={isShowHistoryRecord}>
-                <div className="color_8 color_6_p">搜索历史</div>
+                <div className="color_9 color_6_p font_14">搜索历史<span className="icon_del"><img src={require('./icon_del_n.png')}/></span></div>
                     {historyRecord}
                 </div>
             <ListView

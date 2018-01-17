@@ -45,3 +45,31 @@ hr.line:before{
     top: 0;
     left:0;
 }
+.icon_ios{
+    width: 24px;
+    height: 24px;
+    vertical-align: text-bottom;
+}
+.search_top .am-search-cancel{
+    color:#F46A55
+}
+.search_list_item .am-list-line .am-list-content{
+    text-indent: 20px;
+    font-size: 14px !important;
+    color: #333 !important;
+}
+.userinfo_wrap .am-list-body::before, .userinfo_wrap .am-list-body div:not(:last-child) .am-list-line::after, .userinfo_wrap .am-list-body::after{
+    background-color: #fff !important;
+}
+.icon_del{
+    width: 14px;
+    height: 14px;
+    float: right;
+    cursor: pointer;
+    margin-right: 15px;
+    margin-top: 1px;
+}
+.icon_del img{
+    max-height: 100%;
+    max-width: 100%;
+}
