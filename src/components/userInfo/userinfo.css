@@ -76,3 +76,6 @@ hr.line:before{
 .userinfo_wrap .am-search{
     background: #eee;
 }
+.user_height{
+    height: 100%;
+}
