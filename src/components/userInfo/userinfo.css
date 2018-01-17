@@ -12,6 +12,7 @@
 }
 .userinfo_left{
     width: 60px;
+    min-width: 60px;
     display: inline-block;
     text-align: right;
 }
