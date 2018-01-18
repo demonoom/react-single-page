@@ -450,7 +450,7 @@ export default class resultAnalysis extends React.Component {
         var clazzes = data.clazzes;   //班级排名
         var clazzesArr = [];
         clazzes.forEach(function (v, i) {
-            var liClass = <li onClick={_this.turnToClassRel.bind(this, v.clazzId)}><b>{v.order}</b>{v.clazzName}</li>
+            var liClass = <li onClick={_this.turnToClassRel.bind(this, v.clazzId)}><b>{v.order}</b>{v.clazzName+'班'}</li>
             clazzesArr.push(liClass);
         });
 
@@ -485,7 +485,7 @@ export default class resultAnalysis extends React.Component {
                     <div className="font_20 color">{v.score}</div>
                     <div>{v.str}</div>
                 </div>
-            </Flex.Item>
+            </Flex.Item>;
             topDataArr.push(flex);
         });
 
@@ -498,7 +498,7 @@ export default class resultAnalysis extends React.Component {
                     <td>{(v.hitRate * 100).toFixed(1) + '%'}</td>
                     <td>{v.hitPeopleCount}</td>
                     <td>{v.missPeopleCount}</td>
-                </tr>
+                </tr>;
                 tableArr.push(tb);
             });
         }
