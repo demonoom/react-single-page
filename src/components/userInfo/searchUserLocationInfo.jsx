@@ -266,18 +266,18 @@ export default class searchUserLocationInfo extends React.Component {
                             <div className="color_9 font_12 user_name">{iosEmptyInfo}</div>
                         </div>
                     </div>
-                    <div className="userinfo_info font_14">
-                        <div className="color_9 user_info_line" style={isAndroidShow}>
-                            <div className="my_flex"><span className="color_9 userinfo_left">设备名称</span><span className="userinfo_right flex_auto">{isAndroidEmpty?rowData.androidLoginRecord.deviceName:"暂无数据"}</span></div>
-                            <div className="my_flex"><span className="color_9 userinfo_left">设备类型</span><span className="userinfo_right flex_auto"><img className="icon_ios" src={require('./icon_android.png')}/>{isAndroidEmpty?rowData.androidLoginRecord.machineType:"暂无数据"}</span></div>
-                            <div className="my_flex"><span className="color_9 userinfo_left">登录地址</span><span className="userinfo_right flex_auto">{isAndroidEmpty?rowData.androidLoginRecord.address:""}</span></div>
-                            <div className="my_flex user_bottom"><span className="color_9 userinfo_left">登录时间</span><span className="userinfo_right flex_auto">{isAndroidEmpty?rowData.androidLoginRecord.accessTime:"暂无数据"}</span></div>
+                    <div className="font_14">
+                        <div className="color_9" style={isAndroidShow}>
+                            <div className="my_flex padding_8"><span className="color_9 userinfo_left">设备名称</span><span className="userinfo_right flex_auto">{isAndroidEmpty?rowData.androidLoginRecord.deviceName:"暂无数据"}</span></div>
+                            <div className="my_flex padding_8"><span className="color_9 userinfo_left">设备类型</span><span className="userinfo_right flex_auto"><img className="icon_ios" src={require('./icon_android.png')}/>{isAndroidEmpty?rowData.androidLoginRecord.machineType:"暂无数据"}</span></div>
+                            <div className="my_flex padding_8"><span className="color_9 userinfo_left">登录地址</span><span className="userinfo_right flex_auto">{isAndroidEmpty?rowData.androidLoginRecord.address:""}</span></div>
+                            <div className="my_flex padding_8"><span className="color_9 userinfo_left">登录时间</span><span className="userinfo_right flex_auto">{isAndroidEmpty?rowData.androidLoginRecord.accessTime:"暂无数据"}</span></div>
                         </div>
-                            <div className="color_9" style={isIosShow}>
-                            <div className="my_flex"><span className="color_9 userinfo_left">设备名称</span><span className="userinfo_right flex_auto">{isIosEmpty?rowData.iosLoginRecord.deviceName:"暂无数据"}</span></div>
-                            <div className="my_flex"><span className="color_9 userinfo_left">设备类型</span><span className="userinfo_right flex_auto"><img className="icon_ios" src={require('./icon_ios.png')}/>{isIosEmpty?rowData.iosLoginRecord.machineType:"暂无数据"}</span></div>
-                            <div className="my_flex"><span className="color_9 userinfo_left">登录地址</span><span className="userinfo_right flex_auto">{isIosEmpty?rowData.iosLoginRecord.address:"暂无数据"}</span></div>
-                            <div className="my_flex"><span className="color_9 userinfo_left">登录时间</span><span className="userinfo_right flex_auto">{isIosEmpty?rowData.iosLoginRecord.accessTime:"暂无数据"}</span></div>
+                            <div className="color_9 user_info_line" style={isIosShow}>
+                            <div className="my_flex padding_8 user_bottom"><span className="color_9 userinfo_left">设备名称</span><span className="userinfo_right flex_auto">{isIosEmpty?rowData.iosLoginRecord.deviceName:"暂无数据"}</span></div>
+                            <div className="my_flex padding_8"><span className="color_9 userinfo_left">设备类型</span><span className="userinfo_right flex_auto"><img className="icon_ios" src={require('./icon_ios.png')}/>{isIosEmpty?rowData.iosLoginRecord.machineType:"暂无数据"}</span></div>
+                            <div className="my_flex padding_8"><span className="color_9 userinfo_left">登录地址</span><span className="userinfo_right flex_auto">{isIosEmpty?rowData.iosLoginRecord.address:"暂无数据"}</span></div>
+                            <div className="my_flex padding_8"><span className="color_9 userinfo_left">登录时间</span><span className="userinfo_right flex_auto">{isIosEmpty?rowData.iosLoginRecord.accessTime:"暂无数据"}</span></div>
                         </div>
                     </div>
 
@@ -323,7 +323,7 @@ export default class searchUserLocationInfo extends React.Component {
             <ListView
                 ref={el => this.lv = el}
                 dataSource={this.state.userDataSource}    //数据类型是 ListViewDataSource
-                renderFooter={() => (<div style={{padding: 30, textAlign: 'center'}}>
+                renderFooter={() => (<div style={{paddingTop: 5, paddingBottom:40, textAlign: 'center'}}>
                     {this.state.isLoading ? '正在加载' : '没有更多数据了'}
                 </div>)}
                 renderRow={rowRight}   //需要的参数包括一行数据等,会返回一个可渲染的组件为这行数据渲染  返回renderable
