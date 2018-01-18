@@ -26,6 +26,7 @@ export default class searchUserLocationInfo extends React.Component {
             isShowHistoryRecord:{display:'none'},
             isShowUserList:'none',
             isShowEmptyImg:'none',
+            clientHeight:document.body.clientHeight,
             // clicked: 'none',
             // open: false,
             // tabOnClick: 0,
@@ -36,6 +37,8 @@ export default class searchUserLocationInfo extends React.Component {
 
     }
     componentDidMount() {
+
+        this.setState({clientHeight:document.body.clientHeight});
         var historyUserArray = this.state.historyUserArray;
         var isShowHistoryRecord=historyUserArray!=undefined&&historyUserArray.length>0?{display:'block'}:{display:'none'};
         this.setState({isShowHistoryRecord:isShowHistoryRecord});
@@ -197,14 +200,11 @@ export default class searchUserLocationInfo extends React.Component {
                     dataBlob[`${i}`] = topic;
                 }
                 if (isSearch) {    //拉动刷新  获取数据之后再清除原有数据
-                    setTimeout(function () {
                         _this.initDataOther.splice(0);
                         _this.state.dataSourceOther = [];
                         _this.state.dataSourceOther = new ListView.DataSource({
                             rowHasChanged: (row1, row2) => row1 !== row2,
                         });
-                    },300)
-
                 }
                 var isLoading=false;
                 if(response.length>0){
@@ -239,7 +239,7 @@ export default class searchUserLocationInfo extends React.Component {
         }
 
         var listStyle={
-            height: document.body.clientHeight,
+            height: _this.state.clientHeight,
             display:_this.state.isShowUserList,
         }
 
