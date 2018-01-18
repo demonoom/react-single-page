@@ -61,7 +61,7 @@ export default class searchUserLocationInfo extends React.Component {
         // load new data
         // hasMore: from backend data, indicates whether it is the last page, here is false
         //这个if没有成立过
-        if (this.state.isLoading && !this.state.hasMore) {
+        if (!this.state.isLoading && !this.state.hasMore) {
             return;
         }
         currentPageNo += 1;
@@ -69,7 +69,7 @@ export default class searchUserLocationInfo extends React.Component {
         _this.getUserLocationInfo(false);
         this.setState({
             userDataSource: this.state.userDataSource.cloneWithRows(this.initDataOther),
-            isLoading: false,
+            isLoading: true,
         });
     };
     searchHistoryRecord=(i)=>{
@@ -148,6 +148,8 @@ export default class searchUserLocationInfo extends React.Component {
         var PageNo ;
         if(isSearch){
             PageNo=1;
+            setTimeout(() => this.lv.scrollTo(0, 0), 300);
+            this.setState({defaultPageNoOther: 1});
         }else{
             PageNo = this.state.defaultPageNoOther;
         }
@@ -172,6 +174,7 @@ export default class searchUserLocationInfo extends React.Component {
             .catch(err => ({err}))
             .then(function (result) {
                 var response = result.data.response;
+                var pager = result.data.pager;
                 for (let i = 0; i < response.length; i++) {
                     var topic = response[i];
                     topic.checkBoxChecked = false;
@@ -184,10 +187,20 @@ export default class searchUserLocationInfo extends React.Component {
                         rowHasChanged: (row1, row2) => row1 !== row2,
                     });
                 }
+                var isLoading=false;
+                if(response.length>0){
+                    if(pager.pageCount==1&&pager.rsCount<30){
+                        isLoading=false;
+                    }else {
+                        isLoading = true;
+                    }
+                }else{
+                    isLoading=false;
+                }
                 _this.initDataOther = _this.initDataOther.concat(response);
                 _this.setState({
                     userDataSource: _this.state.userDataSource.cloneWithRows(_this.initDataOther),
-                    isLoading: false,
+                    isLoading: isLoading,
                     refreshing: false
                 })
             });
@@ -253,18 +266,18 @@ export default class searchUserLocationInfo extends React.Component {
                             <div className="color_9 font_12 user_name">{iosEmptyInfo}</div>
                         </div>
                     </div>
-                    <div className="userinfo_info font_14">
-                        <div className="color_9 user_info_line" style={isAndroidShow}>
-                            <div className="my_flex"><span className="color_9 userinfo_left">设备名称</span><span className="userinfo_right flex_auto">{isAndroidEmpty?rowData.androidLoginRecord.deviceName:"暂无数据"}</span></div>
-                            <div className="my_flex"><span className="color_9 userinfo_left">设备类型</span><span className="userinfo_right flex_auto"><img className="icon_ios" src={require('./icon_android.png')}/>{isAndroidEmpty?rowData.androidLoginRecord.machineType:"暂无数据"}</span></div>
-                            <div className="my_flex"><span className="color_9 userinfo_left">登录地址</span><span className="userinfo_right flex_auto">{isAndroidEmpty?rowData.androidLoginRecord.address:""}</span></div>
-                            <div className="my_flex user_bottom"><span className="color_9 userinfo_left">登录时间</span><span className="userinfo_right flex_auto">{isAndroidEmpty?rowData.androidLoginRecord.accessTime:"暂无数据"}</span></div>
+                    <div className="font_14">
+                        <div className="color_9" style={isAndroidShow}>
+                            <div className="my_flex padding_8"><span className="color_9 userinfo_left">设备名称</span><span className="userinfo_right flex_auto">{isAndroidEmpty?rowData.androidLoginRecord.deviceName:"暂无数据"}</span></div>
+                            <div className="my_flex padding_8"><span className="color_9 userinfo_left">设备类型</span><span className="userinfo_right flex_auto"><img className="icon_ios" src={require('./icon_android.png')}/>{isAndroidEmpty?rowData.androidLoginRecord.machineType:"暂无数据"}</span></div>
+                            <div className="my_flex padding_8"><span className="color_9 userinfo_left">登录地址</span><span className="userinfo_right flex_auto">{isAndroidEmpty?rowData.androidLoginRecord.address:""}</span></div>
+                            <div className="my_flex padding_8"><span className="color_9 userinfo_left">登录时间</span><span className="userinfo_right flex_auto">{isAndroidEmpty?rowData.androidLoginRecord.accessTime:"暂无数据"}</span></div>
                         </div>
-                            <div className="color_9" style={isIosShow}>
-                            <div className="my_flex"><span className="color_9 userinfo_left">设备名称</span><span className="userinfo_right flex_auto">{isIosEmpty?rowData.iosLoginRecord.deviceName:"暂无数据"}</span></div>
-                            <div className="my_flex"><span className="color_9 userinfo_left">设备类型</span><span className="userinfo_right flex_auto"><img className="icon_ios" src={require('./icon_ios.png')}/>{isIosEmpty?rowData.iosLoginRecord.machineType:"暂无数据"}</span></div>
-                            <div className="my_flex"><span className="color_9 userinfo_left">登录地址</span><span className="userinfo_right flex_auto">{isIosEmpty?rowData.iosLoginRecord.address:"暂无数据"}</span></div>
-                            <div className="my_flex"><span className="color_9 userinfo_left">登录时间</span><span className="userinfo_right flex_auto">{isIosEmpty?rowData.iosLoginRecord.accessTime:"暂无数据"}</span></div>
+                            <div className="color_9 user_info_line" style={isIosShow}>
+                            <div className="my_flex padding_8 user_bottom"><span className="color_9 userinfo_left">设备名称</span><span className="userinfo_right flex_auto">{isIosEmpty?rowData.iosLoginRecord.deviceName:"暂无数据"}</span></div>
+                            <div className="my_flex padding_8"><span className="color_9 userinfo_left">设备类型</span><span className="userinfo_right flex_auto"><img className="icon_ios" src={require('./icon_ios.png')}/>{isIosEmpty?rowData.iosLoginRecord.machineType:"暂无数据"}</span></div>
+                            <div className="my_flex padding_8"><span className="color_9 userinfo_left">登录地址</span><span className="userinfo_right flex_auto">{isIosEmpty?rowData.iosLoginRecord.address:"暂无数据"}</span></div>
+                            <div className="my_flex padding_8"><span className="color_9 userinfo_left">登录时间</span><span className="userinfo_right flex_auto">{isIosEmpty?rowData.iosLoginRecord.accessTime:"暂无数据"}</span></div>
                         </div>
                     </div>
 
@@ -308,14 +321,15 @@ export default class searchUserLocationInfo extends React.Component {
                     {historyRecord}
                 </div>
             <ListView
+                ref={el => this.lv = el}
                 dataSource={this.state.userDataSource}    //数据类型是 ListViewDataSource
-                renderFooter={() => (<div style={{padding: 30, textAlign: 'center'}}>
+                renderFooter={() => (<div style={{paddingTop: 5, paddingBottom:40, textAlign: 'center'}}>
                     {this.state.isLoading ? '正在加载' : '没有更多数据了'}
                 </div>)}
                 renderRow={rowRight}   //需要的参数包括一行数据等,会返回一个可渲染的组件为这行数据渲染  返回renderable
                 renderSeparator={separator}   //可以不设置的属性  行间距
                 className="am-list"
-                pageSize={5}    //每次事件循环（每帧）渲染的行数
+                pageSize={30}    //每次事件循环（每帧）渲染的行数
                 onScroll={() => {
                     console.log('scroll');
                 }}   //在滚动的过程中，每帧最多调用一次此回调函数。调用的频率可以用scrollEventThrottle属性来控制。
