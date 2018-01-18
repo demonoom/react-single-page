@@ -4,7 +4,7 @@ import './userinfo.css'
 import {
     ListView,SearchBar, Button, WhiteSpace, WingBlank,List
 } from 'antd-mobile';
-const debug=true;
+const debug=false;
 const mobileUrl = debug?'http://192.168.1.16:9006/Excoord_ApiServer/webservice':'http://www.maaee.com/Excoord_For_Education/webservice';
 export default class searchUserLocationInfo extends React.Component {
     constructor(props) {
@@ -329,7 +329,7 @@ export default class searchUserLocationInfo extends React.Component {
                 renderRow={rowRight}   //需要的参数包括一行数据等,会返回一个可渲染的组件为这行数据渲染  返回renderable
                 renderSeparator={separator}   //可以不设置的属性  行间距
                 className="am-list"
-                pageSize={5}    //每次事件循环（每帧）渲染的行数
+                pageSize={30}    //每次事件循环（每帧）渲染的行数
                 onScroll={() => {
                     console.log('scroll');
                 }}   //在滚动的过程中，每帧最多调用一次此回调函数。调用的频率可以用scrollEventThrottle属性来控制。
