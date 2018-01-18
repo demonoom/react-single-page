@@ -2,6 +2,7 @@
 html,
 body {
   height: 100%;
+  font-size: 14px;
 }
 body {
   overflow: auto!important;
@@ -121,4 +122,8 @@ hr {
 .padding_8 {
   padding: 8px 0;
   line-height: 20px;
+}
+.font_20 {
+  font-size: 1.42rem;
+  font-family: sans-serif;
 }
