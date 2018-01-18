@@ -8,6 +8,7 @@ import Stage3 from './components/Stage3';
 import Stage4 from './components/Stage4';
 import questionBank from './components/questionBank/questionBank';
 import questionDetil from './components/questionBank/questionDetil';
+import analysisList from './components/resultAnalysis/analysisList';
 import resultAnalysis from './components/resultAnalysis/resultAnalysis';
 import classReaultAnalysis from './components/resultAnalysis/classResultAnalysis';
 import searchUserLocationInfo from './components/userInfo/searchUserLocationInfo'
@@ -47,6 +48,7 @@ ReactDOM.render(
             <Route path="s4" component={Stage4}/>
             <Route path="questionBank" component={questionBank}/>
             <Route path="questionDetil" component={questionDetil}/>
+            <Route path="analysisList" component={analysisList}/>
             <Route path="resultAnalysis" component={resultAnalysis}/>
             <Route path="classReaultAnalysis" component={classReaultAnalysis}/>
             <Route path="s8" component={Stage8}/>
