@@ -413,8 +413,8 @@ export default class resultAnalysis extends React.Component {
             body: requestParams,
         };
 
-        var ret = dataF.response;
-        this.buildAnalysis(ret);
+        // var ret = dataF.response;
+        // this.buildAnalysis(ret);
 
         fetch(mobileUrl, obj)
             .then(_this.checkStatus)
@@ -422,10 +422,11 @@ export default class resultAnalysis extends React.Component {
             .then(data => ({data}))
             .catch(err => ({err}))
             .then(function (result) {
+                console.log(result);
                 var ret = result.data.response;
                 if (result.data.success == true && result.data.msg == '调用成功') {
                     //  获得数据
-                    // _this.buildAnalysis(ret);
+                    _this.buildAnalysis(ret);
                 } else {
                     Toast.fail(result.data.msg, 1);
                 }

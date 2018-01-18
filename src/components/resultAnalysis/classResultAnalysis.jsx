@@ -369,8 +369,10 @@ export default class classReaultAnalysis extends React.Component {
         super(props);
         this.state = {
             top5StudentListArr: [],
-            clazzesArr: [],
+            last5StudentListArr: [],
             topDataArr: [],
+            topDiv: '',
+            isNameShow: 'block'
         }
     }
 
@@ -442,7 +444,6 @@ export default class classReaultAnalysis extends React.Component {
      */
     buildAnalysis(data) {
         var _this = this;
-        console.log(data);
         var top5StudentList = data.top5StudentList;   //前五名
         var top5StudentListArr = []
         top5StudentList.forEach(function (v, i) {
@@ -472,7 +473,7 @@ export default class classReaultAnalysis extends React.Component {
                 <span>{clazzMax + '/' + gradeMax}</span>
                 <span>最高分(班级/年级)</span>
             </div>
-        </Flex.Item>
+        </Flex.Item>;
 
         var topData = [
             {
@@ -500,21 +501,50 @@ export default class classReaultAnalysis extends React.Component {
                     <span>{v.score}</span>
                     <span>{v.str}</span>
                 </div>
-            </Flex.Item>
+            </Flex.Item>;
             topDataArr.push(flex);
         });
 
-
-        this.setState({top5StudentListArr, last5StudentListArr, topDataArr, topDiv});
-
-    }
-
-    /**
-     * 跳转到班级分析结果
-     * @param id
-     */
-    turnToClassRel(id) {
-        console.log(id);
+        // console.log(data.studentList);
+        if (data.studentList[0].studId == data.studentList[0].studName) {
+            this.setState({isNameShow: 'none'})
+        }
+        if (data.studentList.length != 0) {
+            var studentList = []
+            data.studentList.forEach(function (v, i) {
+                //每个学生
+                var stu = <Flex>
+                    <Flex.Item>
+                        <div className='placeholderBottom'>
+                            <span>{v.studId}</span>
+                        </div>
+                    </Flex.Item>
+                    <Flex.Item style={{display: _this.state.isNameShow}}>
+                        <div className='placeholderBottom'>
+                            <span>{v.studName}</span>
+                        </div>
+                    </Flex.Item>
+                    <Flex.Item>
+                        <div className='placeholderBottom'>
+                            <span>{v.studScore}</span>
+                        </div>
+                    </Flex.Item>
+                    <Flex.Item>
+                        <div className='placeholderBottom'>
+                            <span>{v.clazzRank + '/' + v.gradeRank}</span>
+                            <span>(班级/年级)</span>
+                        </div>
+                    </Flex.Item>
+                    <Flex.Item>
+                        <div className='placeholderBottom'>
+                            <span>{v.badTopics.join(',')}</span>
+                        </div>
+                    </Flex.Item>
+                </Flex>
+                studentList.push(stu);
+            })
+        }
+        this.setState({top5StudentListArr, last5StudentListArr, topDataArr, topDiv, studentList});
     }
 
     renderTabBar(props) {
@@ -524,13 +554,6 @@ export default class classReaultAnalysis extends React.Component {
     }
 
     render() {
-
-        const PlaceHolder = ({className = '', ...restProps, s}) => (
-            <div className={`${className} placeholder`} {...restProps}>
-                <span>100</span>
-                <span>平均分</span>
-            </div>
-        );
 
         return (
             <div className='classResult'>
@@ -565,6 +588,40 @@ export default class classReaultAnalysis extends React.Component {
                                     {this.state.last5StudentListArr}
                                 </ul>
                             </WingBlank>
+                            <WingBlank size="md">
+                                <Flex>
+                                    <Flex.Item>
+                                        <div className='placeholderBottom'>
+                                            <span>学号</span>
+                                        </div>
+                                    </Flex.Item>
+                                    <Flex.Item style={{display: this.state.isNameShow}}>
+                                        <div className='placeholderBottom'>
+                                            <span>姓名</span>
+                                        </div>
+                                    </Flex.Item>
+                                    <Flex.Item>
+                                        <div className='placeholderBottom'>
+                                            <span>分数</span>
+                                        </div>
+                                    </Flex.Item>
+                                    <Flex.Item>
+                                        <div className='placeholderBottom'>
+                                            <span>排名</span>
+                                            <span>(班级/年级)</span>
+                                        </div>
+                                    </Flex.Item>
+                                    <Flex.Item>
+                                        <div className='placeholderBottom'>
+                                            <span>错题号</span>
+                                        </div>
+                                    </Flex.Item>
+                                </Flex>
+                            </WingBlank>
+                            <WingBlank>
+                                {this.state.studentList}
+                            </WingBlank>
+
                         </div>
                         <div style={{
                             display: 'flex',
