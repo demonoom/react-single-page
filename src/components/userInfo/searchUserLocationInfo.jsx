@@ -25,6 +25,7 @@ export default class searchUserLocationInfo extends React.Component {
             historyUserArray:JSON.parse(localStorage.getItem('historyUserArray')),
             isShowHistoryRecord:{display:'none'},
             isShowUserList:'none',
+            isShowEmptyImg:'none',
             // clicked: 'none',
             // open: false,
             // tabOnClick: 0,
@@ -39,6 +40,11 @@ export default class searchUserLocationInfo extends React.Component {
         var isShowHistoryRecord=historyUserArray!=undefined&&historyUserArray.length>0?{display:'block'}:{display:'none'};
         this.setState({isShowHistoryRecord:isShowHistoryRecord});
         document.title = '搜索查看用户位置信息';
+        if(historyUserArray!=undefined&&historyUserArray.length>0){
+            this.setState({isShowEmptyImg:'none'});
+        }else{
+            this.setState({isShowEmptyImg:'block'});
+        }
         Bridge.setShareAble("false");
         Bridge.setRefreshAble("false");
     }
@@ -97,6 +103,12 @@ export default class searchUserLocationInfo extends React.Component {
         this.setState({searchValue:""});
         this.setState({isShowHistoryRecord:{display:'block'}});
         this.setState({isShowUserList:  'none'});
+        var historyUserArray=JSON.parse(localStorage.getItem('historyUserArray'));
+        if (historyUserArray == undefined || historyUserArray.length == 0) {
+            this.setState({isShowEmptyImg: 'block'});
+        }else{
+            this.setState({isShowEmptyImg: 'none'});
+        }
         this.initDataOther.splice(0);
         this.state.dataSourceOther = [];
         this.state.dataSourceOther = new ListView.DataSource({
@@ -109,6 +121,9 @@ export default class searchUserLocationInfo extends React.Component {
     saveHistoryRecord=(searchKeyWords)=>{
         var historyUserArray=JSON.parse(localStorage.getItem('historyUserArray'));
         if(searchKeyWords!=""&&searchKeyWords!=undefined) {
+            this.setState({isShowHistoryRecord: {display: 'none'}});
+            this.setState({isShowUserList: 'block'});
+            this.setState({isShowEmptyImg:'none'});
             if (historyUserArray == undefined || historyUserArray.length == 0) {
                 historyUserArray = new Array();
                 historyUserArray.unshift(this.state.searchValue);
@@ -120,20 +135,21 @@ export default class searchUserLocationInfo extends React.Component {
                     historyUserArray.unshift(this.state.searchValue);
                 }
             }
+        }else{
+            this.setState({isShowHistoryRecord: {display: 'block'}});
+            this.setState({isShowUserList:  'none'});
+            if (historyUserArray == undefined || historyUserArray.length == 0) {
+                this.setState({isShowEmptyImg: 'block'});
+            }
         }
         localStorage.setItem("historyUserArray", JSON.stringify(historyUserArray));
         this.setState({historyUserArray:historyUserArray});
-        if(searchKeyWords==''||searchKeyWords==undefined){
-            this.setState({isShowHistoryRecord: {display: 'block'}});
-            this.setState({isShowUserList:  'none'});
-        }else {
-            this.setState({isShowHistoryRecord: {display: 'none'}});
-            this.setState({isShowUserList: 'block'});
-        }
     }
     clearHistoryRecord=()=>{
         this.setState({historyUserArray:new Array() });
         localStorage.setItem("historyUserArray", null);
+        this.setState({isShowEmptyImg: 'block'});
+        this.setState({isShowHistoryRecord: {display: 'none'}});
 
     }
     /**
@@ -344,7 +360,7 @@ export default class searchUserLocationInfo extends React.Component {
                 //     distanceToRefresh={80}
                 // />}
             />
-                <div className="icon_empty">
+                <div className="icon_empty" style={{display:this.state.isShowEmptyImg}}>
                     <img src={require('./icon_empty.png')}/>
                 </div>
             </div>
