@@ -567,7 +567,7 @@ export default class classReaultAnalysis extends React.Component {
                     >
                         <div style={{
                             height: document.documentElement.clientHeight - 45,
-                            backgroundColor: '#EFEFEF'
+                            backgroundColor: '#f4f4f4'
                         }}>
                             <Flex className='flexByNoom'>
                                 {this.state.topDiv}
