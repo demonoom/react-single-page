@@ -47,8 +47,8 @@ hr.line:before{
     left:0;
 }
 .icon_ios{
-    width: 24px;
-    height: 24px;
+    width: 18px;
+    height: 18px;
     vertical-align: text-bottom;
 }
 .search_top .am-search-cancel{
@@ -64,13 +64,14 @@ hr.line:before{
 }
 .user_info_line{
     position:relative;
+    margin-top: 5px;
 }
 .user_info_line:before{
     content: "";
     pointer-events: none;
     box-sizing: border-box;
     border: none;
-    border-bottom: 1px solid #e5e5e5;
+    border-top: 1px solid #e5e5e5;
     height: 200%;
     transform: scaleY(0.5);
     transform-origin: 0 0;
@@ -96,6 +97,9 @@ hr.line:before{
 .userinfo_wrap .am-search{
     background: #eee;
 }
+.userinfo_wrap .line_item:last-child{
+    display: none;
+}
 .user_height{
     height: 100%;
 }
@@ -110,6 +114,5 @@ hr.line:before{
     line-height: 30px;
 }
 .user_bottom{
-    margin-bottom: 10px;
-    padding-bottom: 10px;
+    padding-top: 15px;
 }
