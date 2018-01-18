@@ -382,7 +382,7 @@ export default class classReaultAnalysis extends React.Component {
         var locationHref = window.location.href;
         var locationSearch = locationHref.substr(locationHref.indexOf("?") + 1);
         var searchArray = locationSearch.split("&");
-        this.viewclazzAnalysis(searchArray)
+        this.viewclazzAnalysis(searchArray);
     }
 
     parseJSON(response) {

@@ -377,10 +377,10 @@ export default class resultAnalysis extends React.Component {
 
     componentDidMount() {
         document.title = '成绩分析';
-        // var locationHref = window.location.href;
-        // var locationSearch = locationHref.substr(locationHref.indexOf("?") + 1);
-        // var searchArray = locationSearch.split("&");
-        this.viewGradeAnalysis()
+        var locationHref = window.location.href;
+        var locationSearch = locationHref.substr(locationHref.indexOf("?") + 1);
+        var searchArray = locationSearch.split("&");
+        this.viewGradeAnalysis(searchArray)
     }
 
     parseJSON(response) {
@@ -400,11 +400,12 @@ export default class resultAnalysis extends React.Component {
     /**
      * 查看试卷分析中的年级的结果
      */
-    viewGradeAnalysis() {
+    viewGradeAnalysis(array) {
+        var taskId = array[0].split('=')[1];
         var _this = this;
         var param = {
             "method": 'viewGradeAnalysis',
-            "taskId": 1,
+            "taskId": taskId,
         };
 
         var requestParams = encodeURI("params=" + JSON.stringify(param));
