@@ -39,7 +39,7 @@ export default class searchUserLocationInfo extends React.Component {
         var historyUserArray = this.state.historyUserArray;
         var isShowHistoryRecord=historyUserArray!=undefined&&historyUserArray.length>0?{display:'block'}:{display:'none'};
         this.setState({isShowHistoryRecord:isShowHistoryRecord});
-        document.title = '搜索查看用户位置信息';
+        document.title = '登录信息查询';
         if(historyUserArray!=undefined&&historyUserArray.length>0){
             this.setState({isShowEmptyImg:'none'});
         }else{
@@ -197,11 +197,14 @@ export default class searchUserLocationInfo extends React.Component {
                     dataBlob[`${i}`] = topic;
                 }
                 if (isSearch) {    //拉动刷新  获取数据之后再清除原有数据
-                    _this.initDataOther.splice(0);
-                    _this.state.dataSourceOther = [];
-                    _this.state.dataSourceOther = new ListView.DataSource({
-                        rowHasChanged: (row1, row2) => row1 !== row2,
-                    });
+                    setTimeout(function () {
+                        _this.initDataOther.splice(0);
+                        _this.state.dataSourceOther = [];
+                        _this.state.dataSourceOther = new ListView.DataSource({
+                            rowHasChanged: (row1, row2) => row1 !== row2,
+                        });
+                    },300)
+
                 }
                 var isLoading=false;
                 if(response.length>0){
