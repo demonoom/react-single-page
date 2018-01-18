@@ -2,7 +2,7 @@ import React from 'react';
 import fetch from 'dva/fetch'
 import {Tabs, Flex, List, WingBlank, Toast} from 'antd-mobile';
 import {StickyContainer, Sticky} from 'react-sticky';
-import './reaultAnalysis.less';
+import './classReaultAnalysis.less';
 
 // const mobileUrl = 'http://www.maaee.com/Excoord_For_Education/webservice';
 const mobileUrl = 'http://192.168.1.230:9006/Excoord_ApiServer/webservice';
@@ -364,7 +364,7 @@ const dataF = {
     }
 }
 
-export default class resultAnalysis extends React.Component {
+export default class classReaultAnalysis extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -376,10 +376,10 @@ export default class resultAnalysis extends React.Component {
 
     componentDidMount() {
         document.title = '成绩分析';
-        // var locationHref = window.location.href;
-        // var locationSearch = locationHref.substr(locationHref.indexOf("?") + 1);
-        // var searchArray = locationSearch.split("&");
-        this.viewGradeAnalysis()
+        var locationHref = window.location.href;
+        var locationSearch = locationHref.substr(locationHref.indexOf("?") + 1);
+        var searchArray = locationSearch.split("&");
+        this.viewclazzAnalysis(searchArray)
     }
 
     parseJSON(response) {
@@ -399,11 +399,14 @@ export default class resultAnalysis extends React.Component {
     /**
      * 查看试卷分析中的年级的结果
      */
-    viewGradeAnalysis() {
+    viewclazzAnalysis(array) {
+        var taskId = array[0].split('=')[1];
+        var clazzId = array[1].split('=')[1];
         var _this = this;
         var param = {
-            "method": 'viewGradeAnalysis',
-            "taskId": 1,
+            "method": 'viewclazzAnalysis',
+            "taskId": taskId,
+            "clazzId": clazzId,
         };
 
         var requestParams = encodeURI("params=" + JSON.stringify(param));
@@ -413,8 +416,8 @@ export default class resultAnalysis extends React.Component {
             body: requestParams,
         };
 
-        var ret = dataF.response;
-        this.buildAnalysis(ret);
+        // var ret = dataF.response;
+        // this.buildAnalysis(ret);
 
         fetch(mobileUrl, obj)
             .then(_this.checkStatus)
@@ -422,10 +425,11 @@ export default class resultAnalysis extends React.Component {
             .then(data => ({data}))
             .catch(err => ({err}))
             .then(function (result) {
+                // console.log(result);
                 var ret = result.data.response;
                 if (result.data.success == true && result.data.msg == '调用成功') {
                     //  获得数据
-                    // _this.buildAnalysis(ret);
+                    _this.buildAnalysis(ret);
                 } else {
                     Toast.fail(result.data.msg, 1);
                 }
@@ -446,34 +450,46 @@ export default class resultAnalysis extends React.Component {
             top5StudentListArr.push(li);
         });
 
-        var clazzes = data.clazzes;   //班级排名
-        var clazzesArr = [];
-        clazzes.forEach(function (v, i) {
-            var liClass = <li onClick={_this.turnToClassRel.bind(this, v.clazzId)}><b>{v.order}</b>{v.clazzName}</li>
-            clazzesArr.push(liClass);
+        var last5StudentList = data.last5StudentList;   //后五名
+        var last5StudentListArr = [];
+        last5StudentList.forEach(function (v, i) {
+            var liLast = <li>{v.studName}<span>{v.studScore}</span></li>
+            last5StudentListArr.push(liLast);
         });
 
-        var ave = data.ave.toFixed(1);  //平均分
-        var excellentRate = (data.excellentRate * 100).toFixed(1);  //优秀率
-        var passingRate = (data.passingRate * 100).toFixed(1);  //通过率
-        var max = data.max;   //最高分
-        var min = data.min;   //最低分
+        var clazzMax = data.clazzMax;   //班级最高分
+        var gradeMax = data.gradeMax;   //年级最高分
+        var clazzOrder = data.clazzOrder;   //班级排名
+        var clazzCount = data.clazzCount;   //总班级数
+        var clazzPassingRate = (data.clazzPassingRate * 100).toFixed(1);  //班级及格率
+        var gradePassingRate = (data.gradePassingRate * 100).toFixed(1);  //年级及格率
+        var clazzExcellentRate = (data.clazzExcellentRate * 100).toFixed(1);  //班级优秀率
+        var gradeExcellentRate = (data.gradeExcellentRate * 100).toFixed(1);  //年级优秀率
+        var clazzAve = data.clazzAve.toFixed(1);  //班级平均分
+        var gradeAve = data.gradeAve.toFixed(1);  //年级平均分
+        var topDiv = <Flex.Item>
+            <div className='placeholder'>
+                <span>{clazzMax + '/' + gradeMax}</span>
+                <span>最高分(班级/年级)</span>
+            </div>
+        </Flex.Item>
+
         var topData = [
             {
-                score: max + '/' + min,
-                str: '最高分/最低分'
+                score: clazzOrder + '/' + clazzCount,
+                str: '班级排名/班级总数'
             },
             {
-                score: ave,
-                str: '平均分'
+                score: clazzAve + '/' + gradeAve,
+                str: '平均分(班级/年级)'
             },
             {
-                score: excellentRate + '%',
-                str: '优秀率'
+                score: clazzExcellentRate + '%' + '/' + gradeExcellentRate + '%',
+                str: '优秀率(班级/年级)'
             },
             {
-                score: passingRate + '%',
-                str: '及格率'
+                score: clazzPassingRate + '%' + '/' + gradePassingRate + '%',
+                str: '及格率(班级/年级)'
             },
 
         ];
@@ -489,7 +505,7 @@ export default class resultAnalysis extends React.Component {
         });
 
 
-        this.setState({top5StudentListArr, clazzesArr, topDataArr});
+        this.setState({top5StudentListArr, last5StudentListArr, topDataArr, topDiv});
 
     }
 
@@ -498,15 +514,7 @@ export default class resultAnalysis extends React.Component {
      * @param id
      */
     turnToClassRel(id) {
-        window.open("/#/classReaultAnalysis?taskId=" + 1 + "&clazzId=" + id);
-
-        /*var url = "http://jiaoxue.maaee.com:8091/#/classReaultAnalysis?taskId=" + 1 + "&clazzId=" + id;
-        var data = {};
-        data.method = 'openNewPage';
-        data.url = url;
-        Bridge.callHandler(data, null, function (error) {
-            window.location.href = url;
-        });*/
+        console.log(id);
     }
 
     renderTabBar(props) {
@@ -517,8 +525,15 @@ export default class resultAnalysis extends React.Component {
 
     render() {
 
+        const PlaceHolder = ({className = '', ...restProps, s}) => (
+            <div className={`${className} placeholder`} {...restProps}>
+                <span>100</span>
+                <span>平均分</span>
+            </div>
+        );
+
         return (
-            <div className='result'>
+            <div className='classResult'>
                 <StickyContainer>
                     <Tabs tabs={tabs}
                           initalPage={0}
@@ -532,19 +547,22 @@ export default class resultAnalysis extends React.Component {
                             backgroundColor: '#EFEFEF'
                         }}>
                             <Flex className='flexByNoom'>
+                                {this.state.topDiv}
+                            </Flex>
+                            <Flex className='flexByNoom'>
                                 {this.state.topDataArr}
                             </Flex>
 
                             <WingBlank size="md">
-                                <div className='gradeRank rank'>年级前五名</div>
+                                <div className='gradeRank rank'>班级前五名</div>
                                 <ul className='ulFirstByNoom'>
                                     {this.state.top5StudentListArr}
                                 </ul>
                             </WingBlank>
                             <WingBlank size="md">
-                                <div className='classRank rank'>班级平均分排名</div>
+                                <div className='classRank rank'>班级后五名</div>
                                 <ul className='ulFirstByNoom'>
-                                    {this.state.clazzesArr}
+                                    {this.state.last5StudentListArr}
                                 </ul>
                             </WingBlank>
                         </div>

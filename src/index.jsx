@@ -8,7 +8,8 @@ import Stage3 from './components/Stage3';
 import Stage4 from './components/Stage4';
 import questionBank from './components/questionBank/questionBank';
 import questionDetil from './components/questionBank/questionDetil';
-import resultAnalysis from './components/resultAnalysis/resultAnalysis'
+import resultAnalysis from './components/resultAnalysis/resultAnalysis';
+import classReaultAnalysis from './components/resultAnalysis/classResultAnalysis';
 import searchUserLocationInfo from './components/userInfo/searchUserLocationInfo'
 import Stage8 from './components/Stage8';
 import Stage9 from './components/Stage9';
@@ -47,6 +48,7 @@ ReactDOM.render(
             <Route path="questionBank" component={questionBank}/>
             <Route path="questionDetil" component={questionDetil}/>
             <Route path="resultAnalysis" component={resultAnalysis}/>
+            <Route path="classReaultAnalysis" component={classReaultAnalysis}/>
             <Route path="s8" component={Stage8}/>
             <Route path="s9" component={Stage9}/>
             <Route path="searchUserLocationInfo" component={searchUserLocationInfo}/>

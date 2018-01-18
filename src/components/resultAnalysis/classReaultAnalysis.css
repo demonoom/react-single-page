@@ -1,21 +1,21 @@
 (node) util.print is deprecated. Use console.log instead.
-.result .flex-container {
+.classResult .flex-container {
   margin: 0 15px;
 }
-.result .flex-container .inline {
+.classResult .flex-container .inline {
   width: 80px !important;
   margin: 9px 9px 9px 0;
 }
-.result .flex-container .small {
+.classResult .flex-container .small {
   height: 20px !important;
   line-height: 20px !important;
 }
-.result .sub-title {
+.classResult .sub-title {
   color: #888;
   font-size: 14px;
   padding: 30px 0 18px 0;
 }
-.result .placeholder {
+.classResult .placeholder {
   background-color: #ebebef;
   color: #bbb;
   text-align: center;
@@ -23,47 +23,47 @@
   line-height: 85px;
   width: 100%;
 }
-.result .flexByNoom {
+.classResult .flexByNoom {
   display: flex;
   alignItems: center;
   justifyContent: center;
   width: 100%;
 }
-.result .ulFirstByNoom {
+.classResult .ulFirstByNoom {
   padding: 0 10px;
   list-style: none;
   text-align: center;
   background-color: #ffffff;
   margin: 0;
 }
-.result .ulFirstByNoom li {
+.classResult .ulFirstByNoom li {
   font-size: 14px;
   height: 44px;
   line-height: 44px;
   border-bottom: 0.5px solid #e5e5e5;
   color: #666666;
 }
-.result .ulFirstByNoom li span {
+.classResult .ulFirstByNoom li span {
   float: right;
   color: #666666;
 }
-.result .ulFirstByNoom li b {
+.classResult .ulFirstByNoom li b {
   float: left;
   font-weight: normal;
   margin-left: 0.5rem;
 }
-.result .ulFirstByNoom li img {
+.classResult .ulFirstByNoom li img {
   height: 60%;
   float: left;
   transform: translateY(25%);
 }
-.result .gradeRank {
+.classResult .gradeRank {
   background-color: #42A7F9;
 }
-.result .classRank {
+.classResult .classRank {
   background-color: #FDB300;
 }
-.result .rank {
+.classResult .rank {
   height: 45px;
   line-height: 45px;
   margin-top: 10px;
