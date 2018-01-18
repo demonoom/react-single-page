@@ -299,16 +299,16 @@ export default class questionBank extends React.Component {
         var currentPageNo = this.state.defaultPageNo;
         // load new data
         // hasMore: from backend data, indicates whether it is the last page, here is false
-        if (this.state.isLoading && !this.state.hasMore) {
+        if (this.state.getUserLocationInfo && !this.state.hasMore) {
             return;
         }
         currentPageNo += 1;
-        this.setState({isLoading: true, defaultPageNo: currentPageNo});
+        this.setState({getUserLocationInfo: true, defaultPageNo: currentPageNo});
         // setTimeout(() => {
         //     this.rData = { ...this.rData, ...genData(++pageIndex) };
         //     this.setState({
         //         dataSource: this.state.dataSource.cloneWithRows(this.rData),
-        //         isLoading: false,
+        //         getUserLocationInfo: false,
         //     });
         // }, 1000);
         // _this.initData = _this.initData.concat();

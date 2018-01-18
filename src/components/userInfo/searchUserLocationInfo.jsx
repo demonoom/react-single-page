@@ -4,7 +4,7 @@ import './userinfo.css'
 import {
     ListView,SearchBar, Button, WhiteSpace, WingBlank,List
 } from 'antd-mobile';
-const debug=false;
+const debug=true;
 const mobileUrl = debug?'http://192.168.1.16:9006/Excoord_ApiServer/webservice':'http://www.maaee.com/Excoord_For_Education/webservice';
 export default class searchUserLocationInfo extends React.Component {
     constructor(props) {
@@ -61,7 +61,7 @@ export default class searchUserLocationInfo extends React.Component {
         // load new data
         // hasMore: from backend data, indicates whether it is the last page, here is false
         //这个if没有成立过
-        if (this.state.isLoading && !this.state.hasMore) {
+        if (!this.state.isLoading && !this.state.hasMore) {
             return;
         }
         currentPageNo += 1;
@@ -69,7 +69,7 @@ export default class searchUserLocationInfo extends React.Component {
         _this.getUserLocationInfo(false);
         this.setState({
             userDataSource: this.state.userDataSource.cloneWithRows(this.initDataOther),
-            isLoading: false,
+            isLoading: true,
         });
     };
     searchHistoryRecord=(i)=>{
@@ -148,6 +148,8 @@ export default class searchUserLocationInfo extends React.Component {
         var PageNo ;
         if(isSearch){
             PageNo=1;
+            setTimeout(() => this.lv.scrollTo(0, 0), 300);
+            this.setState({defaultPageNoOther: 1});
         }else{
             PageNo = this.state.defaultPageNoOther;
         }
@@ -172,6 +174,7 @@ export default class searchUserLocationInfo extends React.Component {
             .catch(err => ({err}))
             .then(function (result) {
                 var response = result.data.response;
+                var pager = result.data.pager;
                 for (let i = 0; i < response.length; i++) {
                     var topic = response[i];
                     topic.checkBoxChecked = false;
@@ -184,10 +187,20 @@ export default class searchUserLocationInfo extends React.Component {
                         rowHasChanged: (row1, row2) => row1 !== row2,
                     });
                 }
+                var isLoading=false;
+                if(response.length>0){
+                    if(pager.pageCount==1&&pager.rsCount<30){
+                        isLoading=false;
+                    }else {
+                        isLoading = true;
+                    }
+                }else{
+                    isLoading=false;
+                }
                 _this.initDataOther = _this.initDataOther.concat(response);
                 _this.setState({
                     userDataSource: _this.state.userDataSource.cloneWithRows(_this.initDataOther),
-                    isLoading: false,
+                    isLoading: isLoading,
                     refreshing: false
                 })
             });
@@ -308,6 +321,7 @@ export default class searchUserLocationInfo extends React.Component {
                     {historyRecord}
                 </div>
             <ListView
+                ref={el => this.lv = el}
                 dataSource={this.state.userDataSource}    //数据类型是 ListViewDataSource
                 renderFooter={() => (<div style={{padding: 30, textAlign: 'center'}}>
                     {this.state.isLoading ? '正在加载' : '没有更多数据了'}
