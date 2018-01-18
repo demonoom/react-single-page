@@ -499,8 +499,8 @@ export default class classReaultAnalysis extends React.Component {
         topData.forEach(function (v, i) {
             var flex = <Flex.Item>
                 <div className='placeholder'>
-                    <span>{v.score}</span>
-                    <span>{v.str}</span>
+                    <div className="font_20 color">{v.score}</div>
+                    <div>{v.str}</div>
                 </div>
             </Flex.Item>;
             topDataArr.push(flex);
