@@ -20,6 +20,7 @@ body {
   right: 0;
   overflow: scroll;
 }
+
 .fixed-bottom {
   position: fixed;
   bottom: 0;
@@ -66,7 +67,7 @@ hr {
   font-size: 12px;
 }
 .font_14 {
-  font-size: 14px;
+  font-size: 1rem;
 }
 .color_red {
   color: #f46a55;
@@ -124,6 +125,10 @@ hr {
   line-height: 20px;
 }
 .font_20 {
+  font-size: 1.42rem;
+  font-family: sans-serif;
+}
+.font_18 {
   font-size: 1.42rem;
   font-family: sans-serif;
 }

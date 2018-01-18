@@ -478,23 +478,27 @@ export default class classReaultAnalysis extends React.Component {
 
         var topData = [
             {
-                score: clazzOrder + '/' + clazzCount,
+                score: clazzOrder,
+                scoreBot:clazzCount,
                 str: '班级排名',
                 strElse: '/班级总数'
             },
             {
-                score: clazzAve + '/' + gradeAve,
+                score: clazzAve,
+                scoreBot:gradeAve,
                 str: '平均分',
                 strElse: '(班级/年级)'
             },
             {
-                score: clazzExcellentRate + '/' + gradeExcellentRate + '%',
-                str: '优秀率',
+                score: clazzExcellentRate,
+                scoreBot:gradeExcellentRate,
+                str: '优秀率(%)',
                 strElse: '(班级/年级)'
             },
             {
-                score: clazzPassingRate + '/' + gradePassingRate + '%',
-                str: '及格率',
+                score: clazzPassingRate,
+                scoreBot:gradePassingRate,
+                str: '及格率(%)',
                 strElse: '(班级/年级)'
             },
 
@@ -503,9 +507,8 @@ export default class classReaultAnalysis extends React.Component {
         topData.forEach(function (v, i) {
             var flex = <Flex.Item>
                 <div className='placeholder'>
-                    <div className="font_20 color">{v.score}</div>
-                    <div>{v.str}</div>
-                    <div>{v.strElse}</div>
+                    <div className="font_20 color le8"><span className="top">{v.score}</span><span className="line">{v.scoreBot}</span></div>
+                    <div>{v.str}<br></br>{v.strElse}</div>
                 </div>
             </Flex.Item>;
             topDataArr.push(flex);
@@ -592,7 +595,7 @@ export default class classReaultAnalysis extends React.Component {
                             <Flex className='flexByNoom'>
                                 {this.state.topDiv}
                             </Flex>
-                            <Flex className='flexByNoom'>
+                            <Flex className='flexByNoom2'>
                                 {this.state.topDataArr}
                             </Flex>
 

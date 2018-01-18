@@ -23,7 +23,38 @@
     text-align: center;
     font-size: .85rem;
   }
-
+  .placeholder div {
+    padding: 8px 0;
+  }
+  .placeholder div.le8 {
+    padding: 8px 14px;
+  }
+  .placeholder div.le8 span{
+    display: block;
+  }
+  .placeholder div.le8 span.line{
+    position: relative;
+    width: 100%;
+    padding-top: 6px;
+  }
+  .placeholder div.le8 span.top{
+  margin-bottom: 6px;
+}
+  .placeholder div.le8 span.line:before{
+    content: "";
+    pointer-events: none;
+    box-sizing: border-box;
+    border: none;
+    border-top: 1px solid #c8c8c8;
+    height: 200%;
+    transform: scaleY(0.5);
+    transform-origin: 0 0;
+    -webkit-transform: scaleY(0.5);
+    position: absolute;
+    width: 100%;
+    top: 0%;
+    left:0;
+  }
   .placeholderBottom {
     background-color: #ebebef;
     color: #bbb;
@@ -38,7 +69,15 @@
     display: flex;
     alignItems: center;
     justifyContent: center;
-    margin: .7rem;
+    margin: .7rem .7rem 0 .7rem;
+    background: #fff;
+    padding: 2.1rem 0rem;
+  }
+  .flexByNoom2 {
+    display: flex;
+    alignItems: center;
+    justifyContent: center;
+    margin: 0 .7rem .7rem .7rem;
     background: #fff;
     padding: 2.1rem 0rem;
   }
@@ -87,5 +126,18 @@
     text-align: center;
     font-size: 16px;
     color: #ffffff;
+  }
+
+  .am-flexbox .am-flexbox-item:first-child .placeholder div.color{
+    color: #60b0f3
+  }
+  .am-flexbox .am-flexbox-item:nth-child(2) .placeholder div.color{
+    color: #56c26b;
+  }
+  .am-flexbox .am-flexbox-item:nth-child(3) .placeholder .color{
+    color: #fe974d
+  }
+  .am-flexbox .am-flexbox-item:nth-child(4) .placeholder .color{
+    color: #eb6264;
   }
 }
