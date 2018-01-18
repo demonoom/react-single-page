@@ -372,7 +372,8 @@ export default class classReaultAnalysis extends React.Component {
             last5StudentListArr: [],
             topDataArr: [],
             topDiv: '',
-            isNameShow: 'block'
+            isNameShow: 'block',
+            tableArr: [],
         }
     }
 
@@ -505,7 +506,6 @@ export default class classReaultAnalysis extends React.Component {
             topDataArr.push(flex);
         });
 
-        // console.log(data.studentList);
         if (data.studentList[0].studId == data.studentList[0].studName) {
             this.setState({isNameShow: 'none'})
         }
@@ -544,7 +544,22 @@ export default class classReaultAnalysis extends React.Component {
                 studentList.push(stu);
             })
         }
-        this.setState({top5StudentListArr, last5StudentListArr, topDataArr, topDiv, studentList});
+
+        var tableArr = [];
+        if (data.topics.length != 0) {
+            data.topics.forEach(function (v, i) {
+                var tb = <tr>
+                    <td>{i + 1}</td>
+                    <td>{v.knowledgePoint}</td>
+                    <td>{(v.hitRate * 100).toFixed(1) + '%'}</td>
+                    <td>{v.hitPeopleCount}</td>
+                    <td>{v.missPeopleCount}</td>
+                </tr>
+                tableArr.push(tb);
+            });
+        }
+
+        this.setState({top5StudentListArr, last5StudentListArr, topDataArr, topDiv, studentList, tableArr});
     }
 
     renderTabBar(props) {
@@ -624,13 +639,21 @@ export default class classReaultAnalysis extends React.Component {
 
                         </div>
                         <div style={{
-                            display: 'flex',
-                            alignItems: 'center',
-                            justifyContent: 'center',
                             height: document.documentElement.clientHeight - 45,
                             backgroundColor: '#fff'
                         }}>
-                            Content of second tab
+                            <table>
+                                <thead>
+                                <td>题号</td>
+                                <td>知识点/考点</td>
+                                <td>班级得分率</td>
+                                <td>答对人数</td>
+                                <td>答错人数</td>
+                                </thead>
+                                <tbody>
+                                {this.state.tableArr}
+                                </tbody>
+                            </table>
                         </div>
                     </Tabs>
                 </StickyContainer>

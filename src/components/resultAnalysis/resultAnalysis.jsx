@@ -371,6 +371,7 @@ export default class resultAnalysis extends React.Component {
             top5StudentListArr: [],
             clazzesArr: [],
             topDataArr: [],
+            tableArr: [],
         }
     }
 
@@ -422,7 +423,6 @@ export default class resultAnalysis extends React.Component {
             .then(data => ({data}))
             .catch(err => ({err}))
             .then(function (result) {
-                console.log(result);
                 var ret = result.data.response;
                 if (result.data.success == true && result.data.msg == '调用成功') {
                     //  获得数据
@@ -439,7 +439,6 @@ export default class resultAnalysis extends React.Component {
      */
     buildAnalysis(data) {
         var _this = this;
-        console.log(data);
         var top5StudentList = data.top5StudentList;   //前五名
         var top5StudentListArr = []
         top5StudentList.forEach(function (v, i) {
@@ -489,8 +488,20 @@ export default class resultAnalysis extends React.Component {
             topDataArr.push(flex);
         });
 
-
-        this.setState({top5StudentListArr, clazzesArr, topDataArr});
+        var tableArr = [];
+        if (data.topics.length != 0) {
+            data.topics.forEach(function (v, i) {
+                var tb = <tr>
+                    <td>{i + 1}</td>
+                    <td>{v.knowledgePoint}</td>
+                    <td>{(v.hitRate * 100).toFixed(1) + '%'}</td>
+                    <td>{v.hitPeopleCount}</td>
+                    <td>{v.missPeopleCount}</td>
+                </tr>
+                tableArr.push(tb);
+            });
+        }
+        this.setState({top5StudentListArr, clazzesArr, topDataArr, tableArr});
 
     }
 
@@ -550,13 +561,21 @@ export default class resultAnalysis extends React.Component {
                             </WingBlank>
                         </div>
                         <div style={{
-                            display: 'flex',
-                            alignItems: 'center',
-                            justifyContent: 'center',
                             height: document.documentElement.clientHeight - 45,
                             backgroundColor: '#fff'
                         }}>
-                            Content of second tab
+                            <table>
+                                <thead>
+                                <td>题号</td>
+                                <td>知识点/考点</td>
+                                <td>年级得分率</td>
+                                <td>答对人数</td>
+                                <td>答错人数</td>
+                                </thead>
+                                <tbody>
+                                {this.state.tableArr}
+                                </tbody>
+                            </table>
                         </div>
                     </Tabs>
                 </StickyContainer>
