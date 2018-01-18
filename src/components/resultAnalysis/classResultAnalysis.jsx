@@ -479,19 +479,23 @@ export default class classReaultAnalysis extends React.Component {
         var topData = [
             {
                 score: clazzOrder + '/' + clazzCount,
-                str: '班级排名/班级总数'
+                str: '班级排名',
+                strElse: '/班级总数'
             },
             {
                 score: clazzAve + '/' + gradeAve,
-                str: '平均分(班级/年级)'
+                str: '平均分',
+                strElse: '(班级/年级)'
             },
             {
-                score: clazzExcellentRate + '%' + '/' + gradeExcellentRate + '%',
-                str: '优秀率(班级/年级)'
+                score: clazzExcellentRate + '/' + gradeExcellentRate + '%',
+                str: '优秀率',
+                strElse: '(班级/年级)'
             },
             {
-                score: clazzPassingRate + '%' + '/' + gradePassingRate + '%',
-                str: '及格率(班级/年级)'
+                score: clazzPassingRate + '/' + gradePassingRate + '%',
+                str: '及格率',
+                strElse: '(班级/年级)'
             },
 
         ];
@@ -501,6 +505,7 @@ export default class classReaultAnalysis extends React.Component {
                 <div className='placeholder'>
                     <div className="font_20 color">{v.score}</div>
                     <div>{v.str}</div>
+                    <div>{v.strElse}</div>
                 </div>
             </Flex.Item>;
             topDataArr.push(flex);

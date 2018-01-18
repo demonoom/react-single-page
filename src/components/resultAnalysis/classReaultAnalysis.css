@@ -1,95 +1,80 @@
+(node) util.print is deprecated. Use console.log instead.
 .classResult .flex-container {
-    margin: 0 15px;
+  margin: 0 15px;
 }
-
 .classResult .flex-container .inline {
-    width: 80px !important;
-    margin: 9px 9px 9px 0;
+  width: 80px !important;
+  margin: 9px 9px 9px 0;
 }
-
 .classResult .flex-container .small {
-    height: 20px !important;
-    line-height: 20px !important;
+  height: 20px !important;
+  line-height: 20px !important;
 }
-
 .classResult .sub-title {
-    color: #888;
-    font-size: 14px;
-    padding: 30px 0 18px 0;
+  color: #888;
+  font-size: 14px;
+  padding: 30px 0 18px 0;
 }
-
 .classResult .placeholder {
-    background-color: #ebebef;
-    color: #bbb;
-    text-align: center;
-    height: 85px;
-    line-height: 85px;
-    width: 100%;
+  text-align: center;
+  font-size: .85rem;
 }
-
 .classResult .placeholderBottom {
-    background-color: #ebebef;
-    color: #bbb;
-    text-align: center;
-    height: 40px;
-    line-height: 40px;
-    width: 100%;
-    margin-top: 10px;
+  background-color: #ebebef;
+  color: #bbb;
+  text-align: center;
+  height: 40px;
+  line-height: 40px;
+  width: 100%;
+  margin-top: 10px;
 }
-
 .classResult .flexByNoom {
-    display: flex;
-    alignItems: center;
-    justifyContent: center;
-    width: 100%;
+  display: flex;
+  alignItems: center;
+  justifyContent: center;
+  margin: .7rem;
+  background: #fff;
+  padding: 2.1rem 0rem;
 }
-
 .classResult .ulFirstByNoom {
-    padding: 0 10px;
-    list-style: none;
-    text-align: center;
-    background-color: #ffffff;
-    margin: 0;
+  padding: 0 10px;
+  list-style: none;
+  text-align: center;
+  background-color: #ffffff;
+  margin: 0;
 }
-
 .classResult .ulFirstByNoom li {
-    font-size: 14px;
-    height: 44px;
-    line-height: 44px;
-    border-bottom: 0.5px solid #e5e5e5;
-    color: #666666;
+  font-size: 14px;
+  height: 44px;
+  line-height: 44px;
+  border-bottom: 0.5px solid #e5e5e5;
+  color: #666666;
 }
-
 .classResult .ulFirstByNoom li span {
-    float: right;
-    color: #666666;
+  float: right;
+  color: #666666;
 }
-
 .classResult .ulFirstByNoom li b {
-    float: left;
-    font-weight: normal;
-    margin-left: 0.5rem;
+  float: left;
+  font-weight: normal;
+  margin-left: 0.5rem;
 }
-
 .classResult .ulFirstByNoom li img {
-    height: 60%;
-    float: left;
-    transform: translateY(25%);
+  height: 60%;
+  float: left;
+  transform: translateY(25%);
 }
-
 .classResult .gradeRank {
-    background-color: #42A7F9;
+  background-color: #42A7F9;
 }
-
 .classResult .classRank {
-    background-color: #FDB300;
+  background-color: #FDB300;
 }
-
 .classResult .rank {
-    height: 45px;
-    line-height: 45px;
-    margin-top: 10px;
-    text-align: center;
-    font-size: 16px;
-    color: #ffffff;
+  height: 45px;
+  line-height: 45px;
+  margin-top: 10px;
+  text-align: center;
+  font-size: 16px;
+  color: #ffffff;
 }
