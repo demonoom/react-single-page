@@ -20,19 +20,19 @@
   }
 
   .placeholder {
-    background-color: #ebebef;
-    color: #bbb;
     text-align: center;
-    height: 85px;
-    line-height: 85px;
-    width: 100%;
+    font-size: .85rem;
   }
-
+  .placeholder div {
+      padding: 8px 0;
+  }
   .flexByNoom {
     display: flex;
     alignItems: center;
     justifyContent: center;
-    width: 100%;
+    margin: .7rem;
+    background: #fff;
+    padding: 2.1rem 0rem;
   }
 
   .ulFirstByNoom {
@@ -80,4 +80,44 @@
     font-size: 16px;
     color: #ffffff;
   }
+  .am-tabs-default-bar-tab-active{
+    color: #EE9D36;
+  }
+  .am-tabs-default-bar-underline{
+    border:1px #EE9D36 solid
+  }
+  .am-flexbox .am-flexbox-item{
+    margin-left: 0;
+    position: relative;
+  }
+  .am-flexbox .am-flexbox-item:before{
+    content: "";
+    pointer-events: none;
+    box-sizing: border-box;
+    border: none;
+    border-left: 1px solid #e5e5e5;
+    width: 200%;
+    transform: scaleX(0.5);
+    transform-origin: 0 0;
+    -webkit-transform: scaleX(0.5);
+    -webkit-transform-origin: 0 0;
+    position: absolute;
+    height: 60%;
+    top: 20%;
+    left:0;
+  }
+  .am-flexbox .am-flexbox-item:first-child .placeholder div.color{
+      color: #60b0f3
+  }
+  .am-flexbox .am-flexbox-item:nth-child(2) .placeholder div.color{
+    color: #56c26b;
+  }
+  .am-flexbox .am-flexbox-item:nth-child(3) .placeholder .color{
+      color: #fe974d
+  }
+  .am-flexbox .am-flexbox-item:nth-child(4) .placeholder .color{
+      color: #eb6264;
+  }
 }
+
+

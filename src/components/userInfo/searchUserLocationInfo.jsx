@@ -344,6 +344,9 @@ export default class searchUserLocationInfo extends React.Component {
                 //     distanceToRefresh={80}
                 // />}
             />
+                <div className="icon_empty">
+                    <img src={require('./icon_empty.png')}/>
+                </div>
             </div>
 
         );

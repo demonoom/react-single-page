@@ -116,3 +116,12 @@ hr.line:before{
 .user_bottom{
     padding-top: 15px;
 }
+.icon_empty{
+    width: 9rem;
+    height: 9rem;
+    margin: 45% auto 0 auto;
+}
+.icon_empty img{
+    width: 100%;
+    height:100%;
+}
