@@ -1,6 +1,6 @@
 import React from 'react';
 import fetch from 'dva/fetch'
-import {Tabs, Flex, List, WingBlank, Toast} from 'antd-mobile';
+import {Tabs, Flex, WingBlank, Toast} from 'antd-mobile';
 import {StickyContainer, Sticky} from 'react-sticky';
 import './reaultAnalysis.less';
 
@@ -12,361 +12,12 @@ const tabs = [
     {title: '题目分析'},
 ];
 
-const dataF = {
-    "success": true,
-    "msg": "调用成功",
-    "response": {
-        "gradeName": "年级",
-        "max": 135,
-        "min": 0,
-        "ave": 111.99337748344371,
-        "excellentRate": 0.9668874172185431,
-        "passingRate": 0.9960264900662251,
-        "top5StudentList": [
-            {
-                "studName": "498",
-                "studScore": 135
-            },
-            {
-                "studName": "718",
-                "studScore": 134
-            },
-            {
-                "studName": "575",
-                "studScore": 133
-            },
-            {
-                "studName": "233",
-                "studScore": 131
-            },
-            {
-                "studName": "513",
-                "studScore": 130
-            }
-        ],
-        "clazzes": [
-            {
-                "clazzId": "1812",
-                "order": 1,
-                "clazzName": "1812",
-                "clazzAve": 121.48979591836735
-            },
-            {
-                "clazzId": "1811",
-                "order": 2,
-                "clazzName": "1811",
-                "clazzAve": 120.15
-            },
-            {
-                "clazzId": "1816",
-                "order": 3,
-                "clazzName": "1816",
-                "clazzAve": 119.33
-            },
-            {
-                "clazzId": "1813",
-                "order": 4,
-                "clazzName": "1813",
-                "clazzAve": 117.43
-            },
-            {
-                "clazzId": "1814",
-                "order": 5,
-                "clazzName": "1814",
-                "clazzAve": 118.20408163265306
-            },
-            {
-                "clazzId": "1815",
-                "order": 6,
-                "clazzName": "1815",
-                "clazzAve": 116.42
-            },
-            {
-                "clazzId": "1805",
-                "order": 7,
-                "clazzName": "1805",
-                "clazzAve": 110.78888888888889
-            },
-            {
-                "clazzId": "1803",
-                "order": 8,
-                "clazzName": "1803",
-                "clazzAve": 109.67
-            },
-            {
-                "clazzId": "1804",
-                "order": 9,
-                "clazzName": "1804",
-                "clazzAve": 108.3
-            },
-            {
-                "clazzId": "1809",
-                "order": 10,
-                "clazzName": "1809",
-                "clazzAve": 109.12765957446808
-            },
-            {
-                "clazzId": "1801",
-                "order": 11,
-                "clazzName": "1801",
-                "clazzAve": 107.08888888888889
-            },
-            {
-                "clazzId": "1802",
-                "order": 12,
-                "clazzName": "1802",
-                "clazzAve": 106.5609756097561
-            },
-            {
-                "clazzId": "1808",
-                "order": 13,
-                "clazzName": "1808",
-                "clazzAve": 107.03260869565217
-            },
-            {
-                "clazzId": "1806",
-                "order": 14,
-                "clazzName": "1806",
-                "clazzAve": 105.96875
-            },
-            {
-                "clazzId": "1807",
-                "order": 15,
-                "clazzName": "1807",
-                "clazzAve": 105.44318181818181
-            },
-            {
-                "clazzId": "1810",
-                "order": 16,
-                "clazzName": "1810",
-                "clazzAve": 105.09782608695652
-            }
-        ],
-        "topics": [
-            {
-                "name": "题目:1",
-                "knowledgePoint": "正弦定理",
-                "hitPeopleCount": 755,
-                "missPeopleCount": 0,
-                "hitRate": 1
-            },
-            {
-                "name": "题目:2",
-                "knowledgePoint": "求等差数列的公差",
-                "hitPeopleCount": 755,
-                "missPeopleCount": 0,
-                "hitRate": 1
-            },
-            {
-                "name": "题目:3",
-                "knowledgePoint": "一元二次不等式求解逆用",
-                "hitPeopleCount": 755,
-                "missPeopleCount": 0,
-                "hitRate": 1
-            },
-            {
-                "name": "题目:4",
-                "knowledgePoint": "等比数列求和公式应用",
-                "hitPeopleCount": 755,
-                "missPeopleCount": 0,
-                "hitRate": 1
-            },
-            {
-                "name": "题目:5",
-                "knowledgePoint": "余弦定理，三角形的解的个数判断",
-                "hitPeopleCount": 755,
-                "missPeopleCount": 0,
-                "hitRate": 1
-            },
-            {
-                "name": "题目:6",
-                "knowledgePoint": "均值不等式应用",
-                "hitPeopleCount": 755,
-                "missPeopleCount": 0,
-                "hitRate": 1
-            },
-            {
-                "name": "题目:7",
-                "knowledgePoint": "等差前 项和最值",
-                "hitPeopleCount": 755,
-                "missPeopleCount": 0,
-                "hitRate": 1
-            },
-            {
-                "name": "题目:8",
-                "knowledgePoint": "二次方程根的分布",
-                "hitPeopleCount": 755,
-                "missPeopleCount": 0,
-                "hitRate": 1
-            },
-            {
-                "name": "题目:9",
-                "knowledgePoint": "函数与数列，递增数列的判断",
-                "hitPeopleCount": 755,
-                "missPeopleCount": 0,
-                "hitRate": 1
-            },
-            {
-                "name": "题目:10",
-                "knowledgePoint": "数列的拓展应用，累加，拆项相消",
-                "hitPeopleCount": 755,
-                "missPeopleCount": 0,
-                "hitRate": 1
-            },
-            {
-                "name": "题目:11",
-                "knowledgePoint": "等差数列的通项公式",
-                "hitPeopleCount": 755,
-                "missPeopleCount": 0,
-                "hitRate": 1
-            },
-            {
-                "name": "题目:12",
-                "knowledgePoint": "余弦定理的实际应用",
-                "hitPeopleCount": 755,
-                "missPeopleCount": 0,
-                "hitRate": 1
-            },
-            {
-                "name": "题目:13",
-                "knowledgePoint": "均值不等式的综合",
-                "hitPeopleCount": 755,
-                "missPeopleCount": 0,
-                "hitRate": 1
-            },
-            {
-                "name": "题目:14",
-                "knowledgePoint": "等比数列的性质，函数与数列",
-                "hitPeopleCount": 755,
-                "missPeopleCount": 0,
-                "hitRate": 1
-            },
-            {
-                "name": "题目:15",
-                "knowledgePoint": "多命题正误判断（跨章节知识应用）",
-                "hitPeopleCount": 755,
-                "missPeopleCount": 0,
-                "hitRate": 1
-            },
-            {
-                "name": "题目:16",
-                "knowledgePoint": "正、余弦定理与解三角形",
-                "hitPeopleCount": 755,
-                "missPeopleCount": 0,
-                "hitRate": 1
-            },
-            {
-                "name": "题目:17",
-                "knowledgePoint": "解二次不等式，大小比较，不等式恒成立",
-                "hitPeopleCount": 755,
-                "missPeopleCount": 0,
-                "hitRate": 1
-            },
-            {
-                "name": "题目:18",
-                "knowledgePoint": "等差数列，等比数列，累加，分组求和",
-                "hitPeopleCount": 755,
-                "missPeopleCount": 0,
-                "hitRate": 1
-            },
-            {
-                "name": "题目:19",
-                "knowledgePoint": "正、余弦定理与三角变换的综合",
-                "hitPeopleCount": 755,
-                "missPeopleCount": 0,
-                "hitRate": 1
-            },
-            {
-                "name": "题目:20",
-                "knowledgePoint": "数列，不等式综合的实际应用题",
-                "hitPeopleCount": 755,
-                "missPeopleCount": 0,
-                "hitRate": 1
-            },
-            {
-                "name": "题目:21",
-                "knowledgePoint": "数列综合应用，错位相减，不等式恒成立",
-                "hitPeopleCount": 755,
-                "missPeopleCount": 0,
-                "hitRate": 1
-            },
-            {
-                "name": "题目:22",
-                "knowledgePoint": "数列综合应用，错位相减，不等式恒成立",
-                "hitPeopleCount": 755,
-                "missPeopleCount": 0,
-                "hitRate": 1
-            },
-            {
-                "name": "题目:23",
-                "knowledgePoint": "数列综合应用，错位相减，不等式恒成立",
-                "hitPeopleCount": 755,
-                "missPeopleCount": 0,
-                "hitRate": 1
-            },
-            {
-                "name": "题目:24",
-                "knowledgePoint": "数列综合应用，错位相减，不等式恒成立",
-                "hitPeopleCount": 755,
-                "missPeopleCount": 0,
-                "hitRate": 1
-            },
-            {
-                "name": "题目:25",
-                "knowledgePoint": "数列综合应用，错位相减，不等式恒成立",
-                "hitPeopleCount": 755,
-                "missPeopleCount": 0,
-                "hitRate": 1
-            },
-            {
-                "name": "题目:26",
-                "knowledgePoint": "数列综合应用，错位相减，不等式恒成立",
-                "hitPeopleCount": 755,
-                "missPeopleCount": 0,
-                "hitRate": 1
-            },
-            {
-                "name": "题目:27",
-                "knowledgePoint": "数列综合应用，错位相减，不等式恒成立",
-                "hitPeopleCount": 755,
-                "missPeopleCount": 0,
-                "hitRate": 1
-            },
-            {
-                "name": "题目:28",
-                "knowledgePoint": "数列综合应用，错位相减，不等式恒成立",
-                "hitPeopleCount": 755,
-                "missPeopleCount": 0,
-                "hitRate": 1
-            },
-            {
-                "name": "题目:29",
-                "knowledgePoint": "数列综合应用，错位相减，不等式恒成立",
-                "hitPeopleCount": 755,
-                "missPeopleCount": 0,
-                "hitRate": 1
-            },
-            {
-                "name": "题目:30",
-                "knowledgePoint": "数列综合应用，错位相减，不等式恒成立",
-                "hitPeopleCount": 755,
-                "missPeopleCount": 0,
-                "hitRate": 1
-            },
-            {
-                "name": "题目:31",
-                "knowledgePoint": "数列综合应用，错位相减，不等式恒成立",
-                "hitPeopleCount": 755,
-                "missPeopleCount": 0,
-                "hitRate": 1
-            }
-        ]
-    }
-}
+var reaultA;
 
 export default class resultAnalysis extends React.Component {
     constructor(props) {
         super(props);
+        reaultA = this;
         this.state = {
             top5StudentListArr: [],
             clazzesArr: [],
@@ -402,6 +53,7 @@ export default class resultAnalysis extends React.Component {
      */
     viewGradeAnalysis(array) {
         var taskId = array[0].split('=')[1];
+        this.setState({taskId});
         var _this = this;
         var param = {
             "method": 'viewGradeAnalysis',
@@ -414,9 +66,6 @@ export default class resultAnalysis extends React.Component {
             method: 'post',
             body: requestParams,
         };
-
-        // var ret = dataF.response;
-        // this.buildAnalysis(ret);
 
         fetch(mobileUrl, obj)
             .then(_this.checkStatus)
@@ -450,7 +99,8 @@ export default class resultAnalysis extends React.Component {
         var clazzes = data.clazzes;   //班级排名
         var clazzesArr = [];
         clazzes.forEach(function (v, i) {
-            var liClass = <li onClick={_this.turnToClassRel.bind(this, v.clazzId)}><b>{v.order}</b>{v.clazzName+'班'}</li>
+            var liClass = <li onClick={_this.turnToClassRel.bind(this, v.clazzId)}><b>{v.order}</b>{v.clazzName + '班'}
+            </li>
             clazzesArr.push(liClass);
         });
 
@@ -511,7 +161,8 @@ export default class resultAnalysis extends React.Component {
      * @param id
      */
     turnToClassRel(id) {
-        window.open("/#/classReaultAnalysis?taskId=" + 1 + "&clazzId=" + id);
+        var taskId = reaultA.state.taskId;
+        window.open("/#/classReaultAnalysis?taskId=" + taskId + "&clazzId=" + id);
 
         /*var url = "http://jiaoxue.maaee.com:8091/#/classReaultAnalysis?taskId=" + 1 + "&clazzId=" + id;
         var data = {};
