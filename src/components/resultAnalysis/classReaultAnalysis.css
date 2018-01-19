@@ -60,13 +60,16 @@
   width: 100%;
   margin-top: 10px;
 }
+.classResult .flexByNoom .placeholder {
+  font-size: 1rem;
+}
 .classResult .flexByNoom {
   display: flex;
   alignItems: center;
   justifyContent: center;
   margin: .7rem .7rem 0 .7rem;
   background: #fff;
-  padding: 2.1rem 0rem;
+  padding: 2.1rem 0rem 0 0;
 }
 .classResult .flexByNoom2 {
   display: flex;
@@ -75,6 +78,13 @@
   margin: 0 .7rem .7rem .7rem;
   background: #fff;
   padding: 2.1rem 0rem;
+}
+.classResult .flexByNoom3 .placeholderBottom {
+  background: #e7f1fd;
+  color: #333;
+}
+.classResult .flexByNoom3 .am-flexbox-item {
+  margin-left: 0;
 }
 .classResult .ulFirstByNoom {
   padding: 0 10px;
@@ -129,4 +139,37 @@
 }
 .classResult .am-flexbox .am-flexbox-item:nth-child(4) .placeholder .color {
   color: #eb6264;
+}
+.classResult .wingblank_list,
+.classResult .wingblank_list2 {
+  margin-left: 0;
+  margin-right: 0;
+}
+.classResult .wingblank_list .am-flexbox-item {
+  margin-left: 0;
+}
+.classResult .wingblank_list .placeholderBottom {
+  margin-top: 0;
+}
+.classResult .wingblank_list .am-flexbox.am-flexbox-align-center:nth-child(odd) .placeholderBottom {
+  background: #fff;
+}
+.classResult .wingblank_list .am-flexbox.am-flexbox-align-center:nth-child(even) .placeholderBottom {
+  background: #fafbfe;
+}
+.classResult .wingblank_list_wrap {
+  width: 100%;
+  overflow-x: auto;
+  overflow-y: hidden;
+}
+.classResult .wingblank_list_cont {
+  width: 200%;
+}
+.classResult .class_table {
+  width: 100%;
+  background: #fff;
+}
+.classResult .class_table table {
+  background: #fff;
+  min-height: 100%;
 }

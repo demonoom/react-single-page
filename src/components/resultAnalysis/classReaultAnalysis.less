@@ -29,18 +29,18 @@
   .placeholder div.le8 {
     padding: 8px 14px;
   }
-  .placeholder div.le8 span{
+  .placeholder div.le8 span {
     display: block;
   }
-  .placeholder div.le8 span.line{
+  .placeholder div.le8 span.line {
     position: relative;
     width: 100%;
     padding-top: 6px;
   }
-  .placeholder div.le8 span.top{
-  margin-bottom: 6px;
-}
-  .placeholder div.le8 span.line:before{
+  .placeholder div.le8 span.top {
+    margin-bottom: 6px;
+  }
+  .placeholder div.le8 span.line:before {
     content: "";
     pointer-events: none;
     box-sizing: border-box;
@@ -53,7 +53,7 @@
     position: absolute;
     width: 100%;
     top: 0%;
-    left:0;
+    left: 0;
   }
   .placeholderBottom {
     background-color: #ebebef;
@@ -64,14 +64,16 @@
     width: 100%;
     margin-top: 10px;
   }
-
+  .flexByNoom .placeholder {
+    font-size: 1rem;
+  }
   .flexByNoom {
     display: flex;
     alignItems: center;
     justifyContent: center;
     margin: .7rem .7rem 0 .7rem;
     background: #fff;
-    padding: 2.1rem 0rem;
+    padding: 2.1rem 0rem 0 0;
   }
   .flexByNoom2 {
     display: flex;
@@ -81,7 +83,13 @@
     background: #fff;
     padding: 2.1rem 0rem;
   }
-
+  .flexByNoom3 .placeholderBottom {
+    background: #e7f1fd;
+    color: #333;
+  }
+  .flexByNoom3 .am-flexbox-item {
+    margin-left: 0;
+  }
   .ulFirstByNoom {
     padding: 0 10px;
     list-style: none;
@@ -128,16 +136,48 @@
     color: #ffffff;
   }
 
-  .am-flexbox .am-flexbox-item:first-child .placeholder div.color{
+  .am-flexbox .am-flexbox-item:first-child .placeholder div.color {
     color: #60b0f3
   }
-  .am-flexbox .am-flexbox-item:nth-child(2) .placeholder div.color{
+  .am-flexbox .am-flexbox-item:nth-child(2) .placeholder div.color {
     color: #56c26b;
   }
-  .am-flexbox .am-flexbox-item:nth-child(3) .placeholder .color{
+  .am-flexbox .am-flexbox-item:nth-child(3) .placeholder .color {
     color: #fe974d
   }
-  .am-flexbox .am-flexbox-item:nth-child(4) .placeholder .color{
+  .am-flexbox .am-flexbox-item:nth-child(4) .placeholder .color {
     color: #eb6264;
+  }
+  .wingblank_list, .wingblank_list2 {
+    margin-left: 0;
+    margin-right: 0;
+  }
+  .wingblank_list .am-flexbox-item {
+    margin-left: 0;
+  }
+  .wingblank_list .placeholderBottom {
+    margin-top: 0;
+  }
+  .wingblank_list .am-flexbox.am-flexbox-align-center:nth-child(odd) .placeholderBottom {
+    background: #fff;
+  }
+  .wingblank_list .am-flexbox.am-flexbox-align-center:nth-child(even) .placeholderBottom {
+    background: #fafbfe
+  }
+  .wingblank_list_wrap {
+    width: 100%;
+    overflow-x: auto;
+    overflow-y: hidden;
+  }
+  .wingblank_list_cont {
+    width: 200%;
+  }
+  .class_table {
+    width: 100%;
+    background: #fff;
+  }
+  .class_table table {
+    background: #fff;
+    min-height: 100%;
   }
 }
