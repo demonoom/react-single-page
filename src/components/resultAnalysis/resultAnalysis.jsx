@@ -5,7 +5,7 @@ import {StickyContainer, Sticky} from 'react-sticky';
 import './reaultAnalysis.less';
 
 // const mobileUrl = 'http://www.maaee.com/Excoord_For_Education/webservice';
-const mobileUrl = 'http://192.168.1.230:9006/Excoord_ApiServer/webservice';
+const mobileUrl = 'http://172.16.2.230:9006/Excoord_ApiServer/webservice';
 
 const tabs = [
     {title: '成绩分析'},

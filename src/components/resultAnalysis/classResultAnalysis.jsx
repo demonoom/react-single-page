@@ -5,7 +5,7 @@ import {StickyContainer, Sticky} from 'react-sticky';
 import './classReaultAnalysis.less';
 
 // const mobileUrl = 'http://www.maaee.com/Excoord_For_Education/webservice';
-const mobileUrl = 'http://192.168.1.230:9006/Excoord_ApiServer/webservice';
+const mobileUrl = 'http://172.16.2.230:9006/Excoord_ApiServer/webservice';
 
 const tabs = [
     {title: '成绩分析'},
@@ -159,7 +159,7 @@ export default class classReaultAnalysis extends React.Component {
         });
 
         if (data.studentList[0].studId == data.studentList[0].studName) {
-            this.setState({isNameShow: 'none'})
+          /*  this.setState({isNameShow: 'none'})*/
         }
         if (data.studentList.length != 0) {
             var studentList = []
@@ -255,8 +255,10 @@ export default class classReaultAnalysis extends React.Component {
                                     {this.state.last5StudentListArr}
                                 </ul>
                             </WingBlank>
-                            <WingBlank size="md">
-                                <Flex>
+                            <div className="wingblank_list_wrap">
+                            <div className="wingblank_list_cont">
+                            <WingBlank size="md" className="wingblank_list2">
+                                <Flex className='flexByNoom3'>
                                     <Flex.Item>
                                         <div className='placeholderBottom'>
                                             <span>学号</span>
@@ -285,16 +287,16 @@ export default class classReaultAnalysis extends React.Component {
                                     </Flex.Item>
                                 </Flex>
                             </WingBlank>
-                            <WingBlank>
+                            <WingBlank className="wingblank_list">
                                 {this.state.studentList}
                             </WingBlank>
-
+                            </div>
+                            </div>
                         </div>
-                        <div style={{
-                            height: document.documentElement.clientHeight - 45,
-                            backgroundColor: '#fff'
+                        <div className="class_table" style={{
+                            height: document.documentElement.clientHeight - 45, background:'#fff'
                         }}>
-                            <table>
+                            <table style={{width:'160%'}}>
                                 <thead>
                                 <td>题号</td>
                                 <td>知识点/考点</td>
