@@ -153,6 +153,7 @@ export default class analysisList extends React.Component {
                     onClick={this.turnToAnaysis.bind(this, rowData.taskId)}
                     className='analysisListDiv'
                 >
+                    <img src={require('./lALPBY0V4uapiOAwMA_48_48.png')}/>
                     {rowData.taskName}
                 </div>
             );
@@ -166,7 +167,7 @@ export default class analysisList extends React.Component {
                         ref={el => this.lv = el}
                         dataSource={this.state.dataSource}    //数据类型是 ListViewDataSource
                         renderFooter={() => (<div style={{padding: 10, textAlign: 'center'}}>
-                            {this.state.isLoading ? '正在加载' : '没有试卷了'}
+                            {this.state.isLoading ? '正在加载' : '没有更多成绩单了'}
                         </div>)}
                         renderRow={row}   //需要的参数包括一行数据等,会返回一个可渲染的组件为这行数据渲染  返回renderable
                         renderSeparator={separator}   //可以不设置的属性  行间距
