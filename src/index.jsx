@@ -31,7 +31,7 @@ class Index extends React.Component {
                     <li><Link to="/analysisList" style={{fontSize: '24px'}}>成绩分析</Link></li>
                     <li><Link to="/s8" style={{fontSize: '24px'}}>下拉刷新</Link></li>
                     <li><Link to="/s9" style={{fontSize: '24px'}}>List</Link></li>
-                    <li><Link to="/searchUserLocationInfo" style={{fontSize: '24px'}}>搜索查看用户位置信息</Link></li>
+                    {/*<li><Link to="/searchUserLocationInfo" style={{fontSize: '24px'}}>搜索查看用户位置信息</Link></li>*/}
                 </ul>
             </div>
         );
