@@ -216,17 +216,17 @@ export default class resultAnalysis extends React.Component {
                                 </ul>
                             </WingBlank>
                         </div>
-                        <div style={{
+                        <div className="class_table" style={{
                             height: document.documentElement.clientHeight - 45,
                             backgroundColor: '#fff'
                         }}>
-                            <table>
+                            <table className="class_table_cont">
                                 <thead>
-                                <td>题号</td>
-                                <td>知识点/考点</td>
-                                <td>年级得分率</td>
-                                <td>答对人数</td>
-                                <td>答错人数</td>
+                                <td className="first">题号</td>
+                                <td className="second">知识点/考点</td>
+                                <td className="three">年级得分率</td>
+                                <td className="three">答对人数</td>
+                                <td className="three">答错人数</td>
                                 </thead>
                                 <tbody>
                                 {this.state.tableArr}
