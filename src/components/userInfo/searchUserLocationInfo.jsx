@@ -26,6 +26,7 @@ export default class searchUserLocationInfo extends React.Component {
             isShowHistoryRecord:{display:'none'},
             isShowUserList:'none',
             isShowEmptyImg:'none',
+            clientHeight:document.body.clientHeight,
             // clicked: 'none',
             // open: false,
             // tabOnClick: 0,
@@ -36,10 +37,12 @@ export default class searchUserLocationInfo extends React.Component {
 
     }
     componentDidMount() {
+
+        this.setState({clientHeight:document.body.clientHeight});
         var historyUserArray = this.state.historyUserArray;
         var isShowHistoryRecord=historyUserArray!=undefined&&historyUserArray.length>0?{display:'block'}:{display:'none'};
         this.setState({isShowHistoryRecord:isShowHistoryRecord});
-        document.title = '搜索查看用户位置信息';
+        document.title = '登录信息查询';
         if(historyUserArray!=undefined&&historyUserArray.length>0){
             this.setState({isShowEmptyImg:'none'});
         }else{
@@ -120,6 +123,7 @@ export default class searchUserLocationInfo extends React.Component {
     };
     saveHistoryRecord=(searchKeyWords)=>{
         var historyUserArray=JSON.parse(localStorage.getItem('historyUserArray'));
+
         if(searchKeyWords!=""&&searchKeyWords!=undefined) {
             this.setState({isShowHistoryRecord: {display: 'none'}});
             this.setState({isShowUserList: 'block'});
@@ -128,12 +132,17 @@ export default class searchUserLocationInfo extends React.Component {
                 historyUserArray = new Array();
                 historyUserArray.unshift(this.state.searchValue);
             } else {
-                if(historyUserArray[0]!=searchKeyWords) {
-                    if (historyUserArray.length == 10) {
-                        historyUserArray.pop();
+                var curArray=new Array();
+                curArray.push(searchKeyWords);
+                historyUserArray.map((i) => {
+                    if(i!=searchKeyWords){
+                        curArray.push(i);
                     }
-                    historyUserArray.unshift(this.state.searchValue);
+                })
+                if (curArray.length == 10) {
+                    curArray.pop();
                 }
+                historyUserArray=curArray;
             }
         }else{
             this.setState({isShowHistoryRecord: {display: 'block'}});
@@ -151,6 +160,9 @@ export default class searchUserLocationInfo extends React.Component {
         this.setState({isShowEmptyImg: 'block'});
         this.setState({isShowHistoryRecord: {display: 'none'}});
 
+    }
+    imgError=(e)=> {
+        e.target.src='http://www.maaee.com:80/Excoord_For_Education/userPhoto/default_avatar.png';
     }
     /**
      *
@@ -197,11 +209,11 @@ export default class searchUserLocationInfo extends React.Component {
                     dataBlob[`${i}`] = topic;
                 }
                 if (isSearch) {    //拉动刷新  获取数据之后再清除原有数据
-                    _this.initDataOther.splice(0);
-                    _this.state.dataSourceOther = [];
-                    _this.state.dataSourceOther = new ListView.DataSource({
-                        rowHasChanged: (row1, row2) => row1 !== row2,
-                    });
+                        _this.initDataOther.splice(0);
+                        _this.state.dataSourceOther = [];
+                        _this.state.dataSourceOther = new ListView.DataSource({
+                            rowHasChanged: (row1, row2) => row1 !== row2,
+                        });
                 }
                 var isLoading=false;
                 if(response.length>0){
@@ -236,7 +248,7 @@ export default class searchUserLocationInfo extends React.Component {
         }
 
         var listStyle={
-            height: document.body.clientHeight,
+            height: _this.state.clientHeight,
             display:_this.state.isShowUserList,
         }
 
@@ -270,7 +282,7 @@ export default class searchUserLocationInfo extends React.Component {
                 <div key={rowID} className="exercises_line userinfo_cont">
                     <div className="my_flex flex_1">
                         <div className="user_face">
-                            <img src={rowData.user.avatar}></img>
+                            <img onError={this.imgError} src={rowData.user.avatar}></img>
                         </div>
                         <div className="flex_auto">
                             <div className="font_15 user_name">
@@ -285,7 +297,7 @@ export default class searchUserLocationInfo extends React.Component {
                     <div className="font_14">
                         <div className="color_9" style={isAndroidShow}>
                             <div className="my_flex padding_8"><span className="color_9 userinfo_left">设备名称</span><span className="userinfo_right flex_auto">{isAndroidEmpty?rowData.androidLoginRecord.deviceName:"暂无数据"}</span></div>
-                            <div className="my_flex padding_8"><span className="color_9 userinfo_left">设备类型</span><span className="userinfo_right flex_auto"><img className="icon_ios" src={require('./icon_android.png')}/>{isAndroidEmpty?rowData.androidLoginRecord.machineType:"暂无数据"}</span></div>
+                            <div className="my_flex padding_8"><span className="color_9 userinfo_left">设备类型</span><span className="userinfo_right flex_auto"> <img className="icon_ios" src={require('./icon_android.png')}/>{isAndroidEmpty?rowData.androidLoginRecord.machineType:"暂无数据"}</span></div>
                             <div className="my_flex padding_8"><span className="color_9 userinfo_left">登录地址</span><span className="userinfo_right flex_auto">{isAndroidEmpty?rowData.androidLoginRecord.address:""}</span></div>
                             <div className="my_flex padding_8"><span className="color_9 userinfo_left">登录时间</span><span className="userinfo_right flex_auto">{isAndroidEmpty?rowData.androidLoginRecord.accessTime:"暂无数据"}</span></div>
                         </div>
