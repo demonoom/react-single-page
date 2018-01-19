@@ -100,11 +100,13 @@
       font-size: 14px;
       height: 44px;
       line-height: 44px;
-      border-bottom: 0.5px solid #e5e5e5;
       color: #666666;
+      position: relative;
       span {
         float: right;
         color: #666666;
+        margin-right: 0.85rem;
+
       }
       b {
         float: left;
@@ -115,7 +117,23 @@
         height: 60%;
         float: left;
         transform: translateY(25%);
+        margin-left: 0.85rem;
       }
+    }
+    li:before {
+      content: "";
+      pointer-events: none;
+      box-sizing: border-box;
+      border: none;
+      border-bottom: 1px solid #e8e8e8;
+      height: 200%;
+      transform: scaleY(0.5);
+      transform-origin: 0 0;
+      -webkit-transform: scaleY(0.5);
+      position: absolute;
+      width: 100%;
+      top: 0;
+      left: 0;
     }
   }
 
@@ -157,6 +175,7 @@
   }
   .wingblank_list .placeholderBottom {
     margin-top: 0;
+    color: #666;
   }
   .wingblank_list .am-flexbox.am-flexbox-align-center:nth-child(odd) .placeholderBottom {
     background: #fff;
@@ -175,9 +194,46 @@
     width: 100%;
     background: #fff;
   }
-  .class_table table {
+  .class_table_cont{
     background: #fff;
     min-height: 100%;
     width: 160%;
+    border-spacing: 0;
+  }
+  .class_table_cont thead td{
+    background: #e7f1fd;
+    color: #333;
+    text-align: center;
+    height: 40px;
+    line-height: 40px;
+    margin-top: 10px;
+  }
+  .class_table_cont tbody tr td{
+    text-align: center;
+    min-height: 40px;
+    line-height: 20px;
+    color: #666;
+    padding: 10px 0;
+    word-wrap: break-word;
+    word-break: break-all;
+    white-space: pre-wrap;
+  }
+  .class_table_cont tbody tr:nth-child(odd){
+    background: #fff;
+  }
+  .class_table_cont tbody tr:nth-child(even){
+    background: #fafbfe;
+  }
+  .class_table_cont thead td.first, .class_table_cont tbody tr td.first{
+    width: 12%;
+  }
+  .class_table_cont thead td.second, .class_table_cont tbody tr td.second{
+    width:43%
+  }
+  .class_table_cont thead td.three, .class_table_cont tbody tr td.three{
+    width: 15%;
+  }
+  .class_table_cont tbody tr td:nth-child(2){
+    text-align: left;
   }
 }
