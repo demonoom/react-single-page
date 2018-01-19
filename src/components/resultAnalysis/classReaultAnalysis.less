@@ -172,15 +172,35 @@
   }
   .wingblank_list .am-flexbox-item {
     margin-left: 0;
+    min-height: 40px;
+    line-height: 20px;
+    padding: 10px 0;
+    word-wrap: break-word;
+    word-break: break-all;
+    white-space: pre-wrap;
+    height: auto;
+  }
+  .wingblank_list .am-flexbox-item:last-child{
+    padding-right: 1rem;
+  }
+  .wingblank_list .am-flexbox-item:last-child .placeholderBottom:last-child{
+    text-align: left;
   }
   .wingblank_list .placeholderBottom {
     margin-top: 0;
     color: #666;
+    min-height: 22px;
+    line-height: 22px;
+    padding: 0;
+    word-wrap: break-word;
+    word-break: break-all;
+    white-space: pre-wrap;
+    height: auto;
   }
-  .wingblank_list .am-flexbox.am-flexbox-align-center:nth-child(odd) .placeholderBottom {
+  .wingblank_list .am-flexbox.am-flexbox-align-center:nth-child(odd), .wingblank_list .am-flexbox.am-flexbox-align-center:nth-child(odd) .placeholderBottom {
     background: #fff;
   }
-  .wingblank_list .am-flexbox.am-flexbox-align-center:nth-child(even) .placeholderBottom {
+  .wingblank_list .am-flexbox.am-flexbox-align-center:nth-child(even), .wingblank_list .am-flexbox.am-flexbox-align-center:nth-child(even) .placeholderBottom {
     background: #fafbfe
   }
   .wingblank_list_wrap {
@@ -189,6 +209,7 @@
   }
   .wingblank_list_cont {
     width: 200%;
+    background: #fff;
   }
   .class_table {
     width: 100%;

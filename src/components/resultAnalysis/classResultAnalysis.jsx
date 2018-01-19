@@ -193,7 +193,7 @@ export default class classReaultAnalysis extends React.Component {
                     </Flex.Item>
                     <Flex.Item>
                         <div className='placeholderBottom'>
-                            <span>{v.badTopics.join(',')}</span>
+                            <span>{v.badTopics.join('，')}</span>
                         </div>
                     </Flex.Item>
                 </Flex>
