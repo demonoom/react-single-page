@@ -164,7 +164,7 @@ export default class classReaultAnalysis extends React.Component {
         });
 
         if (data.studentList[0].studId == data.studentList[0].studName) {
-          /*  this.setState({isNameShow: 'none'})*/
+            this.setState({isNameShow: 'none'})
         }
         if (data.studentList.length != 0) {
             var studentList = []
