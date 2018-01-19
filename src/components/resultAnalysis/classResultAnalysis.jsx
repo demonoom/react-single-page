@@ -155,8 +155,7 @@ export default class classReaultAnalysis extends React.Component {
         topData.forEach(function (v, i) {
             var flex = <Flex.Item>
                 <div className='placeholder'>
-                    <div className="font_20 color le8"><span className="top">{v.score}</span><span
-                        className="line">{v.scoreBot}</span></div>
+                    <div className="color le8"><span className="font_20 top">{v.score}</span><span className="font_16 line">{v.scoreBot}</span></div>
                     <div>{v.str}<br></br>{v.strElse}</div>
                 </div>
             </Flex.Item>;
@@ -301,13 +300,13 @@ export default class classReaultAnalysis extends React.Component {
                         <div className="class_table" style={{
                             height: document.documentElement.clientHeight - 45, background:'#fff'
                         }}>
-                            <table style={{width:'160%'}}>
+                            <table className="class_table_cont">
                                 <thead>
-                                <td>题号</td>
-                                <td>知识点/考点</td>
-                                <td>班级得分率</td>
-                                <td>答对人数</td>
-                                <td>答错人数</td>
+                                <td className="first">题号</td>
+                                <td className="second">知识点/考点</td>
+                                <td className="three">班级得分率</td>
+                                <td className="three">答对人数</td>
+                                <td className="three">答错人数</td>
                                 </thead>
                                 <tbody>
                                 {this.state.tableArr}

@@ -137,12 +137,8 @@ export default class analysisList extends React.Component {
 
         //上下行间距
         const separator = (sectionID, rowID) => (
-            <div
+            <div className="line"
                 key={`${sectionID}-${rowID}`}
-                style={{
-                    height: 1,
-                    borderTop: '1px solid #ECECED',
-                }}
             />
         );
 
@@ -161,7 +157,6 @@ export default class analysisList extends React.Component {
 
         return (
             <div className='analysisList'>
-                <WhiteSpace size='sm'/>
                 <WingBlank size='sm'>
                     <ListView
                         ref={el => this.lv = el}
