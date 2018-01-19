@@ -471,8 +471,8 @@ export default class classReaultAnalysis extends React.Component {
         var gradeAve = data.gradeAve.toFixed(1);  //年级平均分
         var topDiv = <Flex.Item>
             <div className='placeholder'>
-                <span>{clazzMax + '/' + gradeMax}</span>
-                <span>最高分(班级/年级)</span>
+                <div className="font_20 color le8">{clazzMax + '/' + gradeMax}</div>
+                <div>最高分(班级/年级)</div>
             </div>
         </Flex.Item>;
 
