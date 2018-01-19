@@ -4,7 +4,7 @@ import {ListView, WingBlank, Toast, WhiteSpace} from 'antd-mobile';
 import './analysisList.less';
 
 // const mobileUrl = 'http://www.maaee.com/Excoord_For_Education/webservice';
-const mobileUrl = 'http://192.168.1.230:9006/Excoord_ApiServer/webservice';
+const mobileUrl = 'http://172.16.2.230:9006/Excoord_ApiServer/webservice';
 
 export default class analysisList extends React.Component {
     constructor(props) {
@@ -81,6 +81,7 @@ export default class analysisList extends React.Component {
             .then(data => ({data}))
             .catch(err => ({err}))
             .then(function (result) {
+                console.log(result);
                 var response = result.data.response;
                 if (result.data.success == true && result.data.msg == '调用成功') {
                     //  获得数据
@@ -113,7 +114,7 @@ export default class analysisList extends React.Component {
         _this.viewPaperAnalysisTaskPage();
         this.setState({
             dataSource: this.state.dataSource.cloneWithRows(this.initData),
-            isLoading: false,
+            isLoading: true,
         });
     };
 
@@ -180,7 +181,7 @@ export default class analysisList extends React.Component {
                         scrollRenderAheadDistance={200}   //当一个行接近屏幕范围多少像素之内的时候，就开始渲染这一行
                         onEndReached={this.onEndReached}  //当所有的数据都已经渲染过，并且列表被滚动到距离最底部不足onEndReachedThreshold个像素的距离时调用
                         onEndReachedThreshold={10}  //调用onEndReached之前的临界值，单位是像素  number类型
-                        initialListSize={10}   //指定在组件刚挂载的时候渲染多少行数据，用这个属性来确保首屏显示合适数量的数据
+                        initialListSize={15}   //指定在组件刚挂载的时候渲染多少行数据，用这个属性来确保首屏显示合适数量的数据
                         scrollEventThrottle={20}     //控制在滚动过程中，scroll事件被调用的频率
                         style={{
                             height: document.body.clientHeight,

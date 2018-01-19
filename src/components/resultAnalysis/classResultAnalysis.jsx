@@ -1,11 +1,11 @@
 import React from 'react';
 import fetch from 'dva/fetch'
-import {Tabs, Flex, List, WingBlank, Toast} from 'antd-mobile';
+import {Tabs, Flex, WingBlank, Toast, ActivityIndicator, WhiteSpace} from 'antd-mobile';
 import {StickyContainer, Sticky} from 'react-sticky';
 import './classReaultAnalysis.less';
 
 // const mobileUrl = 'http://www.maaee.com/Excoord_For_Education/webservice';
-const mobileUrl = 'http://192.168.1.230:9006/Excoord_ApiServer/webservice';
+const mobileUrl = 'http://172.16.2.230:9006/Excoord_ApiServer/webservice';
 
 const tabs = [
     {title: '成绩分析'},
@@ -22,6 +22,8 @@ export default class classReaultAnalysis extends React.Component {
             topDiv: '',
             isNameShow: 'block',
             tableArr: [],
+            animating: true,   //动画状态
+            mainDiv: 'none',
         }
     }
 
@@ -73,12 +75,14 @@ export default class classReaultAnalysis extends React.Component {
             .then(data => ({data}))
             .catch(err => ({err}))
             .then(function (result) {
+                _this.setState({animating: false});
                 var ret = result.data.response;
                 if (result.data.success == true && result.data.msg == '调用成功') {
                     //  获得数据
                     _this.buildAnalysis(ret);
+                    _this.setState({mainDiv: 'block'})
                 } else {
-                    Toast.fail(result.data.msg, 1);
+                    Toast.fail(result.data.msg, 3);
                 }
             });
     }
@@ -123,25 +127,25 @@ export default class classReaultAnalysis extends React.Component {
         var topData = [
             {
                 score: clazzOrder,
-                scoreBot:clazzCount,
+                scoreBot: clazzCount,
                 str: '班级排名',
                 strElse: '/班级总数'
             },
             {
                 score: clazzAve,
-                scoreBot:gradeAve,
+                scoreBot: gradeAve,
                 str: '平均分',
                 strElse: '(班级/年级)'
             },
             {
                 score: clazzExcellentRate,
-                scoreBot:gradeExcellentRate,
+                scoreBot: gradeExcellentRate,
                 str: '优秀率(%)',
                 strElse: '(班级/年级)'
             },
             {
                 score: clazzPassingRate,
-                scoreBot:gradePassingRate,
+                scoreBot: gradePassingRate,
                 str: '及格率(%)',
                 strElse: '(班级/年级)'
             },
@@ -151,7 +155,8 @@ export default class classReaultAnalysis extends React.Component {
         topData.forEach(function (v, i) {
             var flex = <Flex.Item>
                 <div className='placeholder'>
-                    <div className="font_20 color le8"><span className="top">{v.score}</span><span className="line">{v.scoreBot}</span></div>
+                    <div className="font_20 color le8"><span className="top">{v.score}</span><span
+                        className="line">{v.scoreBot}</span></div>
                     <div>{v.str}<br></br>{v.strElse}</div>
                 </div>
             </Flex.Item>;
@@ -224,7 +229,7 @@ export default class classReaultAnalysis extends React.Component {
 
         return (
             <div className='classResult'>
-                <StickyContainer>
+                <StickyContainer style={{display: this.state.mainDiv}}>
                     <Tabs tabs={tabs}
                           initalPage={0}
                           renderTabBar={this.renderTabBar}
@@ -309,6 +314,19 @@ export default class classReaultAnalysis extends React.Component {
                         </div>
                     </Tabs>
                 </StickyContainer>
+
+                <WingBlank>
+                    <div className="toast-container">
+                        <WhiteSpace size="xl"/>
+                        <div className="toast-example">
+                            <ActivityIndicator
+                                toast
+                                text="正在加载..."
+                                animating={this.state.animating}
+                            />
+                        </div>
+                    </div>
+                </WingBlank>
             </div>
         );
     }

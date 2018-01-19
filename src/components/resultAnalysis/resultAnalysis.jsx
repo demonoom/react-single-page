@@ -1,11 +1,11 @@
 import React from 'react';
 import fetch from 'dva/fetch'
-import {Tabs, Flex, WingBlank, Toast} from 'antd-mobile';
+import {Tabs, Flex, WingBlank, Toast, ActivityIndicator, WhiteSpace} from 'antd-mobile';
 import {StickyContainer, Sticky} from 'react-sticky';
 import './reaultAnalysis.less';
 
 // const mobileUrl = 'http://www.maaee.com/Excoord_For_Education/webservice';
-const mobileUrl = 'http://192.168.1.230:9006/Excoord_ApiServer/webservice';
+const mobileUrl = 'http://172.16.2.230:9006/Excoord_ApiServer/webservice';
 
 const tabs = [
     {title: '成绩分析'},
@@ -23,6 +23,8 @@ export default class resultAnalysis extends React.Component {
             clazzesArr: [],
             topDataArr: [],
             tableArr: [],
+            animating: true,   //动画状态
+            mainDiv: 'none',
         }
     }
 
@@ -73,12 +75,14 @@ export default class resultAnalysis extends React.Component {
             .then(data => ({data}))
             .catch(err => ({err}))
             .then(function (result) {
+                _this.setState({animating: false});
                 var ret = result.data.response;
                 if (result.data.success == true && result.data.msg == '调用成功') {
                     //  获得数据
                     _this.buildAnalysis(ret);
+                    _this.setState({mainDiv: 'block'})
                 } else {
-                    Toast.fail(result.data.msg, 1);
+                    Toast.fail(result.data.msg, 3);
                 }
             });
     }
@@ -183,7 +187,7 @@ export default class resultAnalysis extends React.Component {
 
         return (
             <div className='result'>
-                <StickyContainer>
+                <StickyContainer style={{display: this.state.mainDiv}}>
                     <Tabs tabs={tabs}
                           initalPage={0}
                           renderTabBar={this.renderTabBar}
@@ -231,6 +235,18 @@ export default class resultAnalysis extends React.Component {
                         </div>
                     </Tabs>
                 </StickyContainer>
+                <WingBlank>
+                    <div className="toast-container">
+                        <WhiteSpace size="xl"/>
+                        <div className="toast-example">
+                            <ActivityIndicator
+                                toast
+                                text="正在加载..."
+                                animating={this.state.animating}
+                            />
+                        </div>
+                    </div>
+                </WingBlank>
             </div>
         );
     }
