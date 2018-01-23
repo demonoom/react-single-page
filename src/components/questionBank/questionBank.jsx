@@ -708,10 +708,8 @@ export default class questionBank extends React.Component {
                                     <div dangerouslySetInnerHTML={{__html: rowData.content}}
                                          className="flex_1 exercises_cont"></div>
                                     <div className="flex_70">
-                                        <span>本校</span>
-                                    </div>
-                                    <div className="flex_70"><span
-                                        className={rowData.subjectType}>{rowData.typeName}</span>
+                                        <span className="margin_10 blue_solid">本校</span>
+                                        <span className={rowData.subjectType}>{rowData.typeName}</span>
                                     </div>
                                 </div>
                             </div>
@@ -731,8 +729,8 @@ export default class questionBank extends React.Component {
                                 <div style={{lineHeight: 1}} className="flex_1 my_flex">
                                     <div dangerouslySetInnerHTML={{__html: rowData.content}}
                                          className="flex_1 exercises_cont"></div>
-                                    <div className="flex_70"><span
-                                        className={rowData.subjectType}>{rowData.typeName}</span>
+                                    <div className="flex_70">
+                                        <span className={rowData.subjectType}>{rowData.typeName}</span>
                                     </div>
                                 </div>
                             </div>
@@ -759,10 +757,8 @@ export default class questionBank extends React.Component {
                                     <div dangerouslySetInnerHTML={{__html: rowData.content}}
                                          className="flex_1 exercises_cont"></div>
                                     <div className="flex_70">
-                                        <span>本校</span>
-                                    </div>
-                                    <div className="flex_70"><span
-                                        className={rowData.subjectType}>{rowData.typeName}</span>
+                                        <span className="margin_10 blue_solid">本校</span>
+                                        <span className={rowData.subjectType}>{rowData.typeName}</span>
                                     </div>
                                 </div>
                             </div>
@@ -782,8 +778,8 @@ export default class questionBank extends React.Component {
                                 <div style={{lineHeight: 1}} className="flex_1 my_flex">
                                     <div dangerouslySetInnerHTML={{__html: rowData.content}}
                                          className="flex_1 exercises_cont"></div>
-                                    <div className="flex_70"><span
-                                        className={rowData.subjectType}>{rowData.typeName}</span>
+                                    <div className="flex_70">
+                                        <span className={rowData.subjectType}>{rowData.typeName}</span>
                                     </div>
                                 </div>
                             </div>
