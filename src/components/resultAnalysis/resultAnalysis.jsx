@@ -166,15 +166,15 @@ export default class resultAnalysis extends React.Component {
      */
     turnToClassRel(id) {
         var taskId = reaultA.state.taskId;
-        // window.open("/#/classReaultAnalysis?taskId=" + taskId + "&clazzId=" + id);
+        window.open("/#/classReaultAnalysis?taskId=" + taskId + "&clazzId=" + id);
 
-        var url = "http://172.16.2.53:8091/#/classReaultAnalysis?taskId=" + taskId + "&clazzId=" + id;
-        var data = {};
-        data.method = 'openNewPage';
-        data.url = url;
-        Bridge.callHandler(data, null, function (error) {
-            window.location.href = url;
-        });
+        // var url = "http://172.16.2.53:8091/#/classReaultAnalysis?taskId=" + taskId + "&clazzId=" + id;
+        // var data = {};
+        // data.method = 'openNewPage';
+        // data.url = url;
+        // Bridge.callHandler(data, null, function (error) {
+        //     window.location.href = url;
+        // });
     }
 
     renderTabBar(props) {
