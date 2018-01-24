@@ -1,5 +1,7 @@
 import React from 'react';
 import fetch from 'dva/fetch'
+import ReactEcharts from 'echarts-for-react';
+import echarts from 'echarts';
 import {Tabs, Flex, WingBlank, Toast, ActivityIndicator, WhiteSpace} from 'antd-mobile';
 import {StickyContainer, Sticky} from 'react-sticky';
 import './classReaultAnalysis.less';
@@ -23,7 +25,10 @@ export default class classReaultAnalysis extends React.Component {
             isNameShow: 'block',
             tableArr: [],
             animating: true,   //动画状态
-            mainDiv: 'none',
+            mainDiv: 'hidden',
+            radarIndicator:[],
+            seriesvalue:[],
+            radarOption:{}
         }
     }
 
@@ -80,7 +85,7 @@ export default class classReaultAnalysis extends React.Component {
                 if (result.data.success == true && result.data.msg == '调用成功') {
                     //  获得数据
                     _this.buildAnalysis(ret);
-                    _this.setState({mainDiv: 'block'})
+                    _this.setState({mainDiv: 'visible'})
                 } else {
                     Toast.fail(result.data.msg, 3);
                 }
@@ -200,7 +205,8 @@ export default class classReaultAnalysis extends React.Component {
                 studentList.push(stu);
             })
         }
-
+        var radarIndicator=[];
+        var seriesValue=[];
         var tableArr = [];
         if (data.topics.length != 0) {
             data.topics.forEach(function (v, i) {
@@ -212,9 +218,16 @@ export default class classReaultAnalysis extends React.Component {
                     <td>{v.missPeopleCount}</td>
                 </tr>;
                 tableArr.push(tb);
+                var name = v.name;
+                var max = v.max;
+                var nameJson = { name: name, max: max};
+                var hit = v.hit;
+                radarIndicator.push(nameJson);
+                seriesValue.push(hit);
             });
         }
-
+        console.log(data.topics);
+        this.buildRadarOption(radarIndicator,seriesValue);
         this.setState({top5StudentListArr, last5StudentListArr, topDataArr, topDiv, studentList, tableArr});
     }
 
@@ -224,11 +237,60 @@ export default class classReaultAnalysis extends React.Component {
         </Sticky>);
     }
 
+    buildRadarOption(radarIndicator,seriesValue){
+        var _this = this;
+        var radarOption = {
+            title: {
+                text: '题目雷达图'
+            },
+            tooltip: {},
+            legend: {
+                data: ['得分率']
+            },
+            radar: {
+                // shape: 'circle',
+                name: {
+                    textStyle: {
+                        color: '#fff',
+                        backgroundColor: '#999',
+                        borderRadius: 3,
+                        padding: [3, 5]
+                    }
+                },
+                /*indicator: [
+                    { name: '销售（sales）', max: 6500},
+                    { name: '管理（Administration）', max: 16000},
+                    { name: '信息技术（Information Techology）', max: 30000},
+                    { name: '客服（Customer Support）', max: 38000},
+                    { name: '研发（Development）', max: 52000},
+                    { name: '市场（Marketing）', max: 25000}
+                ]*/
+                indicator: radarIndicator,
+                splitNumber:5, //让雷达图等分为10份
+            },
+            series: [{
+                name: '得分率',
+                type: 'radar',
+                // areaStyle: {normal: {}},
+                data : [
+                    {
+                        // value : [4300, 10000, 28000, 35000, 50000, 19000],
+                        value :seriesValue,
+                        name : '得分率'
+                    }
+                ],
+                silent:true
+                //label:{show:true}   //在图中的数据点上显示具体的数值
+            }]
+        };
+        this.setState({"radarOption":radarOption});
+    }
+
     render() {
 
         return (
             <div className='classResult'>
-                <StickyContainer style={{display: this.state.mainDiv}}>
+                <StickyContainer style={{visibility: this.state.mainDiv}}>
                     <Tabs tabs={tabs}
                           initalPage={0}
                           renderTabBar={this.renderTabBar}
@@ -300,6 +362,10 @@ export default class classReaultAnalysis extends React.Component {
                         <div className="class_table" style={{
                             height: document.documentElement.clientHeight - 45, background:'#fff'
                         }}>
+                            <ReactEcharts
+                                option={this.state.radarOption}
+                                style={{height: '500px', width: '100%'}}
+                                className='react_for_echarts' />
                             <table className="class_table_cont">
                                 <thead>
                                 <td className="first">题号</td>

@@ -238,7 +238,8 @@ export default class resultAnalysis extends React.Component {
                         value :seriesValue,
                         name : '得分率'
                     }
-                ]
+                ],
+                silent:true
                 //label:{show:true}   //在图中的数据点上显示具体的数值
             }]
         };
