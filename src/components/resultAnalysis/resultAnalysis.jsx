@@ -201,15 +201,15 @@ export default class resultAnalysis extends React.Component {
         var _this = this;
         var radarOption = {
             title: {
-                text: '题目雷达图',
-                textStyle: {
+                text: '题目得分率统计',
+                /*textStyle: {
                     fontSize: '14px',
-                },
+                },*/
             },
             tooltip: {},
-            legend: {
+            /*legend: {
                 data: ['得分率']
-            },
+            },*/
             radar: {
                 // shape: 'circle',
                 name: {

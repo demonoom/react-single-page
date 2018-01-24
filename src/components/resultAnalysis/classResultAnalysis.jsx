@@ -241,12 +241,12 @@ export default class classReaultAnalysis extends React.Component {
         var _this = this;
         var radarOption = {
             title: {
-                text: '题目雷达图'
+                text: '题目得分率统计'
             },
             tooltip: {},
-            legend: {
+            /*legend: {
                 data: ['得分率']
-            },
+            },*/
             radar: {
                 // shape: 'circle',
                 name: {
