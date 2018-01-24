@@ -1,4 +1,6 @@
 import React from 'react';
+import ReactEcharts from 'echarts-for-react';
+import echarts from 'echarts';
 import fetch from 'dva/fetch'
 import {Tabs, Flex, WingBlank, Toast, ActivityIndicator, WhiteSpace} from 'antd-mobile';
 import {StickyContainer, Sticky} from 'react-sticky';
@@ -25,6 +27,9 @@ export default class resultAnalysis extends React.Component {
             tableArr: [],
             animating: true,   //动画状态
             mainDiv: 'none',
+            radarIndicator:[],
+            seriesvalue:[],
+            radarOption:{}
         }
     }
 
@@ -142,7 +147,8 @@ export default class resultAnalysis extends React.Component {
             </Flex.Item>;
             topDataArr.push(flex);
         });
-
+        var radarIndicator=[];
+        var seriesValue=[];
         var tableArr = [];
         if (data.topics.length != 0) {
             data.topics.forEach(function (v, i) {
@@ -154,8 +160,16 @@ export default class resultAnalysis extends React.Component {
                     <td>{v.missPeopleCount}</td>
                 </tr>;
                 tableArr.push(tb);
+                var name = v.name;
+                var max = v.max;
+                var nameJson = { name: name, max: max};
+                var hit = v.hit;
+                radarIndicator.push(nameJson);
+                seriesValue.push(hit);
             });
         }
+        console.log(data.topics);
+        this.buildRadarOption(radarIndicator,seriesValue);
         this.setState({top5StudentListArr, clazzesArr, topDataArr, tableArr});
 
     }
@@ -181,6 +195,53 @@ export default class resultAnalysis extends React.Component {
         return (<Sticky>
             {({style}) => <div style={{...style, zIndex: 1}}><Tabs.DefaultTabBar {...props} /></div>}
         </Sticky>);
+    }
+
+    buildRadarOption(radarIndicator,seriesValue){
+        var _this = this;
+        var radarOption = {
+            title: {
+                text: '题目雷达图'
+            },
+            tooltip: {},
+            legend: {
+                data: ['得分率']
+            },
+            radar: {
+                // shape: 'circle',
+                name: {
+                    textStyle: {
+                        color: '#fff',
+                        backgroundColor: '#999',
+                        borderRadius: 3,
+                        padding: [3, 5]
+                    }
+                },
+                /*indicator: [
+                    { name: '销售（sales）', max: 6500},
+                    { name: '管理（Administration）', max: 16000},
+                    { name: '信息技术（Information Techology）', max: 30000},
+                    { name: '客服（Customer Support）', max: 38000},
+                    { name: '研发（Development）', max: 52000},
+                    { name: '市场（Marketing）', max: 25000}
+                ]*/
+                indicator: radarIndicator,
+                splitNumber:10,
+            },
+            series: [{
+                name: '得分率',
+                type: 'radar',
+                // areaStyle: {normal: {}},
+                data : [
+                    {
+                        // value : [4300, 10000, 28000, 35000, 50000, 19000],
+                        value :seriesValue,
+                        name : '得分率'
+                    }
+                ]
+            }]
+        };
+        this.setState({"radarOption":radarOption});
     }
 
     render() {
@@ -220,6 +281,10 @@ export default class resultAnalysis extends React.Component {
                             height: document.documentElement.clientHeight - 45,
                             backgroundColor: '#fff'
                         }}>
+                            <ReactEcharts
+                                option={this.state.radarOption}
+                                style={{height: '500px', width: '100%'}}
+                                className='react_for_echarts' />
                             <table className="class_table_cont">
                                 <thead>
                                 <td className="first">题号</td>
