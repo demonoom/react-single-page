@@ -201,7 +201,10 @@ export default class resultAnalysis extends React.Component {
         var _this = this;
         var radarOption = {
             title: {
-                text: '题目雷达图'
+                text: '题目雷达图',
+                textStyle: {
+                    fontSize: '14px',
+                },
             },
             tooltip: {},
             legend: {

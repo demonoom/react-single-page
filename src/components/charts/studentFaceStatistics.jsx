@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactEcharts from 'echarts-for-react';
-
+import './studentFaceStatistics.css'
 
 
 export default class studentFaceStatistics extends React.Component{
