@@ -16,7 +16,8 @@ import fetch from 'dva/fetch'
 import './questionBank.css'
 
 /*请求地址*/
-const mobileUrl = 'http://www.maaee.com/Excoord_For_Education/webservice';
+// const mobileUrl = 'http://www.maaee.com/Excoord_For_Education/webservice';
+const mobileUrl = 'http://192.168.1.140:9006/Excoord_ApiServer/webservice';
 
 const CheckboxItem = Checkbox.CheckboxItem;
 
@@ -113,6 +114,7 @@ export default class questionBank extends React.Component {
         //     "tittle":'你好'
         // };
         localStorage.setItem("loginUser", JSON.stringify(loginUser));
+        this.getUserByAccount(ident);
     }
 
     componentDidMount() {
@@ -143,6 +145,31 @@ export default class questionBank extends React.Component {
         throw error;
     }
 
+    getUserByAccount(id) {
+        var _this = this;
+        var param = {
+            "method": 'getUserByAccount',
+            "account": 'te' + id,
+        };
+
+        var requestParams = encodeURI("params=" + JSON.stringify(param));
+
+        var obj = {
+            method: 'post',
+            body: requestParams,
+        };
+
+        fetch(mobileUrl, obj)
+            .then(_this.checkStatus)
+            .then(_this.parseJSON)
+            .then(data => ({data}))
+            .catch(err => ({err}))
+            .then(function (result) {
+                var response = result.data.response.schoolId;
+                _this.setState({schoolId: response});
+            });
+    }
+
     /**
      * 根据资源库的知识点id获取知识点下的题目
      */
@@ -156,7 +183,8 @@ export default class questionBank extends React.Component {
             "ident": loginUser.ident,
             "pointId": loginUser.pointId,
             "pageNo": PageNo,
-            "isOwmer": "Y"
+            "isOwmer": "Y",
+            "subjectVisible": ''
         };
 
         var requestParams = encodeURI("params=" + JSON.stringify(param));
@@ -207,7 +235,8 @@ export default class questionBank extends React.Component {
             "ident": loginUser.ident,
             "pointId": loginUser.pointId,
             "pageNo": PageNo,
-            "isOwmer": "N"
+            "isOwmer": "N",
+            "subjectVisible": ''
         };
 
         var requestParams = encodeURI("params=" + JSON.stringify(param));
@@ -360,7 +389,7 @@ export default class questionBank extends React.Component {
     showActionSheet = () => {
         var _this = this;
         if (this.state.tabOnClick == 0) {
-            var BUTTONS = ['全选', '取消全选', '使用', '删除', '添加题目'];
+            var BUTTONS = ['全选', '取消全选', '使用', '删除',];
         } else {
             var BUTTONS = ['全选', '取消全选', '使用'];
         }
@@ -482,13 +511,14 @@ export default class questionBank extends React.Component {
      * 删除课程
      */
     delClass() {
+        var loginUser = JSON.parse(localStorage.getItem('loginUser'));
         var _this = this;
         var arr = this.state.delCheckBoxCheckedArr;
         var subjectsIds = arr.join(',');
         var param = {
             "method": 'delMySubjects',
             "subjects": subjectsIds,
-            "userId": '54208',
+            "userId": loginUser.ident,
         };
 
         var requestParams = encodeURI("params=" + JSON.stringify(param));
@@ -636,6 +666,7 @@ export default class questionBank extends React.Component {
 
     render() {
         var scheduleNameArr = [];
+        var schoolId = this.state.schoolId;
         if (typeof(this.state.scheduleNameArr) != 'undefined') {
             scheduleNameArr = this.state.scheduleNameArr;
         }
@@ -663,48 +694,99 @@ export default class questionBank extends React.Component {
         );
         //左边每一道题的div
         const row = (rowData, sectionID, rowID) => {
-            return (
-                <div key={rowID} className="exercises_line">
-                    <CheckboxItem
-                        key={rowData.id}
-                        onChange={() => this.checkBoxOnChange(event, rowData.id, rowID)}
-                        className="noomCkeckBox"
-                    >
-                        <div style={{display: '-webkit-box', display: 'flex'}}
-                             onClick={this.rowOnClick.bind(this, rowData)}>
-                            <div style={{lineHeight: 1}} className="flex_1 my_flex">
-                                <div dangerouslySetInnerHTML={{__html: rowData.content}}
-                                     className="flex_1 exercises_cont"></div>
-                                <div className="flex_70"><span className={rowData.subjectType}>{rowData.typeName}</span>
+            if (rowData.ownerSchoolid == schoolId) {
+                return (
+                    <div key={rowID} className="exercises_line">
+                        <CheckboxItem
+                            key={rowData.id}
+                            onChange={() => this.checkBoxOnChange(event, rowData.id, rowID)}
+                            className="noomCkeckBox"
+                        >
+                            <div style={{display: '-webkit-box', display: 'flex'}}
+                                 onClick={this.rowOnClick.bind(this, rowData)}>
+                                <div style={{lineHeight: 1}} className="flex_1 my_flex">
+                                    <div dangerouslySetInnerHTML={{__html: rowData.content}}
+                                         className="flex_1 exercises_cont"></div>
+                                    <div className="flex_70">
+                                        <span className="margin_10 blue_solid">本校</span>
+                                        <span className={rowData.subjectType}>{rowData.typeName}</span>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                    </CheckboxItem>
-                </div>
-            );
+                        </CheckboxItem>
+                    </div>
+                );
+            } else {
+                return (
+                    <div key={rowID} className="exercises_line">
+                        <CheckboxItem
+                            key={rowData.id}
+                            onChange={() => this.checkBoxOnChange(event, rowData.id, rowID)}
+                            className="noomCkeckBox"
+                        >
+                            <div style={{display: '-webkit-box', display: 'flex'}}
+                                 onClick={this.rowOnClick.bind(this, rowData)}>
+                                <div style={{lineHeight: 1}} className="flex_1 my_flex">
+                                    <div dangerouslySetInnerHTML={{__html: rowData.content}}
+                                         className="flex_1 exercises_cont"></div>
+                                    <div className="flex_70">
+                                        <span className={rowData.subjectType}>{rowData.typeName}</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </CheckboxItem>
+                    </div>
+                );
+            }
         };
 
         //右边每一道题的div(暂时废弃)
         const rowRight = (rowData, sectionID, rowID) => {
-            return (
-                <div key={rowID} className="exercises_line">
-                    <CheckboxItem
-                        key={rowData.id}
-                        onChange={() => this.checkBoxOnChange(event, rowData.id, rowID)}
-                        className="noomCkeckBoxOther"
-                    >
-                        <div style={{display: '-webkit-box', display: 'flex'}}
-                             onClick={this.rowOnClick.bind(this, rowData)}>
-                            <div style={{lineHeight: 1}} className="flex_1 my_flex">
-                                <div dangerouslySetInnerHTML={{__html: rowData.content}}
-                                     className="flex_1 exercises_cont"></div>
-                                <div className="flex_70"><span className={rowData.subjectType}>{rowData.typeName}</span>
+            console.log(rowData.ownerSchoolid);
+            if (rowData.ownerSchoolid == schoolId) {
+                return (
+                    <div key={rowID} className="exercises_line">
+                        <CheckboxItem
+                            key={rowData.id}
+                            onChange={() => this.checkBoxOnChange(event, rowData.id, rowID)}
+                            className="noomCkeckBoxOther"
+                        >
+                            <div style={{display: '-webkit-box', display: 'flex'}}
+                                 onClick={this.rowOnClick.bind(this, rowData)}>
+                                <div style={{lineHeight: 1}} className="flex_1 my_flex">
+                                    <div dangerouslySetInnerHTML={{__html: rowData.content}}
+                                         className="flex_1 exercises_cont"></div>
+                                    <div className="flex_70">
+                                        <span className="margin_10 blue_solid">本校</span>
+                                        <span className={rowData.subjectType}>{rowData.typeName}</span>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                    </CheckboxItem>
-                </div>
-            );
+                        </CheckboxItem>
+                    </div>
+                );
+            } else {
+                return (
+                    <div key={rowID} className="exercises_line">
+                        <CheckboxItem
+                            key={rowData.id}
+                            onChange={() => this.checkBoxOnChange(event, rowData.id, rowID)}
+                            className="noomCkeckBoxOther"
+                        >
+                            <div style={{display: '-webkit-box', display: 'flex'}}
+                                 onClick={this.rowOnClick.bind(this, rowData)}>
+                                <div style={{lineHeight: 1}} className="flex_1 my_flex">
+                                    <div dangerouslySetInnerHTML={{__html: rowData.content}}
+                                         className="flex_1 exercises_cont"></div>
+                                    <div className="flex_70">
+                                        <span className={rowData.subjectType}>{rowData.typeName}</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </CheckboxItem>
+                    </div>
+                );
+            }
         };
 
         return (

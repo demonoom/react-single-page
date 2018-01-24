@@ -4,7 +4,7 @@ import {ListView, WingBlank, Toast, WhiteSpace} from 'antd-mobile';
 import './analysisList.less';
 
 // const mobileUrl = 'http://www.maaee.com/Excoord_For_Education/webservice';
-const mobileUrl = 'http://192.168.1.230:9006/Excoord_ApiServer/webservice';
+const mobileUrl = 'http://172.16.2.230:9006/Excoord_ApiServer/webservice';
 
 export default class analysisList extends React.Component {
     constructor(props) {
@@ -81,6 +81,7 @@ export default class analysisList extends React.Component {
             .then(data => ({data}))
             .catch(err => ({err}))
             .then(function (result) {
+                console.log(result);
                 var response = result.data.response;
                 if (result.data.success == true && result.data.msg == '调用成功') {
                     //  获得数据
@@ -109,11 +110,10 @@ export default class analysisList extends React.Component {
             return;
         }
         currentPageNo += 1;
-        this.setState({getUserLocationInfo: true, defaultPageNo: currentPageNo});
+        this.setState({getUserLocationInfo: true, defaultPageNo: currentPageNo,isLoading: true,});
         _this.viewPaperAnalysisTaskPage();
         this.setState({
             dataSource: this.state.dataSource.cloneWithRows(this.initData),
-            isLoading: false,
         });
     };
 
@@ -137,12 +137,8 @@ export default class analysisList extends React.Component {
 
         //上下行间距
         const separator = (sectionID, rowID) => (
-            <div
+            <div className="line"
                 key={`${sectionID}-${rowID}`}
-                style={{
-                    height: 1,
-                    borderTop: '1px solid #ECECED',
-                }}
             />
         );
 
@@ -153,6 +149,7 @@ export default class analysisList extends React.Component {
                     onClick={this.turnToAnaysis.bind(this, rowData.taskId)}
                     className='analysisListDiv'
                 >
+                    <img src={require('./lALPBY0V4uapiOAwMA_48_48.png')}/>
                     {rowData.taskName}
                 </div>
             );
@@ -160,13 +157,12 @@ export default class analysisList extends React.Component {
 
         return (
             <div className='analysisList'>
-                <WhiteSpace size='sm'/>
                 <WingBlank size='sm'>
                     <ListView
                         ref={el => this.lv = el}
                         dataSource={this.state.dataSource}    //数据类型是 ListViewDataSource
                         renderFooter={() => (<div style={{padding: 10, textAlign: 'center'}}>
-                            {this.state.isLoading ? '正在加载' : '没有试卷了'}
+                            {this.state.isLoading ? '正在加载' : '没有更多成绩单了'}
                         </div>)}
                         renderRow={row}   //需要的参数包括一行数据等,会返回一个可渲染的组件为这行数据渲染  返回renderable
                         renderSeparator={separator}   //可以不设置的属性  行间距
@@ -178,8 +174,8 @@ export default class analysisList extends React.Component {
                         }}   //在滚动的过程中，每帧最多调用一次此回调函数。调用的频率可以用scrollEventThrottle属性来控制。
                         scrollRenderAheadDistance={200}   //当一个行接近屏幕范围多少像素之内的时候，就开始渲染这一行
                         onEndReached={this.onEndReached}  //当所有的数据都已经渲染过，并且列表被滚动到距离最底部不足onEndReachedThreshold个像素的距离时调用
-                        onEndReachedThreshold={10}  //调用onEndReached之前的临界值，单位是像素  number类型
-                        initialListSize={10}   //指定在组件刚挂载的时候渲染多少行数据，用这个属性来确保首屏显示合适数量的数据
+                        onEndReachedThreshold={20}  //调用onEndReached之前的临界值，单位是像素  number类型
+                        initialListSize={30}   //指定在组件刚挂载的时候渲染多少行数据，用这个属性来确保首屏显示合适数量的数据
                         scrollEventThrottle={20}     //控制在滚动过程中，scroll事件被调用的频率
                         style={{
                             height: document.body.clientHeight,

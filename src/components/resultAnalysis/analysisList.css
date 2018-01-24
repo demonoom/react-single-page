@@ -1,8 +1,68 @@
 (node) util.print is deprecated. Use console.log instead.
+.analysisList {
+  /* 这是针对缺省样式 (必须的) */
+  /* 滑块颜色 */
+  /* 滑轨两头的监听按钮颜色 */
+  /* ::-webkit-scrollbar-corner {
+        background-color: none;
+  } 横向滚动条和纵向滚动条相交处尖角的颜色 */
+}
 .analysisList .analysisListDiv {
-  height: 40px;
-  line-height: 40px;
-  font-size: 16px;
+  height: 45px;
+  line-height: 45px;
+  font-size: 1rem;
   font-family: '微软雅黑';
-  margin-left: 2rem;
+  margin-left: .4rem;
+  color: #666;
+}
+.analysisList .analysisListDiv img {
+  height: 70%;
+  vertical-align: middle;
+  margin-right: 0.4rem;
+}
+.analysisList .am-wingblank.am-wingblank-sm {
+  margin-left: 8px;
+  margin-right: 8px;
+}
+.analysisList .am-wingblank.am-wingblank-sm .am-list-body {
+  padding: 0 10px;
+}
+.analysisList div.line {
+  height: 1px;
+  margin: 0;
+  padding: 0;
+  border: none;
+  width: 100%;
+  position: relative;
+}
+.analysisList div.line:before {
+  content: "";
+  pointer-events: none;
+  box-sizing: border-box;
+  border: none;
+  border-top: 1px solid #e5e5e5;
+  height: 1px;
+  transform: scaleY(0.5);
+  transform-origin: 0 0;
+  -webkit-transform: scaleY(0.5);
+  -webkit-transform-origin: 0 0;
+  position: absolute;
+  width: 100%;
+  top: 0;
+  left: 0;
+}
+.analysisList .am-list-body div.line:last-child {
+  display: none;
+}
+.analysisList ::-webkit-scrollbar {
+  width: 8px;
+  height: 12px;
+}
+.analysisList ::-webkit-scrollbar-thumb {
+  background-color: #ccc;
+  border-radius: 9px;
+  -webkit-border-radius: 9px;
+}
+.analysisList ::-webkit-scrollbar-button {
+  background-color: initial;
 }

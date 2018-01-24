@@ -1,4 +1,12 @@
 (node) util.print is deprecated. Use console.log instead.
+.classResult {
+  /* 这是针对缺省样式 (必须的) */
+  /* 滑块颜色 */
+  /* 滑轨两头的监听按钮颜色 */
+  /* ::-webkit-scrollbar-corner {
+        background-color: none;
+  } 横向滚动条和纵向滚动条相交处尖角的颜色 */
+}
 .classResult .flex-container {
   margin: 0 15px;
 }
@@ -19,6 +27,38 @@
   text-align: center;
   font-size: .85rem;
 }
+.classResult .placeholder div {
+  padding: 8px 0;
+}
+.classResult .placeholder div.le8 {
+  padding: 8px 14px;
+}
+.classResult .placeholder div.le8 span {
+  display: block;
+}
+.classResult .placeholder div.le8 span.line {
+  position: relative;
+  width: 100%;
+  padding-top: 6px;
+}
+.classResult .placeholder div.le8 span.top {
+  margin-bottom: 6px;
+}
+.classResult .placeholder div.le8 span.line:before {
+  content: "";
+  pointer-events: none;
+  box-sizing: border-box;
+  border: none;
+  border-top: 1px solid #c8c8c8;
+  height: 200%;
+  transform: scaleY(0.5);
+  transform-origin: 0 0;
+  -webkit-transform: scaleY(0.5);
+  position: absolute;
+  width: 100%;
+  top: 0%;
+  left: 0;
+}
 .classResult .placeholderBottom {
   background-color: #ebebef;
   color: #bbb;
@@ -28,13 +68,31 @@
   width: 100%;
   margin-top: 10px;
 }
+.classResult .flexByNoom .placeholder {
+  font-size: 1rem;
+}
 .classResult .flexByNoom {
   display: flex;
   alignItems: center;
   justifyContent: center;
-  margin: .7rem;
+  margin: .7rem .7rem 0 .7rem;
+  background: #fff;
+  padding: 2.1rem 0rem 0 0;
+}
+.classResult .flexByNoom2 {
+  display: flex;
+  alignItems: center;
+  justifyContent: center;
+  margin: 0 .7rem .7rem .7rem;
   background: #fff;
   padding: 2.1rem 0rem;
+}
+.classResult .flexByNoom3 .placeholderBottom {
+  background: #e7f1fd;
+  color: #333;
+}
+.classResult .flexByNoom3 .am-flexbox-item {
+  margin-left: 0;
 }
 .classResult .ulFirstByNoom {
   padding: 0 10px;
@@ -47,12 +105,13 @@
   font-size: 14px;
   height: 44px;
   line-height: 44px;
-  border-bottom: 0.5px solid #e5e5e5;
   color: #666666;
+  position: relative;
 }
 .classResult .ulFirstByNoom li span {
   float: right;
   color: #666666;
+  margin-right: 0.85rem;
 }
 .classResult .ulFirstByNoom li b {
   float: left;
@@ -63,6 +122,22 @@
   height: 60%;
   float: left;
   transform: translateY(25%);
+  margin-left: 0.85rem;
+}
+.classResult .ulFirstByNoom li:before {
+  content: "";
+  pointer-events: none;
+  box-sizing: border-box;
+  border: none;
+  border-bottom: 1px solid #e8e8e8;
+  height: 200%;
+  transform: scaleY(0.5);
+  transform-origin: 0 0;
+  -webkit-transform: scaleY(0.5);
+  position: absolute;
+  width: 100%;
+  top: 0;
+  left: 0;
 }
 .classResult .gradeRank {
   background-color: #42A7F9;
@@ -77,4 +152,132 @@
   text-align: center;
   font-size: 16px;
   color: #ffffff;
+}
+.classResult .am-flexbox .am-flexbox-item:first-child .placeholder div.color {
+  color: #60b0f3;
+}
+.classResult .am-flexbox .am-flexbox-item:nth-child(2) .placeholder div.color {
+  color: #56c26b;
+}
+.classResult .am-flexbox .am-flexbox-item:nth-child(3) .placeholder .color {
+  color: #fe974d;
+}
+.classResult .am-flexbox .am-flexbox-item:nth-child(4) .placeholder .color {
+  color: #eb6264;
+}
+.classResult .wingblank_list,
+.classResult .wingblank_list2 {
+  margin-left: 0;
+  margin-right: 0;
+}
+.classResult .wingblank_list .am-flexbox-item {
+  margin-left: 0;
+  min-height: 40px;
+  line-height: 20px;
+  padding: 10px 0;
+  word-wrap: break-word;
+  word-break: break-all;
+  white-space: pre-wrap;
+  height: auto;
+}
+.classResult .wingblank_list .am-flexbox-item:last-child {
+  padding-right: 1rem;
+}
+.classResult .wingblank_list .am-flexbox-item:last-child .placeholderBottom:last-child {
+  text-align: left;
+}
+.classResult .wingblank_list .placeholderBottom {
+  margin-top: 0;
+  color: #666;
+  min-height: 22px;
+  line-height: 22px;
+  padding: 0;
+  word-wrap: break-word;
+  word-break: break-all;
+  white-space: pre-wrap;
+  height: auto;
+}
+.classResult .wingblank_list .am-flexbox.am-flexbox-align-center:nth-child(odd),
+.classResult .wingblank_list .am-flexbox.am-flexbox-align-center:nth-child(odd) .placeholderBottom {
+  background: #fff;
+}
+.classResult .wingblank_list .am-flexbox.am-flexbox-align-center:nth-child(even),
+.classResult .wingblank_list .am-flexbox.am-flexbox-align-center:nth-child(even) .placeholderBottom {
+  background: #fafbfe;
+}
+.classResult .wingblank_list_wrap {
+  width: 100%;
+  overflow: auto;
+}
+.classResult .wingblank_list_cont {
+  width: 200%;
+  background: #fff;
+}
+.classResult .class_table {
+  width: 100%;
+  background: #fff;
+  overflow: auto;
+}
+.classResult .class_table_cont {
+  background: #fff;
+  min-height: 100%;
+  width: 160%;
+  border-spacing: 0;
+}
+.classResult .class_table_cont thead td {
+  background: #e7f1fd;
+  color: #333;
+  text-align: center;
+  height: 40px;
+  line-height: 40px;
+  margin-top: 10px;
+}
+.classResult .class_table_cont tbody tr td {
+  text-align: center;
+  min-height: 40px;
+  line-height: 20px;
+  color: #666;
+  padding: 10px 0;
+  word-wrap: break-word;
+  word-break: break-all;
+  white-space: pre-wrap;
+}
+.classResult .class_table_cont tbody tr:nth-child(odd) {
+  background: #fff;
+}
+.classResult .class_table_cont tbody tr:nth-child(even) {
+  background: #fafbfe;
+}
+.classResult .class_table_cont thead td.first,
+.classResult .class_table_cont tbody tr td.first {
+  width: 12%;
+}
+.classResult .class_table_cont thead td.second,
+.classResult .class_table_cont tbody tr td.second {
+  width: 43%;
+}
+.classResult .class_table_cont thead td.three,
+.classResult .class_table_cont tbody tr td.three {
+  width: 15%;
+}
+.classResult .class_table_cont tbody tr td:nth-child(2) {
+  text-align: left;
+}
+.classResult .am-tabs-default-bar-tab-active {
+  color: #EE9D36;
+}
+.classResult .am-tabs-default-bar-underline {
+  border: 1px #ee9d36 solid;
+}
+.classResult ::-webkit-scrollbar {
+  width: 8px;
+  height: 12px;
+}
+.classResult ::-webkit-scrollbar-thumb {
+  background-color: #ccc;
+  border-radius: 9px;
+  -webkit-border-radius: 9px;
+}
+.classResult ::-webkit-scrollbar-button {
+  background-color: initial;
 }
