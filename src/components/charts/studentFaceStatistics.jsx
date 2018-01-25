@@ -1,27 +1,192 @@
 import React from 'react';
 import ReactEcharts from 'echarts-for-react';
 import './studentFaceStatistics.css'
+import {
+    Toast,
+} from 'antd-mobile';
+const debug=false;
 
-
+const mobileUrl = debug?'http://192.168.1.34:9006/Excoord_ApiServer/webservice':'http://www.maaee.com/Excoord_For_Education/webservice';
 export default class studentFaceStatistics extends React.Component{
-    componentDidMount(){
+    classOpenSend = 0;
+    constructor(props) {
+        super(props);
+        this.state = {
+            lineChartOption: this.initChartOption(),
+            lastPoint:'0'
+        };
     }
-    getOption = () => {
+    componentDidMount(){
+        document.title = '学生听课认真度分析';
+        Bridge.setShareAble("false");
+        Bridge.setRefreshAble("false");
+        this.getVclassFaceEmotionsStatistics();
+
+        // if (this.timeTicket) {
+        //     clearInterval(this.timeTicket);
+        // }
+        setInterval(this.fetchNewDate, 5000);
+
+    }
+    fetchNewDate = () => {
+        if(this.classOpenSend==0){
+            return;
+        }
+        var loginUser = JSON.parse(localStorage.getItem('loginUser'));
+        var _this = this;
+        var locationHref = window.location.href;
+        var locationSearch = locationHref.substr(locationHref.indexOf("?") + 1);
+        var searchArray = locationSearch.split("&");
+        var vid = searchArray[0].split('=')[1];
+        const dataBlob = {};
+        var param = {
+            "method": 'getVclassFaceEmotionsBySecondsPoint',
+            "vid":vid,
+            "count":'5',
+            "lastPoint":this.classOpenSend,
+        };
+        console.log(this.classOpenSend);
+        var requestParams = encodeURI("params=" + JSON.stringify(param));
+
+        var obj = {
+            method: 'post',
+            body: requestParams,
+        };
+
+        fetch(mobileUrl, obj)
+            .then(_this.checkStatus)
+            .then(_this.parseJSON)
+            .then(data => ({data}))
+            .catch(err => ({err}))
+            .then(function (result) {
+                var data = result.data;
+                if (!data.success ) {
+                    Toast.fail(data.msg, 1);
+                    return;
+                }
+                _this.classOpenSend=data.class_opened_seconds+5;
+                var resourse=data.response;
+                _this.handleResourse(resourse);
+            });
+
+    };
+    parseJSON(response) {
+        return response.json();
+    }
+    checkStatus(response) {
+        if (response.status >= 200 && response.status < 300) {
+            return response;
+        }
+
+        const error = new Error(response.statusText);
+        error.response = response;
+        throw error;
+    }
+    getVclassFaceEmotionsStatistics=()=> {
+        var loginUser = JSON.parse(localStorage.getItem('loginUser'));
+        var _this = this;
+        var locationHref = window.location.href;
+        var locationSearch = locationHref.substr(locationHref.indexOf("?") + 1);
+        var searchArray = locationSearch.split("&");
+        var vid = searchArray[0].split('=')[1];
+        const dataBlob = {};
+        var param = {
+            "method": 'getVclassFaceEmotionsStatistics',
+            "vid":vid,
+        };
+        var requestParams = encodeURI("params=" + JSON.stringify(param));
+
+        var obj = {
+            method: 'post',
+            body: requestParams,
+        };
+
+        fetch(mobileUrl, obj)
+            .then(_this.checkStatus)
+            .then(_this.parseJSON)
+            .then(data => ({data}))
+            .catch(err => ({err}))
+            .then(function (result) {
+                var data = result.data;
+                _this.classOpenSend=data.class_opened_seconds+5;
+                if (!data.success ) {
+                    Toast.fail(data.msg, 1);
+                    return;
+                }
+                var resourse=data.response;
+                _this.handleResourse(resourse);
+            });
+    }
+    isEmptyObject=(obj)=>{
+        for(var n in obj){return false}
+        return true;
+    }
+    getLoadingOption = () => {
+        return {
+            text: '加载中...',
+            color: '#4413c2',
+            textColor: '#270240',
+            maskColor: 'rgba(194, 88, 86, 0.3)',
+            zlevel: 0
+        };
+    };
+    onChartReady = (chart) => {
+        this._t = setTimeout(function() {
+            chart.hideLoading();
+        }, 3000);
+    };
+    handleResourse=(resourse)=>{
+        if(!resourse){
+            Toast.fail(resourse, 1);
+            return;
+        }
+        var faceEmotionDatas=resourse;
+        var lineChartOption=this.state.lineChartOption;
+        var i=1;
+        var lastPoint;
+        if(!this.isEmptyObject(faceEmotionDatas)) {
+            for (var key in faceEmotionDatas) {
+                i++;
+                var faceEmotionData = faceEmotionDatas[key];
+                var xMinuite = parseInt(key / 60);
+                if(xMinuite>60){
+                    break;
+                }
+                (lineChartOption.xAxis)[0].data.push(xMinuite);
+                (lineChartOption.series)[0].data.push(faceEmotionData.attention.toFixed(2));
+                (lineChartOption.series)[1].data.push(faceEmotionData.browFurrow.toFixed(2));
+                (lineChartOption.series)[2].data.push(faceEmotionData.chinRaise.toFixed(2));
+                (lineChartOption.series)[3].data.push(faceEmotionData.joy.toFixed(2));
+                (lineChartOption.series)[4].data.push(faceEmotionData.surprise.toFixed(2));
+                lastPoint = key;
+            }
+
+            this.setState({lineChartOption: lineChartOption});
+            this.setState({lastPoint: lastPoint});
+        }else{
+            (lineChartOption.xAxis)[0].data.push( parseInt(this.classOpenSend / 60));
+            (lineChartOption.series)[0].data.push(0);
+            (lineChartOption.series)[1].data.push(0);
+            (lineChartOption.series)[2].data.push(0);
+            (lineChartOption.series)[3].data.push(0);
+            (lineChartOption.series)[4].data.push(0);
+            this.setState({lineChartOption: lineChartOption});
+            this.setState({lastPoint: lastPoint});
+        }
+
+    }
+    initChartOption = () => {
         return {
             title: {
-                text: '堆叠区域图'
+                text: ''
             },
             tooltip : {
                 trigger: 'axis'
             },
             legend: {
-                data:['邮件营销','联盟广告','视频广告']
+                data:['专注','皱眉','思考','喜悦','惊讶']
             },
-            toolbox: {
-                feature: {
-                    saveAsImage: {}
-                }
-            },
+
             grid: {
                 left: '3%',
                 right: '4%',
@@ -32,7 +197,8 @@ export default class studentFaceStatistics extends React.Component{
                 {
                     type : 'category',
                     boundaryGap : false,
-                    data : ['周一','周二','周三','周四','周五','周六','周日']
+                    axisTick: {length:2},
+                    data : [],
                 }
             ],
             yAxis : [
@@ -42,42 +208,83 @@ export default class studentFaceStatistics extends React.Component{
             ],
             series : [
                 {
-                    name:'邮件营销',
+                    name:'专注',
                     type:'line',
-                    stack: '总量',
-                    areaStyle: {normal: {}},
-                    data:[120, 132, 101, 134, 90, 230, 210]
+                    smooth:true,  //这句就是让曲线变平滑的
+                    itemStyle:{
+                        normal:{
+                            color:'#E872FF'
+                        }
+                    },
+                    data:[]
                 },
                 {
-                    name:'联盟广告',
+                    name:'皱眉',
                     type:'line',
-                    stack: '总量',
-                    areaStyle: {normal: {}},
-                    data:[220, 182, 191, 234, 290, 330, 310]
+                    smooth:true,  //这句就是让曲线变平滑的
+                    itemStyle:{
+                        normal:{
+                            color:'#F56A55'
+                        }
+                    },
+                    data:[]
                 },
                 {
-                    name:'视频广告',
+                    name:'思考',
                     type:'line',
-                    stack: '总量',
-                    areaStyle: {normal: {}},
-                    data:[150, 232, 201, 154, 190, 330, 410]
+                    smooth:true,  //这句就是让曲线变平滑的
+                    itemStyle:{
+                        normal:{
+                            color:'#6DD100'
+                        }
+                    },
+                    data:[]
+                },
+                {
+                    name:'喜悦',
+                    type:'line',
+                    smooth:true,  //这句就是让曲线变平滑的
+                    itemStyle:{
+                        normal:{
+                            color:'#5DA8FF'
+                        }
+                    },
+                    data:[]
+                },
+                {
+                    name:'惊讶',
+                    type:'line',
+                    smooth:true,  //这句就是让曲线变平滑的
+                    itemStyle:{
+                        normal:{
+                            color:'#FFD000'
+                        }
+                    },
+                    data:[]
                 }
             ]
         };
     };
     render(){
+        var _this = this;
+        var lineChartOption=_this.state.lineChartOption;
         return (
-            <div className='examples'>
-                <div className='parent'>
-                    <label> render a Simple echart With <strong>option and height</strong>: </label>
+            <div className="student_cont">
+            <div className='over_flow_auto student_f_auto'>
+                <span className="student_f_left">占比/％</span>
+                <span className="student_f_right">时间/M</span>
+                <div>
                     <ReactEcharts
-                        option={this.getOption()}
+                        option={lineChartOption}
                         style={{height: '350px', width: '100%'}}
-                        className='react_for_echarts' />
-                    <label> code below: </label>
+                       // loadingOption={this.getLoadingOption()}
+                       // showLoading={true}
+                       // onChartReady={this.onChartReady}
+                        className='' />
                     <pre>
           </pre>
                 </div>
+            </div>
             </div>
         );
     }
