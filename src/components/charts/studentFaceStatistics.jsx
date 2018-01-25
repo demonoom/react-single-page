@@ -6,7 +6,7 @@ import {
 } from 'antd-mobile';
 const debug=false;
 
-const mobileUrl = debug?'http://192.168.1.34:9006/Excoord_ApiServer/webservice':'http://www.maaee.com/Excoord_For_Education/webservice';
+const mobileUrl = debug?'http://192.168.1.34:9006/Excoord_ApiServer/webservice':'https://www.maaee.com/Excoord_For_Education/webservice';
 export default class studentFaceStatistics extends React.Component{
     classOpenSend = 0;
     constructor(props) {
