@@ -3,8 +3,8 @@ import fetch from 'dva/fetch'
 import {ListView, WingBlank, Toast, WhiteSpace} from 'antd-mobile';
 import './analysisList.less';
 
-// const mobileUrl = 'http://www.maaee.com/Excoord_For_Education/webservice';
-const mobileUrl = 'http://172.16.2.230:9006/Excoord_ApiServer/webservice';
+const mobileUrl = 'http://www.maaee.com/Excoord_For_Education/webservice';
+// const mobileUrl = 'http://172.16.2.230:9006/Excoord_ApiServer/webservice';
 
 export default class analysisList extends React.Component {
     constructor(props) {
@@ -21,17 +21,17 @@ export default class analysisList extends React.Component {
     }
 
     componentWillMount() {
-        /*var locationHref = window.location.href;
+        var locationHref = window.location.href;
         var locationSearch = locationHref.substr(locationHref.indexOf("?") + 1);
         var searchArray = locationSearch.split("&");
         var colUid = searchArray[0].split('=')[1];
         var loginUser = {
             "colUid": colUid,
-        };*/
-
-        var loginUser = {
-            "colUid": 23836,
         };
+
+        /*var loginUser = {
+            "colUid": 23836,
+        };*/
         localStorage.setItem("loginUserAnalyList", JSON.stringify(loginUser));
     }
 

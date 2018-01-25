@@ -16,8 +16,8 @@ import fetch from 'dva/fetch'
 import './questionBank.css'
 
 /*请求地址*/
-// const mobileUrl = 'http://www.maaee.com/Excoord_For_Education/webservice';
-const mobileUrl = 'http://192.168.1.140:9006/Excoord_ApiServer/webservice';
+const mobileUrl = 'http://www.maaee.com/Excoord_For_Education/webservice';
+// const mobileUrl = 'http://192.168.1.140:9006/Excoord_ApiServer/webservice';
 
 const CheckboxItem = Checkbox.CheckboxItem;
 
