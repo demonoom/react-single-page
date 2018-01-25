@@ -148,7 +148,6 @@ export default class studentFaceStatistics extends React.Component{
             for (var key in faceEmotionDatas) {
                 i++;
                 var faceEmotionData = faceEmotionDatas[key];
-                //console.log(faceEmotionData);
                 var xMinuite = parseInt(key / 60);
                 if(xMinuite>60){
                     break;
@@ -162,6 +161,15 @@ export default class studentFaceStatistics extends React.Component{
                 lastPoint = key;
             }
 
+            this.setState({lineChartOption: lineChartOption});
+            this.setState({lastPoint: lastPoint});
+        }else{
+            (lineChartOption.xAxis)[0].data.push( parseInt(this.classOpenSend / 60));
+            (lineChartOption.series)[0].data.push(0);
+            (lineChartOption.series)[1].data.push(0);
+            (lineChartOption.series)[2].data.push(0);
+            (lineChartOption.series)[3].data.push(0);
+            (lineChartOption.series)[4].data.push(0);
             this.setState({lineChartOption: lineChartOption});
             this.setState({lastPoint: lastPoint});
         }
