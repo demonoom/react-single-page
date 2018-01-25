@@ -65,7 +65,7 @@ export default class Demo extends React.Component {
             body: requestParams,
         };
 
-        fetch("http://www.maaee.com/Excoord_For_Education/webservice", obj)
+        fetch("https://www.maaee.com/Excoord_For_Education/webservice", obj)
             .then(_this.checkStatus)
             .then(_this.parseJSON)
             .then(data => ({data}))

@@ -7,7 +7,7 @@ var domain = isDebug ? "192.168.1.140" : "www.maaee.com";
 var elearningWebserviceURL = "http://" + domain + ":8888/elearning/elearningControl/";
 //小蚂蚁webService地址
 // var apiWebServiceURL = "http://"+domain+":9006/Excoord_ApiServer/webservice";
-var apiWebServiceURL = "http://www.maaee.com/Excoord_For_Education/webservice";
+var apiWebServiceURL = "https://www.maaee.com/Excoord_For_Education/webservice";
 
 class requestUtil{
 
