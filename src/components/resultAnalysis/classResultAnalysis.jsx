@@ -241,7 +241,10 @@ export default class classReaultAnalysis extends React.Component {
         var _this = this;
         var radarOption = {
             title: {
-                text: '题目得分率统计'
+                text: '题目得分率统计',
+                textStyle: {
+                    fontSize: '14px',
+                },
             },
             tooltip: {},
             /*legend: {
@@ -364,7 +367,7 @@ export default class classReaultAnalysis extends React.Component {
                         }}>
                             <ReactEcharts
                                 option={this.state.radarOption}
-                                style={{height: '500px', width: '100%'}}
+                                style={{Minheight: '340px', width: '100%'}}
                                 className='react_for_echarts' />
                             <table className="class_table_cont">
                                 <thead>
