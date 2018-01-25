@@ -3,8 +3,8 @@ import fetch from 'dva/fetch'
 import {ListView, WingBlank, Toast, WhiteSpace} from 'antd-mobile';
 import './analysisList.less';
 
-// const mobileUrl = 'http://www.maaee.com/Excoord_For_Education/webservice';
-const mobileUrl = 'http://172.16.2.230:9006/Excoord_ApiServer/webservice';
+const mobileUrl = 'http://www.maaee.com/Excoord_For_Education/webservice';
+// const mobileUrl = 'http://172.16.2.230:9006/Excoord_ApiServer/webservice';
 
 export default class analysisList extends React.Component {
     constructor(props) {
