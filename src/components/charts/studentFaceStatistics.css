@@ -9,7 +9,7 @@
     padding:10px;
 }
 .student_f_auto{
-    margin-top: 40%;
+    width:100%
 }
 .student_f_left{
     position: absolute;
@@ -24,4 +24,14 @@
     bottom: 12px;
     font-size: 10px;
     color: #999;
+}
+.student_cont{
+    display: -webkit-flex;
+    display: flex;
+    -webkit-align-items: center;
+    align-items: center;
+    -webkit-justify-content: center;
+    justify-content: center;
+    height: 100%;
+    width: 100%;
 }

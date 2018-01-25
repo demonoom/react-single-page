@@ -261,6 +261,7 @@ export default class studentFaceStatistics extends React.Component{
         var _this = this;
         var lineChartOption=_this.state.lineChartOption;
         return (
+            <div className="student_cont">
             <div className='over_flow_auto student_f_auto'>
                 <span className="student_f_left">占比/％</span>
                 <span className="student_f_right">时间/M</span>
@@ -275,6 +276,7 @@ export default class studentFaceStatistics extends React.Component{
                     <pre>
           </pre>
                 </div>
+            </div>
             </div>
         );
     }
