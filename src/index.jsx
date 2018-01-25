@@ -15,7 +15,6 @@ import searchUserLocationInfo from './components/userInfo/searchUserLocationInfo
 import Stage8 from './components/Stage8';
 import Stage9 from './components/Stage9';
 import studentFaceStatistics from './components/charts/studentFaceStatistics'
-
 import './index.less';
 
 class Index extends React.Component {
