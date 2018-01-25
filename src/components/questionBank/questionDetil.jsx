@@ -1,7 +1,7 @@
 import React from 'react';
 import fetch from 'dva/fetch'
 
-const mobileUrl = 'http://www.maaee.com/Excoord_For_Education/webservice';
+const mobileUrl = 'https://www.maaee.com/Excoord_For_Education/webservice';
 
 export default class Demo extends React.Component {
     constructor(props) {

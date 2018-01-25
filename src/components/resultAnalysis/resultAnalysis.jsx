@@ -6,7 +6,7 @@ import {Tabs, Flex, WingBlank, Toast, ActivityIndicator, WhiteSpace} from 'antd-
 import {StickyContainer, Sticky} from 'react-sticky';
 import './reaultAnalysis.less';
 
-const mobileUrl = 'http://www.maaee.com/Excoord_For_Education/webservice';
+const mobileUrl = 'https://www.maaee.com/Excoord_For_Education/webservice';
 // const mobileUrl = 'http://172.16.2.230:9006/Excoord_ApiServer/webservice';
 
 const tabs = [
@@ -179,10 +179,11 @@ export default class resultAnalysis extends React.Component {
      * @param id
      */
     turnToClassRel(id) {
-        // var taskId = reaultA.state.taskId;
+        var taskId = reaultA.state.taskId;
         // window.open("/#/classReaultAnalysis?taskId=" + taskId + "&clazzId=" + id);
 
-        var url = "http://172.16.2.53:8091/#/classReaultAnalysis?taskId=" + taskId + "&clazzId=" + id;
+        // var url = "http://172.16.2.53:8091/#/classReaultAnalysis?taskId=" + taskId + "&clazzId=" + id;
+        var url = "http://jiaoxue.maaee.com:8091/#/classReaultAnalysis?taskId=" + taskId + "&clazzId=" + id;
         var data = {};
         data.method = 'openNewPage';
         data.url = url;

@@ -6,7 +6,7 @@ import {Tabs, Flex, WingBlank, Toast, ActivityIndicator, WhiteSpace} from 'antd-
 import {StickyContainer, Sticky} from 'react-sticky';
 import './classReaultAnalysis.less';
 
-const mobileUrl = 'http://www.maaee.com/Excoord_For_Education/webservice';
+const mobileUrl = 'https://www.maaee.com/Excoord_For_Education/webservice';
 // const mobileUrl = 'http://172.16.2.230:9006/Excoord_ApiServer/webservice';
 
 const tabs = [
