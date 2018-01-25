@@ -2,7 +2,26 @@
     overflow: auto;
     padding:10px;
     text-align: center;
+    position: relative;
+
 }
 .react_for_echarts{
     padding:10px;
+}
+.student_f_auto{
+    margin-top: 40%;
+}
+.student_f_left{
+    position: absolute;
+    left: 18px;
+    top: 42px;
+    font-size: 10px;
+    color: #999;
+}
+.student_f_right{
+    position: absolute;
+    right: 10px;
+    bottom: 12px;
+    font-size: 10px;
+    color: #999;
 }

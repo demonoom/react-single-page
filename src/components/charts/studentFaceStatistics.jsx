@@ -25,10 +25,13 @@ export default class studentFaceStatistics extends React.Component{
         // if (this.timeTicket) {
         //     clearInterval(this.timeTicket);
         // }
-        // this.timeTicket = setInterval(this.getVclassFaceEmotionsStatistics, 1000);
+        setInterval(this.fetchNewDate, 5000);
 
     }
     fetchNewDate = () => {
+        if(this.classOpenSend==0){
+            return;
+        }
         var loginUser = JSON.parse(localStorage.getItem('loginUser'));
         var _this = this;
         var locationHref = window.location.href;
@@ -42,6 +45,7 @@ export default class studentFaceStatistics extends React.Component{
             "count":'5',
             "lastPoint":this.classOpenSend,
         };
+        console.log(this.classOpenSend);
         var requestParams = encodeURI("params=" + JSON.stringify(param));
 
         var obj = {
@@ -150,11 +154,11 @@ export default class studentFaceStatistics extends React.Component{
                     break;
                 }
                 (lineChartOption.xAxis)[0].data.push(xMinuite);
-                (lineChartOption.series)[0].data.push(faceEmotionData.attention);
-                (lineChartOption.series)[1].data.push(faceEmotionData.browFurrow);
-                (lineChartOption.series)[2].data.push(faceEmotionData.chinRaise);
-                (lineChartOption.series)[3].data.push(faceEmotionData.joy);
-                (lineChartOption.series)[4].data.push(faceEmotionData.surprise);
+                (lineChartOption.series)[0].data.push(faceEmotionData.attention.toFixed(2));
+                (lineChartOption.series)[1].data.push(faceEmotionData.browFurrow.toFixed(2));
+                (lineChartOption.series)[2].data.push(faceEmotionData.chinRaise.toFixed(2));
+                (lineChartOption.series)[3].data.push(faceEmotionData.joy.toFixed(2));
+                (lineChartOption.series)[4].data.push(faceEmotionData.surprise.toFixed(2));
                 lastPoint = key;
             }
 
@@ -201,7 +205,7 @@ export default class studentFaceStatistics extends React.Component{
                     smooth:true,  //这句就是让曲线变平滑的
                     itemStyle:{
                         normal:{
-                            color:'blue'
+                            color:'#E872FF'
                         }
                     },
                     data:[]
@@ -212,7 +216,7 @@ export default class studentFaceStatistics extends React.Component{
                     smooth:true,  //这句就是让曲线变平滑的
                     itemStyle:{
                         normal:{
-                            color:'black'
+                            color:'#F56A55'
                         }
                     },
                     data:[]
@@ -223,7 +227,7 @@ export default class studentFaceStatistics extends React.Component{
                     smooth:true,  //这句就是让曲线变平滑的
                     itemStyle:{
                         normal:{
-                            color:'red'
+                            color:'#6DD100'
                         }
                     },
                     data:[]
@@ -234,7 +238,7 @@ export default class studentFaceStatistics extends React.Component{
                     smooth:true,  //这句就是让曲线变平滑的
                     itemStyle:{
                         normal:{
-                            color:'yellow'
+                            color:'#5DA8FF'
                         }
                     },
                     data:[]
@@ -245,7 +249,7 @@ export default class studentFaceStatistics extends React.Component{
                     smooth:true,  //这句就是让曲线变平滑的
                     itemStyle:{
                         normal:{
-                            color:'green'
+                            color:'#FFD000'
                         }
                     },
                     data:[]
@@ -257,7 +261,9 @@ export default class studentFaceStatistics extends React.Component{
         var _this = this;
         var lineChartOption=_this.state.lineChartOption;
         return (
-            <div className='over_flow_auto'>
+            <div className='over_flow_auto student_f_auto'>
+                <span className="student_f_left">占比/％</span>
+                <span className="student_f_right">时间/M</span>
                 <div>
                     <ReactEcharts
                         option={lineChartOption}
