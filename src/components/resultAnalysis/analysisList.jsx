@@ -122,15 +122,15 @@ export default class analysisList extends React.Component {
      * @param id
      */
     turnToAnaysis(id) {
-        window.open("/#/resultAnalysis?taskId=" + id);
+        // window.open("/#/resultAnalysis?taskId=" + id);
 
-        /*var url = "http://jiaoxue.maaee.com:8091/#/resultAnalysis?taskId=" + id;
+        var url = "http://jiaoxue.maaee.com:8091/#/resultAnalysis?taskId=" + id;
         var data = {};
         data.method = 'openNewPage';
         data.url = url;
         Bridge.callHandler(data, null, function (error) {
             window.location.href = url;
-        });*/
+        });
     }
 
     render() {
