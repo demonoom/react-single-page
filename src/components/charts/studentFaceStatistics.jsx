@@ -177,22 +177,24 @@ export default class studentFaceStatistics extends React.Component{
                 }
                 (lineChartOption.xAxis)[0].data.push(xMinuite);
                 (lineChartOption.series)[0].data.push(faceEmotionData.attention.toFixed(2));
-                (lineChartOption.series)[1].data.push(faceEmotionData.browFurrow.toFixed(2));
-                (lineChartOption.series)[2].data.push(faceEmotionData.chinRaise.toFixed(2));
+                (lineChartOption.series)[1].data.push(faceEmotionData.confuse.toFixed(2));
+                (lineChartOption.series)[2].data.push(faceEmotionData.thinking.toFixed(2));
                 (lineChartOption.series)[3].data.push(faceEmotionData.joy.toFixed(2));
                 (lineChartOption.series)[4].data.push(faceEmotionData.surprise.toFixed(2));
+                (lineChartOption.series)[5].data.push(faceEmotionData.understand.toFixed(2));
                 lastPoint = key;
             }
 
             this.setState({lineChartOption: lineChartOption});
             this.setState({lastPoint: lastPoint});
         }else{
-            (lineChartOption.xAxis)[0].data.push( parseInt(this.classOpenSend / 60));
+            (lineChartOption.xAxis)[0].data.push( this.formatSeconds(this.classOpenSend));
             (lineChartOption.series)[0].data.push(0);
             (lineChartOption.series)[1].data.push(0);
             (lineChartOption.series)[2].data.push(0);
             (lineChartOption.series)[3].data.push(0);
             (lineChartOption.series)[4].data.push(0);
+            (lineChartOption.series)[5].data.push(0);
             this.setState({lineChartOption: lineChartOption});
             this.setState({lastPoint: lastPoint});
         }
@@ -200,6 +202,11 @@ export default class studentFaceStatistics extends React.Component{
     }
     initChartOption = () => {
         return {
+            toolbox: {
+                feature: {
+                    saveAsImage: {}
+                }
+            },
             title: {
                 text: ''
             },
@@ -207,7 +214,16 @@ export default class studentFaceStatistics extends React.Component{
                 trigger: 'axis'
             },
             legend: {
-                data:['专注','皱眉','思考','喜悦','惊讶']
+                data:[{name:'专注',icon:'rect'},
+                    {name:'疑惑',icon:'rect'},
+                    {name:'思考',icon:'rect'},
+                    {name:'喜悦',icon:'rect'},
+                    {name:'惊讶',icon:'rect'},
+                    {name:'理解',icon:'rect'},
+                  ],
+                textStyle: {
+                    fontSize: 20,
+                }
             },
 
             grid: {
@@ -236,18 +252,18 @@ export default class studentFaceStatistics extends React.Component{
                     smooth:true,  //这句就是让曲线变平滑的
                     itemStyle:{
                         normal:{
-                            color:'#E872FF'
+                            color:'green'
                         }
                     },
                     data:[]
                 },
                 {
-                    name:'皱眉',
+                    name:'疑惑',
                     type:'line',
                     smooth:true,  //这句就是让曲线变平滑的
                     itemStyle:{
                         normal:{
-                            color:'#F56A55'
+                            color:'black'
                         }
                     },
                     data:[]
@@ -258,7 +274,7 @@ export default class studentFaceStatistics extends React.Component{
                     smooth:true,  //这句就是让曲线变平滑的
                     itemStyle:{
                         normal:{
-                            color:'#6DD100'
+                            color:'#DA22FF'
                         }
                     },
                     data:[]
@@ -269,7 +285,7 @@ export default class studentFaceStatistics extends React.Component{
                     smooth:true,  //这句就是让曲线变平滑的
                     itemStyle:{
                         normal:{
-                            color:'#5DA8FF'
+                            color:'blue'
                         }
                     },
                     data:[]
@@ -280,7 +296,18 @@ export default class studentFaceStatistics extends React.Component{
                     smooth:true,  //这句就是让曲线变平滑的
                     itemStyle:{
                         normal:{
-                            color:'#FFD000'
+                            color:'yellow'
+                        }
+                    },
+                    data:[]
+                },
+                {
+                    name:'理解',
+                    type:'line',
+                    smooth:true,  //这句就是让曲线变平滑的
+                    itemStyle:{
+                        normal:{
+                            color:'red'
                         }
                     },
                     data:[]
