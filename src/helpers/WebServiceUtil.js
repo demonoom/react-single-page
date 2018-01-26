@@ -1,7 +1,7 @@
 // import fetch from 'dva/fetch';
 // import {isDebug} from './Const';
 
-var isDebug = true;
+var isDebug = false;
 var localDomain = "172.16.2.95";
 //云校本地测试webService地址
 var elearningWebserviceURLOfLocal = "http://"+localDomain+":8888/elearning/elearningControl/";
