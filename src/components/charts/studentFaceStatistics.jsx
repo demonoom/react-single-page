@@ -4,8 +4,9 @@ import './studentFaceStatistics.css'
 import {
     Toast,
 } from 'antd-mobile';
-import requestLittleAntApi from '../../helpers/WebServiceUtil';
+const debug=false;
 
+const mobileUrl = debug?'http://192.168.1.34:9006/Excoord_ApiServer/webservice':'https://www.maaee.com/Excoord_For_Education/webservice';
 export default class studentFaceStatistics extends React.Component{
     classOpenSend = 0;
     constructor(props) {
@@ -47,19 +48,27 @@ export default class studentFaceStatistics extends React.Component{
         console.log(this.classOpenSend);
         var requestParams = encodeURI("params=" + JSON.stringify(param));
 
-        requestLittleAntApi({
+        var obj = {
             method: 'post',
             body: requestParams,
-        }).then(function (result) {
-            var data = result.data;
-            if (!data.success ) {
-                Toast.fail(data.msg, 1);
-                return;
-            }
-            _this.classOpenSend=data.class_opened_seconds+5;
-            var resourse=data.response;
-            _this.handleResourse(resourse);
-        });
+        };
+
+        fetch(mobileUrl, obj)
+            .then(_this.checkStatus)
+            .then(_this.parseJSON)
+            .then(data => ({data}))
+            .catch(err => ({err}))
+            .then(function (result) {
+                var data = result.data;
+                if (!data.success ) {
+                    Toast.fail(data.msg, 1);
+                    return;
+                }
+                _this.classOpenSend=data.class_opened_seconds+5;
+                var resourse=data.response;
+                _this.handleResourse(resourse);
+            });
+
     };
     formatSeconds(value) {
         var theTime = parseInt(value);// 秒
@@ -110,19 +119,26 @@ export default class studentFaceStatistics extends React.Component{
         };
         var requestParams = encodeURI("params=" + JSON.stringify(param));
 
-        requestLittleAntApi({
+        var obj = {
             method: 'post',
             body: requestParams,
-        }).then(function (result) {
-            var data = result.data;
-            _this.classOpenSend=data.class_opened_seconds+5;
-            if (!data.success ) {
-                Toast.fail(data.msg, 1);
-                return;
-            }
-            var resourse=data.response;
-            _this.handleResourse(resourse);
-        });
+        };
+
+        fetch(mobileUrl, obj)
+            .then(_this.checkStatus)
+            .then(_this.parseJSON)
+            .then(data => ({data}))
+            .catch(err => ({err}))
+            .then(function (result) {
+                var data = result.data;
+                _this.classOpenSend=data.class_opened_seconds+5;
+                if (!data.success ) {
+                    Toast.fail(data.msg, 1);
+                    return;
+                }
+                var resourse=data.response;
+                _this.handleResourse(resourse);
+            });
     }
     isEmptyObject=(obj)=>{
         for(var n in obj){return false}
