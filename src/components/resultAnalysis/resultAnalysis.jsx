@@ -1,13 +1,11 @@
 import React from 'react';
 import ReactEcharts from 'echarts-for-react';
 import echarts from 'echarts';
-import fetch from 'dva/fetch'
 import {Tabs, Flex, WingBlank, Toast, ActivityIndicator, WhiteSpace} from 'antd-mobile';
 import {StickyContainer, Sticky} from 'react-sticky';
+import requestLittleAntApi from '../../helpers/WebServiceUtil';
 import './reaultAnalysis.less';
-
-const mobileUrl = 'https://www.maaee.com/Excoord_For_Education/webservice';
-// const mobileUrl = 'http://172.16.2.230:9006/Excoord_ApiServer/webservice';
+import {CLASS_RESULT_ANALYSIS_URL} from '../../helpers/Const';
 
 const tabs = [
     {title: '成绩分析'},
@@ -15,7 +13,6 @@ const tabs = [
 ];
 
 var reaultA;
-
 export default class resultAnalysis extends React.Component {
     constructor(props) {
         super(props);
@@ -41,55 +38,32 @@ export default class resultAnalysis extends React.Component {
         this.viewGradeAnalysis(searchArray)
     }
 
-    parseJSON(response) {
-        return response.json();
-    }
-
-    checkStatus(response) {
-        if (response.status >= 200 && response.status < 300) {
-            return response;
-        }
-
-        const error = new Error(response.statusText);
-        error.response = response;
-        throw error;
-    }
-
     /**
      * 查看试卷分析中的年级的结果
      */
     viewGradeAnalysis(array) {
-        var taskId = array[0].split('=')[1];
-        this.setState({taskId});
         var _this = this;
+        var taskId = array[0].split('=')[1];
+        _this.setState({taskId});
         var param = {
             "method": 'viewGradeAnalysis',
             "taskId": taskId,
         };
-
         var requestParams = encodeURI("params=" + JSON.stringify(param));
-
-        var obj = {
+        requestLittleAntApi({
             method: 'post',
             body: requestParams,
-        };
-
-        fetch(mobileUrl, obj)
-            .then(_this.checkStatus)
-            .then(_this.parseJSON)
-            .then(data => ({data}))
-            .catch(err => ({err}))
-            .then(function (result) {
-                _this.setState({animating: false});
-                var ret = result.data.response;
-                if (result.data.success == true && result.data.msg == '调用成功') {
-                    //  获得数据
-                    _this.buildAnalysis(ret);
-                    _this.setState({mainDiv: 'visible'})
-                } else {
-                    Toast.fail(result.data.msg, 3);
-                }
-            });
+        }).then(function (result) {
+            _this.setState({animating: false});
+            var ret = result.data.response;
+            if (result.data.success == true && result.data.msg == '调用成功') {
+                //  获得数据
+                _this.buildAnalysis(ret);
+                _this.setState({mainDiv: 'visible'})
+            } else {
+                Toast.fail(result.data.msg, 3);
+            }
+        });
     }
 
     /**
@@ -181,9 +155,8 @@ export default class resultAnalysis extends React.Component {
     turnToClassRel(id) {
         var taskId = reaultA.state.taskId;
         // window.open("/#/classReaultAnalysis?taskId=" + taskId + "&clazzId=" + id);
-
         // var url = "http://172.16.2.53:8091/#/classReaultAnalysis?taskId=" + taskId + "&clazzId=" + id;
-        var url = "http://jiaoxue.maaee.com:8091/#/classReaultAnalysis?taskId=" + taskId + "&clazzId=" + id;
+        var url = CLASS_RESULT_ANALYSIS_URL+"?taskId=" + taskId + "&clazzId=" + id;
         var data = {};
         data.method = 'openNewPage';
         data.url = url;

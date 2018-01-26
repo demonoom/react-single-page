@@ -1,7 +1,5 @@
 import React from 'react';
-import fetch from 'dva/fetch'
-
-const mobileUrl = 'https://www.maaee.com/Excoord_For_Education/webservice';
+import requestLittleAntApi from '../../helpers/WebServiceUtil';
 
 export default class Demo extends React.Component {
     constructor(props) {
@@ -20,20 +18,6 @@ export default class Demo extends React.Component {
         this.getSubjectLineById(id);
     }
 
-    parseJSON(response) {
-        return response.json();
-    }
-
-    checkStatus(response) {
-        if (response.status >= 200 && response.status < 300) {
-            return response;
-        }
-
-        const error = new Error(response.statusText);
-        error.response = response;
-        throw error;
-    }
-
     getSubjectLineById(id) {
         var _this = this;
         var param = {
@@ -42,25 +26,17 @@ export default class Demo extends React.Component {
         };
 
         var requestParams = encodeURI("params=" + JSON.stringify(param));
-
-        var obj = {
+        requestLittleAntApi({
             method: 'post',
             body: requestParams,
-        };
-
-        fetch(mobileUrl, obj)
-            .then(_this.checkStatus)
-            .then(_this.parseJSON)
-            .then(data => ({data}))
-            .catch(err => ({err}))
-            .then(function (result) {
-                var ret = result.data;
-                if (ret.msg == '调用成功' && ret.success == true) {
-                    var data = ret.response;
-                    // console.log(data);
-                    _this.setState({questionDetil: data})
-                }
-            });
+        }).then(function (result) {
+            var ret = result.data;
+            if (ret.msg == '调用成功' && ret.success == true) {
+                var data = ret.response;
+                // console.log(data);
+                _this.setState({questionDetil: data})
+            }
+        });
     }
 
     render() {
