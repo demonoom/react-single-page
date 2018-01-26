@@ -33,12 +33,13 @@ WebServiceUtil.checkStatus = function (response) {
 }
 
 WebServiceUtil.requestLittleAntApi = function(options){//定义静态方法
-    console.log(' This is a static method ');
-    return fetch(apiWebServiceURL, options)
+    alert(' This is a static method ');
+    /*return fetch(apiWebServiceURL, options)
         .then(WebServiceUtil.checkStatus)
         .then(WebServiceUtil.parseJSON)
         .then(data => ({data}))
-        .catch(err => ({err}));
+        .catch(err => ({err}));*/
+    return "";
 }
 
 /**
