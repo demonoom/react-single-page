@@ -1,5 +1,5 @@
 import React from 'react';
-import requestLittleAntApi from '../../helpers/WebServiceUtil';
+// import requestLittleAntApi from '../../helpers/WebServiceUtil';
 
 export default class Demo extends React.Component {
     constructor(props) {
@@ -26,7 +26,7 @@ export default class Demo extends React.Component {
         };
 
         var requestParams = encodeURI("params=" + JSON.stringify(param));
-        requestLittleAntApi({
+        WebServiceUtil.requestLittleAntApi({
             method: 'post',
             body: requestParams,
         }).then(function (result) {

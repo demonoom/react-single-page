@@ -12,13 +12,8 @@ import {
     PullToRefresh,
 } from 'antd-mobile';
 import {StickyContainer, Sticky} from 'react-sticky';
-import requestLittleAntApi from '../../helpers/WebServiceUtil';
-import {QUESTION_DETAIL_URL} from '../../helpers/Const';
+// import {QUESTION_DETAIL_URL} from '../../helpers/Const';
 import './questionBank.css'
-
-/*请求地址*/
-const mobileUrl = 'https://www.maaee.com/Excoord_For_Education/webservice';
-// const mobileUrl = 'http://192.168.1.140:9006/Excoord_ApiServer/webservice';
 
 const CheckboxItem = Checkbox.CheckboxItem;
 
@@ -140,7 +135,7 @@ export default class questionBank extends React.Component {
         };
 
         var requestParams = encodeURI("params=" + JSON.stringify(param));
-        requestLittleAntApi({
+        WebServiceUtil.requestLittleAntApi({
             method: 'post',
             body: requestParams,
         }).then(function (result) {
@@ -167,7 +162,7 @@ export default class questionBank extends React.Component {
         };
 
         var requestParams = encodeURI("params=" + JSON.stringify(param));
-        requestLittleAntApi({
+        WebServiceUtil.requestLittleAntApi({
             method: 'post',
             body: requestParams,
         }).then(function (result) {
@@ -211,7 +206,7 @@ export default class questionBank extends React.Component {
         };
 
         var requestParams = encodeURI("params=" + JSON.stringify(param));
-        requestLittleAntApi({
+        WebServiceUtil.requestLittleAntApi({
             method: 'post',
             body: requestParams,
         }).then(function (result) {
@@ -250,7 +245,7 @@ export default class questionBank extends React.Component {
         };
 
         var requestParams = encodeURI("params=" + JSON.stringify(param));
-        requestLittleAntApi({
+        WebServiceUtil.requestLittleAntApi({
             method: 'post',
             body: requestParams,
         }).then(function (result) {
@@ -331,7 +326,7 @@ export default class questionBank extends React.Component {
         var subjectId = res.id;
         var subjectType = res.subjectType;
         // window.open("/#/questionDetil?courseId=" + subjectId + "&subjectType=" + subjectType);
-        var url = QUESTION_DETAIL_URL+"?courseId=" + subjectId + "&subjectType=" + subjectType;
+        var url = "http://172.16.2.95:8091/#/questionDetil?courseId=" + subjectId + "&subjectType=" + subjectType;
         var data = {};
         data.method = 'openNewPage';
         data.url = url;
@@ -477,7 +472,7 @@ export default class questionBank extends React.Component {
         };
 
         var requestParams = encodeURI("params=" + JSON.stringify(param));
-        requestLittleAntApi({
+        WebServiceUtil.requestLittleAntApi({
             method: 'post',
             body: requestParams,
         }).then(function (result) {
@@ -571,7 +566,7 @@ export default class questionBank extends React.Component {
         };
 
         var requestParams = encodeURI("params=" + JSON.stringify(param));
-        requestLittleAntApi({
+        WebServiceUtil.requestLittleAntApi({
             method: 'post',
             body: requestParams,
         }).then(function (result) {
