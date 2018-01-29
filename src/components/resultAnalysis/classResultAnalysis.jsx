@@ -1,10 +1,13 @@
 import React from 'react';
+import fetch from 'dva/fetch'
 import ReactEcharts from 'echarts-for-react';
 import echarts from 'echarts';
 import {Tabs, Flex, WingBlank, Toast, ActivityIndicator, WhiteSpace} from 'antd-mobile';
 import {StickyContainer, Sticky} from 'react-sticky';
-import requestLittleAntApi from '../../helpers/WebServiceUtil';
 import './classReaultAnalysis.less';
+
+const mobileUrl = 'https://www.maaee.com/Excoord_For_Education/webservice';
+// const mobileUrl = 'http://172.16.2.230:9006/Excoord_ApiServer/webservice';
 
 const tabs = [
     {title: '成绩分析'},
@@ -37,6 +40,20 @@ export default class classReaultAnalysis extends React.Component {
         this.viewclazzAnalysis(searchArray);
     }
 
+    parseJSON(response) {
+        return response.json();
+    }
+
+    checkStatus(response) {
+        if (response.status >= 200 && response.status < 300) {
+            return response;
+        }
+
+        const error = new Error(response.statusText);
+        error.response = response;
+        throw error;
+    }
+
     /**
      * 查看试卷分析中的年级的结果
      */
@@ -51,20 +68,28 @@ export default class classReaultAnalysis extends React.Component {
         };
 
         var requestParams = encodeURI("params=" + JSON.stringify(param));
-        requestLittleAntApi({
+
+        var obj = {
             method: 'post',
             body: requestParams,
-        }).then(function (result) {
-            _this.setState({animating: false});
-            var ret = result.data.response;
-            if (result.data.success == true && result.data.msg == '调用成功') {
-                //  获得数据
-                _this.buildAnalysis(ret);
-                _this.setState({mainDiv: 'visible'})
-            } else {
-                Toast.fail(result.data.msg, 3);
-            }
-        });
+        };
+
+        fetch(mobileUrl, obj)
+            .then(_this.checkStatus)
+            .then(_this.parseJSON)
+            .then(data => ({data}))
+            .catch(err => ({err}))
+            .then(function (result) {
+                _this.setState({animating: false});
+                var ret = result.data.response;
+                if (result.data.success == true && result.data.msg == '调用成功') {
+                    //  获得数据
+                    _this.buildAnalysis(ret);
+                    _this.setState({mainDiv: 'visible'})
+                } else {
+                    Toast.fail(result.data.msg, 3);
+                }
+            });
     }
 
     /**
