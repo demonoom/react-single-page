@@ -142,3 +142,10 @@ hr.line:before{
     width: 100%;
     height:100%;
 }
+.top_right_btn{
+    position: absolute;
+    top:20px;
+    right:15px;
+    color: #41a1fb;
+    font-size: 12px;
+}

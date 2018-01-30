@@ -143,6 +143,20 @@ export default class studentFaceStatistics extends React.Component {
             zlevel: 0
         };
     };
+    openNewPage = () => {
+        var locationHref = window.location.href;
+        var locationSearch = locationHref.substr(locationHref.indexOf("?") + 1);
+        var searchArray = locationSearch.split("&");
+        var vid = searchArray[0].split('=')[1];
+        var url = "http://jiaoxue.maaee.com:8091/#/studentFaceStatistics?vid=" + vid;
+        window.open(url);
+        // var data = {};
+        // data.method = 'openNewPage';
+        // data.url = url;
+        // Bridge.callHandler(data, null, function (error) {
+        //     window.location.href = url;
+        // });
+    };
     onChartReady = (chart) => {
         this._t = setTimeout(function () {
             chart.hideLoading();
@@ -308,21 +322,27 @@ export default class studentFaceStatistics extends React.Component {
 
     render() {
         var _this = this;
-        var lineChartOption = _this.state.lineChartOption;
+        var lineChartOption=_this.state.lineChartOption;
+    /*    // //上下行间距
+        // const jump=()=>{
+        //     return (<div onClick={() => this.openNewPage()}>新页面打开</div>);
+        // }*/
         return (
+
             <div className="student_cont">
-                <div className='over_flow_auto student_f_auto'>
-                    <span className="student_f_left">占比/％</span>
-                    <span className="student_f_right">时间/M</span>
-                    <div>
-                        <ReactEcharts
-                            option={lineChartOption}
-                            style={{height: '350px', width: '100%'}}
-                            // loadingOption={this.getLoadingOption()}
-                            // showLoading={true}
-                            // onChartReady={this.onChartReady}
-                            className=''/>
-                        <pre>
+                <div onClick={() => this.openNewPage()} className="top_right_btn">新页面打开</div>
+            <div className='over_flow_auto student_f_auto'>
+                <span className="student_f_left">占比/％</span>
+                <span className="student_f_right">时间/M</span>
+                <div>
+                    <ReactEcharts
+                        option={lineChartOption}
+                        style={{height: '350px', width: '100%'}}
+                       // loadingOption={this.getLoadingOption()}
+                       // showLoading={true}
+                       // onChartReady={this.onChartReady}
+                        className='' />
+                    <pre>
           </pre>
                     </div>
                 </div>
