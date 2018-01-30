@@ -205,12 +205,21 @@ export default class studentFaceStatistics extends React.Component {
 
     }
     initChartOption = () => {
+        var _this=this;
         return {
             toolbox: {
                 feature: {
-                    saveAsImage: {}
+                    saveAsImage:{},
+                    myTool1: {
+                        show: true,
+                        title: '新页面打开',
+                        icon: 'image://http://60.205.86.217/upload6/2018-01-30/12/871b0650-212d-43af-830e-7ab963d31de3.png?size=300x300',
+                        onclick: function (){
+                            _this.openNewPage();
+                        }
+                    }
                 }
-            },
+            }  ,
             title: {
                 text: ''
             },
@@ -329,7 +338,6 @@ export default class studentFaceStatistics extends React.Component {
         return (
 
             <div className="student_cont">
-                {jump()}
             <div className='over_flow_auto student_f_auto'>
                 <span className="student_f_left">占比/％</span>
                 <span className="student_f_right">时间/M</span>
