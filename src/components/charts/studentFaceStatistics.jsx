@@ -74,7 +74,7 @@ export default class studentFaceStatistics extends React.Component{
         var theTime = parseInt(value);// 秒
         var theTime1 = 0;// 分
         var theTime2 = 0;// 小时
-// alert(theTime);
+// alertx(theTime);
         if(theTime > 60) {
             theTime1 = parseInt(theTime/60);
             theTime = parseInt(theTime%60);
@@ -152,6 +152,20 @@ export default class studentFaceStatistics extends React.Component{
             maskColor: 'rgba(194, 88, 86, 0.3)',
             zlevel: 0
         };
+    };
+    openNewPage = () => {
+        var locationHref = window.location.href;
+        var locationSearch = locationHref.substr(locationHref.indexOf("?") + 1);
+        var searchArray = locationSearch.split("&");
+        var vid = searchArray[0].split('=')[1];
+        var url = "http://jiaoxue.maaee.com:8091/#/studentFaceStatistics?vid=" + vid;
+        window.open(url);
+        // var data = {};
+        // data.method = 'openNewPage';
+        // data.url = url;
+        // Bridge.callHandler(data, null, function (error) {
+        //     window.location.href = url;
+        // });
     };
     onChartReady = (chart) => {
         this._t = setTimeout(function() {
@@ -318,8 +332,14 @@ export default class studentFaceStatistics extends React.Component{
     render(){
         var _this = this;
         var lineChartOption=_this.state.lineChartOption;
+    /*    // //上下行间距
+        // const jump=()=>{
+        //     return (<div onClick={() => this.openNewPage()}>新页面打开</div>);
+        // }*/
         return (
+
             <div className="student_cont">
+                <div onClick={() => this.openNewPage()} className="top_right_btn">新页面打开</div>
             <div className='over_flow_auto student_f_auto'>
                 <span className="student_f_left">占比/％</span>
                 <span className="student_f_right">时间/M</span>
