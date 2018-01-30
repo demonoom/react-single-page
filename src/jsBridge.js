@@ -96,7 +96,7 @@ Bridge.setBackAsk = function(ask,askInfo){
 
 if(!Bridge.isPhone()){
 	document.onreadystatechange = function(){
-		 if(document.readyState == "complete"){ //当页面加载状态为完全结束时进入 
+		 if(document.readyState == "complete"){ //当页面加载状态为完全结束时进入
 			 var data = {};
 			 data.method = 'setPanelTitle';
 			 data.windowName = window.name;

@@ -1,5 +1,4 @@
 import React from 'react';
-// import requestLittleAntApi from '../../helpers/WebServiceUtil';
 
 export default class Demo extends React.Component {
     constructor(props) {

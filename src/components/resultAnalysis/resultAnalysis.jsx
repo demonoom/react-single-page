@@ -1,13 +1,8 @@
 import React from 'react';
 import ReactEcharts from 'echarts-for-react';
-import echarts from 'echarts';
-import fetch from 'dva/fetch'
 import {Tabs, Flex, WingBlank, Toast, ActivityIndicator, WhiteSpace} from 'antd-mobile';
 import {StickyContainer, Sticky} from 'react-sticky';
 import './reaultAnalysis.less';
-
-const mobileUrl = 'https://www.maaee.com/Excoord_For_Education/webservice';
-// const mobileUrl = 'http://172.16.2.230:9006/Excoord_ApiServer/webservice';
 
 const tabs = [
     {title: '成绩分析'},
@@ -27,9 +22,9 @@ export default class resultAnalysis extends React.Component {
             tableArr: [],
             animating: true,   //动画状态
             mainDiv: 'hidden',
-            radarIndicator:[],
-            seriesvalue:[],
-            radarOption:{}
+            radarIndicator: [],
+            seriesvalue: [],
+            radarOption: {}
         }
     }
 
@@ -39,20 +34,6 @@ export default class resultAnalysis extends React.Component {
         var locationSearch = locationHref.substr(locationHref.indexOf("?") + 1);
         var searchArray = locationSearch.split("&");
         this.viewGradeAnalysis(searchArray)
-    }
-
-    parseJSON(response) {
-        return response.json();
-    }
-
-    checkStatus(response) {
-        if (response.status >= 200 && response.status < 300) {
-            return response;
-        }
-
-        const error = new Error(response.statusText);
-        error.response = response;
-        throw error;
     }
 
     /**
@@ -69,27 +50,20 @@ export default class resultAnalysis extends React.Component {
 
         var requestParams = encodeURI("params=" + JSON.stringify(param));
 
-        var obj = {
+        WebServiceUtil.requestLittleAntApi({
             method: 'post',
             body: requestParams,
-        };
-
-        fetch(mobileUrl, obj)
-            .then(_this.checkStatus)
-            .then(_this.parseJSON)
-            .then(data => ({data}))
-            .catch(err => ({err}))
-            .then(function (result) {
-                _this.setState({animating: false});
-                var ret = result.data.response;
-                if (result.data.success == true && result.data.msg == '调用成功') {
-                    //  获得数据
-                    _this.buildAnalysis(ret);
-                    _this.setState({mainDiv: 'visible'})
-                } else {
-                    Toast.fail(result.data.msg, 3);
-                }
-            });
+        }).then(function (result) {
+            _this.setState({animating: false});
+            var ret = result.data.response;
+            if (result.data.success == true && result.data.msg == '调用成功') {
+                //  获得数据
+                _this.buildAnalysis(ret);
+                _this.setState({mainDiv: 'visible'})
+            } else {
+                Toast.fail(result.data.msg, 3);
+            }
+        });
     }
 
     /**
@@ -147,8 +121,8 @@ export default class resultAnalysis extends React.Component {
             </Flex.Item>;
             topDataArr.push(flex);
         });
-        var radarIndicator=[];
-        var seriesValue=[];
+        var radarIndicator = [];
+        var seriesValue = [];
         var tableArr = [];
         if (data.topics.length != 0) {
             data.topics.forEach(function (v, i) {
@@ -162,14 +136,13 @@ export default class resultAnalysis extends React.Component {
                 tableArr.push(tb);
                 var name = v.name;
                 var max = v.max;
-                var nameJson = { name: name, max: max};
+                var nameJson = {name: name, max: max};
                 var hit = v.hit;
                 radarIndicator.push(nameJson);
                 seriesValue.push(hit);
             });
         }
-        console.log(data.topics);
-        this.buildRadarOption(radarIndicator,seriesValue);
+        this.buildRadarOption(radarIndicator, seriesValue);
         this.setState({top5StudentListArr, clazzesArr, topDataArr, tableArr});
 
     }
@@ -182,7 +155,6 @@ export default class resultAnalysis extends React.Component {
         var taskId = reaultA.state.taskId;
         // window.open("/#/classReaultAnalysis?taskId=" + taskId + "&clazzId=" + id);
 
-        // var url = "http://172.16.2.53:8091/#/classReaultAnalysis?taskId=" + taskId + "&clazzId=" + id;
         var url = "http://jiaoxue.maaee.com:8091/#/classReaultAnalysis?taskId=" + taskId + "&clazzId=" + id;
         var data = {};
         data.method = 'openNewPage';
@@ -198,7 +170,7 @@ export default class resultAnalysis extends React.Component {
         </Sticky>);
     }
 
-    buildRadarOption(radarIndicator,seriesValue){
+    buildRadarOption(radarIndicator, seriesValue) {
         var _this = this;
         var radarOption = {
             title: {
@@ -230,24 +202,24 @@ export default class resultAnalysis extends React.Component {
                     { name: '市场（Marketing）', max: 25000}
                 ]*/
                 indicator: radarIndicator,
-                splitNumber:5, //让雷达图等分为10份
+                splitNumber: 5, //让雷达图等分为10份
             },
             series: [{
                 name: '得分率',
                 type: 'radar',
                 // areaStyle: {normal: {}},
-                data : [
+                data: [
                     {
                         // value : [4300, 10000, 28000, 35000, 50000, 19000],
-                        value :seriesValue,
-                        name : '得分率'
+                        value: seriesValue,
+                        name: '得分率'
                     }
                 ],
-                silent:true
+                silent: true
                 //label:{show:true}   //在图中的数据点上显示具体的数值
             }]
         };
-        this.setState({"radarOption":radarOption});
+        this.setState({"radarOption": radarOption});
     }
 
     render() {
@@ -292,7 +264,7 @@ export default class resultAnalysis extends React.Component {
                             <ReactEcharts
                                 option={this.state.radarOption}
                                 style={{Minheight: '340px', width: '100%'}}
-                                className='react_for_echarts' />
+                                className='react_for_echarts'/>
 
                             <table className="class_table_cont">
                                 <thead>

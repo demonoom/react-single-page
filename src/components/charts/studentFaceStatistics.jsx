@@ -4,19 +4,19 @@ import './studentFaceStatistics.css'
 import {
     Toast,
 } from 'antd-mobile';
-const debug=false;
 
-const mobileUrl = debug?'http://192.168.1.34:9006/Excoord_ApiServer/webservice':'https://www.maaee.com/Excoord_For_Education/webservice';
-export default class studentFaceStatistics extends React.Component{
+export default class studentFaceStatistics extends React.Component {
     classOpenSend = 0;
+
     constructor(props) {
         super(props);
         this.state = {
             lineChartOption: this.initChartOption(),
-            lastPoint:'0'
+            lastPoint: '0'
         };
     }
-    componentDidMount(){
+
+    componentDidMount() {
         document.title = '学生听课认真度分析';
         Bridge.setShareAble("false");
         Bridge.setRefreshAble("false");
@@ -28,8 +28,9 @@ export default class studentFaceStatistics extends React.Component{
         setInterval(this.fetchNewDate, 10000);
 
     }
+
     fetchNewDate = () => {
-        if(this.classOpenSend==0){
+        if (this.classOpenSend == 0) {
             return;
         }
         var loginUser = JSON.parse(localStorage.getItem('loginUser'));
@@ -41,61 +42,54 @@ export default class studentFaceStatistics extends React.Component{
         const dataBlob = {};
         var param = {
             "method": 'getVclassFaceEmotionsBySecondsPoint',
-            "vid":vid,
-            "count":'10',
-            "lastPoint":this.classOpenSend,
+            "vid": vid,
+            "count": '10',
+            "lastPoint": this.classOpenSend,
         };
         console.log(this.classOpenSend);
         var requestParams = encodeURI("params=" + JSON.stringify(param));
 
-        var obj = {
+        WebServiceUtil.requestLittleAntApi({
             method: 'post',
             body: requestParams,
-        };
-
-        fetch(mobileUrl, obj)
-            .then(_this.checkStatus)
-            .then(_this.parseJSON)
-            .then(data => ({data}))
-            .catch(err => ({err}))
-            .then(function (result) {
-                var data = result.data;
-                if (!data.success ) {
-                    Toast.fail(data.msg, 1);
-                    return;
-                }
-                _this.classOpenSend=data.class_opened_seconds+5;
-                var resourse=data.response;
-                _this.handleResourse(resourse);
-            });
-
+        }).then(function (result) {
+            var data = result.data;
+            if (!data.success) {
+                Toast.fail(data.msg, 1);
+                return;
+            }
+            _this.classOpenSend = data.class_opened_seconds + 5;
+            var resourse = data.response;
+            _this.handleResourse(resourse);
+        });
     };
+
     formatSeconds(value) {
         var theTime = parseInt(value);// 秒
         var theTime1 = 0;// 分
         var theTime2 = 0;// 小时
-// alert(theTime);
-        if(theTime > 60) {
-            theTime1 = parseInt(theTime/60);
-            theTime = parseInt(theTime%60);
-// alert(theTime1+"-"+theTime);
-            if(theTime1 > 60) {
-                theTime2 = parseInt(theTime1/60);
-                theTime1 = parseInt(theTime1%60);
+        if (theTime > 60) {
+            theTime1 = parseInt(theTime / 60);
+            theTime = parseInt(theTime % 60);
+            if (theTime1 > 60) {
+                theTime2 = parseInt(theTime1 / 60);
+                theTime1 = parseInt(theTime1 % 60);
             }
         }
-        var result = ""+parseInt(theTime)+"s";
-        if(theTime1 > 0) {
-            result = ""+parseInt(theTime1)+"m"+result;
+        var result = "" + parseInt(theTime) + "s";
+        if (theTime1 > 0) {
+            result = "" + parseInt(theTime1) + "m" + result;
         }
-        if(theTime2 > 0) {
-            result = ""+parseInt(theTime2)+"h"+result;
+        if (theTime2 > 0) {
+            result = "" + parseInt(theTime2) + "h" + result;
         }
         return result;
     }
+
     parseJSON(response) {
         return response.json();
     }
+
     checkStatus(response) {
         if (response.status >= 200 && response.status < 300) {
             return response;
@@ -105,7 +99,8 @@ export default class studentFaceStatistics extends React.Component{
         error.response = response;
         throw error;
     }
-    getVclassFaceEmotionsStatistics=()=> {
+
+    getVclassFaceEmotionsStatistics = () => {
         var loginUser = JSON.parse(localStorage.getItem('loginUser'));
         var _this = this;
         var locationHref = window.location.href;
@@ -115,33 +110,28 @@ export default class studentFaceStatistics extends React.Component{
         const dataBlob = {};
         var param = {
             "method": 'getVclassFaceEmotionsStatistics',
-            "vid":vid,
+            "vid": vid,
         };
         var requestParams = encodeURI("params=" + JSON.stringify(param));
 
-        var obj = {
+        WebServiceUtil.requestLittleAntApi({
             method: 'post',
             body: requestParams,
-        };
-
-        fetch(mobileUrl, obj)
-            .then(_this.checkStatus)
-            .then(_this.parseJSON)
-            .then(data => ({data}))
-            .catch(err => ({err}))
-            .then(function (result) {
-                var data = result.data;
-                _this.classOpenSend=data.class_opened_seconds+5;
-                if (!data.success ) {
-                    Toast.fail(data.msg, 1);
-                    return;
-                }
-                var resourse=data.response;
-                _this.handleResourse(resourse);
-            });
+        }).then(function (result) {
+            var data = result.data;
+            _this.classOpenSend = data.class_opened_seconds + 5;
+            if (!data.success) {
+                Toast.fail(data.msg, 1);
+                return;
+            }
+            var resourse = data.response;
+            _this.handleResourse(resourse);
+        });
     }
-    isEmptyObject=(obj)=>{
-        for(var n in obj){return false}
+    isEmptyObject = (obj) => {
+        for (var n in obj) {
+            return false
+        }
         return true;
     }
     getLoadingOption = () => {
@@ -154,25 +144,25 @@ export default class studentFaceStatistics extends React.Component{
         };
     };
     onChartReady = (chart) => {
-        this._t = setTimeout(function() {
+        this._t = setTimeout(function () {
             chart.hideLoading();
         }, 3000);
     };
-    handleResourse=(resourse)=>{
-        if(!resourse){
+    handleResourse = (resourse) => {
+        if (!resourse) {
             Toast.fail(resourse, 1);
             return;
         }
-        var faceEmotionDatas=resourse;
-        var lineChartOption=this.state.lineChartOption;
-        var i=1;
+        var faceEmotionDatas = resourse;
+        var lineChartOption = this.state.lineChartOption;
+        var i = 1;
         var lastPoint;
-        if(!this.isEmptyObject(faceEmotionDatas)) {
+        if (!this.isEmptyObject(faceEmotionDatas)) {
             for (var key in faceEmotionDatas) {
                 i++;
                 var faceEmotionData = faceEmotionDatas[key];
                 var xMinuite = this.formatSeconds(key);
-                if(xMinuite>60){
+                if (xMinuite > 60) {
                     break;
                 }
                 (lineChartOption.xAxis)[0].data.push(xMinuite);
@@ -187,8 +177,8 @@ export default class studentFaceStatistics extends React.Component{
 
             this.setState({lineChartOption: lineChartOption});
             this.setState({lastPoint: lastPoint});
-        }else{
-            (lineChartOption.xAxis)[0].data.push( this.formatSeconds(this.classOpenSend));
+        } else {
+            (lineChartOption.xAxis)[0].data.push(this.formatSeconds(this.classOpenSend));
             (lineChartOption.series)[0].data.push(0);
             (lineChartOption.series)[1].data.push(0);
             (lineChartOption.series)[2].data.push(0);
@@ -210,17 +200,17 @@ export default class studentFaceStatistics extends React.Component{
             title: {
                 text: ''
             },
-            tooltip : {
+            tooltip: {
                 trigger: 'axis'
             },
             legend: {
-                data:[{name:'专注',icon:'rect'},
-                    {name:'疑惑',icon:'rect'},
-                    {name:'思考',icon:'rect'},
-                    {name:'喜悦',icon:'rect'},
-                    {name:'惊讶',icon:'rect'},
-                    {name:'理解',icon:'rect'},
-                  ],
+                data: [{name: '专注', icon: 'rect'},
+                    {name: '疑惑', icon: 'rect'},
+                    {name: '思考', icon: 'rect'},
+                    {name: '喜悦', icon: 'rect'},
+                    {name: '惊讶', icon: 'rect'},
+                    {name: '理解', icon: 'rect'},
+                ],
                 textStyle: {
                     fontSize: 20,
                 }
@@ -232,109 +222,110 @@ export default class studentFaceStatistics extends React.Component{
                 bottom: '3%',
                 containLabel: true
             },
-            xAxis : [
+            xAxis: [
                 {
-                    type : 'category',
-                    boundaryGap : false,
-                    axisTick: {length:2},
-                    data : [],
+                    type: 'category',
+                    boundaryGap: false,
+                    axisTick: {length: 2},
+                    data: [],
                 }
             ],
-            yAxis : [
+            yAxis: [
                 {
-                    type : 'value'
+                    type: 'value'
                 }
             ],
-            series : [
+            series: [
                 {
-                    name:'专注',
-                    type:'line',
-                    smooth:true,  //这句就是让曲线变平滑的
-                    itemStyle:{
-                        normal:{
-                            color:'green'
+                    name: '专注',
+                    type: 'line',
+                    smooth: true,  //这句就是让曲线变平滑的
+                    itemStyle: {
+                        normal: {
+                            color: 'green'
                         }
                     },
-                    data:[]
+                    data: []
                 },
                 {
-                    name:'疑惑',
-                    type:'line',
-                    smooth:true,  //这句就是让曲线变平滑的
-                    itemStyle:{
-                        normal:{
-                            color:'black'
+                    name: '疑惑',
+                    type: 'line',
+                    smooth: true,  //这句就是让曲线变平滑的
+                    itemStyle: {
+                        normal: {
+                            color: 'black'
                         }
                     },
-                    data:[]
+                    data: []
                 },
                 {
-                    name:'思考',
-                    type:'line',
-                    smooth:true,  //这句就是让曲线变平滑的
-                    itemStyle:{
-                        normal:{
-                            color:'#DA22FF'
+                    name: '思考',
+                    type: 'line',
+                    smooth: true,  //这句就是让曲线变平滑的
+                    itemStyle: {
+                        normal: {
+                            color: '#DA22FF'
                         }
                     },
-                    data:[]
+                    data: []
                 },
                 {
-                    name:'喜悦',
-                    type:'line',
-                    smooth:true,  //这句就是让曲线变平滑的
-                    itemStyle:{
-                        normal:{
-                            color:'blue'
+                    name: '喜悦',
+                    type: 'line',
+                    smooth: true,  //这句就是让曲线变平滑的
+                    itemStyle: {
+                        normal: {
+                            color: 'blue'
                         }
                     },
-                    data:[]
+                    data: []
                 },
                 {
-                    name:'惊讶',
-                    type:'line',
-                    smooth:true,  //这句就是让曲线变平滑的
-                    itemStyle:{
-                        normal:{
-                            color:'yellow'
+                    name: '惊讶',
+                    type: 'line',
+                    smooth: true,  //这句就是让曲线变平滑的
+                    itemStyle: {
+                        normal: {
+                            color: 'yellow'
                         }
                     },
-                    data:[]
+                    data: []
                 },
                 {
-                    name:'理解',
-                    type:'line',
-                    smooth:true,  //这句就是让曲线变平滑的
-                    itemStyle:{
-                        normal:{
-                            color:'red'
+                    name: '理解',
+                    type: 'line',
+                    smooth: true,  //这句就是让曲线变平滑的
+                    itemStyle: {
+                        normal: {
+                            color: 'red'
                         }
                     },
-                    data:[]
+                    data: []
                 }
             ]
         };
     };
-    render(){
+
+    render() {
         var _this = this;
-        var lineChartOption=_this.state.lineChartOption;
+        var lineChartOption = _this.state.lineChartOption;
         return (
             <div className="student_cont">
-            <div className='over_flow_auto student_f_auto'>
-                <span className="student_f_left">占比/％</span>
-                <span className="student_f_right">时间/M</span>
-                <div>
-                    <ReactEcharts
-                        option={lineChartOption}
-                        style={{height: '350px', width: '100%'}}
-                       // loadingOption={this.getLoadingOption()}
-                       // showLoading={true}
-                       // onChartReady={this.onChartReady}
-                        className='' />
-                    <pre>
+                <div className='over_flow_auto student_f_auto'>
+                    <span className="student_f_left">占比/％</span>
+                    <span className="student_f_right">时间/M</span>
+                    <div>
+                        <ReactEcharts
+                            option={lineChartOption}
+                            style={{height: '350px', width: '100%'}}
+                            // loadingOption={this.getLoadingOption()}
+                            // showLoading={true}
+                            // onChartReady={this.onChartReady}
+                            className=''/>
+                        <pre>
           </pre>
+                    </div>
                 </div>
-            </div>
             </div>
         );
     }

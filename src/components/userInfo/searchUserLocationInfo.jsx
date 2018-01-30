@@ -1,11 +1,9 @@
 import React from 'react';
-import fetch from 'dva/fetch'
 import './userinfo.css'
 import {
-    ListView,SearchBar, Button, WhiteSpace, WingBlank,List
+    ListView, SearchBar, List
 } from 'antd-mobile';
-const debug=false;
-const mobileUrl = debug?'http://192.168.1.16:9006/Excoord_ApiServer/webservice':'https://www.maaee.com/Excoord_For_Education/webservice';
+
 export default class searchUserLocationInfo extends React.Component {
     constructor(props) {
         super(props);
@@ -18,48 +16,47 @@ export default class searchUserLocationInfo extends React.Component {
 
         this.state = {
             userDataSource: userDataSource.cloneWithRows(this.initDataOther),
-            searchValue:"",
+            searchValue: "",
             isLoading: true,   //为true显示'加载'  false显示'没有跟多课程'
             defaultPageNo: 1,
             defaultPageNoOther: 1,
-            historyUserArray:JSON.parse(localStorage.getItem('historyUserArray')),
-            isShowHistoryRecord:{display:'none'},
-            isShowUserList:'none',
-            isShowEmptyImg:'none',
-            clientHeight:document.body.clientHeight,
+            historyUserArray: JSON.parse(localStorage.getItem('historyUserArray')),
+            isShowHistoryRecord: {display: 'none'},
+            isShowUserList: 'none',
+            isShowEmptyImg: 'none',
+            clientHeight: document.body.clientHeight,
             // clicked: 'none',
             // open: false,
             // tabOnClick: 0,
             // refreshing: false,   //下拉刷新状态
         };
     }
-    componentWillMount(){
+
+    componentWillMount() {
 
     }
+
     componentDidMount() {
 
-        this.setState({clientHeight:document.body.clientHeight});
+        this.setState({clientHeight: document.body.clientHeight});
         var historyUserArray = this.state.historyUserArray;
-        var isShowHistoryRecord=historyUserArray!=undefined&&historyUserArray.length>0?{display:'block'}:{display:'none'};
-        this.setState({isShowHistoryRecord:isShowHistoryRecord});
+        var isShowHistoryRecord = historyUserArray != undefined && historyUserArray.length > 0 ? {display: 'block'} : {display: 'none'};
+        this.setState({isShowHistoryRecord: isShowHistoryRecord});
         document.title = '登录信息查询';
-        if(historyUserArray!=undefined&&historyUserArray.length>0){
-            this.setState({isShowEmptyImg:'none'});
-        }else{
-            this.setState({isShowEmptyImg:'block'});
+        if (historyUserArray != undefined && historyUserArray.length > 0) {
+            this.setState({isShowEmptyImg: 'none'});
+        } else {
+            this.setState({isShowEmptyImg: 'block'});
         }
         Bridge.setShareAble("false");
         Bridge.setRefreshAble("false");
     }
+
     //右侧下拉刷新
     onRefreshOther = () => {
         // this.setState({defaultPageNoOther: 1, refreshing: true});
         // this.getUserLocationInfo(true);
     };
-
-    parseJSON(response) {
-        return response.json();
-    }
 
     /**
      *  ListView数据全部渲染完毕的回调  (右侧)
@@ -81,35 +78,26 @@ export default class searchUserLocationInfo extends React.Component {
             isLoading: true,
         });
     };
-    searchHistoryRecord=(i)=>{
+    searchHistoryRecord = (i) => {
         var _this = this;
-        this.setState({searchValue:i});
+        this.setState({searchValue: i});
 
         setTimeout(function () {
             _this.getUserLocationInfo(true);
-        },300)
-    }
-    checkStatus(response) {
-        if (response.status >= 200 && response.status < 300) {
-            return response;
-        }
-
-        const error = new Error(response.statusText);
-        error.response = response;
-        throw error;
+        }, 300)
     }
 
-    handleChange=(value)=> {
-        this.setState({searchValue:value});
+    handleChange = (value) => {
+        this.setState({searchValue: value});
     }
-    cancelSearch=()=>{
-        this.setState({searchValue:""});
-        this.setState({isShowHistoryRecord:{display:'block'}});
-        this.setState({isShowUserList:  'none'});
-        var historyUserArray=JSON.parse(localStorage.getItem('historyUserArray'));
+    cancelSearch = () => {
+        this.setState({searchValue: ""});
+        this.setState({isShowHistoryRecord: {display: 'block'}});
+        this.setState({isShowUserList: 'none'});
+        var historyUserArray = JSON.parse(localStorage.getItem('historyUserArray'));
         if (historyUserArray == undefined || historyUserArray.length == 0) {
             this.setState({isShowEmptyImg: 'block'});
-        }else{
+        } else {
             this.setState({isShowEmptyImg: 'none'});
         }
         this.initDataOther.splice(0);
@@ -119,164 +107,157 @@ export default class searchUserLocationInfo extends React.Component {
         })
     }
     clear = () => {
-        this.setState({ value: '' });
+        this.setState({value: ''});
     };
-    saveHistoryRecord=(searchKeyWords)=>{
-        var historyUserArray=JSON.parse(localStorage.getItem('historyUserArray'));
+    saveHistoryRecord = (searchKeyWords) => {
+        var historyUserArray = JSON.parse(localStorage.getItem('historyUserArray'));
 
-        if(searchKeyWords!=""&&searchKeyWords!=undefined) {
+        if (searchKeyWords != "" && searchKeyWords != undefined) {
             this.setState({isShowHistoryRecord: {display: 'none'}});
             this.setState({isShowUserList: 'block'});
-            this.setState({isShowEmptyImg:'none'});
+            this.setState({isShowEmptyImg: 'none'});
             if (historyUserArray == undefined || historyUserArray.length == 0) {
                 historyUserArray = new Array();
                 historyUserArray.unshift(this.state.searchValue);
             } else {
-                var curArray=new Array();
+                var curArray = new Array();
                 curArray.push(searchKeyWords);
                 historyUserArray.map((i) => {
-                    if(i!=searchKeyWords){
+                    if (i != searchKeyWords) {
                         curArray.push(i);
                     }
                 })
                 if (curArray.length == 10) {
                     curArray.pop();
                 }
-                historyUserArray=curArray;
+                historyUserArray = curArray;
             }
-        }else{
+        } else {
             this.setState({isShowHistoryRecord: {display: 'block'}});
-            this.setState({isShowUserList:  'none'});
+            this.setState({isShowUserList: 'none'});
             if (historyUserArray == undefined || historyUserArray.length == 0) {
                 this.setState({isShowEmptyImg: 'block'});
             }
         }
         localStorage.setItem("historyUserArray", JSON.stringify(historyUserArray));
-        this.setState({historyUserArray:historyUserArray});
+        this.setState({historyUserArray: historyUserArray});
     }
-    clearHistoryRecord=()=>{
-        this.setState({historyUserArray:new Array() });
+    clearHistoryRecord = () => {
+        this.setState({historyUserArray: new Array()});
         localStorage.setItem("historyUserArray", null);
         this.setState({isShowEmptyImg: 'block'});
         this.setState({isShowHistoryRecord: {display: 'none'}});
 
     }
-    imgError=(e)=> {
-        e.target.src='http://www.maaee.com:80/Excoord_For_Education/userPhoto/default_avatar.png';
+    imgError = (e) => {
+        e.target.src = 'http://www.maaee.com:80/Excoord_For_Education/userPhoto/default_avatar.png';
     }
     /**
      *
      */
-    getUserLocationInfo=(isSearch)=> {
-        var searchKeyWords=this.state.searchValue;
+    getUserLocationInfo = (isSearch) => {
+        var searchKeyWords = this.state.searchValue;
         this.saveHistoryRecord(searchKeyWords);
         var loginUser = JSON.parse(localStorage.getItem('loginUser'));
         var _this = this;
         const dataBlob = {};
-        var PageNo ;
-        if(isSearch){
-            PageNo=1;
+        var PageNo;
+        if (isSearch) {
+            PageNo = 1;
             setTimeout(() => this.lv.scrollTo(0, 0), 300);
             this.setState({defaultPageNoOther: 1});
-        }else{
+        } else {
             PageNo = this.state.defaultPageNoOther;
         }
         var param = {
             "method": 'searchUserLocationInfo',
             "pageNo": PageNo,
             "userId": '',
-            "searchKeyWords":searchKeyWords ,
+            "searchKeyWords": searchKeyWords,
         };
 
         var requestParams = encodeURI("params=" + JSON.stringify(param));
 
-        var obj = {
+        WebServiceUtil.requestLittleAntApi({
             method: 'post',
             body: requestParams,
-        };
-
-        fetch(mobileUrl, obj)
-            .then(_this.checkStatus)
-            .then(_this.parseJSON)
-            .then(data => ({data}))
-            .catch(err => ({err}))
-            .then(function (result) {
-                var response = result.data.response;
-                var pager = result.data.pager;
-                for (let i = 0; i < response.length; i++) {
-                    var topic = response[i];
-                    topic.checkBoxChecked = false;
-                    dataBlob[`${i}`] = topic;
+        }).then(function (result) {
+            var response = result.data.response;
+            var pager = result.data.pager;
+            for (let i = 0; i < response.length; i++) {
+                var topic = response[i];
+                topic.checkBoxChecked = false;
+                dataBlob[`${i}`] = topic;
+            }
+            if (isSearch) {    //拉动刷新  获取数据之后再清除原有数据
+                _this.initDataOther.splice(0);
+                _this.state.dataSourceOther = [];
+                _this.state.dataSourceOther = new ListView.DataSource({
+                    rowHasChanged: (row1, row2) => row1 !== row2,
+                });
+            }
+            var isLoading = false;
+            if (response.length > 0) {
+                if (pager.pageCount == 1 && pager.rsCount < 30) {
+                    isLoading = false;
+                } else {
+                    isLoading = true;
                 }
-                if (isSearch) {    //拉动刷新  获取数据之后再清除原有数据
-                        _this.initDataOther.splice(0);
-                        _this.state.dataSourceOther = [];
-                        _this.state.dataSourceOther = new ListView.DataSource({
-                            rowHasChanged: (row1, row2) => row1 !== row2,
-                        });
-                }
-                var isLoading=false;
-                if(response.length>0){
-                    if(pager.pageCount==1&&pager.rsCount<30){
-                        isLoading=false;
-                    }else {
-                        isLoading = true;
-                    }
-                }else{
-                    isLoading=false;
-                }
-                _this.initDataOther = _this.initDataOther.concat(response);
-                _this.setState({
-                    userDataSource: _this.state.userDataSource.cloneWithRows(_this.initDataOther),
-                    isLoading: isLoading,
-                    refreshing: false
-                })
-            });
+            } else {
+                isLoading = false;
+            }
+            _this.initDataOther = _this.initDataOther.concat(response);
+            _this.setState({
+                userDataSource: _this.state.userDataSource.cloneWithRows(_this.initDataOther),
+                isLoading: isLoading,
+                refreshing: false
+            })
+        });
     }
 
 
     render() {
         var _this = this;
         var historyUserArray = this.state.historyUserArray;
-        var isShowHistoryRecord=this.state.isShowHistoryRecord;
+        var isShowHistoryRecord = this.state.isShowHistoryRecord;
         // var isShowUserList=this.state.isShowUserList;
         var _this = this;
         var searchValue = this.state.searchValue;
 
-        const search=()=>{
+        const search = () => {
             return (<div>搜索</div>);
         }
 
-        var listStyle={
+        var listStyle = {
             height: _this.state.clientHeight,
-            display:_this.state.isShowUserList,
+            display: _this.state.isShowUserList,
         }
 
         //右边每一道题的div(暂时废弃)
         const rowRight = (rowData, sectionID, rowID) => {
-            if(!rowData){
+            if (!rowData) {
                 return (<div></div>)
             }
-            var androidLoginRecord=rowData.androidLoginRecord;
-            var iosLoginRecord=rowData.iosLoginRecord;
-            var isAndroidEmpty=false;
-            var isIosEmpty=false;
-            var isAndroidShow={display:'none'};
-            var isIosShow={display:'none'};
+            var androidLoginRecord = rowData.androidLoginRecord;
+            var iosLoginRecord = rowData.iosLoginRecord;
+            var isAndroidEmpty = false;
+            var isIosEmpty = false;
+            var isAndroidShow = {display: 'none'};
+            var isIosShow = {display: 'none'};
             var iosEmptyInfo;
             var androidEmptyInfo;
-            if(androidLoginRecord!=undefined){
-                isAndroidEmpty=true;
-                isAndroidShow={display:'block'};
-            }else{
-                androidEmptyInfo='暂无安卓登录信息';
+            if (androidLoginRecord != undefined) {
+                isAndroidEmpty = true;
+                isAndroidShow = {display: 'block'};
+            } else {
+                androidEmptyInfo = '暂无安卓登录信息';
 
             }
-            if(iosLoginRecord!=undefined){
-                isIosEmpty=true;
-                isIosShow={display:'block'};
-            }else{
-                iosEmptyInfo='暂无苹果系统登录信息';
+            if (iosLoginRecord != undefined) {
+                isIosEmpty = true;
+                isIosShow = {display: 'block'};
+            } else {
+                iosEmptyInfo = '暂无苹果系统登录信息';
             }
             return (
                 <div key={rowID} className="exercises_line userinfo_cont">
@@ -296,16 +277,35 @@ export default class searchUserLocationInfo extends React.Component {
                     </div>
                     <div className="font_14">
                         <div className="color_9" style={isAndroidShow}>
-                            <div className="my_flex padding_8"><span className="color_9 userinfo_left">设备名称</span><span className="userinfo_right flex_auto">{isAndroidEmpty?rowData.androidLoginRecord.deviceName:"暂无数据"}</span></div>
-                            <div className="my_flex padding_8"><span className="color_9 userinfo_left">设备类型</span><span className="userinfo_right flex_auto"> <img className="icon_ios" src={require('./icon_android.png')}/>{isAndroidEmpty?rowData.androidLoginRecord.machineType:"暂无数据"}</span></div>
-                            <div className="my_flex padding_8"><span className="color_9 userinfo_left">登录地址</span><span className="userinfo_right flex_auto">{isAndroidEmpty?rowData.androidLoginRecord.address:""}</span></div>
-                            <div className="my_flex padding_8"><span className="color_9 userinfo_left">登录时间</span><span className="userinfo_right flex_auto">{isAndroidEmpty?rowData.androidLoginRecord.accessTime:"暂无数据"}</span></div>
+                            <div className="my_flex padding_8"><span className="color_9 userinfo_left">设备名称</span><span
+                                className="userinfo_right flex_auto">{isAndroidEmpty ? rowData.androidLoginRecord.deviceName : "暂无数据"}</span>
+                            </div>
+                            <div className="my_flex padding_8"><span className="color_9 userinfo_left">设备类型</span><span
+                                className="userinfo_right flex_auto"> <img className="icon_ios"
+                                                                           src={require('./icon_android.png')}/>{isAndroidEmpty ? rowData.androidLoginRecord.machineType : "暂无数据"}</span>
+                            </div>
+                            <div className="my_flex padding_8"><span className="color_9 userinfo_left">登录地址</span><span
+                                className="userinfo_right flex_auto">{isAndroidEmpty ? rowData.androidLoginRecord.address : ""}</span>
+                            </div>
+                            <div className="my_flex padding_8"><span className="color_9 userinfo_left">登录时间</span><span
+                                className="userinfo_right flex_auto">{isAndroidEmpty ? rowData.androidLoginRecord.accessTime : "暂无数据"}</span>
+                            </div>
                         </div>
-                            <div className="color_9 user_info_line" style={isIosShow}>
-                            <div className="my_flex padding_8 user_bottom"><span className="color_9 userinfo_left">设备名称</span><span className="userinfo_right flex_auto">{isIosEmpty?rowData.iosLoginRecord.deviceName:"暂无数据"}</span></div>
-                            <div className="my_flex padding_8"><span className="color_9 userinfo_left">设备类型</span><span className="userinfo_right flex_auto"><img className="icon_ios" src={require('./icon_ios.png')}/>{isIosEmpty?rowData.iosLoginRecord.machineType:"暂无数据"}</span></div>
-                            <div className="my_flex padding_8"><span className="color_9 userinfo_left">登录地址</span><span className="userinfo_right flex_auto">{isIosEmpty?rowData.iosLoginRecord.address:"暂无数据"}</span></div>
-                            <div className="my_flex padding_8"><span className="color_9 userinfo_left">登录时间</span><span className="userinfo_right flex_auto">{isIosEmpty?rowData.iosLoginRecord.accessTime:"暂无数据"}</span></div>
+                        <div className="color_9 user_info_line" style={isIosShow}>
+                            <div className="my_flex padding_8 user_bottom"><span
+                                className="color_9 userinfo_left">设备名称</span><span
+                                className="userinfo_right flex_auto">{isIosEmpty ? rowData.iosLoginRecord.deviceName : "暂无数据"}</span>
+                            </div>
+                            <div className="my_flex padding_8"><span className="color_9 userinfo_left">设备类型</span><span
+                                className="userinfo_right flex_auto"><img className="icon_ios"
+                                                                          src={require('./icon_ios.png')}/>{isIosEmpty ? rowData.iosLoginRecord.machineType : "暂无数据"}</span>
+                            </div>
+                            <div className="my_flex padding_8"><span className="color_9 userinfo_left">登录地址</span><span
+                                className="userinfo_right flex_auto">{isIosEmpty ? rowData.iosLoginRecord.address : "暂无数据"}</span>
+                            </div>
+                            <div className="my_flex padding_8"><span className="color_9 userinfo_left">登录时间</span><span
+                                className="userinfo_right flex_auto">{isIosEmpty ? rowData.iosLoginRecord.accessTime : "暂无数据"}</span>
+                            </div>
                         </div>
                     </div>
 
@@ -323,7 +323,7 @@ export default class searchUserLocationInfo extends React.Component {
 
         //历史记录
         var historyRecord;
-        if(historyUserArray!=null&&typeof (historyUserArray)!=undefined) {
+        if (historyUserArray != null && typeof (historyUserArray) != undefined) {
             historyRecord = (<List>
                 {historyUserArray.map((i) => {
                     return (<List.Item
@@ -338,41 +338,43 @@ export default class searchUserLocationInfo extends React.Component {
         return (
             <div className="userinfo_wrap">
                 <SearchBar placeholder="搜索" maxLength={8}
-                           onSubmit={this.getUserLocationInfo.bind(this,true)}
+                           onSubmit={this.getUserLocationInfo.bind(this, true)}
                            value={searchValue}
                            className="search_top"
                            onCancel={() => this.cancelSearch()}
-                           onChange={_this.handleChange} />
+                           onChange={_this.handleChange}/>
 
                 <div style={isShowHistoryRecord}>
-                <div className="color_9 color_6_p font_14">搜索历史<span className="icon_del" onClick={() => this.clearHistoryRecord()}><img src={require('./icon_del_n.png')}/></span></div>
+                    <div className="color_9 color_6_p font_14">搜索历史<span className="icon_del"
+                                                                         onClick={() => this.clearHistoryRecord()}><img
+                        src={require('./icon_del_n.png')}/></span></div>
                     {historyRecord}
                 </div>
-            <ListView
-                ref={el => this.lv = el}
-                dataSource={this.state.userDataSource}    //数据类型是 ListViewDataSource
-                renderFooter={() => (<div style={{paddingTop: 5, paddingBottom:40, textAlign: 'center'}}>
-                    {this.state.isLoading ? '正在加载' : '没有更多数据了'}
-                </div>)}
-                renderRow={rowRight}   //需要的参数包括一行数据等,会返回一个可渲染的组件为这行数据渲染  返回renderable
-                renderSeparator={separator}   //可以不设置的属性  行间距
-                className="am-list"
-                pageSize={30}    //每次事件循环（每帧）渲染的行数
-                onScroll={() => {
-                    console.log('scroll');
-                }}   //在滚动的过程中，每帧最多调用一次此回调函数。调用的频率可以用scrollEventThrottle属性来控制。
-                scrollRenderAheadDistance={200}   //当一个行接近屏幕范围多少像素之内的时候，就开始渲染这一行
-                onEndReached={this.otherOnEndReached}  //当所有的数据都已经渲染过，并且列表被滚动到距离最底部不足onEndReachedThreshold个像素的距离时调用
-                onEndReachedThreshold={10}  //调用onEndReached之前的临界值，单位是像素  number类型
-                initialListSize={30}
-                scrollEventThrottle={20}
-                style={listStyle}
-                // pullToRefresh={<PullToRefresh
-                //     onRefresh={this.onRefreshOther}
-                //     distanceToRefresh={80}
-                // />}
-            />
-                <div className="icon_empty" style={{display:this.state.isShowEmptyImg}}>
+                <ListView
+                    ref={el => this.lv = el}
+                    dataSource={this.state.userDataSource}    //数据类型是 ListViewDataSource
+                    renderFooter={() => (<div style={{paddingTop: 5, paddingBottom: 40, textAlign: 'center'}}>
+                        {this.state.isLoading ? '正在加载' : '没有更多数据了'}
+                    </div>)}
+                    renderRow={rowRight}   //需要的参数包括一行数据等,会返回一个可渲染的组件为这行数据渲染  返回renderable
+                    renderSeparator={separator}   //可以不设置的属性  行间距
+                    className="am-list"
+                    pageSize={30}    //每次事件循环（每帧）渲染的行数
+                    onScroll={() => {
+                        console.log('scroll');
+                    }}   //在滚动的过程中，每帧最多调用一次此回调函数。调用的频率可以用scrollEventThrottle属性来控制。
+                    scrollRenderAheadDistance={200}   //当一个行接近屏幕范围多少像素之内的时候，就开始渲染这一行
+                    onEndReached={this.otherOnEndReached}  //当所有的数据都已经渲染过，并且列表被滚动到距离最底部不足onEndReachedThreshold个像素的距离时调用
+                    onEndReachedThreshold={10}  //调用onEndReached之前的临界值，单位是像素  number类型
+                    initialListSize={30}
+                    scrollEventThrottle={20}
+                    style={listStyle}
+                    // pullToRefresh={<PullToRefresh
+                    //     onRefresh={this.onRefreshOther}
+                    //     distanceToRefresh={80}
+                    // />}
+                />
+                <div className="icon_empty" style={{display: this.state.isShowEmptyImg}}>
                     <img src={require('./icon_empty.png')}/>
                 </div>
             </div>

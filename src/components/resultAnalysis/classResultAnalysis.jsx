@@ -1,13 +1,9 @@
 import React from 'react';
-import fetch from 'dva/fetch'
 import ReactEcharts from 'echarts-for-react';
-import echarts from 'echarts';
 import {Tabs, Flex, WingBlank, Toast, ActivityIndicator, WhiteSpace} from 'antd-mobile';
 import {StickyContainer, Sticky} from 'react-sticky';
 import './classReaultAnalysis.less';
 
-const mobileUrl = 'https://www.maaee.com/Excoord_For_Education/webservice';
-// const mobileUrl = 'http://172.16.2.230:9006/Excoord_ApiServer/webservice';
 
 const tabs = [
     {title: '成绩分析'},
@@ -26,9 +22,9 @@ export default class classReaultAnalysis extends React.Component {
             tableArr: [],
             animating: true,   //动画状态
             mainDiv: 'hidden',
-            radarIndicator:[],
-            seriesvalue:[],
-            radarOption:{}
+            radarIndicator: [],
+            seriesvalue: [],
+            radarOption: {}
         }
     }
 
@@ -38,20 +34,6 @@ export default class classReaultAnalysis extends React.Component {
         var locationSearch = locationHref.substr(locationHref.indexOf("?") + 1);
         var searchArray = locationSearch.split("&");
         this.viewclazzAnalysis(searchArray);
-    }
-
-    parseJSON(response) {
-        return response.json();
-    }
-
-    checkStatus(response) {
-        if (response.status >= 200 && response.status < 300) {
-            return response;
-        }
-
-        const error = new Error(response.statusText);
-        error.response = response;
-        throw error;
     }
 
     /**
@@ -69,27 +51,20 @@ export default class classReaultAnalysis extends React.Component {
 
         var requestParams = encodeURI("params=" + JSON.stringify(param));
 
-        var obj = {
+        WebServiceUtil.requestLittleAntApi({
             method: 'post',
             body: requestParams,
-        };
-
-        fetch(mobileUrl, obj)
-            .then(_this.checkStatus)
-            .then(_this.parseJSON)
-            .then(data => ({data}))
-            .catch(err => ({err}))
-            .then(function (result) {
-                _this.setState({animating: false});
-                var ret = result.data.response;
-                if (result.data.success == true && result.data.msg == '调用成功') {
-                    //  获得数据
-                    _this.buildAnalysis(ret);
-                    _this.setState({mainDiv: 'visible'})
-                } else {
-                    Toast.fail(result.data.msg, 3);
-                }
-            });
+        }).then(function (result) {
+            _this.setState({animating: false});
+            var ret = result.data.response;
+            if (result.data.success == true && result.data.msg == '调用成功') {
+                //  获得数据
+                _this.buildAnalysis(ret);
+                _this.setState({mainDiv: 'visible'})
+            } else {
+                Toast.fail(result.data.msg, 3);
+            }
+        });
     }
 
     /**
@@ -160,7 +135,8 @@ export default class classReaultAnalysis extends React.Component {
         topData.forEach(function (v, i) {
             var flex = <Flex.Item>
                 <div className='placeholder'>
-                    <div className="color le8"><span className="font_20 top">{v.score}</span><span className="font_16 line">{v.scoreBot}</span></div>
+                    <div className="color le8"><span className="font_20 top">{v.score}</span><span
+                        className="font_16 line">{v.scoreBot}</span></div>
                     <div>{v.str}<br></br>{v.strElse}</div>
                 </div>
             </Flex.Item>;
@@ -205,8 +181,8 @@ export default class classReaultAnalysis extends React.Component {
                 studentList.push(stu);
             })
         }
-        var radarIndicator=[];
-        var seriesValue=[];
+        var radarIndicator = [];
+        var seriesValue = [];
         var tableArr = [];
         if (data.topics.length != 0) {
             data.topics.forEach(function (v, i) {
@@ -220,14 +196,14 @@ export default class classReaultAnalysis extends React.Component {
                 tableArr.push(tb);
                 var name = v.name;
                 var max = v.max;
-                var nameJson = { name: name, max: max};
+                var nameJson = {name: name, max: max};
                 var hit = v.hit;
                 radarIndicator.push(nameJson);
                 seriesValue.push(hit);
             });
         }
         console.log(data.topics);
-        this.buildRadarOption(radarIndicator,seriesValue);
+        this.buildRadarOption(radarIndicator, seriesValue);
         this.setState({top5StudentListArr, last5StudentListArr, topDataArr, topDiv, studentList, tableArr});
     }
 
@@ -237,7 +213,7 @@ export default class classReaultAnalysis extends React.Component {
         </Sticky>);
     }
 
-    buildRadarOption(radarIndicator,seriesValue){
+    buildRadarOption(radarIndicator, seriesValue) {
         var _this = this;
         var radarOption = {
             title: {
@@ -269,24 +245,24 @@ export default class classReaultAnalysis extends React.Component {
                     { name: '市场（Marketing）', max: 25000}
                 ]*/
                 indicator: radarIndicator,
-                splitNumber:5, //让雷达图等分为10份
+                splitNumber: 5, //让雷达图等分为10份
             },
             series: [{
                 name: '得分率',
                 type: 'radar',
                 // areaStyle: {normal: {}},
-                data : [
+                data: [
                     {
                         // value : [4300, 10000, 28000, 35000, 50000, 19000],
-                        value :seriesValue,
-                        name : '得分率'
+                        value: seriesValue,
+                        name: '得分率'
                     }
                 ],
-                silent:true
+                silent: true
                 //label:{show:true}   //在图中的数据点上显示具体的数值
             }]
         };
-        this.setState({"radarOption":radarOption});
+        this.setState({"radarOption": radarOption});
     }
 
     render() {
@@ -325,50 +301,50 @@ export default class classReaultAnalysis extends React.Component {
                                 </ul>
                             </WingBlank>
                             <div className="wingblank_list_wrap">
-                            <div className="wingblank_list_cont">
-                            <WingBlank size="md" className="wingblank_list2">
-                                <Flex className='flexByNoom3'>
-                                    <Flex.Item>
-                                        <div className='placeholderBottom'>
-                                            <span>学号</span>
-                                        </div>
-                                    </Flex.Item>
-                                    <Flex.Item style={{display: this.state.isNameShow}}>
-                                        <div className='placeholderBottom'>
-                                            <span>姓名</span>
-                                        </div>
-                                    </Flex.Item>
-                                    <Flex.Item>
-                                        <div className='placeholderBottom'>
-                                            <span>分数</span>
-                                        </div>
-                                    </Flex.Item>
-                                    <Flex.Item>
-                                        <div className='placeholderBottom'>
-                                            <span>排名</span>
-                                            <span>(班级/年级)</span>
-                                        </div>
-                                    </Flex.Item>
-                                    <Flex.Item>
-                                        <div className='placeholderBottom'>
-                                            <span>错题号</span>
-                                        </div>
-                                    </Flex.Item>
-                                </Flex>
-                            </WingBlank>
-                            <WingBlank className="wingblank_list">
-                                {this.state.studentList}
-                            </WingBlank>
-                            </div>
+                                <div className="wingblank_list_cont">
+                                    <WingBlank size="md" className="wingblank_list2">
+                                        <Flex className='flexByNoom3'>
+                                            <Flex.Item>
+                                                <div className='placeholderBottom'>
+                                                    <span>学号</span>
+                                                </div>
+                                            </Flex.Item>
+                                            <Flex.Item style={{display: this.state.isNameShow}}>
+                                                <div className='placeholderBottom'>
+                                                    <span>姓名</span>
+                                                </div>
+                                            </Flex.Item>
+                                            <Flex.Item>
+                                                <div className='placeholderBottom'>
+                                                    <span>分数</span>
+                                                </div>
+                                            </Flex.Item>
+                                            <Flex.Item>
+                                                <div className='placeholderBottom'>
+                                                    <span>排名</span>
+                                                    <span>(班级/年级)</span>
+                                                </div>
+                                            </Flex.Item>
+                                            <Flex.Item>
+                                                <div className='placeholderBottom'>
+                                                    <span>错题号</span>
+                                                </div>
+                                            </Flex.Item>
+                                        </Flex>
+                                    </WingBlank>
+                                    <WingBlank className="wingblank_list">
+                                        {this.state.studentList}
+                                    </WingBlank>
+                                </div>
                             </div>
                         </div>
                         <div className="class_table" style={{
-                            height: document.documentElement.clientHeight - 45, background:'#fff'
+                            height: document.documentElement.clientHeight - 45, background: '#fff'
                         }}>
                             <ReactEcharts
                                 option={this.state.radarOption}
                                 style={{Minheight: '340px', width: '100%'}}
-                                className='react_for_echarts' />
+                                className='react_for_echarts'/>
                             <table className="class_table_cont">
                                 <thead>
                                 <td className="first">题号</td>

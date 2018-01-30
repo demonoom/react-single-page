@@ -1,10 +1,6 @@
 import React from 'react';
-import fetch from 'dva/fetch'
-import {ListView, WingBlank, Toast, WhiteSpace} from 'antd-mobile';
+import {ListView, WingBlank, Toast} from 'antd-mobile';
 import './analysisList.less';
-
-const mobileUrl = 'https://www.maaee.com/Excoord_For_Education/webservice';
-// const mobileUrl = 'http://172.16.2.230:9006/Excoord_ApiServer/webservice';
 
 export default class analysisList extends React.Component {
     constructor(props) {
@@ -28,30 +24,12 @@ export default class analysisList extends React.Component {
         var loginUser = {
             "colUid": colUid,
         };
-
-        /*var loginUser = {
-            "colUid": 23836,
-        };*/
         localStorage.setItem("loginUserAnalyList", JSON.stringify(loginUser));
     }
 
     componentDidMount() {
         document.title = '成绩分析';
         this.viewPaperAnalysisTaskPage()
-    }
-
-    parseJSON(response) {
-        return response.json();
-    }
-
-    checkStatus(response) {
-        if (response.status >= 200 && response.status < 300) {
-            return response;
-        }
-
-        const error = new Error(response.statusText);
-        error.response = response;
-        throw error;
     }
 
     /**
@@ -70,34 +48,26 @@ export default class analysisList extends React.Component {
 
         var requestParams = encodeURI("params=" + JSON.stringify(param));
 
-        var obj = {
+        WebServiceUtil.requestLittleAntApi({
             method: 'post',
             body: requestParams,
-        };
-
-        fetch(mobileUrl, obj)
-            .then(_this.checkStatus)
-            .then(_this.parseJSON)
-            .then(data => ({data}))
-            .catch(err => ({err}))
-            .then(function (result) {
-                console.log(result);
-                var response = result.data.response;
-                if (result.data.success == true && result.data.msg == '调用成功') {
-                    //  获得数据
-                    for (let i = 0; i < response.length; i++) {
-                        var topic = response[i];
-                        dataBlob[`${i}`] = topic;
-                    }
-                    _this.initData = _this.initData.concat(response);
-                    _this.setState({
-                        dataSource: _this.state.dataSource.cloneWithRows(_this.initData),
-                        isLoading: false,
-                    })
-                } else {
-                    Toast.fail(result.data.msg, 1);
+        }).then(function (result) {
+            var response = result.data.response;
+            if (result.data.success == true && result.data.msg == '调用成功') {
+                //  获得数据
+                for (let i = 0; i < response.length; i++) {
+                    var topic = response[i];
+                    dataBlob[`${i}`] = topic;
                 }
-            });
+                _this.initData = _this.initData.concat(response);
+                _this.setState({
+                    dataSource: _this.state.dataSource.cloneWithRows(_this.initData),
+                    isLoading: false,
+                })
+            } else {
+                Toast.fail(result.data.msg, 1);
+            }
+        });
     }
 
     /**
@@ -110,7 +80,7 @@ export default class analysisList extends React.Component {
             return;
         }
         currentPageNo += 1;
-        this.setState({getUserLocationInfo: true, defaultPageNo: currentPageNo,isLoading: true,});
+        this.setState({getUserLocationInfo: true, defaultPageNo: currentPageNo, isLoading: true,});
         _this.viewPaperAnalysisTaskPage();
         this.setState({
             dataSource: this.state.dataSource.cloneWithRows(this.initData),
@@ -138,7 +108,7 @@ export default class analysisList extends React.Component {
         //上下行间距
         const separator = (sectionID, rowID) => (
             <div className="line"
-                key={`${sectionID}-${rowID}`}
+                 key={`${sectionID}-${rowID}`}
             />
         );
 

@@ -12,7 +12,6 @@ import {
     PullToRefresh,
 } from 'antd-mobile';
 import {StickyContainer, Sticky} from 'react-sticky';
-// import {QUESTION_DETAIL_URL} from '../../helpers/Const';
 import './questionBank.css'
 
 const CheckboxItem = Checkbox.CheckboxItem;
@@ -103,12 +102,6 @@ export default class questionBank extends React.Component {
             "pointId": pointId,
             "title": title,
         };
-
-        // var loginUser = {
-        //     "ident": 54208,
-        //     "pointId": 4339,
-        //     "tittle":'你好'
-        // };
         localStorage.setItem("loginUser", JSON.stringify(loginUser));
         this.getUserByAccount(ident);
     }
@@ -326,7 +319,7 @@ export default class questionBank extends React.Component {
         var subjectId = res.id;
         var subjectType = res.subjectType;
         // window.open("/#/questionDetil?courseId=" + subjectId + "&subjectType=" + subjectType);
-        var url = "http://172.16.2.95:8091/#/questionDetil?courseId=" + subjectId + "&subjectType=" + subjectType;
+        var url = "http://jiaoxue.maaee.com:8091/#/questionDetil?courseId=" + subjectId + "&subjectType=" + subjectType;
         var data = {};
         data.method = 'openNewPage';
         data.url = url;
