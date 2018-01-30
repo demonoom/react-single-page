@@ -10,8 +10,10 @@ var elearningWebserviceURL = isDebug ? elearningWebserviceURLOfLocal : elearning
 const apiWebServiceURLOfLocal = "http://" + localDomain + ":9006/Excoord_ApiServer/webservice";
 const apiWebServiceURLOfRemote = "https://www.maaee.com/Excoord_For_Education/webservice";
 var apiWebServiceURL = isDebug ? apiWebServiceURLOfLocal : apiWebServiceURLOfRemote;
-
-
+//小蚂蚁mobile地址
+const mobileURLOfLocal = "http://"+localDomain+":8091/#/";
+const mobileURLOfRemote = "http://jiaoxue.maaee.com:8091/#/";
+var mobileServiceURL = isDebug ? mobileURLOfLocal : mobileURLOfRemote;
 function WebServiceUtil() {
 
 };

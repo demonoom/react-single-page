@@ -148,7 +148,7 @@ export default class studentFaceStatistics extends React.Component {
         var locationSearch = locationHref.substr(locationHref.indexOf("?") + 1);
         var searchArray = locationSearch.split("&");
         var vid = searchArray[0].split('=')[1];
-        var url = "http://jiaoxue.maaee.com:8091/#/studentFaceStatistics?vid=" + vid;
+        var url = mobileServiceURL+"studentFaceStatistics?vid=" + vid;
         window.open(url);
         // var data = {};
         // data.method = 'openNewPage';
@@ -323,14 +323,13 @@ export default class studentFaceStatistics extends React.Component {
     render() {
         var _this = this;
         var lineChartOption=_this.state.lineChartOption;
-    /*    // //上下行间距
-        // const jump=()=>{
-        //     return (<div onClick={() => this.openNewPage()}>新页面打开</div>);
-        // }*/
+        const jump=()=>{
+            return ( <div onClick={() => this.openNewPage()} className="top_right_btn">新页面打开</div>);
+        }
         return (
 
             <div className="student_cont">
-                <div onClick={() => this.openNewPage()} className="top_right_btn">新页面打开</div>
+                {jump()}
             <div className='over_flow_auto student_f_auto'>
                 <span className="student_f_left">占比/％</span>
                 <span className="student_f_right">时间/M</span>
