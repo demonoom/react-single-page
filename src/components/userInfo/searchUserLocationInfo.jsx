@@ -52,12 +52,6 @@ export default class searchUserLocationInfo extends React.Component {
         Bridge.setRefreshAble("false");
     }
 
-    //右侧下拉刷新
-    onRefreshOther = () => {
-        // this.setState({defaultPageNoOther: 1, refreshing: true});
-        // this.getUserLocationInfo(true);
-    };
-
     /**
      *  ListView数据全部渲染完毕的回调  (右侧)
      */
@@ -78,6 +72,7 @@ export default class searchUserLocationInfo extends React.Component {
             isLoading: true,
         });
     };
+
     searchHistoryRecord = (i) => {
         var _this = this;
         this.setState({searchValue: i});
@@ -90,6 +85,7 @@ export default class searchUserLocationInfo extends React.Component {
     handleChange = (value) => {
         this.setState({searchValue: value});
     }
+
     cancelSearch = () => {
         this.setState({searchValue: ""});
         this.setState({isShowHistoryRecord: {display: 'block'}});
@@ -106,9 +102,11 @@ export default class searchUserLocationInfo extends React.Component {
             rowHasChanged: (row1, row2) => row1 !== row2,
         })
     }
+
     clear = () => {
         this.setState({value: ''});
     };
+
     saveHistoryRecord = (searchKeyWords) => {
         var historyUserArray = JSON.parse(localStorage.getItem('historyUserArray'));
 
@@ -142,6 +140,7 @@ export default class searchUserLocationInfo extends React.Component {
         localStorage.setItem("historyUserArray", JSON.stringify(historyUserArray));
         this.setState({historyUserArray: historyUserArray});
     }
+
     clearHistoryRecord = () => {
         this.setState({historyUserArray: new Array()});
         localStorage.setItem("historyUserArray", null);
@@ -149,9 +148,11 @@ export default class searchUserLocationInfo extends React.Component {
         this.setState({isShowHistoryRecord: {display: 'none'}});
 
     }
+
     imgError = (e) => {
         e.target.src = 'http://www.maaee.com:80/Excoord_For_Education/userPhoto/default_avatar.png';
     }
+
     /**
      *
      */
@@ -360,19 +361,12 @@ export default class searchUserLocationInfo extends React.Component {
                     renderSeparator={separator}   //可以不设置的属性  行间距
                     className="am-list"
                     pageSize={30}    //每次事件循环（每帧）渲染的行数
-                    onScroll={() => {
-                        console.log('scroll');
-                    }}   //在滚动的过程中，每帧最多调用一次此回调函数。调用的频率可以用scrollEventThrottle属性来控制。
                     scrollRenderAheadDistance={200}   //当一个行接近屏幕范围多少像素之内的时候，就开始渲染这一行
                     onEndReached={this.otherOnEndReached}  //当所有的数据都已经渲染过，并且列表被滚动到距离最底部不足onEndReachedThreshold个像素的距离时调用
                     onEndReachedThreshold={10}  //调用onEndReached之前的临界值，单位是像素  number类型
                     initialListSize={30}
                     scrollEventThrottle={20}
                     style={listStyle}
-                    // pullToRefresh={<PullToRefresh
-                    //     onRefresh={this.onRefreshOther}
-                    //     distanceToRefresh={80}
-                    // />}
                 />
                 <div className="icon_empty" style={{display: this.state.isShowEmptyImg}}>
                     <img src={require('./icon_empty.png')}/>
