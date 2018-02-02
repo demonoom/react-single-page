@@ -332,7 +332,7 @@ export default class questionBank extends React.Component {
     rowOnClick(res) {
         var subjectId = res.id;
         var subjectType = res.subjectType;
-        // window.open("/#/questionDetil?courseId=" + subjectId + "&subjectType=" + subjectType);
+        window.open("/#/questionDetil?courseId=" + subjectId + "&subjectType=" + subjectType);
         var url = "http://jiaoxue.maaee.com:8091/#/questionDetil?courseId=" + subjectId + "&subjectType=" + subjectType;
         var data = {};
         data.method = 'openNewPage';
@@ -731,20 +731,6 @@ export default class questionBank extends React.Component {
                           useOnPan={false}    //使用跟手滚动   禁用跟手滚动 但是开启动画与滑动切换 达到与原生的体验
                           onChange={this.tabOnChange}
                     >
-                        {/*<PullToRefresh*/}
-                        {/*ref={el => this.ptr = el}*/}
-                        {/*style={{*/}
-                        {/*height: document.documentElement.clientHeight,*/}
-                        {/*overflow: 'auto',*/}
-                        {/*}}*/}
-                        {/*distanceToRefresh={80}*/}
-                        {/*direction={'down'}*/}
-                        {/*refreshing={this.state.refreshing}*/}
-                        {/*onRefresh={() => {*/}
-                        {/*this.setState({refreshing: true});*/}
-                        {/*this.onRefresh();*/}
-                        {/*}}*/}
-                        {/*>*/}
                         {/*我上传的 ListView*/}
                         <ListView
                             ref={el => this.lv = el}
@@ -771,23 +757,8 @@ export default class questionBank extends React.Component {
                                 distanceToRefresh={80}
                             />}
                         />
-                        {/*</PullToRefresh>*/}
 
                         {/*其他老师上传的 ListView*/}
-                        {/*<PullToRefresh*/}
-                        {/*ref={el => this.ptr = el}*/}
-                        {/*style={{*/}
-                        {/*height: document.documentElement.clientHeight,*/}
-                        {/*overflow: 'auto',*/}
-                        {/*}}*/}
-                        {/*distanceToRefresh={80}*/}
-                        {/*direction={'down'}*/}
-                        {/*refreshing={this.state.refreshing}*/}
-                        {/*onRefresh={() => {*/}
-                        {/*this.setState({refreshing: true});*/}
-                        {/*this.onRefreshOther();*/}
-                        {/*}}*/}
-                        {/*>*/}
                         <ListView
                             dataSource={this.state.dataSourceOther}    //数据类型是 ListViewDataSource
                             renderFooter={() => (
@@ -811,7 +782,7 @@ export default class questionBank extends React.Component {
                                 distanceToRefresh={80}
                             />}
                         />
-                        {/*</PullToRefresh>*/}
+
                     </Tabs>
                     {/*悬浮按钮*/}
                     <WingBlank className="btn_homework_cont"
