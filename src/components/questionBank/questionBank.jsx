@@ -593,17 +593,22 @@ export default class questionBank extends React.Component {
 
     //左侧下拉刷新
     onRefresh = () => {
+        var divPull = document.getElementsByClassName('am-pull-to-refresh-content');
+        divPull[0].style.transform = "translate3d(0px, 30px, 0px)";   //设置拉动后回到的位置
         this.setState({defaultPageNo: 1, refreshing: true});
         this.getSubjectDataByKnowledge(true);
     };
 
     //右侧下拉刷新
     onRefreshOther = () => {
+        var divPull = document.getElementsByClassName('am-pull-to-refresh-content');
+        divPull[1].style.transform = "translate3d(0px, 30px, 0px)";    //设置拉动后回到的位置
         this.setState({defaultPageNoOther: 1, refreshing: true});
         this.getSubjectDataByKnowledgeOther(true);
     };
 
     render() {
+
         var scheduleNameArr = [];
         var schoolId = this.state.schoolId;
         if (typeof(this.state.scheduleNameArr) != 'undefined') {
@@ -636,8 +641,10 @@ export default class questionBank extends React.Component {
             if (rowData.ownerSchoolid == schoolId) {
                 return (
                     <div key={rowID} className="exercises_line">
-                        <CheckboxItem key={rowData.id} onChange={() => this.checkBoxOnChange(event, rowData.id, rowID)} className="noomCkeckBox" >
-                            <div onClick={this.rowOnClick.bind(this, rowData)} dangerouslySetInnerHTML={{__html: rowData.content}} className="exercises_cont">
+                        <CheckboxItem key={rowData.id} onChange={() => this.checkBoxOnChange(event, rowData.id, rowID)}
+                                      className="noomCkeckBox">
+                            <div onClick={this.rowOnClick.bind(this, rowData)}
+                                 dangerouslySetInnerHTML={{__html: rowData.content}} className="exercises_cont">
                             </div>
                             <div className="flex_70">
                                 <span className="margin_10 blue_solid">本校</span>
@@ -655,7 +662,8 @@ export default class questionBank extends React.Component {
                             onChange={() => this.checkBoxOnChange(event, rowData.id, rowID)}
                             className="noomCkeckBox"
                         >
-                            <div onClick={this.rowOnClick.bind(this, rowData)} dangerouslySetInnerHTML={{__html: rowData.content}} className="exercises_cont">
+                            <div onClick={this.rowOnClick.bind(this, rowData)}
+                                 dangerouslySetInnerHTML={{__html: rowData.content}} className="exercises_cont">
                             </div>
                             <div className="flex_70">
                                 <span className={rowData.subjectType}>{rowData.typeName}</span>
@@ -676,7 +684,8 @@ export default class questionBank extends React.Component {
                             onChange={() => this.checkBoxOnChange(event, rowData.id, rowID)}
                             className="noomCkeckBoxOther"
                         >
-                            <div onClick={this.rowOnClick.bind(this, rowData)} dangerouslySetInnerHTML={{__html: rowData.content}} className="exercises_cont">
+                            <div onClick={this.rowOnClick.bind(this, rowData)}
+                                 dangerouslySetInnerHTML={{__html: rowData.content}} className="exercises_cont">
                             </div>
                             <div className="flex_70">
                                 <span className="margin_10 blue_solid">本校</span>
@@ -689,8 +698,10 @@ export default class questionBank extends React.Component {
             } else {
                 return (
                     <div key={rowID} className="exercises_line">
-                        <CheckboxItem key={rowData.id} onChange={() => this.checkBoxOnChange(event, rowData.id, rowID)} className="noomCkeckBoxOther" >
-                            <div onClick={this.rowOnClick.bind(this, rowData)} dangerouslySetInnerHTML={{__html: rowData.content}} className="exercises_cont">
+                        <CheckboxItem key={rowData.id} onChange={() => this.checkBoxOnChange(event, rowData.id, rowID)}
+                                      className="noomCkeckBoxOther">
+                            <div onClick={this.rowOnClick.bind(this, rowData)}
+                                 dangerouslySetInnerHTML={{__html: rowData.content}} className="exercises_cont">
                             </div>
                             <div className="flex_70">
                                 <span className={rowData.subjectType}>{rowData.typeName}</span>
@@ -763,52 +774,44 @@ export default class questionBank extends React.Component {
                         {/*</PullToRefresh>*/}
 
                         {/*其他老师上传的 ListView*/}
-                        <PullToRefresh
-                            ref={el => this.ptr = el}
+                        {/*<PullToRefresh*/}
+                        {/*ref={el => this.ptr = el}*/}
+                        {/*style={{*/}
+                        {/*height: document.documentElement.clientHeight,*/}
+                        {/*overflow: 'auto',*/}
+                        {/*}}*/}
+                        {/*distanceToRefresh={80}*/}
+                        {/*direction={'down'}*/}
+                        {/*refreshing={this.state.refreshing}*/}
+                        {/*onRefresh={() => {*/}
+                        {/*this.setState({refreshing: true});*/}
+                        {/*this.onRefreshOther();*/}
+                        {/*}}*/}
+                        {/*>*/}
+                        <ListView
+                            dataSource={this.state.dataSourceOther}    //数据类型是 ListViewDataSource
+                            renderFooter={() => (
+                                <div style={{paddingTop: 5, paddingBottom: 40, textAlign: 'center'}}>
+                                    {this.state.isLoading ? '正在加载' : '没有更多课了'}
+                                </div>)}
+                            renderRow={rowRight}   //需要的参数包括一行数据等,会返回一个可渲染的组件为这行数据渲染  返回renderable
+                            renderSeparator={separator}   //可以不设置的属性  行间距
+                            className="am-list"
+                            pageSize={30}    //每次事件循环（每帧）渲染的行数
+                            scrollRenderAheadDistance={200}   //当一个行接近屏幕范围多少像素之内的时候，就开始渲染这一行
+                            onEndReached={this.otherOnEndReached}  //当所有的数据都已经渲染过，并且列表被滚动到距离最底部不足onEndReachedThreshold个像素的距离时调用
+                            onEndReachedThreshold={10}  //调用onEndReached之前的临界值，单位是像素  number类型
+                            initialListSize={30}
+                            scrollEventThrottle={20}
                             style={{
-                                height: document.documentElement.clientHeight,
-                                overflow: 'auto',
+                                height: document.body.clientHeight,
                             }}
-                            distanceToRefresh={80}
-                            direction={'down'}
-                            refreshing={this.state.refreshing}
-                            onRefresh={() => {
-                                this.setState({refreshing: true});
-                                this.onRefreshOther();
-                            }}
-                        >
-                            <div
-                                style={{
-                                    height: document.documentElement.clientHeight,
-                                    overflow: 'auto',
-                                }}
-                            >
-                                <ListView
-                                    dataSource={this.state.dataSourceOther}    //数据类型是 ListViewDataSource
-                                    renderFooter={() => (
-                                        <div style={{paddingTop: 5, paddingBottom: 40, textAlign: 'center'}}>
-                                            {this.state.isLoading ? '正在加载' : '没有更多课了'}
-                                        </div>)}
-                                    renderRow={rowRight}   //需要的参数包括一行数据等,会返回一个可渲染的组件为这行数据渲染  返回renderable
-                                    renderSeparator={separator}   //可以不设置的属性  行间距
-                                    className="am-list"
-                                    pageSize={30}    //每次事件循环（每帧）渲染的行数
-                                    scrollRenderAheadDistance={200}   //当一个行接近屏幕范围多少像素之内的时候，就开始渲染这一行
-                                    onEndReached={this.otherOnEndReached}  //当所有的数据都已经渲染过，并且列表被滚动到距离最底部不足onEndReachedThreshold个像素的距离时调用
-                                    onEndReachedThreshold={10}  //调用onEndReached之前的临界值，单位是像素  number类型
-                                    initialListSize={30}
-                                    scrollEventThrottle={20}
-                                    style={{
-                                        height: document.body.clientHeight,
-                                    }}
-                                    // pullToRefresh={<PullToRefresh
-                                    //     onRefresh={this.onRefreshOther}
-                                    //     distanceToRefresh={80}
-                                    // />}
-                                />
-                            </div>
-                        </PullToRefresh>
-
+                            pullToRefresh={<PullToRefresh
+                                onRefresh={this.onRefreshOther}
+                                distanceToRefresh={80}
+                            />}
+                        />
+                        {/*</PullToRefresh>*/}
                     </Tabs>
                     {/*悬浮按钮*/}
                     <WingBlank className="btn_homework_cont"
