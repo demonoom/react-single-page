@@ -113,6 +113,36 @@
 .question_detil_cont h3{
     margin: 15px 0;
 }
+.b_c_1::before{
+    content: "";
+    width: 5px;
+    height: 20px;
+    background: #f5a623;
+    display: inline-block;
+    margin-right: 8px;
+    top: 3px;
+    position: relative;
+}
+.b_c_2::before{
+    content: "";
+    width: 5px;
+    height: 20px;
+    background: #65bb02;
+    display: inline-block;
+    margin-right: 8px;
+    top: 3px;
+    position: relative;
+}
+.b_c_3::before{
+    content: "";
+    width: 5px;
+    height: 20px;
+    background: #4a90e2;
+    display: inline-block;
+    margin-right: 8px;
+    top: 3px;
+    position: relative;
+}
 .question_detil_cont hr{
     height: 1px;
     margin: 30px 0;

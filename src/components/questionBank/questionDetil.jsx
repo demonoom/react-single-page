@@ -42,11 +42,11 @@ export default class Demo extends React.Component {
     render() {
         return (
             <div className="question_detil_cont">
-                <h3>【{this.state.questionDetil.typeName}】</h3>
+                <h3><span className="b_c_1"></span>{this.state.questionDetil.typeName}</h3>
                 <div dangerouslySetInnerHTML={{__html: this.state.questionDetil.content}}
                      className="question_detil"></div>
                 <hr/>
-                <h3>【正确答案】</h3>
+                <h3><span className="b_c_2"></span>正确答案</h3>
                 <div dangerouslySetInnerHTML={{__html: this.state.questionDetil.answer}}></div>
             </div>
         );
