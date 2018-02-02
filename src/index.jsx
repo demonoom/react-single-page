@@ -12,6 +12,7 @@ import resultAnalysis from './components/resultAnalysis/resultAnalysis';
 import classReaultAnalysis from './components/resultAnalysis/classResultAnalysis';
 import searchUserLocationInfo from './components/userInfo/searchUserLocationInfo'
 import Stage8 from './components/Stage8';
+import Stage9 from './components/Stage9';
 import studentFaceStatistics from './components/charts/studentFaceStatistics'
 import './index.less';
 
@@ -29,6 +30,7 @@ class Index extends React.Component {
                               style={{fontSize: '24px'}}>题库</Link></li>
                     <li><Link to="/analysisList?access_user=23836" style={{fontSize: '24px'}}>成绩分析</Link></li>
                     <li><Link to="/s8" style={{fontSize: '24px'}}>下拉刷新</Link></li>
+                    <li><Link to="/s9" style={{fontSize: '24px'}}>下拉刷新2</Link></li>
                     <li><Link to="/searchUserLocationInfo" style={{fontSize: '24px'}}>搜索查看用户位置信息</Link></li>
                     <li><Link to="/studentFaceStatistics" style={{fontSize: '24px'}}>学生脸部表情分析折线图</Link></li>
                 </ul>
@@ -50,6 +52,7 @@ ReactDOM.render(
             <Route path="resultAnalysis" component={resultAnalysis}/>
             <Route path="classReaultAnalysis" component={classReaultAnalysis}/>
             <Route path="s8" component={Stage8}/>
+            <Route path="s9" component={Stage9}/>
             <Route path="searchUserLocationInfo" component={searchUserLocationInfo}/>
             <Route path="studentFaceStatistics" component={studentFaceStatistics}/>
         </Route>

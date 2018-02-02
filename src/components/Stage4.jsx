@@ -54,8 +54,8 @@ export default class Demo extends React.Component {
         var param = {
             "method": 'getTopicsByType',
             "ident": '23836',
-            "type": type,
-            "pageNo": pageNo
+            "type": 0,
+            "pageNo": 1
         };
 
         var requestParams = encodeURI("params=" + JSON.stringify(param));
@@ -124,6 +124,7 @@ export default class Demo extends React.Component {
         var _this = this;
         const row = (rowData, sectionID, rowID) => {
             console.log(22);
+            console.log(rowData);
             var fromUser = rowData.fromUser;
             return (
                 <div key={rowID} style={{padding: '0 15px'}}>
@@ -134,7 +135,7 @@ export default class Demo extends React.Component {
                             fontSize: 18,
                             borderBottom: '1px solid #F6F6F6',
                         }}
-                    >{fromUser.userName}</div>
+                    >{99}</div>
                     <div style={{display: '-webkit-box', display: 'flex', padding: '15px 0'}}>
                         <img style={{height: '64px', marginRight: '15px'}} src={fromUser.avatar} alt=""/>
                         <div style={{lineHeight: 1}}>

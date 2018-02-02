@@ -278,17 +278,6 @@ export default class questionBank extends React.Component {
     }
 
     /**
-     * 做固定tab的
-     * @param props
-     * @returns {XML}
-     */
-    renderTabBar(props) {
-        return (<Sticky>
-            {({style}) => <div style={{...style, zIndex: 1}}><Tabs.DefaultTabBar {...props} /></div>}
-        </Sticky>);
-    }
-
-    /**
      *  ListView数据全部渲染完毕的回调
      */
     onEndReached = (event) => {
@@ -696,7 +685,6 @@ export default class questionBank extends React.Component {
 
         //右边每一道题的div(暂时废弃)
         const rowRight = (rowData, sectionID, rowID) => {
-            console.log(rowData.ownerSchoolid);
             if (rowData.ownerSchoolid == schoolId) {
                 return (
                     <div key={rowID} className="exercises_line">
@@ -758,99 +746,103 @@ export default class questionBank extends React.Component {
                     onOpenChange={this.onOpenChange}
                     position="right"
                 >
-                    <StickyContainer>
-                        <Tabs tabs={tabs}
-                              renderTabBar={this.renderTabBar}   //替换TabBar
-                              initialPage={0}    //初始化Tab, index or key
-                              swipeable={false}   //是否可以滑动内容切换
-                              animated={false}     //是否开启切换动画
-                              useOnPan={false}    //使用跟手滚动   禁用跟手滚动 但是开启动画与滑动切换 达到与原生的体验
-                              onChange={this.tabOnChange}
+                    <Tabs tabs={tabs}
+                          initialPage={0}    //初始化Tab, index or key
+                          swipeable={false}   //是否可以滑动内容切换
+                          animated={false}     //是否开启切换动画
+                          useOnPan={false}    //使用跟手滚动   禁用跟手滚动 但是开启动画与滑动切换 达到与原生的体验
+                          onChange={this.tabOnChange}
+                    >
+                        {/*<PullToRefresh*/}
+                        {/*ref={el => this.ptr = el}*/}
+                        {/*style={{*/}
+                        {/*height: document.documentElement.clientHeight,*/}
+                        {/*overflow: 'auto',*/}
+                        {/*}}*/}
+                        {/*distanceToRefresh={80}*/}
+                        {/*direction={'down'}*/}
+                        {/*refreshing={this.state.refreshing}*/}
+                        {/*onRefresh={() => {*/}
+                        {/*this.setState({refreshing: true});*/}
+                        {/*this.onRefresh();*/}
+                        {/*}}*/}
+                        {/*>*/}
+                        {/*我上传的 ListView*/}
+                        <ListView
+                            ref={el => this.lv = el}
+                            dataSource={this.state.dataSource}    //数据类型是 ListViewDataSource
+                            renderFooter={() => (
+                                <div style={{paddingTop: 5, paddingBottom: 40, textAlign: 'center'}}>
+                                    {this.state.isLoadingLeft ? '正在加载' : '没有更多课了'}
+                                </div>)}
+                            renderRow={row}   //需要的参数包括一行数据等,会返回一个可渲染的组件为这行数据渲染  返回renderable
+                            renderSeparator={separator}   //可以不设置的属性  行间距
+                            className="am-list"
+                            pageSize={30}    //每次事件循环（每帧）渲染的行数
+                            //useBodyScroll  //使用 html 的 body 作为滚动容器   bool类型   不应这么写  否则无法下拉刷新
+                            scrollRenderAheadDistance={200}   //当一个行接近屏幕范围多少像素之内的时候，就开始渲染这一行
+                            onEndReached={this.onEndReached}  //当所有的数据都已经渲染过，并且列表被滚动到距离最底部不足onEndReachedThreshold个像素的距离时调用
+                            onEndReachedThreshold={10}  //调用onEndReached之前的临界值，单位是像素  number类型
+                            initialListSize={30}   //指定在组件刚挂载的时候渲染多少行数据，用这个属性来确保首屏显示合适数量的数据
+                            scrollEventThrottle={20}     //控制在滚动过程中，scroll事件被调用的频率
+                            style={{
+                                height: document.body.clientHeight,
+                            }}
+                            pullToRefresh={<PullToRefresh
+                                onRefresh={this.onRefresh}
+                                distanceToRefresh={80}
+                            />}
+                        />
+                        {/*</PullToRefresh>*/}
+
+                        {/*其他老师上传的 ListView*/}
+                        <PullToRefresh
+                            ref={el => this.ptr = el}
+                            style={{
+                                height: document.documentElement.clientHeight,
+                                overflow: 'auto',
+                            }}
+                            distanceToRefresh={80}
+                            direction={'down'}
+                            refreshing={this.state.refreshing}
+                            onRefresh={() => {
+                                this.setState({refreshing: true});
+                                this.onRefreshOther();
+                            }}
                         >
-                            {/*<PullToRefresh*/}
-                            {/*ref={el => this.ptr = el}*/}
-                            {/*style={{*/}
-                            {/*height: document.documentElement.clientHeight,*/}
-                            {/*overflow: 'auto',*/}
-                            {/*}}*/}
-                            {/*distanceToRefresh={80}*/}
-                            {/*direction={'down'}*/}
-                            {/*refreshing={this.state.refreshing}*/}
-                            {/*onRefresh={() => {*/}
-                            {/*this.setState({refreshing: true});*/}
-                            {/*this.onRefresh();*/}
-                            {/*}}*/}
-                            {/*>*/}
-                            {/*我上传的 ListView*/}
-                            <ListView
-                                ref={el => this.lv = el}
-                                dataSource={this.state.dataSource}    //数据类型是 ListViewDataSource
-                                renderFooter={() => (
-                                    <div style={{paddingTop: 5, paddingBottom: 40, textAlign: 'center'}}>
-                                        {this.state.isLoadingLeft ? '正在加载' : '没有更多课了'}
-                                    </div>)}
-                                renderRow={row}   //需要的参数包括一行数据等,会返回一个可渲染的组件为这行数据渲染  返回renderable
-                                renderSeparator={separator}   //可以不设置的属性  行间距
-                                className="am-list"
-                                pageSize={30}    //每次事件循环（每帧）渲染的行数
-                                //useBodyScroll  //使用 html 的 body 作为滚动容器   bool类型   不应这么写  否则无法下拉刷新
-                                scrollRenderAheadDistance={200}   //当一个行接近屏幕范围多少像素之内的时候，就开始渲染这一行
-                                onEndReached={this.onEndReached}  //当所有的数据都已经渲染过，并且列表被滚动到距离最底部不足onEndReachedThreshold个像素的距离时调用
-                                onEndReachedThreshold={10}  //调用onEndReached之前的临界值，单位是像素  number类型
-                                initialListSize={30}   //指定在组件刚挂载的时候渲染多少行数据，用这个属性来确保首屏显示合适数量的数据
-                                scrollEventThrottle={20}     //控制在滚动过程中，scroll事件被调用的频率
+                            <div
                                 style={{
-                                    height: document.body.clientHeight,
+                                    height: document.documentElement.clientHeight,
+                                    overflow: 'auto',
                                 }}
-                                pullToRefresh={<PullToRefresh
-                                    onRefresh={this.onRefresh}
-                                    distanceToRefresh={80}
-                                />}
-                            />
-                            {/*</PullToRefresh>*/}
+                            >
+                                <ListView
+                                    dataSource={this.state.dataSourceOther}    //数据类型是 ListViewDataSource
+                                    renderFooter={() => (
+                                        <div style={{paddingTop: 5, paddingBottom: 40, textAlign: 'center'}}>
+                                            {this.state.isLoading ? '正在加载' : '没有更多课了'}
+                                        </div>)}
+                                    renderRow={rowRight}   //需要的参数包括一行数据等,会返回一个可渲染的组件为这行数据渲染  返回renderable
+                                    renderSeparator={separator}   //可以不设置的属性  行间距
+                                    className="am-list"
+                                    pageSize={30}    //每次事件循环（每帧）渲染的行数
+                                    scrollRenderAheadDistance={200}   //当一个行接近屏幕范围多少像素之内的时候，就开始渲染这一行
+                                    onEndReached={this.otherOnEndReached}  //当所有的数据都已经渲染过，并且列表被滚动到距离最底部不足onEndReachedThreshold个像素的距离时调用
+                                    onEndReachedThreshold={10}  //调用onEndReached之前的临界值，单位是像素  number类型
+                                    initialListSize={30}
+                                    scrollEventThrottle={20}
+                                    style={{
+                                        height: document.body.clientHeight,
+                                    }}
+                                    // pullToRefresh={<PullToRefresh
+                                    //     onRefresh={this.onRefreshOther}
+                                    //     distanceToRefresh={80}
+                                    // />}
+                                />
+                            </div>
+                        </PullToRefresh>
 
-                            {/*其他老师上传的 ListView*/}
-                            {/*<PullToRefresh*/}
-                            {/*ref={el => this.ptr = el}*/}
-                            {/*style={{*/}
-                            {/*height: document.documentElement.clientHeight,*/}
-                            {/*overflow: 'auto',*/}
-                            {/*}}*/}
-                            {/*distanceToRefresh={80}*/}
-                            {/*direction={'down'}*/}
-                            {/*refreshing={this.state.refreshing}*/}
-                            {/*onRefresh={() => {*/}
-                            {/*this.setState({refreshing: true});*/}
-                            {/*this.onRefreshOther();*/}
-                            {/*}}*/}
-                            {/*>*/}
-                            <ListView
-                                dataSource={this.state.dataSourceOther}    //数据类型是 ListViewDataSource
-                                renderFooter={() => (
-                                    <div style={{paddingTop: 5, paddingBottom: 40, textAlign: 'center'}}>
-                                        {this.state.isLoading ? '正在加载' : '没有更多课了'}
-                                    </div>)}
-                                renderRow={rowRight}   //需要的参数包括一行数据等,会返回一个可渲染的组件为这行数据渲染  返回renderable
-                                renderSeparator={separator}   //可以不设置的属性  行间距
-                                className="am-list"
-                                pageSize={30}    //每次事件循环（每帧）渲染的行数
-                                scrollRenderAheadDistance={200}   //当一个行接近屏幕范围多少像素之内的时候，就开始渲染这一行
-                                onEndReached={this.otherOnEndReached}  //当所有的数据都已经渲染过，并且列表被滚动到距离最底部不足onEndReachedThreshold个像素的距离时调用
-                                onEndReachedThreshold={10}  //调用onEndReached之前的临界值，单位是像素  number类型
-                                initialListSize={30}
-                                scrollEventThrottle={20}
-                                style={{
-                                    height: document.body.clientHeight,
-                                }}
-                                pullToRefresh={<PullToRefresh
-                                    onRefresh={this.onRefreshOther}
-                                    distanceToRefresh={80}
-                                />}
-                            />
-                            {/*</PullToRefresh>*/}
-
-                        </Tabs>
-                    </StickyContainer>
+                    </Tabs>
                     {/*悬浮按钮*/}
                     <WingBlank className="btn_homework_cont"
                                style={{
