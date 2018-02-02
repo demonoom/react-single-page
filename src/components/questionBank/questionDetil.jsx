@@ -9,6 +9,7 @@ export default class Demo extends React.Component {
     }
 
     componentDidMount() {
+        Bridge.setShareAble("false");
         document.title = '题目详情';
         var locationHref = window.location.href;
         var locationSearch = locationHref.substr(locationHref.indexOf("?") + 1);
@@ -42,7 +43,8 @@ export default class Demo extends React.Component {
         return (
             <div className="question_detil_cont">
                 <h3>【{this.state.questionDetil.typeName}】</h3>
-                <div dangerouslySetInnerHTML={{__html: this.state.questionDetil.content}} className="question_detil"></div>
+                <div dangerouslySetInnerHTML={{__html: this.state.questionDetil.content}}
+                     className="question_detil"></div>
                 <hr/>
                 <h3>【正确答案】</h3>
                 <div dangerouslySetInnerHTML={{__html: this.state.questionDetil.answer}}></div>
