@@ -636,25 +636,15 @@ export default class questionBank extends React.Component {
             if (rowData.ownerSchoolid == schoolId) {
                 return (
                     <div key={rowID} className="exercises_line">
-                        <CheckboxItem
-                            key={rowData.id}
-                            onChange={() => this.checkBoxOnChange(event, rowData.id, rowID)}
-                            className="noomCkeckBox"
-                        >
-                            <div style={{display: '-webkit-box', display: 'flex'}}
-                                 onClick={this.rowOnClick.bind(this, rowData)}>
-                                <div style={{lineHeight: 1}} className="flex_1 my_flex">
-                                    <div className="flex_100">
-                                        <div dangerouslySetInnerHTML={{__html: rowData.content}}
-                                             className="exercises_cont"></div>
-                                        <div className="flex_70">
-                                            <span className="margin_10 blue_solid">本校</span>
-                                            <span className={rowData.subjectType}>{rowData.typeName}</span>
-                                        </div>
-                                    </div>
-                                </div>
+                        <CheckboxItem key={rowData.id} onChange={() => this.checkBoxOnChange(event, rowData.id, rowID)} className="noomCkeckBox" >
+                            <div onClick={this.rowOnClick.bind(this, rowData)} dangerouslySetInnerHTML={{__html: rowData.content}} className="exercises_cont">
+                            </div>
+                            <div className="flex_70">
+                                <span className="margin_10 blue_solid">本校</span>
+                                <span className={rowData.subjectType}>{rowData.typeName}</span>
                             </div>
                         </CheckboxItem>
+
                     </div>
                 );
             } else {
@@ -665,17 +655,10 @@ export default class questionBank extends React.Component {
                             onChange={() => this.checkBoxOnChange(event, rowData.id, rowID)}
                             className="noomCkeckBox"
                         >
-                            <div style={{display: '-webkit-box', display: 'flex'}}
-                                 onClick={this.rowOnClick.bind(this, rowData)}>
-                                <div style={{lineHeight: 1}} className="flex_1 my_flex">
-                                    <div className="flex_100">
-                                        <div dangerouslySetInnerHTML={{__html: rowData.content}}
-                                             className="exercises_cont"></div>
-                                        <div className="flex_70">
-                                            <span className={rowData.subjectType}>{rowData.typeName}</span>
-                                        </div>
-                                    </div>
-                                </div>
+                            <div onClick={this.rowOnClick.bind(this, rowData)} dangerouslySetInnerHTML={{__html: rowData.content}} className="exercises_cont">
+                            </div>
+                            <div className="flex_70">
+                                <span className={rowData.subjectType}>{rowData.typeName}</span>
                             </div>
                         </CheckboxItem>
                     </div>
@@ -693,43 +676,27 @@ export default class questionBank extends React.Component {
                             onChange={() => this.checkBoxOnChange(event, rowData.id, rowID)}
                             className="noomCkeckBoxOther"
                         >
-                            <div style={{display: '-webkit-box', display: 'flex'}}
-                                 onClick={this.rowOnClick.bind(this, rowData)}>
-                                <div style={{lineHeight: 1}} className="flex_1 my_flex">
-                                    <div className="flex_100">
-                                        <div dangerouslySetInnerHTML={{__html: rowData.content}}
-                                             className="exercises_cont"></div>
-                                        <div className="flex_70">
-                                            <span className="margin_10 blue_solid">本校</span>
-                                            <span className={rowData.subjectType}>{rowData.typeName}</span>
-                                        </div>
-                                    </div>
-                                </div>
+                            <div onClick={this.rowOnClick.bind(this, rowData)} dangerouslySetInnerHTML={{__html: rowData.content}} className="exercises_cont">
+                            </div>
+                            <div className="flex_70">
+                                <span className="margin_10 blue_solid">本校</span>
+                                <span className={rowData.subjectType}>{rowData.typeName}</span>
                             </div>
                         </CheckboxItem>
+
                     </div>
                 );
             } else {
                 return (
                     <div key={rowID} className="exercises_line">
-                        <CheckboxItem
-                            key={rowData.id}
-                            onChange={() => this.checkBoxOnChange(event, rowData.id, rowID)}
-                            className="noomCkeckBoxOther"
-                        >
-                            <div style={{display: '-webkit-box', display: 'flex'}}
-                                 onClick={this.rowOnClick.bind(this, rowData)}>
-                                <div style={{lineHeight: 1}} className="flex_1 my_flex">
-                                    <div className="flex_100">
-                                        <div dangerouslySetInnerHTML={{__html: rowData.content}}
-                                             className="exercises_cont"></div>
-                                        <div className="flex_70">
-                                            <span className={rowData.subjectType}>{rowData.typeName}</span>
-                                        </div>
-                                    </div>
-                                </div>
+                        <CheckboxItem key={rowData.id} onChange={() => this.checkBoxOnChange(event, rowData.id, rowID)} className="noomCkeckBoxOther" >
+                            <div onClick={this.rowOnClick.bind(this, rowData)} dangerouslySetInnerHTML={{__html: rowData.content}} className="exercises_cont">
+                            </div>
+                            <div className="flex_70">
+                                <span className={rowData.subjectType}>{rowData.typeName}</span>
                             </div>
                         </CheckboxItem>
+
                     </div>
                 );
             }
