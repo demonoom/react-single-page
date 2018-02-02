@@ -630,7 +630,7 @@ export default class questionBank extends React.Component {
                             <div style={{display: '-webkit-box', display: 'flex'}}
                                  onClick={this.rowOnClick.bind(this, rowData)}>
                                 <div style={{lineHeight: 1}} className="flex_1 my_flex">
-                                    <div className="my_flex flex_100 justify_content">
+                                    <div className="flex_100">
                                         <div dangerouslySetInnerHTML={{__html: rowData.content}}
                                              className="exercises_cont"></div>
                                         <div className="flex_70">
@@ -654,7 +654,7 @@ export default class questionBank extends React.Component {
                             <div style={{display: '-webkit-box', display: 'flex'}}
                                  onClick={this.rowOnClick.bind(this, rowData)}>
                                 <div style={{lineHeight: 1}} className="flex_1 my_flex">
-                                    <div className="my_flex flex_100 justify_content">
+                                    <div className="flex_100">
                                         <div dangerouslySetInnerHTML={{__html: rowData.content}}
                                              className="exercises_cont"></div>
                                         <div className="flex_70">
@@ -683,7 +683,7 @@ export default class questionBank extends React.Component {
                             <div style={{display: '-webkit-box', display: 'flex'}}
                                  onClick={this.rowOnClick.bind(this, rowData)}>
                                 <div style={{lineHeight: 1}} className="flex_1 my_flex">
-                                    <div className="my_flex flex_100 justify_content">
+                                    <div className="flex_100">
                                         <div dangerouslySetInnerHTML={{__html: rowData.content}}
                                              className="exercises_cont"></div>
                                         <div className="flex_70">
@@ -707,7 +707,7 @@ export default class questionBank extends React.Component {
                             <div style={{display: '-webkit-box', display: 'flex'}}
                                  onClick={this.rowOnClick.bind(this, rowData)}>
                                 <div style={{lineHeight: 1}} className="flex_1 my_flex">
-                                    <div className="my_flex flex_100 justify_content">
+                                    <div className="flex_100">
                                         <div dangerouslySetInnerHTML={{__html: rowData.content}}
                                              className="exercises_cont"></div>
                                         <div className="flex_70">
