@@ -5,7 +5,8 @@ export default class Demo extends React.Component {
         super(props);
         this.state = {
             questionDetil: {},
-            knowledgeInfoArr: []
+            knowledgeInfoArr: [],
+            divShow: 'block'
         };
     }
 
@@ -31,7 +32,6 @@ export default class Demo extends React.Component {
             method: 'post',
             body: requestParams,
         }).then(function (result) {
-            console.log(result);
             var ret = result.data;
             if (ret.msg == '调用成功' && ret.success == true) {
                 var data = ret.response;
@@ -44,6 +44,8 @@ export default class Demo extends React.Component {
                         knowledgeInfoArr.push(knowledgeInfo);
                     })
                     _this.setState({knowledgeInfoArr});
+                } else {
+                    _this.setState({divShow: 'none'});
                 }
             }
         });
@@ -52,22 +54,25 @@ export default class Demo extends React.Component {
     render() {
         return (
             <div className="question_detil_cont">
-                <div className="list_padding">
+                <div className="list_padding" style={{display: this.state.divShow}}>
                     <div className="tags_blue my_flex my_flex_wrap">
                         {this.state.knowledgeInfoArr}
                     </div>
                 </div>
                 <div className="list_padding">
                     <h3><span className="b_c_1"></span>{this.state.questionDetil.typeName}</h3>
-                    <div dangerouslySetInnerHTML={{__html: this.state.questionDetil.content}} className="question_detil"></div>
+                    <div dangerouslySetInnerHTML={{__html: this.state.questionDetil.content}}
+                         className="question_detil"></div>
                 </div>
                 <div className="list_padding">
                     <h3><span className="b_c_2"></span>正确答案</h3>
-                    <div dangerouslySetInnerHTML={{__html: this.state.questionDetil.answer}} className="question_detil"></div>
+                    <div dangerouslySetInnerHTML={{__html: this.state.questionDetil.answer}}
+                         className="question_detil"></div>
                 </div>
                 <div className="list_padding list_padding_no_b">
                     <h3><span className="b_c_3"></span>解析</h3>
-                    <div dangerouslySetInnerHTML={{__html: this.state.questionDetil.analysisContent}} className="question_detil"></div>
+                    <div dangerouslySetInnerHTML={{__html: this.state.questionDetil.analysisContent}}
+                         className="question_detil"></div>
                 </div>
             </div>
         );
