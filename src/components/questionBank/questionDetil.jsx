@@ -5,6 +5,7 @@ export default class Demo extends React.Component {
         super(props);
         this.state = {
             questionDetil: {},
+            knowledgeInfoArr: []
         };
     }
 
@@ -30,11 +31,20 @@ export default class Demo extends React.Component {
             method: 'post',
             body: requestParams,
         }).then(function (result) {
+            console.log(result);
             var ret = result.data;
             if (ret.msg == '调用成功' && ret.success == true) {
                 var data = ret.response;
-                // console.log(data);
-                _this.setState({questionDetil: data})
+                _this.setState({questionDetil: data});
+                var knowledgeInfoList = data.knowledgeInfoList;
+                if (WebServiceUtil.isEmpty(knowledgeInfoList) == false) {
+                    var knowledgeInfoArr = [];
+                    knowledgeInfoList.forEach(function (v, i) {
+                        var knowledgeInfo = <span>{v.knowledgeName}</span>
+                        knowledgeInfoArr.push(knowledgeInfo);
+                    })
+                    _this.setState({knowledgeInfoArr});
+                }
             }
         });
     }
@@ -42,12 +52,18 @@ export default class Demo extends React.Component {
     render() {
         return (
             <div className="question_detil_cont">
+                <div className="tags_blue">
+                    {this.state.knowledgeInfoArr}
+                </div>
                 <h3><span className="b_c_1"></span>{this.state.questionDetil.typeName}</h3>
+
                 <div dangerouslySetInnerHTML={{__html: this.state.questionDetil.content}}
                      className="question_detil"></div>
                 <hr/>
                 <h3><span className="b_c_2"></span>正确答案</h3>
                 <div dangerouslySetInnerHTML={{__html: this.state.questionDetil.answer}}></div>
+                <h3><span className="b_c_3"></span>解析</h3>
+                <div dangerouslySetInnerHTML={{__html: this.state.questionDetil.analysisContent}}></div>
             </div>
         );
     }
