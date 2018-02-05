@@ -52,18 +52,23 @@ export default class Demo extends React.Component {
     render() {
         return (
             <div className="question_detil_cont">
-                <div className="tags_blue">
-                    {this.state.knowledgeInfoArr}
+                <div className="list_padding">
+                    <div className="tags_blue my_flex my_flex_wrap">
+                        {this.state.knowledgeInfoArr}
+                    </div>
                 </div>
-                <h3><span className="b_c_1"></span>{this.state.questionDetil.typeName}</h3>
-
-                <div dangerouslySetInnerHTML={{__html: this.state.questionDetil.content}}
-                     className="question_detil"></div>
-                <hr/>
-                <h3><span className="b_c_2"></span>正确答案</h3>
-                <div dangerouslySetInnerHTML={{__html: this.state.questionDetil.answer}}></div>
-                <h3><span className="b_c_3"></span>解析</h3>
-                <div dangerouslySetInnerHTML={{__html: this.state.questionDetil.analysisContent}}></div>
+                <div className="list_padding">
+                    <h3><span className="b_c_1"></span>{this.state.questionDetil.typeName}</h3>
+                    <div dangerouslySetInnerHTML={{__html: this.state.questionDetil.content}} className="question_detil"></div>
+                </div>
+                <div className="list_padding">
+                    <h3><span className="b_c_2"></span>正确答案</h3>
+                    <div dangerouslySetInnerHTML={{__html: this.state.questionDetil.answer}} className="question_detil"></div>
+                </div>
+                <div className="list_padding list_padding_no_b">
+                    <h3><span className="b_c_3"></span>解析</h3>
+                    <div dangerouslySetInnerHTML={{__html: this.state.questionDetil.analysisContent}} className="question_detil"></div>
+                </div>
             </div>
         );
     }

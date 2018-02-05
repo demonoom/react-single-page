@@ -82,6 +82,7 @@ hr {
   display: -ms-flexbox;
   display: flex;
 }
+
 .flex_1 {
   -webkit-box-flex: 1;
   -webkit-flex: 1;

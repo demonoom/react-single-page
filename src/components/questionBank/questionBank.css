@@ -1,8 +1,4 @@
-@media screen and (max-width: 300px) {
-    .exercises_cont {
-        width: 200px;
-    }
-}
+
 .my-drawer {
     position: relative;
     overflow: auto;
@@ -49,7 +45,7 @@
 }
 
 .exercises_cont{
-    max-height: 40px;
+    max-height: 34px;
     overflow: hidden;
     word-break: break-all;
     word-wrap: break-word;
@@ -108,10 +104,14 @@
     border: none !important;
 }
 .question_detil_cont{
-    padding:0 15px;
+    padding:0;
+    background: #fff;
+    height: 100%;
+    overflow-y: auto;
+    overflow-x: hidden;
 }
 .question_detil_cont h3{
-    margin: 15px 0;
+    margin: 0 0 15px 0;
 }
 .b_c_1::before{
     content: "";
@@ -167,8 +167,7 @@
 }
 .question_detil{
     color:#666;
-    width: 96%;
-    margin: 0 2%;
+    margin: 0 15px;
 }
 .exercises_line .am-checkbox-input{
     width: 40px;
@@ -233,7 +232,7 @@
 }
 .noomCkeckBox .am-list-content, .noomCkeckBoxOther .am-list-content{
     position: relative;
-    height: 40px;
+    height: 34px;
     padding-top: 0 !important;
     padding-bottom: 0 !important;
 }
