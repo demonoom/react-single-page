@@ -20,6 +20,24 @@ export default class Demo extends React.Component {
         this.getSubjectLineById(id);
     }
 
+    componentDidUpdate() {
+        var arr = document.getElementsByTagName('img');
+        if (WebServiceUtil.isEmpty(arr) == false) {
+            for (var i = 0; i < arr.length; i++) {
+                arr[i].addEventListener("click", function () {
+                    var data = {
+                        method: "showImage",
+                        url: this.src,
+                        currentUrl: this.src,
+                    };
+                    Bridge.callHandler(data, null, function (error) {
+                        console.log(error);
+                    });
+                });
+            }
+        }
+    }
+
     getSubjectLineById(id) {
         var _this = this;
         var param = {

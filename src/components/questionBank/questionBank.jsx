@@ -331,7 +331,7 @@ export default class questionBank extends React.Component {
     rowOnClick(res) {
         var subjectId = res.id;
         var subjectType = res.subjectType;
-        // window.open("/#/questionDetil?courseId=" + subjectId + "&subjectType=" + subjectType);
+        window.open("/#/questionDetil?courseId=" + subjectId + "&subjectType=" + subjectType);
         var url = "http://jiaoxue.maaee.com:8091/#/questionDetil?courseId=" + subjectId + "&subjectType=" + subjectType;
         var data = {};
         data.method = 'openNewPage';
