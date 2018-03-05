@@ -377,6 +377,7 @@ export default class studentFaceStatistics extends React.Component {
         var confuseUserList=_this.state.currentFaceEmotion.confuseUserList;
         var noUnderstandUserList=_this.state.currentFaceEmotion.noUnderstandUserList;
         var understandUserList=_this.state.currentFaceEmotion.understandUserList;
+        var thinkUserList=_this.state.currentFaceEmotion.thinkUserList;
         if(!aliveUserList){
             aliveUserList=new Array();
         }
@@ -392,10 +393,13 @@ export default class studentFaceStatistics extends React.Component {
         if(!understandUserList){
             understandUserList=new Array();
         }
+        if(!thinkUserList){
+            thinkUserList=new Array();
+        }
         var attention=this.formateNumer(attentionUserList.length/aliveUserList.length,2);
         var confuse=this.formateNumer(confuseUserList.length/aliveUserList.length,2);
         var understand=this.formateNumer(understandUserList.length/aliveUserList.length,2);
-        var thinking=this.formateNumer(Number(_this.state.currentFaceEmotion.thinking),2);
+        var thinking=this.formateNumer(thinkUserList.length/aliveUserList.length,2);
         var understandLow25=this.formateNumer(noUnderstandUserList.length/aliveUserList.length,2);
 
         // var attention=this.formateNumer(Number(_this.state.currentFaceEmotion.attention),2);
@@ -451,7 +455,17 @@ export default class studentFaceStatistics extends React.Component {
                     </div>
                 )})
         }
-
+        //思考度
+        var thinkRecord;
+        if (thinkUserList != null && typeof (thinkUserList) != undefined) {
+            thinkRecord= thinkUserList.map(function (item) {
+                return (
+                    <div  className="concentration_user"  >
+                        <div><img src={item.avatar}></img></div>
+                        <div className="concentration_font">{item.userName}</div>
+                    </div>
+                )})
+        }
         return (
 
             <div >
@@ -483,11 +497,13 @@ export default class studentFaceStatistics extends React.Component {
 
                     <div className="concentration_list">
                         <div className="concentration_title concentration_title3">疑惑度{confuse}%</div>
-                        <div className="concentration_title2">（高于平均值的学生）%</div>
+                        <div className="concentration_title2">（高于平均值的学生）</div>
                         <div className="concentration_user_cont">{confuseRecord}</div>
                     </div>
                     <div className="concentration_list">
                         <div className="concentration_title concentration_title3">思考度{thinking}%</div>
+                        <div className="concentration_title2">（在思考的学生）</div>
+                        <div className="concentration_user_cont">{thinkRecord}</div>
                     </div>
                 </div>
                 <div className='over_flow_auto'>
