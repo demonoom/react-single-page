@@ -1,3 +1,4 @@
+
 .my-drawer {
     position: relative;
     overflow: auto;
@@ -35,22 +36,24 @@
     width:0 !important;
 }
 .flex_70{
-    width:100px;
-    margin: 4px 0 0 10px;
+    width: 100px;
+    margin: 4px 0 0 0;
     text-align: right;
+    position: absolute;
+    top: 0;
+    right: 0;
 }
+
 .exercises_cont{
-    max-width: calc(100% - 110px) !important;
-    width: calc(100% - 110px) !important;
-    display: inline-flex;
-    display: -webkit-inline-box;
-    display: -webkit-inline-flex;
-    display: -ms-inline-flexbox;
-    max-height: 60px;
+    max-height: 34px;
     overflow: hidden;
     word-break: break-all;
     word-wrap: break-word;
     white-space: pre-wrap;
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: calc(100% - 120px);
 }
 .exercises_cont div div, .question_detil div div{
     padding:0 !important;
@@ -62,8 +65,15 @@
     margin: 0;
     width: 100% !important;
 }
+.exercises_cont div img{
+    max-width: 100%;
+    max-height:40px;
+    padding-bottom: 0;
+}
 .exercises_cont div div p img, .question_detil div div p img{
     max-width: 100%;
+    max-height:40px;
+    padding-bottom: 0;
 }
 
 .exercises_line .am-list-line{
@@ -94,10 +104,44 @@
     border: none !important;
 }
 .question_detil_cont{
-    padding:0 15px;
+    padding:0;
+    background: #fff;
+    height: 100%;
+    overflow-y: auto;
+    overflow-x: hidden;
 }
 .question_detil_cont h3{
-    margin: 15px 0;
+    margin: 0 0 15px 0;
+}
+.b_c_1::before{
+    content: "";
+    width: 5px;
+    height: 20px;
+    background: #f5a623;
+    display: inline-block;
+    margin-right: 8px;
+    top: 3px;
+    position: relative;
+}
+.b_c_2::before{
+    content: "";
+    width: 5px;
+    height: 20px;
+    background: #65bb02;
+    display: inline-block;
+    margin-right: 8px;
+    top: 3px;
+    position: relative;
+}
+.b_c_3::before{
+    content: "";
+    width: 5px;
+    height: 20px;
+    background: #4a90e2;
+    display: inline-block;
+    margin-right: 8px;
+    top: 3px;
+    position: relative;
 }
 .question_detil_cont hr{
     height: 1px;
@@ -123,8 +167,7 @@
 }
 .question_detil{
     color:#666;
-    width: 96%;
-    margin: 0 2%;
+    margin: 0 15px;
 }
 .exercises_line .am-checkbox-input{
     width: 40px;
@@ -178,5 +221,21 @@
     border: none;
     font-size: 14px;
     padding: 2px 4px;
-    border-radius: 4px;
+    border-radius: 2px;
+}
+.flex_100{
+    width: 100%;
+}
+.justify_content, .noomCkeckBox .am-list-content, .noomCkeckBoxOther .am-list-content{
+    justify-content: space-between;
+
+}
+.noomCkeckBox .am-list-content, .noomCkeckBoxOther .am-list-content{
+    position: relative;
+    height: 34px;
+    padding-top: 0 !important;
+    padding-bottom: 0 !important;
+}
+.noomCkeckBox .am-checkbox-inner, .noomCkeckBoxOther .am-checkbox-inner{
+    border-radius: 1px;
 }
