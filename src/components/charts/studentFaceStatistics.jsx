@@ -199,6 +199,12 @@ export default class studentFaceStatistics extends React.Component {
             (currentFaceEmotion.understandUserList)[1]=user;
             (currentFaceEmotion.understandUserList)[2]=user;
             (currentFaceEmotion.understandUserList)[3]=user;
+            (currentFaceEmotion.understandUserList)[4]=user;
+            (currentFaceEmotion.understandUserList)[5]=user;
+            (currentFaceEmotion.understandUserList)[6]=user;
+            (currentFaceEmotion.understandUserList)[7]=user;
+            (currentFaceEmotion.understandUserList)[8]=user;
+            (currentFaceEmotion.understandUserList)[9]=user;
 
             (currentFaceEmotion.attentionUserList)[0]=user;
             (currentFaceEmotion.attentionUserList)[1]=user;
@@ -385,9 +391,9 @@ export default class studentFaceStatistics extends React.Component {
         if (understandUserList != null && typeof (understandUserList) != undefined) {
             understandRecord= understandUserList.map(function (item) {
                 return (
-                    <div>
-                        <div>{item.userName}</div>
+                    <div  className="concentration_user">
                         <div><img src={item.avatar}></img></div>
+                        <div className="concentration_font">{item.userName}</div>
                     </div>
                 )})
 
@@ -397,9 +403,9 @@ export default class studentFaceStatistics extends React.Component {
         if (attentionUserList != null && typeof (attentionUserList) != undefined) {
             attentionRecord= understandUserList.map(function (item) {
                 return (
-                    <div  >
-                        <div>{item.userName}</div>
+                    <div  className="concentration_user" >
                         <div><img src={item.avatar}></img></div>
+                        <div className="concentration_font">{item.userName}</div>
                     </div>
                 )})
         }
@@ -408,9 +414,9 @@ export default class studentFaceStatistics extends React.Component {
         if (noUnderstandUserList != null && typeof (noUnderstandUserList) != undefined) {
             noUnderstandRecord= understandUserList.map(function (item) {
                 return (
-                    <div  >
-                        <div>{item.userName}</div>
+                    <div   className="concentration_user" >
                         <div><img src={item.avatar}></img></div>
+                        <div className="concentration_font">{item.userName}</div>
                     </div>
                 )})
         }
@@ -419,17 +425,52 @@ export default class studentFaceStatistics extends React.Component {
         if (confuseUserList != null && typeof (confuseUserList) != undefined) {
             confuseRecord= understandUserList.map(function (item) {
                 return (
-                    <div  >
-                        <div>{item.userName}</div>
+                    <div  className="concentration_user"  >
                         <div><img src={item.avatar}></img></div>
+                        <div className="concentration_font">{item.userName}</div>
                     </div>
                 )})
         }
 
         return (
 
-            <div className="student_cont">
-                <div className='over_flow_auto student_f_auto'>
+            <div >
+                <div className='over_flow_auto student_f_auto concentration_title concentration_top'>学生听课认真度</div>
+                <div className='over_flow_auto concentration_bottom my_flex flex_justify'>
+                    <div className="concentration_list">
+                        <div className="concentration_title">专注度{attention}</div>
+                        <div className="concentration_title2">（低于平均值的学生）</div>
+                        <div className="concentration_user_cont">{attentionRecord}</div>
+                    </div>
+
+
+                    <div className="concentration_list concentration_list2">
+                        <div className="concentration_list2_1">
+                            <div className="concentration_title">理解度{understand}</div>
+                            <div className="concentration_title2">（理解的学生）</div>
+                            <div className="concentration_user_cont">{understandRecord}</div>
+                        </div>
+                        <div className="concentration_list2_line">
+                            <div className="concentration_list2_line_l"></div>
+                        </div>
+                        <div className="concentration_list2_1">
+                            <div className="concentration_title">不理解度{understandLow25}</div>
+                            <div className="concentration_title2">（不理解的学生）</div>
+                            <div className="concentration_user_cont">{noUnderstandRecord}</div>
+                        </div>
+                    </div>
+
+
+                    <div className="concentration_list">
+                        <div className="concentration_title">疑惑度{confuse}</div>
+                        <div className="concentration_title2">（低于平均值的学生）</div>
+                        <div className="concentration_user_cont">{confuseRecord}</div>
+                    </div>
+                    <div className="concentration_list concentration_height">
+                        <div className="concentration_title">思考度{thinking}</div>
+                    </div>
+                </div>
+                <div className='over_flow_auto'>
                     <span className="student_f_left">占比/％</span>
                     <span className="student_f_right">时间/M</span>
                     <div>
@@ -437,23 +478,14 @@ export default class studentFaceStatistics extends React.Component {
                             <ReactEcharts
                                 option={lineChartOption}
                                 style={{height: '350px', width: '100%'}}
-                               // loadingOption={this.getLoadingOption()}
-                               // showLoading={true}
-                               // onChartReady={this.onChartReady}
+                                // loadingOption={this.getLoadingOption()}
+                                // showLoading={true}
+                                // onChartReady={this.onChartReady}
                                 className='' />
                             <pre></pre>
                         </div>
                     </div>
                 </div>
-                <div>专注度{attention}</div>
-                {attentionRecord}
-                <div>理解度{understand}</div>
-                {understandRecord}
-                <div>不理解度{understandLow25}</div>
-                {noUnderstandRecord}
-                <div>疑惑度{confuse}</div>
-                {confuseRecord}
-                <div>思考度{thinking}</div>
             </div>
         );
     }
