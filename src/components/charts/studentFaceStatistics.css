@@ -36,7 +36,7 @@
     width: 100%;
 }
 .concentration_list{
-    width:264px;
+    flex:1;
     height: 380px;
     border: 1px solid #eee;
     margin: 0 8px;

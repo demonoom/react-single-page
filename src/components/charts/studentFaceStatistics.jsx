@@ -444,7 +444,7 @@ export default class studentFaceStatistics extends React.Component {
                     </div>
 
 
-                    <div className="concentration_list concentration_list2">
+                    <div className="concentration_list concentration_list2 my_flex">
                         <div className="concentration_list2_1">
                             <div className="concentration_title">理解度{understand}</div>
                             <div className="concentration_title2">（理解的学生）</div>
