@@ -2,7 +2,7 @@ import React from 'react';
 import ReactEcharts from 'echarts-for-react';
 import './studentFaceStatistics.css'
 import {
-    Toast,
+    Toast,List
 } from 'antd-mobile';
 
 export default class studentFaceStatistics extends React.Component {
@@ -12,7 +12,8 @@ export default class studentFaceStatistics extends React.Component {
         super(props);
         this.state = {
             lineChartOption: this.initChartOption(),
-            lastPoint: '0'
+            lastPoint: '0',
+            currentFaceEmotion:{}
         };
     }
 
@@ -46,7 +47,6 @@ export default class studentFaceStatistics extends React.Component {
             "count": '10',
             "lastPoint": this.classOpenSend,
         };
-        console.log(this.classOpenSend);
         var requestParams = encodeURI("params=" + JSON.stringify(param));
 
         WebServiceUtil.requestLittleAntApi({
@@ -168,13 +168,16 @@ export default class studentFaceStatistics extends React.Component {
             return;
         }
         var faceEmotionDatas = resourse;
+        console.log(faceEmotionDatas);
         var lineChartOption = this.state.lineChartOption;
         var i = 1;
         var lastPoint;
+        var currentFaceEmotion;
         if (!this.isEmptyObject(faceEmotionDatas)) {
             for (var key in faceEmotionDatas) {
                 i++;
                 var faceEmotionData = faceEmotionDatas[key];
+                currentFaceEmotion=faceEmotionData;
                 var xMinuite = this.formatSeconds(key);
                 if (xMinuite > 60) {
                     break;
@@ -189,6 +192,30 @@ export default class studentFaceStatistics extends React.Component {
                 lastPoint = key;
             }
 
+            var user={};
+            user.userName='成旭';
+            user.avatar='http://60.205.86.217/upload6/2018-02-01/0/5f8ff939-a387-47b4-a5b3-898776aded40.jpg?size=100x100';
+            (currentFaceEmotion.understandUserList)[0]=user;
+            (currentFaceEmotion.understandUserList)[1]=user;
+            (currentFaceEmotion.understandUserList)[2]=user;
+            (currentFaceEmotion.understandUserList)[3]=user;
+
+            (currentFaceEmotion.attentionUserList)[0]=user;
+            (currentFaceEmotion.attentionUserList)[1]=user;
+            (currentFaceEmotion.attentionUserList)[2]=user;
+            (currentFaceEmotion.attentionUserList)[3]=user;
+
+            (currentFaceEmotion.noUnderstandUserList)[0]=user;
+            (currentFaceEmotion.noUnderstandUserList)[1]=user;
+            (currentFaceEmotion.noUnderstandUserList)[2]=user;
+            (currentFaceEmotion.noUnderstandUserList)[3]=user;
+
+            (currentFaceEmotion.confuseUserList)[0]=user;
+            (currentFaceEmotion.confuseUserList)[1]=user;
+            (currentFaceEmotion.confuseUserList)[2]=user;
+            (currentFaceEmotion.confuseUserList)[3]=user;
+
+            this.setState({currentFaceEmotion: currentFaceEmotion});
             this.setState({lineChartOption: lineChartOption});
             this.setState({lastPoint: lastPoint});
         } else {
@@ -203,6 +230,12 @@ export default class studentFaceStatistics extends React.Component {
             this.setState({lastPoint: lastPoint});
         }
 
+    }
+    formateNumer=(number,i)=>{
+        if(!number){
+            return 0.00;
+        }
+        return number.toFixed(i);
     }
     initChartOption = () => {
         var _this=this;
@@ -329,30 +362,98 @@ export default class studentFaceStatistics extends React.Component {
         };
     };
 
+
     render() {
         var _this = this;
         var lineChartOption=_this.state.lineChartOption;
+        var aliveUserList=_this.state.currentFaceEmotion.aliveUserList;
+        var attentionUserList=_this.state.currentFaceEmotion.attentionUserList;
+        var confuseUserList=_this.state.currentFaceEmotion.confuseUserList;
+        var noUnderstandUserList=_this.state.currentFaceEmotion.noUnderstandUserList;
+        var understandUserList=_this.state.currentFaceEmotion.understandUserList;
+
+        var attention=this.formateNumer(Number(_this.state.currentFaceEmotion.attention),2);
+        var confuse=this.formateNumer(Number(_this.state.currentFaceEmotion.confuse),2);
+        var understand=this.formateNumer(Number(_this.state.currentFaceEmotion.understandMore25),2);
+        var thinking=this.formateNumer(Number(_this.state.currentFaceEmotion.thinking),2);
+        var understandLow25=this.formateNumer(Number(_this.state.currentFaceEmotion.understandLow25),2);
         const jump=()=>{
             return ( <div onClick={() => this.openNewPage()} className="top_right_btn">新页面打开</div>);
         }
+        //不理解度
+        var understandRecord;
+        if (understandUserList != null && typeof (understandUserList) != undefined) {
+            understandRecord= understandUserList.map(function (item) {
+                return (
+                    <div>
+                        <div>{item.userName}</div>
+                        <div><img src={item.avatar}></img></div>
+                    </div>
+                )})
+
+        }
+        //专注度
+        var attentionRecord;
+        if (attentionUserList != null && typeof (attentionUserList) != undefined) {
+            attentionRecord= understandUserList.map(function (item) {
+                return (
+                    <div  >
+                        <div>{item.userName}</div>
+                        <div><img src={item.avatar}></img></div>
+                    </div>
+                )})
+        }
+        //不理解度
+        var noUnderstandRecord;
+        if (noUnderstandUserList != null && typeof (noUnderstandUserList) != undefined) {
+            noUnderstandRecord= understandUserList.map(function (item) {
+                return (
+                    <div  >
+                        <div>{item.userName}</div>
+                        <div><img src={item.avatar}></img></div>
+                    </div>
+                )})
+        }
+        //疑惑度
+        var confuseRecord;
+        if (confuseUserList != null && typeof (confuseUserList) != undefined) {
+            confuseRecord= understandUserList.map(function (item) {
+                return (
+                    <div  >
+                        <div>{item.userName}</div>
+                        <div><img src={item.avatar}></img></div>
+                    </div>
+                )})
+        }
+
         return (
 
             <div className="student_cont">
-            <div className='over_flow_auto student_f_auto'>
-                <span className="student_f_left">占比/％</span>
-                <span className="student_f_right">时间/M</span>
-                <div>
-                    <ReactEcharts
-                        option={lineChartOption}
-                        style={{height: '350px', width: '100%'}}
-                       // loadingOption={this.getLoadingOption()}
-                       // showLoading={true}
-                       // onChartReady={this.onChartReady}
-                        className='' />
-                    <pre>
-          </pre>
+                <div className='over_flow_auto student_f_auto'>
+                    <span className="student_f_left">占比/％</span>
+                    <span className="student_f_right">时间/M</span>
+                    <div>
+                        <div>
+                            <ReactEcharts
+                                option={lineChartOption}
+                                style={{height: '350px', width: '100%'}}
+                               // loadingOption={this.getLoadingOption()}
+                               // showLoading={true}
+                               // onChartReady={this.onChartReady}
+                                className='' />
+                            <pre></pre>
+                        </div>
                     </div>
                 </div>
+                <div>专注度{attention}</div>
+                {attentionRecord}
+                <div>理解度{understand}</div>
+                {understandRecord}
+                <div>不理解度{understandLow25}</div>
+                {noUnderstandRecord}
+                <div>疑惑度{confuse}</div>
+                {confuseRecord}
+                <div>思考度{thinking}</div>
             </div>
         );
     }
