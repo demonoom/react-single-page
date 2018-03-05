@@ -40,6 +40,7 @@ export default class studentFaceStatistics extends React.Component {
         var locationSearch = locationHref.substr(locationHref.indexOf("?") + 1);
         var searchArray = locationSearch.split("&");
         var vid = searchArray[0].split('=')[1];
+        console.log(this.classOpenSend);
         const dataBlob = {};
         var param = {
             "method": 'getVclassFaceEmotionsBySecondsPoint',
@@ -172,6 +173,7 @@ export default class studentFaceStatistics extends React.Component {
         var lineChartOption = this.state.lineChartOption;
         var i = 1;
         var lastPoint;
+
         var currentFaceEmotion;
         if (!this.isEmptyObject(faceEmotionDatas)) {
             for (var key in faceEmotionDatas) {
@@ -220,7 +222,6 @@ export default class studentFaceStatistics extends React.Component {
             // (currentFaceEmotion.confuseUserList)[1]=user;
             // (currentFaceEmotion.confuseUserList)[2]=user;
             // (currentFaceEmotion.confuseUserList)[3]=user;
-
             this.setState({currentFaceEmotion: currentFaceEmotion});
             this.setState({lineChartOption: lineChartOption});
             this.setState({lastPoint: lastPoint});
@@ -413,14 +414,21 @@ export default class studentFaceStatistics extends React.Component {
         //不理解度
         var understandRecord;
         if (understandUserList != null && typeof (understandUserList) != undefined) {
-            understandRecord= understandUserList.map(function (item) {
-                return (
-                    <div  className="concentration_user">
-                        <div><img src={item.avatar}></img></div>
-                        <div className="concentration_font">{item.userName}</div>
-                    </div>
-                )})
+            if(understandUserList.length==0){
+                understandRecord="";
+            }else {
+                understandRecord = understandUserList.map(function (item) {
+                    return (
+                        <div className="concentration_user">
+                            <div><img src={item.avatar}></img></div>
+                            <div className="concentration_font">{item.userName}</div>
+                        </div>
+                    )
+                })
+            }
 
+        }else{
+            understandRecord="";
         }
         //专注度
         var attentionRecord;
@@ -432,19 +440,28 @@ export default class studentFaceStatistics extends React.Component {
                         <div className="concentration_font">{item.userName}</div>
                     </div>
                 )})
+        }else{
+            attentionRecord="";
         }
         //不理解度
         var noUnderstandRecord;
         if (noUnderstandUserList != null && typeof (noUnderstandUserList) != undefined) {
-            noUnderstandRecord= understandUserList.map(function (item) {
-                return (
-                    <div   className="concentration_user" >
-                        <div><img src={item.avatar}></img></div>
-                        <div className="concentration_font">{item.userName}</div>
-                    </div>
-                )})
+            if(noUnderstandUserList.length==0){
+                noUnderstandRecord="";
+            }else {
+                noUnderstandRecord = understandUserList.map(function (item) {
+                    return (
+                        <div className="concentration_user">
+                            <div><img src={item.avatar}></img></div>
+                            <div className="concentration_font">{item.userName}</div>
+                        </div>
+                    )
+                })
+            }
+        }else {
+            noUnderstandRecord = "";
         }
-        //疑惑度
+        //疑惑度`
         var confuseRecord;
         if (confuseUserList != null && typeof (confuseUserList) != undefined) {
             confuseRecord= understandUserList.map(function (item) {
