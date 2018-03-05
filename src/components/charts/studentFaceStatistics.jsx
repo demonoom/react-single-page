@@ -377,12 +377,32 @@ export default class studentFaceStatistics extends React.Component {
         var confuseUserList=_this.state.currentFaceEmotion.confuseUserList;
         var noUnderstandUserList=_this.state.currentFaceEmotion.noUnderstandUserList;
         var understandUserList=_this.state.currentFaceEmotion.understandUserList;
-
-        var attention=this.formateNumer(Number(_this.state.currentFaceEmotion.attention),2);
-        var confuse=this.formateNumer(Number(_this.state.currentFaceEmotion.confuse),2);
-        var understand=this.formateNumer(Number(_this.state.currentFaceEmotion.understandMore25),2);
+        if(!aliveUserList){
+            aliveUserList=new Array();
+        }
+        if(!attentionUserList){
+            attentionUserList=new Array();
+        }
+        if(!confuseUserList){
+            confuseUserList=new Array();
+        }
+        if(!noUnderstandUserList){
+            noUnderstandUserList=new Array();
+        }
+        if(!understandUserList){
+            understandUserList=new Array();
+        }
+        var attention=this.formateNumer(attentionUserList.length/aliveUserList.length,2);
+        var confuse=this.formateNumer(confuseUserList.length/aliveUserList.length,2);
+        var understand=this.formateNumer(understandUserList.length/aliveUserList.length,2);
         var thinking=this.formateNumer(Number(_this.state.currentFaceEmotion.thinking),2);
-        var understandLow25=this.formateNumer(Number(_this.state.currentFaceEmotion.understandLow25),2);
+        var understandLow25=this.formateNumer(noUnderstandUserList.length/aliveUserList.length,2);
+
+        // var attention=this.formateNumer(Number(_this.state.currentFaceEmotion.attention),2);
+        // var confuse=this.formateNumer(Number(_this.state.currentFaceEmotion.confuse),2);
+        // var understand=this.formateNumer(Number(_this.state.currentFaceEmotion.understandMore25),2);
+        // var thinking=this.formateNumer(Number(_this.state.currentFaceEmotion.thinking),2);
+        // var understandLow25=this.formateNumer(Number(_this.state.currentFaceEmotion.understandLow25),2);
         const jump=()=>{
             return ( <div onClick={() => this.openNewPage()} className="top_right_btn">新页面打开</div>);
         }
@@ -438,7 +458,7 @@ export default class studentFaceStatistics extends React.Component {
                 <div className='over_flow_auto student_f_auto concentration_title concentration_top'>学生听课认真度</div>
                 <div className='over_flow_auto concentration_bottom my_flex flex_justify'>
                     <div className="concentration_list">
-                        <div className="concentration_title">专注度{attention}</div>
+                        <div className="concentration_title concentration_title3">专注度{attention}%</div>
                         <div className="concentration_title2">（低于平均值的学生）</div>
                         <div className="concentration_user_cont">{attentionRecord}</div>
                     </div>
@@ -446,7 +466,7 @@ export default class studentFaceStatistics extends React.Component {
 
                     <div className="concentration_list concentration_list2 my_flex">
                         <div className="concentration_list2_1">
-                            <div className="concentration_title">理解度{understand}</div>
+                            <div className="concentration_title concentration_title3">理解度{understand}%</div>
                             <div className="concentration_title2">（理解的学生）</div>
                             <div className="concentration_user_cont">{understandRecord}</div>
                         </div>
@@ -454,7 +474,7 @@ export default class studentFaceStatistics extends React.Component {
                             <div className="concentration_list2_line_l"></div>
                         </div>
                         <div className="concentration_list2_1">
-                            <div className="concentration_title">不理解度{understandLow25}</div>
+                            <div className="concentration_title concentration_title3">不理解度{understandLow25}%</div>
                             <div className="concentration_title2">（不理解的学生）</div>
                             <div className="concentration_user_cont">{noUnderstandRecord}</div>
                         </div>
@@ -462,12 +482,12 @@ export default class studentFaceStatistics extends React.Component {
 
 
                     <div className="concentration_list">
-                        <div className="concentration_title">疑惑度{confuse}</div>
-                        <div className="concentration_title2">（低于平均值的学生）</div>
+                        <div className="concentration_title concentration_title3">疑惑度{confuse}%</div>
+                        <div className="concentration_title2">（高于平均值的学生）%</div>
                         <div className="concentration_user_cont">{confuseRecord}</div>
                     </div>
-                    <div className="concentration_list concentration_height">
-                        <div className="concentration_title">思考度{thinking}</div>
+                    <div className="concentration_list">
+                        <div className="concentration_title concentration_title3">思考度{thinking}%</div>
                     </div>
                 </div>
                 <div className='over_flow_auto'>

@@ -37,26 +37,23 @@
 }
 .concentration_list{
     flex:1;
-    height: 380px;
+    height: 390px;
     border: 1px solid #eee;
     margin: 0 8px;
     padding:8px;
     box-shadow: rgba(0, 0, 0, 0.15) 1px 4px 12px;
     border-radius: 2px;
     overflow: hidden;
-    display: inline-block;
     background: #fff;
 }
 .concentration_height{
     height: 38px;
 }
 .concentration_list2{
-    width:538px;
+    flex-grow: 2;
 }
 .concentration_list2_1{
-    width:264px;
-    display: inline-block;
-    float: left;
+    flex:1;
 }
 .concentration_list2_line{
     width: 10px;
@@ -82,8 +79,10 @@
     color: #888;
     padding: 10px 0;
 }
+.concentration_title3{
+    font-size: 24px;
+}
 .concentration_user_cont{
-    width: 228px;
     margin: 0 auto;
     text-align: left;
 }
@@ -91,6 +90,7 @@
     text-align: center;
     display: inline-block;
     margin: 8px;
+    width: calc(25% - 16px);
 }
 .concentration_user img{
     width: 60px;
