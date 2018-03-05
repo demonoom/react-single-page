@@ -192,34 +192,34 @@ export default class studentFaceStatistics extends React.Component {
                 lastPoint = key;
             }
 
-            var user={};
-            user.userName='成旭';
-            user.avatar='http://60.205.86.217/upload6/2018-02-01/0/5f8ff939-a387-47b4-a5b3-898776aded40.jpg?size=100x100';
-            (currentFaceEmotion.understandUserList)[0]=user;
-            (currentFaceEmotion.understandUserList)[1]=user;
-            (currentFaceEmotion.understandUserList)[2]=user;
-            (currentFaceEmotion.understandUserList)[3]=user;
-            (currentFaceEmotion.understandUserList)[4]=user;
-            (currentFaceEmotion.understandUserList)[5]=user;
-            (currentFaceEmotion.understandUserList)[6]=user;
-            (currentFaceEmotion.understandUserList)[7]=user;
-            (currentFaceEmotion.understandUserList)[8]=user;
-            (currentFaceEmotion.understandUserList)[9]=user;
-
-            (currentFaceEmotion.attentionUserList)[0]=user;
-            (currentFaceEmotion.attentionUserList)[1]=user;
-            (currentFaceEmotion.attentionUserList)[2]=user;
-            (currentFaceEmotion.attentionUserList)[3]=user;
-
-            (currentFaceEmotion.noUnderstandUserList)[0]=user;
-            (currentFaceEmotion.noUnderstandUserList)[1]=user;
-            (currentFaceEmotion.noUnderstandUserList)[2]=user;
-            (currentFaceEmotion.noUnderstandUserList)[3]=user;
-
-            (currentFaceEmotion.confuseUserList)[0]=user;
-            (currentFaceEmotion.confuseUserList)[1]=user;
-            (currentFaceEmotion.confuseUserList)[2]=user;
-            (currentFaceEmotion.confuseUserList)[3]=user;
+            // var user={};
+            // user.userName='成旭';
+            // user.avatar='http://60.205.86.217/upload6/2018-02-01/0/5f8ff939-a387-47b4-a5b3-898776aded40.jpg?size=100x100';
+            // (currentFaceEmotion.understandUserList)[0]=user;
+            // (currentFaceEmotion.understandUserList)[1]=user;
+            // (currentFaceEmotion.understandUserList)[2]=user;
+            // (currentFaceEmotion.understandUserList)[3]=user;
+            // (currentFaceEmotion.understandUserList)[4]=user;
+            // (currentFaceEmotion.understandUserList)[5]=user;
+            // (currentFaceEmotion.understandUserList)[6]=user;
+            // (currentFaceEmotion.understandUserList)[7]=user;
+            // (currentFaceEmotion.understandUserList)[8]=user;
+            // (currentFaceEmotion.understandUserList)[9]=user;
+            //
+            // (currentFaceEmotion.attentionUserList)[0]=user;
+            // (currentFaceEmotion.attentionUserList)[1]=user;
+            // (currentFaceEmotion.attentionUserList)[2]=user;
+            // (currentFaceEmotion.attentionUserList)[3]=user;
+            //
+            // (currentFaceEmotion.noUnderstandUserList)[0]=user;
+            // (currentFaceEmotion.noUnderstandUserList)[1]=user;
+            // (currentFaceEmotion.noUnderstandUserList)[2]=user;
+            // (currentFaceEmotion.noUnderstandUserList)[3]=user;
+            //
+            // (currentFaceEmotion.confuseUserList)[0]=user;
+            // (currentFaceEmotion.confuseUserList)[1]=user;
+            // (currentFaceEmotion.confuseUserList)[2]=user;
+            // (currentFaceEmotion.confuseUserList)[3]=user;
 
             this.setState({currentFaceEmotion: currentFaceEmotion});
             this.setState({lineChartOption: lineChartOption});
