@@ -106,11 +106,13 @@ export default class termitePlateLibrary extends React.Component {
             "userId": loginUser.ident,
             "pageNo": PageNo,
         };
+        console.log(param);
         var requestParams = encodeURI("params=" + JSON.stringify(param));
         WebServiceUtil.requestLittleAntApi({
             method: 'post',
             body: requestParams,
         }).then(function (result) {
+            console.log(result);
             if (result.data.msg == '调用成功' || result.data.success == true) {
                 var response = result.data.response;
                 var pager = result.data.pager;
@@ -237,27 +239,45 @@ export default class termitePlateLibrary extends React.Component {
 
             if (rowData.fileType == 2) {
                 //题目
-                headDiv = <div onClick={_this.queCilcked.bind(this, rowData.subject)}>
+                headDiv = <div className="my_flex flex_align_center">
                     <img className="QuePic" src={require('../imgs/subject.png')} alt=""/>
-                    {/*{rowData.name}*/}
-                    {rowData.creator.userName}
-                    {time}
+                    <div onClick={_this.queCilcked.bind(this, rowData.subject)} className="lineheight">
+                        {/*{rowData.name}*/}
+                        <div className="ant_list_time">
+                            <span className="margin_right_8">{rowData.creator.userName}</span>
+                            <span>{time}</span>
+                        </div>
+                    </div>
                 </div>;
-                headDivItem = <span>
-                    <li>删除</li>
-                </span>;
+
+                headDivItem = <ul className="my_flex ul_list_del flex_align_center">
+                    <li className="flex_1">
+                        <img className="icon_small_del" src={require('../imgs/icon_delet@3x.png')} alt=""/>
+                        <div>删除</div>
+                    </li>
+                </ul>;
             } else {
                 //文件夹
-                headDiv = <div onClick={_this.fileClicked.bind(this, rowData)}>
+                headDiv = <div className="my_flex flex_align_center" onClick={_this.fileClicked.bind(this, rowData)}>
                     <img className="filePic" src={require('../imgs/file.png')} alt=""/>
-                    {rowData.name}
-                    {rowData.creator.userName}
-                    {time}
-                </div>;
-                headDivItem = <span>
-                    <li>删除</li>
-                    <li>重命名</li>
-                </span>;
+                    <div onClick={_this.fileClicked} className="lineheight">
+                        <div className="ant_list_title">{rowData.name}</div>
+                        <div className="ant_list_time">
+                            <span className="margin_right_8">{rowData.creator.userName}</span>
+                            <span>{time}</span>
+                        </div>
+                    </div>
+                </div>
+                headDivItem = <ul className="my_flex ul_list_del flex_align_center">
+                    <li className="flex_1">
+                        <img className="icon_small_del" src={require('../imgs/icon_delet@3x.png')} alt=""/>
+                        <div>删除</div>
+                    </li>
+                    <li className="flex_1">
+                        <img className="icon_small_del" src={require('../imgs/icon_edit@3x.png')} alt=""/>
+                        <div>重命名</div>
+                    </li>
+                </ul>;
             }
             return (
                 <div className="noom-accordion">

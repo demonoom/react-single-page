@@ -407,7 +407,7 @@ export default class studentFaceStatistics extends React.Component {
         if(!thinkUserList){
             thinkUserList=new Array();
         }
-        var attention=this.formateNumer(_this.state.currentFaceEmotion.attention,2);
+        var attention=this.formateNumer(_this.state.currentFaceEmotion.attention/_this.state.currentFaceEmotion.count,2);
         var confuse=this.formateNumer(confuseUserList.length/aliveUserList.length,2);
         var understand=this.formateNumer(understandUserList.length/aliveUserList.length,2);
         var thinking=this.formateNumer(thinkUserList.length/aliveUserList.length,2);
