@@ -13,7 +13,8 @@ export default class studentFaceStatistics extends React.Component {
         this.state = {
             lineChartOption: this.initChartOption(),
             lastPoint: '0',
-            currentFaceEmotion:{}
+            currentFaceEmotion:{},
+            screenHeight:screen.height
         };
     }
 
@@ -23,9 +24,6 @@ export default class studentFaceStatistics extends React.Component {
         Bridge.setRefreshAble("false");
         this.getVclassFaceEmotionsStatistics();
 
-        // if (this.timeTicket) {
-        //     clearInterval(this.timeTicket);
-        // }
         setInterval(this.fetchNewDate, 10000);
 
     }
@@ -194,35 +192,43 @@ export default class studentFaceStatistics extends React.Component {
                 lastPoint = key;
             }
 
-            // var user={};
-            // user.userName='成旭';
-            // user.avatar='http://60.205.86.217/upload6/2018-02-01/0/5f8ff939-a387-47b4-a5b3-898776aded40.jpg?size=100x100';
-            // (currentFaceEmotion.understandUserList)[0]=user;
-            // (currentFaceEmotion.understandUserList)[1]=user;
-            // (currentFaceEmotion.understandUserList)[2]=user;
-            // (currentFaceEmotion.understandUserList)[3]=user;
-            // (currentFaceEmotion.understandUserList)[4]=user;
-            // (currentFaceEmotion.understandUserList)[5]=user;
-            // (currentFaceEmotion.understandUserList)[6]=user;
-            // (currentFaceEmotion.understandUserList)[7]=user;
-            // (currentFaceEmotion.understandUserList)[8]=user;
-            // (currentFaceEmotion.understandUserList)[9]=user;
-            //
-            // (currentFaceEmotion.attentionUserList)[0]=user;
-            // (currentFaceEmotion.attentionUserList)[1]=user;
-            // (currentFaceEmotion.attentionUserList)[2]=user;
-            // (currentFaceEmotion.attentionUserList)[3]=user;
-            //
-            // (currentFaceEmotion.noUnderstandUserList)[0]=user;
-            // (currentFaceEmotion.noUnderstandUserList)[1]=user;
-            // (currentFaceEmotion.noUnderstandUserList)[2]=user;
-            // (currentFaceEmotion.noUnderstandUserList)[3]=user;
-            //
-            // (currentFaceEmotion.confuseUserList)[0]=user;
-            // (currentFaceEmotion.confuseUserList)[1]=user;
-            // (currentFaceEmotion.confuseUserList)[2]=user;
-            // (currentFaceEmotion.confuseUserList)[3]=user;
-            this.setState({currentFaceEmotion: currentFaceEmotion});
+            var user={};
+            user.userName='成旭';
+            user.avatar='http://60.205.86.217/upload6/2018-02-01/0/5f8ff939-a387-47b4-a5b3-898776aded40.jpg?size=100x100';
+            (currentFaceEmotion.understandUserList)[0]=user;
+            (currentFaceEmotion.understandUserList)[1]=user;
+            (currentFaceEmotion.understandUserList)[2]=user;
+            (currentFaceEmotion.understandUserList)[3]=user;
+            (currentFaceEmotion.understandUserList)[4]=user;
+            (currentFaceEmotion.understandUserList)[5]=user;
+            (currentFaceEmotion.understandUserList)[6]=user;
+            (currentFaceEmotion.understandUserList)[7]=user;
+            (currentFaceEmotion.understandUserList)[8]=user;
+            (currentFaceEmotion.understandUserList)[9]=user;
+            (currentFaceEmotion.understandUserList)[10]=user;
+            (currentFaceEmotion.understandUserList)[11]=user;
+            (currentFaceEmotion.understandUserList)[12]=user;
+            (currentFaceEmotion.understandUserList)[13]=user;
+            (currentFaceEmotion.understandUserList)[14]=user;
+            (currentFaceEmotion.understandUserList)[15]=user;
+            (currentFaceEmotion.understandUserList)[16]=user;
+
+
+            (currentFaceEmotion.attentionUserList)[0]=user;
+            (currentFaceEmotion.attentionUserList)[1]=user;
+            (currentFaceEmotion.attentionUserList)[2]=user;
+            (currentFaceEmotion.attentionUserList)[3]=user;
+
+            (currentFaceEmotion.noUnderstandUserList)[0]=user;
+            (currentFaceEmotion.noUnderstandUserList)[1]=user;
+            (currentFaceEmotion.noUnderstandUserList)[2]=user;
+            (currentFaceEmotion.noUnderstandUserList)[3]=user;
+
+            (currentFaceEmotion.confuseUserList)[0]=user;
+            (currentFaceEmotion.confuseUserList)[1]=user;
+            (currentFaceEmotion.confuseUserList)[2]=user;
+            (currentFaceEmotion.confuseUserList)[3]=user;
+            this.showUserHandleByScreenWidth(currentFaceEmotion);
             this.setState({lineChartOption: lineChartOption});
             this.setState({lastPoint: lastPoint});
         } else {
@@ -237,6 +243,10 @@ export default class studentFaceStatistics extends React.Component {
             this.setState({lastPoint: lastPoint});
         }
 
+    }
+    showUserHandleByScreenWidth=(data)=>{
+
+        this.setState({currentFaceEmotion: data});
     }
     formateNumer=(number,i)=>{
         if(!number){
@@ -402,12 +412,15 @@ export default class studentFaceStatistics extends React.Component {
         var understand=this.formateNumer(understandUserList.length/aliveUserList.length,2);
         var thinking=this.formateNumer(thinkUserList.length/aliveUserList.length,2);
         var understandLow25=this.formateNumer(noUnderstandUserList.length/aliveUserList.length,2);
-
-        // var attention=this.formateNumer(Number(_this.state.currentFaceEmotion.attention),2);
-        // var confuse=this.formateNumer(Number(_this.state.currentFaceEmotion.confuse),2);
-        // var understand=this.formateNumer(Number(_this.state.currentFaceEmotion.understandMore25),2);
-        // var thinking=this.formateNumer(Number(_this.state.currentFaceEmotion.thinking),2);
-        // var understandLow25=this.formateNumer(Number(_this.state.currentFaceEmotion.understandLow25),2);
+        var screenHeight=_this.state.screenHeight;
+        var showConutByScreenHeight=16;
+        if(screenHeight==1080){//16
+            showConutByScreenHeight=16;
+        }else if(screenHeight==768){//12
+            showConutByScreenHeight=12;
+        }else if(screenHeight==2160){
+            showConutByScreenHeight=32;
+        }
         const jump=()=>{
             return ( <div onClick={() => this.openNewPage()} className="top_right_btn">新页面打开</div>);
         }
@@ -417,31 +430,38 @@ export default class studentFaceStatistics extends React.Component {
             if(understandUserList.length==0){
                 understandRecord="";
             }else {
-                understandRecord = understandUserList.map(function (item) {
-                    return (
-                        <div className="concentration_user">
-                            <div><img src={item.avatar}></img></div>
-                            <div className="concentration_font">{item.userName}</div>
-                        </div>
-                    )
+                understandRecord = understandUserList.map(function (item,index) {
+                    if(index<showConutByScreenHeight){
+                        return (
+                            <div className="concentration_user">
+                                <div><img src={item.avatar}></img></div>
+                                <div className="concentration_font">{item.userName}</div>
+                            </div>
+                        )
+                    }
+                    return
                 })
             }
 
-        }else{
-            understandRecord="";
         }
         //专注度
         var attentionRecord;
         if (attentionUserList != null && typeof (attentionUserList) != undefined) {
-            attentionRecord= understandUserList.map(function (item) {
-                return (
-                    <div  className="concentration_user" >
-                        <div><img src={item.avatar}></img></div>
-                        <div className="concentration_font">{item.userName}</div>
-                    </div>
-                )})
-        }else{
-            attentionRecord="";
+            if(attentionUserList.length==0){
+                attentionRecord="";
+            }else {
+                attentionRecord = understandUserList.map(function (item,index) {
+                    if(index<showConutByScreenHeight) {
+                        return (
+                            <div className="concentration_user">
+                                <div><img src={item.avatar}></img></div>
+                                <div className="concentration_font">{item.userName}</div>
+                            </div>
+                        )
+                    }
+                    return
+                })
+            }
         }
         //不理解度
         var noUnderstandRecord;
@@ -449,45 +469,62 @@ export default class studentFaceStatistics extends React.Component {
             if(noUnderstandUserList.length==0){
                 noUnderstandRecord="";
             }else {
-                noUnderstandRecord = understandUserList.map(function (item) {
-                    return (
-                        <div className="concentration_user">
-                            <div><img src={item.avatar}></img></div>
-                            <div className="concentration_font">{item.userName}</div>
-                        </div>
-                    )
+                noUnderstandRecord = understandUserList.map(function (item,index) {
+                    if(index<showConutByScreenHeight) {
+                        return (
+                            <div className="concentration_user">
+                                <div><img src={item.avatar}></img></div>
+                                <div className="concentration_font">{item.userName}</div>
+                            </div>
+                        )
+                    }
+                    return
                 })
             }
-        }else {
-            noUnderstandRecord = "";
         }
         //疑惑度`
         var confuseRecord;
         if (confuseUserList != null && typeof (confuseUserList) != undefined) {
-            confuseRecord= understandUserList.map(function (item) {
-                return (
-                    <div  className="concentration_user"  >
-                        <div><img src={item.avatar}></img></div>
-                        <div className="concentration_font">{item.userName}</div>
-                    </div>
-                )})
+            if(confuseUserList.length==0){
+                confuseRecord="";
+            }else {
+                confuseRecord = understandUserList.map(function (item,index) {
+                    if(index<showConutByScreenHeight) {
+                        return (
+                            <div className="concentration_user">
+                                <div><img src={item.avatar}></img></div>
+                                <div className="concentration_font">{item.userName}</div>
+                            </div>
+                        )
+                    }
+                    return
+                })
+            }
         }
         //思考度
         var thinkRecord;
         if (thinkUserList != null && typeof (thinkUserList) != undefined) {
-            thinkRecord= thinkUserList.map(function (item) {
-                return (
-                    <div  className="concentration_user"  >
-                        <div><img src={item.avatar}></img></div>
-                        <div className="concentration_font">{item.userName}</div>
-                    </div>
-                )})
+            if(thinkUserList.length==0){
+                thinkRecord="";
+            }else {
+                thinkRecord = thinkUserList.map(function (item,index) {
+                    if(index<showConutByScreenHeight) {
+                        return (
+                            <div className="concentration_user">
+                                <div><img src={item.avatar}></img></div>
+                                <div className="concentration_font">{item.userName}</div>
+                            </div>
+                        )
+                    }
+                    return
+                })
+            }
         }
         return (
 
-            <div >
+            <div className="face_cont_wrap">
                 <div className='over_flow_auto student_f_auto concentration_title concentration_top'>学生听课认真度</div>
-                <div className='over_flow_auto concentration_bottom my_flex flex_justify'>
+                <div className='over_flow_auto concentration_bottom my_flex flex_justify face_cont_wrap1'>
                     <div className="concentration_list">
                         <div className="concentration_title concentration_title3">专注度{attention}%</div>
                         <div className="concentration_title2">（低于平均值的学生）</div>
@@ -523,14 +560,14 @@ export default class studentFaceStatistics extends React.Component {
                         <div className="concentration_user_cont">{thinkRecord}</div>
                     </div>
                 </div>
-                <div className='over_flow_auto'>
+                <div className='over_flow_auto face_cont_wrap2'>
                     <span className="student_f_left">占比/％</span>
                     <span className="student_f_right">时间/M</span>
-                    <div>
-                        <div>
+                    <div className="face_cont_wrap">
+                        <div className="face_cont_2_1">
                             <ReactEcharts
                                 option={lineChartOption}
-                                style={{height: '350px', width: '100%'}}
+                                style={{height: '100%', width: '100%'}}
                                 // loadingOption={this.getLoadingOption()}
                                 // showLoading={true}
                                 // onChartReady={this.onChartReady}
