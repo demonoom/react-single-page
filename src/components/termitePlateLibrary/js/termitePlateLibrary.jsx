@@ -295,7 +295,7 @@ export default class termitePlateLibrary extends React.Component {
                 <div className="ant_title">
                     <span className="ant_btn_list" onClick={() => prompt('请输入创建的文件夹名称', '', [
                         {text: 'Cancel'},
-                        {text: 'Submit', onPress: value => this.creatFile(value)},
+                        {text: '确定', onPress: value => this.creatFile(value)},
                     ], 'default', '新建文件夹')}><img className="ant_btn_img"
                                                  src={require('../imgs/icon_ant_new.png')}
                                                  alt=""/><span>新建</span></span>
