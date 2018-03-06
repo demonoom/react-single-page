@@ -99,6 +99,7 @@
     text-overflow: ellipsis;
     overflow: hidden;
     white-space: nowrap;
+    width: 100%;
 }
 .concentration_bottom{
     margin-bottom: 15px;
@@ -117,7 +118,7 @@
         border-radius: 100%;
     }
     .concentration_font{
-        width: 60px;
+        min-width: 60px;
     }
 }
 @media only screen and (max-width: 1365px){
@@ -127,7 +128,7 @@
         border-radius: 100%;
     }
     .concentration_font{
-        width: 40px;
+        min-width: 40px;
     }
 }
 .face_cont_wrap{
