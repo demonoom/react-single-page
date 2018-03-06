@@ -1,13 +1,81 @@
 (node) util.print is deprecated. Use console.log instead.
+#termitePlateLibrary ul,
+#termitePlateLibrary li {
+  margin: 0;
+  padding: 0;
+}
 #termitePlateLibrary .my-accordion .pad .am-accordion-content-box {
   padding: 10px;
 }
 #termitePlateLibrary .noom-accordion .am-accordion-header {
-  height: 60px;
+  box-sizing: border-box;
+  cursor: pointer;
+  padding: 8px 0;
+  height: 55px;
+  display: flex;
+  flex-flow: row nowrap;
+  align-items: center;
+  position: relative;
+}
+#termitePlateLibrary .noom-accordion .am-accordion-header i {
+  top: 20px;
 }
 #termitePlateLibrary .noom-accordion .filePic {
-  width: 10%;
+  flex: 0 0 38px;
+  margin-right: 15px;
+  max-width: 38px;
+  height: 38px;
+  margin-left: 15px;
 }
 #termitePlateLibrary .noom-accordion .QuePic {
-  width: 7%;
+  flex: 0 0 38px;
+  margin-right: 15px;
+  max-width: 38px;
+  height: 38px;
+  margin-left: 15px;
+}
+#termitePlateLibrary .ant_title {
+  height: 28px;
+  padding: 15px;
+}
+#termitePlateLibrary .ant_btn_list {
+  display: inline-block;
+  line-height: 28px;
+}
+#termitePlateLibrary .ant_btn_line {
+  margin: 0 15px;
+  position: relative;
+  width: 1px;
+}
+#termitePlateLibrary .ant_btn_line:after {
+  content: "";
+  pointer-events: none;
+  box-sizing: border-box;
+  border: none;
+  width: 1px;
+  background: #c9c9c9;
+  -webkit-transform: scaleX(0.5);
+  /* for Chrome || Safari */
+  -moz-transform: scaleX(0.5);
+  /* for Firefox */
+  -ms-transform: scaleX(0.5);
+  /* for IE */
+  -o-transform: scaleX(0.5);
+  /* for Opera */
+  transform: scaleX(0.5);
+  transform-origin: 0 0;
+  -webkit-transform-origin: 0 0;
+  position: absolute;
+  height: 100%;
+  top: 0;
+  left: 0;
+}
+#termitePlateLibrary .ant_btn_img {
+  width: 28px;
+  float: left;
+  margin-right: 4px;
+}
+#termitePlateLibrary .title_wrap {
+  display: flex;
+  margin-bottom: 4px;
 }

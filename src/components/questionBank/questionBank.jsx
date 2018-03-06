@@ -111,7 +111,7 @@ export default class questionBank extends React.Component {
     componentDidMount() {
         this.getSubjectDataByKnowledge(false);
         this.getSubjectDataByKnowledgeOther(false);
-        this.getTeachScheduleByIdent();
+        // this.getTeachScheduleByIdent();
 
         // setTimeout(() => {
         //     this.rData = genData();
@@ -252,7 +252,7 @@ export default class questionBank extends React.Component {
     /**
      * 获取备课计划
      */
-    getTeachScheduleByIdent() {
+    /*getTeachScheduleByIdent() {
         var loginUser = JSON.parse(localStorage.getItem('loginUser'));
         var _this = this;
         var arr = [];
@@ -274,7 +274,7 @@ export default class questionBank extends React.Component {
                 _this.setState({scheduleNameArr: arr});
             }
         });
-    }
+    }*/
 
     /**
      *  ListView数据全部渲染完毕的回调
@@ -392,7 +392,26 @@ export default class questionBank extends React.Component {
                         Toast.fail('还未选择课程', 1);
                         return
                     }
-                    this.onOpenChange()
+                    var array = this.state.checkBoxCheckedArr.join(',');
+
+                    var data = {
+                        subjectIds: array,
+                        method: 'useQuestion'
+                    };
+
+                    Bridge.callHandler(data, null, function (error) {
+                        Toast.fail(error, 1);
+                    });
+
+                    //清空勾选状态与数据
+                    var arr = document.getElementsByClassName('am-checkbox');
+                    for (var i = 0; i < arr.length; i++) {
+                        arr[i].classList.remove("am-checkbox-checked");
+                    }
+                    this.state.checkBoxCheckedArr.splice(0);
+                    this.state.delCheckBoxCheckedArr.splice(0);
+
+                    // this.onOpenChange()
                 } else if (buttonIndex == 3) {
                     if (this.state.delCheckBoxCheckedArr.length == 0) {
                         Toast.fail('还未选择课程', 1);
@@ -543,7 +562,7 @@ export default class questionBank extends React.Component {
     };
 
     // 抽屉开/关
-    onOpenChange = (...args) => {
+    /*onOpenChange = (...args) => {
         this.setState({open: !this.state.open});
         if (args[1]) {
             //抽屉关闭   1.页面的选中状态取消   2.滞空checkBoxCheckedArr
@@ -554,15 +573,15 @@ export default class questionBank extends React.Component {
             this.state.checkBoxCheckedArr.splice(0);
             this.state.delCheckBoxCheckedArr.splice(0);
         }
-    };
+    };*/
 
     //抽屉被点击(保存到备课计划)
-    scheduleOnClick(data) {
+    /*scheduleOnClick(data) {
         this.copySubjects(data);
-    }
+    }*/
 
     //使用题目到备课计划
-    copySubjects(data) {
+    /*copySubjects(data) {
         var arr = this.state.checkBoxCheckedArr;
         var subjectsIds = arr.join(',');
         var _this = this;
@@ -584,7 +603,7 @@ export default class questionBank extends React.Component {
                 Toast.fail('题目使用失败', 1);
             }
         });
-    }
+    }*/
 
     //tab切换
     tabOnChange(TabData, index) {
@@ -609,14 +628,14 @@ export default class questionBank extends React.Component {
 
     render() {
 
-        var scheduleNameArr = [];
+        // var scheduleNameArr = [];
         var schoolId = this.state.schoolId;
-        if (typeof(this.state.scheduleNameArr) != 'undefined') {
-            scheduleNameArr = this.state.scheduleNameArr;
-        }
+        // if (typeof(this.state.scheduleNameArr) != 'undefined') {
+        //     scheduleNameArr = this.state.scheduleNameArr;
+        // }
 
         //抽屉内容
-        const sidebar = (<List>
+        /*const sidebar = (<List>
             {scheduleNameArr.map((i) => {
                 return (<List.Item key={i.split('#')[0]}
                                    thumb={require('./icon_check_homework.png')}
@@ -624,7 +643,7 @@ export default class questionBank extends React.Component {
                                    className="icon_homework_check"
                 >{i.split('#')[1]}</List.Item>);
             })}
-        </List>);
+        </List>);*/
 
         //上下行间距
         const separator = (sectionID, rowID) => (
@@ -715,7 +734,7 @@ export default class questionBank extends React.Component {
 
         return (
             <div>
-                <Drawer
+                {/*<Drawer
                     className="my-drawer my_drawer"
                     style={{minHeight: document.documentElement.clientHeight}}
                     enableDragHandle
@@ -723,82 +742,82 @@ export default class questionBank extends React.Component {
                     open={this.state.open}
                     onOpenChange={this.onOpenChange}
                     position="right"
+                >*/}
+                <Tabs tabs={tabs}
+                      initialPage={0}    //初始化Tab, index or key
+                      swipeable={false}   //是否可以滑动内容切换
+                      animated={false}     //是否开启切换动画
+                      useOnPan={false}    //使用跟手滚动   禁用跟手滚动 但是开启动画与滑动切换 达到与原生的体验
+                      onChange={this.tabOnChange}
                 >
-                    <Tabs tabs={tabs}
-                          initialPage={0}    //初始化Tab, index or key
-                          swipeable={false}   //是否可以滑动内容切换
-                          animated={false}     //是否开启切换动画
-                          useOnPan={false}    //使用跟手滚动   禁用跟手滚动 但是开启动画与滑动切换 达到与原生的体验
-                          onChange={this.tabOnChange}
-                    >
-                        {/*我上传的 ListView*/}
-                        <ListView
-                            ref={el => this.lv = el}
-                            dataSource={this.state.dataSource}    //数据类型是 ListViewDataSource
-                            renderFooter={() => (
-                                <div style={{paddingTop: 5, paddingBottom: 40, textAlign: 'center'}}>
-                                    {this.state.isLoadingLeft ? '正在加载' : '没有更多课了'}
-                                </div>)}
-                            renderRow={row}   //需要的参数包括一行数据等,会返回一个可渲染的组件为这行数据渲染  返回renderable
-                            renderSeparator={separator}   //可以不设置的属性  行间距
-                            className="am-list"
-                            pageSize={30}    //每次事件循环（每帧）渲染的行数
-                            //useBodyScroll  //使用 html 的 body 作为滚动容器   bool类型   不应这么写  否则无法下拉刷新
-                            scrollRenderAheadDistance={200}   //当一个行接近屏幕范围多少像素之内的时候，就开始渲染这一行
-                            onEndReached={this.onEndReached}  //当所有的数据都已经渲染过，并且列表被滚动到距离最底部不足onEndReachedThreshold个像素的距离时调用
-                            onEndReachedThreshold={10}  //调用onEndReached之前的临界值，单位是像素  number类型
-                            initialListSize={30}   //指定在组件刚挂载的时候渲染多少行数据，用这个属性来确保首屏显示合适数量的数据
-                            scrollEventThrottle={20}     //控制在滚动过程中，scroll事件被调用的频率
-                            style={{
-                                height: document.body.clientHeight,
-                            }}
-                            pullToRefresh={<PullToRefresh
-                                onRefresh={this.onRefresh}
-                                distanceToRefresh={80}
-                            />}
-                        />
+                    {/*我上传的 ListView*/}
+                    <ListView
+                        ref={el => this.lv = el}
+                        dataSource={this.state.dataSource}    //数据类型是 ListViewDataSource
+                        renderFooter={() => (
+                            <div style={{paddingTop: 5, paddingBottom: 40, textAlign: 'center'}}>
+                                {this.state.isLoadingLeft ? '正在加载' : '没有更多课了'}
+                            </div>)}
+                        renderRow={row}   //需要的参数包括一行数据等,会返回一个可渲染的组件为这行数据渲染  返回renderable
+                        renderSeparator={separator}   //可以不设置的属性  行间距
+                        className="am-list"
+                        pageSize={30}    //每次事件循环（每帧）渲染的行数
+                        //useBodyScroll  //使用 html 的 body 作为滚动容器   bool类型   不应这么写  否则无法下拉刷新
+                        scrollRenderAheadDistance={200}   //当一个行接近屏幕范围多少像素之内的时候，就开始渲染这一行
+                        onEndReached={this.onEndReached}  //当所有的数据都已经渲染过，并且列表被滚动到距离最底部不足onEndReachedThreshold个像素的距离时调用
+                        onEndReachedThreshold={10}  //调用onEndReached之前的临界值，单位是像素  number类型
+                        initialListSize={30}   //指定在组件刚挂载的时候渲染多少行数据，用这个属性来确保首屏显示合适数量的数据
+                        scrollEventThrottle={20}     //控制在滚动过程中，scroll事件被调用的频率
+                        style={{
+                            height: document.body.clientHeight,
+                        }}
+                        pullToRefresh={<PullToRefresh
+                            onRefresh={this.onRefresh}
+                            distanceToRefresh={80}
+                        />}
+                    />
 
-                        {/*其他老师上传的 ListView*/}
-                        <ListView
-                            dataSource={this.state.dataSourceOther}    //数据类型是 ListViewDataSource
-                            renderFooter={() => (
-                                <div style={{paddingTop: 5, paddingBottom: 40, textAlign: 'center'}}>
-                                    {this.state.isLoading ? '正在加载' : '没有更多课了'}
-                                </div>)}
-                            renderRow={rowRight}   //需要的参数包括一行数据等,会返回一个可渲染的组件为这行数据渲染  返回renderable
-                            renderSeparator={separator}   //可以不设置的属性  行间距
-                            className="am-list"
-                            pageSize={30}    //每次事件循环（每帧）渲染的行数
-                            scrollRenderAheadDistance={200}   //当一个行接近屏幕范围多少像素之内的时候，就开始渲染这一行
-                            onEndReached={this.otherOnEndReached}  //当所有的数据都已经渲染过，并且列表被滚动到距离最底部不足onEndReachedThreshold个像素的距离时调用
-                            onEndReachedThreshold={10}  //调用onEndReached之前的临界值，单位是像素  number类型
-                            initialListSize={30}
-                            scrollEventThrottle={20}
-                            style={{
-                                height: document.body.clientHeight,
-                            }}
-                            pullToRefresh={<PullToRefresh
-                                onRefresh={this.onRefreshOther}
-                                distanceToRefresh={80}
-                            />}
-                        />
+                    {/*其他老师上传的 ListView*/}
+                    <ListView
+                        dataSource={this.state.dataSourceOther}    //数据类型是 ListViewDataSource
+                        renderFooter={() => (
+                            <div style={{paddingTop: 5, paddingBottom: 40, textAlign: 'center'}}>
+                                {this.state.isLoading ? '正在加载' : '没有更多课了'}
+                            </div>)}
+                        renderRow={rowRight}   //需要的参数包括一行数据等,会返回一个可渲染的组件为这行数据渲染  返回renderable
+                        renderSeparator={separator}   //可以不设置的属性  行间距
+                        className="am-list"
+                        pageSize={30}    //每次事件循环（每帧）渲染的行数
+                        scrollRenderAheadDistance={200}   //当一个行接近屏幕范围多少像素之内的时候，就开始渲染这一行
+                        onEndReached={this.otherOnEndReached}  //当所有的数据都已经渲染过，并且列表被滚动到距离最底部不足onEndReachedThreshold个像素的距离时调用
+                        onEndReachedThreshold={10}  //调用onEndReached之前的临界值，单位是像素  number类型
+                        initialListSize={30}
+                        scrollEventThrottle={20}
+                        style={{
+                            height: document.body.clientHeight,
+                        }}
+                        pullToRefresh={<PullToRefresh
+                            onRefresh={this.onRefreshOther}
+                            distanceToRefresh={80}
+                        />}
+                    />
 
-                    </Tabs>
-                    {/*悬浮按钮*/}
-                    <WingBlank className="btn_homework_cont"
-                               style={{
-                                   width: 40,
-                                   position: 'fixed',
-                                   bottom: 20,
-                                   right: 5,
+                </Tabs>
+                {/*悬浮按钮*/}
+                <WingBlank className="btn_homework_cont"
+                           style={{
+                               width: 40,
+                               position: 'fixed',
+                               bottom: 20,
+                               right: 5,
 
-                               }}
-                    >
-                        <Button onClick={this.showActionSheet} className="btn_homework btn_no_b">
-                            <img src={require('./homework_icon.png')}/>
-                        </Button>
-                    </WingBlank>
-                </Drawer>
+                           }}
+                >
+                    <Button onClick={this.showActionSheet} className="btn_homework btn_no_b">
+                        <img src={require('./homework_icon.png')}/>
+                    </Button>
+                </WingBlank>
+                {/*</Drawer>*/}
             </div>
         );
     }

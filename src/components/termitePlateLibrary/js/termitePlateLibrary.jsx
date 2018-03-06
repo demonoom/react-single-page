@@ -1,6 +1,8 @@
 import React from 'react';
-import {ListView, PullToRefresh, Accordion, List} from 'antd-mobile';
+import {ListView, PullToRefresh, Accordion, List, Modal, Button, WingBlank, WhiteSpace, Toast} from 'antd-mobile';
 import '../css/termitePlateLibrary.less'
+
+const prompt = Modal.prompt;
 
 export default class termitePlateLibrary extends React.Component {
 
@@ -28,6 +30,7 @@ export default class termitePlateLibrary extends React.Component {
         var fileId = searchArray[1].split('=')[1];
         var fileName = searchArray[2].split('=')[1];
         document.title = fileName;   //设置title
+        this.setState({parentCloudFileId: fileId});
         var loginUser = {
             "ident": ident,
         };
@@ -41,7 +44,7 @@ export default class termitePlateLibrary extends React.Component {
         }
     }
 
-    listCloudSubject(fileId) {
+    listCloudSubject(fileId, clearFlag) {
         var _this = this;
         const dataBlob = {};
         var PageNo = this.state.defaultPageNo;
@@ -55,8 +58,7 @@ export default class termitePlateLibrary extends React.Component {
             method: 'post',
             body: requestParams,
         }).then(function (result) {
-            console.log(result);
-            /*if (result.data.msg == '调用成功' || result.data.success == true) {
+            if (result.data.msg == '调用成功' || result.data.success == true) {
                 var response = result.data.response;
                 var pager = result.data.pager;
                 for (let i = 0; i < response.length; i++) {
@@ -64,13 +66,13 @@ export default class termitePlateLibrary extends React.Component {
                     // topic.checkBoxChecked = false;
                     dataBlob[`${i}`] = topic;
                 }
-                /!*if (pullFalg) {    //拉动刷新  获取数据之后再清除原有数据
+                if (clearFlag) {    //拉动刷新  获取数据之后再清除原有数据
                     _this.initData.splice(0);
                     _this.state.dataSource = [];
                     _this.state.dataSource = new ListView.DataSource({
                         rowHasChanged: (row1, row2) => row1 !== row2,
                     });
-                }*!/
+                }
                 var isLoading = false;
                 if (response.length > 0) {
                     if (pager.pageCount == 1 && pager.rsCount < 30) {
@@ -87,14 +89,14 @@ export default class termitePlateLibrary extends React.Component {
                     isLoadingLeft: isLoading,
                     refreshing: false
                 })
-            }*/
+            }
         });
     }
 
     /**
      * 点"我的题目"时调用的接口
      */
-    getUserRootCloudSubjects() {
+    getUserRootCloudSubjects(clearFlag) {
         var loginUser = JSON.parse(localStorage.getItem('loginUserTLibrary'));
         var _this = this;
         const dataBlob = {};
@@ -117,13 +119,13 @@ export default class termitePlateLibrary extends React.Component {
                     // topic.checkBoxChecked = false;
                     dataBlob[`${i}`] = topic;
                 }
-                /*if (pullFalg) {    //拉动刷新  获取数据之后再清除原有数据
+                if (clearFlag) {    //拉动刷新  获取数据之后再清除原有数据
                     _this.initData.splice(0);
                     _this.state.dataSource = [];
                     _this.state.dataSource = new ListView.DataSource({
                         rowHasChanged: (row1, row2) => row1 !== row2,
                     });
-                }*/
+                }
                 var isLoading = false;
                 if (response.length > 0) {
                     if (pager.pageCount == 1 && pager.rsCount < 30) {
@@ -194,6 +196,34 @@ export default class termitePlateLibrary extends React.Component {
         });
     };
 
+    /**
+     * 创建文件夹
+     */
+    creatFile(value) {
+        var _this = this;
+        //新建文件夹,刷新页面
+        var param = {
+            "method": 'mkdir',
+            "operateUserId": JSON.parse(localStorage.getItem('loginUserTLibrary')).ident,
+            "parentCloudFileId": this.state.parentCloudFileId,
+            "name": value
+        };
+        var requestParams = encodeURI("params=" + JSON.stringify(param));
+        WebServiceUtil.requestLittleAntApi({
+            method: 'post',
+            body: requestParams,
+        }).then(function (result) {
+            if (result.data.msg == '调用成功' || result.data.success == true) {
+                // 刷新
+                if (_this.state.parentCloudFileId == -1) {
+                    _this.getUserRootCloudSubjects(true)
+                } else {
+                    _this.listCloudSubject(_this.state.parentCloudFileId, true)
+                }
+            }
+        });
+    }
+
     render() {
         var _this = this;
 
@@ -209,7 +239,7 @@ export default class termitePlateLibrary extends React.Component {
                 //题目
                 headDiv = <div onClick={_this.queCilcked.bind(this, rowData.subject)}>
                     <img className="QuePic" src={require('../imgs/subject.png')} alt=""/>
-                    {rowData.name}
+                    {/*{rowData.name}*/}
                     {rowData.creator.userName}
                     {time}
                 </div>;
@@ -242,9 +272,17 @@ export default class termitePlateLibrary extends React.Component {
 
         return (
             <div id="termitePlateLibrary">
-                <div>
-                    <span>新建</span>
-                    <span>上传</span>
+                <div className="ant_title">
+                    <span className="ant_btn_list" onClick={() => prompt('请输入创建的文件夹名称', '', [
+                        {text: 'Cancel'},
+                        {text: 'Submit', onPress: value => this.creatFile(value)},
+                    ], 'default', '新建文件夹')}><img className="ant_btn_img"
+                                                 src={require('../imgs/icon_ant_new.png')}
+                                                 alt=""/><span>新建</span></span>
+                    <span className="ant_btn_line"></span>
+                    <span className="ant_btn_list"><img className="ant_btn_img"
+                                                        src={require('../imgs/icon_ant_uploading.png')}
+                                                        alt=""/><span>上传</span></span>
                 </div>
 
                 <ListView
