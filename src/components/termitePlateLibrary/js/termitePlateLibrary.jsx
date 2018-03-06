@@ -4,10 +4,13 @@ import '../css/termitePlateLibrary.less'
 
 const prompt = Modal.prompt;
 
+var tLibrary;
+
 export default class termitePlateLibrary extends React.Component {
 
     constructor(props) {
         super(props);
+        tLibrary = this;
         const dataSource = new ListView.DataSource({
             rowHasChanged: (row1, row2) => row1 !== row2,
         });
@@ -226,6 +229,26 @@ export default class termitePlateLibrary extends React.Component {
         });
     }
 
+    /**
+     * 上传题目
+     */
+    upLoadQue() {
+        var parentCloudFileId = tLibrary.state.parentCloudFileId;
+        var data = {
+            parentCloudFileId: parentCloudFileId,
+            method: 'upLoadQue',
+            isPractive: true
+        };
+
+        console.log(data);
+
+        Bridge.callHandler(data, function (mes) {
+            alert(mes)
+        }, function (error) {
+            Toast.fail(error, 1);
+        });
+    }
+
     render() {
         var _this = this;
 
@@ -299,9 +322,9 @@ export default class termitePlateLibrary extends React.Component {
                                                  src={require('../imgs/icon_ant_new.png')}
                                                  alt=""/><span>新建</span></span>
                     <span className="ant_btn_line"></span>
-                    <span className="ant_btn_list"><img className="ant_btn_img"
-                                                        src={require('../imgs/icon_ant_uploading.png')}
-                                                        alt=""/><span>上传</span></span>
+                    <span className="ant_btn_list" onClick={this.upLoadQue}><img className="ant_btn_img"
+                                                                                 src={require('../imgs/icon_ant_uploading.png')}
+                                                                                 alt=""/><span>上传</span></span>
                 </div>
 
                 <ListView
