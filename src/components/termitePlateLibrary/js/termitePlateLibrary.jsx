@@ -241,8 +241,8 @@ export default class termitePlateLibrary extends React.Component {
                 //题目
                 headDiv = <div className="my_flex flex_align_center">
                     <img className="QuePic" src={require('../imgs/subject.png')} alt=""/>
-                    <div onClick={_this.queCilcked.bind(this, rowData.subject)} className="lineheight">
-                        <div className="ant_list_time" dangerouslySetInnerHTML={{__html: rowData.name}}>
+                    <div onClick={_this.queCilcked.bind(this, rowData.subject)} className="lineheight ant_list_subject">
+                        <div className="ant_list_title ant_list_subject_no" dangerouslySetInnerHTML={{__html: rowData.name}}>
                             {/*<span className="margin_right_8">{rowData.creator.userName}</span>*/}
                             {/*<span>{time}</span>*/}
                         </div>
