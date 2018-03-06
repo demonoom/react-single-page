@@ -25,11 +25,70 @@ export default class termitePlateLibrary extends React.Component {
         var locationSearch = locationHref.substr(locationHref.indexOf("?") + 1);
         var searchArray = locationSearch.split("&");
         var ident = searchArray[0].split('=')[1];
+        var fileId = searchArray[1].split('=')[1];
+        var fileName = searchArray[2].split('=')[1];
+        document.title = fileName;   //设置title
         var loginUser = {
             "ident": ident,
         };
         localStorage.setItem("loginUserTLibrary", JSON.stringify(loginUser));
-        this.getUserRootCloudSubjects()
+        if (fileId == -1) {
+            //进入根目录
+            this.getUserRootCloudSubjects()
+        } else {
+            //进入文件夹
+            this.listCloudSubject(fileId)
+        }
+    }
+
+    listCloudSubject(fileId) {
+        var _this = this;
+        const dataBlob = {};
+        var PageNo = this.state.defaultPageNo;
+        var param = {
+            "method": 'listCloudSubject',
+            "cloudFileId": fileId,
+            "pageNo": PageNo,
+        };
+        var requestParams = encodeURI("params=" + JSON.stringify(param));
+        WebServiceUtil.requestLittleAntApi({
+            method: 'post',
+            body: requestParams,
+        }).then(function (result) {
+            console.log(result);
+            /*if (result.data.msg == '调用成功' || result.data.success == true) {
+                var response = result.data.response;
+                var pager = result.data.pager;
+                for (let i = 0; i < response.length; i++) {
+                    var topic = response[i];
+                    // topic.checkBoxChecked = false;
+                    dataBlob[`${i}`] = topic;
+                }
+                /!*if (pullFalg) {    //拉动刷新  获取数据之后再清除原有数据
+                    _this.initData.splice(0);
+                    _this.state.dataSource = [];
+                    _this.state.dataSource = new ListView.DataSource({
+                        rowHasChanged: (row1, row2) => row1 !== row2,
+                    });
+                }*!/
+                var isLoading = false;
+                if (response.length > 0) {
+                    if (pager.pageCount == 1 && pager.rsCount < 30) {
+                        isLoading = false;
+                    } else {
+                        isLoading = true;
+                    }
+                } else {
+                    isLoading = false;
+                }
+                _this.initData = _this.initData.concat(response);
+                _this.setState({
+                    dataSource: _this.state.dataSource.cloneWithRows(_this.initData),
+                    isLoadingLeft: isLoading,
+                    refreshing: false
+                })
+            }*/
+        });
     }
 
     /**
@@ -106,9 +165,17 @@ export default class termitePlateLibrary extends React.Component {
     /**
      * 文件夹被点击
      */
-    fileClicked(event) {
+    fileClicked(obj, event) {
         event.stopPropagation();
-        console.log('文件夹被点击');
+        var loginUser = JSON.parse(localStorage.getItem('loginUserTLibrary'));
+        //新开这个jsx,传递文件夹id和文件夹tittle
+        var url = "http://192.168.50.29:8091/#/termitePlateLibrary?ident=" + loginUser.ident + "&fileId=" + obj.id + "&fileTitle=" + obj.name;
+        var data = {};
+        data.method = 'openNewPage';
+        data.url = url;
+        Bridge.callHandler(data, null, function (error) {
+            window.location.href = url;
+        });
     };
 
     /**
@@ -125,25 +192,13 @@ export default class termitePlateLibrary extends React.Component {
         Bridge.callHandler(data, null, function (error) {
             window.location.href = url;
         });
-
     };
 
     render() {
         var _this = this;
 
-        //上下行间距
-        const separator = (sectionID, rowID) => (
-            <div
-                key={`${sectionID}-${rowID}`}
-                style={{
-                    height: 1,
-                    borderTop: '1px solid #ECECED',
-                }}
-            />
-        );
-
         const row = (rowData, sectionID, rowID) => {
-            // console.log(rowData.subject.id);
+            // console.log(rowData);
 
             var headDiv;
             var headDivItem;
@@ -163,7 +218,7 @@ export default class termitePlateLibrary extends React.Component {
                 </span>;
             } else {
                 //文件夹
-                headDiv = <div onClick={_this.fileClicked}>
+                headDiv = <div onClick={_this.fileClicked.bind(this, rowData)}>
                     <img className="filePic" src={require('../imgs/file.png')} alt=""/>
                     {rowData.name}
                     {rowData.creator.userName}

@@ -45,14 +45,11 @@ export default class Demo extends React.Component {
             "sid": id,
         };
 
-        console.log(param);
-
         var requestParams = encodeURI("params=" + JSON.stringify(param));
         WebServiceUtil.requestLittleAntApi({
             method: 'post',
             body: requestParams,
         }).then(function (result) {
-            console.log(result);
             var ret = result.data;
             if (ret.msg == '调用成功' && ret.success == true) {
                 var data = ret.response;
