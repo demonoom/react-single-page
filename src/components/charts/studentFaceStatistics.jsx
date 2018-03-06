@@ -527,7 +527,7 @@ export default class studentFaceStatistics extends React.Component {
                 <div className='over_flow_auto concentration_bottom my_flex flex_justify face_cont_wrap1'>
                     <div className="concentration_list">
                         <div className="concentration_title concentration_title3">专注度{attention}%</div>
-                        <div className="concentration_title2">（专注度高得学生）</div>
+                        <div className="concentration_title2">（专注度高的学生）</div>
                         <div className="concentration_user_cont">{attentionRecord}</div>
                     </div>
 
