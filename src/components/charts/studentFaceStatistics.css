@@ -92,11 +92,6 @@
     margin: 8px;
     width: calc(25% - 16px);
 }
-.concentration_user img{
-    width: 60px;
-    height: 60px;
-    border-radius: 50%;
-}
 .concentration_font{
     font-size: 15px;
     color: #555;
@@ -114,4 +109,18 @@
 }
 .flex_justify {
     justify-content: center;
+}
+@media only screen and (min-width: 1025px) {
+    .concentration_user img{
+        width: 60px;
+        height: 60px;
+        border-radius: 100%;
+    }
+}
+@media only screen and (max-width: 1024px){
+    .concentration_user img{
+        width: 54px;
+        height: 54px;
+        border-radius: 100%;
+    }
 }
