@@ -407,11 +407,11 @@ export default class studentFaceStatistics extends React.Component {
         if(!thinkUserList){
             thinkUserList=new Array();
         }
-        var attention=this.formateNumer(_this.state.currentFaceEmotion.attention/aliveUserList.length,2);
-        var confuse=this.formateNumer(confuseUserList.length/aliveUserList.length,2);
-        var understand=this.formateNumer(understandUserList.length/aliveUserList.length,2);
-        var thinking=this.formateNumer(thinkUserList.length/aliveUserList.length,2);
-        var understandLow25=this.formateNumer(noUnderstandUserList.length/aliveUserList.length,2);
+        var attention=this.formateNumer(_this.state.currentFaceEmotion.attention/aliveUserList.length,0);
+        var confuse=this.formateNumer(confuseUserList.length/aliveUserList.length,0);
+        var understand=this.formateNumer(understandUserList.length/aliveUserList.length,0);
+        var thinking=this.formateNumer(thinkUserList.length/aliveUserList.length,0);
+        var understandLow25=this.formateNumer(noUnderstandUserList.length/aliveUserList.length,0);
         var screenHeight=_this.state.screenHeight;
         var showConutByScreenHeight=16;
         if(screenHeight==1080){//16
