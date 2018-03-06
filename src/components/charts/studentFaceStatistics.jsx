@@ -192,7 +192,7 @@ export default class studentFaceStatistics extends React.Component {
                 lastPoint = key;
             }
 
-            var user={};
+          /*  var user={};
             user.userName='成旭';
             user.avatar='http://60.205.86.217/upload6/2018-02-01/0/5f8ff939-a387-47b4-a5b3-898776aded40.jpg?size=100x100';
             (currentFaceEmotion.understandUserList)[0]=user;
@@ -227,7 +227,7 @@ export default class studentFaceStatistics extends React.Component {
             (currentFaceEmotion.confuseUserList)[0]=user;
             (currentFaceEmotion.confuseUserList)[1]=user;
             (currentFaceEmotion.confuseUserList)[2]=user;
-            (currentFaceEmotion.confuseUserList)[3]=user;
+            (currentFaceEmotion.confuseUserList)[3]=user;*/
             this.showUserHandleByScreenWidth(currentFaceEmotion);
             this.setState({lineChartOption: lineChartOption});
             this.setState({lastPoint: lastPoint});
@@ -516,7 +516,7 @@ export default class studentFaceStatistics extends React.Component {
                             </div>
                         )
                     }
-                    return
+                      return
                 })
             }
         }
