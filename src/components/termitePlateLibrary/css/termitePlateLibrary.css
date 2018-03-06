@@ -1,0 +1,13 @@
+(node) util.print is deprecated. Use console.log instead.
+#termitePlateLibrary .my-accordion .pad .am-accordion-content-box {
+  padding: 10px;
+}
+#termitePlateLibrary .noom-accordion .am-accordion-header {
+  height: 60px;
+}
+#termitePlateLibrary .noom-accordion .filePic {
+  width: 10%;
+}
+#termitePlateLibrary .noom-accordion .QuePic {
+  width: 7%;
+}
