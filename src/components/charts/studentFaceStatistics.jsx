@@ -24,7 +24,7 @@ export default class studentFaceStatistics extends React.Component {
         Bridge.setRefreshAble("false");
         this.getVclassFaceEmotionsStatistics();
 
-        setInterval(this.fetchNewDate, 10000);
+        setInterval(this.fetchNewDate, 4000);
 
     }
 
@@ -407,7 +407,7 @@ export default class studentFaceStatistics extends React.Component {
         if(!thinkUserList){
             thinkUserList=new Array();
         }
-        var attention=this.formateNumer(attentionUserList.length/aliveUserList.length,2);
+        var attention=this.formateNumer(_this.state.currentFaceEmotion.attention/_this.state.currentFaceEmotion.count,2);
         var confuse=this.formateNumer(confuseUserList.length/aliveUserList.length,2);
         var understand=this.formateNumer(understandUserList.length/aliveUserList.length,2);
         var thinking=this.formateNumer(thinkUserList.length/aliveUserList.length,2);
@@ -523,7 +523,7 @@ export default class studentFaceStatistics extends React.Component {
         return (
 
             <div className="face_cont_wrap">
-                <div className='over_flow_auto student_f_auto concentration_title concentration_top'>学生听课认真度</div>
+                <div className='over_flow_auto student_f_auto concentration_title concentration_top'>课堂实时表情分析</div>
                 <div className='over_flow_auto concentration_bottom my_flex flex_justify face_cont_wrap1'>
                     <div className="concentration_list">
                         <div className="concentration_title concentration_title3">专注度{attention}%</div>
@@ -534,7 +534,7 @@ export default class studentFaceStatistics extends React.Component {
 
                     <div className="concentration_list concentration_list2 my_flex">
                         <div className="concentration_list2_1">
-                            <div className="concentration_title concentration_title3">理解度{understand}%</div>
+                            <div className="concentration_title concentration_title3">理解度学生占比{understand}%</div>
                             <div className="concentration_title2">（理解的学生）</div>
                             <div className="concentration_user_cont">{understandRecord}</div>
                         </div>
@@ -542,7 +542,7 @@ export default class studentFaceStatistics extends React.Component {
                             <div className="concentration_list2_line_l"></div>
                         </div>
                         <div className="concentration_list2_1">
-                            <div className="concentration_title concentration_title3">不理解度{understandLow25}%</div>
+                            <div className="concentration_title concentration_title3">不理解学生占比{understandLow25}%</div>
                             <div className="concentration_title2">（不理解的学生）</div>
                             <div className="concentration_user_cont">{noUnderstandRecord}</div>
                         </div>
@@ -550,12 +550,12 @@ export default class studentFaceStatistics extends React.Component {
 
 
                     <div className="concentration_list">
-                        <div className="concentration_title concentration_title3">疑惑度{confuse}%</div>
+                        <div className="concentration_title concentration_title3">疑惑学生占比{confuse}%</div>
                         <div className="concentration_title2">（高于平均值的学生）</div>
                         <div className="concentration_user_cont">{confuseRecord}</div>
                     </div>
                     <div className="concentration_list">
-                        <div className="concentration_title concentration_title3">思考度{thinking}%</div>
+                        <div className="concentration_title concentration_title3">思考学生占比{thinking}%</div>
                         <div className="concentration_title2">（在思考的学生）</div>
                         <div className="concentration_user_cont">{thinkRecord}</div>
                     </div>
