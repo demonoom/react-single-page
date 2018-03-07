@@ -407,11 +407,11 @@ export default class studentFaceStatistics extends React.Component {
         if(!thinkUserList){
             thinkUserList=new Array();
         }
-        var attention=this.formateNumer(_this.state.currentFaceEmotion.attention/_this.state.currentFaceEmotion.count,2);
-        var confuse=this.formateNumer(confuseUserList.length/aliveUserList.length,2);
-        var understand=this.formateNumer(understandUserList.length/aliveUserList.length,2);
-        var thinking=this.formateNumer(thinkUserList.length/aliveUserList.length,2);
-        var understandLow25=this.formateNumer(noUnderstandUserList.length/aliveUserList.length,2);
+        var attention=this.formateNumer(_this.state.currentFaceEmotion.attention/aliveUserList.length,0);
+        var confuse=this.formateNumer(confuseUserList.length/aliveUserList.length,0);
+        var understand=this.formateNumer(understandUserList.length/aliveUserList.length,0);
+        var thinking=this.formateNumer(thinkUserList.length/aliveUserList.length,0);
+        var understandLow25=this.formateNumer(noUnderstandUserList.length/aliveUserList.length,0);
         var screenHeight=_this.state.screenHeight;
         var showConutByScreenHeight=16;
         if(screenHeight==1080){//16
@@ -424,7 +424,7 @@ export default class studentFaceStatistics extends React.Component {
         const jump=()=>{
             return ( <div onClick={() => this.openNewPage()} className="top_right_btn">新页面打开</div>);
         }
-        //不理解度
+        //理解度
         var understandRecord;
         if (understandUserList != null && typeof (understandUserList) != undefined) {
             if(understandUserList.length==0){
@@ -450,7 +450,7 @@ export default class studentFaceStatistics extends React.Component {
             if(attentionUserList.length==0){
                 attentionRecord="";
             }else {
-                attentionRecord = understandUserList.map(function (item,index) {
+                attentionRecord = attentionUserList.map(function (item,index) {
                     if(index<showConutByScreenHeight) {
                         return (
                             <div className="concentration_user">
@@ -469,7 +469,7 @@ export default class studentFaceStatistics extends React.Component {
             if(noUnderstandUserList.length==0){
                 noUnderstandRecord="";
             }else {
-                noUnderstandRecord = understandUserList.map(function (item,index) {
+                noUnderstandRecord = noUnderstandUserList.map(function (item,index) {
                     if(index<showConutByScreenHeight) {
                         return (
                             <div className="concentration_user">
@@ -488,7 +488,7 @@ export default class studentFaceStatistics extends React.Component {
             if(confuseUserList.length==0){
                 confuseRecord="";
             }else {
-                confuseRecord = understandUserList.map(function (item,index) {
+                confuseRecord = confuseUserList.map(function (item,index) {
                     if(index<showConutByScreenHeight) {
                         return (
                             <div className="concentration_user">
@@ -527,14 +527,14 @@ export default class studentFaceStatistics extends React.Component {
                 <div className='over_flow_auto concentration_bottom my_flex flex_justify face_cont_wrap1'>
                     <div className="concentration_list">
                         <div className="concentration_title concentration_title3">专注度{attention}%</div>
-                        <div className="concentration_title2">（低于平均值的学生）</div>
+                        <div className="concentration_title2">（专注度高的学生）</div>
                         <div className="concentration_user_cont">{attentionRecord}</div>
                     </div>
 
 
                     <div className="concentration_list concentration_list2 my_flex">
                         <div className="concentration_list2_1">
-                            <div className="concentration_title concentration_title3">理解度学生占比{understand}%</div>
+                            <div className="concentration_title concentration_title3">理解学生占比{understand}%</div>
                             <div className="concentration_title2">（理解的学生）</div>
                             <div className="concentration_user_cont">{understandRecord}</div>
                         </div>
