@@ -1,8 +1,21 @@
 import React from 'react';
-import {ListView, PullToRefresh, Accordion, List, Modal, Button, WingBlank, WhiteSpace, Toast} from 'antd-mobile';
+import {
+    ListView,
+    PullToRefresh,
+    Accordion,
+    List,
+    Modal,
+    Button,
+    WingBlank,
+    WhiteSpace,
+    Toast,
+    ActionSheet
+} from 'antd-mobile';
 import '../css/termitePlateLibrary.less'
 
 const prompt = Modal.prompt;
+
+const alert = Modal.alert;
 
 var tLibrary;
 
@@ -18,6 +31,8 @@ export default class termitePlateLibrary extends React.Component {
         this.state = {
             dataSource: dataSource.cloneWithRows(this.initData),
             defaultPageNo: 1,
+            clicked: 'none',
+            parentFileId: '-1'   //父文件夹id,初始为-1,每次进出更换,向客户端发送
         };
     }
 
@@ -26,6 +41,11 @@ export default class termitePlateLibrary extends React.Component {
     }
 
     componentDidMount() {
+        // alert(window.innerHeight)
+        // alert(document.body.clientHeight-108);
+        this.setState({aHeight: document.body.clientHeight - 108})
+        // console.log(window.innerHeight);
+        // console.log(document.body.clientHeight);
         var locationHref = window.location.href;
         var locationSearch = locationHref.substr(locationHref.indexOf("?") + 1);
         var searchArray = locationSearch.split("&");
@@ -47,6 +67,11 @@ export default class termitePlateLibrary extends React.Component {
         }
     }
 
+    /**
+     * 文件夹内部请求接口
+     * @param fileId
+     * @param clearFlag
+     */
     listCloudSubject(fileId, clearFlag) {
         var _this = this;
         const dataBlob = {};
@@ -109,13 +134,11 @@ export default class termitePlateLibrary extends React.Component {
             "userId": loginUser.ident,
             "pageNo": PageNo,
         };
-        console.log(param);
         var requestParams = encodeURI("params=" + JSON.stringify(param));
         WebServiceUtil.requestLittleAntApi({
             method: 'post',
             body: requestParams,
         }).then(function (result) {
-            console.log(result);
             if (result.data.msg == '调用成功' || result.data.success == true) {
                 var response = result.data.response;
                 var pager = result.data.pager;
@@ -183,6 +206,14 @@ export default class termitePlateLibrary extends React.Component {
         Bridge.callHandler(data, null, function (error) {
             window.location.href = url;
         });
+        // var data = {};
+        // data.method = 'goBackWeb';
+        // data.fileIndex =
+        // Bridge.callHandler(data, function (mes) {
+        //     alert(mes+'')
+        // }, function (error) {
+        //     alert(error)
+        // });
     };
 
     /**
@@ -232,20 +263,131 @@ export default class termitePlateLibrary extends React.Component {
     /**
      * 上传题目
      */
-    upLoadQue() {
+    upLoadQue = () => {
+        const BUTTONS = ['单选题', '简答题', '判断题', '多选题'];
+        ActionSheet.showActionSheetWithOptions({
+                options: BUTTONS,
+                maskClosable: true,
+            },
+            (buttonIndex) => {
+                this.setState({clicked: BUTTONS[buttonIndex]});
+                //0>>单选题  1>>简答题  2>>判断题  3>>多选题
+                this.postMesToMob(buttonIndex);
+            });
+    };
+
+    /**
+     * 将上传交给客户端处理
+     * @param buttonIndex
+     */
+    postMesToMob(buttonIndex) {
+        if (buttonIndex == -1) {
+            //遮罩层被点击,不执行通信
+            return
+        }
         var parentCloudFileId = tLibrary.state.parentCloudFileId;
+        //0>>单选题  1>>简答题  2>>判断题  3>>多选题
         var data = {
             parentCloudFileId: parentCloudFileId,
-            method: 'upLoadQue',
-            isPractive: true
+            isPractive: 'true',
         };
-
-        console.log(data);
-
+        if (buttonIndex == 0) {
+            data.method = 'singleChoiceInCloud';
+        } else if (buttonIndex == 1) {
+            data.method = 'shortAnswerInCloud';
+        } else if (buttonIndex == 2) {
+            data.method = 'trueOrFalseInCloud';
+        } else if (buttonIndex == 3) {
+            data.method = 'multipleChoiceInCloud';
+        }
         Bridge.callHandler(data, function (mes) {
-            alert(mes)
+            if (mes == 'uploadSubjectSuccess') {
+                Toast.success(mes, 1);
+            }
+            /*if (mes == 'refresh') {
+                //刷新页面
+                Toast.success('题目添加成功', 1);
+                _this.initData.splice(0);
+                _this.state.dataSource = [];
+                _this.state.dataSource = new ListView.DataSource({
+                    rowHasChanged: (row1, row2) => row1 !== row2,
+                });
+                _this.setState({defaultPageNo: 1});
+                _this.getSubjectDataByKnowledge(false);
+            }*/
         }, function (error) {
-            Toast.fail(error, 1);
+            // Toast.fail('失败', 1);
+            Toast.fail(error, 5);
+        });
+    }
+
+    /**
+     * 删除弹出框
+     */
+    showAlert = (data) => {
+        var _this = this;
+        const alertInstance = alert('删除', '您确定要删除该文件吗?', [
+            {text: '取消', onPress: () => console.log('cancel'), style: 'default'},
+            {text: '确定', onPress: () => _this.removeFile(data)},
+        ]);
+    };
+
+    /**
+     * 删除文件,文件夹
+     */
+    removeFile(obj) {
+        var _this = this;
+        var param = {
+            "method": 'deleteCloudFiles',
+            "operateUserId": JSON.parse(localStorage.getItem('loginUserTLibrary')).ident,
+            "cloudFileIds": obj.id,
+        };
+        var requestParams = encodeURI("params=" + JSON.stringify(param));
+        WebServiceUtil.requestLittleAntApi({
+            method: 'post',
+            body: requestParams,
+        }).then(function (result) {
+            if (result.data.msg == '调用成功' || result.data.success == true) {
+                //刷新页面,弹出
+                Toast.success('删除成功', 1);
+                if (_this.state.parentCloudFileId == -1) {
+                    _this.getUserRootCloudSubjects(true)
+                } else {
+                    _this.listCloudSubject(_this.state.parentCloudFileId, true)
+                }
+            } else {
+                Toast.fail('删除失败', 1);
+            }
+        });
+    }
+
+    /**
+     * 文件夹重命名
+     */
+    renameFile(str, data) {
+        var _this = this;
+        var param = {
+            "method": 'renameCloudFile',
+            "operateUserId": JSON.parse(localStorage.getItem('loginUserTLibrary')).ident,
+            "cloudFileId": data.id,
+            "name": str
+        };
+        var requestParams = encodeURI("params=" + JSON.stringify(param));
+        WebServiceUtil.requestLittleAntApi({
+            method: 'post',
+            body: requestParams,
+        }).then(function (result) {
+            if (result.data.msg == '调用成功' || result.data.success == true) {
+                // 刷新
+                Toast.success('重命名成功', 1);
+                if (_this.state.parentCloudFileId == -1) {
+                    _this.getUserRootCloudSubjects(true)
+                } else {
+                    _this.listCloudSubject(_this.state.parentCloudFileId, true)
+                }
+            } else {
+                Toast.fail('重命名失败', 1);
+            }
         });
     }
 
@@ -253,7 +395,7 @@ export default class termitePlateLibrary extends React.Component {
         var _this = this;
 
         const row = (rowData, sectionID, rowID) => {
-            // console.log(rowData);
+            console.log(rowData);
 
             var headDiv;
             var headDivItem;
@@ -262,10 +404,22 @@ export default class termitePlateLibrary extends React.Component {
 
             if (rowData.fileType == 2) {
                 //题目
+                var img;
+                if (rowData.subject.typeName == '单选题') {
+                    img = <img className="QuePic" src={require('../imgs/singleChoice.png')} alt=""/>
+                } else if (rowData.subject.typeName == '简答题') {
+                    img = <img className="QuePic" src={require('../imgs/shortAnswer.png')} alt=""/>
+                } else if (rowData.subject.typeName == '多选题') {
+                    img = <img className="QuePic" src={require('../imgs/multipleChoice.png')} alt=""/>
+                } else {
+                    img = <img className="QuePic" src={require('../imgs/trueOrFalse.png')} alt=""/>
+                }
+
                 headDiv = <div className="my_flex flex_align_center">
-                    <img className="QuePic" src={require('../imgs/subject.png')} alt=""/>
+                    {img}
                     <div onClick={_this.queCilcked.bind(this, rowData.subject)} className="lineheight ant_list_subject">
-                        <div className="ant_list_title ant_list_subject_no" dangerouslySetInnerHTML={{__html: rowData.name}}>
+                        <div className="ant_list_title ant_list_subject_no"
+                             dangerouslySetInnerHTML={{__html: rowData.name}}>
                             {/*<span className="margin_right_8">{rowData.creator.userName}</span>*/}
                             {/*<span>{time}</span>*/}
                         </div>
@@ -273,7 +427,7 @@ export default class termitePlateLibrary extends React.Component {
                 </div>;
 
                 headDivItem = <ul className="my_flex ul_list_del flex_align_center">
-                    <li className="flex_1">
+                    <li className="flex_1" onClick={this.showAlert.bind(this, rowData)}>
                         <img className="icon_small_del" src={require('../imgs/icon_delet@3x.png')} alt=""/>
                         <div>删除</div>
                     </li>
@@ -289,13 +443,16 @@ export default class termitePlateLibrary extends React.Component {
                             <span>{time}</span>
                         </div>
                     </div>
-                </div>
+                </div>;
                 headDivItem = <ul className="my_flex ul_list_del flex_align_center">
-                    <li className="flex_1">
+                    <li className="flex_1" onClick={this.showAlert.bind(this, rowData)}>
                         <img className="icon_small_del" src={require('../imgs/icon_delet@3x.png')} alt=""/>
                         <div>删除</div>
                     </li>
-                    <li className="flex_1">
+                    <li className="flex_1" onClick={() => prompt('请输入您修改的名称', '', [
+                        {text: '取消'},
+                        {text: '确定', onPress: value => this.renameFile(value, rowData)},
+                    ], 'default', '新建文件夹')}>
                         <img className="icon_small_del" src={require('../imgs/icon_edit@3x.png')} alt=""/>
                         <div>重命名</div>
                     </li>
@@ -313,10 +470,11 @@ export default class termitePlateLibrary extends React.Component {
         };
 
         return (
-            <div id="termitePlateLibrary">
+            // this.state.aHeight
+            <div id="termitePlateLibrary" style={{height: this.state.aHeight}}>
                 <div className="ant_title">
                     <span className="ant_btn_list" onClick={() => prompt('请输入创建的文件夹名称', '', [
-                        {text: 'Cancel'},
+                        {text: '取消'},
                         {text: '确定', onPress: value => this.creatFile(value)},
                     ], 'default', '新建文件夹')}><img className="ant_btn_img"
                                                  src={require('../imgs/icon_ant_new.png')}
@@ -335,7 +493,6 @@ export default class termitePlateLibrary extends React.Component {
                             {this.state.isLoadingLeft ? '正在加载' : '已经全部加载完毕'}
                         </div>)}
                     renderRow={row}   //需要的参数包括一行数据等,会返回一个可渲染的组件为这行数据渲染  返回renderable
-                    //renderSeparator={separator}   //可以不设置的属性  行间距
                     className="am-list"
                     pageSize={30}    //每次事件循环（每帧）渲染的行数
                     //useBodyScroll  //使用 html 的 body 作为滚动容器   bool类型   不应这么写  否则无法下拉刷新
@@ -345,7 +502,7 @@ export default class termitePlateLibrary extends React.Component {
                     initialListSize={30}   //指定在组件刚挂载的时候渲染多少行数据，用这个属性来确保首屏显示合适数量的数据
                     scrollEventThrottle={20}     //控制在滚动过程中，scroll事件被调用的频率
                     style={{
-                        height: document.body.clientHeight,
+                        height: document.body.clientHeight - 28,
                     }}
                     // pullToRefresh={<PullToRefresh
                     //     onRefresh={this.onRefresh}

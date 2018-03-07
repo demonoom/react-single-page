@@ -1,7 +1,19 @@
 import React from 'react';
 import {Modal, Button, WingBlank, WhiteSpace, Toast} from 'antd-mobile';
 
-const prompt = Modal.prompt;
+const alert = Modal.alert;
+
+const showAlert = () => {
+    const alertInstance = alert('删除', '您确定要删除该文件吗?', [
+        {text: 'Cancel', onPress: () => console.log('cancel'), style: 'default'},
+        {text: 'OK', onPress: () => console.log('ok')},
+    ]);
+    // setTimeout(() => {
+    //     // 可以调用close方法以在外部close
+    //     console.log('auto close');
+    //     alertInstance.close();
+    // }, 500000);
+};
 
 export default class Stage5 extends React.Component {
 
@@ -22,15 +34,7 @@ export default class Stage5 extends React.Component {
 
         return (
             <div>
-                <WingBlank size="lg">
-
-                    <Button onClick={() => prompt('defaultValue', 'defaultValue for prompt', [
-                        { text: 'Cancel' },
-                        { text: 'Submit', onPress: value => console.log(`输入的内容:${value}`) },
-                    ], 'default', '100')}
-                    >defaultValue</Button>
-
-                </WingBlank>
+                <Button onClick={showAlert}>customized buttons</Button>
             </div>
         );
     }
