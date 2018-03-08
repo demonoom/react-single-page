@@ -35,12 +35,14 @@
   margin-left: 15px;
 }
 #termitePlateLibrary .ant_title {
-  height: 28px;
-  padding: 15px;
+  height: 18px;
+  padding: 20px 15px;
+  color: #545454;
+  background: #fff;
 }
 #termitePlateLibrary .ant_btn_list {
   display: inline-block;
-  line-height: 28px;
+  line-height: 18px;
 }
 #termitePlateLibrary .ant_btn_line {
   margin: 0 15px;
@@ -71,7 +73,7 @@
   left: 0;
 }
 #termitePlateLibrary .ant_btn_img {
-  width: 28px;
+  width: 18px;
   float: left;
   margin-right: 4px;
 }
@@ -118,8 +120,11 @@
   word-break: break-all;
   word-wrap: break-word;
   white-space: pre-wrap;
-  width: 78%;
+  width: 70%;
 }
 #termitePlateLibrary .ant_list_subject_no {
   margin-bottom: 0;
+}
+#termitePlateLibrary .uuu {
+  height: 400px !important;
 }

@@ -6,8 +6,9 @@ body {
   font-family: "Helvetica Neue", "Hiragino Sans GB", Helvetica, "Microsoft YaHei", Arial;
 }
 body {
-  overflow: auto!important;
+  overflow: auto !important;
   -webkit-overflow-scrolling: touch;
+  height: 100%;
 }
 #example,
 .container {
