@@ -484,7 +484,7 @@ export default class termitePlateLibrary extends React.Component {
 
         return (
             // this.state.aHeight
-            <div id="termitePlateLibrary" style={{height: this.state.aHeight}}>
+            <div id="termitePlateLibrary"  style={{height: this.state.aHeight}}>
                 <div className="ant_title">
                     <span className="ant_btn_list" onClick={() => prompt('请输入创建的文件夹名称', '', [
                         {text: '取消'},
