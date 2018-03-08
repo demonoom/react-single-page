@@ -32,39 +32,25 @@ export default class termitePlateLibrary extends React.Component {
             dataSource: dataSource.cloneWithRows(this.initData),
             defaultPageNo: 1,
             clicked: 'none',
-            parentFileId: '-1'   //父文件夹id,初始为-1,每次进出更换,向客户端发送
+            parentFileId: '-1',   //父文件夹id,初始为-1,每次进出更换,向客户端发送
         };
     }
 
-    componentWillMount() {
-
-    }
-
     componentDidMount() {
-        // alert(window.innerHeight)
-        // alert(document.body.clientHeight-108);
         this.setState({aHeight: document.body.clientHeight - 108})
-        // console.log(window.innerHeight);
-        // console.log(document.body.clientHeight);
         var locationHref = window.location.href;
         var locationSearch = locationHref.substr(locationHref.indexOf("?") + 1);
         var searchArray = locationSearch.split("&");
         var ident = searchArray[0].split('=')[1];
         var fileId = searchArray[1].split('=')[1];
-        var fileName = searchArray[2].split('=')[1];
-        document.title = fileName;   //设置title
+        // var fileName = searchArray[2].split('=')[1];
+        // document.title = fileName;   //设置title
         this.setState({parentCloudFileId: fileId});
         var loginUser = {
             "ident": ident,
         };
         localStorage.setItem("loginUserTLibrary", JSON.stringify(loginUser));
-        if (fileId == -1) {
-            //进入根目录
-            this.getUserRootCloudSubjects()
-        } else {
-            //进入文件夹
-            this.listCloudSubject(fileId)
-        }
+        this.getUserRootCloudSubjects();
     }
 
     /**
@@ -73,6 +59,7 @@ export default class termitePlateLibrary extends React.Component {
      * @param clearFlag
      */
     listCloudSubject(fileId, clearFlag) {
+        this.setState({parentCloudFileId: fileId});
         var _this = this;
         const dataBlob = {};
         var PageNo = this.state.defaultPageNo;
@@ -89,9 +76,14 @@ export default class termitePlateLibrary extends React.Component {
             if (result.data.msg == '调用成功' || result.data.success == true) {
                 var response = result.data.response;
                 var pager = result.data.pager;
+                // console.log(response[0].parentId);
+                _this.setState({parentFileId: response[0].parentId});   //记录目标文件夹
+                if (response[0].fileType == '-1') {
+                    //文件夹下没有文件架
+                    response.splice(0);
+                }
                 for (let i = 0; i < response.length; i++) {
                     var topic = response[i];
-                    // topic.checkBoxChecked = false;
                     dataBlob[`${i}`] = topic;
                 }
                 if (clearFlag) {    //拉动刷新  获取数据之后再清除原有数据
@@ -125,6 +117,17 @@ export default class termitePlateLibrary extends React.Component {
      * 点"我的题目"时调用的接口
      */
     getUserRootCloudSubjects(clearFlag) {
+
+        var data = {};
+        data.method = 'goBackWeb';
+        data.fileIndex = '-1';
+        setTimeout(function () {
+            Bridge.callHandler(data, null, function (error) {
+                alert(error)
+            });
+        }, 350);
+
+        this.setState({parentCloudFileId: '-1'});
         var loginUser = JSON.parse(localStorage.getItem('loginUserTLibrary'));
         var _this = this;
         const dataBlob = {};
@@ -144,7 +147,6 @@ export default class termitePlateLibrary extends React.Component {
                 var pager = result.data.pager;
                 for (let i = 0; i < response.length; i++) {
                     var topic = response[i];
-                    // topic.checkBoxChecked = false;
                     dataBlob[`${i}`] = topic;
                 }
                 if (clearFlag) {    //拉动刷新  获取数据之后再清除原有数据
@@ -196,24 +198,36 @@ export default class termitePlateLibrary extends React.Component {
      * 文件夹被点击
      */
     fileClicked(obj, event) {
+        this.state.defaultPageNo = 1;
         event.stopPropagation();
-        var loginUser = JSON.parse(localStorage.getItem('loginUserTLibrary'));
-        //新开这个jsx,传递文件夹id和文件夹tittle
-        var url = "http://192.168.50.29:8091/#/termitePlateLibrary?ident=" + loginUser.ident + "&fileId=" + obj.id + "&fileTitle=" + obj.name;
+
+        //进入文件夹,只会调用list接口,向客户端发送父文件夹id,记录parentFileId
+        this.listCloudSubject(obj.id, true);
+
+
         var data = {};
-        data.method = 'openNewPage';
-        data.url = url;
-        Bridge.callHandler(data, null, function (error) {
-            window.location.href = url;
+        data.method = 'goBackWeb';
+        data.fileIndex = '-2';
+        Bridge.callHandler(data, function (mes) {
+            //后退信号
+            tLibrary.fileOnBack();
+        }, function (error) {
+            alert(error)
         });
-        // var data = {};
-        // data.method = 'goBackWeb';
-        // data.fileIndex =
-        // Bridge.callHandler(data, function (mes) {
-        //     alert(mes+'')
-        // }, function (error) {
-        //     alert(error)
-        // });
+    };
+
+    /**
+     * 文件夹返回函数
+     */
+    fileOnBack() {
+        this.state.defaultPageNo = 1;
+        var _this = this;
+        var fileId = this.state.parentFileId;
+        if (fileId == '0') {
+            _this.getUserRootCloudSubjects(true);
+        } else {
+            _this.listCloudSubject(fileId, true);
+        }
     };
 
     /**
@@ -281,6 +295,7 @@ export default class termitePlateLibrary extends React.Component {
      * @param buttonIndex
      */
     postMesToMob(buttonIndex) {
+        var _this = this;
         if (buttonIndex == -1) {
             //遮罩层被点击,不执行通信
             return
@@ -301,22 +316,23 @@ export default class termitePlateLibrary extends React.Component {
             data.method = 'multipleChoiceInCloud';
         }
         Bridge.callHandler(data, function (mes) {
-            if (mes == 'uploadSubjectSuccess') {
-                Toast.success(mes, 1);
-            }
-            /*if (mes == 'refresh') {
-                //刷新页面
-                Toast.success('题目添加成功', 1);
-                _this.initData.splice(0);
-                _this.state.dataSource = [];
-                _this.state.dataSource = new ListView.DataSource({
-                    rowHasChanged: (row1, row2) => row1 !== row2,
+            // 刷新
+            if (_this.state.parentCloudFileId == -1) {
+                _this.getUserRootCloudSubjects(true)
+            } else {
+                _this.listCloudSubject(_this.state.parentCloudFileId, true)
+                var data = {};
+                data.method = 'goBackWeb';
+                data.fileIndex = '-2';
+                Bridge.callHandler(data, function (mes) {
+                    //后退信号
+                    tLibrary.fileOnBack();
+                }, function (error) {
+                    alert(error)
                 });
-                _this.setState({defaultPageNo: 1});
-                _this.getSubjectDataByKnowledge(false);
-            }*/
+            }
+
         }, function (error) {
-            // Toast.fail('失败', 1);
             Toast.fail(error, 5);
         });
     }
@@ -395,7 +411,6 @@ export default class termitePlateLibrary extends React.Component {
         var _this = this;
 
         const row = (rowData, sectionID, rowID) => {
-            console.log(rowData);
 
             var headDiv;
             var headDivItem;
@@ -420,8 +435,6 @@ export default class termitePlateLibrary extends React.Component {
                     <div onClick={_this.queCilcked.bind(this, rowData.subject)} className="lineheight ant_list_subject">
                         <div className="ant_list_title ant_list_subject_no"
                              dangerouslySetInnerHTML={{__html: rowData.name}}>
-                            {/*<span className="margin_right_8">{rowData.creator.userName}</span>*/}
-                            {/*<span>{time}</span>*/}
                         </div>
                     </div>
                 </div>;
@@ -436,7 +449,7 @@ export default class termitePlateLibrary extends React.Component {
                 //文件夹
                 headDiv = <div className="my_flex flex_align_center" onClick={_this.fileClicked.bind(this, rowData)}>
                     <img className="filePic" src={require('../imgs/file.png')} alt=""/>
-                    <div onClick={_this.fileClicked} className="lineheight">
+                    <div className="lineheight">
                         <div className="ant_list_title">{rowData.name}</div>
                         <div className="ant_list_time">
                             <span className="margin_right_8">{rowData.creator.userName}</span>
