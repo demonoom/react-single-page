@@ -406,9 +406,12 @@ export default class termitePlateLibrary extends React.Component {
                         v.name = str;
                     }
                 });
-                _this.setState({
-                    dataSource: _this.state.dataSource.cloneWithRows(_this.initData)
-                });
+                //解决安卓键盘改变窗口高度问题,所以延迟300
+                setTimeout(function () {
+                    _this.setState({
+                        dataSource: _this.state.dataSource.cloneWithRows(_this.initData)
+                    });
+                }, 300);
 
             } else {
                 Toast.fail('重命名失败', 1);
