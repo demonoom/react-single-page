@@ -1,25 +1,19 @@
 import React from 'react';
-import {Modal, Button, WingBlank, WhiteSpace, Toast} from 'antd-mobile';
+import {Popover, NavBar, Icon} from 'antd-mobile';
 
-const alert = Modal.alert;
+const Item = Popover.Item;
 
-const showAlert = () => {
-    const alertInstance = alert('删除', '您确定要删除该文件吗?', [
-        {text: 'Cancel', onPress: () => console.log('cancel'), style: 'default'},
-        {text: 'OK', onPress: () => console.log('ok')},
-    ]);
-    // setTimeout(() => {
-    //     // 可以调用close方法以在外部close
-    //     console.log('auto close');
-    //     alertInstance.close();
-    // }, 500000);
-};
+const myImg = src => <img src={`https://gw.alipayobjects.com/zos/rmsportal/${src}.svg`} className="am-icon am-icon-xs"
+                          alt=""/>;
 
 export default class Stage5 extends React.Component {
 
     constructor(props) {
         super(props);
-        this.state = {};
+        this.state = {
+            visible: true,
+            selected: '',
+        };
     }
 
     componentWillMount() {
@@ -30,11 +24,57 @@ export default class Stage5 extends React.Component {
 
     }
 
+    onSelect = (opt) => {
+        // console.log(opt.props.value);
+        this.setState({
+            visible: false,
+            selected: opt.props.value,
+        });
+    };
+    handleVisibleChange = (visible) => {
+        this.setState({
+            visible,
+        });
+    };
+
     render() {
 
         return (
             <div>
-                <Button onClick={showAlert}>customized buttons</Button>
+                <Popover mask
+                         placement="bottomLeft"
+                         overlayClassName="fortest"
+                         overlayStyle={{color: 'currentColor'}}
+                         visible={this.state.visible}
+                         overlay={[
+                             (<Item key="4" value="scan" icon={myImg('tOtXhkIWzwotgGSeptou')} data-seed="logId">单选题</Item>),
+                             (<Item key="5" value="special" icon={myImg('PKAgAqZWJVNwKsAJSmXd')}
+                                    style={{whiteSpace: 'nowrap'}}>简答题</Item>),
+                             (<Item key="6" value="button ct" icon={myImg('uQIYTFeRrjPELImDRrPt')}>
+                                 <span style={{marginRight: 5}}>判断题</span>
+                             </Item>),
+                             (<Item key="7" value="button ct" icon={myImg('uQIYTFeRrjPELImDRrPt')}>
+                                 <span style={{marginRight: 5}}>多选题</span>
+                             </Item>),
+                         ]}
+                         align={{
+                             overflow: {adjustY: 0, adjustX: 0},
+                             offset: [-10, 0],
+                         }}
+                         onVisibleChange={this.handleVisibleChange}
+                         onSelect={this.onSelect}
+                >
+                    <div style={{
+                        height: '100%',
+                        padding: '0 15px',
+                        marginRight: '-15px',
+                        display: 'flex',
+                        alignItems: 'center',
+                    }}
+                    >
+                        <span>上传</span>
+                    </div>
+                </Popover>
             </div>
         );
     }
