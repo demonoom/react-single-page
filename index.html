@@ -26,5 +26,21 @@
 <script src="https://as.alipayobjects.com/g/component/??react/15.3.2/react.min.js,react/15.3.2/react-dom.min.js"></script>
 <script src="/dist/shared.js"></script>
 <script src="/dist/index.js?v=1.1.8"></script>
+<script type="text/javascript">
+
+    (function (doc, win) {
+        var docEl = doc.documentElement,
+            resizeEvt = 'orientationchange' in window ? 'orientationchange' : 'resize',
+            recalc = function () {
+                var clientWidth = docEl.clientWidth;
+                if (!clientWidth) return;
+                docEl.style.fontSize = clientWidth / 7.5 + 'px';
+            };
+
+        if (!doc.addEventListener) return;
+        win.addEventListener(resizeEvt, recalc, false);
+        doc.addEventListener('DOMContentLoaded', recalc, false);
+    })(document, window);
+</script>
 </body>
 </html>
