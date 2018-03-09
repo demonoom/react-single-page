@@ -33,18 +33,25 @@ export default class termitePlateLibrary extends React.Component {
             defaultPageNo: 1,
             clicked: 'none',
             parentFileId: '-1',   //父文件夹id,初始为-1,每次进出更换,向客户端发送
+            parentFileIdArr: ['-1'],
         };
     }
 
     componentDidMount() {
-        this.setState({aHeight: document.body.clientHeight - 108})
+        this.setState({aHeight: document.body.clientHeight - 108});
         var locationHref = window.location.href;
         var locationSearch = locationHref.substr(locationHref.indexOf("?") + 1);
         var searchArray = locationSearch.split("&");
         var ident = searchArray[0].split('=')[1];
         var fileId = searchArray[1].split('=')[1];
-        // var fileName = searchArray[2].split('=')[1];
-        // document.title = fileName;   //设置title
+        var phoneType = searchArray[2].split('=')[1];
+        if (phoneType == '0') {
+            //iOS
+            this.setState({phoneHeight: 28 + 108});
+        } else {
+            //Android
+            this.setState({phoneHeight: 28});
+        }
         this.setState({parentCloudFileId: fileId});
         var loginUser = {
             "ident": ident,
@@ -76,12 +83,7 @@ export default class termitePlateLibrary extends React.Component {
             if (result.data.msg == '调用成功' || result.data.success == true) {
                 var response = result.data.response;
                 var pager = result.data.pager;
-                // console.log(response[0].parentId);
-                _this.setState({parentFileId: response[0].parentId});   //记录目标文件夹
-                if (response[0].fileType == '-1') {
-                    //文件夹下没有文件架
-                    response.splice(0);
-                }
+                //_this.setState({parentFileId: response[response.length - 1].parentId});   //记录目标文件夹
                 for (let i = 0; i < response.length; i++) {
                     var topic = response[i];
                     dataBlob[`${i}`] = topic;
@@ -198,12 +200,11 @@ export default class termitePlateLibrary extends React.Component {
      * 文件夹被点击
      */
     fileClicked(obj, event) {
-        this.state.defaultPageNo = 1;
         event.stopPropagation();
+        this.state.defaultPageNo = 1;
 
         //进入文件夹,只会调用list接口,向客户端发送父文件夹id,记录parentFileId
         this.listCloudSubject(obj.id, true);
-
 
         var data = {};
         data.method = 'goBackWeb';
@@ -483,8 +484,7 @@ export default class termitePlateLibrary extends React.Component {
         };
 
         return (
-            // this.state.aHeight
-            <div id="termitePlateLibrary"  style={{height: this.state.aHeight}}>
+            <div id="termitePlateLibrary" style={{height: document.body.clientHeight}}>
                 <div className="ant_title">
                     <span className="ant_btn_list" onClick={() => prompt('请输入创建的文件夹名称', '', [
                         {text: '取消'},
@@ -515,7 +515,7 @@ export default class termitePlateLibrary extends React.Component {
                     initialListSize={30}   //指定在组件刚挂载的时候渲染多少行数据，用这个属性来确保首屏显示合适数量的数据
                     scrollEventThrottle={20}     //控制在滚动过程中，scroll事件被调用的频率
                     style={{
-                        height: document.body.clientHeight - 28,
+                        height: document.body.clientHeight - this.state.phoneHeight,
                     }}
                     // pullToRefresh={<PullToRefresh
                     //     onRefresh={this.onRefresh}
