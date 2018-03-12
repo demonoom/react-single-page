@@ -29,7 +29,6 @@ export default class termitePlateLibrary extends React.Component {
         this.state = {
             dataSource: dataSource.cloneWithRows(this.initData),
             defaultPageNo: 1,
-            clicked: 'none',
             parentFileId: '-1',    //parentFileId会push进parentFileIdArr
             parentFileIdArr: [],
         };

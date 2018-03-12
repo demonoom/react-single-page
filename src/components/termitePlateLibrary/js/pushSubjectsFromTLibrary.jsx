@@ -1,8 +1,8 @@
 import React from 'react';
 import {
     ListView,
-    PullToRefresh,
-    Checkbox
+    Checkbox,
+    Toast,
 } from 'antd-mobile';
 import '../css/pushSubjectsFromTLibrary.less'
 
@@ -22,9 +22,9 @@ export default class pushSubjectsFromTLibrary extends React.Component {
         this.state = {
             dataSource: dataSource.cloneWithRows(this.initData),
             defaultPageNo: 1,
-            clicked: 'none',
             parentFileId: '-1',    //parentFileId会push进parentFileIdArr
             parentFileIdArr: [],
+            pushSubjectsArr: [],   //推题的数组
         };
     }
 
@@ -231,25 +231,44 @@ export default class pushSubjectsFromTLibrary extends React.Component {
      * 推题
      */
     pushSubjects() {
-
+        //向客户端发送id,交给客户端处理
+        if (tLibrary.state.pushSubjectsArr.length == 0) {
+            Toast.fail('请选择要推送的题目', 1);
+            return
+        }
+        var ids = tLibrary.state.pushSubjectsArr.join(',');
+        var data = {
+            method: 'pushSubjects',
+            ids: ids
+        };
+        Bridge.callHandler(data, null, function (error) {
+            Toast.fail(error, 5);
+        });
+        tLibrary.state.pushSubjectsArr.splice(0);
+        var arr = document.getElementsByClassName('am-checkbox');
+        for (var i = 0; i < arr.length; i++) {
+            arr[i].classList.remove("am-checkbox-checked");
+        }
     }
 
-    pushSubjectsOnChange(obj) {
-        console.log(obj);
+    /**
+     * CheckBox被选择
+     * @param e
+     * @param obj
+     */
+    pushSubjectsOnChange(e, obj) {
+        if (e.target.checked) {
+            //钩中
+            this.state.pushSubjectsArr.push(obj.subject.id);
+        } else {
+            //取消钩中
+            this.state.pushSubjectsArr.forEach(function (v, i) {
+                if (v == obj.subject.id) {
+                    tLibrary.state.pushSubjectsArr.splice(i, 1);
+                }
+            })
+        }
     }
-
-    //下拉刷新
-    // onRefresh = () => {
-    //     var divPull = document.getElementsByClassName('am-pull-to-refresh-content');
-    //     divPull[0].style.transform = "translate3d(0px, 30px, 0px)";   //设置拉动后回到的位置
-    //     this.setState({defaultPageNo: 1, refreshing: true});
-    //     if (this.state.parentCloudFileId == -1) {
-    //         this.getUserRootCloudSubjects(true);
-    //     } else {
-    //         this.listCloudSubject(this.state.parentCloudFileId, true);
-    //     }
-    //
-    // };
 
     render() {
         var _this = this;
@@ -271,7 +290,7 @@ export default class pushSubjectsFromTLibrary extends React.Component {
                     img = <img className="QuePic" src={require('../imgs/trueOrFalse.png')} alt=""/>
                 }
                 return (
-                    <CheckboxItem key={rowData.id} onChange={() => this.pushSubjectsOnChange(rowData)}>
+                    <CheckboxItem key={rowData.id} onChange={() => this.pushSubjectsOnChange(event, rowData)}>
                         <div className="my_flex flex_align_center">
                             {img}
                             <div className="lineheight ant_list_subject">
@@ -322,10 +341,6 @@ export default class pushSubjectsFromTLibrary extends React.Component {
                         // height: document.body.clientHeight - this.state.phoneHeight,
                         height: document.body.clientHeight,
                     }}
-                    // pullToRefresh={<PullToRefresh
-                    //     onRefresh={this.onRefresh}
-                    //     distanceToRefresh={80}
-                    // />}
                 />
                 <div className="pushSubjects" onClick={this.pushSubjects}>
 
