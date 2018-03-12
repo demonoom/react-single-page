@@ -14,6 +14,7 @@ import classReaultAnalysis from './components/resultAnalysis/classResultAnalysis
 import searchUserLocationInfo from './components/userInfo/searchUserLocationInfo';
 import studentFaceStatistics from './components/charts/studentFaceStatistics';
 import termitePlateLibrary from './components/termitePlateLibrary/js/termitePlateLibrary';
+import pushSubjectsFromTLibrary from './components/termitePlateLibrary/js/pushSubjectsFromTLibrary';
 import './index.less';
 
 class Index extends React.Component {
@@ -32,7 +33,10 @@ class Index extends React.Component {
                     <li><Link to="/analysisList?access_user=23836" style={{fontSize: '24px'}}>成绩分析</Link></li>
                     <li><Link to="/searchUserLocationInfo" style={{fontSize: '24px'}}>搜索查看用户位置信息</Link></li>
                     <li><Link to="/studentFaceStatistics" style={{fontSize: '24px'}}>学生脸部表情分析折线图</Link></li>
-                    <li><Link to="/termitePlateLibrary?ident=23836&fileId=-1&title=我的题库" style={{fontSize: '24px'}}>蚁盘题库</Link></li>
+                    <li><Link to="/termitePlateLibrary?ident=23836&fileId=-1&phoneType=-1" style={{fontSize: '24px'}}>蚁盘题库</Link>
+                    </li>
+                    <li><Link to="/pushSubjectsFromTLibrary?ident=23836&fileId=-1&phoneType=-1"
+                              style={{fontSize: '24px'}}>蚁盘推题</Link></li>
                 </ul>
             </div>
         );
@@ -55,6 +59,7 @@ ReactDOM.render(
             <Route path="searchUserLocationInfo" component={searchUserLocationInfo}/>
             <Route path="studentFaceStatistics" component={studentFaceStatistics}/>
             <Route path="termitePlateLibrary" component={termitePlateLibrary}/>
+            <Route path="pushSubjectsFromTLibrary" component={pushSubjectsFromTLibrary}/>
         </Route>
     </Router>
     , document.getElementById('example'));

@@ -3,13 +3,8 @@ import {
     ListView,
     PullToRefresh,
     Accordion,
-    List,
     Modal,
-    Button,
-    WingBlank,
-    WhiteSpace,
     Toast,
-    ActionSheet,
     Popover
 } from 'antd-mobile';
 import '../css/termitePlateLibrary.less'
@@ -41,7 +36,6 @@ export default class termitePlateLibrary extends React.Component {
     }
 
     componentDidMount() {
-        this.setState({aHeight: document.body.clientHeight - 108});
         var locationHref = window.location.href;
         var locationSearch = locationHref.substr(locationHref.indexOf("?") + 1);
         var searchArray = locationSearch.split("&");

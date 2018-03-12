@@ -1,0 +1,140 @@
+(node) util.print is deprecated. Use console.log instead.
+#pushSubjectsFromTLibrary html {
+  font-size: 10px;
+}
+#pushSubjectsFromTLibrary ul,
+#pushSubjectsFromTLibrary li {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+#pushSubjectsFromTLibrary .my-accordion .pad .am-accordion-content-box {
+  padding: 10px;
+}
+#pushSubjectsFromTLibrary .noom-accordion .am-accordion-header {
+  box-sizing: border-box;
+  cursor: pointer;
+  padding: 8px 0;
+  height: 55px;
+  display: flex;
+  flex-flow: row nowrap;
+  position: relative;
+  align-items: center;
+}
+#pushSubjectsFromTLibrary .noom-accordion .am-accordion-header i {
+  top: 20px;
+}
+#pushSubjectsFromTLibrary .noom-accordion .filePic {
+  margin-right: 15px;
+  height: 38px;
+  margin-left: 15px;
+}
+#pushSubjectsFromTLibrary .noom-accordion .QuePic {
+  margin-right: 15px;
+  height: 38px;
+  margin-left: 15px;
+}
+#pushSubjectsFromTLibrary .ant_title {
+  height: 1.2rem;
+  padding: 1.5rem 1rem;
+  color: #545454;
+  background: #fff;
+  font-size: 1rem;
+}
+#pushSubjectsFromTLibrary .ant_btn_list {
+  display: inline-block;
+  line-height: 1.5rem;
+}
+#pushSubjectsFromTLibrary .ant_btn_line {
+  margin: 0 15px;
+  position: relative;
+  width: 1px;
+}
+#pushSubjectsFromTLibrary .ant_btn_line:after {
+  content: "";
+  pointer-events: none;
+  box-sizing: border-box;
+  border: none;
+  width: 1px;
+  background: #c9c9c9;
+  -webkit-transform: scaleX(0.5);
+  /* for Chrome || Safari */
+  -moz-transform: scaleX(0.5);
+  /* for Firefox */
+  -ms-transform: scaleX(0.5);
+  /* for IE */
+  -o-transform: scaleX(0.5);
+  /* for Opera */
+  transform: scaleX(0.5);
+  transform-origin: 0 0;
+  -webkit-transform-origin: 0 0;
+  position: absolute;
+  height: 100%;
+  top: 0;
+  left: 0;
+}
+#pushSubjectsFromTLibrary .ant_btn_img {
+  width: 1.4rem;
+  float: left;
+  margin-right: 4px;
+}
+#pushSubjectsFromTLibrary .title_wrap {
+  display: flex;
+  margin-bottom: 4px;
+}
+#pushSubjectsFromTLibrary .lineheight {
+  line-height: 1;
+}
+#pushSubjectsFromTLibrary .ant_list_title {
+  font-size: 1rem;
+  margin-bottom: 6px;
+  color: #333;
+}
+#pushSubjectsFromTLibrary .ant_list_time {
+  color: #a9a9a9;
+  font-size: 0.8rem;
+}
+#pushSubjectsFromTLibrary .flex_align_center {
+  align-items: center;
+}
+#pushSubjectsFromTLibrary .margin_right_8 {
+  margin-right: 8px;
+}
+#pushSubjectsFromTLibrary .ul_list_del {
+  background: #f8f8f8;
+  padding: 10px 0;
+  text-align: center;
+  color: #666;
+  font-size: 0.8rem;
+}
+#pushSubjectsFromTLibrary .icon_small_del {
+  height: 15px;
+  margin-bottom: 4px;
+}
+#pushSubjectsFromTLibrary .am-accordion .am-accordion-item .am-accordion-header::after,
+#pushSubjectsFromTLibrary .am-accordion .am-accordion-item .am-accordion-content .am-accordion-content-box::after {
+  height: 0;
+}
+#pushSubjectsFromTLibrary .ant_list_subject {
+  max-height: 38px;
+  overflow: hidden;
+  word-break: break-all;
+  word-wrap: break-word;
+  white-space: pre-wrap;
+  width: 70%;
+}
+#pushSubjectsFromTLibrary .ant_list_subject_no {
+  margin-bottom: 0;
+}
+#pushSubjectsFromTLibrary .uuu {
+  height: 400px !important;
+}
+#pushSubjectsFromTLibrary .pushSubjects {
+  border-radius: 50%;
+  background-color: #4a90e2;
+  width: 40px;
+  height: 40px;
+  position: fixed;
+  bottom: 5px;
+  right: 5px;
+}
