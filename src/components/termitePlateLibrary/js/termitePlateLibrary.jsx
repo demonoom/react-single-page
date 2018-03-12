@@ -513,7 +513,8 @@ export default class termitePlateLibrary extends React.Component {
         };
 
         return (
-            <div id="termitePlateLibrary" className="Android_wrap" style={{height: document.body.clientHeight}}>
+            <div id="termitePlateLibrary" className={this.state.phoneHeight == '28' ? 'Android_wrap' : ''}
+                 style={{height: document.body.clientHeight}}>
                 <div className="ant_title">
                     <span className="ant_btn_list" onClick={() => prompt('请输入创建的文件夹名称', '', [
                         {text: '取消'},

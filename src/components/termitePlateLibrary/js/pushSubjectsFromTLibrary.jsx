@@ -48,58 +48,6 @@ export default class pushSubjectsFromTLibrary extends React.Component {
         };
         localStorage.setItem("loginUserTLibrary", JSON.stringify(loginUser));
         this.getUserRootCloudSubjects();
-        this.connectClazz()
-    }
-
-    connectClazz(userId, classCode, classType,account) {
-        var _this = this;
-        connection = new ClazzConnection();
-        connection.clazzWsListener = {
-
-            onError: function (errorMsg) {
-                //强制退出课堂
-                message.error(errorMsg);
-                // window.close();
-            },
-
-            onWarn: function (warnMsg) {
-                message.warn(warnMsg);
-            },
-            // 显示消息
-            onMessage: function (info) {
-                var data = info.data;
-                console.log("=============================================>"+info);
-                switch (info.command) {
-                    case "teacherLogin":
-                        //老师登入课堂成功后，返回新建课堂的vid，以此vid进入课堂
-                        var account = data.account;
-                        var vid = data.vid;
-                        sessionStorage.setItem("vid",vid);
-                        _this.setState({vid});
-                        break;
-                    case'simpleClassDanmu': // 弹幕
-                        var message = info.data.message;
-                        break;
-
-                    case 'classDanmu':
-                        var message = info.data.message;
-                        break;
-                }
-            }
-        };
-        //构建登录课堂的协议信息
-        var loginPro = {
-            "command": "teacherLogin",
-            "data": {
-                "password": sessionStorage.getItem("pd"),
-                "account": account,
-                "classType": classType,
-                "classCode": classCode,
-                "userId": userId
-            }
-        };
-        //连接登入课堂
-        connection.connect(loginPro);
     }
 
     /**
