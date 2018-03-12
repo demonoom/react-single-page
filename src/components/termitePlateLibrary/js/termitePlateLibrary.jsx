@@ -430,6 +430,19 @@ export default class termitePlateLibrary extends React.Component {
         tLibrary.postMesToMob(opt.props.value);
     }
 
+    //下拉刷新
+    onRefresh = () => {
+        var divPull = document.getElementsByClassName('am-pull-to-refresh-content');
+        divPull[0].style.transform = "translate3d(0px, 30px, 0px)";   //设置拉动后回到的位置
+        this.setState({defaultPageNo: 1, refreshing: true});
+        if (this.state.parentCloudFileId == -1) {
+            this.getUserRootCloudSubjects(true);
+        } else {
+            this.listCloudSubject(this.state.parentCloudFileId, true);
+        }
+
+    };
+
     render() {
         var _this = this;
 
@@ -567,10 +580,10 @@ export default class termitePlateLibrary extends React.Component {
                     style={{
                         height: document.body.clientHeight - this.state.phoneHeight,
                     }}
-                    // pullToRefresh={<PullToRefresh
-                    //     onRefresh={this.onRefresh}
-                    //     distanceToRefresh={80}
-                    // />}
+                    pullToRefresh={<PullToRefresh
+                        onRefresh={this.onRefresh}
+                        distanceToRefresh={80}
+                    />}
                 />
             </div>
         );
