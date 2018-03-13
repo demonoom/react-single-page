@@ -27,7 +27,7 @@ class Index extends React.Component {
                     {/*<li><Link to="/s1">ListView + Carousel</Link></li>*/}
                     {/*<li><Link to="/s3">Form + ...</Link></li>*/}
                     {/*<li><Link to="/s4" style={{fontSize: '24px'}}>蚁巢</Link></li>*/}
-                    <li><Link to="/s5" style={{fontSize: '24px'}}>实验</Link></li>
+                    {/*<li><Link to="/s5" style={{fontSize: '24px'}}>实验</Link></li>*/}
                     <li><Link to="/questionBank?ident=54208&pointId=4339&title=nihao"
                               style={{fontSize: '24px'}}>题库</Link></li>
                     <li><Link to="/analysisList?access_user=23836" style={{fontSize: '24px'}}>成绩分析</Link></li>
