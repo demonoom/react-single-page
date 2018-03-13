@@ -437,6 +437,12 @@ export default class termitePlateLibrary extends React.Component {
     };
 
     render() {
+        //设置下拉div的最小高度
+        var pullDiv = document.getElementsByClassName('am-pull-to-refresh-content-wrapper')[0];
+        if (typeof (pullDiv) != 'undefined') {
+            pullDiv.style.minHeight = document.body.clientHeight + 'px';
+        }
+
         var _this = this;
 
         const row = (rowData, sectionID, rowID) => {
