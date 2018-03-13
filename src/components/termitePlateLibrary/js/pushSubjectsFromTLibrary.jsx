@@ -291,7 +291,7 @@ export default class pushSubjectsFromTLibrary extends React.Component {
                 }
                 return (
                     <CheckboxItem key={rowData.id} onChange={() => this.pushSubjectsOnChange(event, rowData)}>
-                        <div className="my_flex flex_align_center">
+                        <div className="my_flex flex_align_center noom-accordion">
                             {img}
                             <div className="lineheight ant_list_subject">
                                 <div className="ant_list_title ant_list_subject_no"
@@ -305,7 +305,7 @@ export default class pushSubjectsFromTLibrary extends React.Component {
             } else {
                 //文件夹
                 return (
-                    <div className="my_flex flex_align_center" onClick={_this.fileClicked.bind(this, rowData)}>
+                    <div className="my_flex flex_align_center noom-accordion" onClick={_this.fileClicked.bind(this, rowData)}>
                         <img className="filePic" src={require('../imgs/file.png')} alt=""/>
                         <div className="lineheight">
                             <div className="ant_list_title">{rowData.name}</div>
@@ -343,7 +343,7 @@ export default class pushSubjectsFromTLibrary extends React.Component {
                     }}
                 />
                 <div className="pushSubjects" onClick={this.pushSubjects}>
-
+                    <img  src={require('../imgs/tuisong_blue.png')} alt=""/>
                 </div>
             </div>
         );
