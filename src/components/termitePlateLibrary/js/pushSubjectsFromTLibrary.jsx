@@ -281,8 +281,7 @@ export default class pushSubjectsFromTLibrary extends React.Component {
                 //题目
                 return (
                     <CheckboxItem key={rowData.id} onChange={() => this.pushSubjectsOnChange(event, rowData)}>
-                        <div className="ant_list_title ant_list_subject_no"
-                             dangerouslySetInnerHTML={{__html: rowData.name}}>
+                        <div className="ant_list_subject_no" dangerouslySetInnerHTML={{__html: rowData.name}}>
                         </div>
                     </CheckboxItem>
 
@@ -290,16 +289,18 @@ export default class pushSubjectsFromTLibrary extends React.Component {
             } else {
                 //文件夹
                 return (
-                    <div className="my_flex flex_align_center noom-accordion"
-                         onClick={_this.fileClicked.bind(this, rowData)}>
-                        <div className="ant_list_title">{rowData.name}</div>
-                    </div>
+                        <div className="am-list-item am-checkbox-item am-list-item-middle" onClick={_this.fileClicked.bind(this, rowData)}>
+                            <div className="am-list-thumb"><img src={require('../imgs/file.png')} alt=""/></div>
+                            <div className="am-list-line">
+                                <div className="am-list-content">{rowData.name}</div>
+                            </div>
+                        </div>
                 )
             }
         };
 
         return (
-            <div id="pushSubjectsFromTLibrary" className="uuuuuuu" style={{height: document.body.clientHeight}}>
+            <div id="pushSubjectsFromTLibrary" style={{height: document.body.clientHeight}}>
                 <ListView
                     ref={el => this.lv = el}
                     dataSource={this.state.dataSource}    //数据类型是 ListViewDataSource
