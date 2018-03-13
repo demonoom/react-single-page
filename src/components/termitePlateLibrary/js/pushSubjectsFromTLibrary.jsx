@@ -279,25 +279,10 @@ export default class pushSubjectsFromTLibrary extends React.Component {
 
             if (rowData.fileType == 2) {
                 //题目
-                var img;
-                if (rowData.subject.typeName == '单选题') {
-                    img = <img className="QuePic" src={require('../imgs/singleChoice.png')} alt=""/>
-                } else if (rowData.subject.typeName == '简答题') {
-                    img = <img className="QuePic" src={require('../imgs/shortAnswer.png')} alt=""/>
-                } else if (rowData.subject.typeName == '多选题') {
-                    img = <img className="QuePic" src={require('../imgs/multipleChoice.png')} alt=""/>
-                } else {
-                    img = <img className="QuePic" src={require('../imgs/trueOrFalse.png')} alt=""/>
-                }
                 return (
                     <CheckboxItem key={rowData.id} onChange={() => this.pushSubjectsOnChange(event, rowData)}>
-                        <div className="my_flex flex_align_center noom-accordion">
-                            {img}
-                            <div className="lineheight ant_list_subject">
-                                <div className="ant_list_title ant_list_subject_no"
-                                     dangerouslySetInnerHTML={{__html: rowData.name}}>
-                                </div>
-                            </div>
+                        <div className="ant_list_title ant_list_subject_no"
+                             dangerouslySetInnerHTML={{__html: rowData.name}}>
                         </div>
                     </CheckboxItem>
 
@@ -305,15 +290,9 @@ export default class pushSubjectsFromTLibrary extends React.Component {
             } else {
                 //文件夹
                 return (
-                    <div className="my_flex flex_align_center noom-accordion" onClick={_this.fileClicked.bind(this, rowData)}>
-                        <img className="filePic" src={require('../imgs/file.png')} alt=""/>
-                        <div className="lineheight">
-                            <div className="ant_list_title">{rowData.name}</div>
-                            <div className="ant_list_time">
-                                <span className="margin_right_8">{rowData.creator.userName}</span>
-                                <span>{time}</span>
-                            </div>
-                        </div>
+                    <div className="my_flex flex_align_center noom-accordion"
+                         onClick={_this.fileClicked.bind(this, rowData)}>
+                        <div className="ant_list_title">{rowData.name}</div>
                     </div>
                 )
             }
@@ -343,7 +322,7 @@ export default class pushSubjectsFromTLibrary extends React.Component {
                     }}
                 />
                 <div className="pushSubjects" onClick={this.pushSubjects}>
-                    <img  src={require('../imgs/tuisong_blue.png')} alt=""/>
+                    <img src={require('../imgs/tuisong_blue.png')} alt=""/>
                 </div>
             </div>
         );
