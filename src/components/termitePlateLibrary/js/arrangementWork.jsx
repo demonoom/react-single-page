@@ -286,9 +286,8 @@ export default class arrangementWork extends React.Component {
                     <CheckboxItem key={rowData.id} onChange={() => this.pushSubjectsOnChange(event, rowData)}>
                         <div className="ant_list_subject_no" dangerouslySetInnerHTML={{__html: rowData.name}}>
                         </div>
-                        <span onClick={this.queClicked.bind(this, rowData.subject)}>{rowData.subject.typeName}</span>
+                        <div className="flex_70"><span className="S" onClick={this.queClicked.bind(this, rowData.subject)}>{rowData.subject.typeName}</span></div>
                     </CheckboxItem>
-
                 )
             } else {
                 //文件夹
@@ -310,7 +309,7 @@ export default class arrangementWork extends React.Component {
                     ref={el => this.lv = el}
                     dataSource={this.state.dataSource}    //数据类型是 ListViewDataSource
                     renderFooter={() => (
-                        <div style={{paddingTop: 5, paddingBottom: 40, textAlign: 'center'}}>
+                        <div style={{paddingTop: 5, paddingBottom: 55, textAlign: 'center'}}>
                             {this.state.isLoadingLeft ? '正在加载' : '已经全部加载完毕'}
                         </div>)}
                     renderRow={row}   //需要的参数包括一行数据等,会返回一个可渲染的组件为这行数据渲染  返回renderable
@@ -327,8 +326,8 @@ export default class arrangementWork extends React.Component {
                         height: document.body.clientHeight,
                     }}
                 />
-                <div className="pushSubjects" onClick={this.arrangementWork}>
-                    确定
+                <div className="pushSubjects_cont">
+                    <div className="pushSubjects" onClick={this.arrangementWork}>确定</div>
                 </div>
             </div>
         );
