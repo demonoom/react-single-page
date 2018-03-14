@@ -30,6 +30,7 @@ export default class arrangementWork extends React.Component {
     }
 
     componentDidMount() {
+        document.title = '选择题目';   //设置title
         var locationHref = window.location.href;
         var locationSearch = locationHref.substr(locationHref.indexOf("?") + 1);
         var searchArray = locationSearch.split("&");
@@ -62,15 +63,14 @@ export default class arrangementWork extends React.Component {
     }
 
     callBackSubjectsId(mes) {
-        Toast.fail(mes, 5);
-        // if (mes == 'null') {
-        //     //客户端未选择,清空数组
-        //     this.setState({selectedWorkIds: []})
-        // } else {
-        //     //客户端已选择,赋值数组
-        //     var selectedWorkIds = mes.split(',');
-        //     this.setState({selectedWorkIds});
-        // }
+        if (mes == 'null') {
+            //客户端未选择,清空数组
+            this.setState({selectedWorkIds: []})
+        } else {
+            //客户端已选择,赋值数组
+            var selectedWorkIds = mes.split(',');
+            this.setState({selectedWorkIds});
+        }
     }
 
     /**
@@ -317,9 +317,10 @@ export default class arrangementWork extends React.Component {
                     <CheckboxItem key={rowData.id} onChange={() => this.pushSubjectsOnChange(event, rowData)}>
                         <div className="ant_list_subject_no" dangerouslySetInnerHTML={{__html: rowData.name}}>
                         </div>
-                        <span onClick={this.queClicked.bind(this, rowData.subject)}>{rowData.subject.typeName}</span>
+                        <div onClick={this.queClicked.bind(this, rowData.subject)} className="flex_70"><span
+                            className="S">{rowData.subject.typeName}</span>
+                        </div>
                     </CheckboxItem>
-
                 )
             } else {
                 //文件夹
@@ -341,7 +342,7 @@ export default class arrangementWork extends React.Component {
                     ref={el => this.lv = el}
                     dataSource={this.state.dataSource}    //数据类型是 ListViewDataSource
                     renderFooter={() => (
-                        <div style={{paddingTop: 5, paddingBottom: 40, textAlign: 'center'}}>
+                        <div style={{paddingTop: 5, paddingBottom: 55, textAlign: 'center'}}>
                             {this.state.isLoadingLeft ? '正在加载' : '已经全部加载完毕'}
                         </div>)}
                     renderRow={row}   //需要的参数包括一行数据等,会返回一个可渲染的组件为这行数据渲染  返回renderable
@@ -357,8 +358,8 @@ export default class arrangementWork extends React.Component {
                         height: document.body.clientHeight,
                     }}
                 />
-                <div className="pushSubjects" onClick={this.arrangementWork}>
-                    确定
+                <div className="pushSubjects_cont">
+                    <div className="pushSubjects" onClick={this.arrangementWork}>确定</div>
                 </div>
             </div>
         );

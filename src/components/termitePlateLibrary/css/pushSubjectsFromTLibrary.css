@@ -164,10 +164,20 @@
 }
 #pushSubjectsFromTLibrary .ant_list_subject_no {
   margin-bottom: 0;
+  width: -moz-calc(100% - 70px);
+  width: -webkit-calc(100% - 70px);
+  width: calc(100% - 70px);
+  display: inline-block;
 }
 #pushSubjectsFromTLibrary .ant_list_subject_no > div > div {
   line-height: 1 !important;
   padding: 0 !important;
+  white-space: nowrap;
+  font-size: 14px;
+  color: #424242;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  line-height: 34px;
 }
 #pushSubjectsFromTLibrary .uuu {
   height: 400px !important;
@@ -189,4 +199,14 @@
 }
 #pushSubjectsFromTLibrary .am-list-item .am-list-line .am-list-content {
   line-height: 2;
+  position: relative;
+}
+#pushSubjectsFromTLibrary .am-checkbox-inner {
+  border-radius: 0;
+}
+#pushSubjectsFromTLibrary .flex_70 {
+  width: 100px;
+  margin: 4px 0 0 0;
+  text-align: right;
+  display: inline-block;
 }

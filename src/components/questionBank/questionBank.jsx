@@ -470,7 +470,7 @@ export default class questionBank extends React.Component {
         Bridge.callHandler(data, function (mes) {
             if (mes == 'refresh') {
                 //刷新页面
-                Toast.success('题目添加成功', 1);
+                // Toast.success('题目添加成功', 1);
                 _this.initData.splice(0);
                 _this.state.dataSource = [];
                 _this.state.dataSource = new ListView.DataSource({
