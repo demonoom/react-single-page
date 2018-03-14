@@ -24,7 +24,8 @@ export default class arrangementWork extends React.Component {
             defaultPageNo: 1,
             parentFileId: '-1',    //parentFileId会push进parentFileIdArr
             parentFileIdArr: [],
-            pushSubjectsArr: [],   //推题的数组
+            arrangementWorkArr: [],   //推题的数组
+            selectedWorkIds: []
         };
     }
 
@@ -47,7 +48,29 @@ export default class arrangementWork extends React.Component {
             "ident": ident,
         };
         localStorage.setItem("loginUserTLibrary", JSON.stringify(loginUser));
+        var data = {
+            method: 'callBackSubjectsId',
+        };
+        setTimeout(function () {
+            Bridge.callHandler(data, function (mes) {
+                tLibrary.callBackSubjectsId(mes);
+            }, function (error) {
+                Toast.fail('返回失败', 5);
+            });
+        }, 100);
         this.getUserRootCloudSubjects();
+    }
+
+    callBackSubjectsId(mes) {
+        Toast.fail(mes, 5);
+        // if (mes == 'null') {
+        //     //客户端未选择,清空数组
+        //     this.setState({selectedWorkIds: []})
+        // } else {
+        //     //客户端已选择,赋值数组
+        //     var selectedWorkIds = mes.split(',');
+        //     this.setState({selectedWorkIds});
+        // }
     }
 
     /**
@@ -228,14 +251,23 @@ export default class arrangementWork extends React.Component {
     };
 
     /**
-     * 推题
+     * 布置作业,交给客户端
      */
     arrangementWork() {
         //向客户端发送id,交给客户端处理
-        if (tLibrary.state.pushSubjectsArr.length == 0) {
+        if (tLibrary.state.arrangementWorkArr.length == 0) {
             Toast.fail('请选择要布置的题目', 1);
             return
         }
+
+        var data = {
+            method: 'arrangementWork',
+            subjects: JSON.stringify(tLibrary.state.arrangementWorkArr)
+        };
+        Bridge.callHandler(data, null, function (error) {
+            Toast.fail(error, 5);
+        });
+        //由于客户端在此处直接关闭页面,所以不用再处理移除数据逻辑
     }
 
     /**
@@ -244,15 +276,14 @@ export default class arrangementWork extends React.Component {
      * @param obj
      */
     pushSubjectsOnChange(e, obj) {
-        console.log(obj);
         if (e.target.checked) {
             //钩中
-            this.state.pushSubjectsArr.push(obj.subject.id);
+            this.state.arrangementWorkArr.push(obj.subject);
         } else {
             //取消钩中
-            this.state.pushSubjectsArr.forEach(function (v, i) {
-                if (v == obj.subject.id) {
-                    tLibrary.state.pushSubjectsArr.splice(i, 1);
+            this.state.arrangementWorkArr.forEach(function (v, i) {
+                if (v.id == obj.subject.id) {
+                    tLibrary.state.arrangementWorkArr.splice(i, 1);
                 }
             })
         }
@@ -323,7 +354,6 @@ export default class arrangementWork extends React.Component {
                     initialListSize={30}   //指定在组件刚挂载的时候渲染多少行数据，用这个属性来确保首屏显示合适数量的数据
                     scrollEventThrottle={20}     //控制在滚动过程中，scroll事件被调用的频率
                     style={{
-                        // height: document.body.clientHeight - this.state.phoneHeight,
                         height: document.body.clientHeight,
                     }}
                 />

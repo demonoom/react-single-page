@@ -19,7 +19,8 @@ export default class Stage5 extends React.Component {
 
     }
 
-    onChange = (val) => {
+    onChange = (e, val) => {
+        console.log(e.target.checked);
         console.log(val);
     }
 
@@ -34,7 +35,7 @@ export default class Stage5 extends React.Component {
         return (
             <div>
                 {data.map(i => (
-                    <CheckboxItem key={i.value} onChange={() => this.onChange(i.value)}>
+                    <CheckboxItem defaultChecked={true} key={i.value} onChange={() => this.onChange(event, i.value)}>
                         {i.label}
                     </CheckboxItem>
                 ))}
