@@ -4,13 +4,13 @@ import {
     Checkbox,
     Toast,
 } from 'antd-mobile';
-import '../css/pushSubjectsFromTLibrary.less'
+import '../css/arrangementWork.less';
 
 const CheckboxItem = Checkbox.CheckboxItem;
 
 var tLibrary;
 
-export default class pushSubjectsFromTLibrary extends React.Component {
+export default class arrangementWork extends React.Component {
 
     constructor(props) {
         super(props);
@@ -230,24 +230,11 @@ export default class pushSubjectsFromTLibrary extends React.Component {
     /**
      * 推题
      */
-    pushSubjects() {
+    arrangementWork() {
         //向客户端发送id,交给客户端处理
         if (tLibrary.state.pushSubjectsArr.length == 0) {
-            Toast.fail('请选择要推送的题目', 1);
+            Toast.fail('请选择要布置的题目', 1);
             return
-        }
-        var ids = tLibrary.state.pushSubjectsArr.join(',');
-        var data = {
-            method: 'pushSubjects',
-            ids: ids
-        };
-        Bridge.callHandler(data, null, function (error) {
-            Toast.fail(error, 5);
-        });
-        tLibrary.state.pushSubjectsArr.splice(0);
-        var arr = document.getElementsByClassName('am-checkbox');
-        for (var i = 0; i < arr.length; i++) {
-            arr[i].classList.remove("am-checkbox-checked");
         }
     }
 
@@ -257,6 +244,7 @@ export default class pushSubjectsFromTLibrary extends React.Component {
      * @param obj
      */
     pushSubjectsOnChange(e, obj) {
+        console.log(obj);
         if (e.target.checked) {
             //钩中
             this.state.pushSubjectsArr.push(obj.subject.id);
@@ -270,6 +258,23 @@ export default class pushSubjectsFromTLibrary extends React.Component {
         }
     }
 
+    /**
+     * 题目被点击
+     */
+    queClicked(obj, event) {
+        event.stopPropagation();
+
+        //进入题目详情,使用原来页面
+        var subjectId = obj.id;
+        var url = "http://jiaoxue.maaee.com:8091/#/questionDetil?courseId=" + subjectId;
+        var data = {};
+        data.method = 'openNewPage';
+        data.url = url;
+        Bridge.callHandler(data, null, function (error) {
+            window.location.href = url;
+        });
+    }
+
     render() {
         var _this = this;
 
@@ -281,6 +286,7 @@ export default class pushSubjectsFromTLibrary extends React.Component {
                     <CheckboxItem key={rowData.id} onChange={() => this.pushSubjectsOnChange(event, rowData)}>
                         <div className="ant_list_subject_no" dangerouslySetInnerHTML={{__html: rowData.name}}>
                         </div>
+                        <span onClick={this.queClicked.bind(this, rowData.subject)}>{rowData.subject.typeName}</span>
                     </CheckboxItem>
 
                 )
@@ -299,7 +305,7 @@ export default class pushSubjectsFromTLibrary extends React.Component {
         };
 
         return (
-            <div id="pushSubjectsFromTLibrary" style={{height: document.body.clientHeight}}>
+            <div id="arrangementWork" style={{height: document.body.clientHeight}}>
                 <ListView
                     ref={el => this.lv = el}
                     dataSource={this.state.dataSource}    //数据类型是 ListViewDataSource
@@ -321,8 +327,8 @@ export default class pushSubjectsFromTLibrary extends React.Component {
                         height: document.body.clientHeight,
                     }}
                 />
-                <div className="pushSubjects" onClick={this.pushSubjects}>
-                    <img src={require('../imgs/tuisong_blue.png')} alt=""/>
+                <div className="pushSubjects" onClick={this.arrangementWork}>
+                    确定
                 </div>
             </div>
         );
