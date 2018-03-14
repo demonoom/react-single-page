@@ -164,16 +164,21 @@
     width: -webkit-calc(~"100% - 70px");
     width: calc(~"100% - 70px");
     display: inline-block;
+    position: absolute;
+    left: 0;
+    top: 0;
+    height: 48px;
+    overflow: hidden;
   }
   .ant_list_subject_no > div > div {
-    line-height: 1 !important;
     padding: 0 !important;
     white-space: nowrap;
     font-size: 14px;
     color: #424242;
     text-overflow: ellipsis;
     overflow: hidden;
-    line-height: 34px;
+    line-height: 48px !important;
+    height:48px;
   }
   .uuu {
     height: 400px !important;
@@ -206,6 +211,7 @@
   .am-list-item .am-list-line .am-list-content {
     line-height: 2;
     position: relative;
+    height: 34px;
   }
   .am-checkbox-inner{
     border-radius: 0;
@@ -215,5 +221,8 @@
     margin: 4px 0 0 0;
     text-align: right;
     display: inline-block;
+  }
+  .am-checkbox-input{
+    width: 50px;
   }
 }
