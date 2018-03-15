@@ -22,10 +22,7 @@ export default class arrangementWork extends React.Component {
         this.state = {
             dataSource: dataSource.cloneWithRows(this.initData),
             defaultPageNo: 1,
-            parentFileId: '-1',    //parentFileId会push进parentFileIdArr
-            parentFileIdArr: [],
             arrangementWorkArr: [],   //推题的数组
-            selectedWorkIds: []
         };
     }
 
@@ -36,40 +33,16 @@ export default class arrangementWork extends React.Component {
         var searchArray = locationSearch.split("&");
         var ident = searchArray[0].split('=')[1];
         var fileId = searchArray[1].split('=')[1];
-        var phoneType = searchArray[2].split('=')[1];
-        if (phoneType == '0') {
-            //iOS
-            this.setState({phoneHeight: 28 + 108});
-        } else {
-            //Android
-            this.setState({phoneHeight: 28});
-        }
-        this.setState({parentCloudFileId: fileId});
         var loginUser = {
             "ident": ident,
         };
         localStorage.setItem("loginUserTLibrary", JSON.stringify(loginUser));
-        var data = {
-            method: 'callBackSubjectsId',
-        };
-        setTimeout(function () {
-            Bridge.callHandler(data, function (mes) {
-                tLibrary.callBackSubjectsId(mes);
-            }, function (error) {
-                Toast.fail('返回失败', 5);
-            });
-        }, 100);
-        this.getUserRootCloudSubjects();
-    }
-
-    callBackSubjectsId(mes) {
-        if (mes == 'null') {
-            //客户端未选择,清空数组
-            this.setState({selectedWorkIds: []})
+        if (fileId == -1) {
+            //进入根目录
+            this.getUserRootCloudSubjects()
         } else {
-            //客户端已选择,赋值数组
-            var selectedWorkIds = mes.split(',');
-            this.setState({selectedWorkIds});
+            //进入文件夹
+            this.listCloudSubject(fileId)
         }
     }
 
@@ -79,8 +52,6 @@ export default class arrangementWork extends React.Component {
      * @param clearFlag
      */
     listCloudSubject(fileId, clearFlag) {
-        this.setState({parentFileId: fileId});
-        this.setState({parentCloudFileId: fileId});
         var _this = this;
         const dataBlob = {};
         var PageNo = this.state.defaultPageNo;
@@ -132,16 +103,6 @@ export default class arrangementWork extends React.Component {
      * 点"我的题目"时调用的接口
      */
     getUserRootCloudSubjects(clearFlag) {
-        var data = {};
-        data.method = 'goBackWeb';
-        data.fileIndex = '-1';
-        setTimeout(function () {
-            Bridge.callHandler(data, null, function (error) {
-                console.log(error);
-            });
-        }, 350);
-
-        this.setState({parentCloudFileId: '-1'});
         var loginUser = JSON.parse(localStorage.getItem('loginUserTLibrary'));
         var _this = this;
         const dataBlob = {};
@@ -212,42 +173,16 @@ export default class arrangementWork extends React.Component {
      * 文件夹被点击
      */
     fileClicked(obj, event) {
-        if (this.state.parentFileId != 'NAN') {
-            this.state.parentFileIdArr.push(this.state.parentFileId);
-        }
-
         event.stopPropagation();
-        this.state.defaultPageNo = 1;
-
-        //进入文件夹,只会调用list接口,向客户端发送父文件夹id,记录parentFileId
-        this.listCloudSubject(obj.id, true);
-
+        var loginUser = JSON.parse(localStorage.getItem('loginUserTLibrary'));
+        //新开这个jsx,传递文件夹id和文件夹tittle
+        var url = "http://172.16.2.128:8091/#/arrangementWork?ident=" + loginUser.ident + "&fileId=" + obj.id;
         var data = {};
-        data.method = 'goBackWeb';
-        data.fileIndex = '-2';
-        Bridge.callHandler(data, function (mes) {
-            //后退信号
-            tLibrary.fileOnBack();
-        }, function (error) {
-            console.log(error);
+        data.method = 'openNewPage';
+        data.url = url;
+        Bridge.callHandler(data, null, function (error) {
+            window.location.href = url;
         });
-    };
-
-    /**
-     * 文件夹返回函数
-     */
-    fileOnBack() {
-        this.state.defaultPageNo = 1;
-        var arrLength = this.state.parentFileIdArr.length;
-        var _this = this;
-        var fileId = this.state.parentFileIdArr[arrLength - 1];
-        if (fileId == '-1') {
-            _this.setState({parentFileId: 'NAN'});
-            _this.getUserRootCloudSubjects(true);
-        } else {
-            _this.listCloudSubject(fileId, true);
-            _this.state.parentFileIdArr.splice(arrLength - 1, 1)
-        }
     };
 
     /**

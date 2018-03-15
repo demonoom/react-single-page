@@ -346,7 +346,7 @@ export default class questionBank extends React.Component {
     showActionSheet = () => {
         var _this = this;
         if (this.state.tabOnClick == 0) {
-            var BUTTONS = ['全选', '取消全选', '使用', '删除', '上传题目'];
+            var BUTTONS = ['全选', '取消全选', '使用', '删除',];
         } else {
             var BUTTONS = ['全选', '取消全选', '使用'];
         }

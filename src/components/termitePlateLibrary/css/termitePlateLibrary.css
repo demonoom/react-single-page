@@ -41,6 +41,9 @@
   background: #fff;
   font-size: 14px;
 }
+#termitePlateLibrary .noomWidth {
+  width: calc(100% - 50px);
+}
 #termitePlateLibrary .ant_btn_list {
   display: inline-block;
   line-height: 15px;

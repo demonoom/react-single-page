@@ -22,8 +22,6 @@ export default class pushSubjectsFromTLibrary extends React.Component {
         this.state = {
             dataSource: dataSource.cloneWithRows(this.initData),
             defaultPageNo: 1,
-            parentFileId: '-1',    //parentFileId会push进parentFileIdArr
-            parentFileIdArr: [],
             pushSubjectsArr: [],   //推题的数组
         };
     }
@@ -34,20 +32,17 @@ export default class pushSubjectsFromTLibrary extends React.Component {
         var searchArray = locationSearch.split("&");
         var ident = searchArray[0].split('=')[1];
         var fileId = searchArray[1].split('=')[1];
-        var phoneType = searchArray[2].split('=')[1];
-        if (phoneType == '0') {
-            //iOS
-            this.setState({phoneHeight: 28 + 108});
-        } else {
-            //Android
-            this.setState({phoneHeight: 28});
-        }
-        this.setState({parentCloudFileId: fileId});
         var loginUser = {
             "ident": ident,
         };
         localStorage.setItem("loginUserTLibrary", JSON.stringify(loginUser));
-        this.getUserRootCloudSubjects();
+        if (fileId == -1) {
+            //进入根目录
+            this.getUserRootCloudSubjects()
+        } else {
+            //进入文件夹
+            this.listCloudSubject(fileId)
+        }
     }
 
     /**
@@ -56,8 +51,6 @@ export default class pushSubjectsFromTLibrary extends React.Component {
      * @param clearFlag
      */
     listCloudSubject(fileId, clearFlag) {
-        this.setState({parentFileId: fileId});
-        this.setState({parentCloudFileId: fileId});
         var _this = this;
         const dataBlob = {};
         var PageNo = this.state.defaultPageNo;
@@ -109,16 +102,6 @@ export default class pushSubjectsFromTLibrary extends React.Component {
      * 点"我的题目"时调用的接口
      */
     getUserRootCloudSubjects(clearFlag) {
-        var data = {};
-        data.method = 'goBackWeb';
-        data.fileIndex = '-1';
-        setTimeout(function () {
-            Bridge.callHandler(data, null, function (error) {
-                console.log(error);
-            });
-        }, 350);
-
-        this.setState({parentCloudFileId: '-1'});
         var loginUser = JSON.parse(localStorage.getItem('loginUserTLibrary'));
         var _this = this;
         const dataBlob = {};
@@ -189,42 +172,16 @@ export default class pushSubjectsFromTLibrary extends React.Component {
      * 文件夹被点击
      */
     fileClicked(obj, event) {
-        if (this.state.parentFileId != 'NAN') {
-            this.state.parentFileIdArr.push(this.state.parentFileId);
-        }
-
         event.stopPropagation();
-        this.state.defaultPageNo = 1;
-
-        //进入文件夹,只会调用list接口,向客户端发送父文件夹id,记录parentFileId
-        this.listCloudSubject(obj.id, true);
-
+        var loginUser = JSON.parse(localStorage.getItem('loginUserTLibrary'));
+        //新开这个jsx,传递文件夹id和文件夹tittle
+        var url = "http://172.16.2.128:8091/#/pushSubjectsFromTLibrary?ident=" + loginUser.ident + "&fileId=" + obj.id;
         var data = {};
-        data.method = 'goBackWeb';
-        data.fileIndex = '-2';
-        Bridge.callHandler(data, function (mes) {
-            //后退信号
-            tLibrary.fileOnBack();
-        }, function (error) {
-            console.log(error);
+        data.method = 'openNewPage';
+        data.url = url;
+        Bridge.callHandler(data, null, function (error) {
+            window.location.href = url;
         });
-    };
-
-    /**
-     * 文件夹返回函数
-     */
-    fileOnBack() {
-        this.state.defaultPageNo = 1;
-        var arrLength = this.state.parentFileIdArr.length;
-        var _this = this;
-        var fileId = this.state.parentFileIdArr[arrLength - 1];
-        if (fileId == '-1') {
-            _this.setState({parentFileId: 'NAN'});
-            _this.getUserRootCloudSubjects(true);
-        } else {
-            _this.listCloudSubject(fileId, true);
-            _this.state.parentFileIdArr.splice(arrLength - 1, 1)
-        }
     };
 
     /**
@@ -317,7 +274,6 @@ export default class pushSubjectsFromTLibrary extends React.Component {
                     initialListSize={30}   //指定在组件刚挂载的时候渲染多少行数据，用这个属性来确保首屏显示合适数量的数据
                     scrollEventThrottle={20}     //控制在滚动过程中，scroll事件被调用的频率
                     style={{
-                        // height: document.body.clientHeight - this.state.phoneHeight,
                         height: document.body.clientHeight,
                     }}
                 />
