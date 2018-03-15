@@ -103,6 +103,7 @@ module.exports = {
         }),
         //抽取CSS文件插件
         new ExtractTextPlugin({filename: '[name].css', allChunks: true}),
+        // ["import", { libraryName: "antd-mobile", style: "css" }] // `style: true` 会加载 less 文件
         ...otherPlugins
     ]
 }

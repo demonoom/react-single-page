@@ -3,11 +3,7 @@ import {
     ListView,
     PullToRefresh,
     Accordion,
-    List,
     Modal,
-    Button,
-    WingBlank,
-    WhiteSpace,
     Toast,
     ActionSheet
 } from 'antd-mobile';
@@ -32,7 +28,6 @@ export default class termitePlateLibrary extends React.Component {
             dataSource: dataSource.cloneWithRows(this.initData),
             defaultPageNo: 1,
             clicked: 'none',
-            parentFileId: '-1'   //父文件夹id,初始为-1,每次进出更换,向客户端发送
         };
     }
 
@@ -190,7 +185,7 @@ export default class termitePlateLibrary extends React.Component {
         event.stopPropagation();
         var loginUser = JSON.parse(localStorage.getItem('loginUserTLibrary'));
         //新开这个jsx,传递文件夹id和文件夹tittle
-        var url = "http://172.16.2.128:8091/#/termitePlateLibrary?ident=" + loginUser.ident + "&fileId=" + obj.id + "&fileTitle=" + obj.name + "&phoneType=" + this.state.phoneType;
+        var url = "http://192.168.50.29:8091/#/termitePlateLibrary?ident=" + loginUser.ident + "&fileId=" + obj.id + "&fileTitle=" + obj.name + "&phoneType=" + this.state.phoneType;
         var data = {};
         data.method = 'openNewPage';
         data.url = url;
@@ -416,6 +411,11 @@ export default class termitePlateLibrary extends React.Component {
     };
 
     render() {
+        //设置下拉div的最小高度
+        var pullDiv = document.getElementsByClassName('am-pull-to-refresh-content-wrapper')[0];
+        if (typeof (pullDiv) != 'undefined') {
+            pullDiv.style.minHeight = document.body.clientHeight + 'px';
+        }
         var _this = this;
 
         const row = (rowData, sectionID, rowID) => {
