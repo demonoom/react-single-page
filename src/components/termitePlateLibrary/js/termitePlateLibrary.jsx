@@ -306,11 +306,13 @@ export default class termitePlateLibrary extends React.Component {
                 // 刷新
                 Toast.success('上传成功', 1);
                 _this.state.defaultPageNo = 1;
-                if (_this.state.parentCloudFileId == -1) {
-                    _this.getUserRootCloudSubjects(true)
-                } else {
-                    _this.listCloudSubject(_this.state.parentCloudFileId, true);
-                }
+                setTimeout(function () {
+                    if (_this.state.parentCloudFileId == -1) {
+                        _this.getUserRootCloudSubjects(true)
+                    } else {
+                        _this.listCloudSubject(_this.state.parentCloudFileId, true);
+                    }
+                }, 100);
             }
         }, function (error) {
             Toast.fail(error, 5);
