@@ -89,10 +89,16 @@
     font-size: 14px;
     margin-bottom: 6px;
     color: #333;
+    width: 100%;
+    text-overflow: ellipsis;
+    overflow: hidden;
   }
   .ant_list_time {
     color: #a9a9a9;
     font-size: 12px;
+    width: 100%;
+    text-overflow: ellipsis;
+    overflow: hidden;
   }
   .flex_align_center {
     align-items: center;
@@ -117,14 +123,34 @@
   .ant_list_subject {
     max-height: 38px;
     overflow: hidden;
-    word-break: break-all;
-    word-wrap: break-word;
-    white-space: pre-wrap;
     width: 70%;
+    position: absolute;
+    left: 70px;
+    top: 25px;
+    display: inline-block;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  .ant_list_subject2 {
+    max-height: 58px;
+    overflow: hidden;
+    width: 70%;
+    position: absolute;
+    left: 70px;
+    top: 25px;
+    display: inline-block;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    padding-left: 10px;
   }
   .ant_list_subject_no {
     margin-bottom: 0;
   }
+  .ant_list_subject_no > div > div{
+  width: 100%;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
 }
 
 .termite_popover {
@@ -189,11 +215,17 @@
       font-size: 14px;
       margin-bottom: 8px;
       color: #333;
+      width: 100%;
+      text-overflow: ellipsis;
+      overflow: hidden;
     }
 
     .ant_list_time {
       color: #a9a9a9;
       font-size: 12px;
+      width: 100%;
+      text-overflow: ellipsis;
+      overflow: hidden;
     }
 
     .noom-accordion .am-accordion-header i {
@@ -276,11 +308,17 @@
       font-size: 18px;
       margin-bottom: 10px;
       color: #333;
+      width: 100%;
+      text-overflow: ellipsis;
+      overflow: hidden;
     }
 
     .ant_list_time {
       color: #a9a9a9;
       font-size: 14px;
+      width: 100%;
+      text-overflow: ellipsis;
+      overflow: hidden;
     }
 
     .noom-accordion .am-accordion-header i {

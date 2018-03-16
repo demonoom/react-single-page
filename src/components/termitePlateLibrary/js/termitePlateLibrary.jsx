@@ -461,7 +461,7 @@ export default class termitePlateLibrary extends React.Component {
                 headDiv = <div className="my_flex flex_align_center noomWidth"
                                onClick={_this.fileClicked.bind(this, rowData)}>
                     <img className="filePic" src={require('../imgs/file.png')} alt=""/>
-                    <div className="lineheight">
+                    <div className="lineheight ant_list_subject2">
                         <div className="ant_list_title">{rowData.name}</div>
                         <div className="ant_list_time">
                             <span className="margin_right_8">{rowData.creator.userName}</span>
