@@ -25,19 +25,27 @@ const postcssOpts = {
     ],
 };
 
+const uglify = require('uglifyjs-webpack-plugin');
+
 module.exports = {
-    devtool: 'source-map', // or 'inline-source-map'
+    plugins: [
+        ["import", {libraryName: "antd-mobile", style: "css"}, new uglify()] // `style: true` 会加载 less 文件
+    ],
+    devtool: 'false', // or 'inline-source-map'
     devServer: {
         disableHostCheck: true
     },
 
-    entry: {"index": path.resolve(__dirname, 'src/index'), vendor: ['react']}, /*指向spa应用的入口文件*/
+    entry: {
+        "index": path.resolve(__dirname, 'src/index'),
+        vendor: ['react', 'react-dom', 'react-router', 'redux']   //提取react、redux第三方的库文件
+    }, /*指向spa应用的入口文件*/
 
     output: {
         filename: '[name].js',
         chunkFilename: '[id].chunk.js',
         path: path.join(__dirname, '/dist'), /*输出的文件路径*/
-        publicPath: '/dist/',
+        publicPath: '/dist/'
     },
 
     resolve: {
@@ -98,14 +106,24 @@ module.exports = {
         //分离第三方应用的插件
         new webpack.optimize.CommonsChunkPlugin({
             // minChunks: 2,
-            name: 'shared',
-            filename: 'shared.js',
-            // names: ['vendor'],
-            // filename: 'vendor.js'
+            name: 'vendor',
+            filename: 'shared.js'
+        }),
+        // new webpack.optimize.UglifyJsPlugin({
+        //     output: {
+        //         comments: false,  // remove all comments
+        //     },
+        //     compress: {
+        //         warnings: false
+        //     }
+        // }),
+        new webpack.DefinePlugin({
+            'process.env': {
+                NODE_ENV: JSON.stringify(process.env.NODE_ENV),
+            },
         }),
         //抽取CSS文件插件
         new ExtractTextPlugin({filename: '[name].css', allChunks: true}),
-        // ["import", { libraryName: "antd-mobile", style: "css" }] // `style: true` 会加载 less 文件
         ...otherPlugins
     ]
 }
