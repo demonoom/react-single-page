@@ -109,14 +109,18 @@ module.exports = {
             name: 'vendor',
             filename: 'shared.js'
         }),
-        // new webpack.optimize.UglifyJsPlugin({
-        //     output: {
-        //         comments: false,  // remove all comments
-        //     },
-        //     compress: {
-        //         warnings: false
-        //     }
-        // }),
+        new webpack.optimize.UglifyJsPlugin({
+            //压缩插件,不写mangle会报错
+            mangle: {
+                except: ['$super', '$', 'exports', 'require', 'module', '_']
+            },
+            output: {
+                comments: false,  // remove all comments
+            },
+            compress: {
+                warnings: false
+            }
+        }),
         new webpack.DefinePlugin({
             'process.env': {
                 NODE_ENV: JSON.stringify(process.env.NODE_ENV),
