@@ -31,13 +31,13 @@ module.exports = {
         disableHostCheck: true
     },
 
-    entry: {"index": path.resolve(__dirname, 'src/index')}, /*指向spa应用的入口文件*/
+    entry: {"index": path.resolve(__dirname, 'src/index'), vendor: ['react']}, /*指向spa应用的入口文件*/
 
     output: {
         filename: '[name].js',
         chunkFilename: '[id].chunk.js',
         path: path.join(__dirname, '/dist'), /*输出的文件路径*/
-        publicPath: '/dist/'
+        publicPath: '/dist/',
     },
 
     resolve: {
@@ -99,7 +99,9 @@ module.exports = {
         new webpack.optimize.CommonsChunkPlugin({
             // minChunks: 2,
             name: 'shared',
-            filename: 'shared.js'
+            filename: 'shared.js',
+            // names: ['vendor'],
+            // filename: 'vendor.js'
         }),
         //抽取CSS文件插件
         new ExtractTextPlugin({filename: '[name].css', allChunks: true}),

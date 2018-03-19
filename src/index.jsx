@@ -2,20 +2,62 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import {Router, Route, hashHistory, IndexRoute, Link} from 'react-router';
 import App from './components/App';
-import Stage1 from './components/Stage1';
-import Stage3 from './components/Stage3';
-import Stage4 from './components/Stage4';
-import Stage5 from './components/Stage5';
-import questionBank from './components/questionBank/questionBank';
-import questionDetil from './components/questionBank/questionDetil';
-import analysisList from './components/resultAnalysis/analysisList';
-import resultAnalysis from './components/resultAnalysis/resultAnalysis';
-import classReaultAnalysis from './components/resultAnalysis/classResultAnalysis';
-import searchUserLocationInfo from './components/userInfo/searchUserLocationInfo';
-import studentFaceStatistics from './components/charts/studentFaceStatistics';
-import termitePlateLibrary from './components/termitePlateLibrary/js/termitePlateLibrary';
-import pushSubjectsFromTLibrary from './components/termitePlateLibrary/js/pushSubjectsFromTLibrary';
-import arrangementWork from './components/termitePlateLibrary/js/arrangementWork';
+// import Stage1 from './components/Stage1';
+// import Stage3 from './components/Stage3';
+// import Stage4 from './components/Stage4';
+// import Stage5 from './components/Stage5';
+
+const questionBank = (location, cb) => {
+    require.ensure([], require => {
+        cb(null, require('./components/questionBank/questionBank').default)
+    }, 'questionBank')
+};
+const questionDetil = (location, cb) => {
+    require.ensure([], require => {
+        cb(null, require('./components/questionBank/questionDetil').default)
+    }, 'questionDetil')
+};
+const analysisList = (location, cb) => {
+    require.ensure([], require => {
+        cb(null, require('./components/resultAnalysis/analysisList').default)
+    }, 'analysisList')
+};
+const resultAnalysis = (location, cb) => {
+    require.ensure([], require => {
+        cb(null, require('./components/resultAnalysis/resultAnalysis').default)
+    }, 'resultAnalysis')
+};
+const classReaultAnalysis = (location, cb) => {
+    require.ensure([], require => {
+        cb(null, require('./components/resultAnalysis/classResultAnalysis').default)
+    }, 'classReaultAnalysis')
+};
+const searchUserLocationInfo = (location, cb) => {
+    require.ensure([], require => {
+        cb(null, require('./components/userInfo/searchUserLocationInfo').default)
+    }, 'searchUserLocationInfo')
+};
+const studentFaceStatistics = (location, cb) => {
+    require.ensure([], require => {
+        cb(null, require('./components/charts/studentFaceStatistics').default)
+    }, 'studentFaceStatistics')
+};
+const termitePlateLibrary = (location, cb) => {
+    require.ensure([], require => {
+        cb(null, require('./components/termitePlateLibrary/js/termitePlateLibrary').default)
+    }, 'termitePlateLibrary')
+};
+const pushSubjectsFromTLibrary = (location, cb) => {
+    require.ensure([], require => {
+        cb(null, require('./components/termitePlateLibrary/js/pushSubjectsFromTLibrary').default)
+    }, 'pushSubjectsFromTLibrary')
+};
+const arrangementWork = (location, cb) => {
+    require.ensure([], require => {
+        cb(null, require('./components/termitePlateLibrary/js/arrangementWork').default)
+    }, 'arrangementWork')
+};
+
 import './index.less';
 
 class Index extends React.Component {
@@ -51,20 +93,20 @@ ReactDOM.render(
     <Router history={hashHistory}>
         <Route path="/" component={App}>
             <IndexRoute component={Index}/>
-            <Route path="s1" component={Stage1}/>
-            <Route path="s3" component={Stage3}/>
-            <Route path="s4" component={Stage4}/>
-            <Route path="s5" component={Stage5}/>
-            <Route path="questionBank" component={questionBank}/>
-            <Route path="questionDetil" component={questionDetil}/>
-            <Route path="analysisList" component={analysisList}/>
-            <Route path="resultAnalysis" component={resultAnalysis}/>
-            <Route path="classReaultAnalysis" component={classReaultAnalysis}/>
-            <Route path="searchUserLocationInfo" component={searchUserLocationInfo}/>
-            <Route path="studentFaceStatistics" component={studentFaceStatistics}/>
-            <Route path="termitePlateLibrary" component={termitePlateLibrary}/>
-            <Route path="pushSubjectsFromTLibrary" component={pushSubjectsFromTLibrary}/>
-            <Route path="arrangementWork" component={arrangementWork}/>
+            {/*<Route path="s1" component={Stage1}/>*/}
+            {/*<Route path="s3" component={Stage3}/>*/}
+            {/*<Route path="s4" component={Stage4}/>*/}
+            {/*<Route path="s5" component={Stage5}/>*/}
+            <Route path="questionBank" getComponent={questionBank}/>
+            <Route path="questionDetil" getComponent={questionDetil}/>
+            <Route path="analysisList" getComponent={analysisList}/>
+            <Route path="resultAnalysis" getComponent={resultAnalysis}/>
+            <Route path="classReaultAnalysis" getComponent={classReaultAnalysis}/>
+            <Route path="searchUserLocationInfo" getComponent={searchUserLocationInfo}/>
+            <Route path="studentFaceStatistics" getComponent={studentFaceStatistics}/>
+            <Route path="termitePlateLibrary" getComponent={termitePlateLibrary}/>
+            <Route path="pushSubjectsFromTLibrary" getComponent={pushSubjectsFromTLibrary}/>
+            <Route path="arrangementWork" getComponent={arrangementWork}/>
         </Route>
     </Router>
     , document.getElementById('example'));
