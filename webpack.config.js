@@ -1,5 +1,5 @@
-const path = require('path')  //引入path模块
-const webpack = require('webpack')
+const path = require('path');  //引入path模块
+const webpack = require('webpack');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const autoprefixer = require('autoprefixer');
 const pxtorem = require('postcss-pxtorem');
@@ -25,13 +25,13 @@ const postcssOpts = {
     ],
 };
 
-const uglify = require('uglifyjs-webpack-plugin');
+const uglify = require('uglifyjs-webpack-plugin');   //压缩工具
 
 module.exports = {
     plugins: [
         ["import", {libraryName: "antd-mobile", style: "css"}, new uglify()] // `style: true` 会加载 less 文件
     ],
-    devtool: 'false', // or 'inline-source-map'
+    devtool: 'false', // or 'inline-source-map'    生产模式,不再打包.map文件
     devServer: {
         disableHostCheck: true
     },
@@ -43,7 +43,7 @@ module.exports = {
 
     output: {
         filename: '[name].js',
-        chunkFilename: '[id].chunk.js',
+        chunkFilename: '[id].chunk.js',   //匹配chunk
         path: path.join(__dirname, '/dist'), /*输出的文件路径*/
         publicPath: '/dist/'
     },
@@ -110,7 +110,7 @@ module.exports = {
             filename: 'shared.js'
         }),
         new webpack.optimize.UglifyJsPlugin({
-            //压缩插件,不写mangle会报错
+            //压缩插件,使用npm 安装, cnpm会报错
             mangle: {
                 except: ['$super', '$', 'exports', 'require', 'module', '_']
             },
@@ -121,9 +121,9 @@ module.exports = {
                 warnings: false
             }
         }),
+        //将开发模式变为生产模式
         new webpack.DefinePlugin({
             'process.env': {
-                // NODE_ENV: JSON.stringify(process.env.NODE_ENV),
                 NODE_ENV: '"production"',
             },
         }),
