@@ -28,10 +28,12 @@ export default class termitePlateLibrary extends React.Component {
             dataSource: dataSource.cloneWithRows(this.initData),
             defaultPageNo: 1,
             clicked: 'none',
+            clientHeight: document.body.clientHeight,
         };
     }
 
     componentDidMount() {
+        Bridge.setShareAble("false");
         var locationHref = window.location.href;
         var locationSearch = locationHref.substr(locationHref.indexOf("?") + 1);
         var searchArray = locationSearch.split("&");
@@ -53,6 +55,17 @@ export default class termitePlateLibrary extends React.Component {
             //进入文件夹
             this.listCloudSubject(fileId)
         }
+        window.addEventListener('resize', tLibrary.onWindowResize)
+    }
+
+    componentWillUnmount() {
+        window.removeEventListener('resize', tLibrary.onWindowResize)
+    }
+
+    onWindowResize() {
+        setTimeout(function () {
+            tLibrary.setState({clientHeight: document.body.clientHeight});
+        }, 100)
     }
 
     /**
@@ -387,12 +400,15 @@ export default class termitePlateLibrary extends React.Component {
                         v.name = str;
                     }
                 });
-                //解决安卓键盘改变窗口高度问题,所以延迟300
-                setTimeout(function () {
-                    _this.setState({
-                        dataSource: _this.state.dataSource.cloneWithRows(_this.initData)
-                    });
-                }, 300);
+                _this.setState({
+                    dataSource: _this.state.dataSource.cloneWithRows(_this.initData)
+                });
+                //解决安卓键盘改变窗口高度问题,所以延迟100
+                // setTimeout(function () {
+                //     _this.setState({
+                //         dataSource: _this.state.dataSource.cloneWithRows(_this.initData)
+                //     });
+                // }, 100);
             } else {
                 Toast.fail('重命名失败', 1);
             }
@@ -496,7 +512,7 @@ export default class termitePlateLibrary extends React.Component {
 
         return (
             <div id="termitePlateLibrary" className={this.state.phoneType == '0' ? 'Android_wrap' : ''}
-                 style={{height: document.body.clientHeight}}>
+                 style={{height: this.state.clientHeight}}>
                 <div className="ant_title">
                     <span className="ant_btn_list" onClick={() => prompt('请输入创建的文件夹名称', '', [
                         {text: '取消'},
@@ -527,7 +543,7 @@ export default class termitePlateLibrary extends React.Component {
                     initialListSize={30}   //指定在组件刚挂载的时候渲染多少行数据，用这个属性来确保首屏显示合适数量的数据
                     scrollEventThrottle={20}     //控制在滚动过程中，scroll事件被调用的频率
                     style={{
-                        height: document.body.clientHeight - 28,
+                        height: this.state.clientHeight - 28,
                     }}
                     pullToRefresh={<PullToRefresh
                         onRefresh={this.onRefresh}

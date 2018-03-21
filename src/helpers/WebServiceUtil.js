@@ -1,4 +1,4 @@
-var isDebug = false;
+var isDebug = true;
 var localDomain = "192.168.50.230";
 //云校本地测试webService地址
 var elearningWebserviceURLOfLocal = "http://" + localDomain + ":8888/elearning/elearningControl/";
