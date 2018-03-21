@@ -252,6 +252,7 @@ export default class studentFaceStatistics extends React.Component {
         if(!number){
             return 0.00;
         }
+        console.log(number)
         return number.toFixed(i);
     }
     initChartOption = () => {
@@ -407,11 +408,12 @@ export default class studentFaceStatistics extends React.Component {
         if(!thinkUserList){
             thinkUserList=new Array();
         }
+        console.log(thinkUserList.length/aliveUserList.length);
         var attention=this.formateNumer(_this.state.currentFaceEmotion.attention/aliveUserList.length,0);
-        var confuse=this.formateNumer(confuseUserList.length/aliveUserList.length,0);
-        var understand=this.formateNumer(understandUserList.length/aliveUserList.length,0);
-        var thinking=this.formateNumer(thinkUserList.length/aliveUserList.length,0);
-        var understandLow25=this.formateNumer(noUnderstandUserList.length/aliveUserList.length,0);
+        var confuse=this.formateNumer((confuseUserList.length/aliveUserList.length)*100,0);
+        var understand=this.formateNumer((understandUserList.length/aliveUserList.length)*100,0);
+        var thinking=this.formateNumer((thinkUserList.length/aliveUserList.length)*100,0);
+        var understandLow25=this.formateNumer((noUnderstandUserList.length/aliveUserList.length)*100,0);
         var screenHeight=_this.state.screenHeight;
         var showConutByScreenHeight=16;
         if(screenHeight==1080){//16
