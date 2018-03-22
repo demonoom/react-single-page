@@ -55,13 +55,18 @@ export default class termitePlateLibrary extends React.Component {
             //进入文件夹
             this.listCloudSubject(fileId)
         }
+        //添加对视窗大小的监听,在屏幕转换以及键盘弹起时重设各项高度
         window.addEventListener('resize', tLibrary.onWindowResize)
     }
 
     componentWillUnmount() {
+        //解除监听
         window.removeEventListener('resize', tLibrary.onWindowResize)
     }
 
+    /**
+     * 视窗改变时改变高度
+     */
     onWindowResize() {
         setTimeout(function () {
             tLibrary.setState({clientHeight: document.body.clientHeight});
@@ -198,7 +203,7 @@ export default class termitePlateLibrary extends React.Component {
         event.stopPropagation();
         var loginUser = JSON.parse(localStorage.getItem('loginUserTLibrary'));
         //新开这个jsx,传递文件夹id和文件夹tittle
-        var url = "http://192.168.50.29:8091/#/termitePlateLibrary?ident=" + loginUser.ident + "&fileId=" + obj.id + "&fileTitle=" + obj.name + "&phoneType=" + this.state.phoneType;
+        var url = "http://192.168.50.34:8091/#/termitePlateLibrary?ident=" + loginUser.ident + "&fileId=" + obj.id + "&fileTitle=" + obj.name + "&phoneType=" + this.state.phoneType;
         var data = {};
         data.method = 'openNewPage';
         data.url = url;
@@ -227,6 +232,11 @@ export default class termitePlateLibrary extends React.Component {
      * 删除弹出框
      */
     showAlert = (data) => {
+        if (tLibrary.state.phoneType == '-1') {
+            var phone = 'ios'
+        } else {
+            var phone = 'android'
+        }
         if (data.fileType == '1') {
             //文件夹
             var str = '您确定要删除该文件夹吗?';
@@ -237,7 +247,7 @@ export default class termitePlateLibrary extends React.Component {
         const alertInstance = alert('删除', str, [
             {text: '取消', onPress: () => console.log('cancel'), style: 'default'},
             {text: '确定', onPress: () => _this.removeFile(data)},
-        ]);
+        ], phone);
     };
 
     /**
@@ -370,6 +380,45 @@ export default class termitePlateLibrary extends React.Component {
 
     /**
      * 文件夹重命名
+     * phoneType = 0 安卓,  phoneType = -1 ios,
+     * @param rowData
+     */
+    reNameAntFile(rowData) {
+        if (tLibrary.state.phoneType == '-1') {
+            var phone = 'ios'
+        } else {
+            var phone = 'android'
+        }
+        prompt('请输入您修改的名称', '', [
+            {text: '取消'},
+            {text: '确定', onPress: value => tLibrary.renameFile(value, rowData)},
+        ], 'default', '', [], phone)
+        if (tLibrary.state.phoneType == '-1') {
+            document.getElementsByClassName('am-modal-input')[0].getElementsByTagName('input')[0].focus();
+        }
+    }
+
+    /**
+     * 新建文件夹
+     * phoneType = 0 安卓,  phoneType = -1 ios,
+     */
+    creatNewFile() {
+        if (tLibrary.state.phoneType == '-1') {
+            var phone = 'ios'
+        } else {
+            var phone = 'android'
+        }
+        prompt('请输入文件夹名称', '', [
+            {text: '取消'},
+            {text: '确定', onPress: value => tLibrary.creatFile(value)},
+        ], 'default', '新建文件夹', [], phone)
+        if (tLibrary.state.phoneType == '-1') {
+            document.getElementsByClassName('am-modal-input')[0].getElementsByTagName('input')[0].focus();
+        }
+    }
+
+    /**
+     * 文件夹重命名
      */
     renameFile(str, data) {
         if (str.length == 0) {
@@ -490,10 +539,7 @@ export default class termitePlateLibrary extends React.Component {
                         <img className="icon_small_del" src={require('../imgs/icon_delet@3x.png')} alt=""/>
                         <div>删除</div>
                     </li>
-                    <li className="flex_1" onClick={() => prompt('请输入您修改的名称', '', [
-                        {text: '取消'},
-                        {text: '确定', onPress: value => this.renameFile(value, rowData)},
-                    ], 'default', '')}>
+                    <li className="flex_1" onClick={this.reNameAntFile.bind(this, rowData)}>
                         <img className="icon_small_del" src={require('../imgs/icon_edit@3x.png')} alt=""/>
                         <div>重命名</div>
                     </li>
@@ -514,12 +560,9 @@ export default class termitePlateLibrary extends React.Component {
             <div id="termitePlateLibrary" className={this.state.phoneType == '0' ? 'Android_wrap' : ''}
                  style={{height: this.state.clientHeight}}>
                 <div className="ant_title">
-                    <span className="ant_btn_list" onClick={() => prompt('请输入创建的文件夹名称', '', [
-                        {text: '取消'},
-                        {text: '确定', onPress: value => this.creatFile(value)},
-                    ], 'default', '新建文件夹')}><img className="ant_btn_img"
-                                                 src={require('../imgs/icon_ant_new.png')}
-                                                 alt=""/><span>新建</span></span>
+                    <span className="ant_btn_list" onClick={this.creatNewFile}><img className="ant_btn_img"
+                                                                                    src={require('../imgs/icon_ant_new.png')}
+                                                                                    alt=""/><span>新建</span></span>
                     <span className="ant_btn_line"></span>
                     <span className="ant_btn_list" onClick={this.upLoadQue}><img className="ant_btn_img"
                                                                                  src={require('../imgs/icon_ant_uploading.png')}

@@ -176,7 +176,7 @@ export default class arrangementWork extends React.Component {
         event.stopPropagation();
         var loginUser = JSON.parse(localStorage.getItem('loginUserTLibrary'));
         //新开这个jsx,传递文件夹id和文件夹tittle
-        var url = "http://192.168.50.29:8091/#/arrangementWork?ident=" + loginUser.ident + "&fileId=" + obj.id;
+        var url = "http://192.168.50.34:8091/#/arrangementWork?ident=" + loginUser.ident + "&fileId=" + obj.id;
         var data = {};
         data.method = 'openNewPage';
         data.url = url;
