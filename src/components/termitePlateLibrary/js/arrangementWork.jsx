@@ -10,6 +10,23 @@ const CheckboxItem = Checkbox.CheckboxItem;
 
 var tLibrary;
 
+// noomShareId(id) {
+//     var _this = this;
+//     var param = {
+//         "method": 'getCloudFileShareById',
+//         "shareId": id,
+//     };
+//     doWebService(JSON.stringify(param), {
+//         onResponse: function (ret) {
+//             var response = ret.response.attachments;
+//             _this.buildFileDetilData(response);
+//         },
+//         onError: function (error) {
+//             message.error(error);
+//         }
+//     });
+// },
+
 export default class arrangementWork extends React.Component {
 
     constructor(props) {
@@ -60,41 +77,42 @@ export default class arrangementWork extends React.Component {
             "cloudFileId": fileId,
             "pageNo": PageNo,
         };
-        var requestParams = encodeURI("params=" + JSON.stringify(param));
-        WebServiceUtil.requestLittleAntApi({
-            method: 'post',
-            body: requestParams,
-        }).then(function (result) {
-            if (result.data.msg == '调用成功' || result.data.success == true) {
-                var response = result.data.response;
-                var pager = result.data.pager;
-                for (let i = 0; i < response.length; i++) {
-                    var topic = response[i];
-                    dataBlob[`${i}`] = topic;
-                }
-                if (clearFlag) {    //拉动刷新  获取数据之后再清除原有数据
-                    _this.initData.splice(0);
-                    _this.state.dataSource = [];
-                    _this.state.dataSource = new ListView.DataSource({
-                        rowHasChanged: (row1, row2) => row1 !== row2,
-                    });
-                }
-                var isLoading = false;
-                if (response.length > 0) {
-                    if (pager.pageCount == 1 && pager.rsCount < 30) {
-                        isLoading = false;
-                    } else {
-                        isLoading = true;
+        JqueryUtil.requestLittleAntApi(JSON.stringify(param), {
+            onResponse: function (result) {
+                if (result.msg == '调用成功' || result.success == true) {
+                    var response = result.response;
+                    var pager = result.pager;
+                    for (let i = 0; i < response.length; i++) {
+                        var topic = response[i];
+                        dataBlob[`${i}`] = topic;
                     }
-                } else {
-                    isLoading = false;
+                    if (clearFlag) {    //拉动刷新  获取数据之后再清除原有数据
+                        _this.initData.splice(0);
+                        _this.state.dataSource = [];
+                        _this.state.dataSource = new ListView.DataSource({
+                            rowHasChanged: (row1, row2) => row1 !== row2,
+                        });
+                    }
+                    var isLoading = false;
+                    if (response.length > 0) {
+                        if (pager.pageCount == 1 && pager.rsCount < 30) {
+                            isLoading = false;
+                        } else {
+                            isLoading = true;
+                        }
+                    } else {
+                        isLoading = false;
+                    }
+                    _this.initData = _this.initData.concat(response);
+                    _this.setState({
+                        dataSource: _this.state.dataSource.cloneWithRows(_this.initData),
+                        isLoadingLeft: isLoading,
+                        refreshing: false
+                    })
                 }
-                _this.initData = _this.initData.concat(response);
-                _this.setState({
-                    dataSource: _this.state.dataSource.cloneWithRows(_this.initData),
-                    isLoadingLeft: isLoading,
-                    refreshing: false
-                })
+            },
+            onError: function (error) {
+                // message.error(error);
             }
         });
     }
@@ -112,41 +130,43 @@ export default class arrangementWork extends React.Component {
             "userId": loginUser.ident,
             "pageNo": PageNo,
         };
-        var requestParams = encodeURI("params=" + JSON.stringify(param));
-        WebServiceUtil.requestLittleAntApi({
-            method: 'post',
-            body: requestParams,
-        }).then(function (result) {
-            if (result.data.msg == '调用成功' || result.data.success == true) {
-                var response = result.data.response;
-                var pager = result.data.pager;
-                for (let i = 0; i < response.length; i++) {
-                    var topic = response[i];
-                    dataBlob[`${i}`] = topic;
-                }
-                if (clearFlag) {    //拉动刷新  获取数据之后再清除原有数据
-                    _this.initData.splice(0);
-                    _this.state.dataSource = [];
-                    _this.state.dataSource = new ListView.DataSource({
-                        rowHasChanged: (row1, row2) => row1 !== row2,
-                    });
-                }
-                var isLoading = false;
-                if (response.length > 0) {
-                    if (pager.pageCount == 1 && pager.rsCount < 30) {
-                        isLoading = false;
-                    } else {
-                        isLoading = true;
+        JqueryUtil.requestLittleAntApi(JSON.stringify(param), {
+            onResponse: function (result) {
+                console.log(result);
+                if (result.msg == '调用成功' || result.success == true) {
+                    var response = result.response;
+                    var pager = result.pager;
+                    for (let i = 0; i < response.length; i++) {
+                        var topic = response[i];
+                        dataBlob[`${i}`] = topic;
                     }
-                } else {
-                    isLoading = false;
+                    if (clearFlag) {    //拉动刷新  获取数据之后再清除原有数据
+                        _this.initData.splice(0);
+                        _this.state.dataSource = [];
+                        _this.state.dataSource = new ListView.DataSource({
+                            rowHasChanged: (row1, row2) => row1 !== row2,
+                        });
+                    }
+                    var isLoading = false;
+                    if (response.length > 0) {
+                        if (pager.pageCount == 1 && pager.rsCount < 30) {
+                            isLoading = false;
+                        } else {
+                            isLoading = true;
+                        }
+                    } else {
+                        isLoading = false;
+                    }
+                    _this.initData = _this.initData.concat(response);
+                    _this.setState({
+                        dataSource: _this.state.dataSource.cloneWithRows(_this.initData),
+                        isLoadingLeft: isLoading,
+                        refreshing: false
+                    })
                 }
-                _this.initData = _this.initData.concat(response);
-                _this.setState({
-                    dataSource: _this.state.dataSource.cloneWithRows(_this.initData),
-                    isLoadingLeft: isLoading,
-                    refreshing: false
-                })
+            },
+            onError: function (error) {
+                // message.error(error);
             }
         });
     }
