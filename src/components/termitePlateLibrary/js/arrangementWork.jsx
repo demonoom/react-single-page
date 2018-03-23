@@ -77,7 +77,7 @@ export default class arrangementWork extends React.Component {
             "cloudFileId": fileId,
             "pageNo": PageNo,
         };
-        JqueryUtil.requestLittleAntApi(JSON.stringify(param), {
+        WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
             onResponse: function (result) {
                 if (result.msg == '调用成功' || result.success == true) {
                     var response = result.response;
@@ -130,9 +130,8 @@ export default class arrangementWork extends React.Component {
             "userId": loginUser.ident,
             "pageNo": PageNo,
         };
-        JqueryUtil.requestLittleAntApi(JSON.stringify(param), {
+        WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
             onResponse: function (result) {
-                console.log(result);
                 if (result.msg == '调用成功' || result.success == true) {
                     var response = result.response;
                     var pager = result.pager;
@@ -196,7 +195,7 @@ export default class arrangementWork extends React.Component {
         event.stopPropagation();
         var loginUser = JSON.parse(localStorage.getItem('loginUserTLibrary'));
         //新开这个jsx,传递文件夹id和文件夹tittle
-        var url = "http://192.168.50.34:8091/#/arrangementWork?ident=" + loginUser.ident + "&fileId=" + obj.id;
+        var url = WebServiceUtil.mobileServiceURL + "arrangementWork?ident=" + loginUser.ident + "&fileId=" + obj.id;
         var data = {};
         data.method = 'openNewPage';
         data.url = url;
@@ -252,7 +251,7 @@ export default class arrangementWork extends React.Component {
 
         //进入题目详情,使用原来页面
         var subjectId = obj.id;
-        var url = "http://jiaoxue.maaee.com:8091/#/questionDetil?courseId=" + subjectId;
+        var url = WebServiceUtil.mobileServiceURL + "questionDetil?courseId=" + subjectId;
         var data = {};
         data.method = 'openNewPage';
         data.url = url;

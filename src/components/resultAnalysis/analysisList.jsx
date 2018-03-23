@@ -46,26 +46,26 @@ export default class analysisList extends React.Component {
             "pageNo": PageNo,
         };
 
-        var requestParams = encodeURI("params=" + JSON.stringify(param));
-
-        WebServiceUtil.requestLittleAntApi({
-            method: 'post',
-            body: requestParams,
-        }).then(function (result) {
-            var response = result.data.response;
-            if (result.data.success == true && result.data.msg == '调用成功') {
-                //  获得数据
-                for (let i = 0; i < response.length; i++) {
-                    var topic = response[i];
-                    dataBlob[`${i}`] = topic;
+        WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
+            onResponse: function (result) {
+                var response = result.response;
+                if (result.success == true && result.msg == '调用成功') {
+                    //  获得数据
+                    for (let i = 0; i < response.length; i++) {
+                        var topic = response[i];
+                        dataBlob[`${i}`] = topic;
+                    }
+                    _this.initData = _this.initData.concat(response);
+                    _this.setState({
+                        dataSource: _this.state.dataSource.cloneWithRows(_this.initData),
+                        isLoading: false,
+                    })
+                } else {
+                    Toast.fail(result.msg, 1);
                 }
-                _this.initData = _this.initData.concat(response);
-                _this.setState({
-                    dataSource: _this.state.dataSource.cloneWithRows(_this.initData),
-                    isLoading: false,
-                })
-            } else {
-                Toast.fail(result.data.msg, 1);
+            },
+            onError: function (error) {
+                // message.error(error);
             }
         });
     }

@@ -129,13 +129,14 @@ export default class questionBank extends React.Component {
             "account": 'te' + id,
         };
 
-        var requestParams = encodeURI("params=" + JSON.stringify(param));
-        WebServiceUtil.requestLittleAntApi({
-            method: 'post',
-            body: requestParams,
-        }).then(function (result) {
-            var response = result.data.response.schoolId;
-            _this.setState({schoolId: response});
+        WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
+            onResponse: function (result) {
+                var response = result.response.schoolId;
+                _this.setState({schoolId: response});
+            },
+            onError: function (error) {
+                // message.error(error);
+            }
         });
     }
 
@@ -156,41 +157,42 @@ export default class questionBank extends React.Component {
             "subjectVisible": ''
         };
 
-        var requestParams = encodeURI("params=" + JSON.stringify(param));
-        WebServiceUtil.requestLittleAntApi({
-            method: 'post',
-            body: requestParams,
-        }).then(function (result) {
-            var response = result.data.response;
-            var pager = result.data.pager;
-            for (let i = 0; i < response.length; i++) {
-                var topic = response[i];
-                topic.checkBoxChecked = false;
-                dataBlob[`${i}`] = topic;
-            }
-            if (pullFalg) {    //拉动刷新  获取数据之后再清除原有数据
-                _this.initData.splice(0);
-                _this.state.dataSource = [];
-                _this.state.dataSource = new ListView.DataSource({
-                    rowHasChanged: (row1, row2) => row1 !== row2,
-                });
-            }
-            var isLoading = false;
-            if (response.length > 0) {
-                if (pager.pageCount == 1 && pager.rsCount < 30) {
-                    isLoading = false;
-                } else {
-                    isLoading = true;
+        WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
+            onResponse: function (result) {
+                var response = result.response;
+                var pager = result.pager;
+                for (let i = 0; i < response.length; i++) {
+                    var topic = response[i];
+                    topic.checkBoxChecked = false;
+                    dataBlob[`${i}`] = topic;
                 }
-            } else {
-                isLoading = false;
+                if (pullFalg) {    //拉动刷新  获取数据之后再清除原有数据
+                    _this.initData.splice(0);
+                    _this.state.dataSource = [];
+                    _this.state.dataSource = new ListView.DataSource({
+                        rowHasChanged: (row1, row2) => row1 !== row2,
+                    });
+                }
+                var isLoading = false;
+                if (response.length > 0) {
+                    if (pager.pageCount == 1 && pager.rsCount < 30) {
+                        isLoading = false;
+                    } else {
+                        isLoading = true;
+                    }
+                } else {
+                    isLoading = false;
+                }
+                _this.initData = _this.initData.concat(response);
+                _this.setState({
+                    dataSource: _this.state.dataSource.cloneWithRows(_this.initData),
+                    isLoadingLeft: isLoading,
+                    refreshing: false
+                })
+            },
+            onError: function (error) {
+                // message.error(error);
             }
-            _this.initData = _this.initData.concat(response);
-            _this.setState({
-                dataSource: _this.state.dataSource.cloneWithRows(_this.initData),
-                isLoadingLeft: isLoading,
-                refreshing: false
-            })
         });
     }
 
@@ -211,41 +213,42 @@ export default class questionBank extends React.Component {
             "subjectVisible": ''
         };
 
-        var requestParams = encodeURI("params=" + JSON.stringify(param));
-        WebServiceUtil.requestLittleAntApi({
-            method: 'post',
-            body: requestParams,
-        }).then(function (result) {
-            var response = result.data.response;
-            var pager = result.data.pager;
-            for (let i = 0; i < response.length; i++) {
-                var topic = response[i];
-                topic.checkBoxChecked = false;
-                dataBlob[`${i}`] = topic;
-            }
-            if (pullFalg) {    //拉动刷新  获取数据之后再清除原有数据
-                _this.initDataOther.splice(0);
-                _this.state.dataSourceOther = [];
-                _this.state.dataSourceOther = new ListView.DataSource({
-                    rowHasChanged: (row1, row2) => row1 !== row2,
-                });
-            }
-            var isLoading = false;
-            if (response.length > 0) {
-                if (pager.pageCount == 1 && pager.rsCount < 30) {
-                    isLoading = false;
-                } else {
-                    isLoading = true;
+        WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
+            onResponse: function (result) {
+                var response = result.response;
+                var pager = result.pager;
+                for (let i = 0; i < response.length; i++) {
+                    var topic = response[i];
+                    topic.checkBoxChecked = false;
+                    dataBlob[`${i}`] = topic;
                 }
-            } else {
-                isLoading = false;
+                if (pullFalg) {    //拉动刷新  获取数据之后再清除原有数据
+                    _this.initDataOther.splice(0);
+                    _this.state.dataSourceOther = [];
+                    _this.state.dataSourceOther = new ListView.DataSource({
+                        rowHasChanged: (row1, row2) => row1 !== row2,
+                    });
+                }
+                var isLoading = false;
+                if (response.length > 0) {
+                    if (pager.pageCount == 1 && pager.rsCount < 30) {
+                        isLoading = false;
+                    } else {
+                        isLoading = true;
+                    }
+                } else {
+                    isLoading = false;
+                }
+                _this.initDataOther = _this.initDataOther.concat(response);
+                _this.setState({
+                    dataSourceOther: _this.state.dataSourceOther.cloneWithRows(_this.initDataOther),
+                    isLoading,
+                    refreshing: false
+                })
+            },
+            onError: function (error) {
+                // message.error(error);
             }
-            _this.initDataOther = _this.initDataOther.concat(response);
-            _this.setState({
-                dataSourceOther: _this.state.dataSourceOther.cloneWithRows(_this.initDataOther),
-                isLoading,
-                refreshing: false
-            })
         });
     }
 
@@ -332,8 +335,7 @@ export default class questionBank extends React.Component {
         var subjectId = res.id;
         var subjectType = res.subjectType;
         // window.open("/#/questionDetil?courseId=" + subjectId + "&subjectType=" + subjectType);
-        var url = "http://jiaoxue.maaee.com:8091/#/questionDetil?courseId=" + subjectId + "&subjectType=" + subjectType;
-        // var url = "http://192.168.50.29:8091/#/questionDetil?courseId=" + subjectId + "&subjectType=" + subjectType;
+        var url = WebServiceUtil.mobileServiceURL + "questionDetil?courseId=" + subjectId + "&subjectType=" + subjectType;
         var data = {};
         data.method = 'openNewPage';
         data.url = url;
@@ -498,31 +500,32 @@ export default class questionBank extends React.Component {
             "userId": loginUser.ident,
         };
 
-        var requestParams = encodeURI("params=" + JSON.stringify(param));
-        WebServiceUtil.requestLittleAntApi({
-            method: 'post',
-            body: requestParams,
-        }).then(function (result) {
-            var ret = result.data;
-            if (ret.msg == '调用成功' && ret.success == true) {
-                Toast.success('题目删除成功', 1);
-                _this.state.dataSource = [];
-                _this.state.dataSource = new ListView.DataSource({
-                    rowHasChanged: (row1, row2) => row1 !== row2,
-                });
-                arr.forEach(function (item) {
-                    _this.initData.forEach(function (v, i) {
-                        if (item == v.id) {
-                            _this.initData.splice(i, 1);
-                        }
+        WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
+            onResponse: function (result) {
+                var ret = result;
+                if (ret.msg == '调用成功' && ret.success == true) {
+                    Toast.success('题目删除成功', 1);
+                    _this.state.dataSource = [];
+                    _this.state.dataSource = new ListView.DataSource({
+                        rowHasChanged: (row1, row2) => row1 !== row2,
                     });
-                });
-                _this.setState({
-                    dataSource: _this.state.dataSource.cloneWithRows(_this.initData)
-                });
-                _this.state.delCheckBoxCheckedArr.splice(0);
-            } else {
-                Toast.fail('题目删除失败', 1);
+                    arr.forEach(function (item) {
+                        _this.initData.forEach(function (v, i) {
+                            if (item == v.id) {
+                                _this.initData.splice(i, 1);
+                            }
+                        });
+                    });
+                    _this.setState({
+                        dataSource: _this.state.dataSource.cloneWithRows(_this.initData)
+                    });
+                    _this.state.delCheckBoxCheckedArr.splice(0);
+                } else {
+                    Toast.fail('题目删除失败', 1);
+                }
+            },
+            onError: function (error) {
+                // message.error(error);
             }
         });
     }

@@ -49,20 +49,20 @@ export default class classReaultAnalysis extends React.Component {
             "clazzId": clazzId,
         };
 
-        var requestParams = encodeURI("params=" + JSON.stringify(param));
-
-        WebServiceUtil.requestLittleAntApi({
-            method: 'post',
-            body: requestParams,
-        }).then(function (result) {
-            _this.setState({animating: false});
-            var ret = result.data.response;
-            if (result.data.success == true && result.data.msg == '调用成功') {
-                //  获得数据
-                _this.buildAnalysis(ret);
-                _this.setState({mainDiv: 'visible'})
-            } else {
-                Toast.fail(result.data.msg, 3);
+        WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
+            onResponse: function (result) {
+                _this.setState({animating: false});
+                var ret = result.response;
+                if (result.success == true && result.msg == '调用成功') {
+                    //  获得数据
+                    _this.buildAnalysis(ret);
+                    _this.setState({mainDiv: 'visible'})
+                } else {
+                    Toast.fail(result.msg, 3);
+                }
+            },
+            onError: function (error) {
+                // message.error(error);
             }
         });
     }
