@@ -175,6 +175,12 @@ export default class pushSubjectsFromTLibrary extends React.Component {
      */
     fileClicked(obj, event) {
         event.stopPropagation();
+        //只要文件夹打开,就会清除当前页的选定题目
+        tLibrary.state.pushSubjectsArr.splice(0);
+        var arr = document.getElementsByClassName('am-checkbox');
+        for (var i = 0; i < arr.length; i++) {
+            arr[i].classList.remove("am-checkbox-checked");
+        };
         var loginUser = JSON.parse(localStorage.getItem('loginUserTLibrary'));
         //新开这个jsx,传递文件夹id和文件夹tittle
         var url = WebServiceUtil.mobileServiceURL + "pushSubjectsFromTLibrary?ident=" + loginUser.ident + "&fileId=" + obj.id;
@@ -241,7 +247,6 @@ export default class pushSubjectsFromTLibrary extends React.Component {
                         <div className="ant_list_subject_no" dangerouslySetInnerHTML={{__html: rowData.name}}>
                         </div>
                     </CheckboxItem>
-
                 )
             } else {
                 //文件夹
