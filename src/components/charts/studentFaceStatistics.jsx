@@ -29,7 +29,9 @@ export default class studentFaceStatistics extends React.Component {
         window.addEventListener( "message",
             function(e){
             console.log(e);
+            if(e.data='classOver') {
                 _this.classOver();
+            }
             },false);
 
     }
