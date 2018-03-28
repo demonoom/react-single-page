@@ -7,7 +7,8 @@ import {
 
 export default class studentFaceStatistics extends React.Component {
     classOpenSend = 0;
-
+    closeCollectData=0;
+    isClassOver=false;
     constructor(props) {
         super(props);
         this.state = {
@@ -23,13 +24,18 @@ export default class studentFaceStatistics extends React.Component {
         Bridge.setShareAble("false");
         Bridge.setRefreshAble("false");
         this.getVclassFaceEmotionsStatistics();
-
+        var _this=this;
         setInterval(this.fetchNewDate, 4000);
+        window.addEventListener( "message",
+            function(e){
+            console.log(e);
+                _this.classOver();
+            },false);
 
     }
 
     fetchNewDate = () => {
-        if (this.classOpenSend == 0) {
+        if (this.classOpenSend == 0||this.isClassOver) {
             return;
         }
         var loginUser = JSON.parse(localStorage.getItem('loginUser'));
@@ -98,7 +104,10 @@ export default class studentFaceStatistics extends React.Component {
         error.response = response;
         throw error;
     }
-
+    classOver() {
+       //alert("class over");
+        this.isClassOver=true;
+    }
     getVclassFaceEmotionsStatistics = () => {
         var loginUser = JSON.parse(localStorage.getItem('loginUser'));
         var _this = this;
@@ -149,12 +158,6 @@ export default class studentFaceStatistics extends React.Component {
         var vid = searchArray[0].split('=')[1];
         var url = mobileServiceURL+"studentFaceStatistics?vid=" + vid;
         window.open(url);
-        // var data = {};
-        // data.method = 'openNewPage';
-        // data.url = url;
-        // Bridge.callHandler(data, null, function (error) {
-        //     window.location.href = url;
-        // });
     };
     onChartReady = (chart) => {
         this._t = setTimeout(function () {
@@ -179,6 +182,7 @@ export default class studentFaceStatistics extends React.Component {
                 var faceEmotionData = faceEmotionDatas[key];
                 currentFaceEmotion=faceEmotionData;
                 var xMinuite = this.formatSeconds(key);
+                this.closeCollectData=xMinuite;
                 if (xMinuite > 60) {
                     break;
                 }
@@ -192,42 +196,6 @@ export default class studentFaceStatistics extends React.Component {
                 lastPoint = key;
             }
 
-          /*  var user={};
-            user.userName='成旭';
-            user.avatar='http://60.205.86.217/upload6/2018-02-01/0/5f8ff939-a387-47b4-a5b3-898776aded40.jpg?size=100x100';
-            (currentFaceEmotion.understandUserList)[0]=user;
-            (currentFaceEmotion.understandUserList)[1]=user;
-            (currentFaceEmotion.understandUserList)[2]=user;
-            (currentFaceEmotion.understandUserList)[3]=user;
-            (currentFaceEmotion.understandUserList)[4]=user;
-            (currentFaceEmotion.understandUserList)[5]=user;
-            (currentFaceEmotion.understandUserList)[6]=user;
-            (currentFaceEmotion.understandUserList)[7]=user;
-            (currentFaceEmotion.understandUserList)[8]=user;
-            (currentFaceEmotion.understandUserList)[9]=user;
-            (currentFaceEmotion.understandUserList)[10]=user;
-            (currentFaceEmotion.understandUserList)[11]=user;
-            (currentFaceEmotion.understandUserList)[12]=user;
-            (currentFaceEmotion.understandUserList)[13]=user;
-            (currentFaceEmotion.understandUserList)[14]=user;
-            (currentFaceEmotion.understandUserList)[15]=user;
-            (currentFaceEmotion.understandUserList)[16]=user;
-
-
-            (currentFaceEmotion.attentionUserList)[0]=user;
-            (currentFaceEmotion.attentionUserList)[1]=user;
-            (currentFaceEmotion.attentionUserList)[2]=user;
-            (currentFaceEmotion.attentionUserList)[3]=user;
-
-            (currentFaceEmotion.noUnderstandUserList)[0]=user;
-            (currentFaceEmotion.noUnderstandUserList)[1]=user;
-            (currentFaceEmotion.noUnderstandUserList)[2]=user;
-            (currentFaceEmotion.noUnderstandUserList)[3]=user;
-
-            (currentFaceEmotion.confuseUserList)[0]=user;
-            (currentFaceEmotion.confuseUserList)[1]=user;
-            (currentFaceEmotion.confuseUserList)[2]=user;
-            (currentFaceEmotion.confuseUserList)[3]=user;*/
             this.showUserHandleByScreenWidth(currentFaceEmotion);
             this.setState({lineChartOption: lineChartOption});
             this.setState({lastPoint: lastPoint});
@@ -409,11 +377,11 @@ export default class studentFaceStatistics extends React.Component {
             thinkUserList=new Array();
         }
         console.log(thinkUserList.length/aliveUserList.length);
-        var attention=this.formateNumer(_this.state.currentFaceEmotion.attention/aliveUserList.length,0);
-        var confuse=this.formateNumer((confuseUserList.length/aliveUserList.length)*100,0);
-        var understand=this.formateNumer((understandUserList.length/aliveUserList.length)*100,0);
-        var thinking=this.formateNumer((thinkUserList.length/aliveUserList.length)*100,0);
-        var understandLow25=this.formateNumer((noUnderstandUserList.length/aliveUserList.length)*100,0);
+        var attention=this.formateNumer(_this.state.currentFaceEmotion.attention/(aliveUserList.length-1),0);
+        var confuse=this.formateNumer((confuseUserList.length/(aliveUserList.length-1)*100),0);
+        var understand=this.formateNumer((understandUserList.length/(aliveUserList.length-1))*100,0);
+        var thinking=this.formateNumer((thinkUserList.length/(aliveUserList.length-1))*100,0);
+        var understandLow25=this.formateNumer((noUnderstandUserList.length/(aliveUserList.length-1))*100,0);
         var screenHeight=_this.state.screenHeight;
         var showConutByScreenHeight=16;
         if(screenHeight==1080){//16
