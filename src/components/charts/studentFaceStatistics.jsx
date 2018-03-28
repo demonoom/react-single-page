@@ -28,8 +28,8 @@ export default class studentFaceStatistics extends React.Component {
         setInterval(this.fetchNewDate, 4000);
         window.addEventListener( "message",
             function(e){
-            console.log(e);
-            if(e.data='classOver') {
+            console.log(e.data);
+            if(e.data=='classOver') {
                 _this.classOver();
             }
             },false);
