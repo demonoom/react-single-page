@@ -177,42 +177,42 @@ export default class searchUserLocationInfo extends React.Component {
             "searchKeyWords": searchKeyWords,
         };
 
-        var requestParams = encodeURI("params=" + JSON.stringify(param));
-
-        WebServiceUtil.requestLittleAntApi({
-            method: 'post',
-            body: requestParams,
-        }).then(function (result) {
-            var response = result.data.response;
-            var pager = result.data.pager;
-            for (let i = 0; i < response.length; i++) {
-                var topic = response[i];
-                topic.checkBoxChecked = false;
-                dataBlob[`${i}`] = topic;
-            }
-            if (isSearch) {    //拉动刷新  获取数据之后再清除原有数据
-                _this.initDataOther.splice(0);
-                _this.state.dataSourceOther = [];
-                _this.state.dataSourceOther = new ListView.DataSource({
-                    rowHasChanged: (row1, row2) => row1 !== row2,
-                });
-            }
-            var isLoading = false;
-            if (response.length > 0) {
-                if (pager.pageCount == 1 && pager.rsCount < 30) {
-                    isLoading = false;
-                } else {
-                    isLoading = true;
+        WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
+            onResponse: function (result) {
+                var response = result.response;
+                var pager = result.pager;
+                for (let i = 0; i < response.length; i++) {
+                    var topic = response[i];
+                    topic.checkBoxChecked = false;
+                    dataBlob[`${i}`] = topic;
                 }
-            } else {
-                isLoading = false;
+                if (isSearch) {    //拉动刷新  获取数据之后再清除原有数据
+                    _this.initDataOther.splice(0);
+                    _this.state.dataSourceOther = [];
+                    _this.state.dataSourceOther = new ListView.DataSource({
+                        rowHasChanged: (row1, row2) => row1 !== row2,
+                    });
+                }
+                var isLoading = false;
+                if (response.length > 0) {
+                    if (pager.pageCount == 1 && pager.rsCount < 30) {
+                        isLoading = false;
+                    } else {
+                        isLoading = true;
+                    }
+                } else {
+                    isLoading = false;
+                }
+                _this.initDataOther = _this.initDataOther.concat(response);
+                _this.setState({
+                    userDataSource: _this.state.userDataSource.cloneWithRows(_this.initDataOther),
+                    isLoading: isLoading,
+                    refreshing: false
+                })
+            },
+            onError: function (error) {
+                // message.error(error);
             }
-            _this.initDataOther = _this.initDataOther.concat(response);
-            _this.setState({
-                userDataSource: _this.state.userDataSource.cloneWithRows(_this.initDataOther),
-                isLoading: isLoading,
-                refreshing: false
-            })
         });
     }
 

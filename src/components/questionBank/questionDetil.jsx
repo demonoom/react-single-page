@@ -45,26 +45,27 @@ export default class Demo extends React.Component {
             "sid": id,
         };
 
-        var requestParams = encodeURI("params=" + JSON.stringify(param));
-        WebServiceUtil.requestLittleAntApi({
-            method: 'post',
-            body: requestParams,
-        }).then(function (result) {
-            var ret = result.data;
-            if (ret.msg == '调用成功' && ret.success == true) {
-                var data = ret.response;
-                _this.setState({questionDetil: data});
-                var knowledgeInfoList = data.knowledgeInfoList;
-                if (WebServiceUtil.isEmpty(knowledgeInfoList) == false) {
-                    var knowledgeInfoArr = [];
-                    knowledgeInfoList.forEach(function (v, i) {
-                        var knowledgeInfo = <span>{v.knowledgeName}</span>
-                        knowledgeInfoArr.push(knowledgeInfo);
-                    })
-                    _this.setState({knowledgeInfoArr});
-                } else {
-                    _this.setState({divShow: 'none'});
+        WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
+            onResponse: function (result) {
+                var ret = result;
+                if (ret.msg == '调用成功' && ret.success == true) {
+                    var data = ret.response;
+                    _this.setState({questionDetil: data});
+                    var knowledgeInfoList = data.knowledgeInfoList;
+                    if (WebServiceUtil.isEmpty(knowledgeInfoList) == false) {
+                        var knowledgeInfoArr = [];
+                        knowledgeInfoList.forEach(function (v, i) {
+                            var knowledgeInfo = <span>{v.knowledgeName}</span>
+                            knowledgeInfoArr.push(knowledgeInfo);
+                        })
+                        _this.setState({knowledgeInfoArr});
+                    } else {
+                        _this.setState({divShow: 'none'});
+                    }
                 }
+            },
+            onError: function (error) {
+                // message.error(error);
             }
         });
     }

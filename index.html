@@ -6,7 +6,8 @@
           content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no"/>
     <meta name="format-detection" content="telephone=no"/>
     <!--<script src="./src/jsBridge.js"></script>-->
-    <script src="./src/helpers/WebServiceUtil.js?v=0.0.2"></script>
+    <script src="src/helpers/zepto.min.js"></script>
+    <script src="src/helpers/webServiceUtil.js"></script>
     <script src="https://www.maaee.com/Excoord_PhoneService/js/jsbridge.js?v=17"></script>
     <script src="https://as.alipayobjects.com/g/component/fastclick/1.0.6/fastclick.js"></script>
     <script>
@@ -19,43 +20,12 @@
             document.writeln('<script src="https://as.alipayobjects.com/g/component/es6-promise/3.2.2/es6-promise.min.js"' + '>' + '<' + '/' + 'script>');
         }
     </script>
-    <link rel="stylesheet" href="/dist/index.css?v=1.8">
+    <link rel="stylesheet" href="/dist/index.css?v=2.0">
 </head>
 <body>
 <div id="example"/>
 <script src="https://as.alipayobjects.com/g/component/??react/15.3.2/react.min.js,react/15.3.2/react-dom.min.js"></script>
 <script src="/dist/shared.js?v=1.0.0"></script>
-<script src="/dist/index.js?v=1.1.8"></script>
-<script>
-    window.alert = function(name){
-        var iframe = document.createElement("IFRAME");
-        iframe.style.display="none";
-        iframe.setAttribute("src", 'data:text/plain,');
-        document.documentElement.appendChild(iframe);
-        window.frames[0].window.alert(name);
-        iframe.parentNode.removeChild(iframe);
-    }
-    //重写confirm 不显示ip地址
-    var wConfirm = window.confirm;
-    window.confirm = function (message) {
-        try {
-            var iframe = document.createElement("IFRAME");
-            iframe.style.display = "none";
-            iframe.setAttribute("src", 'data:text/plain,');
-            document.documentElement.appendChild(iframe);
-            var alertFrame = window.frames[0];
-            var iwindow = alertFrame.window;
-            if (iwindow == undefined) {
-                iwindow = alertFrame.contentWindow;
-            }
-            var result = iwindow.confirm(message);
-            iframe.parentNode.removeChild(iframe);
-            return result;
-        }
-        catch (exc) {
-            return wConfirm(message);
-        }
-    }
-</script>
+<script src="/dist/index.js?v=1.2.0"></script>
 </body>
 </html>

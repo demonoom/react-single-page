@@ -10,6 +10,23 @@ const CheckboxItem = Checkbox.CheckboxItem;
 
 var tLibrary;
 
+// noomShareId(id) {
+//     var _this = this;
+//     var param = {
+//         "method": 'getCloudFileShareById',
+//         "shareId": id,
+//     };
+//     doWebService(JSON.stringify(param), {
+//         onResponse: function (ret) {
+//             var response = ret.response.attachments;
+//             _this.buildFileDetilData(response);
+//         },
+//         onError: function (error) {
+//             message.error(error);
+//         }
+//     });
+// },
+
 export default class arrangementWork extends React.Component {
 
     constructor(props) {
@@ -60,41 +77,42 @@ export default class arrangementWork extends React.Component {
             "cloudFileId": fileId,
             "pageNo": PageNo,
         };
-        var requestParams = encodeURI("params=" + JSON.stringify(param));
-        WebServiceUtil.requestLittleAntApi({
-            method: 'post',
-            body: requestParams,
-        }).then(function (result) {
-            if (result.data.msg == '调用成功' || result.data.success == true) {
-                var response = result.data.response;
-                var pager = result.data.pager;
-                for (let i = 0; i < response.length; i++) {
-                    var topic = response[i];
-                    dataBlob[`${i}`] = topic;
-                }
-                if (clearFlag) {    //拉动刷新  获取数据之后再清除原有数据
-                    _this.initData.splice(0);
-                    _this.state.dataSource = [];
-                    _this.state.dataSource = new ListView.DataSource({
-                        rowHasChanged: (row1, row2) => row1 !== row2,
-                    });
-                }
-                var isLoading = false;
-                if (response.length > 0) {
-                    if (pager.pageCount == 1 && pager.rsCount < 30) {
-                        isLoading = false;
-                    } else {
-                        isLoading = true;
+        WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
+            onResponse: function (result) {
+                if (result.msg == '调用成功' || result.success == true) {
+                    var response = result.response;
+                    var pager = result.pager;
+                    for (let i = 0; i < response.length; i++) {
+                        var topic = response[i];
+                        dataBlob[`${i}`] = topic;
                     }
-                } else {
-                    isLoading = false;
+                    if (clearFlag) {    //拉动刷新  获取数据之后再清除原有数据
+                        _this.initData.splice(0);
+                        _this.state.dataSource = [];
+                        _this.state.dataSource = new ListView.DataSource({
+                            rowHasChanged: (row1, row2) => row1 !== row2,
+                        });
+                    }
+                    var isLoading = false;
+                    if (response.length > 0) {
+                        if (pager.pageCount == 1 && pager.rsCount < 30) {
+                            isLoading = false;
+                        } else {
+                            isLoading = true;
+                        }
+                    } else {
+                        isLoading = false;
+                    }
+                    _this.initData = _this.initData.concat(response);
+                    _this.setState({
+                        dataSource: _this.state.dataSource.cloneWithRows(_this.initData),
+                        isLoadingLeft: isLoading,
+                        refreshing: false
+                    })
                 }
-                _this.initData = _this.initData.concat(response);
-                _this.setState({
-                    dataSource: _this.state.dataSource.cloneWithRows(_this.initData),
-                    isLoadingLeft: isLoading,
-                    refreshing: false
-                })
+            },
+            onError: function (error) {
+                // message.error(error);
             }
         });
     }
@@ -112,41 +130,42 @@ export default class arrangementWork extends React.Component {
             "userId": loginUser.ident,
             "pageNo": PageNo,
         };
-        var requestParams = encodeURI("params=" + JSON.stringify(param));
-        WebServiceUtil.requestLittleAntApi({
-            method: 'post',
-            body: requestParams,
-        }).then(function (result) {
-            if (result.data.msg == '调用成功' || result.data.success == true) {
-                var response = result.data.response;
-                var pager = result.data.pager;
-                for (let i = 0; i < response.length; i++) {
-                    var topic = response[i];
-                    dataBlob[`${i}`] = topic;
-                }
-                if (clearFlag) {    //拉动刷新  获取数据之后再清除原有数据
-                    _this.initData.splice(0);
-                    _this.state.dataSource = [];
-                    _this.state.dataSource = new ListView.DataSource({
-                        rowHasChanged: (row1, row2) => row1 !== row2,
-                    });
-                }
-                var isLoading = false;
-                if (response.length > 0) {
-                    if (pager.pageCount == 1 && pager.rsCount < 30) {
-                        isLoading = false;
-                    } else {
-                        isLoading = true;
+        WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
+            onResponse: function (result) {
+                if (result.msg == '调用成功' || result.success == true) {
+                    var response = result.response;
+                    var pager = result.pager;
+                    for (let i = 0; i < response.length; i++) {
+                        var topic = response[i];
+                        dataBlob[`${i}`] = topic;
                     }
-                } else {
-                    isLoading = false;
+                    if (clearFlag) {    //拉动刷新  获取数据之后再清除原有数据
+                        _this.initData.splice(0);
+                        _this.state.dataSource = [];
+                        _this.state.dataSource = new ListView.DataSource({
+                            rowHasChanged: (row1, row2) => row1 !== row2,
+                        });
+                    }
+                    var isLoading = false;
+                    if (response.length > 0) {
+                        if (pager.pageCount == 1 && pager.rsCount < 30) {
+                            isLoading = false;
+                        } else {
+                            isLoading = true;
+                        }
+                    } else {
+                        isLoading = false;
+                    }
+                    _this.initData = _this.initData.concat(response);
+                    _this.setState({
+                        dataSource: _this.state.dataSource.cloneWithRows(_this.initData),
+                        isLoadingLeft: isLoading,
+                        refreshing: false
+                    })
                 }
-                _this.initData = _this.initData.concat(response);
-                _this.setState({
-                    dataSource: _this.state.dataSource.cloneWithRows(_this.initData),
-                    isLoadingLeft: isLoading,
-                    refreshing: false
-                })
+            },
+            onError: function (error) {
+                // message.error(error);
             }
         });
     }
@@ -176,7 +195,7 @@ export default class arrangementWork extends React.Component {
         event.stopPropagation();
         var loginUser = JSON.parse(localStorage.getItem('loginUserTLibrary'));
         //新开这个jsx,传递文件夹id和文件夹tittle
-        var url = "http://192.168.50.29:8091/#/arrangementWork?ident=" + loginUser.ident + "&fileId=" + obj.id;
+        var url = WebServiceUtil.mobileServiceURL + "arrangementWork?ident=" + loginUser.ident + "&fileId=" + obj.id;
         var data = {};
         data.method = 'openNewPage';
         data.url = url;
@@ -232,7 +251,7 @@ export default class arrangementWork extends React.Component {
 
         //进入题目详情,使用原来页面
         var subjectId = obj.id;
-        var url = "http://jiaoxue.maaee.com:8091/#/questionDetil?courseId=" + subjectId;
+        var url = WebServiceUtil.mobileServiceURL + "questionDetil?courseId=" + subjectId;
         var data = {};
         data.method = 'openNewPage';
         data.url = url;

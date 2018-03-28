@@ -71,18 +71,18 @@ class Index extends React.Component {
                     {/*<li><Link to="/s3">Form + ...</Link></li>*/}
                     {/*<li><Link to="/s4" style={{fontSize: '24px'}}>蚁巢</Link></li>*/}
                     {/*<li><Link to="/s5" style={{fontSize: '24px'}}>实验</Link></li>*/}
-                    <li><Link to="/questionBank?ident=54208&pointId=4339&title=nihao"
-                              style={{fontSize: '24px'}}>题库</Link></li>
+                    {/*<li><Link to="/questionBank?ident=54208&pointId=4339&title=nihao"*/}
+                              {/*style={{fontSize: '24px'}}>题库</Link></li>*/}
                     {/*<li><Link to="/analysisList?access_user=23836" style={{fontSize: '24px'}}>成绩分析</Link></li>*/}
                     {/*<li><Link to="/searchUserLocationInfo" style={{fontSize: '24px'}}>搜索查看用户位置信息</Link></li>*/}
-                    <li><Link to="/studentFaceStatistics" style={{fontSize: '24px'}}>学生脸部表情分析折线图</Link></li>
-                    <li><Link to="/termitePlateLibrary?ident=23836&fileId=-1&title=蚁盘题目&phoneType=0"
-                              style={{fontSize: '24px'}}>蚁盘题库</Link>
-                    </li>
-                    <li><Link to="/pushSubjectsFromTLibrary?ident=23836&fileId=-1"
-                              style={{fontSize: '24px'}}>蚁盘推题</Link></li>
-                    <li><Link to="/arrangementWork?ident=23836&fileId=-1"
-                              style={{fontSize: '24px'}}>布置作业</Link></li>
+                    {/*<li><Link to="/studentFaceStatistics" style={{fontSize: '24px'}}>学生脸部表情分析折线图</Link></li>*/}
+                    {/*<li><Link to="/termitePlateLibrary?ident=23836&fileId=-1&title=蚁盘题目&phoneType=0"*/}
+                              {/*style={{fontSize: '24px'}}>蚁盘题库</Link>*/}
+                    {/*</li>*/}
+                    {/*<li><Link to="/pushSubjectsFromTLibrary?ident=23836&fileId=-1"*/}
+                              {/*style={{fontSize: '24px'}}>蚁盘推题</Link></li>*/}
+                    {/*<li><Link to="/arrangementWork?ident=23836&fileId=-1"*/}
+                              {/*style={{fontSize: '24px'}}>布置作业</Link></li>*/}
                 </ul>
             </div>
         );
