@@ -198,10 +198,8 @@ export default class fileShareLink extends React.Component {
                 headDiv = <div onClick={_this.queCilcked.bind(this, rowData)}>
                     {img}
                     <div>
-                        <div>
-                            <span>{rowData.cloudFile.name}</span>
-                            <span>{time}</span>
-                        </div>
+                        <span>{rowData.cloudFile.name}</span>
+                        <span>{time}</span>
                     </div>
                 </div>;
 
@@ -220,10 +218,8 @@ export default class fileShareLink extends React.Component {
                 headDiv = <div onClick={_this.fileClicked.bind(this, rowData)}>
                     <img src={require('../../termitePlateLibrary/imgs/file.png')} alt=""/>
                     <div>
-                        <div>
-                            <span>{rowData.cloudFile.name}</span>
-                            <span>{time}</span>
-                        </div>
+                        <span>{rowData.cloudFile.name}</span>
+                        <span>{time}</span>
                     </div>
                 </div>;
                 headDivItem = <ul>
