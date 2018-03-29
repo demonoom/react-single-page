@@ -501,7 +501,7 @@ export default class studentFaceStatistics extends React.Component {
         return (
 
             <div className="face_cont_wrap">
-                <div className='over_flow_auto student_f_auto concentration_title concentration_top'>课堂实时表情分析</div>
+                <div className='over_flow_auto student_f_auto concentration_title concentration_top'>FaceMind课堂实时表情分析</div>
                 <div className='over_flow_auto concentration_bottom my_flex flex_justify face_cont_wrap1'>
                     <div className="concentration_list">
                         <div className="concentration_title concentration_title3">专注度{attention}%</div>
