@@ -1,6 +1,7 @@
 var isDebug = false;
-var localDomain = "192.168.50.15";   //请求地址
-var localUrl = "192.168.50.15";    //跳转地址
+var localDomain = "192.168.50.34";   //请求地址
+var isDebugLocal = false;
+var localUrl = "192.168.50.29";    //跳转地址
 // //云校本地测试webService地址
 // var elearningWebserviceURLOfLocal = "http://" + localDomain + ":8888/elearning/elearningControl/";
 // //云校的远程服务器地址
@@ -20,7 +21,7 @@ function WebServiceUtil() {
 
 };
 
-WebServiceUtil.mobileServiceURL = isDebug ? mobileURLOfLocal : mobileURLOfRemote;
+WebServiceUtil.mobileServiceURL = isDebugLocal ? mobileURLOfLocal : mobileURLOfRemote;
 
 WebServiceUtil.requestLittleAntApi = function (data, listener) {
     $.ajax({

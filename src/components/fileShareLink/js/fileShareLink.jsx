@@ -32,25 +32,26 @@ export default class fileShareLink extends React.Component {
         var locationSearch = locationHref.substr(locationHref.indexOf("?") + 1);
         var searchArray = locationSearch.split("&");
         var shareId = searchArray[0].split('=')[1];
-        this.getCloudFileShareById(shareId);
+        var userId = searchArray[1].split('=')[1];
+        this.setState({shareId, userId});
+        var type = 'none';
+        if (WebServiceUtil.isEmpty(searchArray[2]) == false) {
+            type = searchArray[2].split('=')[1];
+        }
+        var obj = {
+            userId: userId
+        };
+        localStorage.setItem("fileShareUserId", JSON.stringify(obj)); //将分享人的相关信息存储在每一页中进行渲染
+        if (type == 'listFiles') {
+            this.listFiles(shareId, userId);
+            this.setState({listFlag: true});
+        } else {
+            this.getCloudFileShareById(shareId);
+            this.setState({listFlag: false});
+        }
 
         //添加对视窗大小的监听,在屏幕转换以及键盘弹起时重设各项高度
         window.addEventListener('resize', fileShare.onWindowResize)
-
-        //this.listFiles();
-
-        // var loginUser = {
-        //     "shareId": shareId,
-        // };
-        // localStorage.setItem("loginUserTLibrary", JSON.stringify(loginUser));
-        // if (fileId == -1) {
-        //     //进入根目录
-        //     this.getUserRootCloudSubjects()
-        // } else {
-        //     //进入文件夹
-        //     this.listCloudSubject(fileId)
-        // }
-
     }
 
     componentWillUnmount() {
@@ -67,19 +68,45 @@ export default class fileShareLink extends React.Component {
         }, 100)
     }
 
-    listFiles() {
+    listFiles(shareId, userId) {
+        var _this = this;
+        const dataBlob = {};
+        var PageNo = this.state.defaultPageNo;
         var param = {
             "method": 'listFiles',
-            "operateUserId": '23836',
-            "cloudFileId": 1046,
+            "operateUserId": userId,
+            "cloudFileId": shareId,
             "queryConditionJson": '',
-            "pageNo": 1
+            "pageNo": PageNo
         };
 
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
             onResponse: function (result) {
                 if (result.msg == '调用成功' || result.success == true) {
                     console.log(result);
+
+                    var response = result.response;
+                    var pager = result.pager;
+                    for (let i = 0; i < response.length; i++) {
+                        var topic = response[i];
+                        dataBlob[`${i}`] = topic;
+                    }
+                    var isLoading = false;
+                    if (response.length > 0) {
+                        if (pager.pageCount == 1 && pager.rsCount < 30) {
+                            isLoading = false;
+                        } else {
+                            isLoading = true;
+                        }
+                    } else {
+                        isLoading = false;
+                    }
+                    _this.initData = _this.initData.concat(response);
+                    _this.setState({
+                        dataSource: _this.state.dataSource.cloneWithRows(_this.initData),
+                        isLoadingLeft: isLoading,
+                        refreshing: false
+                    })
                 }
             },
             onError: function (error) {
@@ -110,25 +137,15 @@ export default class fileShareLink extends React.Component {
                     };
                     localStorage.setItem("fileShareUserMsg", JSON.stringify(obj)); //将分享人的相关信息存储在每一页中进行渲染
 
-                    //var pager = result.pager;
                     for (let i = 0; i < response.attachments.length; i++) {
                         var topic = response.attachments[i];
                         dataBlob[`${i}`] = topic;
                     }
-                    var isLoading = false;
-                    if (response.length > 0) {
-                        // if (pager.pageCount == 1 && pager.rsCount < 30) {
-                        //     isLoading = false;
-                        // } else {
-                        isLoading = true;
-                        // }
-                    } else {
-                        isLoading = false;
-                    }
+
                     _this.initData = _this.initData.concat(response.attachments);
                     _this.setState({
                         dataSource: _this.state.dataSource.cloneWithRows(_this.initData),
-                        isLoadingLeft: isLoading,
+                        isLoadingLeft: false,
                         refreshing: false
                     })
                 }
@@ -143,46 +160,116 @@ export default class fileShareLink extends React.Component {
      * 保存到蚁盘
      */
     saveFile(data) {
-        console.log(data);
+        //拿到文件/文件夹ID,交给客户端进行保存处理
+        var data = {
+            method: 'saveFile',
+            id: data.cloudFileId
+        };
+        Bridge.callHandler(data, null, function (error) {
+            console.log(error);
+        });
     }
 
     /**
      * 下载
      */
     downLoadFile(data) {
-        console.log(data);
+        //拿到文件JSON,交给客户端进行保存处理
+        var data = {
+            method: 'downLoadFile',
+            cloudFile: JSON.stringify(data.cloudFile)
+        };
+        Bridge.callHandler(data, null, function (error) {
+            console.log(error);
+        });
     }
 
     /**
      * 文件夹被点击
      */
-    fileClicked(data) {
-        console.log(data);
+    fileClicked(data, event) {
+        event.stopPropagation();
+        var userId = JSON.parse(localStorage.getItem('fileShareUserId')).userId;
+        var fileId = data.cloudFileId;
+        //新开页
+
+        var url = WebServiceUtil.mobileServiceURL + "fileShareLink?shareId=" + fileId + "&userId=" + userId + "&type=listFiles";
+        var data = {
+            method: 'openNewPage',
+            url: url
+        };
+
+        Bridge.callHandler(data, null, function (error) {
+            window.location.href = url;
+        });
     }
 
     /**
      * 文件被点击
      */
-    queCilcked(data) {
+    queCilcked(data, event) {
+        event.stopPropagation();
         console.log(data);
     }
+
+    /**
+     *  ListView数据全部渲染完毕的回调
+     */
+    onEndReached = (event) => {
+
+        if (!fileShare.state.listFlag) {
+            return
+        }
+
+        var _this = this;
+        var currentPageNo = this.state.defaultPageNo;
+        if (!this.state.isLoadingLeft && !this.state.hasMore) {
+            return;
+        }
+        currentPageNo += 1;
+        this.setState({isLoadingLeft: true, defaultPageNo: currentPageNo});
+        _this.listFiles(fileShare.state.shareId, fileShare.state.userId);
+        this.setState({
+            dataSource: this.state.dataSource.cloneWithRows(this.initData),
+            isLoadingLeft: true,
+        });
+    };
 
     render() {
 
         var _this = this;
 
         var fileShareUserMsg = JSON.parse(localStorage.getItem('fileShareUserMsg'));
+        var avatarDiv = <div></div>;
+
+        if (WebServiceUtil.isEmpty(fileShareUserMsg) == false) {
+            avatarDiv = <div className="userMsg">
+                <img className="userImg" src={fileShareUserMsg.avatar}/>
+                <div className="userDiv">
+                    <div>{fileShareUserMsg.title}</div>
+                    <div>{WebServiceUtil.formatYMD(fileShareUserMsg.createTime) + ' ' + WebServiceUtil.formatHM(fileShareUserMsg.createTime)}</div>
+                </div>
+            </div>;
+        }
 
         const row = (rowData, sectionID, rowID) => {
-
-            console.log(rowData.cloudFile);
-
             var headDiv;
             var headDivItem;
-            var time = WebServiceUtil.formatYMD(rowData.cloudFile.createTime) + ' ' + WebServiceUtil.formatHM(rowData.cloudFile.createTime);
-            var id = rowData.cloudFileId;
 
-            if (rowData.cloudFile.fileType == 0) {
+            if (fileShare.state.listFlag) {
+                //listFiles
+                var time = WebServiceUtil.formatYMD(rowData.createTime) + ' ' + WebServiceUtil.formatHM(rowData.createTime);
+                var id = rowData.id;
+                var name = rowData.name;
+                var fileType = rowData.fileType;
+            } else {
+                var time = WebServiceUtil.formatYMD(rowData.cloudFile.createTime) + ' ' + WebServiceUtil.formatHM(rowData.cloudFile.createTime);
+                var id = rowData.cloudFileId;
+                var name = rowData.cloudFile.name;
+                var fileType = rowData.cloudFile.fileType;
+            }
+
+            if (fileType == 0) {
                 //文件
                 var img = <img src='../imgs/singleChoice.png'/>;
                 // if (rowData.subject.typeName == '单选题') {
@@ -198,7 +285,7 @@ export default class fileShareLink extends React.Component {
                 headDiv = <div onClick={_this.queCilcked.bind(this, rowData)}>
                     {img}
                     <div>
-                        <span>{rowData.cloudFile.name}</span>
+                        <span>{name}</span>
                         <span>{time}</span>
                     </div>
                 </div>;
@@ -215,10 +302,11 @@ export default class fileShareLink extends React.Component {
                 </ul>;
             } else {
                 //文件夹
-                headDiv = <div onClick={_this.fileClicked.bind(this, rowData)}>
-                    <img src={require('../../termitePlateLibrary/imgs/file.png')} alt=""/>
-                    <div>
-                        <span>{rowData.cloudFile.name}</span>
+                headDiv = <div className="my_flex flex_align_center noomWidth"
+                               onClick={_this.fileClicked.bind(this, rowData)}>
+                    <img className="filePic" src={require('../../termitePlateLibrary/imgs/file.png')} alt=""/>
+                    <div className="ant_list_time">
+                        <span className="margin_right_8">{name}</span>
                         <span>{time}</span>
                     </div>
                 </div>;
@@ -243,13 +331,7 @@ export default class fileShareLink extends React.Component {
 
         return (
             <div id="fileShareLink" style={{height: document.body.clientHeight}}>
-                <div className="userMsg">
-                    <img className="userImg" src={fileShareUserMsg.avatar}/>
-                    <div className="userDiv">
-                        <div>{fileShareUserMsg.title}</div>
-                        <div>{WebServiceUtil.formatYMD(fileShareUserMsg.createTime) + ' ' + WebServiceUtil.formatHM(fileShareUserMsg.createTime)}</div>
-                    </div>
-                </div>
+                {avatarDiv}
                 <ListView
                     ref={el => this.lv = el}
                     dataSource={this.state.dataSource}    //数据类型是 ListViewDataSource
