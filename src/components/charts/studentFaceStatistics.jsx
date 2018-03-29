@@ -6,7 +6,7 @@ import {
 } from 'antd-mobile';
 
 export default class studentFaceStatistics extends React.Component {
-    classOpenSend = 0;
+    classOpenSend = 1;
     closeCollectData=0;
     isClassOver=false;
     constructor(props) {
@@ -23,9 +23,11 @@ export default class studentFaceStatistics extends React.Component {
         document.title = '学生听课认真度分析';
         Bridge.setShareAble("false");
         Bridge.setRefreshAble("false");
+
         this.getVclassFaceEmotionsStatistics();
         var _this=this;
-        setInterval(this.fetchNewDate, 4000);
+
+        //setInterval(this.fetchNewDate, 4000);
         window.addEventListener( "message",
             function(e){
             console.log(e.data);
@@ -38,6 +40,7 @@ export default class studentFaceStatistics extends React.Component {
 
     fetchNewDate = () => {
         if (this.classOpenSend == 0||this.isClassOver) {
+            console.log("arthur test");
             return;
         }
         var loginUser = JSON.parse(localStorage.getItem('loginUser'));
@@ -133,6 +136,7 @@ export default class studentFaceStatistics extends React.Component {
                 }
                 var resourse = data.response;
                 _this.handleResourse(resourse);
+                setTimeout(function(){ setInterval(_this.fetchNewDate, 4000); }, 3000);
             },
             onError: function (error) {
                 // message.error(error);
@@ -190,12 +194,13 @@ export default class studentFaceStatistics extends React.Component {
                     break;
                 }
                 (lineChartOption.xAxis)[0].data.push(xMinuite);
-                (lineChartOption.series)[0].data.push(faceEmotionData.attention.toFixed(2));
-                (lineChartOption.series)[1].data.push(faceEmotionData.confuse.toFixed(2));
-                (lineChartOption.series)[2].data.push(faceEmotionData.thinking.toFixed(2));
-                (lineChartOption.series)[3].data.push(faceEmotionData.joy.toFixed(2));
-                (lineChartOption.series)[4].data.push(faceEmotionData.surprise.toFixed(2));
-                (lineChartOption.series)[5].data.push(faceEmotionData.understand.toFixed(2));
+                var count=faceEmotionData.count;
+                (lineChartOption.series)[0].data.push(faceEmotionData.attention.toFixed(2)/count);
+                (lineChartOption.series)[1].data.push(faceEmotionData.confuse.toFixed(2)/count);
+                (lineChartOption.series)[2].data.push(faceEmotionData.thinking.toFixed(2)/count);
+                (lineChartOption.series)[3].data.push(faceEmotionData.joy.toFixed(2)/count);
+                (lineChartOption.series)[4].data.push(faceEmotionData.surprise.toFixed(2)/count);
+                (lineChartOption.series)[5].data.push(faceEmotionData.understand.toFixed(2)/count);
                 lastPoint = key;
             }
 
@@ -380,11 +385,11 @@ export default class studentFaceStatistics extends React.Component {
             thinkUserList = new Array();
         }
         console.log(thinkUserList.length/aliveUserList.length);
-        var attention=this.formateNumer(_this.state.currentFaceEmotion.attention/(aliveUserList.length-1),0);
-        var confuse=this.formateNumer((confuseUserList.length/(aliveUserList.length-1)*100),0);
-        var understand=this.formateNumer((understandUserList.length/(aliveUserList.length-1))*100,0);
-        var thinking=this.formateNumer((thinkUserList.length/(aliveUserList.length-1))*100,0);
-        var understandLow25=this.formateNumer((noUnderstandUserList.length/(aliveUserList.length-1))*100,0);
+        var attention=this.formateNumer(attentionUserList.length/(aliveUserList.length)*100,0);
+        var confuse=this.formateNumer((confuseUserList.length/(aliveUserList.length)*100),0);
+        var understand=this.formateNumer((understandUserList.length/(aliveUserList.length))*100,0);
+        var thinking=this.formateNumer((thinkUserList.length/(aliveUserList.length))*100,0);
+        var understandLow25=this.formateNumer((noUnderstandUserList.length/(aliveUserList.length))*100,0);
         var screenHeight=_this.state.screenHeight;
         var showConutByScreenHeight=16;
         if(screenHeight==1080){//16
