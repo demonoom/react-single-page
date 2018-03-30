@@ -384,12 +384,12 @@ export default class studentFaceStatistics extends React.Component {
         if (!thinkUserList) {
             thinkUserList = new Array();
         }
-        console.log(thinkUserList.length/aliveUserList.length);
-        var attention=this.formateNumer(attentionUserList.length/(aliveUserList.length)*100,0);
-        var confuse=this.formateNumer((confuseUserList.length/(aliveUserList.length)*100),0);
-        var understand=this.formateNumer((understandUserList.length/(aliveUserList.length))*100,0);
-        var thinking=this.formateNumer((thinkUserList.length/(aliveUserList.length))*100,0);
-        var understandLow25=this.formateNumer((noUnderstandUserList.length/(aliveUserList.length))*100,0);
+        var aliveUserNumber=(aliveUserList.length-1)==0?1:aliveUserList.length-1;
+        var attention=this.formateNumer(attentionUserList.length/(aliveUserNumber)*100,0);
+        var confuse=this.formateNumer((confuseUserList.length/(aliveUserNumber)*100),0);
+        var understand=this.formateNumer((understandUserList.length/(aliveUserNumber))*100,0);
+        var thinking=this.formateNumer((thinkUserList.length/(aliveUserNumber))*100,0);
+        var understandLow25=this.formateNumer((noUnderstandUserList.length/(aliveUserNumber))*100,0);
         var screenHeight=_this.state.screenHeight;
         var showConutByScreenHeight=16;
         if(screenHeight==1080){//16
@@ -501,7 +501,7 @@ export default class studentFaceStatistics extends React.Component {
         return (
 
             <div className="face_cont_wrap">
-                <div className='over_flow_auto student_f_auto concentration_title concentration_top'>课堂实时表情分析</div>
+                <div className='over_flow_auto student_f_auto concentration_title concentration_top'>FaceMind课堂实时表情分析</div>
                 <div className='over_flow_auto concentration_bottom my_flex flex_justify face_cont_wrap1'>
                     <div className="concentration_list">
                         <div className="concentration_title concentration_title3">专注度{attention}%</div>
