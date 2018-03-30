@@ -2,9 +2,6 @@ import React from 'react';
 import {
     ListView,
     Accordion,
-    Modal,
-    Toast,
-    ActionSheet
 } from 'antd-mobile';
 import '../css/fileShareLink.less'
 
@@ -48,6 +45,10 @@ export default class fileShareLink extends React.Component {
         } else {
             this.getCloudFileShareById(shareId);
             this.setState({listFlag: false});
+            var fileShareId = {
+                shareId: shareId
+            };
+            localStorage.setItem("fileShareId", JSON.stringify(fileShareId)); //将分享人的相关信息存储在每一页中进行渲染
         }
 
         //添加对视窗大小的监听,在屏幕转换以及键盘弹起时重设各项高度
@@ -68,6 +69,11 @@ export default class fileShareLink extends React.Component {
         }, 100)
     }
 
+    /**
+     * 获取文件夹内部
+     * @param shareId
+     * @param userId
+     */
     listFiles(shareId, userId) {
         var _this = this;
         const dataBlob = {};
@@ -83,7 +89,6 @@ export default class fileShareLink extends React.Component {
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
             onResponse: function (result) {
                 if (result.msg == '调用成功' || result.success == true) {
-                    console.log(result);
 
                     var response = result.response;
                     var pager = result.pager;
@@ -161,9 +166,18 @@ export default class fileShareLink extends React.Component {
      */
     saveFile(data) {
         //拿到文件/文件夹ID,交给客户端进行保存处理
+        var shareId = JSON.parse(localStorage.getItem('fileShareId')).shareId + '';
+        if (fileShare.state.listFlag) {
+            //listFiles
+            var fileId = data.id + '';
+        } else {
+            var fileId = data.cloudFileId + '';
+        }
+
         var data = {
             method: 'saveFile',
-            id: data.cloudFileId
+            id: fileId,
+            shareId: shareId
         };
         Bridge.callHandler(data, null, function (error) {
             console.log(error);
@@ -175,9 +189,17 @@ export default class fileShareLink extends React.Component {
      */
     downLoadFile(data) {
         //拿到文件JSON,交给客户端进行保存处理
+
+        if (fileShare.state.listFlag) {
+            //listFiles
+            var file = data;
+        } else {
+            var file = data.cloudFile;
+        }
+
         var data = {
             method: 'downLoadFile',
-            cloudFile: JSON.stringify(data.cloudFile)
+            cloudFile: JSON.stringify(file)
         };
         Bridge.callHandler(data, null, function (error) {
             console.log(error);
@@ -189,8 +211,16 @@ export default class fileShareLink extends React.Component {
      */
     fileClicked(data, event) {
         event.stopPropagation();
+
+        if (fileShare.state.listFlag) {
+            //listFiles
+            var fileId = data.id;
+        } else {
+            var fileId = data.cloudFileId;
+        }
+
         var userId = JSON.parse(localStorage.getItem('fileShareUserId')).userId;
-        var fileId = data.cloudFileId;
+
         //新开页
 
         var url = WebServiceUtil.mobileServiceURL + "fileShareLink?shareId=" + fileId + "&userId=" + userId + "&type=listFiles";
@@ -209,7 +239,33 @@ export default class fileShareLink extends React.Component {
      */
     queCilcked(data, event) {
         event.stopPropagation();
-        console.log(data);
+        if (fileShare.state.listFlag) {
+            //listFiles
+            var file = data;
+        } else {
+            var file = data.cloudFile;
+        }
+
+        if (file.suffix == 'png' || file.suffix == 'jpg') {
+            console.log(file);
+            return
+        }
+
+        var userId = JSON.parse(localStorage.getItem('fileShareUserId')).userId;
+        if (WebServiceUtil.isEmpty(file.uuid) == false) {
+            var url = 'http://www.maaee.com/Excoord_PhoneService/cloudFile/cloudFileShow/' + file.uuid + '/' + userId;
+        } else {
+            var url = file.path
+        }
+
+        var data = {
+            method: 'openNewPage',
+            url: url
+        };
+
+        Bridge.callHandler(data, null, function (error) {
+            window.location.href = url;
+        });
     }
 
     /**
