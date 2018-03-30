@@ -45,7 +45,7 @@ export default class arrangementWork extends React.Component {
 
     componentDidMount() {
         document.title = '选择题目';   //设置title
-        var locationHref = window.location.href;
+        var locationHref = decodeURI(window.location.href);
         var locationSearch = locationHref.substr(locationHref.indexOf("?") + 1);
         var searchArray = locationSearch.split("&");
         var ident = searchArray[0].split('=')[1];
@@ -195,7 +195,7 @@ export default class arrangementWork extends React.Component {
         event.stopPropagation();
         var loginUser = JSON.parse(localStorage.getItem('loginUserTLibrary'));
         //新开这个jsx,传递文件夹id和文件夹tittle
-        var url = WebServiceUtil.mobileServiceURL + "arrangementWork?ident=" + loginUser.ident + "&fileId=" + obj.id;
+        var url = encodeURI(WebServiceUtil.mobileServiceURL + "arrangementWork?ident=" + loginUser.ident + "&fileId=" + obj.id);
         var data = {};
         data.method = 'openNewPage';
         data.url = url;
@@ -251,7 +251,7 @@ export default class arrangementWork extends React.Component {
 
         //进入题目详情,使用原来页面
         var subjectId = obj.id;
-        var url = WebServiceUtil.mobileServiceURL + "questionDetil?courseId=" + subjectId;
+        var url = encodeURI(WebServiceUtil.mobileServiceURL + "questionDetil?courseId=" + subjectId);
         var data = {};
         data.method = 'openNewPage';
         data.url = url;

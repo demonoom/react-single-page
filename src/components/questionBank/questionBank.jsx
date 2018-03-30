@@ -92,7 +92,7 @@ export default class questionBank extends React.Component {
 
         Bridge.setShareAble("false");
 
-        var locationHref = window.location.href;
+        var locationHref = decodeURI(window.location.href);
         var locationSearch = locationHref.substr(locationHref.indexOf("?") + 1);
         var searchArray = locationSearch.split("&");
         var ident = searchArray[0].split('=')[1];
@@ -338,7 +338,7 @@ export default class questionBank extends React.Component {
         var subjectId = res.id;
         var subjectType = res.subjectType;
         // window.open("/#/questionDetil?courseId=" + subjectId + "&subjectType=" + subjectType);
-        var url = WebServiceUtil.mobileServiceURL + "questionDetil?courseId=" + subjectId + "&subjectType=" + subjectType;
+        var url = encodeURI(WebServiceUtil.mobileServiceURL + "questionDetil?courseId=" + subjectId + "&subjectType=" + subjectType);
         var data = {};
         data.method = 'openNewPage';
         data.url = url;

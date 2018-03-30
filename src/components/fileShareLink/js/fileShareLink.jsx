@@ -247,7 +247,14 @@ export default class fileShareLink extends React.Component {
         }
 
         if (file.suffix == 'png' || file.suffix == 'jpg') {
-            console.log(file);
+            //对图片类型文件的特殊处理
+            var dataObj = {};
+            dataObj.method = 'showImage';
+            dataObj.url = file.path;
+            dataObj.currentUrl = file.path;
+            Bridge.callHandler(dataObj, null, function (error) {
+                console.log(error);
+            })
             return
         }
 
