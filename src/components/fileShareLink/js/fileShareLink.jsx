@@ -299,11 +299,11 @@ export default class fileShareLink extends React.Component {
         var avatarDiv = <div></div>;
 
         if (WebServiceUtil.isEmpty(fileShareUserMsg) == false) {
-            avatarDiv = <div className="userMsg">
+            avatarDiv = <div className="userMsg my_flex">
                 <img className="userImg" src={fileShareUserMsg.avatar}/>
-                <div className="userDiv">
-                    <div>{fileShareUserMsg.title}</div>
-                    <div>{WebServiceUtil.formatYMD(fileShareUserMsg.createTime) + ' ' + WebServiceUtil.formatHM(fileShareUserMsg.createTime)}</div>
+                <div className="userDiv flex_1">
+                    <div className="ant_list_title ant_list_title_top">{fileShareUserMsg.title}</div>
+                    <div className="ant_list_time">{WebServiceUtil.formatYMD(fileShareUserMsg.createTime) + ' ' + WebServiceUtil.formatHM(fileShareUserMsg.createTime)}</div>
                 </div>
             </div>;
         }
@@ -327,7 +327,7 @@ export default class fileShareLink extends React.Component {
 
             if (fileType == 0) {
                 //文件
-                var img = <img src='../imgs/singleChoice.png'/>;
+                var img = <img className="filePic" src='../imgs/singleChoice.png'/>;
                 // if (rowData.subject.typeName == '单选题') {
                 //     imgs = <imgs className="QuePic" src={require('../imgs/singleChoice.png')} alt=""/>
                 // } else if (rowData.subject.typeName == '简答题') {
@@ -338,21 +338,21 @@ export default class fileShareLink extends React.Component {
                 //     imgs = <imgs className="QuePic" src={require('../imgs/trueOrFalse.png')} alt=""/>
                 // }
 
-                headDiv = <div onClick={_this.queCilcked.bind(this, rowData)}>
+                headDiv = <div className="my_flex flex_align_center noomWidth" onClick={_this.queCilcked.bind(this, rowData)}>
                     {img}
-                    <div>
-                        <span>{name}</span>
-                        <span>{time}</span>
+                    <div className="lineheight ant_list_subject2">
+                        <div className="ant_list_title">{name}</div>
+                        <div className="ant_list_time">{time}</div>
                     </div>
                 </div>;
 
-                headDivItem = <ul>
-                    <li onClick={this.saveFile.bind(this, rowData)}>
-                        <img src={require('../imgs/icon_delet@3x.png')} alt=""/>
+                headDivItem = <ul className="my_flex ul_list_del flex_align_center">
+                    <li className="flex_1"  onClick={this.saveFile.bind(this, rowData)}>
+                        <img className="icon_small_del" src={require('../imgs/icon_sharecopy.png')} alt=""/>
                         <div>保存到蚁盘</div>
                     </li>
-                    <li onClick={this.downLoadFile.bind(this, rowData)}>
-                        <img src={require('../imgs/icon_edit@3x.png')} alt=""/>
+                    <li className="flex_1"  onClick={this.downLoadFile.bind(this, rowData)}>
+                        <img className="icon_small_del" src={require('../imgs/icon_xiazai@3x.png')} alt=""/>
                         <div>下载</div>
                     </li>
                 </ul>;
@@ -361,22 +361,24 @@ export default class fileShareLink extends React.Component {
                 headDiv = <div className="my_flex flex_align_center noomWidth"
                                onClick={_this.fileClicked.bind(this, rowData)}>
                     <img className="filePic" src={require('../../termitePlateLibrary/imgs/file.png')} alt=""/>
-                    <div className="ant_list_time">
-                        <span className="margin_right_8">{name}</span>
-                        <span>{time}</span>
+                    <div className="lineheight ant_list_subject2">
+                        <div className="ant_list_title">{name}</div>
+                        <div className="ant_list_time">
+                            <span>{time}</span>
+                        </div>
                     </div>
                 </div>;
-                headDivItem = <ul>
-                    <li onClick={this.saveFile.bind(this, rowData)}>
-                        <img src={require('../imgs/icon_delet@3x.png')} alt=""/>
+                headDivItem = <ul className="my_flex ul_list_del flex_align_center">
+                    <li className="flex_1" onClick={this.saveFile.bind(this, rowData)}>
+                        <img className="icon_small_del" src={require('../imgs/icon_sharecopy.png')} alt=""/>
                         <div>保存到蚁盘</div>
                     </li>
                 </ul>;
             }
 
             return (
-                <div>
-                    <Accordion accordion>
+                <div className="noom-accordion">
+                    <Accordion accordion className="my-accordion">
                         <Accordion.Panel header={headDiv} key={id}>
                             {headDivItem}
                         </Accordion.Panel>
