@@ -80,21 +80,14 @@ class Index extends React.Component {
                     {/*style={{fontSize: '24px'}}>题库</Link></li>*/}
                     {/*<li><Link to="/analysisList?access_user=23836" style={{fontSize: '24px'}}>成绩分析</Link></li>*/}
                     {/*<li><Link to="/searchUserLocationInfo" style={{fontSize: '24px'}}>搜索查看用户位置信息</Link></li>*/}
-<<<<<<< HEAD
                     {/*<li><Link to="/studentFaceStatistics" style={{fontSize: '24px'}}>学生脸部表情分析折线图</Link></li>*/}
                     {/*<li><Link to="/termitePlateLibrary?ident=23836&fileId=-1&title=蚁盘题目&phoneType=0"*/}
-                              {/*style={{fontSize: '24px'}}>蚁盘题库</Link>*/}
+                    {/*style={{fontSize: '24px'}}>蚁盘题库</Link>*/}
                     {/*</li>*/}
-=======
-                    <li><Link to="/studentFaceStatistics" style={{fontSize: '24px'}}>学生脸部表情分析折线图</Link></li>
-                    <li><Link to="/termitePlateLibrary?ident=23836&fileId=-1&title=蚁盘题目&phoneType=0"
-                    style={{fontSize: '24px'}}>蚁盘题库</Link>
-                    </li>
->>>>>>> 9cb1710f0aff089ab24073d759e23497884b5b19
                     {/*<li><Link to="/pushSubjectsFromTLibrary?ident=23836&fileId=-1"*/}
                     {/*style={{fontSize: '24px'}}>蚁盘推题</Link></li>*/}
                     {/*<li><Link to="/arrangementWork?ident=23836&fileId=-1"*/}
-                              {/*style={{fontSize: '24px'}}>布置作业</Link></li>*/}
+                    {/*style={{fontSize: '24px'}}>布置作业</Link></li>*/}
                     <li><Link to="/fileShareLink?shareId=1971&userId=23836"
                               style={{fontSize: '24px'}}>文件分享</Link></li>
                 </ul>

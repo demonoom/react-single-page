@@ -310,7 +310,8 @@ export default class fileShareLink extends React.Component {
                 <img className="userImg" src={fileShareUserMsg.avatar}/>
                 <div className="userDiv flex_1">
                     <div className="ant_list_title ant_list_title_top">{fileShareUserMsg.title}</div>
-                    <div className="ant_list_time">{WebServiceUtil.formatYMD(fileShareUserMsg.createTime) + ' ' + WebServiceUtil.formatHM(fileShareUserMsg.createTime)}</div>
+                    <div
+                        className="ant_list_time">{WebServiceUtil.formatYMD(fileShareUserMsg.createTime) + ' ' + WebServiceUtil.formatHM(fileShareUserMsg.createTime)}</div>
                 </div>
             </div>;
         }
@@ -325,40 +326,59 @@ export default class fileShareLink extends React.Component {
                 var id = rowData.id;
                 var name = rowData.name;
                 var fileType = rowData.fileType;
+                var file = rowData;
             } else {
                 var time = WebServiceUtil.formatYMD(rowData.cloudFile.createTime) + ' ' + WebServiceUtil.formatHM(rowData.cloudFile.createTime);
                 var id = rowData.cloudFileId;
                 var name = rowData.cloudFile.name;
                 var fileType = rowData.cloudFile.fileType;
+                var file = rowData.cloudFile;
             }
 
             if (fileType == 0) {
                 //文件
-                var img = <img className="filePic" src='../imgs/singleChoice.png'/>;
-                // if (rowData.subject.typeName == '单选题') {
-                //     imgs = <imgs className="QuePic" src={require('../imgs/singleChoice.png')} alt=""/>
-                // } else if (rowData.subject.typeName == '简答题') {
-                //     imgs = <imgs className="QuePic" src={require('../imgs/shortAnswer.png')} alt=""/>
-                // } else if (rowData.subject.typeName == '多选题') {
-                //     imgs = <imgs className="QuePic" src={require('../imgs/multipleChoice.png')} alt=""/>
-                // } else {
-                //     imgs = <imgs className="QuePic" src={require('../imgs/trueOrFalse.png')} alt=""/>
-                // }
+                var img;
+                if (file.suffix == 'apk') {
+                    img = <img className="filePic" src={require("../imgs/apk.png")} alt=""/>
+                } else if (file.suffix == 'ppt' || file.suffix == 'pptx') {
+                    img = <img className="filePic" src={require("../imgs/ppt.png")} alt=""/>
+                } else if (file.suffix == 'doc') {
+                    img = <img className="filePic" src={require("../imgs/doc.png")} alt=""/>
+                } else if (file.suffix == 'pdf') {
+                    img = <img className="filePic" src={require("../imgs/pdf.png")} alt=""/>
+                } else if (file.suffix == 'txt') {
+                    img = <img className="filePic" src={require("../imgs/wps.png")} alt=""/>
+                } else if (file.suffix == 'zip') {
+                    img = <img className="filePic" src={require("../imgs/其他.png")} alt=""/>
+                } else if (file.suffix == 'xls' || file.suffix == 'xlsx') {
+                    img = <img className="filePic" src={require("../imgs/xls.png")} alt=""/>
+                } else if (file.suffix == 'mp3') {
+                    img = <img className="filePic" src={require("../imgs/mp3.png")} alt=""/>
+                } else if (file.suffix == 'mp4') {
+                    img = <img className="filePic" src={require("../imgs/mp4.png")} alt=""/>
+                } else if (file.suffix == 'png') {
+                    img = <img className="filePic" src={require("../imgs/png.png")} alt=""/>
+                } else if (file.suffix == 'jpg') {
+                    img = <img className="filePic" src={require("../imgs/jpg.png")} alt=""/>
+                } else {
+                    img = <img className="filePic" src={require("../imgs/其他.png")} alt=""/>
+                }
 
-                headDiv = <div className="my_flex flex_align_center noomWidth" onClick={_this.queCilcked.bind(this, rowData)}>
-                    {img}
-                    <div className="lineheight ant_list_subject2">
-                        <div className="ant_list_title">{name}</div>
-                        <div className="ant_list_time">{time}</div>
-                    </div>
-                </div>;
+                headDiv =
+                    <div className="my_flex flex_align_center noomWidth" onClick={_this.queCilcked.bind(this, rowData)}>
+                        {img}
+                        <div className="lineheight ant_list_subject2">
+                            <div className="ant_list_title">{name}</div>
+                            <div className="ant_list_time">{time}</div>
+                        </div>
+                    </div>;
 
                 headDivItem = <ul className="my_flex ul_list_del flex_align_center">
-                    <li className="flex_1"  onClick={this.saveFile.bind(this, rowData)}>
+                    <li className="flex_1" onClick={this.saveFile.bind(this, rowData)}>
                         <img className="icon_small_del" src={require('../imgs/icon_sharecopy.png')} alt=""/>
                         <div>保存到蚁盘</div>
                     </li>
-                    <li className="flex_1"  onClick={this.downLoadFile.bind(this, rowData)}>
+                    <li className="flex_1" onClick={this.downLoadFile.bind(this, rowData)}>
                         <img className="icon_small_del" src={require('../imgs/icon_xiazai@3x.png')} alt=""/>
                         <div>下载</div>
                     </li>
