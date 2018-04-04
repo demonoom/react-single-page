@@ -24,6 +24,13 @@ export default class fileShareLink extends React.Component {
     }
 
     componentDidMount() {
+        //判断访问系统是否为ios
+        var phoneType = navigator.userAgent;
+        if (phoneType.indexOf('iPhone') > -1) {
+            this.setState({iphoneType: true})
+        } else {
+            this.setState({iphoneType: false})
+        }
         document.title = '蚁盘文件分享';   //设置title
         var locationHref = window.location.href;
         var locationSearch = locationHref.substr(locationHref.indexOf("?") + 1);
@@ -262,7 +269,8 @@ export default class fileShareLink extends React.Component {
         if (WebServiceUtil.isEmpty(file.uuid) == false) {
             var url = 'http://www.maaee.com/Excoord_PhoneService/cloudFile/cloudFileShow/' + file.uuid + '/' + userId;
         } else {
-            var url = file.path
+            // var url = file.path
+            var url = 'http://www.maaee.com/Excoord_PhoneService/cloudFile/cloudFileShow/' + file.id + '/' + userId;
         }
 
         var data = {
@@ -300,6 +308,13 @@ export default class fileShareLink extends React.Component {
 
     render() {
 
+        var iphoneDisplay;
+        if (this.state.iphoneType) {
+            iphoneDisplay = 'none';
+        } else {
+            iphoneDisplay = 'inline-block';
+        }
+
         var _this = this;
 
         var fileShareUserMsg = JSON.parse(localStorage.getItem('fileShareUserMsg'));
@@ -314,6 +329,9 @@ export default class fileShareLink extends React.Component {
                         className="ant_list_time">{WebServiceUtil.formatYMD(fileShareUserMsg.createTime) + ' ' + WebServiceUtil.formatHM(fileShareUserMsg.createTime)}</div>
                 </div>
             </div>;
+            if (this.state.listFlag) {
+                avatarDiv = <div></div>;
+            }
         }
 
         const row = (rowData, sectionID, rowID) => {
@@ -365,7 +383,8 @@ export default class fileShareLink extends React.Component {
                 }
 
                 headDiv =
-                    <div className="my_flex flex_align_center noomWidth" onClick={_this.queCilcked.bind(this, rowData)}>
+                    <div className="my_flex flex_align_center noomWidth"
+                         onClick={_this.queCilcked.bind(this, rowData)}>
                         {img}
                         <div className="lineheight ant_list_subject2">
                             <div className="ant_list_title">{name}</div>
@@ -378,7 +397,8 @@ export default class fileShareLink extends React.Component {
                         <img className="icon_small_del" src={require('../imgs/icon_sharecopy.png')} alt=""/>
                         <div>保存到蚁盘</div>
                     </li>
-                    <li className="flex_1" onClick={this.downLoadFile.bind(this, rowData)}>
+                    <li style={{display: iphoneDisplay}} className="flex_1"
+                        onClick={this.downLoadFile.bind(this, rowData)}>
                         <img className="icon_small_del" src={require('../imgs/icon_xiazai@3x.png')} alt=""/>
                         <div>下载</div>
                     </li>
@@ -434,7 +454,7 @@ export default class fileShareLink extends React.Component {
                     initialListSize={30}   //指定在组件刚挂载的时候渲染多少行数据，用这个属性来确保首屏显示合适数量的数据
                     scrollEventThrottle={20}     //控制在滚动过程中，scroll事件被调用的频率
                     style={{
-                        height: this.state.clientHeight - 50,
+                        height: this.state.clientHeight,
                     }}
                 />
             </div>
