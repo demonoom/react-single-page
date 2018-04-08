@@ -230,7 +230,7 @@ export default class fileShareLink extends React.Component {
 
         //新开页
 
-        var url = WebServiceUtil.mobileServiceURL + "fileShareLink?shareId=" + fileId + "&userId=" + userId + "&type=listFiles";
+        var url = WebServiceUtil.mobileServiceURL + "fileShareLink?shareId=" + fileId + "&userId=" + userId + "&filesType=listFiles";
         var data = {
             method: 'openNewPage',
             url: url
