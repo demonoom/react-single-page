@@ -64,14 +64,14 @@ export default class webMiddlePage extends React.Component {
         } else if (res.type == -11) {
             //UNKNOW_FILE
             img = <img className='noom_img' src={require('../imgs/其它.png')} alt=""/>
-            btn = <span>暂不支持查看</span>
+            btn = <span className="noom_btn_text">暂不支持查看</span>
         }
         var content = <div className='content_noom'>
             {img}
             <div className='noom_title'>{res.title}</div>
-            <div className='noom_userName'>上传者:{res.user.userName}</div>
+            <div className='noom_userName'>上传者：{res.user.userName}</div>
             <div
-                className='noom_createTime'>上传时间:{WebServiceUtil.formatYMD(res.createTime) + ' ' + WebServiceUtil.formatHM(res.createTime)}</div>
+                className='noom_createTime'>上传时间：{WebServiceUtil.formatYMD(res.createTime) + ' ' + WebServiceUtil.formatHM(res.createTime)}</div>
             {btn}
         </div>
         this.setState({content});
@@ -101,7 +101,6 @@ export default class webMiddlePage extends React.Component {
                     method: 'openNewPage',
                     url: url
                 };
-
                 Bridge.callHandler(data, null, function (error) {
                     window.location.href = url;
                 });
