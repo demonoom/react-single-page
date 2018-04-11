@@ -61,7 +61,17 @@ const fileShareLink = (location, cb) => {
     require.ensure([], require => {
         cb(null, require('./components/fileShareLink/js/fileShareLink').default)
     }, 'fileShareLink')
-}
+};
+const webMiddlePage = (location, cb) => {
+    require.ensure([], require => {
+        cb(null, require('./components/webMiddlePage/js/webMiddlePage').default)
+    }, 'webMiddlePage')
+};
+const previewFile = (location, cb) => {
+    require.ensure([], require => {
+        cb(null, require('./components/webMiddlePage/js/previewFile').default)
+    }, 'previewFile')
+};
 
 import './index.less';
 
@@ -88,8 +98,20 @@ class Index extends React.Component {
                     {/*style={{fontSize: '24px'}}>蚁盘推题</Link></li>*/}
                     {/*<li><Link to="/arrangementWork?ident=23836&fileId=-1"*/}
                     {/*style={{fontSize: '24px'}}>布置作业</Link></li>*/}
-                    <li><Link to="/fileShareLink?shareId=1971&userId=23836"
-                              style={{fontSize: '24px'}}>文件分享</Link></li>
+                    {/*<li><Link to="/fileShareLink?shareId=1971&userId=23836"*/}
+                    {/*style={{fontSize: '24px'}}>文件分享</Link></li>*/}
+                    <li><Link to="/webMiddlePage?fileId=1&fileType=0"
+                              style={{fontSize: '24px'}}>中间页img</Link></li>
+                    <li><Link to="/webMiddlePage?fileId=2&fileType=0"
+                              style={{fontSize: '24px'}}>中间页pdf</Link></li>
+                    <li><Link to="/webMiddlePage?fileId=3&fileType=0"
+                              style={{fontSize: '24px'}}>中间页doc</Link></li>
+                    <li><Link to="/webMiddlePage?fileId=4&fileType=0"
+                              style={{fontSize: '24px'}}>中间页ppt</Link></li>
+                    <li><Link to="/webMiddlePage?fileId=12&fileType=0"
+                              style={{fontSize: '24px'}}>中间页mp3</Link></li>
+                    <li><Link to="/webMiddlePage?fileId=13&fileType=0"
+                              style={{fontSize: '24px'}}>中间页mp4</Link></li>
                 </ul>
             </div>
         );
@@ -115,6 +137,8 @@ ReactDOM.render(
             <Route path="pushSubjectsFromTLibrary" getComponent={pushSubjectsFromTLibrary}/>
             <Route path="arrangementWork" getComponent={arrangementWork}/>
             <Route path="fileShareLink" getComponent={fileShareLink}/>
+            <Route path="webMiddlePage" getComponent={webMiddlePage}/>
+            <Route path="previewFile" getComponent={previewFile}/>
         </Route>
     </Router>
     , document.getElementById('example'));
