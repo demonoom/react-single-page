@@ -1,4 +1,5 @@
 import React from 'react';
+import '../css/previewfile.less'
 
 export default class previewFile extends React.Component {
 
@@ -16,20 +17,20 @@ export default class previewFile extends React.Component {
             if (previewFile.type == '1' || previewFile.type == '31') {
                 //PDF||DOC
                 var iframeSrc = "http://www.maaee.com/Excoord_For_Education/js/pdfjs/web/viewer.html?file=" + previewFile.src;
-                var content = <iframe src={iframeSrc} frameborder="0"></iframe>;
+                var content = <iframe className="ppt_wrap" src={iframeSrc} frameborder="0"></iframe>;
                 this.setState({content})
 
             } else if (previewFile.type == '9') {
                 //AUDIO
-                var content = <audio src={previewFile.src} controls='controls'></audio>
+                var content = <audio className="mp3_wrap" src={previewFile.src} controls='controls'></audio>
                 this.setState({content})
             } else if (previewFile.type == '7') {
                 //VIDEO
-                var content = <video src={previewFile.src} controls='controls'></video>
+                var content = <video className="mp3_wrap" src={previewFile.src} controls='controls'></video>
                 this.setState({content})
             } else {
                 var iframeSrc = previewFile.src;
-                var content = <iframe src={iframeSrc} frameborder="0"></iframe>;
+                var content = <iframe className="ppt_wrap" src={iframeSrc} frameborder="0"></iframe>;
                 this.setState({content})
             }
         }
@@ -38,7 +39,7 @@ export default class previewFile extends React.Component {
     render() {
 
         return (
-            <div id="previewFile" style={{height: document.body.clientHeight}}>
+            <div id="previewFile"  style={{height: document.body.clientHeight}}>
                 {this.state.content}
             </div>
         );
