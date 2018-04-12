@@ -16,6 +16,7 @@ export default class previewFile extends React.Component {
         document.title = '文件预览';
         var previewFile = JSON.parse(localStorage.getItem('previewFile'));
         if (WebServiceUtil.isEmpty(previewFile) == false) {
+            previewFile.src = previewFile.src.replace("60.205.86.217", "www.maaee.com");
             if (previewFile.type == '1' || previewFile.type == '31') {
                 //PDF||DOC
                 var iframeSrc = "http://www.maaee.com/Excoord_For_Education/js/pdfjs/web/viewer.html?file=" + previewFile.src;
