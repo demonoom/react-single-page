@@ -54,7 +54,7 @@ export default class webMiddlePage extends React.Component {
             img = <img className='noom_img' src={require('../imgs/ppt.png')} alt=""/>
         } else if (res.type == 5) {
             //IMG
-            img = <img className='noom_img' src={require('../imgs/图片集.png')} alt=""/>
+            img = <img className='noom_img' src={require('../imgs/pic.png')} alt=""/>
         } else if (res.type == 7) {
             //V
             img = <img className='noom_img' src={require('../imgs/mp3.png')} alt=""/>
@@ -63,7 +63,7 @@ export default class webMiddlePage extends React.Component {
             img = <img className='noom_img' src={require('../imgs/mp4.png')} alt=""/>
         } else if (res.type == -11) {
             //UNKNOW_FILE
-            img = <img className='noom_img' src={require('../imgs/其它.png')} alt=""/>
+            img = <img className='noom_img' src={require('../imgs/other.png')} alt=""/>
             btn = <span className="noom_btn_text">暂不支持查看</span>
         }
         var content = <div className='content_noom'>

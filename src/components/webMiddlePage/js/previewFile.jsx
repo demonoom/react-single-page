@@ -11,9 +11,11 @@ export default class previewFile extends React.Component {
     }
 
     componentDidMount() {
+        Bridge.setRefreshAble(false);
+        Bridge.setShareAble(false);
         document.title = '文件预览';
         var previewFile = JSON.parse(localStorage.getItem('previewFile'));
-        if(WebServiceUtil.isEmpty(previewFile)==false) {
+        if (WebServiceUtil.isEmpty(previewFile) == false) {
             if (previewFile.type == '1' || previewFile.type == '31') {
                 //PDF||DOC
                 var iframeSrc = "http://www.maaee.com/Excoord_For_Education/js/pdfjs/web/viewer.html?file=" + previewFile.src;
@@ -39,7 +41,7 @@ export default class previewFile extends React.Component {
     render() {
 
         return (
-            <div id="previewFile"  style={{height: document.body.clientHeight}}>
+            <div id="previewFile" style={{height: document.body.clientHeight}}>
                 {this.state.content}
             </div>
         );
