@@ -31,6 +31,7 @@ export default class webMiddlePage extends React.Component {
             onResponse: function (result) {
                 if (result.msg == '调用成功' || result.success == true) {
                     var res = result.response;
+                    console.log(res);
                     _this.buildContent(res)
                 }
             },
@@ -71,7 +72,8 @@ export default class webMiddlePage extends React.Component {
             <div className='noom_title'>{res.title}</div>
             <div className='noom_userName'>上传者：{res.user.userName}</div>
             <div
-                className='noom_createTime'>上传时间：{WebServiceUtil.formatYMD(res.createTime) + ' ' + WebServiceUtil.formatHM(res.createTime)}</div>
+                className='noom_createTime'>
+                上传时间：{WebServiceUtil.formatYMD(res.createTime) + ' ' + WebServiceUtil.formatHM(res.createTime)}</div>
             {btn}
         </div>
         this.setState({content});

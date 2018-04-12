@@ -110,7 +110,7 @@ class Index extends React.Component {
                               style={{fontSize: '24px'}}>中间页ppt</Link></li>
                     <li><Link to="/webMiddlePage?fileId=12&fileType=0"
                               style={{fontSize: '24px'}}>中间页mp3</Link></li>
-                    <li><Link to="/webMiddlePage?fileId=17&fileType=0"
+                    <li><Link to="/webMiddlePage?fileId=58&fileType=0"
                               style={{fontSize: '24px'}}>中间页mp4</Link></li>
                 </ul>
             </div>
