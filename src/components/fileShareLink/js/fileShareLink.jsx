@@ -27,7 +27,7 @@ export default class fileShareLink extends React.Component {
     componentDidMount() {
         //判断访问系统是否为ios
         var phoneType = navigator.userAgent;
-        if (phoneType.indexOf('iPhone') > -1) {
+        if (phoneType.indexOf('iPhone') > -1 || phoneType.indexOf('iPad') > -1) {
             this.setState({iphoneType: true})
         } else {
             this.setState({iphoneType: false})
