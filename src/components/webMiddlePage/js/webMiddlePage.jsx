@@ -31,7 +31,6 @@ export default class webMiddlePage extends React.Component {
             onResponse: function (result) {
                 if (result.msg == '调用成功' || result.success == true) {
                     var res = result.response;
-                    console.log(res);
                     _this.buildContent(res)
                 }
             },

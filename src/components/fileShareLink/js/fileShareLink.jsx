@@ -2,6 +2,7 @@ import React from 'react';
 import {
     ListView,
     Accordion,
+    Toast
 } from 'antd-mobile';
 import '../css/fileShareLink.less'
 
@@ -37,10 +38,14 @@ export default class fileShareLink extends React.Component {
         var searchArray = locationSearch.split("&");
         var shareId = searchArray[0].split('=')[1];
         var userId = searchArray[1].split('=')[1];
-        this.setState({shareId, userId});
-        var type = 'none';
+        var userType = 'te';
         if (WebServiceUtil.isEmpty(searchArray[2]) == false) {
-            type = searchArray[2].split('=')[1];
+            userType = searchArray[2].split('=')[1];
+        }
+        this.setState({shareId, userId, userType});
+        var type = 'none';
+        if (WebServiceUtil.isEmpty(searchArray[3]) == false) {
+            type = searchArray[3].split('=')[1];
         }
         var obj = {
             userId: userId
@@ -173,6 +178,12 @@ export default class fileShareLink extends React.Component {
      */
     saveFile(data) {
         //拿到文件/文件夹ID,交给客户端进行保存处理
+
+        if (this.state.userType == 'st') {
+            Toast.info('学生暂未开放蚁盘功能', 1);
+            return
+        }
+
         var shareId = JSON.parse(localStorage.getItem('fileShareId')).shareId + '';
         if (fileShare.state.listFlag) {
             //listFiles
@@ -230,7 +241,7 @@ export default class fileShareLink extends React.Component {
 
         //新开页
 
-        var url = WebServiceUtil.mobileServiceURL + "fileShareLink?shareId=" + fileId + "&userId=" + userId + "&filesType=listFiles";
+        var url = WebServiceUtil.mobileServiceURL + "fileShareLink?shareId=" + fileId + "&userId=" + userId + "&userType=" + this.state.userType + "&filesType=listFiles";
         var data = {
             method: 'openNewPage',
             url: url
@@ -315,6 +326,15 @@ export default class fileShareLink extends React.Component {
             iphoneDisplay = 'inline-block';
         }
 
+        //arrow
+
+        var teacherSave;
+        if (this.state.userType == 'st') {
+            teacherSave = 'none';
+        } else {
+            teacherSave = 'inline-block';
+        }
+
         var _this = this;
 
         var fileShareUserMsg = JSON.parse(localStorage.getItem('fileShareUserMsg'));
@@ -395,7 +415,7 @@ export default class fileShareLink extends React.Component {
                 headDivItem = <ul className="my_flex ul_list_del flex_align_center">
                     <li className="flex_1" onClick={this.saveFile.bind(this, rowData)}>
                         <img className="icon_small_del" src={require('../imgs/icon_sharecopy.png')} alt=""/>
-                        <div>保存到蚁盘</div>
+                        <div className='saveToYi'>保存到蚁盘</div>
                     </li>
                     <li style={{display: iphoneDisplay}} className="flex_1"
                         onClick={this.downLoadFile.bind(this, rowData)}>
@@ -418,7 +438,7 @@ export default class fileShareLink extends React.Component {
                 headDivItem = <ul className="my_flex ul_list_del flex_align_center">
                     <li className="flex_1" onClick={this.saveFile.bind(this, rowData)}>
                         <img className="icon_small_del" src={require('../imgs/icon_sharecopy.png')} alt=""/>
-                        <div>保存到蚁盘</div>
+                        <div className='saveToYi'>保存到蚁盘</div>
                     </li>
                 </ul>;
             }

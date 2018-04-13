@@ -1,0 +1,114 @@
+(node) util.print is deprecated. Use console.log instead.
+#fileShareLink html {
+  font-size: 10px;
+}
+#fileShareLink ul,
+#fileShareLink li {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+#fileShareLink .userMsg {
+  width: 100%;
+  height: 45px;
+  padding: 15px 0;
+  background: #fff;
+  border-bottom: 10px solid #eee;
+}
+#fileShareLink .userMsg .userImg {
+  width: 45px;
+  height: 45px;
+  border-radius: 50%;
+  margin-right: 10px;
+  margin-left: 15px;
+}
+#fileShareLink .userMsg .userDiv {
+  display: inline-block;
+}
+#fileShareLink .noom-accordion .am-accordion-header {
+  box-sizing: border-box;
+  cursor: pointer;
+  padding: 15px 0;
+  height: 70px;
+  display: flex;
+  flex-flow: row nowrap;
+  position: relative;
+  align-items: center;
+}
+#fileShareLink .noom-accordion .am-accordion-header i {
+  top: 20px;
+}
+#fileShareLink .noom-accordion .filePic,
+#fileShareLink .noom-accordion .QuePic {
+  margin-right: 15px;
+  width: 45px;
+  height: 45px;
+  margin-left: 15px;
+}
+#fileShareLink .noom-accordion .am-accordion {
+  border-top: none;
+}
+#fileShareLink .ant_list_time {
+  color: #a9a9a9;
+  font-size: 12px;
+  width: 100%;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+#fileShareLink .filePic,
+#fileShareLink .QuePic {
+  margin-right: 15px;
+  width: 45px;
+  height: 45px;
+  margin-left: 15px;
+}
+#fileShareLink .margin_right_8 {
+  margin-right: 8px;
+}
+#fileShareLink .flex_align_center {
+  align-items: center;
+}
+#fileShareLink .noomWidth {
+  width: calc(100% - 70px);
+}
+#fileShareLink .ul_list_del {
+  background: #f8f8f8;
+  padding: 10px 0;
+  text-align: center;
+  color: #666;
+  font-size: 12px;
+}
+#fileShareLink .icon_small_del {
+  height: 15px;
+  margin-bottom: 4px;
+}
+#fileShareLink .ant_list_title {
+  font-size: 14px;
+  margin-bottom: 10px;
+  color: #333;
+  width: 100%;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+#fileShareLink .ant_list_title_top {
+  margin-top: 5px;
+}
+#fileShareLink .ant_list_subject2 {
+  max-height: 58px;
+  overflow: hidden;
+  width: 65%;
+  position: absolute;
+  left: 70px;
+  top: 20px;
+  display: inline-block;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  padding-left: 10px;
+}
+#fileShareLink .lineheight {
+  line-height: 1;
+}
+#fileShareLink .am-accordion .am-accordion-item .am-accordion-header::after,
+#fileShareLink .am-accordion .am-accordion-item .am-accordion-content .am-accordion-content-box::after {
+  height: 0;
+}
