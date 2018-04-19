@@ -190,8 +190,8 @@ export default class boxBracelet extends React.Component {
                         _this.setState({
                             chooseResultDiv: 'block',
                             searchData: arr,
-                            stNameValue: result.response[0].userName,
-                            searchCheckValue: result.response[0].colUid
+                            stNameValue: result.response[0].name,
+                            searchCheckValue: result.response[0].id
                         });
                         Toast.hide();
                     } else {
