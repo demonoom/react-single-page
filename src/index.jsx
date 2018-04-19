@@ -72,6 +72,21 @@ const previewFile = (location, cb) => {
         cb(null, require('./components/webMiddlePage/js/previewFile').default)
     }, 'previewFile')
 };
+const ringBinding = (location, cb) => {
+    require.ensure([], require => {
+        cb(null, require('./components/ringBindInformation/js/ringBinding').default)
+    }, 'ringBinding')
+};
+const bindingBracelet = (location, cb) => {
+    require.ensure([], require => {
+        cb(null, require('./components/ringBindInformation/js/bindingBracelet').default)
+    }, 'bindingBracelet')
+};
+const boxBracelet = (location, cb) => {
+    require.ensure([], require => {
+        cb(null, require('./components/ringBindInformation/js/boxBracelet').default)
+    }, 'boxBracelet')
+};
 
 import './index.less';
 
@@ -98,12 +113,10 @@ class Index extends React.Component {
                     {/*style={{fontSize: '24px'}}>蚁盘推题</Link></li>*/}
                     {/*<li><Link to="/arrangementWork?ident=23836&fileId=-1"*/}
                     {/*style={{fontSize: '24px'}}>布置作业</Link></li>*/}
-                    <li><Link to="/fileShareLink?shareId=1971&userId=23836&userType=st"
-                              style={{fontSize: '24px'}}>文件分享</Link></li>
-                    <li><Link to="/fileShareLink?shareId=1971&userId=23836"
-                              style={{fontSize: '24px'}}>文件分享</Link></li>
-                    {/*<li><Link to="/webMiddlePage?fileId=1&fileType=0"*/}
-                    {/*style={{fontSize: '24px'}}>中间页img</Link></li>*/}
+                    {/*<li><Link to="/fileShareLink?shareId=1971&userId=23836&userType=st"*/}
+                    {/*style={{fontSize: '24px'}}>文件分享</Link></li>*/}
+                    <li><Link to="/ringBinding?ident=23836"
+                              style={{fontSize: '24px'}}>手环绑定</Link></li>
                 </ul>
             </div>
         );
@@ -131,6 +144,9 @@ ReactDOM.render(
             <Route path="fileShareLink" getComponent={fileShareLink}/>
             <Route path="webMiddlePage" getComponent={webMiddlePage}/>
             <Route path="previewFile" getComponent={previewFile}/>
+            <Route path="ringBinding" getComponent={ringBinding}/>
+            <Route path="bindingBracelet" getComponent={bindingBracelet}/>
+            <Route path="boxBracelet" getComponent={boxBracelet}/>
         </Route>
     </Router>
     , document.getElementById('example'));

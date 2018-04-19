@@ -1,0 +1,42 @@
+(node) util.print is deprecated. Use console.log instead.
+#bindingBracelet .tableDiv {
+  position: relative;
+}
+#bindingBracelet .tableDiv .addBunton {
+  width: 50px;
+  height: 50px;
+  line-height: 50px;
+  position: absolute;
+  right: 10px;
+  bottom: 10px;
+  text-align: center;
+  font-size: 20px;
+  background-color: yellow;
+}
+#bindingBracelet .tableDiv .liName {
+  font-size: 30px;
+}
+#bindingBracelet .addModel {
+  position: relative;
+}
+#bindingBracelet .addModel .chooseResult {
+  height: 300px;
+  overflow: auto;
+}
+#bindingBracelet .addModel .macAddress {
+  display: inline-block;
+  width: 60%;
+  height: 30px;
+  border: 1px solid #333333;
+}
+#bindingBracelet .addModel .scanIcon {
+  width: 30px;
+  height: 30px;
+}
+#bindingBracelet .addModel .binding {
+  width: 70%;
+  position: absolute;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+}
