@@ -184,6 +184,7 @@ export default class bindingBracelet extends React.Component {
                     </ul>
                     <div className='addBunton' onClick={this.addRing}>+</div>
                 </div>
+            
                 <div className='addModel' style={{height: document.body.clientHeight}}>
                     <div onClick={this.cancelAddModel}>
                         关闭
