@@ -40,6 +40,7 @@ export default class bindingBracelet extends React.Component {
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
             onResponse: function (result) {
                 if (result.msg == '调用成功' && result.success == true) {
+                    console.log(result);
                     var arr = result.response;
                     var array = [];
                     arr.forEach(function (v, i) {
