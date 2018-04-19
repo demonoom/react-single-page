@@ -3,8 +3,8 @@ import {Button, Toast, InputItem, List, Radio, Icon} from 'antd-mobile';
 import '../css/bindingBracelet.less'
 
 const RadioItem = Radio.RadioItem;
-
 var bindDing;
+
 export default class bindingBracelet extends React.Component {
 
     constructor(props) {
@@ -214,7 +214,6 @@ export default class bindingBracelet extends React.Component {
         this.setState({stNameValue: e});
     }
 
-
     /**
      * 点击搜索结果的回调
      */
@@ -252,7 +251,7 @@ export default class bindingBracelet extends React.Component {
 
                         <div className='stName'>
                             <InputItem
-                                placeholder="请输入学生姓名"
+                                placeholder="请输入学生姓名并搜索"
                                 data-seed="logId"
                                 onChange={this.inputOnChange.bind(this)}
                                 value={this.state.stNameValue}
@@ -270,11 +269,6 @@ export default class bindingBracelet extends React.Component {
                             ))}
                         </div>
                     </List>
-
-                    {/*<div>*/}
-                    {/*学生姓名:*/}
-                    {/*<input type="text" onChange={this.inputOnChange.bind(this)}/>*/}
-                    {/*</div>*/}
                     <div className='binding' onClick={this.binding}>
                         <Button type="primary">确认绑定</Button>
                     </div>
