@@ -35,12 +35,12 @@ export default class boxBracelet extends React.Component {
         };
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
             onResponse: function (result) {
-                console.log(result);
                 if (result.msg == '调用成功' && result.success == true) {
                     var arr = result.response;
                     var array = [];
                     arr.forEach(function (v, i) {
-                        var li = <li className='liName' onClick={_this.unbindWatch.bind(this, v)}>{v.name}</li>;
+                        var li = <li className='liName'
+                                     onClick={_this.unbindWatch.bind(this, v)}>{v.bindingClazz.name}</li>;
                         array.push(li);
                     });
                     _this.setState({array});
