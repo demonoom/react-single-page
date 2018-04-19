@@ -1,5 +1,5 @@
 import React from 'react';
-import {Button, Toast, InputItem, List, Radio} from 'antd-mobile';
+import {Button, Toast, InputItem, List, Radio, Icon} from 'antd-mobile';
 import '../css/bindingBracelet.less'
 
 const RadioItem = Radio.RadioItem;
@@ -12,7 +12,11 @@ export default class bindingBracelet extends React.Component {
         bindDing = this;
         this.state = {
             tableDivHeight: document.body.clientHeight,
-            value2: 0,
+            searchCheckValue: '',
+            macId: '',
+            chooseResultDiv: 'none',
+            stNameValue: '',
+            searchData: [],
         };
     }
 
@@ -35,7 +39,6 @@ export default class bindingBracelet extends React.Component {
         };
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
             onResponse: function (result) {
-                console.log(result);
                 if (result.msg == '调用成功' && result.success == true) {
                     var arr = result.response;
                     var array = [];
@@ -88,7 +91,7 @@ export default class bindingBracelet extends React.Component {
         //         clearInterval(timer);
         //     }
         // }, 10);
-        $('.tableDiv').hide("normal");
+        $('.tableDiv').hide("fast");
     };
 
     /**
@@ -105,7 +108,7 @@ export default class bindingBracelet extends React.Component {
         //         clearInterval(timer);
         //     }
         // }, 10);
-        $('.tableDiv').show("normal");
+        $('.tableDiv').show("fast");
     };
 
     /**
@@ -117,10 +120,9 @@ export default class bindingBracelet extends React.Component {
         };
         Bridge.callHandler(data, function (mes) {
             //获取二维码MAC地址
-            document.getElementById('macAddress').innerHTML = mes;
             bindDing.setState({macId: mes});
         }, function (error) {
-            Toast.fail(error, 1);
+            console.log(error);
         });
     }
 
@@ -128,9 +130,14 @@ export default class bindingBracelet extends React.Component {
      * 绑定
      */
     binding = () => {
+        var _this = this;
+        if (this.state.searchCheckValue == '' || bindDing.state.macId == '') {
+            Toast.fail('未选择学生或手环',)
+            return
+        }
         var param = {
             "method": 'bindWatch',
-            "uid": this.state.studentId,
+            "uid": this.state.searchCheckValue,
             "mac": bindDing.state.macId,
             "opId": this.state.loginUser.ident,
         };
@@ -139,6 +146,8 @@ export default class bindingBracelet extends React.Component {
             onResponse: function (result) {
                 if (result.msg == '调用成功' && result.success == true) {
                     Toast.success('绑定成功', 1);
+                    $('.tableDiv').show("fast");
+                    _this.viewWatchPage(_this.state.loginUser);
                 } else {
                     Toast.fail(result.msg, 1);
                 }
@@ -149,32 +158,75 @@ export default class bindingBracelet extends React.Component {
         });
     }
 
+    /**
+     * 搜索未绑定手环的用户
+     */
+    searchWatchBindCandidate = () => {
+        Toast.loading('正在搜索');
+        this.setState({searchData: []});
+        var _this = this;
+        if (this.state.stNameValue.trim().length == 0) {
+            Toast.fail('请输入学生姓名', 1)
+            return
+        }
+        var param = {
+            "method": 'searchWatchBindCandidate',
+            "keyWord": this.state.stNameValue.trim(),
+            "aid": this.state.loginUser.ident
+        };
+        WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
+            onResponse: function (result) {
+                if (result.msg == '调用成功' && result.success == true) {
+                    if (WebServiceUtil.isEmpty(result.response) == false) {
+                        var arr = [];
+                        result.response.forEach(function (v, i) {
+                            var obj = {
+                                value: v.colUid,
+                                label: v.userName,
+                                extra: `${v.clazz.name}  ${v.colAccount}`
+                            }
+                            arr.push(obj);
+                        });
+                        _this.setState({
+                            chooseResultDiv: 'block',
+                            searchData: arr,
+                            stNameValue: result.response[0].userName,
+                            searchCheckValue: result.response[0].colUid
+                        });
+                        Toast.hide();
+                    } else {
+                        Toast.fail('没有找到该学生', 1)
+                    }
+                } else {
+                    Toast.fail(result.msg, 1);
+                }
+            },
+            onError: function (error) {
+                // message.error(error);
+            }
+        });
+    };
+
+    /**
+     * 输入框改变的回调
+     */
     inputOnChange(e) {
-        this.setState({studentId: e.target.value});
+        this.setState({stNameValue: e});
     }
 
-    onChange2 = (value) => {
-        console.log('checkbox');
+
+    /**
+     * 点击搜索结果的回调
+     */
+    searchResultOnChange = (i) => {
+        // this.setState({chooseResultDiv: 'none'});   label
         this.setState({
-            value2: value,
+            searchCheckValue: i.value,
+            stNameValue: i.label
         });
     };
 
     render() {
-        const {value2} = this.state;
-        const data2 = [
-            {value: 0, label: 'basketball', extra: 'details'},
-            {value: 1, label: 'football', extra: 'details'},
-            {value: 2, label: 'basketball', extra: 'details'},
-            {value: 3, label: 'football', extra: 'details'},
-            {value: 4, label: 'basketball', extra: 'details'},
-            {value: 5, label: 'football', extra: 'details'},
-            {value: 6, label: 'basketball', extra: 'details'},
-            {value: 7, label: 'football', extra: 'details'},
-            {value: 8, label: 'basketball', extra: 'details'},
-            {value: 9, label: 'football', extra: 'details'},
-        ];
-
         return (
             <div id="bindingBracelet" style={{height: document.body.clientHeight}}>
                 <div className='tableDiv' style={{height: this.state.tableDivHeight}}>
@@ -189,36 +241,40 @@ export default class bindingBracelet extends React.Component {
                         关闭
                     </div>
                     <h1>新增手环</h1>
-                    <div>
-                        MAC地址:
-                        <span className='macAddress' id='macAddress'></span>
-                        <img className='scanIcon' src={require('../imgs/timg.png')} alt="" onClick={this.scanMac}/>
-                    </div>
-                    {/*<List>*/}
-                        {/*<InputItem*/}
-                            {/*value=""*/}
-                            {/*editable={false}*/}
-                        {/*>MAC:</InputItem>*/}
+                    <List>
+                        <div className='macAddress'>
+                            <InputItem
+                                value={bindDing.state.macId}
+                                editable={false}
+                            >MAC:</InputItem>
+                            <img className='scanIcon' src={require('../imgs/timg.png')} alt="" onClick={this.scanMac}/>
+                        </div>
 
-                        {/*<InputItem*/}
-                            {/*placeholder="please input content"*/}
-                            {/*data-seed="logId"*/}
-                        {/*>姓名:</InputItem>*/}
+                        <div className='stName'>
+                            <InputItem
+                                placeholder="请输入学生姓名"
+                                data-seed="logId"
+                                onChange={this.inputOnChange.bind(this)}
+                                value={this.state.stNameValue}
+                            >姓名:</InputItem>
+                            <Icon className='stIcon' type='search' onClick={this.searchWatchBindCandidate}/>
+                        </div>
 
-                        {/*<div className='chooseResult'>*/}
-                            {/*{data2.map(i => (*/}
-                                {/*<RadioItem key={i.value} checked={value2 === i.value}*/}
-                                           {/*onChange={() => this.onChange2(i.value)}>*/}
-                                    {/*{i.label}<List.Item.Brief>{i.extra}</List.Item.Brief>*/}
-                                {/*</RadioItem>*/}
-                            {/*))}*/}
-                        {/*</div>*/}
-                    {/*</List>*/}
+                        <div className='chooseResult' style={{display: this.state.chooseResultDiv}}>
+                            {this.state.searchData.map(i => (
+                                <RadioItem key={i.value} checked={this.state.searchCheckValue === i.value}
+                                    /*这个checked的写法很好*/
+                                           onChange={() => this.searchResultOnChange(i)}>
+                                    {i.label}<List.Item.Brief>{i.extra}</List.Item.Brief>
+                                </RadioItem>
+                            ))}
+                        </div>
+                    </List>
 
-                    <div>
-                        学生姓名:
-                        <input type="text" onChange={this.inputOnChange.bind(this)}/>
-                    </div>
+                    {/*<div>*/}
+                    {/*学生姓名:*/}
+                    {/*<input type="text" onChange={this.inputOnChange.bind(this)}/>*/}
+                    {/*</div>*/}
                     <div className='binding' onClick={this.binding}>
                         <Button type="primary">确认绑定</Button>
                     </div>

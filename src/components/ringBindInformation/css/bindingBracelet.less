@@ -17,20 +17,31 @@
     }
   }
   .addModel {
+    background-color: #fff;
     position: relative;
     .chooseResult {
       height: 300px;
       overflow: auto;
     }
     .macAddress {
-      display: inline-block;
-      width: 60%;
-      height: 30px;
-      border: 1px solid #333333;
+      position: relative;
+      .scanIcon {
+        width: 30px;
+        height: 30px;
+        position: absolute;
+        right: 10px;
+        top: 50%;
+        transform: translateY(-50%);
+      }
     }
-    .scanIcon {
-      width: 30px;
-      height: 30px;
+    .stName {
+      position: relative;
+      .stIcon {
+        position: absolute;
+        right: 13px;
+        top: 50%;
+        transform: translateY(-50%);
+      }
     }
     .binding {
       width: 70%;
