@@ -17,7 +17,8 @@
   bottom: 10px;
   text-align: center;
   font-size: 20px;
-  background-color: yellow;
+  background: rgba(0, 0, 0, 0.6);
+  border-radius: 50%;
 }
 #bindingBracelet .tableDiv .liName {
   font-size: 30px;
@@ -27,6 +28,21 @@
   padding: 20px;
   background-color: #fff;
   position: relative;
+}
+#bindingBracelet .addModel .am-list .am-list-body::before {
+  display: none!important;
+}
+#bindingBracelet .addModel .am-list .am-list-body::after {
+  display: none!important;
+}
+#bindingBracelet .addModel .am-list .am-list-body .am-list-line .am-input-label.am-input-label-5 {
+  width: 50px!important;
+}
+#bindingBracelet .addModel .am-list .am-list-body .am-list-line .am-input-control input {
+  width: 88%!important;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
 }
 #bindingBracelet .addModel .chooseResult {
   height: 300px;
