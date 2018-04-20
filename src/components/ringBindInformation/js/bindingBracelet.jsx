@@ -238,7 +238,7 @@ export default class bindingBracelet extends React.Component {
                 </div>
             
                 <div className='addModel' style={{height: document.body.clientHeight}}>
-                    <div onClick={this.cancelAddModel}>
+                    <div onClick={this.cancelAddModel} className="close" >
                         关闭
                     </div>
                     <h1>新增手环</h1>

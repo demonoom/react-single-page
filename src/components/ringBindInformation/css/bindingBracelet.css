@@ -1,4 +1,3 @@
-(node) util.print is deprecated. Use console.log instead.
 #bindingBracelet .tableDiv {
   position: relative;
 }
@@ -17,12 +16,20 @@
   font-size: 30px;
 }
 #bindingBracelet .addModel {
+  box-sizing: border-box;
+  padding: 20px;
   background-color: #fff;
   position: relative;
 }
 #bindingBracelet .addModel .chooseResult {
   height: 300px;
   overflow: auto;
+}
+#bindingBracelet .addModel .close {
+  font-size: 1.5em;
+}
+#bindingBracelet .addModel > h1 {
+  margin-bottom: 50px;
 }
 #bindingBracelet .addModel .macAddress {
   position: relative;
