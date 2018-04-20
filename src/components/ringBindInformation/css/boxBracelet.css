@@ -17,6 +17,7 @@
   font-size: 30px;
 }
 #boxBracelet .addModel {
+  background-color: #fff;
   position: relative;
 }
 #boxBracelet .addModel .chooseResult {
@@ -24,14 +25,24 @@
   overflow: auto;
 }
 #boxBracelet .addModel .macAddress {
-  display: inline-block;
-  width: 60%;
-  height: 30px;
-  border: 1px solid #333333;
+  position: relative;
 }
-#boxBracelet .addModel .scanIcon {
+#boxBracelet .addModel .macAddress .scanIcon {
   width: 30px;
   height: 30px;
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+}
+#boxBracelet .addModel .stName {
+  position: relative;
+}
+#boxBracelet .addModel .stName .stIcon {
+  position: absolute;
+  right: 13px;
+  top: 50%;
+  transform: translateY(-50%);
 }
 #boxBracelet .addModel .binding {
   width: 70%;

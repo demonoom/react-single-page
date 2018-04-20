@@ -1,5 +1,5 @@
 import React from 'react';
-import {Button, Toast, InputItem, List, Radio} from 'antd-mobile';
+import {Button, Toast, InputItem, List, Radio, Icon, ListView, Card, WingBlank, WhiteSpace} from 'antd-mobile';
 import '../css/boxBracelet.less'
 
 const RadioItem = Radio.RadioItem;
@@ -10,9 +10,19 @@ export default class boxBracelet extends React.Component {
     constructor(props) {
         super(props);
         bindDing = this;
+        const dataSource = new ListView.DataSource({
+            rowHasChanged: (row1, row2) => row1 !== row2,
+        });
+        this.initData = [];
         this.state = {
+            dataSource: dataSource.cloneWithRows(this.initData),
+            defaultPageNo: 1,
             tableDivHeight: document.body.clientHeight,
-            value2: 0,
+            searchCheckValue: '',
+            macId: '',
+            chooseResultDiv: 'none',
+            stNameValue: '',
+            searchData: [],
         };
     }
 
@@ -27,6 +37,12 @@ export default class boxBracelet extends React.Component {
      */
     viewAndroidBoxPage(loginUser) {
         var _this = this;
+        _this.initData.splice(0);
+        _this.state.dataSource = [];
+        _this.state.dataSource = new ListView.DataSource({
+            rowHasChanged: (row1, row2) => row1 !== row2,
+        });
+        const dataBlob = {};
         var param = {
             "method": 'viewAndroidBoxPage',
             "aid": loginUser.ident,
@@ -37,13 +53,27 @@ export default class boxBracelet extends React.Component {
             onResponse: function (result) {
                 if (result.msg == '调用成功' && result.success == true) {
                     var arr = result.response;
-                    var array = [];
-                    arr.forEach(function (v, i) {
-                        var li = <li className='liName'
-                                     onClick={_this.unbindWatch.bind(this, v)}>{v.bindingClazz.name}</li>;
-                        array.push(li);
-                    });
-                    _this.setState({array});
+                    var pager = result.pager;
+                    for (let i = 0; i < arr.length; i++) {
+                        var topic = arr[i];
+                        dataBlob[`${i}`] = topic;
+                    }
+                    var isLoading = false;
+                    if (arr.length > 0) {
+                        if (pager.pageCount == 1 && pager.rsCount < 30) {
+                            isLoading = false;
+                        } else {
+                            isLoading = true;
+                        }
+                    } else {
+                        isLoading = false;
+                    }
+                    _this.initData = _this.initData.concat(arr);
+                    _this.setState({
+                        dataSource: _this.state.dataSource.cloneWithRows(_this.initData),
+                        isLoadingLeft: isLoading,
+                        refreshing: false
+                    })
                 }
             },
             onError: function (error) {
@@ -88,7 +118,7 @@ export default class boxBracelet extends React.Component {
         //         clearInterval(timer);
         //     }
         // }, 10);
-        $('.tableDiv').hide("normal");
+        $('.tableDiv').hide("fast");
     };
 
     /**
@@ -105,7 +135,7 @@ export default class boxBracelet extends React.Component {
         //         clearInterval(timer);
         //     }
         // }, 10);
-        $('.tableDiv').show("normal");
+        $('.tableDiv').show("fast");
     };
 
     /**
@@ -117,10 +147,9 @@ export default class boxBracelet extends React.Component {
         };
         Bridge.callHandler(data, function (mes) {
             //获取二维码MAC地址
-            document.getElementById('macAddress').innerHTML = mes;
             bindDing.setState({macId: mes});
         }, function (error) {
-            Toast.fail(error, 1);
+            console.log(error);
         });
     }
 
@@ -128,9 +157,14 @@ export default class boxBracelet extends React.Component {
      * 绑定
      */
     binding = () => {
+        var _this = this;
+        if (this.state.searchCheckValue == '' || bindDing.state.macId == '') {
+            Toast.fail('未选择班级或手环',)
+            return
+        }
         var param = {
             "method": 'bindAndroidBox',
-            "cid": this.state.studentId,
+            "cid": this.state.searchCheckValue,
             "mac": bindDing.state.macId,
             "opId": this.state.loginUser.ident,
         };
@@ -139,6 +173,8 @@ export default class boxBracelet extends React.Component {
             onResponse: function (result) {
                 if (result.msg == '调用成功' && result.success == true) {
                     Toast.success('绑定成功', 1);
+                    $('.tableDiv').show("fast");
+                    _this.viewAndroidBoxPage(_this.state.loginUser);
                 } else {
                     Toast.fail(result.msg, 1);
                 }
@@ -149,39 +185,141 @@ export default class boxBracelet extends React.Component {
         });
     }
 
+    /**
+     * 搜索未绑定手环的用户
+     */
+    searchWatchBindCandidate = () => {
+        Toast.loading('正在搜索');
+        this.setState({searchData: []});
+        var _this = this;
+        if (this.state.stNameValue.trim().length == 0) {
+            Toast.fail('请输入班级', 1)
+            return
+        }
+        var param = {
+            "method": 'searchBoxBindCandidate',
+            "keyWord": this.state.stNameValue.trim(),
+            "aid": this.state.loginUser.ident
+        };
+        WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
+            onResponse: function (result) {
+                if (result.msg == '调用成功' && result.success == true) {
+                    if (WebServiceUtil.isEmpty(result.response) == false) {
+                        var arr = [];
+                        result.response.forEach(function (v, i) {
+                            var obj = {
+                                value: v.id,
+                                label: v.name,
+                            }
+                            arr.push(obj);
+                        });
+                        _this.setState({
+                            chooseResultDiv: 'block',
+                            searchData: arr,
+                            stNameValue: result.response[0].name,
+                            searchCheckValue: result.response[0].id
+                        });
+                        Toast.hide();
+                    } else {
+                        Toast.fail('没有找到该班级', 1)
+                    }
+                } else {
+                    Toast.fail(result.msg, 1);
+                }
+            },
+            onError: function (error) {
+                // message.error(error);
+            }
+        });
+    };
+
+    /**
+     * 输入框改变的回调
+     */
     inputOnChange(e) {
-        this.setState({studentId: e.target.value});
+        this.setState({stNameValue: e});
     }
 
-    onChange2 = (value) => {
-        console.log('checkbox');
+    /**
+     * 点击搜索结果的回调
+     */
+    searchResultOnChange = (i) => {
+        // this.setState({chooseResultDiv: 'none'});   label
         this.setState({
-            value2: value,
+            searchCheckValue: i.value,
+            stNameValue: i.label
+        });
+    };
+
+    /**
+     *  ListView数据全部渲染完毕的回调
+     */
+    onEndReached = (event) => {
+        var _this = this;
+        var currentPageNo = this.state.defaultPageNo;
+        if (!this.state.isLoadingLeft && !this.state.hasMore) {
+            return;
+        }
+        currentPageNo += 1;
+        this.setState({isLoadingLeft: true, defaultPageNo: currentPageNo});
+        _this.viewAndroidBoxPage(_this.state.loginUser);
+        this.setState({
+            dataSource: this.state.dataSource.cloneWithRows(this.initData),
+            isLoadingLeft: true,
         });
     };
 
     render() {
-        const {value2} = this.state;
-        const data2 = [
-            {value: 0, label: 'basketball', extra: 'details'},
-            {value: 1, label: 'football', extra: 'details'},
-            {value: 2, label: 'basketball', extra: 'details'},
-            {value: 3, label: 'football', extra: 'details'},
-            {value: 4, label: 'basketball', extra: 'details'},
-            {value: 5, label: 'football', extra: 'details'},
-            {value: 6, label: 'basketball', extra: 'details'},
-            {value: 7, label: 'football', extra: 'details'},
-            {value: 8, label: 'basketball', extra: 'details'},
-            {value: 9, label: 'football', extra: 'details'},
-        ];
+
+        var _this = this;
+
+        const row = (rowData, sectionID, rowID) => {
+
+            console.log(rowData);
+
+            return (
+                <WingBlank size="lg">
+                    <WhiteSpace size="lg"/>
+                    <Card>
+                        <Card.Header
+                            className='noomCardHeader'
+                            title={rowData.bindingClazz.name}
+                            extra={<span className='noomCardUnbind'
+                                         onClick={_this.unbindWatch.bind(this, rowData)}>解绑</span>}
+                        />
+                        <Card.Body>
+                            <div>{rowData.macAddress}</div>
+                        </Card.Body>
+                    </Card>
+                    <WhiteSpace size="lg"/>
+                </WingBlank>
+            )
+        };
 
         return (
-            <div id="boxBracelet" style={{height: document.body.clientHeight}}>
+            <div id="bindingBracelet" style={{height: document.body.clientHeight}}>
                 <div className='tableDiv' style={{height: this.state.tableDivHeight}}>
                     {/*这是列表数据,包括添加按钮*/}
-                    <ul>
-                        {this.state.array}
-                    </ul>
+                    <ListView
+                        ref={el => this.lv = el}
+                        dataSource={this.state.dataSource}    //数据类型是 ListViewDataSource
+                        renderFooter={() => (
+                            <div style={{paddingTop: 5, paddingBottom: 40, textAlign: 'center'}}>
+                                {this.state.isLoadingLeft ? '正在加载' : '已经全部加载完毕'}
+                            </div>)}
+                        renderRow={row}   //需要的参数包括一行数据等,会返回一个可渲染的组件为这行数据渲染  返回renderable
+                        className="am-list"
+                        pageSize={30}    //每次事件循环（每帧）渲染的行数
+                        //useBodyScroll  //使用 html 的 body 作为滚动容器   bool类型   不应这么写  否则无法下拉刷新
+                        scrollRenderAheadDistance={200}   //当一个行接近屏幕范围多少像素之内的时候，就开始渲染这一行
+                        onEndReached={this.onEndReached}  //当所有的数据都已经渲染过，并且列表被滚动到距离最底部不足onEndReachedThreshold个像素的距离时调用
+                        onEndReachedThreshold={10}  //调用onEndReached之前的临界值，单位是像素  number类型
+                        initialListSize={30}   //指定在组件刚挂载的时候渲染多少行数据，用这个属性来确保首屏显示合适数量的数据
+                        scrollEventThrottle={20}     //控制在滚动过程中，scroll事件被调用的频率
+                        style={{
+                            height: this.state.tableDivHeight,
+                        }}
+                    />
                     <div className='addBunton' onClick={this.addRing}>+</div>
                 </div>
                 <div className='addModel' style={{height: document.body.clientHeight}}>
@@ -189,36 +327,35 @@ export default class boxBracelet extends React.Component {
                         关闭
                     </div>
                     <h1>新增盒子</h1>
-                    <div>
-                        MAC地址:
-                        <span className='macAddress' id='macAddress'></span>
-                        <img className='scanIcon' src={require('../imgs/timg.png')} alt="" onClick={this.scanMac}/>
-                    </div>
-                    {/*<List>*/}
-                    {/*<InputItem*/}
-                    {/*value=""*/}
-                    {/*editable={false}*/}
-                    {/*>MAC:</InputItem>*/}
+                    <List>
+                        <div className='macAddress'>
+                            <InputItem
+                                value={bindDing.state.macId}
+                                editable={false}
+                            >MAC:</InputItem>
+                            <img className='scanIcon' src={require('../imgs/timg.png')} alt="" onClick={this.scanMac}/>
+                        </div>
 
-                    {/*<InputItem*/}
-                    {/*placeholder="please input content"*/}
-                    {/*data-seed="logId"*/}
-                    {/*>姓名:</InputItem>*/}
+                        <div className='stName'>
+                            <InputItem
+                                placeholder="请输入班级并搜索"
+                                data-seed="logId"
+                                onChange={this.inputOnChange.bind(this)}
+                                value={this.state.stNameValue}
+                            >班级:</InputItem>
+                            <Icon className='stIcon' type='search' onClick={this.searchWatchBindCandidate}/>
+                        </div>
 
-                    {/*<div className='chooseResult'>*/}
-                    {/*{data2.map(i => (*/}
-                    {/*<RadioItem key={i.value} checked={value2 === i.value}*/}
-                    {/*onChange={() => this.onChange2(i.value)}>*/}
-                    {/*{i.label}<List.Item.Brief>{i.extra}</List.Item.Brief>*/}
-                    {/*</RadioItem>*/}
-                    {/*))}*/}
-                    {/*</div>*/}
-                    {/*</List>*/}
-
-                    <div>
-                        班级:
-                        <input type="text" onChange={this.inputOnChange.bind(this)}/>
-                    </div>
+                        <div className='chooseResult' style={{display: this.state.chooseResultDiv}}>
+                            {this.state.searchData.map(i => (
+                                <RadioItem key={i.value} checked={this.state.searchCheckValue === i.value}
+                                    /*这个checked的写法很好*/
+                                           onChange={() => this.searchResultOnChange(i)}>
+                                    {i.label}
+                                </RadioItem>
+                            ))}
+                        </div>
+                    </List>
                     <div className='binding' onClick={this.binding}>
                         <Button type="primary">确认绑定</Button>
                     </div>
