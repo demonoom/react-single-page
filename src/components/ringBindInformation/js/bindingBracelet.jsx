@@ -104,11 +104,19 @@ export default class bindingBracelet extends React.Component {
      * 解绑弹出框
      */
     showAlert = (data) => {
+        var phoneType = navigator.userAgent;
+        var phone;
+        if (phoneType.indexOf('iPhone') > -1 || phoneType.indexOf('iPad') > -1) {
+            phone = 'ios'
+        } else {
+            phone = 'android'
+        }
+
         var _this = this;
         const alertInstance = alert('您确定要解除绑定吗?', '', [
             {text: '取消', onPress: () => console.log('cancel'), style: 'default'},
             {text: '确定', onPress: () => _this.unbindWatch(data)},
-        ], 'android');
+        ], phone);
     };
 
     /**
@@ -353,7 +361,7 @@ export default class bindingBracelet extends React.Component {
                     <div className='addBunton' onClick={this.addRing}>+</div>
                 </div>
                 <div className='addModel' style={{height: bindDing.state.clientHeight}}>
-                    <div onClick={this.cancelAddModel}>
+                    <div onClick={this.cancelAddModel} className="close">
                         关闭
                     </div>
                     <h1>新增手环</h1>

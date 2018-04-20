@@ -346,7 +346,7 @@ export default class boxBracelet extends React.Component {
                     <div className='addBunton' onClick={this.addRing}>+</div>
                 </div>
                 <div className='addModel' style={{height: bindDing.state.clientHeight}}>
-                    <div onClick={this.cancelAddModel}>
+                    <div onClick={this.cancelAddModel} className="close">
                         关闭
                     </div>
                     <h1>新增盒子</h1>
