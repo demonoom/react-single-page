@@ -1,7 +1,8 @@
 import React from 'react';
-import {Button, Toast, InputItem, List, Radio, Icon, ListView, Card, WingBlank, WhiteSpace} from 'antd-mobile';
+import {Button, Toast, InputItem, List, Radio, Icon, ListView, Card, WingBlank, WhiteSpace, Modal} from 'antd-mobile';
 import '../css/bindingBracelet.less'
 
+const alert = Modal.alert;
 const RadioItem = Radio.RadioItem;
 var bindDing;
 
@@ -17,7 +18,7 @@ export default class bindingBracelet extends React.Component {
         this.state = {
             dataSource: dataSource.cloneWithRows(this.initData),
             defaultPageNo: 1,
-            tableDivHeight: document.body.clientHeight,
+            clientHeight: document.body.clientHeight,
             searchCheckValue: '',
             macId: '',
             chooseResultDiv: 'none',
@@ -30,6 +31,22 @@ export default class bindingBracelet extends React.Component {
         var loginUser = JSON.parse(localStorage.getItem('loginUserRingBind'));
         this.setState({loginUser});
         this.viewWatchPage(loginUser);
+        //添加对视窗大小的监听,在屏幕转换以及键盘弹起时重设各项高度
+        window.addEventListener('resize', bindDing.onWindowResize)
+    }
+
+    componentWillUnmount() {
+        //解除监听
+        window.removeEventListener('resize', bindDing.onWindowResize)
+    }
+
+    /**
+     * 视窗改变时改变高度
+     */
+    onWindowResize() {
+        setTimeout(function () {
+            bindDing.setState({clientHeight: document.body.clientHeight});
+        }, 100)
     }
 
     /**
@@ -37,6 +54,11 @@ export default class bindingBracelet extends React.Component {
      */
     viewWatchPage(loginUser) {
         var _this = this;
+        _this.initData.splice(0);
+        _this.state.dataSource = [];
+        _this.state.dataSource = new ListView.DataSource({
+            rowHasChanged: (row1, row2) => row1 !== row2,
+        });
         const dataBlob = {};
         var PageNo = this.state.defaultPageNo;
         var param = {
@@ -79,10 +101,22 @@ export default class bindingBracelet extends React.Component {
     }
 
     /**
+     * 解绑弹出框
+     */
+    showAlert = (data) => {
+        var _this = this;
+        const alertInstance = alert('您确定要解除绑定吗?', '', [
+            {text: '取消', onPress: () => console.log('cancel'), style: 'default'},
+            {text: '确定', onPress: () => _this.unbindWatch(data)},
+        ], 'android');
+    };
+
+    /**
      * 解绑
      * @param obj
      */
     unbindWatch(obj) {
+        var _this = this;
         var param = {
             "method": 'unbindWatch',
             "wid": obj.macAddress,
@@ -91,6 +125,18 @@ export default class bindingBracelet extends React.Component {
             onResponse: function (result) {
                 if (result.msg == '调用成功' && result.success == true) {
                     Toast.success('解绑成功', 1);
+                    _this.state.dataSource = [];
+                    _this.state.dataSource = new ListView.DataSource({
+                        rowHasChanged: (row1, row2) => row1 !== row2,
+                    });
+                    _this.initData.forEach(function (v, i) {
+                        if (obj.id == v.id) {
+                            _this.initData.splice(i, 1);
+                        }
+                    });
+                    _this.setState({
+                        dataSource: _this.state.dataSource.cloneWithRows(_this.initData)
+                    });
                 } else {
                     Toast.fail(result.msg, 1);
                 }
@@ -105,15 +151,6 @@ export default class bindingBracelet extends React.Component {
      * 开启添加手环的界面
      */
     addRing = () => {
-        // var _this = this;
-        // var height = this.state.tableDivHeight;
-        // var timer = setInterval(function () {
-        //     height -= 30;
-        //     _this.setState({tableDivHeight: height});
-        //     if (height <= 0) {
-        //         clearInterval(timer);
-        //     }
-        // }, 10);
         $('.tableDiv').hide("fast");
     };
 
@@ -121,16 +158,6 @@ export default class bindingBracelet extends React.Component {
      * 关闭添加手环的界面
      */
     cancelAddModel = () => {
-        // var _this = this;
-        // var windowHeight = document.body.clientHeight;
-        // var height = this.state.tableDivHeight;
-        // var timer = setInterval(function () {
-        //     height += 30;
-        //     _this.setState({tableDivHeight: height});
-        //     if (height >= windowHeight) {
-        //         clearInterval(timer);
-        //     }
-        // }, 10);
         $('.tableDiv').show("fast");
     };
 
@@ -170,6 +197,9 @@ export default class bindingBracelet extends React.Component {
                 if (result.msg == '调用成功' && result.success == true) {
                     Toast.success('绑定成功', 1);
                     $('.tableDiv').show("fast");
+                    _this.state.macId = '';
+                    _this.state.stNameValue = '';
+                    _this.setState({chooseResultDiv: 'none'});
                     _this.viewWatchPage(_this.state.loginUser);
                 } else {
                     Toast.fail(result.msg, 1);
@@ -283,7 +313,7 @@ export default class bindingBracelet extends React.Component {
                             // thumb={rowData.bindingUser.avatar}
                             thumb='http://60.205.86.217/upload6/2018-02-09/19/805eee4a-b707-49a2-9c75-d5b14ed9227b.jpg'
                             extra={<span className='noomCardUnbind'
-                                         onClick={_this.unbindWatch.bind(this, rowData)}>解绑</span>}
+                                         onClick={_this.showAlert.bind(this, rowData)}>解绑</span>}
                         />
                         <Card.Body>
                             <div>{rowData.macAddress}</div>
@@ -297,8 +327,8 @@ export default class bindingBracelet extends React.Component {
         };
 
         return (
-            <div id="bindingBracelet" style={{height: document.body.clientHeight}}>
-                <div className='tableDiv' style={{height: this.state.tableDivHeight}}>
+            <div id="bindingBracelet" style={{height: bindDing.state.clientHeight}}>
+                <div className='tableDiv' style={{height: bindDing.state.clientHeight}}>
                     {/*这是列表数据,包括添加按钮*/}
                     <ListView
                         ref={el => this.lv = el}
@@ -317,12 +347,12 @@ export default class bindingBracelet extends React.Component {
                         initialListSize={30}   //指定在组件刚挂载的时候渲染多少行数据，用这个属性来确保首屏显示合适数量的数据
                         scrollEventThrottle={20}     //控制在滚动过程中，scroll事件被调用的频率
                         style={{
-                            height: this.state.tableDivHeight,
+                            height: bindDing.state.clientHeight,
                         }}
                     />
                     <div className='addBunton' onClick={this.addRing}>+</div>
                 </div>
-                <div className='addModel' style={{height: document.body.clientHeight}}>
+                <div className='addModel' style={{height: bindDing.state.clientHeight}}>
                     <div onClick={this.cancelAddModel}>
                         关闭
                     </div>
