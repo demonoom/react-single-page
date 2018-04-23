@@ -3,10 +3,34 @@
   text-align: center;
   font-size: 20px;
 }
-#ringBinding .bracelet {
-  margin-bottom: 25px;
-  font-size: 35px;
+#ringBinding > div {
+  background: #fff;
+  padding: 5.8rem 3.6rem;
+  display: flex;
 }
-#ringBinding .box {
-  font-size: 35px;
+#ringBinding > div > span {
+  font-size: 1rem;
+  color: #3c3c3c;
+  line-height: 5rem;
+  margin-left: 4.8rem;
+}
+#ringBinding .bracelet::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 5%;
+  width: 90%;
+  height: 0.05rem;
+  border: 1PX solid #ddd;
+}
+#ringBinding .bracelet {
+  position: relative;
+}
+#ringBinding .bracelet img {
+  width: 5rem;
+  height: 5rem;
+}
+#ringBinding .box img {
+  width: 5rem;
+  height: 5rem;
 }

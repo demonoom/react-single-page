@@ -31,16 +31,16 @@
   position: relative;
 }
 #bindingBracelet .addModel .am-list .am-list-body::before {
-  display: none !important;
+  display: none!important;
 }
 #bindingBracelet .addModel .am-list .am-list-body::after {
-  display: none !important;
+  display: none!important;
 }
 #bindingBracelet .addModel .am-list .am-list-body .am-list-line .am-input-label.am-input-label-5 {
-  width: 50px !important;
+  width: 50px!important;
 }
 #bindingBracelet .addModel .am-list .am-list-body .am-list-line .am-input-control input {
-  width: 88% !important;
+  width: 88%!important;
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
