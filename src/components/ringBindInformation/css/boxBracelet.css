@@ -55,7 +55,7 @@
   width: 50px!important;
 }
 #boxBracelet .addModel .chooseResult {
-  height: 300px;
+  height: 30rem!important;
   overflow: auto;
 }
 #boxBracelet .addModel .macAddress {
@@ -95,7 +95,7 @@
 #boxBracelet .addModel .bottomBox span {
   flex: 1;
   text-align: center;
-  font-size: 1.5em;
+  font-size: 1rem;
   padding: 10px;
   display: block;
 }

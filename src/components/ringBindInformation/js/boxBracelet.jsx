@@ -19,6 +19,7 @@ export default class boxBracelet extends React.Component {
             dataSource: dataSource.cloneWithRows(this.initData),
             defaultPageNo: 1,
             clientHeight: document.body.clientHeight,
+            calmHeight:document.body.clientHeight,
             searchCheckValue: '',
             macId: '',
             chooseResultDiv: 'none',
@@ -45,7 +46,7 @@ export default class boxBracelet extends React.Component {
      */
     onWindowResize() {
         setTimeout(function () {
-            bindDing.setState({clientHeight: document.body.clientHeight});
+            bindDing.setState({clientHeight: document.body.clientHeight,calmHeight:document.body.clientHeight-296});
         }, 100)
     }
 
@@ -369,7 +370,7 @@ export default class boxBracelet extends React.Component {
                             <img className='stIcon' src={require("../imgs/search.png")} type='search' onClick={this.searchWatchBindCandidate}/>
                         </div>
 
-                        <div className='chooseResult' style={{display: this.state.chooseResultDiv}}>
+                        <div className='chooseResult' style={{display: this.state.chooseResultDiv,height:this.state.calmHeight}}>
                             {this.state.searchData.map(i => (
                                 <RadioItem key={i.value} checked={this.state.searchCheckValue === i.value}
                                     /*这个checked的写法很好*/
