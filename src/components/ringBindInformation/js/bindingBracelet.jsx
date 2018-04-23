@@ -324,10 +324,10 @@ export default class bindingBracelet extends React.Component {
                                          onClick={_this.showAlert.bind(this, rowData)}>解绑</span>}
                         />
                         <Card.Body>
-                            <div>{rowData.macAddress}</div>
+                            <div>MAC:{rowData.macAddress}</div>
                         </Card.Body>
-                        <Card.Footer content={rowData.bindingUser.clazz.name}
-                                     extra={<div>{rowData.bindingUser.colAccount}</div>}/>
+                        <Card.Footer content={"班级"+":"+rowData.bindingUser.clazz.name}
+                                     extra={<div>ID:{rowData.bindingUser.colAccount}</div>}/>
                     </Card>
                     <WhiteSpace size="lg"/>
                 </WingBlank>
@@ -358,13 +358,13 @@ export default class bindingBracelet extends React.Component {
                             height: bindDing.state.clientHeight,
                         }}
                     />
-                    <div className='addBunton' onClick={this.addRing}>+</div>
+                    <div className='addBunton' onClick={this.addRing}>
+                        <img src={require("../imgs/addBtn.png")}/>
+                    </div>
                 </div>
                 <div className='addModel' style={{height: bindDing.state.clientHeight}}>
-                    <div onClick={this.cancelAddModel} className="close">
-                        关闭
-                    </div>
-                    <h1>新增手环</h1>
+                    
+                   
                     <List>
                         <div className='macAddress'>
                             <InputItem
@@ -381,7 +381,7 @@ export default class bindingBracelet extends React.Component {
                                 onChange={this.inputOnChange.bind(this)}
                                 value={this.state.stNameValue}
                             >姓名:</InputItem>
-                            <Icon className='stIcon' type='search' onClick={this.searchWatchBindCandidate}/>
+                            <img className='stIcon' src={require('../imgs/search.png')} onClick={this.searchWatchBindCandidate}/>
                         </div>
 
                         <div className='chooseResult' style={{display: this.state.chooseResultDiv}}>
@@ -394,9 +394,15 @@ export default class bindingBracelet extends React.Component {
                             ))}
                         </div>
                     </List>
-                    <div className='binding' onClick={this.binding}>
-                        <Button type="primary">确认绑定</Button>
+                    <div className="bottomBox">
+                        <span onClick={this.cancelAddModel} className="close">
+                                关闭
+                        </span>
+                        
+                            <span className="bind" onClick={this.binding}>确认绑定</span>
+                      
                     </div>
+                    
                 </div>
             </div>
         );

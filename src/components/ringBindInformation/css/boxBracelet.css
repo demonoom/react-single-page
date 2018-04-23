@@ -1,18 +1,37 @@
-(node) util.print is deprecated. Use console.log instead.
 #boxBracelet .tableDiv {
   position: relative;
 }
+#boxBracelet .tableDiv .am-card-body {
+  min-height: 1.5rem!important;
+  color: #888!important;
+}
+#boxBracelet .tableDiv .am-card-body .am-list-item .am-input-label {
+  color: #3c3c3c;
+}
+#boxBracelet .tableDiv .am-card-body .am-list-item .am-input-control input {
+  color: #3c3c3c;
+}
+#boxBracelet .tableDiv .am-card-footer {
+  margin-bottom: 1rem;
+}
+#boxBracelet .tableDiv .noomCardUnbind {
+  background: #ff144e;
+  color: #fff!important;
+  padding: 0.3rem 1.3rem;
+}
+#boxBracelet .tableDiv .noomCardHeader .am-card-header-content {
+  font-size: 1rem;
+  color: #3c3c3c;
+}
 #boxBracelet .tableDiv .addBunton {
-  width: 50px;
-  height: 50px;
-  line-height: 50px;
+  width: 3.5rem;
+  height: 3.5rem;
   position: absolute;
-  right: 10px;
-  bottom: 10px;
-  text-align: center;
-  font-size: 20px;
-  background: rgba(0, 0, 0, 0.6);
-  border-radius: 50%;
+  right: 3rem;
+  bottom: 5rem;
+}
+#boxBracelet .tableDiv .addBunton img {
+  width: 100%;
 }
 #boxBracelet .tableDiv .liName {
   font-size: 30px;
@@ -23,6 +42,8 @@
 }
 #boxBracelet .addModel .close {
   font-size: 1.5em;
+  background: #fff;
+  color: #e46a51;
 }
 #boxBracelet .addModel .am-list .am-list-body::before {
   display: none!important;
@@ -63,4 +84,22 @@
   bottom: 20px;
   left: 50%;
   transform: translateX(-50%);
+}
+#boxBracelet .addModel .bottomBox {
+  display: flex;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+}
+#boxBracelet .addModel .bottomBox span {
+  flex: 1;
+  text-align: center;
+  font-size: 1.5em;
+  padding: 10px;
+  display: block;
+}
+#boxBracelet .addModel .bottomBox .bind {
+  background: #e46a51;
+  color: #fff;
 }
