@@ -121,6 +121,7 @@ export default class boxBracelet extends React.Component {
             "method": 'unbindAndroidBox',
             "bid": obj.macAddress,
         };
+        // calm
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
             onResponse: function (result) {
                 if (result.msg == '调用成功' && result.success == true) {
