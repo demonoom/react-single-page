@@ -23,7 +23,7 @@ export default class personalSettings extends React.Component {
         var uid = searchArray[0].split('=')[1];
         var tid = searchArray[1].split('=')[1];
         this.setState({uid, tid});
-        this.getUserInfo(uid);
+        // this.getUserInfo(uid);
         this.getMessageSilenceStatus(uid, tid);
     }
 
@@ -44,6 +44,7 @@ export default class personalSettings extends React.Component {
             onResponse: function (result) {
                 if (result.msg == '调用成功' && result.success == true) {
                     _this.setState({initialValue: result.response});
+                    _this.getUserInfo(uid);
                 }
             }
         })
