@@ -46,7 +46,7 @@ export default class bindingBracelet extends React.Component {
      */
     onWindowResize() {
         setTimeout(function () {
-            bindDing.setState({clientHeight: document.body.clientHeight,calmHeight:document.body.clientHeight-296});
+            bindDing.setState({clientHeight: document.body.clientHeight,calmHeight:document.body.clientHeight-500});
         }, 100)
     }
 
