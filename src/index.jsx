@@ -97,7 +97,11 @@ const groupSetting = (location, cb) => {
         cb(null, require('./components/chatSettings/js/groupSetting').default)
     }, 'groupSetting')
 };
-
+const chatMsg = (location, cb) => {
+    require.ensure([], require => {
+        cb(null, require("./components/chatSettings/js/chatMsg").default)
+    }, "chatMsg")
+}
 import './index.less';
 
 class Index extends React.Component {
@@ -127,7 +131,7 @@ class Index extends React.Component {
                     {/*style={{fontSize: '24px'}}>文件分享</Link></li>*/}
                     <li><Link to="/ringBinding?ident=23836"
                               style={{fontSize: '24px'}}>手环绑定</Link></li>
-                    <li><Link to="/personalSettings"
+                    <li><Link to="/personalSettings?ident=54208&"
                               style={{fontSize: '24px'}}>个人设置</Link></li>
                     <li><Link to="/groupSetting?chatGroupId=920&ident=23836"
                               style={{fontSize: '24px'}}>群设置</Link></li>
@@ -163,6 +167,7 @@ ReactDOM.render(
             <Route path="boxBracelet" getComponent={boxBracelet}/>
             <Route path="personalSettings" getComponent={personalSettings}/>
             <Route path="groupSetting" getComponent={groupSetting}/>
+            <Route path="chatMsg" getComponent={chatMsg}/>
         </Route>
     </Router>
     , document.getElementById('example'));
