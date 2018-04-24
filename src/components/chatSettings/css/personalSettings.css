@@ -1,0 +1,51 @@
+#personalSettings {
+  margin: 0;
+  padding: 0;
+  background: #f3f3f3;
+  padding: 20px 0px;
+}
+#personalSettings .logoImg {
+  background: #fff;
+  padding: 15px;
+  overflow: hidden;
+}
+#personalSettings .logoImg span {
+  float: left;
+}
+#personalSettings .logoImg .imgInfo {
+  margin-right: 20px;
+}
+#personalSettings .logoImg .topImg {
+  width: 50px;
+  height: 50px;
+  background-color: skyblue;
+  border-radius: 50%;
+}
+#personalSettings .logoImg .rightBtn {
+  width: 50px;
+  height: 50px;
+  font-size: 38px;
+  line-height: 50px;
+}
+#personalSettings .searchChatMsg {
+  margin: 20px 0;
+  padding: 15px;
+  background-color: #fff;
+}
+#personalSettings .searchChatMsg .rightArrow {
+  float: right;
+}
+#personalSettings .ingoreMsg {
+  margin: 20px 0;
+  padding: 15px;
+  background-color: #fff;
+}
+#personalSettings .ingoreMsg .am-list .am-list-body::before {
+  height: 0;
+}
+#personalSettings .ingoreMsg .am-list .am-list-body::after {
+  height: 0;
+}
+#personalSettings .ingoreMsg .am-list .am-list-body .am-list-item.am-list-item-middle {
+  padding-left: 0;
+}

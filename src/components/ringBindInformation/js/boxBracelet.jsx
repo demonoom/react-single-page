@@ -1,5 +1,5 @@
 import React from 'react';
-import {Button, Toast, InputItem, List, Radio, Icon, ListView, Card, WingBlank, WhiteSpace, Modal} from 'antd-mobile';
+import {Toast, InputItem, List, Radio, Icon, ListView, Card, WingBlank, WhiteSpace, Modal} from 'antd-mobile';
 import '../css/boxBracelet.less'
 
 const alert = Modal.alert;
@@ -19,7 +19,7 @@ export default class boxBracelet extends React.Component {
             dataSource: dataSource.cloneWithRows(this.initData),
             defaultPageNo: 1,
             clientHeight: document.body.clientHeight,
-            calmHeight:document.body.clientHeight,
+            calmHeight: document.body.clientHeight - 296,
             searchCheckValue: '',
             macId: '',
             chooseResultDiv: 'none',
@@ -29,6 +29,7 @@ export default class boxBracelet extends React.Component {
     }
 
     componentDidMount() {
+        document.title = '绑定课堂盒子信息';
         var loginUser = JSON.parse(localStorage.getItem('loginUserRingBind'));
         this.setState({loginUser});
         this.viewAndroidBoxPage(loginUser);
@@ -46,7 +47,7 @@ export default class boxBracelet extends React.Component {
      */
     onWindowResize() {
         setTimeout(function () {
-            bindDing.setState({clientHeight: document.body.clientHeight,calmHeight:document.body.clientHeight-296});
+            bindDing.setState({clientHeight: document.body.clientHeight, calmHeight: document.body.clientHeight - 296});
         }, 100)
     }
 
@@ -160,6 +161,9 @@ export default class boxBracelet extends React.Component {
      */
     cancelAddModel = () => {
         $('.tableDiv').show("fast");
+        this.state.macId = '';
+        this.state.stNameValue = '';
+        this.setState({chooseResultDiv: 'none'});
     };
 
     /**
@@ -350,8 +354,8 @@ export default class boxBracelet extends React.Component {
                     </div>
                 </div>
                 <div className='addModel' style={{height: bindDing.state.clientHeight}}>
-                    
-                   
+
+
                     <List>
                         <div className='macAddress'>
                             <InputItem
@@ -368,10 +372,12 @@ export default class boxBracelet extends React.Component {
                                 onChange={this.inputOnChange.bind(this)}
                                 value={this.state.stNameValue}
                             >班级:</InputItem>
-                            <img className='stIcon' src={require("../imgs/search.png")} type='search' onClick={this.searchWatchBindCandidate}/>
+                            <img className='stIcon' src={require("../imgs/search.png")} type='search'
+                                 onClick={this.searchWatchBindCandidate}/>
                         </div>
 
-                        <div className='chooseResult' style={{display: this.state.chooseResultDiv,height:this.state.calmHeight}}>
+                        <div className='chooseResult'
+                             style={{display: this.state.chooseResultDiv, height: this.state.calmHeight}}>
                             {this.state.searchData.map(i => (
                                 <RadioItem key={i.value} checked={this.state.searchCheckValue === i.value}
                                     /*这个checked的写法很好*/
@@ -385,9 +391,9 @@ export default class boxBracelet extends React.Component {
                         <span onClick={this.cancelAddModel} className="close">
                                 关闭
                         </span>
-                        
-                            <span className="bind" onClick={this.binding}>确认绑定</span>
-                      
+
+                        <span className="bind" onClick={this.binding}>确认绑定</span>
+
                     </div>
                 </div>
             </div>

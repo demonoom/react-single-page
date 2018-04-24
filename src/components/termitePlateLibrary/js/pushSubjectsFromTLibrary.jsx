@@ -171,6 +171,20 @@ export default class pushSubjectsFromTLibrary extends React.Component {
     };
 
     /**
+     * 题目被点击
+     */
+    queClicked(obj, event) {
+        event.stopPropagation();
+        var url = encodeURI(WebServiceUtil.mobileServiceURL + "questionDetil?courseId=" + obj.subject.id + "&subjectType=" + obj.subject.subjectType);
+        var data = {};
+        data.method = 'openNewPage';
+        data.url = url;
+        Bridge.callHandler(data, null, function (error) {
+            window.location.href = url;
+        });
+    }
+
+    /**
      * 文件夹被点击
      */
     fileClicked(obj, event) {
@@ -180,7 +194,8 @@ export default class pushSubjectsFromTLibrary extends React.Component {
         var arr = document.getElementsByClassName('am-checkbox');
         for (var i = 0; i < arr.length; i++) {
             arr[i].classList.remove("am-checkbox-checked");
-        };
+        }
+        ;
         var loginUser = JSON.parse(localStorage.getItem('loginUserTLibrary'));
         //新开这个jsx,传递文件夹id和文件夹tittle
         var url = WebServiceUtil.mobileServiceURL + "pushSubjectsFromTLibrary?ident=" + loginUser.ident + "&fileId=" + obj.id;
@@ -244,7 +259,8 @@ export default class pushSubjectsFromTLibrary extends React.Component {
                 //题目
                 return (
                     <CheckboxItem key={rowData.id} onChange={() => this.pushSubjectsOnChange(event, rowData)}>
-                        <div className="ant_list_subject_no" dangerouslySetInnerHTML={{__html: rowData.name}}>
+                        <div onClick={_this.queClicked.bind(this, rowData)} className="ant_list_subject_no"
+                             dangerouslySetInnerHTML={{__html: rowData.name}}>
                         </div>
                     </CheckboxItem>
                 )

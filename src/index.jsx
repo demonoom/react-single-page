@@ -87,7 +87,17 @@ const boxBracelet = (location, cb) => {
         cb(null, require('./components/ringBindInformation/js/boxBracelet').default)
     }, 'boxBracelet')
 };
+const personalSettings = (location, cb) => {
+    require.ensure([], require => {
+        cb(null, require('./components/chatSettings/js/personalSettings').default)
+    }, 'personalSettings')
+};
 
+const chatMsg = (location,cb) => {
+    require.ensure([],require => {
+        cb(null,require("./components/chatSettings/js/chatMsg").default)
+    },"chatMsg")
+}
 import './index.less';
 
 class Index extends React.Component {
@@ -100,9 +110,9 @@ class Index extends React.Component {
                     {/*<li><Link to="/s1">ListView + Carousel</Link></li>*/}
                     {/*<li><Link to="/s3">Form + ...</Link></li>*/}
                     {/*<li><Link to="/s4" style={{fontSize: '24px'}}>蚁巢</Link></li>*/}
-                    {/*<li><Link to="/s5" style={{fontSize: '24px'}}>实验</Link></li>*/}
+                    {/* <li><Link to="/s5" style={{fontSize: '24px'}}>实验</Link></li> */}
                     {/*<li><Link to="/questionBank?ident=54208&pointId=4339&title=nihao"*/}
-                    {/*style={{fontSize: '24px'}}>题库</Link></li>*/}
+                              {/*style={{fontSize: '24px'}}>题库</Link></li>*/}
                     {/*<li><Link to="/analysisList?access_user=23836" style={{fontSize: '24px'}}>成绩分析</Link></li>*/}
                     {/* <li><Link to="/searchUserLocationInfo" style={{fontSize: '24px'}}>搜索查看用户位置信息</Link></li> */}
                     {/*<li><Link to="/studentFaceStatistics" style={{fontSize: '24px'}}>学生脸部表情分析折线图</Link></li>*/}
@@ -117,6 +127,8 @@ class Index extends React.Component {
                     {/*style={{fontSize: '24px'}}>文件分享</Link></li>*/}
                     <li><Link to="/ringBinding?ident=23836"
                               style={{fontSize: '24px'}}>手环绑定</Link></li>
+                    <li><Link to="/personalSettings?ident=54208"
+                              style={{fontSize: '24px'}}>个人设置</Link></li>
                 </ul>
             </div>
         );
@@ -147,6 +159,10 @@ ReactDOM.render(
             <Route path="ringBinding" getComponent={ringBinding}/>
             <Route path="bindingBracelet" getComponent={bindingBracelet}/>
             <Route path="boxBracelet" getComponent={boxBracelet}/>
+            <Route path="personalSettings" getComponent={personalSettings}/>
+            {/* calm add component */}
+            <Route path="chatMsg" getComponent={chatMsg}/>
+            
         </Route>
     </Router>
     , document.getElementById('example'));
