@@ -23,7 +23,6 @@ export default class personalSettings extends React.Component {
         var uid = searchArray[0].split('=')[1];
         var tid = searchArray[1].split('=')[1];
         this.setState({uid, tid});
-        // this.getUserInfo(uid);
         this.getMessageSilenceStatus(uid, tid);
     }
 
@@ -137,7 +136,14 @@ export default class personalSettings extends React.Component {
 
     // 顶部加号按钮
     toGroupChat() {
-        console.log("ok");
+        var param = {
+            "method": 'toGroupChat',
+        };
+        WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
+            onResponse: function (result) {
+                Toast.fail(result, 1);
+            }
+        })
     }
 
     // 查找聊天记录
