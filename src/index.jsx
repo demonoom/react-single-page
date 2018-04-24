@@ -102,6 +102,13 @@ const chatMsg = (location, cb) => {
         cb(null, require("./components/chatSettings/js/chatMsg").default)
     }, "chatMsg")
 }
+
+const longList = (location,cb) => {
+    require.ensure([],require => {
+        cb(null,require("./components/chatSettings/js/longList").default)
+        }
+    )
+}
 import './index.less';
 
 class Index extends React.Component {
@@ -168,6 +175,7 @@ ReactDOM.render(
             <Route path="personalSettings" getComponent={personalSettings}/>
             <Route path="groupSetting" getComponent={groupSetting}/>
             <Route path="chatMsg" getComponent={chatMsg}/>
+            <Route path="longList" getComponent={longList}/>
         </Route>
     </Router>
     , document.getElementById('example'));
