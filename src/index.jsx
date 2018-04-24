@@ -131,7 +131,7 @@ class Index extends React.Component {
                     {/*style={{fontSize: '24px'}}>文件分享</Link></li>*/}
                     <li><Link to="/ringBinding?ident=23836"
                               style={{fontSize: '24px'}}>手环绑定</Link></li>
-                    <li><Link to="/personalSettings?ident=54208&"
+                    <li><Link to="/personalSettings?uid=23836&tid=31837"
                               style={{fontSize: '24px'}}>个人设置</Link></li>
                     <li><Link to="/groupSetting?chatGroupId=920&ident=23836"
                               style={{fontSize: '24px'}}>群设置</Link></li>
