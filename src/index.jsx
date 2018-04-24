@@ -87,6 +87,11 @@ const boxBracelet = (location, cb) => {
         cb(null, require('./components/ringBindInformation/js/boxBracelet').default)
     }, 'boxBracelet')
 };
+const personalSettings = (location, cb) => {
+    require.ensure([], require => {
+        cb(null, require('./components/chatSettings/js/personalSettings').default)
+    }, 'personalSettings')
+};
 
 import './index.less';
 
@@ -109,14 +114,16 @@ class Index extends React.Component {
                     {/*<li><Link to="/termitePlateLibrary?ident=23836&fileId=-1&title=蚁盘题目&phoneType=0"*/}
                     {/*style={{fontSize: '24px'}}>蚁盘题库</Link>*/}
                     {/*</li>*/}
-                    <li><Link to="/pushSubjectsFromTLibrary?ident=23836&fileId=-1"
-                              style={{fontSize: '24px'}}>蚁盘推题</Link></li>
+                    {/*<li><Link to="/pushSubjectsFromTLibrary?ident=23836&fileId=-1"*/}
+                    {/*style={{fontSize: '24px'}}>蚁盘推题</Link></li>*/}
                     {/*<li><Link to="/arrangementWork?ident=23836&fileId=-1"*/}
-                              {/*style={{fontSize: '24px'}}>布置作业</Link></li>*/}
+                    {/*style={{fontSize: '24px'}}>布置作业</Link></li>*/}
                     {/*<li><Link to="/fileShareLink?shareId=1971&userId=23836&userType=st"*/}
                     {/*style={{fontSize: '24px'}}>文件分享</Link></li>*/}
                     <li><Link to="/ringBinding?ident=23836"
                               style={{fontSize: '24px'}}>手环绑定</Link></li>
+                    <li><Link to="/personalSettings"
+                              style={{fontSize: '24px'}}>个人设置</Link></li>
                 </ul>
             </div>
         );
@@ -147,6 +154,7 @@ ReactDOM.render(
             <Route path="ringBinding" getComponent={ringBinding}/>
             <Route path="bindingBracelet" getComponent={bindingBracelet}/>
             <Route path="boxBracelet" getComponent={boxBracelet}/>
+            <Route path="personalSettings" getComponent={personalSettings}/>
         </Route>
     </Router>
     , document.getElementById('example'));
