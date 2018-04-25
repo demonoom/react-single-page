@@ -100,7 +100,7 @@ export default class personalSettings extends React.Component {
                                 valuePropName: 'checked',
                             })}
                             platform="ios"
-                            color="skyblue"
+                            color="#f55045"
                             onClick={(checked) => {
                                 this.getChatMsg(checked)
                             }}
