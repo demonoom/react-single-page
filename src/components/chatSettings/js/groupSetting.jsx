@@ -1,5 +1,5 @@
 import React from 'react';
-import {Toast} from 'antd-mobile';
+import {Toast, Icon} from 'antd-mobile';
 import '../css/groupSetting.less'
 
 export default class groupSetting extends React.Component {
@@ -118,6 +118,8 @@ export default class groupSetting extends React.Component {
                 break;
         }
 
+        var imgL = <div className='noomImgL'>{groupMemebersPhoto}</div>;
+
         if (currentGroupObj.owner.colUid == JSON.parse(localStorage.getItem("loginUserGroupSetting")).colUid) {
             //我是群主
             console.log('我是群主');
@@ -142,7 +144,10 @@ export default class groupSetting extends React.Component {
         var settingPage = <div>
             {imgTag}
             <div>
-                群聊成员
+                <span>群聊成员</span><span>{currentMemberArray.length}人</span><Icon type="right"/>
+                <div>
+                    {imgL}
+                </div>
             </div>
             <div>
                 群聊名称
