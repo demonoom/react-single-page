@@ -3,6 +3,8 @@
   .maaee_group_face1,
   .maaee_group_face2, 
   .maaee_group_face3 {
+    background: #eee;
+    margin: 20px auto;
     width: 80px !important;
     height: 80px !important;
     border-radius: 50%;
@@ -10,63 +12,61 @@
     padding: 15px;
     background: #eee
   }
+  // 一个人
   .maaee_group_face1 {
+    padding: 0;
     img {
       border-radius: 50%;
       width: 100%;
       height: 100%;
     }
   }
+  // 两个人
   .maaee_group_face2 {
+    padding: 0;
     img {
+      margin: 20px 2px 0px 2px;
       border-radius: 50%;
-      width: 100%;
-      height: 100%;
+      width: 45%;
+      height: 45%;
     }
   }
-  .maaee_group_face {
+  // 三个人
+  .maaee_group_face3 {
+    padding: 8px;
     img {
       border-radius: 50%;
-      width: 50%;
-      height: 50%;
+      width: 45%;
+      height: 45%;
+    }
+    img:first-child{
+      margin:auto 20px;
+    }
+    img:nth-child(2){
+      margin-right: 3px;
+      margin-left: 2px;
+    }
+  }
+  // 四个人
+  .maaee_group_face {
+    padding: 8px;
+    img {
+      margin: 3px;
+      border-radius: 50%;
+      width: 40%;
+      height: 40%;
+    }
+    img:first-child{
+      margin-left: 5px;
+    }
+    img:nth-child(3){
+      margin-left: 5px;
     }
   }
 
-
-  .maaee_group_face {
-    background: #eee;
-    margin: 0 auto;
-  }
-
-  // .maaee_group_face div, .maaee_group_face img {
-  //   width: 17px !important;
-  //   height: 17px !important;
-  //   float: left;
-  // }
-
-  // .maaee_group_face tr td img {
-  //   width: 19px !important;
-  //   height: 19px !important;
-  //   float: left;
-  // }
-
-  // .maaee_group_face img:first-child {
-  //   border-radius: 50%
-  // }
-
-  // .maaee_group_face img:nth-child(2) {
-  //   border-radius: 50%
-  // }
-
-  // .maaee_group_face img:nth-child(3) {
-  //   border-radius: 50%
-  // }
-
-  // .maaee_group_face img:nth-child(4) {
-  //   border-radius: 50%
-  // }
+  // 群组成员
   .calmGroupMember {
-    padding: 0px 10px;
+    padding: 0px 15px;
     .allMembers {
       height: 40px;
       line-height: 40px;
@@ -80,19 +80,20 @@
         }
         .iconRight {
             position:absolute;
-            top: 8px;
+            top: 9px;
             right: 0;
         }
     }
   }
   .noomImgL {
     height: 40px;
-    display: flex;
-    justify-content: space-around;
+    overflow: hidden;
     img {
+      float: left;
       width: 40px;
       height: 40px;
       border-radius: 50%;
+      margin-right: 20px;
     }
   }
   // 查找聊天记录
