@@ -1,1 +1,89 @@
-(node) util.print is deprecated. Use console.log instead.
+#groupSetting .maaee_group_face,
+#groupSetting .maaee_group_face1,
+#groupSetting .maaee_group_face2,
+#groupSetting .maaee_group_face3 {
+  width: 80px !important;
+  height: 80px !important;
+  border-radius: 50%;
+  cursor: pointer;
+  padding: 15px;
+  background: #eee;
+}
+#groupSetting .maaee_group_face1 img {
+  border-radius: 50%;
+  width: 100%;
+  height: 100%;
+}
+#groupSetting .maaee_group_face2 img {
+  border-radius: 50%;
+  width: 100%;
+  height: 100%;
+}
+#groupSetting .maaee_group_face img {
+  border-radius: 50%;
+  width: 50%;
+  height: 50%;
+}
+#groupSetting .maaee_group_face {
+  background: #eee;
+  margin: 0 auto;
+}
+#groupSetting .calmGroupMember {
+  padding: 0px 10px;
+}
+#groupSetting .calmGroupMember .allMembers {
+  height: 40px;
+  line-height: 40px;
+}
+#groupSetting .calmGroupMember .groupMemeberRight {
+  float: right;
+  position: relative;
+  overflow: hidden;
+}
+#groupSetting .calmGroupMember .groupMemeberRight .countMembers {
+  margin-right: 20px;
+}
+#groupSetting .calmGroupMember .groupMemeberRight .iconRight {
+  position: absolute;
+  top: 8px;
+  right: 0;
+}
+#groupSetting .noomImgL {
+  height: 40px;
+  display: flex;
+  justify-content: space-around;
+}
+#groupSetting .noomImgL img {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+}
+#groupSetting .searchChatMsg {
+  margin: 20px 0;
+  padding: 15px;
+  background-color: #fff;
+  font-size: 16px;
+}
+#groupSetting .searchChatMsg .rightArrow {
+  float: right;
+}
+#groupSetting .ingoreMsg {
+  margin: 20px 0;
+  padding: 0px 15px;
+  background-color: #fff;
+}
+#groupSetting .ingoreMsg .am-list .am-list-body::before {
+  height: 0;
+}
+#groupSetting .ingoreMsg .am-list .am-list-body::after {
+  height: 0;
+}
+#groupSetting .ingoreMsg .am-list .am-list-body .am-list-item.am-list-item-middle {
+  padding-left: 0;
+}
+#groupSetting .ingoreMsg .am-list .am-list-body .am-list-line {
+  padding-right: 0px;
+}
+#groupSetting .ingoreMsg .am-list .am-list-body .am-list-line .am-list-content {
+  font-size: 16px;
+}
