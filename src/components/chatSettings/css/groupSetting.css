@@ -1,3 +1,4 @@
+(node) util.print is deprecated. Use console.log instead.
 #groupSetting .maaee_group_face,
 #groupSetting .maaee_group_face1,
 #groupSetting .maaee_group_face2,
@@ -7,7 +8,7 @@
   border-radius: 50%;
   cursor: pointer;
   padding: 15px;
-  background: #eee;
+  background: #eeeeee;
 }
 #groupSetting .maaee_group_face1 img {
   border-radius: 50%;

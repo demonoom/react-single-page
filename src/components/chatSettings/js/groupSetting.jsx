@@ -17,6 +17,7 @@ export default class groupSetting extends React.Component {
         gSetting = this;
         this.state = {
             changeNamePower: true,
+            addPerPower: false,
         };
     }
 
@@ -99,9 +100,6 @@ export default class groupSetting extends React.Component {
      * 构建群设置页面
      */
     buildGroupSet(currentMemberArray, currentGroupObj) {
-        console.log('1', currentMemberArray);
-        console.log('2', currentGroupObj);
-
         var _this = this;
         var groupMemebersPhoto = [];
 
@@ -154,28 +152,29 @@ export default class groupSetting extends React.Component {
 
         if (currentGroupObj.owner.colUid == JSON.parse(localStorage.getItem("loginUserGroupSetting")).colUid) {
             //我是群主
-            console.log('我是群主');
             this.state.changeNamePower = true;
-
+            this.state.addPerPower = true;
         } else {
             this.state.changeNamePower = false;
+            this.state.addPerPower = false;
             //我不是群主
             if (currentGroupObj.type == 1) {
                 //部门群
-                console.log('部门群');
             } else {
+                this.state.addPerPower = true;
                 //普通群
-                // if (this.state.utype == 'st') {
-                //     //学生
-                // } else {
-                //     //老师
-                //
-                // }
+                if (this.state.utype == 'st') {
+                    //学生
+                    this.state.addPerPower = false;
+                } else {
+
+                }
             }
 
         }
 
         var imgL = <div className='noomImgL'>{groupMemebersPhoto}<img onClick={this.addPer}
+                                                                      style={{display: this.state.addPerPower ? 'inline-block' : 'none'}}
                                                                       src={require('../img/addBtn.png')} alt=""/>
             <img style={{display: this.state.changeNamePower ? 'inline-block' : 'none'}} onClick={this.delPer}
                  src={require('../img/lALPBbCc1aeG-P5ISA_72_72.png')} alt=""/></div>;
