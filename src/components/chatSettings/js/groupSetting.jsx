@@ -15,7 +15,9 @@ export default class groupSetting extends React.Component {
     constructor(props) {
         super(props);
         gSetting = this;
-        this.state = {};
+        this.state = {
+            changeNamePower: true,
+        };
     }
 
     componentDidMount() {
@@ -26,8 +28,9 @@ export default class groupSetting extends React.Component {
         var searchArray = locationSearch.split("&");
         var chatGroupId = searchArray[0].split('=')[1];
         var ident = searchArray[1].split('=')[1];
-        this.getUserByAccount(ident, chatGroupId);
-        this.setState({ident, chatGroupId});
+        var utype = searchArray[2].split('=')[1];
+        this.getUserByAccount(ident, chatGroupId, utype);
+        this.setState({ident, chatGroupId, utype});
     }
 
     /**
@@ -35,11 +38,11 @@ export default class groupSetting extends React.Component {
      * @param ident
      * @param chatGroupId
      */
-    getUserByAccount(ident, chatGroupId) {
+    getUserByAccount(ident, chatGroupId, utype) {
         var _this = this;
         var param = {
             "method": 'getUserByAccount',
-            "account": 'te' + ident,
+            "account": utype + ident,
         };
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
             onResponse: function (result) {
@@ -99,8 +102,6 @@ export default class groupSetting extends React.Component {
         console.log('1', currentMemberArray);
         console.log('2', currentGroupObj);
 
-        var groupType = currentGroupObj.type;
-
         var _this = this;
         var groupMemebersPhoto = [];
 
@@ -154,27 +155,30 @@ export default class groupSetting extends React.Component {
         if (currentGroupObj.owner.colUid == JSON.parse(localStorage.getItem("loginUserGroupSetting")).colUid) {
             //我是群主
             console.log('我是群主');
+            this.state.changeNamePower = true;
 
         } else {
+            this.state.changeNamePower = false;
             //我不是群主
             if (currentGroupObj.type == 1) {
                 //部门群
                 console.log('部门群');
             } else {
                 //普通群
-                if (JSON.parse(localStorage.getItem("loginUserGroupSetting")).colUtype == 'STUD') {
-                    //学生
-                } else {
-                    //老师
-
-                }
+                // if (this.state.utype == 'st') {
+                //     //学生
+                // } else {
+                //     //老师
+                //
+                // }
             }
 
         }
 
         var imgL = <div className='noomImgL'>{groupMemebersPhoto}<img onClick={this.addPer}
                                                                       src={require('../img/addBtn.png')} alt=""/>
-            <img onClick={this.delPer} src={require('../img/lALPBbCc1aeG-P5ISA_72_72.png')} alt=""/></div>;
+            <img style={{display: this.state.changeNamePower ? 'inline-block' : 'none'}} onClick={this.delPer}
+                 src={require('../img/lALPBbCc1aeG-P5ISA_72_72.png')} alt=""/></div>;
 
         var settingPage = <div>
             {imgTag}
@@ -204,10 +208,12 @@ export default class groupSetting extends React.Component {
             <div className="ingoreMsg">
                 <SwitchExample/>
             </div>
-            <div className="searchChatMsg" onClick={this.changeChatGroup}>
+            <div style={{display: this.state.changeNamePower ? 'block' : 'none'}} className="searchChatMsg"
+                 onClick={this.changeChatGroup}>
                 群主转移
             </div>
-            <div className="searchChatMsg" onClick={this.deleteChatGroupMember.bind(this, currentGroupObj)}>
+            <div style={{display: this.state.changeNamePower ? 'block' : 'none'}} className="searchChatMsg"
+                 onClick={this.deleteChatGroupMember.bind(this, currentGroupObj)}>
                 解散该群
             </div>
             <WingBlank>
@@ -311,7 +317,10 @@ export default class groupSetting extends React.Component {
     /**
      * 修改群名称
      */
-    updateChatGroupName() {
+    updateChatGroupName = () => {
+        if (!this.state.changeNamePower) {
+            return
+        }
         var phoneType = navigator.userAgent;
         var phone;
         if (phoneType.indexOf('iPhone') > -1 || phoneType.indexOf('iPad') > -1) {
