@@ -3,6 +3,7 @@
 #groupSetting .maaee_group_face1,
 #groupSetting .maaee_group_face2,
 #groupSetting .maaee_group_face3 {
+  background: #eee;
   margin: 20px auto;
   width: 80px !important;
   height: 80px !important;

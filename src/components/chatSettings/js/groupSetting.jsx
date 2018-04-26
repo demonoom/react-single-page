@@ -173,10 +173,11 @@ export default class groupSetting extends React.Component {
 
         }
 
-        var imgL = <div className='noomImgL'>{groupMemebersPhoto}<img onClick={this.addPer}
+        var imgL = <div className='noomImgL'>{groupMemebersPhoto}<img onClick={this.addPer.bind(this, currentGroupObj)}
                                                                       style={{display: this.state.addPerPower ? 'inline-block' : 'none'}}
                                                                       src={require('../img/addBtn.png')} alt=""/>
-            <img style={{display: this.state.changeNamePower ? 'inline-block' : 'none'}} onClick={this.delPer}
+            <img style={{display: this.state.changeNamePower ? 'inline-block' : 'none'}}
+                 onClick={this.delPer.bind(this, currentGroupObj)}
                  src={require('../img/lALPBbCc1aeG-P5ISA_72_72.png')} alt=""/></div>;
 
         var settingPage = <div>
@@ -247,17 +248,26 @@ export default class groupSetting extends React.Component {
     /**
      * 加人
      */
-    addPer(event) {
+    addPer(obj, event) {
         event.stopPropagation();
-        console.log('addPer');
+        // 向客户端发送加人群信息
+        var data = {
+            method: 'addGroupPerson',
+            obj: JSON.stringify(obj),
+        };
+        Bridge.callHandler(data, function (ids) {
+            Toast.success(ids, 5);
+        }, function (error) {
+            Toast.fail(error, 2);
+        });
     }
 
     /**
      * 减人
      */
-    delPer(event) {
+    delPer(obj, event) {
         event.stopPropagation();
-        console.log('delPer');
+        console.log(obj);
     }
 
     /**
