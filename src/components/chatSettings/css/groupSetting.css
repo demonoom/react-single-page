@@ -50,3 +50,32 @@
   height: 40px;
   border-radius: 50%;
 }
+#groupSetting .searchChatMsg {
+  margin: 20px 0;
+  padding: 15px;
+  background-color: #fff;
+  font-size: 16px;
+}
+#groupSetting .searchChatMsg .rightArrow {
+  float: right;
+}
+#groupSetting .ingoreMsg {
+  margin: 20px 0;
+  padding: 0px 15px;
+  background-color: #fff;
+}
+#groupSetting .ingoreMsg .am-list .am-list-body::before {
+  height: 0;
+}
+#groupSetting .ingoreMsg .am-list .am-list-body::after {
+  height: 0;
+}
+#groupSetting .ingoreMsg .am-list .am-list-body .am-list-item.am-list-item-middle {
+  padding-left: 0;
+}
+#groupSetting .ingoreMsg .am-list .am-list-body .am-list-line {
+  padding-right: 0px;
+}
+#groupSetting .ingoreMsg .am-list .am-list-body .am-list-line .am-list-content {
+  font-size: 16px;
+}

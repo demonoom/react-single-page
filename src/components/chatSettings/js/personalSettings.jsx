@@ -1,7 +1,6 @@
 import React from 'react';
-import {Icon} from 'antd-mobile';
 import '../css/personalSettings.less'
-import {List, Switch, Toast} from 'antd-mobile';
+import {List, Switch, Toast, Icon} from 'antd-mobile';
 import {createForm} from 'rc-form';
 
 export default class personalSettings extends React.Component {
@@ -16,14 +15,17 @@ export default class personalSettings extends React.Component {
     }
 
     componentDidMount() {
+        Bridge.setShareAble("false");
         document.title = '个人设置';   //设置title
         var locationHref = window.location.href;
         var locationSearch = locationHref.substr(locationHref.indexOf("?") + 1);
         var searchArray = locationSearch.split("&");
         var uid = searchArray[0].split('=')[1];
         var tid = searchArray[1].split('=')[1];
-        this.setState({uid, tid});
-        this.getMessageSilenceStatus(uid, tid);
+        var utype = searchArray[2].split('=')[1];
+        this.setState({uid, tid, utype});
+        this.getMessageSilenceStatus(uid, tid, utype);
+        // this.getUserInfo(uid, false, utype);
     }
 
     /**
@@ -31,7 +33,7 @@ export default class personalSettings extends React.Component {
      * @param uid
      * @param tid
      */
-    getMessageSilenceStatus(uid, tid) {
+    getMessageSilenceStatus(uid, tid, utype) {
         var _this = this;
         var param = {
             "method": 'getMessageSilenceStatus',
@@ -43,14 +45,14 @@ export default class personalSettings extends React.Component {
             onResponse: function (result) {
                 if (result.msg == '调用成功' && result.success == true) {
                     _this.setState({initialValue: result.response});
-                    _this.getUserInfo(uid);
+                    _this.getUserInfo(uid, false, utype);
                 }
             }
         })
     }
 
     /**
-     * 获取登录人的信息
+     * 开启和关闭消息免打扰
      * @param uid 搜索着的id
      * @param tid 群id或单聊中另一个人的id
      */
@@ -73,22 +75,27 @@ export default class personalSettings extends React.Component {
         })
     }
 
-    getUserInfo(uid) {
+    getUserInfo(uid, flag, utype) {
         var _this = this;
         var param = {
             "method": 'getUserByAccount',
-            "account": 'te' + uid,
+            "account": utype + uid,
         };
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
             onResponse: function (result) {
                 if (result.msg == '调用成功' && result.success == true) {
-                    _this.buildUserInfo(result)
+                    if (flag) {
+                        _this.toGroupChatNew(result.response);
+                    } else {
+                        _this.buildUserInfo(result)
+                    }
                 }
             }
         })
     }
 
     buildUserInfo(result) {
+        var displayAdd = this.state.utype == 'te' ? 'inline-blick' : 'none';
         let SwitchExample = (props) => {
             const {getFieldProps} = props.form;
             return (
@@ -118,7 +125,8 @@ export default class personalSettings extends React.Component {
                         </div>
                         <span>{result.response.userName}</span>
                     </span>
-                <img src={require("../img/addBtn.png")} className="rightBtn" onClick={this.toGroupChat}/>
+                <img style={{display: displayAdd}} src={require("../img/addBtn.png")} className="rightBtn"
+                     onClick={this.toGroupChat}/>
             </div>
             <div className="searchChatMsg" onClick={this.searchChatMsg}>
                 <span className="leftText">查找聊天内容</span>
@@ -134,16 +142,19 @@ export default class personalSettings extends React.Component {
         this.setState({userDiv})
     }
 
-    // 顶部加号按钮
-    toGroupChat() {
-        var param = {
+    toGroupChatNew(obj) {
+        var data = {
             "method": 'toGroupChat',
+            "toUserObj": JSON.stringify(obj),
         };
-        WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
-            onResponse: function (result) {
-                Toast.fail(result, 1);
-            }
-        })
+        Bridge.callHandler(data, null, function (error) {
+            Toast.fail(error, 2)
+        });
+    }
+
+    // 顶部加号按钮
+    toGroupChat = () => {
+        this.getUserInfo(this.state.tid, true, this.state.utype);
     }
 
     // 查找聊天记录
