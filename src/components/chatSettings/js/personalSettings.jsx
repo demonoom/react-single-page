@@ -24,8 +24,8 @@ export default class personalSettings extends React.Component {
         var tid = searchArray[1].split('=')[1];
         var utype = searchArray[2].split('=')[1];
         this.setState({uid, tid, utype});
-        this.getMessageSilenceStatus(uid, tid, utype);
-        // this.getUserInfo(uid, false, utype);
+        // this.getMessageSilenceStatus(uid, tid, utype);
+        this.getUserInfo(uid, false, utype);
     }
 
     /**
