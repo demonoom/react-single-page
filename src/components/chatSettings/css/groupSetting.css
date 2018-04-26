@@ -2,6 +2,7 @@
 #groupSetting .maaee_group_face1,
 #groupSetting .maaee_group_face2,
 #groupSetting .maaee_group_face3 {
+  margin: 20px auto;
   width: 80px !important;
   height: 80px !important;
   border-radius: 50%;
@@ -9,27 +10,55 @@
   padding: 15px;
   background: #eee;
 }
+#groupSetting .maaee_group_face1 {
+  padding: 0;
+}
 #groupSetting .maaee_group_face1 img {
   border-radius: 50%;
   width: 100%;
   height: 100%;
 }
-#groupSetting .maaee_group_face2 img {
-  border-radius: 50%;
-  width: 100%;
-  height: 100%;
+#groupSetting .maaee_group_face2 {
+  padding: 0;
 }
-#groupSetting .maaee_group_face img {
+#groupSetting .maaee_group_face2 img {
+  margin: 20px 2px 0px 2px;
   border-radius: 50%;
-  width: 50%;
-  height: 50%;
+  width: 45%;
+  height: 45%;
+}
+#groupSetting .maaee_group_face3 {
+  padding: 8px;
+}
+#groupSetting .maaee_group_face3 img {
+  border-radius: 50%;
+  width: 45%;
+  height: 45%;
+}
+#groupSetting .maaee_group_face3 img:first-child {
+  margin: auto 20px;
+}
+#groupSetting .maaee_group_face3 img:nth-child(2) {
+  margin-right: 3px;
+  margin-left: 2px;
 }
 #groupSetting .maaee_group_face {
-  background: #eee;
-  margin: 0 auto;
+  padding: 8px;
+}
+#groupSetting .maaee_group_face img {
+  margin: 3px;
+  border-radius: 50%;
+  width: 40%;
+  height: 40%;
+}
+#groupSetting .maaee_group_face img:first-child {
+  margin-left: 5px;
+}
+#groupSetting .maaee_group_face img:nth-child(3) {
+  margin-left: 5px;
 }
 #groupSetting .calmGroupMember {
-  padding: 0px 10px;
+  padding: 0px 15px;
 }
 #groupSetting .calmGroupMember .allMembers {
   height: 40px;
@@ -45,18 +74,19 @@
 }
 #groupSetting .calmGroupMember .groupMemeberRight .iconRight {
   position: absolute;
-  top: 8px;
+  top: 9px;
   right: 0;
 }
 #groupSetting .noomImgL {
   height: 40px;
-  display: flex;
-  justify-content: space-around;
+  overflow: hidden;
 }
 #groupSetting .noomImgL img {
+  float: left;
   width: 40px;
   height: 40px;
   border-radius: 50%;
+  margin-right: 20px;
 }
 #groupSetting .searchChatMsg {
   margin: 20px 0;
