@@ -11,7 +11,8 @@ export default class personalSettings extends React.Component {
         this.state = {
             userImg: '',
             userName: "",
-            initialValue: true
+            initialValue: true,
+            chatRecordData:[]
         };
     }
 
@@ -24,8 +25,37 @@ export default class personalSettings extends React.Component {
         var tid = searchArray[1].split('=')[1];
         this.setState({uid, tid});
         this.getMessageSilenceStatus(uid, tid);
+        this.searchChatRecords(uid,tid);
     }
+    /**
+     * 获取聊天内容的数据
+     * @param uid 搜索着的id
+	 * @param tid 群id或单聊中另一个人的id
+	 * @param type 1 = 单聊  4 = 群聊
+	 * @param pn  分页 -1 = 全部
+     */
 
+    searchChatRecords(uid,tid){
+         var _this = this;
+         var param = {
+             "method":"searchChatRecords",
+             "uid":uid,
+             "tid":tid,
+             "type":"1",
+             "keywork":"。",
+             "pn":"-1"
+         };
+         WebServiceUtil.requestLittleAntApi(JSON.stringify(param),{
+            onResponse:function(result){
+                if (result.msg == '调用成功' && result.success == true) {
+                    _this.setState({chatRecordData:result.response});
+                    console.log(_this.state.chatRecordData)
+                }else {
+                    Toast.fail(result.msg, 1);
+                }
+             }
+         })
+     }
     /**
      * 获取消息免打扰的状态
      * @param uid
