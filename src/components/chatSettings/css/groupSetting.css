@@ -1,4 +1,7 @@
 (node) util.print is deprecated. Use console.log instead.
+#groupSetting {
+  overflow: auto;
+}
 #groupSetting .maaee_group_face,
 #groupSetting .maaee_group_face1,
 #groupSetting .maaee_group_face2,

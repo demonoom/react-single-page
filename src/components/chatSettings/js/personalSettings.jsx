@@ -11,7 +11,7 @@ export default class personalSettings extends React.Component {
             userImg: '',
             userName: "",
             initialValue: true,
-            chatRecordData:[]
+            chatRecordData: []
         };
     }
 
@@ -25,38 +25,40 @@ export default class personalSettings extends React.Component {
         var tid = searchArray[1].split('=')[1];
         var utype = searchArray[2].split('=')[1];
         this.setState({uid, tid, utype});
-        // this.getMessageSilenceStatus(uid, tid, utype);
-        this.getUserInfo(uid, false, utype);
+        this.getMessageSilenceStatus(uid, tid, utype);
+        // this.getUserInfo(uid, false, utype);
     }
+
     /**
      * 获取聊天内容的数据
      * @param uid 搜索着的id
-	 * @param tid 群id或单聊中另一个人的id
-	 * @param type 1 = 单聊  4 = 群聊
-	 * @param pn  分页 -1 = 全部
+     * @param tid 群id或单聊中另一个人的id
+     * @param type 1 = 单聊  4 = 群聊
+     * @param pn  分页 -1 = 全部
      */
 
-    searchChatRecords(uid,tid){
-         var _this = this;
-         var param = {
-             "method":"searchChatRecords",
-             "uid":uid,
-             "tid":tid,
-             "type":"1",
-             "keywork":"。",
-             "pn":"-1"
-         };
-         WebServiceUtil.requestLittleAntApi(JSON.stringify(param),{
-            onResponse:function(result){
+    searchChatRecords(uid, tid) {
+        var _this = this;
+        var param = {
+            "method": "searchChatRecords",
+            "uid": uid,
+            "tid": tid,
+            "type": "1",
+            "keywork": "。",
+            "pn": "-1"
+        };
+        WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
+            onResponse: function (result) {
                 if (result.msg == '调用成功' && result.success == true) {
-                    _this.setState({chatRecordData:result.response});
+                    _this.setState({chatRecordData: result.response});
                     console.log(_this.state.chatRecordData)
-                }else {
+                } else {
                     Toast.fail(result.msg, 1);
                 }
-             }
-         })
-     }
+            }
+        })
+    }
+
     /**
      * 获取消息免打扰的状态
      * @param uid
@@ -187,8 +189,8 @@ export default class personalSettings extends React.Component {
     }
 
     // 查找聊天记录
-    searchChatMsg() {
-        var url = WebServiceUtil.mobileServiceURL + "chatMsg";
+    searchChatMsg = () => {
+        var url = WebServiceUtil.mobileServiceURL + "chatMsg?uid=" + this.state.uid + '&tid=' + this.state.tid + '&uType=' + 1;
         var data = {
             method: 'openNewPage',
             url: url
