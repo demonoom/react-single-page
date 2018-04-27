@@ -462,6 +462,7 @@ export default class groupSetting extends React.Component {
                     var data = {
                         method: 'delChatGroupMember',
                         type: '1',
+                        chatGroupId: obj.chatGroupId
                     };
                     Bridge.callHandler(data, null, function (error) {
                         Toast.fail(error, 2);
@@ -573,6 +574,7 @@ export default class groupSetting extends React.Component {
                     var data = {
                         method: 'delChatGroupMember',
                         type: '2',
+                        chatGroupId: obj.chatGroupId
                     };
                     Bridge.callHandler(data, null, function (error) {
                         Toast.fail(error, 2);

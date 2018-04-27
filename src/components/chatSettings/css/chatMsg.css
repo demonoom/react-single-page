@@ -1,0 +1,10 @@
+(node) util.print is deprecated. Use console.log instead.
+#chatMsg .noomWhite {
+  background-color: #F5F4F9;
+}
+#chatMsg .noomCardHeader .am-card-header-content img {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  margin-right: 1rem;
+}
