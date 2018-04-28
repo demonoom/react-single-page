@@ -218,7 +218,7 @@ export default class groupSetting extends React.Component {
 
         var settingPage = <div>
             {imgTag}
-            <div className="calmGroupMember">
+            <div className="calmGroupMember searchChatMsg">
                 <div className="allMembers" onClick={this.intoGroup(currentGroupObj)}>
                     <span>群聊成员</span>
                     <div className="groupMemeberRight">

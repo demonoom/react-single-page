@@ -49,6 +49,7 @@ export default class chatMsg extends React.Component {
     }
 
     getUserLocationInfo(e) {
+        this.setState({inputValue: e});
         this.state.listViewDisplay = true;
         var _this = this;
         _this.initData.splice(0);
@@ -66,10 +67,8 @@ export default class chatMsg extends React.Component {
             "keywork": e,
             "pn": PageNo,
         };
-        console.log(param);
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
             onResponse: function (result) {
-                console.log(result);
                 if (result.msg == '调用成功' && result.success == true) {
                     if (result.response.length == 0) {
                         _this.state.listViewDisplay = false;
@@ -121,7 +120,7 @@ export default class chatMsg extends React.Component {
         }
         currentPageNo += 1;
         this.setState({isLoadingLeft: true, defaultPageNo: currentPageNo});
-        _this.viewAndroidBoxPage(_this.state.loginUser);
+        _this.getUserLocationInfo(_this.state.inputValue);
         this.setState({
             dataSource: this.state.dataSource.cloneWithRows(this.initData),
             isLoadingLeft: true,
@@ -145,7 +144,7 @@ export default class chatMsg extends React.Component {
                                 <span>{WebServiceUtil.formatYMD(rowData.createTime)}</span>}
                         />
                         <Card.Body>
-                            <div>{rowData.content}</div>
+                            <div className='noomCardContent'>{rowData.content}</div>
                         </Card.Body>
                     </Card>
                 </div>
