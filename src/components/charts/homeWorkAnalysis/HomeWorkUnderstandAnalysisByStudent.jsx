@@ -1,9 +1,9 @@
 import React from 'react';
 import ReactEcharts from 'echarts-for-react';
 import {
-    Toast
+    Toast, WingBlank
 } from 'antd-mobile';
-
+import './css/homeWorkAnalysis.less'
 var colors = ['#5793f3', '#d14a61'];
 var returnUrl;
 export default class HomeWorkUnderstandAnalysisByStudent extends React.Component {
@@ -226,7 +226,7 @@ export default class HomeWorkUnderstandAnalysisByStudent extends React.Component
                 {/*<div>学生题目理解度统计</div>*/}
                 <div>
                     <div>
-                        <div style={{height:'400px'}}>
+                        <WingBlank><div style={{height:'300px'}}>
                             <ReactEcharts
                                 option={this.state.columnarChartOption}
                                 style={{height: '100%', width: '100%'}}
@@ -236,6 +236,7 @@ export default class HomeWorkUnderstandAnalysisByStudent extends React.Component
                                 onEvents={onEvents}
                                 className='' />
                         </div>
+                        </WingBlank>
                         <div>
                             <table>
                                 <thead>

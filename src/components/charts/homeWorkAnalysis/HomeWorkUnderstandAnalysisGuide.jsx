@@ -144,13 +144,11 @@ export default class HomeWorkUnderstandAnalysisGuide extends React.Component {
                             <List.Item arrow="horizontal">发布日期</List.Item>
                         </DatePicker>
                     </div>
-                    <div>
-                        <span>
-                            <Picker data={this.state.classList} title="选择班级" extra="请选择(可选)" cols={1}
-                                    value={this.state.clazzId} onChange={(v) => this.setState({clazzId: v})}>
-                                <CustomChildren>班级选择</CustomChildren>
-                              </Picker>
-                        </span>
+                    <div className="understanding_class">
+                        <Picker data={this.state.classList} title="选择班级" extra="请选择(可选)" cols={1}
+                                value={this.state.clazzId} onChange={(v) => this.setState({clazzId: v})}>
+                            <CustomChildren>班级选择</CustomChildren>
+                          </Picker>
                     </div>
 
                     <div>
@@ -163,11 +161,8 @@ export default class HomeWorkUnderstandAnalysisGuide extends React.Component {
                             ))}
                         </List>
                     </div>
-
-                    <div>
-                        <span>
-                            <Button onClick={this.analysisByClass}>分析</Button>
-                        </span>
+                    <div className="list_wrap_padding">
+                        <Button type="primary" onClick={this.analysisByClass}>分析</Button>
                     </div>
 
                 </div>
