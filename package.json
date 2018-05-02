@@ -9,7 +9,7 @@
   },
   "license": "MIT",
   "babel": {
-    "plugins": [ 
+    "plugins": [
       [
         "import",
         {
@@ -21,6 +21,7 @@
   },
   "dependencies": {
     "antd-mobile": "^2.1.8",
+    "array-tree-filter": "^2.1.0",
     "babel-runtime": "^6.11.6",
     "dva": "^1.2.1",
     "echarts": "^4.0.2",
