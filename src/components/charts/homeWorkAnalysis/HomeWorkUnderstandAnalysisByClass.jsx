@@ -3,8 +3,6 @@ import ReactEcharts from 'echarts-for-react';
 import {
     Toast,DatePicker,List,Button,Picker
 } from 'antd-mobile';
-import arrayTreeFilter from 'array-tree-filter';
-import { district } from 'antd-mobile-demo-data';
 var colors = ['#5793f3', '#d14a61'];
 var stuIdArray = [];
 var pushTimeGlobal;
@@ -45,23 +43,26 @@ export default class HomeWorkUnderstandAnalysisByClass extends React.Component {
         };
         this.analysisByClass = this.analysisByClass.bind(this);
         this.getTeacherClasses = this.getTeacherClasses.bind(this);
+        this.onChartClick = this.onChartClick.bind(this);
     }
     componentDidMount() {
         document.title = '班级作业平均理解度/时长统计';
         Bridge.setShareAble("false");
         Bridge.setRefreshAble("false");
-        this.getTeacherClasses(23836);
+        var locationHref = window.location.href;
+        var locationSearch = locationHref.substr(locationHref.indexOf("?") + 1);
+        var searchArray = locationSearch.split("&");
+        var userId = searchArray[0].split('=')[1];
+        this.getTeacherClasses(userId);
+        if(searchArray.length >1 && searchArray[1].split('=')[0] == "clazzId"){
+            var clazzId = searchArray[1].split('=')[1];
+            var pushTime = searchArray[2].split('=')[1];
+            this.getHomeWorkUnderstandAnalysisByClass(clazzId,pushTime);
+        }
     }
 
     getHomeWorkUnderstandAnalysisByClass(clazzId,pushTime){
         var _this = this;
-        /*var locationHref = window.location.href;
-        var locationSearch = locationHref.substr(locationHref.indexOf("?") + 1);
-        var searchArray = locationSearch.split("&");
-        var clazzId = searchArray[0].split('=')[1];
-        var pushTime = searchArray[1].split('=')[1];*/
-        // var clazzId = "819";
-        // var pushTime = "2018-04-14";
         var param = {
             "method": 'getHomeWorkUnderstandAnalysisByClass',
             "clazzId": clazzId,
@@ -218,12 +219,11 @@ export default class HomeWorkUnderstandAnalysisByClass extends React.Component {
     };
 
     onChartClick(optional){
-        var _this = this;
         console.log("1111"+optional);
         var dataIndex = optional.dataIndex;
         // var stuIdArray = _this.state.stuIdArray;
         var stuId = stuIdArray[dataIndex];
-        var hrefUrl = "http://localhost:8091/#/homeWorkUnderstandAnalysisByStudent?studentId="+stuId+"&pushTime="+pushTimeGlobal+"&clazzId="+clazzIdGlobal;
+        var hrefUrl = "http://localhost:8091/#/homeWorkUnderstandAnalysisByStudent?studentId="+stuId+"&pushTime="+pushTimeGlobal+"&clazzId="+clazzIdGlobal+"&userId="+this.state.userId;
         location.href = hrefUrl;
     };
 
@@ -239,11 +239,11 @@ export default class HomeWorkUnderstandAnalysisByClass extends React.Component {
         this.getHomeWorkUnderstandAnalysisByClass(this.state.clazzId[0],dayStr);
     };
 
-    getTeacherClasses(ident){
+    getTeacherClasses(userId){
         var _this = this;
         var param = {
             "method": 'getTeacherClasses',
-            "ident": ident
+            "ident": userId
         };
 
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
@@ -257,7 +257,7 @@ export default class HomeWorkUnderstandAnalysisByClass extends React.Component {
                     var classJson = {label: className,value: classId,}
                     classList.push(classJson)
                 });
-                _this.setState({classList: classList});
+                _this.setState({classList: classList,userId});
             },
             onError: function (error) {
                 Toast.fail(error, 1);
