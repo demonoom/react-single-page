@@ -3,6 +3,7 @@ import ReactEcharts from 'echarts-for-react';
 import {
     Toast,DatePicker,List,Button,Picker
 } from 'antd-mobile';
+import './css/homeWorkAnalysis.less'
 var colors = ['#5793f3', '#d14a61'];
 var stuIdArray = [];
 var pushTimeGlobal;
@@ -313,7 +314,7 @@ export default class HomeWorkUnderstandAnalysisByClass extends React.Component {
                         </span>
                     </div>
                 </div>*/}
-                <div>
+                <div id="homeWorkAnalysis">
                     <div>
                         <div style={{height:'400px'}} className="echarts_wrap">
                             <ReactEcharts

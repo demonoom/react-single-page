@@ -3,6 +3,7 @@ import ReactEcharts from 'echarts-for-react';
 import {
     Toast,DatePicker,List,Button,Picker
 } from 'antd-mobile';
+import './css/homeWorkAnalysis.less'
 var colors = ['#5793f3', '#d14a61'];
 
 // 如果不是使用 List.Item 作为 children
@@ -146,11 +147,11 @@ export default class HomeWorkUnderstandAnalysisByClassSubject extends React.Comp
                 // (columnarChartOption.series)[1].data.push(stuJson.avgOfTimeLength.toFixed(2));
             })
             var subjectJsonDiv=<div>
-                <div>{subjectShowNo}:</div>
-                <div>
+                <div className="subject_title">{subjectShowNo}:</div>
+                <div className="subject_content">
                     <article dangerouslySetInnerHTML={{__html: subjectJson.subjectContent}}></article>
                 </div>
-                <div style={{height:'300px'}}>
+                <div style={{height:'300px'}} className="echarts_wrap">
                     <ReactEcharts
                         option={columnarChartOption}
                         style={{height: '100%', width: '100%'}}
@@ -178,7 +179,7 @@ export default class HomeWorkUnderstandAnalysisByClassSubject extends React.Comp
                 }
             },
             grid: {
-                right: '20%'
+                left: '15%'
             },
             toolbox: {
                 feature: {
@@ -336,7 +337,7 @@ export default class HomeWorkUnderstandAnalysisByClassSubject extends React.Comp
             'click': this.onChartClick,
         }
         return (
-            <div>
+            <div id="homeWorkAnalysis">
                 {/*<div>学生题目理解度统计</div>*/}
                 {/*<div>
                     <div>
@@ -369,7 +370,7 @@ export default class HomeWorkUnderstandAnalysisByClassSubject extends React.Comp
                     <div>
                         {/*<div style={{height:'400px'}}>
                         </div>*/}
-                        <div>
+                        <div className="list_wrap_padding">
                             {this.state.divContentArray}
                         </div>
                     </div>
