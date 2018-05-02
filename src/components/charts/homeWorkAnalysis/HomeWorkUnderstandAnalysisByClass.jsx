@@ -122,7 +122,7 @@ export default class HomeWorkUnderstandAnalysisByClass extends React.Component {
                 }
             },
             grid: {
-                right: '20%',
+                left:'15%'
             },
             toolbox: {
                 feature: {
@@ -315,7 +315,7 @@ export default class HomeWorkUnderstandAnalysisByClass extends React.Component {
                 </div>*/}
                 <div>
                     <div>
-                        <div style={{height:'400px'}}>
+                        <div style={{height:'400px'}} className="echarts_wrap">
                             <ReactEcharts
                                 option={this.state.columnarChartOption}
                                 style={{height: '100%', width: '100%'}}
