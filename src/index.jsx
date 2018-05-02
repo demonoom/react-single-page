@@ -109,6 +109,30 @@ const longList = (location, cb) => {
         }
     )
 }
+// 家庭作业统计 -- 按班级进行统计
+const homeWorkUnderstandAnalysisByClass = (location, cb) => {
+    require.ensure([], require => {
+            cb(null, require("./components/charts/homeWorkAnalysis/HomeWorkUnderstandAnalysisByClass").default)
+        }
+    )
+}
+
+// 家庭作业统计 -- 按学生进行统计
+const homeWorkUnderstandAnalysisByStudent = (location, cb) => {
+    require.ensure([], require => {
+            cb(null, require("./components/charts/homeWorkAnalysis/HomeWorkUnderstandAnalysisByStudent").default)
+        }
+    )
+}
+
+// 家庭作业统计 -- 以班级作业为单位，计算每个题目的每个学生的时长和理解度
+const homeWorkUnderstandAnalysisByClassSubject = (location, cb) => {
+    require.ensure([], require => {
+            cb(null, require("./components/charts/homeWorkAnalysis/HomeWorkUnderstandAnalysisByClassSubject").default)
+        }
+    )
+}
+
 import './index.less';
 
 class Index extends React.Component {
@@ -176,6 +200,9 @@ ReactDOM.render(
             <Route path="groupSetting" getComponent={groupSetting}/>
             <Route path="chatMsg" getComponent={chatMsg}/>
             <Route path="longList" getComponent={longList}/>
+            <Route path="homeWorkUnderstandAnalysisByClass" getComponent={homeWorkUnderstandAnalysisByClass}/>
+            <Route path="homeWorkUnderstandAnalysisByStudent" getComponent={homeWorkUnderstandAnalysisByStudent}/>
+            <Route path="homeWorkUnderstandAnalysisByClassSubject" getComponent={homeWorkUnderstandAnalysisByClassSubject}/>
         </Route>
     </Router>
     , document.getElementById('example'));
