@@ -221,9 +221,6 @@ export default class HomeWorkUnderstandAnalysisByStudent extends React.Component
         }
         return (
             <div>
-                <div>
-                    <a href={returnUrl}>返回</a>
-                </div>
                 <div>学生题目理解度统计</div>
                 <div>
                     <div>

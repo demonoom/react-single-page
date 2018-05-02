@@ -229,8 +229,16 @@ export default class HomeWorkUnderstandAnalysisByClass extends React.Component {
         var dataIndex = optional.dataIndex;
         // var stuIdArray = _this.state.stuIdArray;
         var stuId = stuIdArray[dataIndex];
-        var hrefUrl = "http://localhost:8091/#/homeWorkUnderstandAnalysisByStudent?studentId="+stuId+"&pushTime="+pushTimeGlobal+"&clazzId="+clazzIdGlobal+"&userId="+this.state.userId;
-        location.href = hrefUrl;
+        var analysisUrl = WebServiceUtil.mobileServiceURL+"homeWorkUnderstandAnalysisByStudent?studentId="+stuId+"&pushTime="+pushTimeGlobal+"&clazzId="+clazzIdGlobal+"&userId="+this.state.userId;
+        // location.href = hrefUrl;
+        var data = {
+            method: 'openNewPage',
+            url: analysisUrl
+        };
+
+        Bridge.callHandler(data, null, function (error) {
+            window.location.href = url;
+        });
     };
 
     analysisByClass(){
@@ -311,8 +319,8 @@ export default class HomeWorkUnderstandAnalysisByClass extends React.Component {
                             <ReactEcharts
                                 option={this.state.columnarChartOption}
                                 style={{height: '100%', width: '100%'}}
-                                loadingOption={this.getLoadingOption()}
-                                showLoading={this.state.isLoading}
+                                // loadingOption={this.getLoadingOption()}
+                                // showLoading={this.state.isLoading}
                                 // onChartReady={this.onChartReady}
                                 onEvents={onEvents}
                                 className='' />
