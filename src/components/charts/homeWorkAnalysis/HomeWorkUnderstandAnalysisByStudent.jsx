@@ -3,6 +3,7 @@ import ReactEcharts from 'echarts-for-react';
 import {
     Toast
 } from 'antd-mobile';
+
 var colors = ['#5793f3', '#d14a61'];
 var returnUrl;
 export default class HomeWorkUnderstandAnalysisByStudent extends React.Component {
@@ -220,7 +221,7 @@ export default class HomeWorkUnderstandAnalysisByStudent extends React.Component
             'click': this.onChartClick,
         }
         return (
-            <div>
+            <div id="homeWorkAnalysis">
                 <div>
                     <a href={returnUrl}>返回</a>
                 </div>
