@@ -41,7 +41,7 @@ export default class HomeWorkUnderstandAnalysisByClassSubject extends React.Comp
     }
 
     componentDidMount() {
-        document.title = '学生作业题目理解度/时长统计';
+        document.title = '学生作业题目理解度统计';
         Bridge.setShareAble("false");
         Bridge.setRefreshAble("false");
         //todo 调用接口，完成班级学生平均理解度和平均时长数据的获取
@@ -142,8 +142,8 @@ export default class HomeWorkUnderstandAnalysisByClassSubject extends React.Comp
             }
             stuJsonArray.forEach(function (stuJson) {
                 (columnarChartOption.xAxis)[0].data.push(stuJson.stuName);
-                (columnarChartOption.series)[0].data.push(parseInt(stuJson.avgOfUnderstand));
-                (columnarChartOption.series)[1].data.push(stuJson.avgOfTimeLength.toFixed(2));
+                (columnarChartOption.series)[0].data.push(Math.abs(parseInt(stuJson.avgOfUnderstand)));
+                // (columnarChartOption.series)[1].data.push(stuJson.avgOfTimeLength.toFixed(2));
             })
             var subjectJsonDiv=<div>
                 <div>{subjectShowNo}:</div>
@@ -188,7 +188,8 @@ export default class HomeWorkUnderstandAnalysisByClassSubject extends React.Comp
                 }
             },
             legend: {
-                data:['理解度','时长']
+                // data:['理解度','时长']
+                data:['理解度']
             },
             dataZoom: [
                 {
@@ -227,7 +228,7 @@ export default class HomeWorkUnderstandAnalysisByClassSubject extends React.Comp
                     }
                 },
 
-                {
+                /*{
                     type: 'value',
                     name: '时长',
                     min: 0,
@@ -245,7 +246,7 @@ export default class HomeWorkUnderstandAnalysisByClassSubject extends React.Comp
                         show:true,
                         formatter: '{value} 分钟'
                     }
-                }
+                }*/
             ],
             series: [
                 {
@@ -256,14 +257,14 @@ export default class HomeWorkUnderstandAnalysisByClassSubject extends React.Comp
                     data:[],
                     itemStyle : { normal: {label : {show: true}}}
                 },
-                {
+                /*{
                     name:'时长',
                     type:'line',
                     yAxisIndex: 1,
                     // data:[2.0, 2, 3, 4, 6, 10, 19, 10, 15.0, 16, 12.0, 6],
                     data:[],
                     itemStyle : { normal: {label : {show: true}}}
-                }
+                }*/
             ]
         };
     };
@@ -336,7 +337,7 @@ export default class HomeWorkUnderstandAnalysisByClassSubject extends React.Comp
         }
         return (
             <div>
-                <div>学生题目理解度统计</div>
+                {/*<div>学生题目理解度统计</div>*/}
                 {/*<div>
                     <div>
                         <span>

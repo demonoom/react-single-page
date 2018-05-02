@@ -4,6 +4,7 @@ import {
     Toast, DatePicker, List, Button, Picker, Radio
 } from 'antd-mobile';
 import './css/homeWorkAnalysis.less'
+
 var colors = ['#5793f3', '#d14a61'];
 var stuIdArray = [];
 var pushTimeGlobal;
@@ -130,20 +131,18 @@ export default class HomeWorkUnderstandAnalysisGuide extends React.Component {
         const {value} = this.state;
         return (
             <div id="homeWorkAnalysis">
-                <div className="understanding_title">班级平均理解度统计</div>
                 <div>
-                    <div>
-                        <span>
-                            <DatePicker
-                                mode="date"
-                                title="Select Date"
-                                extra="Optional"
-                                value={this.state.date}
-                                onChange={date => this.setState({date})}
-                            >
-                              <List.Item arrow="horizontal">发布日期</List.Item>
-                            </DatePicker>
-                        </span>
+                    <div className="understanding_date">
+                        <DatePicker
+                            mode="date"
+                            title="Select Date"
+                            extra="Optional"
+                            value={this.state.date}
+                            onChange={date => this.setState({date})}
+
+                        >
+                            <List.Item arrow="horizontal">发布日期</List.Item>
+                        </DatePicker>
                     </div>
                     <div>
                         <span>

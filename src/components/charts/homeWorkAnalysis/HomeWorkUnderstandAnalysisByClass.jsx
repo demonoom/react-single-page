@@ -94,7 +94,7 @@ export default class HomeWorkUnderstandAnalysisByClass extends React.Component {
                         stuIdArray.push(stuId);
                         console.log(stuId+"\t"+stuName+"\t"+avgOfTimeLength+"\t"+avgOfUnderstand);
                         (columnarChartOption.xAxis)[0].data.push(stuName);
-                        (columnarChartOption.series)[0].data.push(parseInt(avgOfUnderstand));
+                        (columnarChartOption.series)[0].data.push(Math.abs(parseInt(avgOfUnderstand)));
                         // (columnarChartOption.series)[1].data.push(avgOfTimeLength.toFixed(2));
                     })
                     pushTimeGlobal = pushTime;
@@ -285,7 +285,7 @@ export default class HomeWorkUnderstandAnalysisByClass extends React.Component {
         };
         return (
             <div>
-                <div>班级平均理解度统计</div>
+                {/*<div>班级平均理解度统计</div>*/}
                 {/*<div>
                     <div>
                         <span>

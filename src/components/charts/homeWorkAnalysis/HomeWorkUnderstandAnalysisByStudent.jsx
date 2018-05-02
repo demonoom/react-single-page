@@ -23,7 +23,7 @@ export default class HomeWorkUnderstandAnalysisByStudent extends React.Component
     }
 
     componentDidMount() {
-        document.title = '学生作业题目理解度/时长统计';
+        document.title = '学生作业题目理解度统计';
         Bridge.setShareAble("false");
         Bridge.setRefreshAble("false");
         //todo 调用接口，完成班级学生平均理解度和平均时长数据的获取
@@ -61,10 +61,10 @@ export default class HomeWorkUnderstandAnalysisByStudent extends React.Component
                         var subjectType = analysisJson.subjectType;
                         var avgOfTimeLength =analysisJson.avgOfTimeLength;
                         var avgOfUnderstand =analysisJson.avgOfUnderstand;
-                        console.log(subjectId+"\t"+subjectType+"\t"+avgOfTimeLength+"\t"+avgOfUnderstand);
+                        // console.log(subjectId+"\t"+subjectType+"\t"+avgOfTimeLength+"\t"+avgOfUnderstand);
                         var subjectShowNo = "题目"+(parseInt(index)+1);
                         (columnarChartOption.xAxis)[0].data.push(subjectShowNo);
-                        (columnarChartOption.series)[0].data.push(parseInt(avgOfUnderstand));
+                        (columnarChartOption.series)[0].data.push(Math.abs(parseInt(avgOfUnderstand)));
                         // (columnarChartOption.series)[1].data.push(avgOfTimeLength.toFixed(2));
 
                         var subjectContent = <tr>
@@ -223,7 +223,7 @@ export default class HomeWorkUnderstandAnalysisByStudent extends React.Component
         return (
 
             <div id="homeWorkAnalysis">
-                <div>学生题目理解度统计</div>
+                {/*<div>学生题目理解度统计</div>*/}
                 <div>
                     <div>
                         <div style={{height:'400px'}}>
