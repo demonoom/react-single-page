@@ -3,7 +3,7 @@ import ReactEcharts from 'echarts-for-react';
 import {
     Toast, DatePicker, List, Button, Picker, Radio
 } from 'antd-mobile';
-
+import './css/homeWorkAnalysis.less'
 var colors = ['#5793f3', '#d14a61'];
 var stuIdArray = [];
 var pushTimeGlobal;
@@ -129,8 +129,8 @@ export default class HomeWorkUnderstandAnalysisGuide extends React.Component {
         ];
         const {value} = this.state;
         return (
-            <div>
-                <div>班级平均理解度统计</div>
+            <div id="homeWorkAnalysis">
+                <div className="understanding_title">班级平均理解度统计</div>
                 <div>
                     <div>
                         <span>
