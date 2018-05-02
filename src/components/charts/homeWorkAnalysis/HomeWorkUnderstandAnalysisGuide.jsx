@@ -77,8 +77,9 @@ export default class HomeWorkUnderstandAnalysisGuide extends React.Component {
 
 
         var data = {
+            // method: 'openLargeNewPage',
             method: 'openNewPage',
-            url: analysisUrl
+            url: analysisUrl,
         };
 
         Bridge.callHandler(data, null, function (error) {
