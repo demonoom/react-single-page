@@ -140,7 +140,7 @@ class Index extends React.Component {
                               style={{fontSize: '24px'}}>手环绑定</Link></li>
                     <li><Link to="/personalSettings?uid=23836&tid=31837&utype=te"
                               style={{fontSize: '24px'}}>个人设置</Link></li>
-                    <li><Link to="/groupSetting?chatGroupId=704&ident=23836&utype=te"
+                    <li><Link to="/groupSetting?chatGroupId=706&ident=23836&utype=te"
                               style={{fontSize: '24px'}}>群设置</Link></li>
                 </ul>
             </div>

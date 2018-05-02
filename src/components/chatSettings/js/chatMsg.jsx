@@ -48,15 +48,21 @@ export default class chatMsg extends React.Component {
         }, 100)
     }
 
-    getUserLocationInfo(e) {
+    inputOnChange = () => {
+        this.setState({defaultPageNo: 1});
+    }
+
+    getUserLocationInfo(e, flag) {
+        var _this = this;
+        if (!flag) {
+            _this.initData.splice(0);
+            _this.state.dataSource = [];
+            _this.state.dataSource = new ListView.DataSource({
+                rowHasChanged: (row1, row2) => row1 !== row2,
+            });
+        }
         this.setState({inputValue: e});
         this.state.listViewDisplay = true;
-        var _this = this;
-        _this.initData.splice(0);
-        _this.state.dataSource = [];
-        _this.state.dataSource = new ListView.DataSource({
-            rowHasChanged: (row1, row2) => row1 !== row2,
-        });
         const dataBlob = {};
         var PageNo = this.state.defaultPageNo;
         var param = {
@@ -65,15 +71,17 @@ export default class chatMsg extends React.Component {
             "tid": this.state.tid,
             "type": this.state.type,
             "keywork": e,
-            "pn": PageNo,
+            "pn": PageNo + '',
         };
+        console.log(param);
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
             onResponse: function (result) {
+                console.log(result);
                 if (result.msg == '调用成功' && result.success == true) {
                     if (result.response.length == 0) {
-                        _this.state.listViewDisplay = false;
-                        _this.setState({listViewDisplay: false})
-                        Toast.info('沒有查到相关内容', 1);
+                        // _this.state.listViewDisplay = false;
+                        _this.setState({isLoadingLeft: false})
+                        // Toast.info('沒有查到相关内容', 1);
                     } else {
                         var arr = result.response;
                         var pager = result.pager;
@@ -120,7 +128,7 @@ export default class chatMsg extends React.Component {
         }
         currentPageNo += 1;
         this.setState({isLoadingLeft: true, defaultPageNo: currentPageNo});
-        _this.getUserLocationInfo(_this.state.inputValue);
+        _this.getUserLocationInfo(_this.state.inputValue, true);
         this.setState({
             dataSource: this.state.dataSource.cloneWithRows(this.initData),
             isLoadingLeft: true,
@@ -157,6 +165,7 @@ export default class chatMsg extends React.Component {
                     placeholder="搜索"
                     maxLength={8}
                     onSubmit={this.getUserLocationInfo.bind(this)}
+                    onChange={this.inputOnChange}
                 />
                 <ListView
                     ref={el => this.lv = el}
@@ -167,12 +176,12 @@ export default class chatMsg extends React.Component {
                         </div>)}
                     renderRow={row}   //需要的参数包括一行数据等,会返回一个可渲染的组件为这行数据渲染  返回renderable
                     className="am-list"
-                    pageSize={30}    //每次事件循环（每帧）渲染的行数
+                    pageSize={15}    //每次事件循环（每帧）渲染的行数
                     //useBodyScroll  //使用 html 的 body 作为滚动容器   bool类型   不应这么写  否则无法下拉刷新
                     scrollRenderAheadDistance={200}   //当一个行接近屏幕范围多少像素之内的时候，就开始渲染这一行
                     onEndReached={this.onEndReached}  //当所有的数据都已经渲染过，并且列表被滚动到距离最底部不足onEndReachedThreshold个像素的距离时调用
                     onEndReachedThreshold={10}  //调用onEndReached之前的临界值，单位是像素  number类型
-                    initialListSize={30}   //指定在组件刚挂载的时候渲染多少行数据，用这个属性来确保首屏显示合适数量的数据
+                    initialListSize={15}   //指定在组件刚挂载的时候渲染多少行数据，用这个属性来确保首屏显示合适数量的数据
                     scrollEventThrottle={20}     //控制在滚动过程中，scroll事件被调用的频率
                     style={{
                         height: chatMsgs.state.clientHeight - 44,
