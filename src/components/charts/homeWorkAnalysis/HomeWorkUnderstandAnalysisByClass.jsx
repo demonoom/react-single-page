@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactEcharts from 'echarts-for-react';
 import {
-    Toast,DatePicker,List,Button,Picker,WingBlank
+    Toast,DatePicker,List,Button,Picker
 } from 'antd-mobile';
 var colors = ['#5793f3', '#d14a61'];
 var stuIdArray = [];
@@ -122,7 +122,7 @@ export default class HomeWorkUnderstandAnalysisByClass extends React.Component {
                 }
             },
             grid: {
-                right: '20%',
+                left:'15%'
             },
             toolbox: {
                 feature: {
@@ -315,8 +315,7 @@ export default class HomeWorkUnderstandAnalysisByClass extends React.Component {
                 </div>*/}
                 <div>
                     <div>
-                        <WingBlank>
-                        <div style={{height:'400px'}}>
+                        <div style={{height:'400px'}} className="echarts_wrap">
                             <ReactEcharts
                                 option={this.state.columnarChartOption}
                                 style={{height: '100%', width: '100%'}}
@@ -326,7 +325,6 @@ export default class HomeWorkUnderstandAnalysisByClass extends React.Component {
                                 onEvents={onEvents}
                                 className='' />
                         </div>
-                        </WingBlank>
                     </div>
                 </div>
             </div>
