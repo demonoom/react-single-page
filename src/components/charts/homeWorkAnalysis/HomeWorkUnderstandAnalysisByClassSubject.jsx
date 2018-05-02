@@ -48,8 +48,14 @@ export default class HomeWorkUnderstandAnalysisByClassSubject extends React.Comp
         var locationHref = window.location.href;
         var locationSearch = locationHref.substr(locationHref.indexOf("?") + 1);
         var searchArray = locationSearch.split("&");
-        var userId = searchArray[0].split('=')[1];
-        this.getTeacherClasses(userId);
+        // var userId = searchArray[0].split('=')[1];
+        // this.getTeacherClasses(userId);
+        var locationHref = window.location.href;
+        var locationSearch = locationHref.substr(locationHref.indexOf("?") + 1);
+        var searchArray = locationSearch.split("&");
+        var clazzId = searchArray[0].split('=')[1];
+        var pushTime = searchArray[1].split('=')[1];
+        this.getHomeWorkUnderstandAnalysisByClassSubject(clazzId,pushTime);
     }
 
     getHomeWorkUnderstandAnalysisByClassSubject(clazzId,pushTime){
@@ -331,7 +337,7 @@ export default class HomeWorkUnderstandAnalysisByClassSubject extends React.Comp
         return (
             <div>
                 <div>学生题目理解度统计</div>
-                <div>
+                {/*<div>
                     <div>
                         <span>
                             <DatePicker
@@ -357,7 +363,7 @@ export default class HomeWorkUnderstandAnalysisByClassSubject extends React.Comp
                             <Button onClick={this.analysisByClass}>分析</Button>
                         </span>
                     </div>
-                </div>
+                </div>*/}
                 <div>
                     <div>
                         {/*<div style={{height:'400px'}}>

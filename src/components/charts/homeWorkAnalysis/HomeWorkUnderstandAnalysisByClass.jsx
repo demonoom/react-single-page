@@ -46,10 +46,16 @@ export default class HomeWorkUnderstandAnalysisByClass extends React.Component {
         this.onChartClick = this.onChartClick.bind(this);
     }
     componentDidMount() {
-        document.title = '班级作业平均理解度/时长统计';
+        document.title = '班级作业平均理解度统计';
         Bridge.setShareAble("false");
         Bridge.setRefreshAble("false");
         var locationHref = window.location.href;
+        var locationSearch = locationHref.substr(locationHref.indexOf("?") + 1);
+        var searchArray = locationSearch.split("&");
+        var clazzId = searchArray[0].split('=')[1];
+        var pushTime = searchArray[1].split('=')[1];
+        this.getHomeWorkUnderstandAnalysisByClass(clazzId,pushTime);
+        /*var locationHref = window.location.href;
         var locationSearch = locationHref.substr(locationHref.indexOf("?") + 1);
         var searchArray = locationSearch.split("&");
         var userId = searchArray[0].split('=')[1];
@@ -58,7 +64,7 @@ export default class HomeWorkUnderstandAnalysisByClass extends React.Component {
             var clazzId = searchArray[1].split('=')[1];
             var pushTime = searchArray[2].split('=')[1];
             this.getHomeWorkUnderstandAnalysisByClass(clazzId,pushTime);
-        }
+        }*/
     }
 
     getHomeWorkUnderstandAnalysisByClass(clazzId,pushTime){
@@ -272,7 +278,7 @@ export default class HomeWorkUnderstandAnalysisByClass extends React.Component {
         return (
             <div>
                 <div>班级平均理解度统计</div>
-                <div>
+                {/*<div>
                     <div>
                         <span>
                             <DatePicker
@@ -298,7 +304,7 @@ export default class HomeWorkUnderstandAnalysisByClass extends React.Component {
                             <Button onClick={this.analysisByClass}>分析</Button>
                         </span>
                     </div>
-                </div>
+                </div>*/}
                 <div>
                     <div>
                         <div style={{height:'400px'}}>
