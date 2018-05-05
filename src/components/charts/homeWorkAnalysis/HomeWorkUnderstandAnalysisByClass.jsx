@@ -96,6 +96,7 @@ export default class HomeWorkUnderstandAnalysisByClass extends React.Component {
                         console.log(stuId+"\t"+stuName+"\t"+avgOfTimeLength+"\t"+avgOfUnderstand);
                         (columnarChartOption.xAxis)[0].data.push(stuName);
                         (columnarChartOption.series)[0].data.push(Math.abs(parseInt(avgOfUnderstand)));
+                        (columnarChartOption.series)[1].data.push(10);
                         // (columnarChartOption.series)[1].data.push(avgOfTimeLength.toFixed(2));
                     })
                     pushTimeGlobal = pushTime;
@@ -173,7 +174,7 @@ export default class HomeWorkUnderstandAnalysisByClass extends React.Component {
                     }
                 },
 
-                /*{
+                {
                     type: 'value',
                     name: '平均时长',
                     min: 0,
@@ -191,7 +192,7 @@ export default class HomeWorkUnderstandAnalysisByClass extends React.Component {
                         show:true,
                         formatter: '{value} 分钟'
                     }
-                }*/
+                }
             ],
             series: [
                 {
@@ -202,15 +203,15 @@ export default class HomeWorkUnderstandAnalysisByClass extends React.Component {
                     data:[],
                     itemStyle : { normal: {label : {show: true}}}
                 },
-                /*{
+                {
                     name:'平均时长',
                     type:'line',
                     showLabel:true,
                     yAxisIndex: 1,
-                    // data:[2.0, 2, 3, 4, 6, 10, 19, 10, 15.0, 16, 12.0, 6],
+                    //data:[2.0, 2, 3, 4, 6, 10, 19, 10, 15.0, 16, 12.0, 6],
                     data:[],
                     itemStyle : { normal: {label : {show: true}}}
-                }*/
+                }
             ]
         };
     };
