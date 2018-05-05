@@ -58,19 +58,20 @@ export default class brotherXu extends React.Component {
         var clazzId = searchArray[0].split('=')[1];
         var pushTime = searchArray[1].split('=')[1];
         var ident = searchArray[2].split('=')[1];
+        var censusType = searchArray[3].split('=')[1];
         //var censusType = searchArray[3].split('=')[1];
         this.setState({ident, clazzId, pushTime});
-        this.getHomeWorkUnderstandAnalysisByClassSubject(clazzId, pushTime,ident);
+        this.getHomeWorkUnderstandAnalysisByClassSubject(clazzId, pushTime,ident,censusType);
     }
 
-    getHomeWorkUnderstandAnalysisByClassSubject(clazzId, pushTime,ident) {
+    getHomeWorkUnderstandAnalysisByClassSubject(clazzId, pushTime,ident,censusType) {
         var _this = this;
         var param;
             param = {
                 "method": 'getHomeWorkUnderstandAnalysisByUser',
                 "clazzId": clazzId,
                 "pushTime": pushTime,
-                "viewType": 0,
+                "viewType": censusType,
                 "userId":ident,
             };
 
@@ -85,7 +86,7 @@ export default class brotherXu extends React.Component {
                         subjectDivContentArray = _this.buildSubjectArrayContent(subjectDivContentArray, analysisJson);
                     });
                     console.log(subjectDivContentArray);
-                    _this.buildSubjectDivContentArray(subjectDivContentArray);
+                    _this.buildSubjectDivContentArray(subjectDivContentArray,censusType);
                 } else {
 
                 }
@@ -153,12 +154,16 @@ export default class brotherXu extends React.Component {
         }
     };
 
-    buildSubjectDivContentArray = (subjectDivContentArray) => {
+    buildSubjectDivContentArray = (subjectDivContentArray,censusType) => {
         var _this = this;
         var divContentArray = [];
         this.setState({subjectDivContentArray});
         var columnarChartOption = null;
-        columnarChartOption = _this.buildChartOption();
+        if (censusType == 0) {
+            columnarChartOption = _this.buildChartOption();
+        } else {
+            columnarChartOption = _this.buildChartOption2();
+        }
 
         for(var index=0;index<subjectDivContentArray.length-1;index++){
             var subjectAndStudentJson=subjectDivContentArray[index];
@@ -181,8 +186,13 @@ export default class brotherXu extends React.Component {
                 avgOfUnderstandTotal += Math.abs(parseInt(stuJson.avgOfUnderstand));
                 avgOfTimeLengthTotal += Math.abs(parseInt(stuJson.avgOfTimeLength));
                 numTotal++;
+                if (censusType == 0) {
                     (columnarChartOption.series)[0].data.push(Math.abs(parseInt(stuJson.avgOfUnderstand)));
-                    (columnarChartOption.series)[1].data.push(Math.abs(parseInt(stuJson.avgOfUnderstand)));
+                    (columnarChartOption.series)[1].data.push(avgUnder);
+                } else {
+                    (columnarChartOption.series)[0].data.push(Math.abs(parseInt(stuJson.avgOfUnderstand)));
+                    (columnarChartOption.series)[1].data.push(avgUnder);
+                }
 
                 // (columnarChartOption.series)[1].data.push(Math.abs(parseInt(stuJson.avgOfTimeLength)));
                 // (columnarChartOption.series)[1].data.push(stuJson.avgOfTimeLength.toFixed(2));
@@ -294,7 +304,7 @@ export default class brotherXu extends React.Component {
 
                 {
                     type: 'value',
-                    name: '理解度',
+                    name: '平均理解度',
                     min: 0,
                     //max: 20,
                     position: 'right',
@@ -322,12 +332,16 @@ export default class brotherXu extends React.Component {
                     itemStyle: {normal: {label: {show: true}}}
                 },
                 {
-                    name: '理解度',
+                    name: '平均理解度',
                     type: 'line',
                     yAxisIndex: 1,
                     // data:[2.0, 2, 3, 4, 6, 10, 19, 10, 15.0, 16, 12.0, 6],
                     data: [],
-                    itemStyle: {normal: {label: {show: true}}}
+                    itemStyle: {
+                        normal: {
+                            color: 'red'
+                        }
+                    },
                 }
             ]
         };

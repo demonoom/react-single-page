@@ -322,7 +322,7 @@ export default class HomeWorkUnderstandAnalysisByClassSubject extends React.Comp
                     },
                     axisLabel: {
                         show: true,
-                        formatter: '{value} '
+                        formatter: '{value} %'
                     }
                 }
             ],
