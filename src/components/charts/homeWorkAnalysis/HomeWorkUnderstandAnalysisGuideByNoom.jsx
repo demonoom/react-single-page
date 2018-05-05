@@ -44,7 +44,6 @@ export default class HomeWorkUnderstandAnalysisGuideByNoom extends React.Compone
                     var pager = result.pager;
                     var pagerNoom = 0;
                     for (let i = 0; i < arr.length; i++) {
-                        console.log(arr[i].useDate);
                         if (arr[i].useDate > 1525104000000) {
                             pagerNoom += 1;
                             var topic = arr[i];
@@ -99,7 +98,7 @@ export default class HomeWorkUnderstandAnalysisGuideByNoom extends React.Compone
     };
 
     analysisByClass(colClazzId, useDate) {
-        var analysisUrl = WebServiceUtil.mobileServiceURL + "homeWorkUnderstandAnalysisByClassSubject?clazzId=" + colClazzId + "&pushTime=" + useDate;
+        var analysisUrl = WebServiceUtil.mobileServiceURL + "homeWorkUnderstandAnalysisByClassSubject?clazzId=" + colClazzId + "&pushTime=" + useDate + "&ident=" + this.state.ident + "&censusType=0";
 
         var data = {
             method: 'openNewPage',
@@ -115,7 +114,6 @@ export default class HomeWorkUnderstandAnalysisGuideByNoom extends React.Compone
         var _this = this;
 
         const row = (rowData, sectionID, rowID) => {
-            console.log(rowData.useDate);
             //1525104000000
             if (rowData.useDate > 1525104000000) {
                 return (

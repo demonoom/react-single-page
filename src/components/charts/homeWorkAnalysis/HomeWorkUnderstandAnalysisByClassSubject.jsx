@@ -1,9 +1,10 @@
 import React from 'react';
 import ReactEcharts from 'echarts-for-react';
 import {
-    Toast,DatePicker,List,Button,Picker
+    Toast, DatePicker, List, Button, Picker
 } from 'antd-mobile';
 import './css/homeWorkAnalysis.less'
+
 var colors = ['#5793f3', '#d14a61'];
 
 // 如果不是使用 List.Item 作为 children
@@ -11,10 +12,10 @@ const CustomChildren = (props) => {
     return (
         <div
             onClick={props.onClick}
-            style={{ backgroundColor: '#fff', height: 45, lineHeight: '45px', padding: '0 15px' }}
+            style={{backgroundColor: '#fff', height: 45, lineHeight: '45px', padding: '0 15px'}}
         >
             {props.children}
-            <span style={{ float: 'right' }}>{props.extra}</span>
+            <span style={{float: 'right'}}>{props.extra}</span>
         </div>
     );
 };
@@ -26,14 +27,14 @@ export default class HomeWorkUnderstandAnalysisByClassSubject extends React.Comp
         const now = new Date(nowTimeStamp);
         this.state = {
             lastPoint: '0',
-            currentFaceEmotion:{},
-            screenHeight:screen.height,
-            stuNameArray:[],
-            avgOfTimeLengthArray:[],
-            avgOfUnderstandArray : [],
-            subjectContentArray:[],
+            currentFaceEmotion: {},
+            screenHeight: screen.height,
+            stuNameArray: [],
+            avgOfTimeLengthArray: [],
+            avgOfUnderstandArray: [],
+            subjectContentArray: [],
             date: now,
-            classList:[],
+            classList: [],
             clazzId: [],
         };
         this.analysisByClass = this.analysisByClass.bind(this);
@@ -56,10 +57,12 @@ export default class HomeWorkUnderstandAnalysisByClassSubject extends React.Comp
         var searchArray = locationSearch.split("&");
         var clazzId = searchArray[0].split('=')[1];
         var pushTime = searchArray[1].split('=')[1];
-        this.getHomeWorkUnderstandAnalysisByClassSubject(clazzId,pushTime);
+        var ident = searchArray[2].split('=')[1];
+        this.setState({ident, clazzId, pushTime});
+        this.getHomeWorkUnderstandAnalysisByClassSubject(clazzId, pushTime);
     }
 
-    getHomeWorkUnderstandAnalysisByClassSubject(clazzId,pushTime){
+    getHomeWorkUnderstandAnalysisByClassSubject(clazzId, pushTime) {
         var _this = this;
         var param = {
             "method": 'getHomeWorkUnderstandAnalysisByCLassSubject',
@@ -72,14 +75,13 @@ export default class HomeWorkUnderstandAnalysisByClassSubject extends React.Comp
                 var dataArray = result.response;
                 var columnarChartOption = _this.state.columnarChartOption;
                 var subjectDivContentArray = [];
-                if(dataArray!=null && dataArray.length!=0){
-                    dataArray.forEach(function (analysisJsonStr,index) {
+                if (dataArray != null && dataArray.length != 0) {
+                    dataArray.forEach(function (analysisJsonStr, index) {
                         var analysisJson = JSON.parse(analysisJsonStr);
-                        subjectDivContentArray =  _this.buildSubjectArrayContent(subjectDivContentArray,analysisJson);
-                    })
-                    console.log(subjectDivContentArray);
+                        subjectDivContentArray = _this.buildSubjectArrayContent(subjectDivContentArray, analysisJson);
+                    });
                     _this.buildSubjectDivContentArray(subjectDivContentArray);
-                }else{
+                } else {
 
                 }
             },
@@ -90,76 +92,84 @@ export default class HomeWorkUnderstandAnalysisByClassSubject extends React.Comp
     }
 
 
-    buildSubjectArrayContent=(subjectDivContentArray,analysisJson)=>{
+    buildSubjectArrayContent = (subjectDivContentArray, analysisJson) => {
         var _this = this;
-        var stuJson = {"avgOfUnderstand":analysisJson.avgOfUnderstand,"avgOfTimeLength":analysisJson.avgOfTimeLength,"stuId":analysisJson.stuId,"stuName":analysisJson.stuName};
-        var subjectJson = {"subjectId":analysisJson.subjectId,"subjectContent":analysisJson.subjectContent};
+        var stuJson = {
+            "avgOfUnderstand": analysisJson.avgOfUnderstand,
+            "avgOfTimeLength": analysisJson.avgOfTimeLength,
+            "stuId": analysisJson.stuId,
+            "stuName": analysisJson.stuName
+        };
+        var subjectJson = {"subjectId": analysisJson.subjectId, "subjectContent": analysisJson.subjectContent};
         var stuJsonArray = [stuJson];
-        var dataJson = {subjectJson,stuJsonArray};
-        if(subjectDivContentArray == null || subjectDivContentArray.length ==0){
+        var dataJson = {subjectJson, stuJsonArray};
+        if (subjectDivContentArray == null || subjectDivContentArray.length == 0) {
             subjectDivContentArray.push(dataJson);
-        }else{
-            var studentJsonArray = _this.hasSameSubjectId(subjectDivContentArray,analysisJson.subjectId);
-            if(studentJsonArray == null){
+        } else {
+            var studentJsonArray = _this.hasSameSubjectId(subjectDivContentArray, analysisJson.subjectId);
+            if (studentJsonArray == null) {
                 studentJsonArray = [];
                 studentJsonArray.push(stuJson);
-                var newDataJson = {subjectJson,stuJsonArray};
+                var newDataJson = {subjectJson, stuJsonArray};
                 subjectDivContentArray.push(newDataJson);
-            }else{
+            } else {
                 studentJsonArray.push(stuJson);
             }
         }
         return subjectDivContentArray;
     };
 
-    hasSameSubjectId=(subjectDivContentArray,subjectId)=>{
+    hasSameSubjectId = (subjectDivContentArray, subjectId) => {
         var isHave = false;
-        for(var i=0;i<subjectDivContentArray.length;i++){
+        for (var i = 0; i < subjectDivContentArray.length; i++) {
             var subjectDivContent = subjectDivContentArray[i];
             //题目编号
             var subjectIdAtDivContent = subjectDivContent.subjectJson.subjectId;
-            if(subjectId == subjectIdAtDivContent){
+            if (subjectId == subjectIdAtDivContent) {
                 isHave = true;
                 return subjectDivContent.stuJsonArray;
                 break;
             }
         }
-        if(isHave == false){
+        if (isHave == false) {
             return null;
         }
     };
 
-    buildSubjectDivContentArray=(subjectDivContentArray)=>{
+    buildSubjectDivContentArray = (subjectDivContentArray) => {
         var _this = this;
         var divContentArray = [];
 
-        subjectDivContentArray.forEach(function (subjectAndStudentJson,index) {
+        subjectDivContentArray.forEach(function (subjectAndStudentJson, index) {
             var subjectJson = subjectAndStudentJson.subjectJson;
             var stuJsonArray = subjectAndStudentJson.stuJsonArray;
-            var subjectShowNo = "题目"+(parseInt(index)+1);
+            var subjectShowNo = "题目" + (parseInt(index) + 1);
             var columnarChartOption = null;
-            var avgOfUnderstandTotal=0;
-            var avgOfTimeLengthTotal=0;
-            var numTotal=0;
+            var avgOfUnderstandTotal = 0;
+            var avgOfTimeLengthTotal = 0;
+            var numTotal = 0;
             columnarChartOption = _this.buildChartOption();
             let onEvents = {
                 'click': _this.onChartClick,
-            }
+            };
             stuJsonArray.forEach(function (stuJson) {
                 (columnarChartOption.xAxis)[0].data.push(stuJson.stuName);
-                avgOfUnderstandTotal+=Math.abs(parseInt(stuJson.avgOfUnderstand));
-                avgOfTimeLengthTotal+=Math.abs(parseInt(stuJson.avgOfTimeLength));
+                avgOfUnderstandTotal += Math.abs(parseInt(stuJson.avgOfUnderstand));
+                avgOfTimeLengthTotal += Math.abs(parseInt(stuJson.avgOfTimeLength));
                 numTotal++;
                 (columnarChartOption.series)[0].data.push(Math.abs(parseInt(stuJson.avgOfUnderstand)));
                 (columnarChartOption.series)[1].data.push(Math.abs(parseInt(stuJson.avgOfTimeLength)));
                 // (columnarChartOption.series)[1].data.push(stuJson.avgOfTimeLength.toFixed(2));
-            })
-            var subjectJsonDiv=<div>
+            });
+            var subjectJsonDiv = <div>
                 <div className="subject_title">{subjectShowNo}:</div>
                 <div className="subject_content">
                     <article dangerouslySetInnerHTML={{__html: subjectJson.subjectContent}}></article>
                 </div>
-                <div style={{height:'300px'}} className="echarts_wrap">
+                <div onClick={_this.averageUnderstanding.bind(this, subjectAndStudentJson.subjectJson.subjectId)}>
+                    做题时间统计
+                </div>
+                <div style={{height: '300px'}} className="echarts_wrap">
                     <ReactEcharts
                         option={columnarChartOption}
                         style={{height: '100%', width: '100%'}}
@@ -167,10 +177,10 @@ export default class HomeWorkUnderstandAnalysisByClassSubject extends React.Comp
                         // showLoading={true}
                         // onChartReady={this.onChartReady}
                         onEvents={onEvents}
-                        className='' />
+                        className=''/>
                 </div>
                 <div className="text_chart">
-                    <span>平均理解度:<i>{(avgOfUnderstandTotal/numTotal).toFixed(0)}%</i></span><span>平均做题时间:<i>{(avgOfTimeLengthTotal/numTotal).toFixed(0)}秒</i></span>
+                    <span>平均理解度:<i>{(avgOfUnderstandTotal / numTotal).toFixed(0)}%</i></span><span>平均做题时间:<i>{(avgOfTimeLengthTotal / numTotal).toFixed(0)}秒</i></span>
                 </div>
 
             </div>;
@@ -178,6 +188,19 @@ export default class HomeWorkUnderstandAnalysisByClassSubject extends React.Comp
         })
         this.setState({divContentArray});
     };
+
+    averageUnderstanding = (id) => {
+        var analysisUrl = WebServiceUtil.mobileServiceURL + "homeWorkUnderstandAnalysisByClassSubject?clazzId=" + this.state.clazzId + "&pushTime=" + this.state.pushTime + "&ident=" + this.state.ident + "&censusType=1" + "&queId=" + id;
+
+        var data = {
+            method: 'openNewPage',
+            url: analysisUrl,
+        };
+
+        Bridge.callHandler(data, null, function (error) {
+            window.location.href = analysisUrl;
+        });
+    }
 
     buildChartOption = () => {
         var _this = this;
@@ -193,13 +216,13 @@ export default class HomeWorkUnderstandAnalysisByClassSubject extends React.Comp
             grid: {
                 left: '15%'
             },
-      /*      toolbox: {
-                feature: {
-                    dataView: {show: true, readOnly: false},
-                    restore: {show: true},
-                    saveAsImage: {show: true}
-                }
-            },*/
+            /*      toolbox: {
+                      feature: {
+                          dataView: {show: true, readOnly: false},
+                          restore: {show: true},
+                          saveAsImage: {show: true}
+                      }
+                  },*/
             // legend: {
             //     // data:['理解度','时长']
             //     data:['理解度']
@@ -221,7 +244,7 @@ export default class HomeWorkUnderstandAnalysisByClassSubject extends React.Comp
                     },
                     // data: ['学生A','学生B','学生C','学生D','学生E','学生F','学生G','学生H','学生I','学生J','学生K','学生L'],
                     data: [],
-                    triggerEvent:true
+                    triggerEvent: true
                 }
             ],
             yAxis: [
@@ -252,31 +275,31 @@ export default class HomeWorkUnderstandAnalysisByClassSubject extends React.Comp
                             color: colors[1]
                         }
                     },
-                    axisTick:{
-                        show:true
+                    axisTick: {
+                        show: true
                     },
                     axisLabel: {
-                        show:true,
+                        show: true,
                         formatter: '{value} 秒'
                     }
                 }
             ],
             series: [
                 {
-                    name:'理解度',
-                    type:'bar',
-                    showLabel:true,
+                    name: '理解度',
+                    type: 'bar',
+                    showLabel: true,
                     // data:[-2.0, -40.9, 7.0, 23.2, -25.6, 76.7, -13.6, 62.2, 32.6, 20.0, 6.4, 3.3],
-                    data:[],
-                    itemStyle : { normal: {label : {show: true}}}
+                    data: [],
+                    itemStyle: {normal: {label: {show: true}}}
                 },
                 {
-                    name:'做题时长',
-                    type:'line',
+                    name: '做题时长',
+                    type: 'line',
                     yAxisIndex: 1,
                     // data:[2.0, 2, 3, 4, 6, 10, 19, 10, 15.0, 16, 12.0, 6],
-                    data:[],
-                    itemStyle : { normal: {label : {show: true}}}
+                    data: [],
+                    itemStyle: {normal: {label: {show: true}}}
                 }
             ]
         };
@@ -292,7 +315,7 @@ export default class HomeWorkUnderstandAnalysisByClassSubject extends React.Comp
         };
     };
 
-    onChartClick(optional){
+    onChartClick(optional) {
     };
 
     formatTime(seconds) {
@@ -305,7 +328,7 @@ export default class HomeWorkUnderstandAnalysisByClassSubject extends React.Comp
             .replace(/\b(\d)\b/g, "0$1");
     };
 
-    getTeacherClasses(ident){
+    getTeacherClasses(ident) {
         var _this = this;
         var param = {
             "method": 'getTeacherClasses',
@@ -320,7 +343,7 @@ export default class HomeWorkUnderstandAnalysisByClassSubject extends React.Comp
                     var classArray = e.split("#");
                     var classId = classArray[0];
                     var className = classArray[1];
-                    var classJson = {label: className,value: classId,}
+                    var classJson = {label: className, value: classId,}
                     classList.push(classJson)
                 });
                 _this.setState({classList: classList});
@@ -331,15 +354,15 @@ export default class HomeWorkUnderstandAnalysisByClassSubject extends React.Comp
         });
     };
 
-    analysisByClass(){
+    analysisByClass() {
         // var d = this.state.date.getDate.toLocaleString();
         var da = new Date(this.state.date);
         var year = da.getFullYear();
-        var month = parseInt(da.getMonth()+1)>9?da.getMonth()+1:"0"+(da.getMonth()+1);
-        var date = parseInt(da.getDate())>9?da.getDate():"0"+da.getDate();
-        var dayStr = [year,month,date].join('-');
+        var month = parseInt(da.getMonth() + 1) > 9 ? da.getMonth() + 1 : "0" + (da.getMonth() + 1);
+        var date = parseInt(da.getDate()) > 9 ? da.getDate() : "0" + da.getDate();
+        var dayStr = [year, month, date].join('-');
         //todo 调用接口，完成班级学生平均理解度和平均时长数据的获取
-        this.getHomeWorkUnderstandAnalysisByClassSubject(this.state.clazzId[0],dayStr);
+        this.getHomeWorkUnderstandAnalysisByClassSubject(this.state.clazzId[0], dayStr);
     };
 
     render() {
