@@ -132,13 +132,13 @@ export default class HomeWorkUnderstandAnalysisByClassSubject extends React.Comp
                 studentJsonArray.push(stuJson);
             }
         }
-        if(analysisJson.stuId==undefined){
+        if (analysisJson.stuId == undefined) {
             console.log(analysisJson);
             for (var key in analysisJson) {
-                for(var i=0;i<subjectDivContentArray.length;i++){
+                for (var i = 0; i < subjectDivContentArray.length; i++) {
                     console.log(subjectDivContentArray[i]);
-                    if(subjectDivContentArray[i].subjectJson.subjectId==key){
-                        subjectDivContentArray[i].avgUnder=analysisJson[key];
+                    if (subjectDivContentArray[i].subjectJson.subjectId == key) {
+                        subjectDivContentArray[i].avgUnder = analysisJson[key];
                     }
                 }
             }
@@ -167,9 +167,9 @@ export default class HomeWorkUnderstandAnalysisByClassSubject extends React.Comp
         var _this = this;
         var divContentArray = [];
         this.setState({subjectDivContentArray});
-        for(var index=0;index<subjectDivContentArray.length-1;index++){
-        //subjectDivContentArray.forEach(function (subjectAndStudentJson, index) {
-            var subjectAndStudentJson=subjectDivContentArray[index];
+        for (var index = 0; index < subjectDivContentArray.length - 1; index++) {
+            //subjectDivContentArray.forEach(function (subjectAndStudentJson, index) {
+            var subjectAndStudentJson = subjectDivContentArray[index];
             var subjectJson = subjectAndStudentJson.subjectJson;
             var stuJsonArray = subjectAndStudentJson.stuJsonArray;
             var subjectShowNo = "题目" + (parseInt(index) + 1);
@@ -177,7 +177,7 @@ export default class HomeWorkUnderstandAnalysisByClassSubject extends React.Comp
             var avgOfUnderstandTotal = 0;
             var avgOfTimeLengthTotal = 0;
             var numTotal = 0;
-            var avgUnder=parseInt(subjectAndStudentJson.avgUnder);
+            var avgUnder = parseInt(subjectAndStudentJson.avgUnder);
             if (censusType == 0) {
                 columnarChartOption = _this.buildChartOption();
             } else {
@@ -208,6 +208,13 @@ export default class HomeWorkUnderstandAnalysisByClassSubject extends React.Comp
                 <div className="subject_title">{subjectShowNo}:</div>
                 <div className="subject_content">
                     <article dangerouslySetInnerHTML={{__html: subjectJson.subjectContent}}></article>
+                    <span
+                        onClick={_this.averageUnderrstanding}
+                        className="timeNum"
+                        style={{display: _this.state.divDisplay ? 'block' : 'none'}}
+                    >
+                            做题时间统计
+                        </span>
                 </div>
                 <div style={{height: '300px'}} className="echarts_wrap">
                     <ReactEcharts
@@ -220,18 +227,20 @@ export default class HomeWorkUnderstandAnalysisByClassSubject extends React.Comp
                         className=''/>
                 </div>
                 <div className="text_chart">
-                   {/* <span
+                    {/* <span
                         style={{display: _this.state.divDisplay ? 'block' : 'none'}}>平均理解度:<i>{avgUnder}%</i></span><span
                     style={{display: _this.state.divDisplay ? 'none' : 'block'}}>平均做题时间:<i>{(avgOfTimeLengthTotal / numTotal).toFixed(0)}秒</i></span>*/}
                 </div>
 
             </div>;
             divContentArray.push(subjectJsonDiv);
-        };
+        }
+        ;
         this.setState({divContentArray});
     };
 
-    averageUnderstanding = () => {
+    averageUnderrstanding = () => {
+        debugger
         var analysisUrl = WebServiceUtil.mobileServiceURL + "homeWorkUnderstandAnalysisByClassSubject?clazzId=" + this.state.clazzId + "&pushTime=" + this.state.pushTime + "&ident=" + this.state.ident + "&censusType=1" + "&queId=" + 1;
 
         var data = {
@@ -242,7 +251,7 @@ export default class HomeWorkUnderstandAnalysisByClassSubject extends React.Comp
         Bridge.callHandler(data, null, function (error) {
             window.location.href = analysisUrl;
         });
-    }
+    };
 
     buildChartOption = () => {
         var _this = this;
@@ -460,7 +469,7 @@ export default class HomeWorkUnderstandAnalysisByClassSubject extends React.Comp
 
     onChartClick = (optional) => {
         var arr = this.state.subjectDivContentArray;
-        var analysisUrl = WebServiceUtil.mobileServiceURL + "brotherXu?clazzId=" + this.state.clazzId + "&pushTime=" + this.state.pushTime + "&stuId=" + arr[0].stuJsonArray[optional.dataIndex].stuId;
+        var analysisUrl = WebServiceUtil.mobileServiceURL + "brotherXu?clazzId=" + this.state.clazzId + "&pushTime=" + this.state.pushTime + "&stuId=" + arr[0].stuJsonArray[optional.dataIndex].stuId + "&censusType=" + this.state.censusType;
 
         var data = {
             method: 'openNewPage',
@@ -558,12 +567,13 @@ export default class HomeWorkUnderstandAnalysisByClassSubject extends React.Comp
                     <div>
                         {/*<div style={{height:'400px'}}>
                          </div>*/}
-                        <div
-                            onClick={_this.averageUnderstanding}
-                            style={{display: this.state.divDisplay ? 'block' : 'none'}}
-                        >
-                            做题时间统计
-                        </div>
+                        {/*<span*/}
+                        {/*className="timeNum"*/}
+                        {/*onClick={_this.averageUnderstanding}*/}
+                        {/*style={{display: this.state.divDisplay ? 'block' : 'none'}}*/}
+                        {/*>*/}
+                        {/*做题时间统计*/}
+                        {/*</span>*/}
                         <div className="list_wrap_padding">
                             {this.state.divContentArray}
                         </div>

@@ -199,13 +199,13 @@ export default class brotherXu extends React.Component {
             });
 
             var subjectJsonDiv = <div>
-                <div className="subject_title">{subjectShowNo}:</div>
-                <div className="subject_content">
-                    <article dangerouslySetInnerHTML={{__html: subjectJson.subjectContent}}></article>
-                </div>
-                <div onClick={_this.averageUnderstanding.bind(this, subjectAndStudentJson.subjectJson.subjectId)}>
-                    做题时间统计
-                </div>
+                {/*<div className="subject_title">{subjectShowNo}:</div>*/}
+                {/*<div className="subject_content">*/}
+                    {/*<article dangerouslySetInnerHTML={{__html: subjectJson.subjectContent}}></article>*/}
+                {/*</div>*/}
+                {/*<div onClick={_this.averageUnderstanding.bind(this, subjectAndStudentJson.subjectJson.subjectId)}>*/}
+                    {/*做题时间统计*/}
+                {/*</div>*/}
                 <div style={{height: '300px'}} className="echarts_wrap">
                     <ReactEcharts
                         option={columnarChartOption}
