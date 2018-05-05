@@ -217,7 +217,7 @@ export default class brotherXu extends React.Component {
                         className=''/>
                 </div>
                 <div className="text_chart">
-                    <span>平均理解度:<i>{avgUnder}%</i></span>
+                    {/*<span>班级平均理解度:<i>{avgUnder}%</i></span>*/}
                 </div>
 
             </div>;
@@ -410,7 +410,7 @@ export default class brotherXu extends React.Component {
 
                 {
                     type: 'value',
-                    name: '班级平均做题时长',
+                    name: '班级平均时长',
                     min: 0,
                     //max: 20,
                     position: 'right',
@@ -438,7 +438,7 @@ export default class brotherXu extends React.Component {
                     itemStyle: {normal: {label: {show: true}}}
                 },
                 {
-                    name: '班级平均做题时长',
+                    name: '班级平均时长',
                     type: 'line',
                     yAxisIndex: 1,
                     // data:[2.0, 2, 3, 4, 6, 10, 19, 10, 15.0, 16, 12.0, 6],

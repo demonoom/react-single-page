@@ -44,7 +44,7 @@ export default class HomeWorkUnderstandAnalysisByClassSubject extends React.Comp
     }
 
     componentDidMount() {
-        document.title = '学生作业题目理解度统计';
+        document.title = '学生作业表情分析报告';
         Bridge.setShareAble("false");
         Bridge.setRefreshAble("false");
         //todo 调用接口，完成班级学生平均理解度和平均时长数据的获取
@@ -213,7 +213,7 @@ export default class HomeWorkUnderstandAnalysisByClassSubject extends React.Comp
                         onClick={_this.averageUnderrstanding}
                         className="timeNum"
                     >
-                        {_this.state.divDisplay ? '本题耗时排名:' : '本题理解度排名:' }{order}
+                        {_this.state.divDisplay ? '本题耗时排名:' : '本题难度排名:' }{order}
                         </span>
                 </div>
                 <div style={{height: '300px'}} className="echarts_wrap">
@@ -419,7 +419,7 @@ export default class HomeWorkUnderstandAnalysisByClassSubject extends React.Comp
 
                 {
                     type: 'value',
-                    name: '班级平均做题时长',
+                    name: '班级平均时长',
                     min: 0,
                     //max: 20,
                     position: 'right',
@@ -447,7 +447,7 @@ export default class HomeWorkUnderstandAnalysisByClassSubject extends React.Comp
                     itemStyle: {normal: {label: {show: true}}}
                 },
                 {
-                    name: '班级平均做题时长',
+                    name: '班级平均时长',
                     type: 'line',
                     yAxisIndex: 1,
                     // data:[2.0, 2, 3, 4, 6, 10, 19, 10, 15.0, 16, 12.0, 6],

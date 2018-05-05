@@ -20,6 +20,7 @@ export default class HomeWorkUnderstandAnalysisGuideByNoom extends React.Compone
     }
 
     componentDidMount() {
+        document.title = '学生作业列表';
         var locationHref = decodeURI(window.location.href);
         var locationSearch = locationHref.substr(locationHref.indexOf("?") + 1);
         var searchArray = locationSearch.split("&");
