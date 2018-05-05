@@ -36,6 +36,7 @@ export default class HomeWorkUnderstandAnalysisByClassSubject extends React.Comp
             date: now,
             classList: [],
             clazzId: [],
+            divDisplay: true,
         };
         this.analysisByClass = this.analysisByClass.bind(this);
         this.getTeacherClasses = this.getTeacherClasses.bind(this);
@@ -67,6 +68,7 @@ export default class HomeWorkUnderstandAnalysisByClassSubject extends React.Comp
         var _this = this;
         var param;
         if (censusType == 0) {
+            this.setState({divDisplay: true});
             param = {
                 "method": 'getHomeWorkUnderstandAnalysisByCLassSubject',
                 "clazzId": clazzId,
@@ -74,6 +76,7 @@ export default class HomeWorkUnderstandAnalysisByClassSubject extends React.Comp
                 "viewType": 0,
             };
         } else {
+            this.setState({divDisplay: false});
             param = {
                 "method": 'getHomeWorkUnderstandAnalysisByCLassSubject',
                 "clazzId": clazzId,
@@ -193,9 +196,6 @@ export default class HomeWorkUnderstandAnalysisByClassSubject extends React.Comp
                 <div className="subject_content">
                     <article dangerouslySetInnerHTML={{__html: subjectJson.subjectContent}}></article>
                 </div>
-                <div onClick={_this.averageUnderstanding.bind(this, subjectAndStudentJson.subjectJson.subjectId)}>
-                    做题时间统计
-                </div>
                 <div style={{height: '300px'}} className="echarts_wrap">
                     <ReactEcharts
                         option={columnarChartOption}
@@ -207,17 +207,19 @@ export default class HomeWorkUnderstandAnalysisByClassSubject extends React.Comp
                         className=''/>
                 </div>
                 <div className="text_chart">
-                    <span>平均理解度:<i>{(avgOfUnderstandTotal / numTotal).toFixed(0)}%</i></span><span>平均做题时间:<i>{(avgOfTimeLengthTotal / numTotal).toFixed(0)}秒</i></span>
+                    <span
+                        style={{display: _this.state.divDisplay ? 'block' : 'none'}}>平均理解度:<i>{(avgOfUnderstandTotal / numTotal).toFixed(0)}%</i></span><span
+                    style={{display: _this.state.divDisplay ? 'none' : 'block'}}>平均做题时间:<i>{(avgOfTimeLengthTotal / numTotal).toFixed(0)}秒</i></span>
                 </div>
 
             </div>;
             divContentArray.push(subjectJsonDiv);
-        })
+        });
         this.setState({divContentArray});
     };
 
-    averageUnderstanding = (id) => {
-        var analysisUrl = WebServiceUtil.mobileServiceURL + "homeWorkUnderstandAnalysisByClassSubject?clazzId=" + this.state.clazzId + "&pushTime=" + this.state.pushTime + "&ident=" + this.state.ident + "&censusType=1" + "&queId=" + id;
+    averageUnderstanding = () => {
+        var analysisUrl = WebServiceUtil.mobileServiceURL + "homeWorkUnderstandAnalysisByClassSubject?clazzId=" + this.state.clazzId + "&pushTime=" + this.state.pushTime + "&ident=" + this.state.ident + "&censusType=1" + "&queId=" + 1;
 
         var data = {
             method: 'openNewPage',
@@ -505,6 +507,7 @@ export default class HomeWorkUnderstandAnalysisByClassSubject extends React.Comp
     };
 
     render() {
+        var _this = this;
         let onEvents = {
             'click': this.onChartClick,
         }
@@ -542,6 +545,12 @@ export default class HomeWorkUnderstandAnalysisByClassSubject extends React.Comp
                     <div>
                         {/*<div style={{height:'400px'}}>
                          </div>*/}
+                        <div
+                            onClick={_this.averageUnderstanding}
+                            style={{display: this.state.divDisplay ? 'block' : 'none'}}
+                        >
+                            做题时间统计
+                        </div>
                         <div className="list_wrap_padding">
                             {this.state.divContentArray}
                         </div>
