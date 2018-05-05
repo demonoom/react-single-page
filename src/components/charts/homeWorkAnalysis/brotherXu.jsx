@@ -131,9 +131,6 @@ export default class brotherXu extends React.Component {
                         subjectDivContentArray[i].avgUnder=analysisJson[key];
                     }
                 }
-
-                console.log(key);
-                console.log(analysisJson[key]);
             }
         }
         return subjectDivContentArray;
@@ -160,23 +157,27 @@ export default class brotherXu extends React.Component {
         var _this = this;
         var divContentArray = [];
         this.setState({subjectDivContentArray});
+        var columnarChartOption = null;
+        columnarChartOption = _this.buildChartOption();
 
-        subjectDivContentArray.forEach(function (subjectAndStudentJson, index) {
+        for(var index=0;index<subjectDivContentArray.length-1;index++){
+            var subjectAndStudentJson=subjectDivContentArray[index];
+        //subjectDivContentArray.forEach(function (subjectAndStudentJson, index) {
             var subjectJson = subjectAndStudentJson.subjectJson;
             var stuJsonArray = subjectAndStudentJson.stuJsonArray;
             var subjectShowNo = "题目" + (parseInt(index) + 1);
-            var columnarChartOption = null;
+
             var avgOfUnderstandTotal = 0;
             var avgOfTimeLengthTotal = 0;
             var avgUnder=parseInt(subjectAndStudentJson.avgUnder);
             var numTotal = 0;
-                columnarChartOption = _this.buildChartOption();
 
             let onEvents = {
                 'click': _this.onChartClick,
             };
             stuJsonArray.forEach(function (stuJson) {
-                (columnarChartOption.xAxis)[0].data.push(stuJson.stuName);
+                console.log(subjectJson.subjectContent.split('>')[2]);
+                (columnarChartOption.xAxis)[0].data.push("题目"+(index+1));
                 avgOfUnderstandTotal += Math.abs(parseInt(stuJson.avgOfUnderstand));
                 avgOfTimeLengthTotal += Math.abs(parseInt(stuJson.avgOfTimeLength));
                 numTotal++;
@@ -210,8 +211,9 @@ export default class brotherXu extends React.Component {
                 </div>
 
             </div>;
-            divContentArray.push(subjectJsonDiv);
-        })
+
+        }
+        divContentArray.push(subjectJsonDiv);
         this.setState({divContentArray});
     };
 
@@ -443,17 +445,6 @@ export default class brotherXu extends React.Component {
     };
 
     onChartClick = (optional) => {
-        var arr = this.state.subjectDivContentArray;
-        var analysisUrl = WebServiceUtil.mobileServiceURL + "brotherXu?clazzId=" + this.state.clazzId + "&pushTime=" + this.state.pushTime + "&stuId=" + arr[0].stuJsonArray[optional.dataIndex].stuId;
-
-        var data = {
-            method: 'openNewPage',
-            url: analysisUrl,
-        };
-
-        Bridge.callHandler(data, null, function (error) {
-            window.location.href = analysisUrl;
-        });
     };
 
     formatTime(seconds) {
