@@ -190,7 +190,7 @@ export default class brotherXu extends React.Component {
                     (columnarChartOption.series)[0].data.push(Math.abs(parseInt(stuJson.avgOfUnderstand)));
                     (columnarChartOption.series)[1].data.push(avgUnder);
                 } else {
-                    (columnarChartOption.series)[0].data.push(Math.abs(parseInt(stuJson.avgOfUnderstand)));
+                    (columnarChartOption.series)[0].data.push(Math.abs(parseInt(stuJson.avgOfTimeLength)));
                     (columnarChartOption.series)[1].data.push(avgUnder);
                 }
 
