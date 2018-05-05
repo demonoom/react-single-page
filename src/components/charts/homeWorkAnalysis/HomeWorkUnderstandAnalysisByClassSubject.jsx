@@ -59,7 +59,7 @@ export default class HomeWorkUnderstandAnalysisByClassSubject extends React.Comp
         var pushTime = searchArray[1].split('=')[1];
         var ident = searchArray[2].split('=')[1];
         var censusType = searchArray[3].split('=')[1];
-        this.setState({ident, clazzId, pushTime,censusType});
+        this.setState({ident, clazzId, pushTime, censusType});
         this.getHomeWorkUnderstandAnalysisByClassSubject(clazzId, pushTime, censusType);
     }
 
@@ -90,10 +90,10 @@ export default class HomeWorkUnderstandAnalysisByClassSubject extends React.Comp
                 var subjectDivContentArray = [];
                 if (dataArray != null && dataArray.length != 0) {
                     dataArray.forEach(function (analysisJsonStr, index) {
-                        var analysisJson = JSON.parse(analysisJsonStr);
+                        var analysisJson = analysisJsonStr;
                         subjectDivContentArray = _this.buildSubjectArrayContent(subjectDivContentArray, analysisJson);
                     });
-                    _this.buildSubjectDivContentArray(subjectDivContentArray,censusType);
+                    _this.buildSubjectDivContentArray(subjectDivContentArray, censusType);
                 } else {
 
                 }
@@ -149,7 +149,7 @@ export default class HomeWorkUnderstandAnalysisByClassSubject extends React.Comp
         }
     };
 
-    buildSubjectDivContentArray = (subjectDivContentArray,censusType) => {
+    buildSubjectDivContentArray = (subjectDivContentArray, censusType) => {
         var _this = this;
         var divContentArray = [];
         this.setState({subjectDivContentArray});
@@ -162,9 +162,9 @@ export default class HomeWorkUnderstandAnalysisByClassSubject extends React.Comp
             var avgOfUnderstandTotal = 0;
             var avgOfTimeLengthTotal = 0;
             var numTotal = 0;
-            if(censusType==0){
+            if (censusType == 0) {
                 columnarChartOption = _this.buildChartOption();
-            }else{
+            } else {
                 columnarChartOption = _this.buildChartOption2();
             }
 
@@ -176,15 +176,15 @@ export default class HomeWorkUnderstandAnalysisByClassSubject extends React.Comp
                 avgOfUnderstandTotal += Math.abs(parseInt(stuJson.avgOfUnderstand));
                 avgOfTimeLengthTotal += Math.abs(parseInt(stuJson.avgOfTimeLength));
                 numTotal++;
-                if(censusType==0){
+                if (censusType == 0) {
                     (columnarChartOption.series)[0].data.push(Math.abs(parseInt(stuJson.avgOfUnderstand)));
                     (columnarChartOption.series)[1].data.push(Math.abs(parseInt(stuJson.avgOfUnderstand)));
-                }else{
+                } else {
                     (columnarChartOption.series)[0].data.push(Math.abs(parseInt(stuJson.avgOfUnderstand)));
                     (columnarChartOption.series)[1].data.push(Math.abs(parseInt(stuJson.avgOfUnderstand)));
                 }
 
-               // (columnarChartOption.series)[1].data.push(Math.abs(parseInt(stuJson.avgOfTimeLength)));
+                // (columnarChartOption.series)[1].data.push(Math.abs(parseInt(stuJson.avgOfTimeLength)));
                 // (columnarChartOption.series)[1].data.push(stuJson.avgOfTimeLength.toFixed(2));
             });
 
@@ -207,7 +207,7 @@ export default class HomeWorkUnderstandAnalysisByClassSubject extends React.Comp
                         className=''/>
                 </div>
                 <div className="text_chart">
-                    {/*<span>平均理解度:<i>{(avgOfUnderstandTotal / numTotal).toFixed(0)}%</i></span><span>平均做题时间:<i>{(avgOfTimeLengthTotal / numTotal).toFixed(0)}秒</i></span>*/}
+                    <span>平均理解度:<i>{(avgOfUnderstandTotal / numTotal).toFixed(0)}%</i></span><span>平均做题时间:<i>{(avgOfTimeLengthTotal / numTotal).toFixed(0)}秒</i></span>
                 </div>
 
             </div>;
@@ -293,9 +293,9 @@ export default class HomeWorkUnderstandAnalysisByClassSubject extends React.Comp
 
                 {
                     type: 'value',
-                    name: '做题时长',
+                    name: '理解度',
                     min: 0,
-                    //max: 20,
+                    max: 100,
                     position: 'right',
                     axisLine: {
                         lineStyle: {
@@ -307,7 +307,7 @@ export default class HomeWorkUnderstandAnalysisByClassSubject extends React.Comp
                     },
                     axisLabel: {
                         show: true,
-                        formatter: '{value} 秒'
+                        formatter: '{value} %'
                     }
                 }
             ],
@@ -379,9 +379,9 @@ export default class HomeWorkUnderstandAnalysisByClassSubject extends React.Comp
             yAxis: [
                 {
                     type: 'value',
-                    name: '理解度',
+                    name: '做题时长',
                     min: 0,
-                    max: 100,
+                    // max: 100,
                     position: 'left',
                     axisLine: {
                         lineStyle: {
@@ -415,7 +415,7 @@ export default class HomeWorkUnderstandAnalysisByClassSubject extends React.Comp
             ],
             series: [
                 {
-                    name: '理解度',
+                    name: '做题时长',
                     type: 'bar',
                     showLabel: true,
                     // data:[-2.0, -40.9, 7.0, 23.2, -25.6, 76.7, -13.6, 62.2, 32.6, 20.0, 6.4, 3.3],
@@ -423,7 +423,7 @@ export default class HomeWorkUnderstandAnalysisByClassSubject extends React.Comp
                     itemStyle: {normal: {label: {show: true}}}
                 },
                 {
-                    name: '理解度',
+                    name: '做题时长',
                     type: 'line',
                     yAxisIndex: 1,
                     // data:[2.0, 2, 3, 4, 6, 10, 19, 10, 15.0, 16, 12.0, 6],
