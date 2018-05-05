@@ -141,6 +141,20 @@ const homeWorkUnderstandAnalysisGuide = (location, cb) => {
     )
 }
 
+const m3u8Player = (location, cb) => {
+    require.ensure([], require => {
+            cb(null, require("./components/m3u8Player/js/m3u8Player").default)
+        }
+    )
+}
+
+const HomeWorkUnderstandAnalysisGuideByNoom = (location, cb) => {
+    require.ensure([], require => {
+            cb(null, require("./components/charts/homeWorkAnalysis/HomeWorkUnderstandAnalysisGuideByNoom").default)
+        }
+    )
+}
+
 import './index.less';
 
 class Index extends React.Component {
@@ -150,30 +164,39 @@ class Index extends React.Component {
             <div className="body">
                 <h1>Stages list</h1>
                 <ul role="nav">
-                    <li><Link to="/s1">ListView + Carousel</Link></li>
-                    <li><Link to="/s3">Form + ...</Link></li>
-                    <li><Link to="/s4" style={{fontSize: '24px'}}>蚁巢</Link></li>
-                    <li><Link to="/s5" style={{fontSize: '24px'}}>实验</Link></li>
-                    <li><Link to="/questionBank?ident=54208&pointId=4339&title=nihao"
-                    style={{fontSize: '24px'}}>题库</Link></li>
-                    <li><Link to="/analysisList?access_user=23836" style={{fontSize: '24px'}}>成绩分析</Link></li>
-                     <li><Link to="/searchUserLocationInfo" style={{fontSize: '24px'}}>搜索查看用户位置信息</Link></li>
-                    <li><Link to="/studentFaceStatistics" style={{fontSize: '24px'}}>学生脸部表情分析折线图</Link></li>
-                    <li><Link to="/termitePlateLibrary?ident=23836&fileId=-1&title=蚁盘题目&phoneType=0"
-                    style={{fontSize: '24px'}}>蚁盘题库</Link>
-                    </li>
-                    <li><Link to="/pushSubjectsFromTLibrary?ident=23836&fileId=-1"
-                    style={{fontSize: '24px'}}>蚁盘推题</Link></li>
-                    <li><Link to="/arrangementWork?ident=23836&fileId=-1"
-                    style={{fontSize: '24px'}}>布置作业</Link></li>
-                    <li><Link to="/fileShareLink?shareId=1971&userId=23836&userType=st"
-                    style={{fontSize: '24px'}}>文件分享</Link></li>
+                    {/*<li><Link to="/s1">ListView + Carousel</Link></li>*/}
+                    {/*<li><Link to="/s3">Form + ...</Link></li>*/}
+                    {/*<li><Link to="/s4" style={{fontSize: '24px'}}>蚁巢</Link></li>*/}
+                    {/*<li><Link to="/s5" style={{fontSize: '24px'}}>实验</Link></li>*/}
+                    {/*<li><Link to="/questionBank?ident=54208&pointId=4339&title=nihao"*/}
+                    {/*style={{fontSize: '24px'}}>题库</Link></li>*/}
+                    {/*<li><Link to="/analysisList?access_user=23836" style={{fontSize: '24px'}}>成绩分析</Link></li>*/}
+                    {/*<li><Link to="/searchUserLocationInfo" style={{fontSize: '24px'}}>搜索查看用户位置信息</Link></li>*/}
+                    {/*<li><Link to="/studentFaceStatistics" style={{fontSize: '24px'}}>学生脸部表情分析折线图</Link></li>*/}
+                    {/*<li><Link to="/termitePlateLibrary?ident=23836&fileId=-1&title=蚁盘题目&phoneType=0"*/}
+                    {/*style={{fontSize: '24px'}}>蚁盘题库</Link>*/}
+                    {/*</li>*/}
+                    {/*<li><Link to="/pushSubjectsFromTLibrary?ident=23836&fileId=-1"*/}
+                    {/*style={{fontSize: '24px'}}>蚁盘推题</Link></li>*/}
+                    {/*<li><Link to="/arrangementWork?ident=23836&fileId=-1"*/}
+                    {/*style={{fontSize: '24px'}}>布置作业</Link></li>*/}
+                    {/*<li><Link to="/fileShareLink?shareId=1971&userId=23836&userType=st"*/}
+                    {/*style={{fontSize: '24px'}}>文件分享</Link></li>*/}
                     <li><Link to="/ringBinding?ident=23836"
                               style={{fontSize: '24px'}}>手环绑定</Link></li>
                     <li><Link to="/personalSettings?uid=23836&tid=31837&utype=te"
                               style={{fontSize: '24px'}}>个人设置</Link></li>
                     <li><Link to="/groupSetting?chatGroupId=706&ident=23836&utype=te"
                               style={{fontSize: '24px'}}>群设置</Link></li>
+                    <li><Link
+                        to="/m3u8Player?path=http://p6ckz6030.bkt.clouddn.com/recordings/z1.maaee.24827/1524474964_1524476205.m3u8&_k=vdcr12"
+                        style={{fontSize: '24px'}}>m3u8Player</Link></li>
+                    <li><Link
+                        to="/m3u8Player?path=http://bpic.588ku.com/video_listen/588ku_video/18/04/17/17/03/11/video5ad5b84f167d6.mp4"
+                        style={{fontSize: '24px'}}>m3u8Player</Link></li>
+                    <li><Link
+                        to="/HomeWorkUnderstandAnalysisGuideByNoom?ident=23836"
+                        style={{fontSize: '24px'}}>作业表情分析NOOM</Link></li>
                 </ul>
             </div>
         );
@@ -210,8 +233,11 @@ ReactDOM.render(
             <Route path="longList" getComponent={longList}/>
             <Route path="homeWorkUnderstandAnalysisByClass" getComponent={homeWorkUnderstandAnalysisByClass}/>
             <Route path="homeWorkUnderstandAnalysisByStudent" getComponent={homeWorkUnderstandAnalysisByStudent}/>
-            <Route path="homeWorkUnderstandAnalysisByClassSubject" getComponent={homeWorkUnderstandAnalysisByClassSubject}/>
+            <Route path="homeWorkUnderstandAnalysisByClassSubject"
+                   getComponent={homeWorkUnderstandAnalysisByClassSubject}/>
             <Route path="homeWorkUnderstandAnalysisGuide" getComponent={homeWorkUnderstandAnalysisGuide}/>
+            <Route path="m3u8Player" getComponent={m3u8Player}/>
+            <Route path="HomeWorkUnderstandAnalysisGuideByNoom" getComponent={HomeWorkUnderstandAnalysisGuideByNoom}/>
         </Route>
     </Router>
     , document.getElementById('example'));

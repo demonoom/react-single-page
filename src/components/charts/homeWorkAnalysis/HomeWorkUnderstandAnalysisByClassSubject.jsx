@@ -170,7 +170,7 @@ export default class HomeWorkUnderstandAnalysisByClassSubject extends React.Comp
                         className='' />
                 </div>
                 <div className="text_chart">
-                    <span>平均理解度:<i>{(avgOfUnderstandTotal/numTotal).toFixed(0)}%</i></span><span>平均理解时间:<i>{(avgOfTimeLengthTotal/numTotal).toFixed(0)}秒</i></span>
+                    <span>平均理解度:<i>{(avgOfUnderstandTotal/numTotal).toFixed(0)}%</i></span><span>平均做题时间:<i>{(avgOfTimeLengthTotal/numTotal).toFixed(0)}秒</i></span>
                 </div>
 
             </div>;
@@ -245,7 +245,7 @@ export default class HomeWorkUnderstandAnalysisByClassSubject extends React.Comp
                     type: 'value',
                     name: '做题时长',
                     min: 0,
-                    max: 20,
+                    //max: 20,
                     position: 'right',
                     axisLine: {
                         lineStyle: {

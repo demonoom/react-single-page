@@ -84,3 +84,14 @@
   padding: 10px 0;
   text-indent: 10px;
 }
+#homeWorkAnalysis .text_chart {
+  text-align: center;
+  padding-bottom: 16px;
+}
+#homeWorkAnalysis .text_chart span {
+  padding-right: 20px;
+  font-size: 14px;
+}
+#homeWorkAnalysis .text_chart span i {
+  color: #5793f3;
+}

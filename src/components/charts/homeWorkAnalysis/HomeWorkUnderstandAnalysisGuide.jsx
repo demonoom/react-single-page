@@ -61,6 +61,7 @@ export default class HomeWorkUnderstandAnalysisGuide extends React.Component {
     }
 
     analysisByClass() {
+        debugger
         var da = new Date(this.state.date);
         var year = da.getFullYear();
         var month = parseInt(da.getMonth() + 1) > 9 ? da.getMonth() + 1 : "0" + (da.getMonth() + 1);
@@ -81,6 +82,8 @@ export default class HomeWorkUnderstandAnalysisGuide extends React.Component {
             method: 'openNewPage',
             url: analysisUrl,
         };
+        console.log(data);
+        return
 
         Bridge.callHandler(data, null, function (error) {
             window.location.href = url;
