@@ -177,7 +177,8 @@ export default class HomeWorkUnderstandAnalysisByClassSubject extends React.Comp
             var avgOfUnderstandTotal = 0;
             var avgOfTimeLengthTotal = 0;
             var numTotal = 0;
-            var avgUnder = parseInt(subjectAndStudentJson.avgUnder);
+            var avgUnder = parseInt(subjectAndStudentJson.avgUnder.avg);
+            var order=subjectAndStudentJson.avgUnder.order
             if (censusType == 0) {
                 columnarChartOption = _this.buildChartOption();
             } else {
@@ -211,9 +212,8 @@ export default class HomeWorkUnderstandAnalysisByClassSubject extends React.Comp
                     <span
                         onClick={_this.averageUnderrstanding}
                         className="timeNum"
-                        style={{display: _this.state.divDisplay ? 'block' : 'none'}}
                     >
-                            做题时间统计
+                        {_this.state.divDisplay ? '本题耗时排名:' : '本题理解度排名:' }{order}
                         </span>
                 </div>
                 <div style={{height: '300px'}} className="echarts_wrap">
@@ -317,7 +317,7 @@ export default class HomeWorkUnderstandAnalysisByClassSubject extends React.Comp
 
                 {
                     type: 'value',
-                    name: '平均理解度',
+                    name: '班级平均理解度',
                     min: 0,
                     max: 100,
                     position: 'right',
@@ -345,7 +345,7 @@ export default class HomeWorkUnderstandAnalysisByClassSubject extends React.Comp
                     itemStyle: {normal: {label: {show: true}}}
                 },
                 {
-                    name: '平均理解度',
+                    name: '班级平均理解度',
                     type: 'line',
                     yAxisIndex: 1,
                     // data:[2.0, 2, 3, 4, 6, 10, 19, 10, 15.0, 16, 12.0, 6],
@@ -419,7 +419,7 @@ export default class HomeWorkUnderstandAnalysisByClassSubject extends React.Comp
 
                 {
                     type: 'value',
-                    name: '平均做题时长',
+                    name: '班级平均做题时长',
                     min: 0,
                     //max: 20,
                     position: 'right',
@@ -447,7 +447,7 @@ export default class HomeWorkUnderstandAnalysisByClassSubject extends React.Comp
                     itemStyle: {normal: {label: {show: true}}}
                 },
                 {
-                    name: '平均做题时长',
+                    name: '班级平均做题时长',
                     type: 'line',
                     yAxisIndex: 1,
                     // data:[2.0, 2, 3, 4, 6, 10, 19, 10, 15.0, 16, 12.0, 6],

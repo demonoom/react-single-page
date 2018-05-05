@@ -304,7 +304,7 @@ export default class brotherXu extends React.Component {
 
                 {
                     type: 'value',
-                    name: '平均理解度',
+                    name: '班级平均理解度',
                     min: 0,
                     //max: 20,
                     position: 'right',
@@ -318,7 +318,7 @@ export default class brotherXu extends React.Component {
                     },
                     axisLabel: {
                         show: true,
-                        formatter: '{value} 秒'
+                        formatter: '{value}  %'
                     }
                 }
             ],
@@ -332,7 +332,7 @@ export default class brotherXu extends React.Component {
                     itemStyle: {normal: {label: {show: true}}}
                 },
                 {
-                    name: '平均理解度',
+                    name: '班级平均理解度',
                     type: 'line',
                     yAxisIndex: 1,
                     // data:[2.0, 2, 3, 4, 6, 10, 19, 10, 15.0, 16, 12.0, 6],
@@ -404,13 +404,13 @@ export default class brotherXu extends React.Component {
                         }
                     },
                     axisLabel: {
-                        formatter: '{value} %'
+                        formatter: '{value} 秒'
                     }
                 },
 
                 {
                     type: 'value',
-                    name: '做题时长',
+                    name: '班级平均做题时长',
                     min: 0,
                     //max: 20,
                     position: 'right',
@@ -438,12 +438,16 @@ export default class brotherXu extends React.Component {
                     itemStyle: {normal: {label: {show: true}}}
                 },
                 {
-                    name: '做题时长',
+                    name: '班级平均做题时长',
                     type: 'line',
                     yAxisIndex: 1,
                     // data:[2.0, 2, 3, 4, 6, 10, 19, 10, 15.0, 16, 12.0, 6],
                     data: [],
-                    itemStyle: {normal: {label: {show: true}}}
+                    itemStyle: {
+                        normal: {
+                            color: 'red'
+                        }
+                    },
                 }
             ]
         };
