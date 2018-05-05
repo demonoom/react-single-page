@@ -58,17 +58,30 @@ export default class HomeWorkUnderstandAnalysisByClassSubject extends React.Comp
         var clazzId = searchArray[0].split('=')[1];
         var pushTime = searchArray[1].split('=')[1];
         var ident = searchArray[2].split('=')[1];
-        this.setState({ident, clazzId, pushTime});
-        this.getHomeWorkUnderstandAnalysisByClassSubject(clazzId, pushTime);
+        var censusType = searchArray[3].split('=')[1];
+        this.setState({ident, clazzId, pushTime,censusType});
+        this.getHomeWorkUnderstandAnalysisByClassSubject(clazzId, pushTime, censusType);
     }
 
-    getHomeWorkUnderstandAnalysisByClassSubject(clazzId, pushTime) {
+    getHomeWorkUnderstandAnalysisByClassSubject(clazzId, pushTime, censusType) {
         var _this = this;
-        var param = {
-            "method": 'getHomeWorkUnderstandAnalysisByCLassSubject',
-            "clazzId": clazzId,
-            "pushTime": pushTime
-        };
+        var param;
+        if (censusType == 0) {
+            param = {
+                "method": 'getHomeWorkUnderstandAnalysisByCLassSubject',
+                "clazzId": clazzId,
+                "pushTime": pushTime,
+                "viewType": 0,
+            };
+        } else {
+            param = {
+                "method": 'getHomeWorkUnderstandAnalysisByCLassSubject',
+                "clazzId": clazzId,
+                "pushTime": pushTime,
+                "viewType": 1,
+            };
+
+        }
 
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
             onResponse: function (result) {
@@ -80,7 +93,7 @@ export default class HomeWorkUnderstandAnalysisByClassSubject extends React.Comp
                         var analysisJson = JSON.parse(analysisJsonStr);
                         subjectDivContentArray = _this.buildSubjectArrayContent(subjectDivContentArray, analysisJson);
                     });
-                    _this.buildSubjectDivContentArray(subjectDivContentArray);
+                    _this.buildSubjectDivContentArray(subjectDivContentArray,censusType);
                 } else {
 
                 }
@@ -136,9 +149,10 @@ export default class HomeWorkUnderstandAnalysisByClassSubject extends React.Comp
         }
     };
 
-    buildSubjectDivContentArray = (subjectDivContentArray) => {
+    buildSubjectDivContentArray = (subjectDivContentArray,censusType) => {
         var _this = this;
         var divContentArray = [];
+        this.setState({subjectDivContentArray});
 
         subjectDivContentArray.forEach(function (subjectAndStudentJson, index) {
             var subjectJson = subjectAndStudentJson.subjectJson;
@@ -148,7 +162,12 @@ export default class HomeWorkUnderstandAnalysisByClassSubject extends React.Comp
             var avgOfUnderstandTotal = 0;
             var avgOfTimeLengthTotal = 0;
             var numTotal = 0;
-            columnarChartOption = _this.buildChartOption();
+            if(censusType==0){
+                columnarChartOption = _this.buildChartOption();
+            }else{
+                columnarChartOption = _this.buildChartOption2();
+            }
+
             let onEvents = {
                 'click': _this.onChartClick,
             };
@@ -157,10 +176,18 @@ export default class HomeWorkUnderstandAnalysisByClassSubject extends React.Comp
                 avgOfUnderstandTotal += Math.abs(parseInt(stuJson.avgOfUnderstand));
                 avgOfTimeLengthTotal += Math.abs(parseInt(stuJson.avgOfTimeLength));
                 numTotal++;
-                (columnarChartOption.series)[0].data.push(Math.abs(parseInt(stuJson.avgOfUnderstand)));
-                (columnarChartOption.series)[1].data.push(Math.abs(parseInt(stuJson.avgOfTimeLength)));
+                if(censusType==0){
+                    (columnarChartOption.series)[0].data.push(Math.abs(parseInt(stuJson.avgOfUnderstand)));
+                    (columnarChartOption.series)[1].data.push(Math.abs(parseInt(stuJson.avgOfUnderstand)));
+                }else{
+                    (columnarChartOption.series)[0].data.push(Math.abs(parseInt(stuJson.avgOfUnderstand)));
+                    (columnarChartOption.series)[1].data.push(Math.abs(parseInt(stuJson.avgOfUnderstand)));
+                }
+
+               // (columnarChartOption.series)[1].data.push(Math.abs(parseInt(stuJson.avgOfTimeLength)));
                 // (columnarChartOption.series)[1].data.push(stuJson.avgOfTimeLength.toFixed(2));
             });
+
             var subjectJsonDiv = <div>
                 <div className="subject_title">{subjectShowNo}:</div>
                 <div className="subject_content">
@@ -180,7 +207,7 @@ export default class HomeWorkUnderstandAnalysisByClassSubject extends React.Comp
                         className=''/>
                 </div>
                 <div className="text_chart">
-                    <span>平均理解度:<i>{(avgOfUnderstandTotal / numTotal).toFixed(0)}%</i></span><span>平均做题时间:<i>{(avgOfTimeLengthTotal / numTotal).toFixed(0)}秒</i></span>
+                    {/*<span>平均理解度:<i>{(avgOfUnderstandTotal / numTotal).toFixed(0)}%</i></span><span>平均做题时间:<i>{(avgOfTimeLengthTotal / numTotal).toFixed(0)}秒</i></span>*/}
                 </div>
 
             </div>;
@@ -217,12 +244,12 @@ export default class HomeWorkUnderstandAnalysisByClassSubject extends React.Comp
                 left: '15%'
             },
             /*      toolbox: {
-                      feature: {
-                          dataView: {show: true, readOnly: false},
-                          restore: {show: true},
-                          saveAsImage: {show: true}
-                      }
-                  },*/
+             feature: {
+             dataView: {show: true, readOnly: false},
+             restore: {show: true},
+             saveAsImage: {show: true}
+             }
+             },*/
             // legend: {
             //     // data:['理解度','时长']
             //     data:['理解度']
@@ -294,7 +321,7 @@ export default class HomeWorkUnderstandAnalysisByClassSubject extends React.Comp
                     itemStyle: {normal: {label: {show: true}}}
                 },
                 {
-                    name: '做题时长',
+                    name: '理解度',
                     type: 'line',
                     yAxisIndex: 1,
                     // data:[2.0, 2, 3, 4, 6, 10, 19, 10, 15.0, 16, 12.0, 6],
@@ -304,7 +331,108 @@ export default class HomeWorkUnderstandAnalysisByClassSubject extends React.Comp
             ]
         };
     };
+    buildChartOption2 = () => {
+        var _this = this;
+        return {
+            color: colors,
 
+            tooltip: {
+                trigger: 'axis',
+                axisPointer: {
+                    type: 'cross'
+                }
+            },
+            grid: {
+                left: '15%'
+            },
+            /*      toolbox: {
+             feature: {
+             dataView: {show: true, readOnly: false},
+             restore: {show: true},
+             saveAsImage: {show: true}
+             }
+             },*/
+            // legend: {
+            //     // data:['理解度','时长']
+            //     data:['理解度']
+            // },
+            dataZoom: [
+                {
+                    show: true,
+                    //开始位置的百分比，0 - 100
+                    start: 0,
+                    //结束位置的百分比，0 - 100
+                    end: 100
+                }
+            ],
+            xAxis: [
+                {
+                    type: 'category',
+                    axisTick: {
+                        alignWithLabel: true
+                    },
+                    // data: ['学生A','学生B','学生C','学生D','学生E','学生F','学生G','学生H','学生I','学生J','学生K','学生L'],
+                    data: [],
+                    triggerEvent: true
+                }
+            ],
+            yAxis: [
+                {
+                    type: 'value',
+                    name: '理解度',
+                    min: 0,
+                    max: 100,
+                    position: 'left',
+                    axisLine: {
+                        lineStyle: {
+                            color: colors[0]
+                        }
+                    },
+                    axisLabel: {
+                        formatter: '{value} %'
+                    }
+                },
+
+                {
+                    type: 'value',
+                    name: '做题时长',
+                    min: 0,
+                    //max: 20,
+                    position: 'right',
+                    axisLine: {
+                        lineStyle: {
+                            color: colors[1]
+                        }
+                    },
+                    axisTick: {
+                        show: true
+                    },
+                    axisLabel: {
+                        show: true,
+                        formatter: '{value} 秒'
+                    }
+                }
+            ],
+            series: [
+                {
+                    name: '理解度',
+                    type: 'bar',
+                    showLabel: true,
+                    // data:[-2.0, -40.9, 7.0, 23.2, -25.6, 76.7, -13.6, 62.2, 32.6, 20.0, 6.4, 3.3],
+                    data: [],
+                    itemStyle: {normal: {label: {show: true}}}
+                },
+                {
+                    name: '理解度',
+                    type: 'line',
+                    yAxisIndex: 1,
+                    // data:[2.0, 2, 3, 4, 6, 10, 19, 10, 15.0, 16, 12.0, 6],
+                    data: [],
+                    itemStyle: {normal: {label: {show: true}}}
+                }
+            ]
+        };
+    };
     getLoadingOption = () => {
         return {
             text: '加载中...',
@@ -315,7 +443,18 @@ export default class HomeWorkUnderstandAnalysisByClassSubject extends React.Comp
         };
     };
 
-    onChartClick(optional) {
+    onChartClick = (optional) => {
+        var arr = this.state.subjectDivContentArray;
+        var analysisUrl = WebServiceUtil.mobileServiceURL + "brotherXu?clazzId=" + this.state.clazzId + "&pushTime=" + this.state.pushTime + "&stuId=" + arr[0].stuJsonArray[optional.dataIndex].stuId;
+
+        var data = {
+            method: 'openNewPage',
+            url: analysisUrl,
+        };
+
+        Bridge.callHandler(data, null, function (error) {
+            window.location.href = analysisUrl;
+        });
     };
 
     formatTime(seconds) {
@@ -373,36 +512,36 @@ export default class HomeWorkUnderstandAnalysisByClassSubject extends React.Comp
             <div id="homeWorkAnalysis">
                 {/*<div>学生题目理解度统计</div>*/}
                 {/*<div>
-                    <div>
-                        <span>
-                            <DatePicker
-                                mode="date"
-                                title="Select Date"
-                                extra="Optional"
-                                value={this.state.date}
-                                onChange={date => this.setState({ date })}
-                            >
-                              <List.Item arrow="horizontal">发布日期</List.Item>
-                            </DatePicker>
-                        </span>
-                    </div>
-                    <div>
-                        <span>
-                            <Picker data={this.state.classList} title="选择班级" extra="请选择(可选)" cols={1} value={this.state.clazzId} onChange={(v) => this.setState({ clazzId: v })}>
-                                <CustomChildren>班级选择</CustomChildren>
-                              </Picker>
-                        </span>
-                    </div>
-                    <div>
-                        <span>
-                            <Button onClick={this.analysisByClass}>分析</Button>
-                        </span>
-                    </div>
-                </div>*/}
+                 <div>
+                 <span>
+                 <DatePicker
+                 mode="date"
+                 title="Select Date"
+                 extra="Optional"
+                 value={this.state.date}
+                 onChange={date => this.setState({ date })}
+                 >
+                 <List.Item arrow="horizontal">发布日期</List.Item>
+                 </DatePicker>
+                 </span>
+                 </div>
+                 <div>
+                 <span>
+                 <Picker data={this.state.classList} title="选择班级" extra="请选择(可选)" cols={1} value={this.state.clazzId} onChange={(v) => this.setState({ clazzId: v })}>
+                 <CustomChildren>班级选择</CustomChildren>
+                 </Picker>
+                 </span>
+                 </div>
+                 <div>
+                 <span>
+                 <Button onClick={this.analysisByClass}>分析</Button>
+                 </span>
+                 </div>
+                 </div>*/}
                 <div>
                     <div>
                         {/*<div style={{height:'400px'}}>
-                        </div>*/}
+                         </div>*/}
                         <div className="list_wrap_padding">
                             {this.state.divContentArray}
                         </div>

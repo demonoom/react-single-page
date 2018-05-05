@@ -155,6 +155,13 @@ const HomeWorkUnderstandAnalysisGuideByNoom = (location, cb) => {
     )
 }
 
+const brotherXu = (location, cb) => {
+    require.ensure([], require => {
+            cb(null, require("./components/charts/homeWorkAnalysis/brotherXu").default)
+        }
+    )
+}
+
 import './index.less';
 
 class Index extends React.Component {
@@ -238,6 +245,7 @@ ReactDOM.render(
             <Route path="homeWorkUnderstandAnalysisGuide" getComponent={homeWorkUnderstandAnalysisGuide}/>
             <Route path="m3u8Player" getComponent={m3u8Player}/>
             <Route path="HomeWorkUnderstandAnalysisGuideByNoom" getComponent={HomeWorkUnderstandAnalysisGuideByNoom}/>
+            <Route path="brotherXu" getComponent={brotherXu}/>
         </Route>
     </Router>
     , document.getElementById('example'));
