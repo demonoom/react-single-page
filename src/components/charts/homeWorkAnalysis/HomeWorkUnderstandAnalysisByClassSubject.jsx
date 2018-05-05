@@ -170,7 +170,7 @@ export default class HomeWorkUnderstandAnalysisByClassSubject extends React.Comp
                         className='' />
                 </div>
                 <div className="text_chart">
-                    <span>平均理解度:<i>{(avgOfUnderstandTotal/numTotal).toFixed(2)}</i></span><span>平均理解时间:<i>{(avgOfTimeLengthTotal/numTotal).toFixed(2)}</i></span>
+                    <span>平均理解度:<i>{(avgOfUnderstandTotal/numTotal).toFixed(0)}%</i></span><span>平均理解时间:<i>{(avgOfTimeLengthTotal/numTotal).toFixed(0)}秒</i></span>
                 </div>
 
             </div>;
@@ -193,17 +193,17 @@ export default class HomeWorkUnderstandAnalysisByClassSubject extends React.Comp
             grid: {
                 left: '15%'
             },
-            toolbox: {
+      /*      toolbox: {
                 feature: {
                     dataView: {show: true, readOnly: false},
                     restore: {show: true},
                     saveAsImage: {show: true}
                 }
-            },
-            legend: {
-                // data:['理解度','时长']
-                data:['理解度']
-            },
+            },*/
+            // legend: {
+            //     // data:['理解度','时长']
+            //     data:['理解度']
+            // },
             dataZoom: [
                 {
                     show: true,
@@ -243,7 +243,7 @@ export default class HomeWorkUnderstandAnalysisByClassSubject extends React.Comp
 
                 {
                     type: 'value',
-                    name: '时长',
+                    name: '做题时长',
                     min: 0,
                     max: 20,
                     position: 'right',
@@ -271,7 +271,7 @@ export default class HomeWorkUnderstandAnalysisByClassSubject extends React.Comp
                     itemStyle : { normal: {label : {show: true}}}
                 },
                 {
-                    name:'时长',
+                    name:'做题时长',
                     type:'line',
                     yAxisIndex: 1,
                     // data:[2.0, 2, 3, 4, 6, 10, 19, 10, 15.0, 16, 12.0, 6],
