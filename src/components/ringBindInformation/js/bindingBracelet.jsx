@@ -323,8 +323,8 @@ export default class bindingBracelet extends React.Component {
                         <Card.Header
                             className='noomCardHeader'
                             title={rowData.name}
-                            // thumb={rowData.bindingUser.avatar}
-                            thumb='http://60.205.86.217/upload6/2018-02-09/19/805eee4a-b707-49a2-9c75-d5b14ed9227b.jpg'
+                            thumb={rowData.bindingUser.avatar}
+                            //thumb='http://60.205.86.217/upload6/2018-02-09/19/805eee4a-b707-49a2-9c75-d5b14ed9227b.jpg'
                             extra={<span className='noomCardUnbind'
                                          onClick={_this.showAlert.bind(this, rowData)}>解绑</span>}
                         />
@@ -386,18 +386,20 @@ export default class bindingBracelet extends React.Component {
                                 onChange={this.inputOnChange.bind(this)}
                                 value={this.state.stNameValue}
                             >姓名:</InputItem>
-                            <img className='stIcon' src={require('../imgs/search.png')}
+                            <img id='stIcon' className='stIcon' src={require('../imgs/search.png')}
                                  onClick={this.searchWatchBindCandidate}/>
                         </div>
 
                         <div className='chooseResult'
                              style={{display: this.state.chooseResultDiv, height: this.state.calmHeight}}>
                             {this.state.searchData.map(i => (
-                                <RadioItem key={i.value} checked={this.state.searchCheckValue === i.value}
-                                    /*这个checked的写法很好*/
-                                           onChange={() => this.searchResultOnChange(i)}>
-                                    {i.label}<List.Item.Brief>{i.extra}</List.Item.Brief>
-                                </RadioItem>
+                                <div onClick={() => this.searchResultOnChange(i)}>
+                                    <RadioItem key={i.value} checked={this.state.searchCheckValue === i.value}
+                                        /*这个checked的写法很好*/
+                                    >
+                                        {i.label}<List.Item.Brief>{i.extra}</List.Item.Brief>
+                                    </RadioItem>
+                                </div>
                             ))}
                         </div>
                     </List>

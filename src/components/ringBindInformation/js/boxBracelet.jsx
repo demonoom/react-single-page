@@ -379,11 +379,13 @@ export default class boxBracelet extends React.Component {
                         <div className='chooseResult'
                              style={{display: this.state.chooseResultDiv, height: this.state.calmHeight}}>
                             {this.state.searchData.map(i => (
-                                <RadioItem key={i.value} checked={this.state.searchCheckValue === i.value}
-                                    /*这个checked的写法很好*/
-                                           onChange={() => this.searchResultOnChange(i)}>
-                                    {i.label}<List.Item.Brief>{i.value}</List.Item.Brief>
-                                </RadioItem>
+                                <div onClick={() => this.searchResultOnChange(i)}>
+                                    <RadioItem key={i.value} checked={this.state.searchCheckValue === i.value}
+                                        /*这个checked的写法很好*/
+                                    >
+                                        {i.label}
+                                    </RadioItem>
+                                </div>
                             ))}
                         </div>
                     </List>
