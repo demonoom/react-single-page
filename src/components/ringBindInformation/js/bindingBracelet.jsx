@@ -242,15 +242,20 @@ export default class bindingBracelet extends React.Component {
         };
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
             onResponse: function (result) {
-                console.log(result);
                 if (result.msg == '调用成功' && result.success == true) {
                     if (WebServiceUtil.isEmpty(result.response) == false) {
                         var arr = [];
                         result.response.forEach(function (v, i) {
+                            var clazzStr = '';
+                            v.clazzList.forEach(function (v) {
+                                clazzStr += v.name + ',';
+                            })
+                            clazzStr = clazzStr.substr(0, clazzStr.length - 1);
                             var obj = {
                                 value: v.colUid,
                                 label: v.userName,
-                                extra: `${v.clazz.name}  ${v.colAccount}`
+                                extra: `${clazzStr}`,
+                                extra1: `${v.colAccount}`
                             }
                             arr.push(obj);
                         });
@@ -398,6 +403,7 @@ export default class bindingBracelet extends React.Component {
                                         /*这个checked的写法很好*/
                                     >
                                         {i.label}<List.Item.Brief>{i.extra}</List.Item.Brief>
+                                        <List.Item.Brief>{i.extra1}</List.Item.Brief>
                                     </RadioItem>
                                 </div>
                             ))}
