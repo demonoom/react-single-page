@@ -1,9 +1,20 @@
+(node) util.print is deprecated. Use console.log instead.
+#boxBracelet .am-pull-to-refresh-content-wrapper {
+  height: 100%;
+}
+#boxBracelet .am-list-view-scrollview-content {
+  height: 100%;
+}
+#boxBracelet .am-pull-to-refresh-indicator {
+  font-size: 1rem !important;
+  color: red !important;
+}
 #boxBracelet .tableDiv {
   position: relative;
 }
 #boxBracelet .tableDiv .am-card-body {
-  min-height: 1.5rem!important;
-  color: #888!important;
+  min-height: 1.5rem !important;
+  color: #888 !important;
 }
 #boxBracelet .tableDiv .am-card-body .am-list-item .am-input-label {
   color: #3c3c3c;
@@ -15,8 +26,8 @@
   margin-bottom: 1rem;
 }
 #boxBracelet .tableDiv .noomCardUnbind {
-  background: #f55d45!important;
-  color: #fff!important;
+  background: #f55d45 !important;
+  color: #fff !important;
   padding: 0.3rem 1.3rem;
 }
 #boxBracelet .tableDiv .noomCardHeader .am-card-header-content {
@@ -46,16 +57,16 @@
   color: #e46a51;
 }
 #boxBracelet .addModel .am-list .am-list-body::before {
-  display: none!important;
+  display: none !important;
 }
 #boxBracelet .addModel .am-list .am-list-body::after {
-  display: none!important;
+  display: none !important;
 }
 #boxBracelet .addModel .am-list .am-list-body .am-input-label-5 {
-  width: 50px!important;
+  width: 50px !important;
 }
 #boxBracelet .addModel .chooseResult {
-  height: 30rem!important;
+  height: 30rem !important;
   overflow: auto;
 }
 #boxBracelet .addModel .macAddress {
