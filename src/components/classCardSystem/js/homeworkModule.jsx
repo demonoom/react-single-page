@@ -28,20 +28,13 @@ export default class homeworkModule extends React.Component {
         var locationHref = window.location.href;
         var locationSearch = locationHref.substr(locationHref.indexOf("?")+1);
         var classId = locationSearch.split("=")[1];
+        this.setState({"classId":classId})
         this.getHomeworkData(classId);
     }
 
 
     getHomeworkData(classId){
         var _this = this;
-        var flag = true;
-        if (!flag) {
-            _this.initData.splice(0);
-            _this.state.dataSource = [];
-            _this.state.dataSource = new ListView.DataSource({
-                rowHasChanged: (row1, row2) => row1 !== row2,
-            });
-        }
         _this.state.listViewDisplay = true;
         const dataBlob = {};
         var pageNo = _this.state.defaultPageNo;
@@ -50,10 +43,8 @@ export default class homeworkModule extends React.Component {
             "clazzIds": classId,
             "pageNo":pageNo
         };
-        // console.log("param",param);
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
             onResponse: function (result) {
-                // console.log(result);
                 if(result.success == true && result.msg == "调用成功"){
                    if(result.response.length === 0){
                        _this.setState({"isLoadingLeft":false})
@@ -87,23 +78,18 @@ export default class homeworkModule extends React.Component {
             }
         });
     }
+
     /**
      *  ListView数据全部渲染完毕的回调
      */
     onEndReached = (event) => {
-        // var _this = this;
-        var locationHref = window.location.href;
-        var locationSearch = locationHref.substr(locationHref.indexOf("?")+1);
-        var classId = locationSearch.split("=")[1];
-
-
         var currentPageNo = this.state.defaultPageNo;
         if (!this.state.isLoadingLeft && !this.state.hasMore) {
             return;
         }
         currentPageNo += 1;
         this.setState({isLoadingLeft: true, defaultPageNo: currentPageNo});
-        this.getHomeworkData(classId);
+        this.getHomeworkData(this.state.classId);
         this.setState({
             dataSource: this.state.dataSource.cloneWithRows(this.initData),
             isLoadingLeft: true,

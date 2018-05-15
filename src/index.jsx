@@ -169,12 +169,7 @@ const homeworkModule = (location, cb) => {
     )
 }
 
-const homeworkDetail = (location, cb) => {
-    require.ensure([], require => {
-            cb(null, require("./components/classCardSystem/js/homeworkDetail").default)
-        }
-    )
-}
+
 
 import './index.less';
 
@@ -221,9 +216,7 @@ class Index extends React.Component {
                     <li><Link
                         to="/homeworkModule?classId=819"
                         style={{fontSize: '24px'}}>作业模块</Link></li>
-                     <li><Link
-                        to="/homeworkDetail?homeworkId=1240982"
-                        style={{fontSize: '24px'}}>作业详情</Link></li>
+                    
                 </ul>
             </div>
         );
@@ -267,7 +260,7 @@ ReactDOM.render(
             <Route path="HomeWorkUnderstandAnalysisGuideByNoom" getComponent={HomeWorkUnderstandAnalysisGuideByNoom}/>
             <Route path="brotherXu" getComponent={brotherXu}/>
             <Route path="homeworkModule" getComponent={homeworkModule}/>
-            <Route path="homeworkDetail" getComponent={homeworkDetail}/>
+            {/* <Route path="homeworkDetail" getComponent={homeworkDetail}/> */}
         </Route>
     </Router>
     , document.getElementById('example'));
