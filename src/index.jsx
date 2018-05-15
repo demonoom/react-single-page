@@ -176,6 +176,13 @@ const homeworkDetail = (location, cb) => {
     )
 }
 
+const curriculumSchedule = (location, cb) => {
+    require.ensure([], require => {
+            cb(null, require("./components/classCardSystemBackstage/js/curriculumSchedule").default)
+        }
+    )
+}
+
 import './index.less';
 
 class Index extends React.Component {
@@ -221,6 +228,9 @@ class Index extends React.Component {
                     <li><Link
                         to="/homeworkModule?classId=819"
                         style={{fontSize: '24px'}}>作业模块</Link></li>
+                    <li><Link
+                        to="/curriculumSchedule"
+                        style={{fontSize: '24px'}}>课程表列表</Link></li>
                 </ul>
             </div>
         );
@@ -265,6 +275,7 @@ ReactDOM.render(
             <Route path="brotherXu" getComponent={brotherXu}/>
             <Route path="homeworkModule" getComponent={homeworkModule}/>
             <Route path="homeworkDetail" getComponent={homeworkDetail}/>
+            <Route path="curriculumSchedule" getComponent={curriculumSchedule}/>
         </Route>
     </Router>
     , document.getElementById('example'));

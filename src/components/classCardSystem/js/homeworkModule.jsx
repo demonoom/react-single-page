@@ -1,5 +1,5 @@
 import React from 'react';
-import { SearchBar,ListView,WhiteSpace,Card } from 'antd-mobile';
+import {SearchBar, ListView, WhiteSpace, Card} from 'antd-mobile';
 
 import '../css/homeworkModule.less';
 
@@ -13,23 +13,23 @@ export default class homeworkModule extends React.Component {
         });
         this.initData = [];
         this.state = {
-            dataSource:dataSource.cloneWithRows(this.initData),
+            dataSource: dataSource.cloneWithRows(this.initData),
             clientHeight: document.body.clientHeight,
-            defaultPageNo:1,
-            listViewDisplay:false,
-            homeworkDataList:[],
+            defaultPageNo: 1,
+            listViewDisplay: false,
+            homeworkDataList: [],
         };
     }
 
     componentDidMount() {
         var locationHref = window.location.href;
-        var locationSearch = locationHref.substr(locationHref.indexOf("?")+1);
+        var locationSearch = locationHref.substr(locationHref.indexOf("?") + 1);
         var classId = locationSearch.split("=")[1];
         this.getHomeworkData(classId);
     }
 
 
-    getHomeworkData(classId,flag){
+    getHomeworkData(classId, flag) {
         var _this = this;
         if (!flag) {
             _this.initData.splice(0);
@@ -44,45 +44,46 @@ export default class homeworkModule extends React.Component {
         var param = {
             "method": 'getTopicsByClazzId',
             "clazzId": classId,
-            "pageNo":pageNo
+            "pageNo": pageNo
         };
-        console.log("param",param);
+        console.log("param", param);
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
             onResponse: function (result) {
                 console.log(result);
-                if(result.success == true && result.msg == "调用成功"){
-                   if(result.response.length === 0){
-                       _this.setState({"isLoadingLeft":false})
-                   }else {
-                    var arr = result.response;
-                    var pager = result.pager;
-                    for (let i = 0; i < arr.length; i++) {
-                        var topic = arr[i];
-                        dataBlob[`${i}`] = topic;
-                    }
-                    var isLoading = false;
-                    if (arr.length > 0) {
-                        if (pager.pageCount == 1 && pager.rsCount < 30) {
-                            isLoading = false;
-                        } else {
-                            isLoading = true;
-                        }
+                if (result.success == true && result.msg == "调用成功") {
+                    if (result.response.length === 0) {
+                        _this.setState({"isLoadingLeft": false})
                     } else {
-                        isLoading = false;
+                        var arr = result.response;
+                        var pager = result.pager;
+                        for (let i = 0; i < arr.length; i++) {
+                            var topic = arr[i];
+                            dataBlob[`${i}`] = topic;
+                        }
+                        var isLoading = false;
+                        if (arr.length > 0) {
+                            if (pager.pageCount == 1 && pager.rsCount < 30) {
+                                isLoading = false;
+                            } else {
+                                isLoading = true;
+                            }
+                        } else {
+                            isLoading = false;
+                        }
+                        _this.initData = _this.initData.concat(arr);
+                        _this.setState({
+                            dataSource: _this.state.dataSource.cloneWithRows(_this.initData),
+                            isLoadingLeft: isLoading,
+                            refreshing: false
+                        })
                     }
-                    _this.initData = _this.initData.concat(arr);
-                    _this.setState({
-                        dataSource: _this.state.dataSource.cloneWithRows(_this.initData),
-                        isLoadingLeft: isLoading,
-                        refreshing: false
-                    })
-                   }
                 }
             },
             onError: function (error) {
             }
         });
     }
+
     /**
      *  ListView数据全部渲染完毕的回调
      */
@@ -99,6 +100,7 @@ export default class homeworkModule extends React.Component {
             isLoadingLeft: true,
         });
     };
+
     render() {
         var _this = this;
         const row = (rowData, sectionID, rowID) => {
