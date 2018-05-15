@@ -162,6 +162,13 @@ const brotherXu = (location, cb) => {
     )
 }
 
+const operationModule = (location, cb) => {
+    require.ensure([], require => {
+            cb(null, require("./components/classCardSystem/js/operationModule").default)
+        }
+    )
+}
+
 import './index.less';
 
 class Index extends React.Component {
@@ -171,7 +178,7 @@ class Index extends React.Component {
             <div className="body">
                 <h1>Stages list</h1>
                 <ul role="nav">
-                    <li><Link to="/s1">ListView + Carousel</Link></li>
+                    {/*<li><Link to="/s1">ListView + Carousel</Link></li>*/}
                     {/*<li><Link to="/s3">Form + ...</Link></li>*/}
                     {/*<li><Link to="/s4" style={{fontSize: '24px'}}>蚁巢</Link></li>*/}
                     {/*<li><Link to="/s5" style={{fontSize: '24px'}}>实验</Link></li>*/}
@@ -189,21 +196,24 @@ class Index extends React.Component {
                     {/*style={{fontSize: '24px'}}>布置作业</Link></li>*/}
                     {/*<li><Link to="/fileShareLink?shareId=1971&userId=23836&userType=st"*/}
                     {/*style={{fontSize: '24px'}}>文件分享</Link></li>*/}
-                    <li><Link to="/ringBinding?ident=23836"
-                              style={{fontSize: '24px'}}>手环绑定</Link></li>
-                    <li><Link to="/personalSettings?uid=23836&tid=31837&utype=te"
-                              style={{fontSize: '24px'}}>个人设置</Link></li>
-                    <li><Link to="/groupSetting?chatGroupId=706&ident=23836&utype=te"
-                              style={{fontSize: '24px'}}>群设置</Link></li>
+                    {/*<li><Link to="/ringBinding?ident=23836"*/}
+                    {/*style={{fontSize: '24px'}}>手环绑定</Link></li>*/}
+                    {/*<li><Link to="/personalSettings?uid=23836&tid=31837&utype=te"*/}
+                    {/*style={{fontSize: '24px'}}>个人设置</Link></li>*/}
+                    {/*<li><Link to="/groupSetting?chatGroupId=706&ident=23836&utype=te"*/}
+                    {/*style={{fontSize: '24px'}}>群设置</Link></li>*/}
+                    {/*<li><Link*/}
+                    {/*to="/m3u8Player?path=http://p6ckz6030.bkt.clouddn.com/recordings/z1.maaee.24827/1524474964_1524476205.m3u8&_k=vdcr12"*/}
+                    {/*style={{fontSize: '24px'}}>m3u8Player</Link></li>*/}
+                    {/*<li><Link*/}
+                    {/*to="/m3u8Player?path=http://bpic.588ku.com/video_listen/588ku_video/18/04/17/17/03/11/video5ad5b84f167d6.mp4"*/}
+                    {/*style={{fontSize: '24px'}}>m3u8Player</Link></li>*/}
+                    {/*<li><Link*/}
+                    {/*to="/HomeWorkUnderstandAnalysisGuideByNoom?ident=23836"*/}
+                    {/*style={{fontSize: '24px'}}>作业表情分析NOOM</Link></li>*/}
                     <li><Link
-                        to="/m3u8Player?path=http://p6ckz6030.bkt.clouddn.com/recordings/z1.maaee.24827/1524474964_1524476205.m3u8&_k=vdcr12"
-                        style={{fontSize: '24px'}}>m3u8Player</Link></li>
-                    <li><Link
-                        to="/m3u8Player?path=http://bpic.588ku.com/video_listen/588ku_video/18/04/17/17/03/11/video5ad5b84f167d6.mp4"
-                        style={{fontSize: '24px'}}>m3u8Player</Link></li>
-                    <li><Link
-                        to="/HomeWorkUnderstandAnalysisGuideByNoom?ident=23836"
-                        style={{fontSize: '24px'}}>作业表情分析NOOM</Link></li>
+                        to="/operationModule"
+                        style={{fontSize: '24px'}}>作业模块</Link></li>
                 </ul>
             </div>
         );
@@ -246,6 +256,7 @@ ReactDOM.render(
             <Route path="m3u8Player" getComponent={m3u8Player}/>
             <Route path="HomeWorkUnderstandAnalysisGuideByNoom" getComponent={HomeWorkUnderstandAnalysisGuideByNoom}/>
             <Route path="brotherXu" getComponent={brotherXu}/>
+            <Route path="operationModule" getComponent={operationModule}/>
         </Route>
     </Router>
     , document.getElementById('example'));
