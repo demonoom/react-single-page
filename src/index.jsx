@@ -169,13 +169,6 @@ const homeworkModule = (location, cb) => {
     )
 }
 
-const homeworkDetail = (location, cb) => {
-    require.ensure([], require => {
-            cb(null, require("./components/classCardSystem/js/homeworkDetail").default)
-        }
-    )
-}
-
 const curriculumSchedule = (location, cb) => {
     require.ensure([], require => {
             cb(null, require("./components/classCardSystemBackstage/js/curriculumSchedule").default)
@@ -274,7 +267,6 @@ ReactDOM.render(
             <Route path="HomeWorkUnderstandAnalysisGuideByNoom" getComponent={HomeWorkUnderstandAnalysisGuideByNoom}/>
             <Route path="brotherXu" getComponent={brotherXu}/>
             <Route path="homeworkModule" getComponent={homeworkModule}/>
-            <Route path="homeworkDetail" getComponent={homeworkDetail}/>
             <Route path="curriculumSchedule" getComponent={curriculumSchedule}/>
         </Route>
     </Router>
