@@ -1,0 +1,107 @@
+(node) util.print is deprecated. Use console.log instead.
+#homeWorkAnalysis {
+  height: 100%;
+  overflow-x: hidden;
+  overflow-y: auto;
+  background: #fff;
+}
+#homeWorkAnalysis .understanding_date,
+#homeWorkAnalysis .understanding_class {
+  position: relative;
+  font-size: 18px;
+}
+#homeWorkAnalysis .understanding_date::before,
+#homeWorkAnalysis .understanding_class::before {
+  content: '';
+  position: absolute;
+  background-color: #ddd;
+  display: block;
+  z-index: 1;
+  top: auto;
+  right: auto;
+  bottom: 0;
+  left: 15px;
+  width: 100%;
+  height: 1PX;
+  -webkit-transform-origin: 50% 50%;
+  -ms-transform-origin: 50% 50%;
+  transform-origin: 50% 50%;
+  -webkit-transform: scaleY(0.5);
+  -ms-transform: scaleY(0.5);
+  transform: scaleY(0.5);
+}
+#homeWorkAnalysis .understanding_class::before {
+  left: 0;
+}
+#homeWorkAnalysis .understanding_class span {
+  color: #888;
+  font-size: 16px;
+}
+#homeWorkAnalysis .echarts_wrap {
+  padding: 15px 0;
+}
+#homeWorkAnalysis .student_table {
+  width: 100%;
+  text-align: center;
+}
+#homeWorkAnalysis .student_table thead {
+  background: #e8e8e8;
+  border-radius: 4px 4px 0 0;
+}
+#homeWorkAnalysis .student_table thead tr td {
+  padding: 10px 4px;
+  min-width: 46px;
+}
+#homeWorkAnalysis .student_table tr td,
+#homeWorkAnalysis .subject_content {
+  position: relative;
+}
+#homeWorkAnalysis .student_table tr td::before,
+#homeWorkAnalysis .subject_content::before {
+  content: '';
+  position: absolute;
+  background-color: #d0d0d0;
+  display: block;
+  z-index: 1;
+  top: auto;
+  right: auto;
+  bottom: 0;
+  left: 0px;
+  width: 100%;
+  height: 1PX;
+  -webkit-transform-origin: 50% 50%;
+  -ms-transform-origin: 50% 50%;
+  transform-origin: 50% 50%;
+  -webkit-transform: scaleY(0.5);
+  -ms-transform: scaleY(0.5);
+  transform: scaleY(0.5);
+}
+#homeWorkAnalysis .subject_content {
+  padding: 0 0 10px 0;
+  z-index: 999;
+}
+#homeWorkAnalysis .subject_title {
+  background: #f7f7f7;
+  padding: 10px 0;
+  text-indent: 10px;
+}
+#homeWorkAnalysis .text_chart {
+  text-align: center;
+  padding-bottom: 16px;
+}
+#homeWorkAnalysis .text_chart span {
+  padding-right: 20px;
+  font-size: 14px;
+}
+#homeWorkAnalysis .text_chart span i {
+  color: #5793f3;
+}
+#homeWorkAnalysis .timeNum {
+  border: 1px solid #6a6ef6;
+  line-height: 2rem;
+  border-radius: 0.3rem;
+  margin: 30px 0 0 8px;
+  padding: 2px 6px;
+  float: right;
+  z-index: 999;
+}

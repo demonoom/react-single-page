@@ -1,5 +1,17 @@
 import React from 'react';
-import {Toast, InputItem, List, Radio, Icon, ListView, Card, WingBlank, WhiteSpace, Modal} from 'antd-mobile';
+import {
+    Toast,
+    InputItem,
+    List,
+    Radio,
+    Icon,
+    ListView,
+    Card,
+    WingBlank,
+    WhiteSpace,
+    Modal,
+    PullToRefresh
+} from 'antd-mobile';
 import '../css/boxBracelet.less'
 
 const alert = Modal.alert;
@@ -29,6 +41,7 @@ export default class boxBracelet extends React.Component {
     }
 
     componentDidMount() {
+        Bridge.setShareAble("false");
         document.title = '绑定课堂盒子信息';
         var loginUser = JSON.parse(localStorage.getItem('loginUserRingBind'));
         this.setState({loginUser});
@@ -300,6 +313,13 @@ export default class boxBracelet extends React.Component {
         });
     };
 
+    onRefresh = () => {
+        var divPull = document.getElementsByClassName('am-pull-to-refresh-content');
+        divPull[0].style.transform = "translate3d(0px, 30px, 0px)";   //设置拉动后回到的位置
+        this.setState({defaultPageNo: 1, refreshing: true, isLoadingLeft: true});
+        this.viewAndroidBoxPage(this.state.loginUser);
+    }
+
     render() {
 
         var _this = this;
@@ -348,6 +368,10 @@ export default class boxBracelet extends React.Component {
                         style={{
                             height: bindDing.state.clientHeight,
                         }}
+                        pullToRefresh={<PullToRefresh
+                            onRefresh={this.onRefresh}
+                            distanceToRefresh={80}
+                        />}
                     />
                     <div className='addBunton' onClick={this.addRing}>
                         <img src={require("../imgs/addBtn.png")}/>
@@ -379,11 +403,13 @@ export default class boxBracelet extends React.Component {
                         <div className='chooseResult'
                              style={{display: this.state.chooseResultDiv, height: this.state.calmHeight}}>
                             {this.state.searchData.map(i => (
-                                <RadioItem key={i.value} checked={this.state.searchCheckValue === i.value}
-                                    /*这个checked的写法很好*/
-                                           onChange={() => this.searchResultOnChange(i)}>
-                                    {i.label}<List.Item.Brief>{i.value}</List.Item.Brief>
-                                </RadioItem>
+                                <div onClick={() => this.searchResultOnChange(i)}>
+                                    <RadioItem key={i.value} checked={this.state.searchCheckValue === i.value}
+                                        /*这个checked的写法很好*/
+                                    >
+                                        {i.label}
+                                    </RadioItem>
+                                </div>
                             ))}
                         </div>
                     </List>

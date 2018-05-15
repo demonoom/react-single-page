@@ -1,5 +1,17 @@
 import React from 'react';
-import {Toast, InputItem, List, Radio, Icon, ListView, Card, WingBlank, WhiteSpace, Modal} from 'antd-mobile';
+import {
+    Toast,
+    InputItem,
+    List,
+    Radio,
+    Icon,
+    ListView,
+    Card,
+    WingBlank,
+    WhiteSpace,
+    Modal,
+    PullToRefresh
+} from 'antd-mobile';
 import '../css/bindingBracelet.less'
 
 const alert = Modal.alert;
@@ -29,6 +41,7 @@ export default class bindingBracelet extends React.Component {
     }
 
     componentDidMount() {
+        Bridge.setShareAble("false");
         document.title = '绑定学生手环信息';
         var loginUser = JSON.parse(localStorage.getItem('loginUserRingBind'));
         this.setState({loginUser});
@@ -242,15 +255,20 @@ export default class bindingBracelet extends React.Component {
         };
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
             onResponse: function (result) {
-                console.log(result);
                 if (result.msg == '调用成功' && result.success == true) {
                     if (WebServiceUtil.isEmpty(result.response) == false) {
                         var arr = [];
                         result.response.forEach(function (v, i) {
+                            var clazzStr = '';
+                            v.clazzList.forEach(function (v) {
+                                clazzStr += v.name + ',';
+                            })
+                            clazzStr = clazzStr.substr(0, clazzStr.length - 1);
                             var obj = {
                                 value: v.colUid,
                                 label: v.userName,
-                                extra: `${v.clazz.name}  ${v.colAccount}`
+                                extra: `${clazzStr}`,
+                                extra1: `${v.colAccount}`
                             }
                             arr.push(obj);
                         });
@@ -310,6 +328,13 @@ export default class bindingBracelet extends React.Component {
         });
     };
 
+    onRefresh = () => {
+        var divPull = document.getElementsByClassName('am-pull-to-refresh-content');
+        divPull[0].style.transform = "translate3d(0px, 30px, 0px)";   //设置拉动后回到的位置
+        this.setState({defaultPageNo: 1, refreshing: true, isLoadingLeft: true});
+        this.viewWatchPage(this.state.loginUser);
+    }
+
     render() {
 
         var _this = this;
@@ -323,8 +348,8 @@ export default class bindingBracelet extends React.Component {
                         <Card.Header
                             className='noomCardHeader'
                             title={rowData.name}
-                            // thumb={rowData.bindingUser.avatar}
-                            thumb='http://60.205.86.217/upload6/2018-02-09/19/805eee4a-b707-49a2-9c75-d5b14ed9227b.jpg'
+                            thumb={rowData.bindingUser.avatar}
+                            //thumb='http://60.205.86.217/upload6/2018-02-09/19/805eee4a-b707-49a2-9c75-d5b14ed9227b.jpg'
                             extra={<span className='noomCardUnbind'
                                          onClick={_this.showAlert.bind(this, rowData)}>解绑</span>}
                         />
@@ -362,6 +387,10 @@ export default class bindingBracelet extends React.Component {
                         style={{
                             height: bindDing.state.clientHeight,
                         }}
+                        pullToRefresh={<PullToRefresh
+                            onRefresh={this.onRefresh}
+                            distanceToRefresh={80}
+                        />}
                     />
                     <div className='addBunton' onClick={this.addRing}>
                         <img src={require("../imgs/addBtn.png")}/>
@@ -386,18 +415,21 @@ export default class bindingBracelet extends React.Component {
                                 onChange={this.inputOnChange.bind(this)}
                                 value={this.state.stNameValue}
                             >姓名:</InputItem>
-                            <img className='stIcon' src={require('../imgs/search.png')}
+                            <img id='stIcon' className='stIcon' src={require('../imgs/search.png')}
                                  onClick={this.searchWatchBindCandidate}/>
                         </div>
 
                         <div className='chooseResult'
                              style={{display: this.state.chooseResultDiv, height: this.state.calmHeight}}>
                             {this.state.searchData.map(i => (
-                                <RadioItem key={i.value} checked={this.state.searchCheckValue === i.value}
-                                    /*这个checked的写法很好*/
-                                           onChange={() => this.searchResultOnChange(i)}>
-                                    {i.label}<List.Item.Brief>{i.extra}</List.Item.Brief>
-                                </RadioItem>
+                                <div onClick={() => this.searchResultOnChange(i)}>
+                                    <RadioItem key={i.value} checked={this.state.searchCheckValue === i.value}
+                                        /*这个checked的写法很好*/
+                                    >
+                                        {i.label}<List.Item.Brief>{i.extra}</List.Item.Brief>
+                                        <List.Item.Brief>{i.extra1}</List.Item.Brief>
+                                    </RadioItem>
+                                </div>
                             ))}
                         </div>
                     </List>

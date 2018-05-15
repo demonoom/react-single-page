@@ -109,6 +109,73 @@ const longList = (location, cb) => {
         }
     )
 }
+// 家庭作业统计 -- 按班级进行统计
+const homeWorkUnderstandAnalysisByClass = (location, cb) => {
+    require.ensure([], require => {
+            cb(null, require("./components/charts/homeWorkAnalysis/HomeWorkUnderstandAnalysisByClass").default)
+        }
+    )
+}
+
+// 家庭作业统计 -- 按学生进行统计
+const homeWorkUnderstandAnalysisByStudent = (location, cb) => {
+    require.ensure([], require => {
+            cb(null, require("./components/charts/homeWorkAnalysis/HomeWorkUnderstandAnalysisByStudent").default)
+        }
+    )
+}
+
+// 家庭作业统计 -- 以班级作业为单位，计算每个题目的每个学生的时长和理解度
+const homeWorkUnderstandAnalysisByClassSubject = (location, cb) => {
+    require.ensure([], require => {
+            cb(null, require("./components/charts/homeWorkAnalysis/HomeWorkUnderstandAnalysisByClassSubject").default)
+        }
+    )
+}
+
+// 家庭作业统计 -- 以班级作业为单位，计算每个题目的每个学生的时长和理解度
+const homeWorkUnderstandAnalysisGuide = (location, cb) => {
+    require.ensure([], require => {
+            cb(null, require("./components/charts/homeWorkAnalysis/HomeWorkUnderstandAnalysisGuide").default)
+        }
+    )
+}
+
+const m3u8Player = (location, cb) => {
+    require.ensure([], require => {
+            cb(null, require("./components/m3u8Player/js/m3u8Player").default)
+        }
+    )
+}
+
+const HomeWorkUnderstandAnalysisGuideByNoom = (location, cb) => {
+    require.ensure([], require => {
+            cb(null, require("./components/charts/homeWorkAnalysis/HomeWorkUnderstandAnalysisGuideByNoom").default)
+        }
+    )
+}
+
+const brotherXu = (location, cb) => {
+    require.ensure([], require => {
+            cb(null, require("./components/charts/homeWorkAnalysis/brotherXu").default)
+        }
+    )
+}
+
+const homeworkModule = (location, cb) => {
+    require.ensure([], require => {
+            cb(null, require("./components/classCardSystem/js/homeworkModule").default)
+        }
+    )
+}
+
+const homeworkDetail = (location, cb) => {
+    require.ensure([], require => {
+            cb(null, require("./components/classCardSystem/js/homeworkDetail").default)
+        }
+    )
+}
+
 import './index.less';
 
 class Index extends React.Component {
@@ -125,7 +192,7 @@ class Index extends React.Component {
                     {/*<li><Link to="/questionBank?ident=54208&pointId=4339&title=nihao"*/}
                     {/*style={{fontSize: '24px'}}>题库</Link></li>*/}
                     {/*<li><Link to="/analysisList?access_user=23836" style={{fontSize: '24px'}}>成绩分析</Link></li>*/}
-                    {/* <li><Link to="/searchUserLocationInfo" style={{fontSize: '24px'}}>搜索查看用户位置信息</Link></li> */}
+                    {/*<li><Link to="/searchUserLocationInfo" style={{fontSize: '24px'}}>搜索查看用户位置信息</Link></li>*/}
                     {/*<li><Link to="/studentFaceStatistics" style={{fontSize: '24px'}}>学生脸部表情分析折线图</Link></li>*/}
                     {/*<li><Link to="/termitePlateLibrary?ident=23836&fileId=-1&title=蚁盘题目&phoneType=0"*/}
                     {/*style={{fontSize: '24px'}}>蚁盘题库</Link>*/}
@@ -136,12 +203,24 @@ class Index extends React.Component {
                     {/*style={{fontSize: '24px'}}>布置作业</Link></li>*/}
                     {/*<li><Link to="/fileShareLink?shareId=1971&userId=23836&userType=st"*/}
                     {/*style={{fontSize: '24px'}}>文件分享</Link></li>*/}
-                    <li><Link to="/ringBinding?ident=23836"
-                              style={{fontSize: '24px'}}>手环绑定</Link></li>
-                    <li><Link to="/personalSettings?uid=23836&tid=31837&utype=te"
-                              style={{fontSize: '24px'}}>个人设置</Link></li>
-                    <li><Link to="/groupSetting?chatGroupId=704&ident=23836&utype=te"
-                              style={{fontSize: '24px'}}>群设置</Link></li>
+                    {/*<li><Link to="/ringBinding?ident=23836"*/}
+                    {/*style={{fontSize: '24px'}}>手环绑定</Link></li>*/}
+                    {/*<li><Link to="/personalSettings?uid=23836&tid=31837&utype=te"*/}
+                    {/*style={{fontSize: '24px'}}>个人设置</Link></li>*/}
+                    {/*<li><Link to="/groupSetting?chatGroupId=706&ident=23836&utype=te"*/}
+                    {/*style={{fontSize: '24px'}}>群设置</Link></li>*/}
+                    {/*<li><Link*/}
+                    {/*to="/m3u8Player?path=http://p6ckz6030.bkt.clouddn.com/recordings/z1.maaee.24827/1524474964_1524476205.m3u8&_k=vdcr12"*/}
+                    {/*style={{fontSize: '24px'}}>m3u8Player</Link></li>*/}
+                    {/*<li><Link*/}
+                    {/*to="/m3u8Player?path=http://bpic.588ku.com/video_listen/588ku_video/18/04/17/17/03/11/video5ad5b84f167d6.mp4"*/}
+                    {/*style={{fontSize: '24px'}}>m3u8Player</Link></li>*/}
+                    {/*<li><Link*/}
+                    {/*to="/HomeWorkUnderstandAnalysisGuideByNoom?ident=23836"*/}
+                    {/*style={{fontSize: '24px'}}>作业表情分析NOOM</Link></li>*/}
+                    <li><Link
+                        to="/homeworkModule?classId=819"
+                        style={{fontSize: '24px'}}>作业模块</Link></li>
                 </ul>
             </div>
         );
@@ -176,6 +255,16 @@ ReactDOM.render(
             <Route path="groupSetting" getComponent={groupSetting}/>
             <Route path="chatMsg" getComponent={chatMsg}/>
             <Route path="longList" getComponent={longList}/>
+            <Route path="homeWorkUnderstandAnalysisByClass" getComponent={homeWorkUnderstandAnalysisByClass}/>
+            <Route path="homeWorkUnderstandAnalysisByStudent" getComponent={homeWorkUnderstandAnalysisByStudent}/>
+            <Route path="homeWorkUnderstandAnalysisByClassSubject"
+                   getComponent={homeWorkUnderstandAnalysisByClassSubject}/>
+            <Route path="homeWorkUnderstandAnalysisGuide" getComponent={homeWorkUnderstandAnalysisGuide}/>
+            <Route path="m3u8Player" getComponent={m3u8Player}/>
+            <Route path="HomeWorkUnderstandAnalysisGuideByNoom" getComponent={HomeWorkUnderstandAnalysisGuideByNoom}/>
+            <Route path="brotherXu" getComponent={brotherXu}/>
+            <Route path="homeworkModule" getComponent={homeworkModule}/>
+            <Route path="homeworkDetail" getComponent={homeworkDetail}/>
         </Route>
     </Router>
     , document.getElementById('example'));

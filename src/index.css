@@ -1,4 +1,4 @@
-
+(node) util.print is deprecated. Use console.log instead.
 html,
 body {
   height: 100%;
@@ -154,4 +154,11 @@ hr {
 }
 .list_padding_no_b {
   border-bottom: 0px;
+}
+.am-checkbox.am-checkbox-checked .am-checkbox-inner {
+  border-color: #f46a55 !important;
+  background: #f46a55 !important;
+}
+.list_wrap_padding {
+  padding: 15px;
 }

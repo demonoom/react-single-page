@@ -1,58 +1,35 @@
-import React from "react";
-import {SearchBar, Button, WhiteSpace, WingBlank, ListView, Toast, Card} from 'antd-mobile';
-import '../css/chatMsg.less'
+import React from 'react';
+import { SearchBar,ListView,WhiteSpace,Card } from 'antd-mobile';
 
-var chatMsgs;
+import '../css/homeworkModule.less';
 
-export default class chatMsg extends React.Component {
+
+export default class homeworkModule extends React.Component {
+
     constructor(props) {
-        super(props)
-        chatMsgs = this;
+        super(props);
         const dataSource = new ListView.DataSource({
             rowHasChanged: (row1, row2) => row1 !== row2,
         });
         this.initData = [];
         this.state = {
-            dataSource: dataSource.cloneWithRows(this.initData),
-            defaultPageNo: 1,
+            dataSource:dataSource.cloneWithRows(this.initData),
             clientHeight: document.body.clientHeight,
-            listViewDisplay: false,
-        }
+            defaultPageNo:1,
+            listViewDisplay:false,
+            homeworkDataList:[],
+        };
     }
 
     componentDidMount() {
-        Bridge.setShareAble("false");
-        document.title = "查找聊天内容";
         var locationHref = window.location.href;
-        var locationSearch = locationHref.substr(locationHref.indexOf("?") + 1);
-        var searchArray = locationSearch.split("&");
-        var uid = searchArray[0].split('=')[1];
-        var tid = searchArray[1].split('=')[1];
-        var type = searchArray[2].split('=')[1];
-        this.setState({uid, tid, type});
-        //添加对视窗大小的监听,在屏幕转换以及键盘弹起时重设各项高度
-        window.addEventListener('resize', chatMsgs.onWindowResize)
+        var locationSearch = locationHref.substr(locationHref.indexOf("?")+1);
+        var classId = locationSearch.split("=")[1];
+        this.getHomeworkData(classId);
     }
 
-    componentWillUnmount() {
-        //解除监听
-        window.removeEventListener('resize', chatMsgs.onWindowResize)
-    }
 
-    /**
-     * 视窗改变时改变高度
-     */
-    onWindowResize() {
-        setTimeout(function () {
-            chatMsgs.setState({clientHeight: document.body.clientHeight});
-        }, 100)
-    }
-    
-    inputOnChange = () => {
-        this.setState({defaultPageNo: 1});
-    }
-
-    getUserLocationInfo(e, flag) {
+    getHomeworkData(classId,flag){
         var _this = this;
         if (!flag) {
             _this.initData.splice(0);
@@ -61,62 +38,51 @@ export default class chatMsg extends React.Component {
                 rowHasChanged: (row1, row2) => row1 !== row2,
             });
         }
-        this.setState({inputValue: e});
-        this.state.listViewDisplay = true;
+        _this.state.listViewDisplay = true;
         const dataBlob = {};
-        var PageNo = this.state.defaultPageNo;
+        var pageNo = _this.state.defaultPageNo;
         var param = {
-            "method": 'searchChatRecords',
-            "uid": this.state.uid,
-            "tid": this.state.tid,
-            "type": this.state.type,
-            "keywork": e,
-            "pn": PageNo + '',
+            "method": 'getTopicsByClazzId',
+            "clazzId": classId,
+            "pageNo":pageNo
         };
-        console.log(param);
+        console.log("param",param);
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
             onResponse: function (result) {
                 console.log(result);
-                if (result.msg == '调用成功' && result.success == true) {
-                    if (result.response.length == 0) {
-                        // _this.state.listViewDisplay = false;
-                        _this.setState({isLoadingLeft: false})
-                        // Toast.info('沒有查到相关内容', 1);
-                    } else {
-                        var arr = result.response;
-                        var pager = result.pager;
-                        for (let i = 0; i < arr.length; i++) {
-                            var topic = arr[i];
-                            dataBlob[`${i}`] = topic;
-                        }
-                        var isLoading = false;
-                        if (arr.length > 0) {
-                            if (pager.pageCount == 1 && pager.rsCount < 30) {
-                                isLoading = false;
-                            } else {
-                                isLoading = true;
-                            }
-                        } else {
-                            isLoading = false;
-                        }
-                        _this.initData = _this.initData.concat(arr);
-                        _this.setState({
-                            dataSource: _this.state.dataSource.cloneWithRows(_this.initData),
-                            isLoadingLeft: isLoading,
-                            refreshing: false
-                        })
+                if(result.success == true && result.msg == "调用成功"){
+                   if(result.response.length === 0){
+                       _this.setState({"isLoadingLeft":false})
+                   }else {
+                    var arr = result.response;
+                    var pager = result.pager;
+                    for (let i = 0; i < arr.length; i++) {
+                        var topic = arr[i];
+                        dataBlob[`${i}`] = topic;
                     }
-
-                } else {
-                    Toast.fail('搜索失败', 1);
+                    var isLoading = false;
+                    if (arr.length > 0) {
+                        if (pager.pageCount == 1 && pager.rsCount < 30) {
+                            isLoading = false;
+                        } else {
+                            isLoading = true;
+                        }
+                    } else {
+                        isLoading = false;
+                    }
+                    _this.initData = _this.initData.concat(arr);
+                    _this.setState({
+                        dataSource: _this.state.dataSource.cloneWithRows(_this.initData),
+                        isLoadingLeft: isLoading,
+                        refreshing: false
+                    })
+                   }
                 }
             },
             onError: function (error) {
-                // message.error(error);
             }
         });
     }
-
     /**
      *  ListView数据全部渲染完毕的回调
      */
@@ -128,45 +94,33 @@ export default class chatMsg extends React.Component {
         }
         currentPageNo += 1;
         this.setState({isLoadingLeft: true, defaultPageNo: currentPageNo});
-        _this.getUserLocationInfo(_this.state.inputValue, true);
         this.setState({
             dataSource: this.state.dataSource.cloneWithRows(this.initData),
             isLoadingLeft: true,
         });
     };
-
     render() {
-
         var _this = this;
-
         const row = (rowData, sectionID, rowID) => {
             return (
                 <div>
-                    <WhiteSpace size="lg" className="noomWhite"/>
+                    <WhiteSpace size="lg"/>
                     <Card full>
                         <Card.Header
-                            className='noomCardHeader'
                             title={rowData.fromUser.userName}
                             thumb={rowData.fromUser.avatar}
                             extra={
                                 <span>{WebServiceUtil.formatYMD(rowData.createTime)}</span>}
                         />
                         <Card.Body>
-                            <div className='noomCardContent'>{rowData.content}</div>
+                            <div>{rowData.content}</div>
                         </Card.Body>
                     </Card>
                 </div>
             )
         };
-
         return (
-            <div id="chatMsg" style={{height: this.state.clientHeight}}>
-                <SearchBar
-                    placeholder="搜索"
-                    maxLength={8}
-                    onSubmit={this.getUserLocationInfo.bind(this)}
-                    onChange={this.inputOnChange}
-                />
+            <div id="homeworkModule" style={{height: document.body.clientHeight}}>
                 <ListView
                     ref={el => this.lv = el}
                     dataSource={this.state.dataSource}    //数据类型是 ListViewDataSource
@@ -184,11 +138,11 @@ export default class chatMsg extends React.Component {
                     initialListSize={15}   //指定在组件刚挂载的时候渲染多少行数据，用这个属性来确保首屏显示合适数量的数据
                     scrollEventThrottle={20}     //控制在滚动过程中，scroll事件被调用的频率
                     style={{
-                        height: chatMsgs.state.clientHeight - 44,
+                        height: this.state.clientHeight - 44,
                         display: this.state.listViewDisplay ? 'block' : 'none'
                     }}
                 />
             </div>
-        )
+        );
     }
 }
