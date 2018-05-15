@@ -8,6 +8,10 @@ export default class homeworkModule extends React.Component {
 
     constructor(props) {
         super(props);
+        /**
+         * dataSource是长列表的数据源
+         * initData初始数据
+         */
         const dataSource = new ListView.DataSource({
             rowHasChanged: (row1, row2) => row1 !== row2,
         });
@@ -17,7 +21,6 @@ export default class homeworkModule extends React.Component {
             clientHeight: document.body.clientHeight,
             defaultPageNo:1,
             listViewDisplay:false,
-            homeworkDataList:[],
         };
     }
 
@@ -29,8 +32,9 @@ export default class homeworkModule extends React.Component {
     }
 
 
-    getHomeworkData(classId,flag){
+    getHomeworkData(classId){
         var _this = this;
+        var flag = true;
         if (!flag) {
             _this.initData.splice(0);
             _this.state.dataSource = [];
@@ -43,13 +47,13 @@ export default class homeworkModule extends React.Component {
         var pageNo = _this.state.defaultPageNo;
         var param = {
             "method": 'getTopicsByClazzId',
-            "clazzId": classId,
+            "clazzIds": classId,
             "pageNo":pageNo
         };
-        console.log("param",param);
+        // console.log("param",param);
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
             onResponse: function (result) {
-                console.log(result);
+                // console.log(result);
                 if(result.success == true && result.msg == "调用成功"){
                    if(result.response.length === 0){
                        _this.setState({"isLoadingLeft":false})
@@ -62,7 +66,7 @@ export default class homeworkModule extends React.Component {
                     }
                     var isLoading = false;
                     if (arr.length > 0) {
-                        if (pager.pageCount == 1 && pager.rsCount < 30) {
+                        if (pager.pageCount == 1 && pager.rsCount < 9) {
                             isLoading = false;
                         } else {
                             isLoading = true;
@@ -87,13 +91,19 @@ export default class homeworkModule extends React.Component {
      *  ListView数据全部渲染完毕的回调
      */
     onEndReached = (event) => {
-        var _this = this;
+        // var _this = this;
+        var locationHref = window.location.href;
+        var locationSearch = locationHref.substr(locationHref.indexOf("?")+1);
+        var classId = locationSearch.split("=")[1];
+
+
         var currentPageNo = this.state.defaultPageNo;
         if (!this.state.isLoadingLeft && !this.state.hasMore) {
             return;
         }
         currentPageNo += 1;
         this.setState({isLoadingLeft: true, defaultPageNo: currentPageNo});
+        this.getHomeworkData(classId);
         this.setState({
             dataSource: this.state.dataSource.cloneWithRows(this.initData),
             isLoadingLeft: true,
@@ -138,7 +148,7 @@ export default class homeworkModule extends React.Component {
                     initialListSize={15}   //指定在组件刚挂载的时候渲染多少行数据，用这个属性来确保首屏显示合适数量的数据
                     scrollEventThrottle={20}     //控制在滚动过程中，scroll事件被调用的频率
                     style={{
-                        height: this.state.clientHeight - 44,
+                        height: this.state.clientHeight,
                         display: this.state.listViewDisplay ? 'block' : 'none'
                     }}
                 />

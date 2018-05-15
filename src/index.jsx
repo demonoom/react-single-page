@@ -221,6 +221,9 @@ class Index extends React.Component {
                     <li><Link
                         to="/homeworkModule?classId=819"
                         style={{fontSize: '24px'}}>作业模块</Link></li>
+                     <li><Link
+                        to="/homeworkDetail?homeworkId=1240982"
+                        style={{fontSize: '24px'}}>作业详情</Link></li>
                 </ul>
             </div>
         );
