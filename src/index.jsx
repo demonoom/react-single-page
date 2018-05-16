@@ -169,8 +169,25 @@ const homeworkModule = (location, cb) => {
     )
 }
 
+const curriculumSchedule = (location, cb) => {
+    require.ensure([], require => {
+            cb(null, require("./components/classCardSystemBackstage/js/curriculumSchedule").default)
+        }
+    )
+}
 
+const workAttendance = (location, cb) => {
+    require.ensure([], require => {
+            cb(null, require("./components/classCardSystem/js/workAttendance").default)
+        }
+    )
+}
 
+const noticeReadMore = (location, cb) => {
+    require.ensure([],require => {
+        cb(null,require("./components/classCardSystem/js/noticeReadMore").default)
+    })
+}
 import './index.less';
 
 class Index extends React.Component {
@@ -216,7 +233,15 @@ class Index extends React.Component {
                     <li><Link
                         to="/homeworkModule?classId=819"
                         style={{fontSize: '24px'}}>作业模块</Link></li>
-                    
+                    <li><Link
+                        to="/curriculumSchedule"
+                        style={{fontSize: '24px'}}>课程表列表</Link></li>
+                    <li><Link
+                        to="/workAttendance"
+                        style={{fontSize: '24px'}}>出勤</Link></li>
+                    <li><Link
+                        to="/noticeReadMore?classId=819"
+                        style={{fontSize:'24px'}}>通知查看更多</Link></li>
                 </ul>
             </div>
         );
@@ -260,7 +285,9 @@ ReactDOM.render(
             <Route path="HomeWorkUnderstandAnalysisGuideByNoom" getComponent={HomeWorkUnderstandAnalysisGuideByNoom}/>
             <Route path="brotherXu" getComponent={brotherXu}/>
             <Route path="homeworkModule" getComponent={homeworkModule}/>
-            {/* <Route path="homeworkDetail" getComponent={homeworkDetail}/> */}
+            <Route path="curriculumSchedule" getComponent={curriculumSchedule}/>
+            <Route path="workAttendance" getComponent={workAttendance} />
+            <Route path="noticeReadMore" getComponent={noticeReadMore} />
         </Route>
     </Router>
     , document.getElementById('example'));
