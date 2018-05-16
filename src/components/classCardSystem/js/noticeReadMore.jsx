@@ -1,14 +1,11 @@
-import React from 'react';
-import {SearchBar, ListView, WhiteSpace, Card} from 'antd-mobile';
+import React from "react";
+import {ListView, WhiteSpace, Card} from "antd-mobile";
+import "../css/noticeReadMore.less";
 
-import '../css/homeworkModule.less';
-
-
-export default class homeworkModule extends React.Component {
-
-    constructor(props) {
+export default class noticeReadMore extends React.Component{
+    constructor(props){
         super(props);
-        /**
+          /**
          * dataSource是长列表的数据源
          * initData初始数据
          */
@@ -19,35 +16,38 @@ export default class homeworkModule extends React.Component {
         this.state = {
             dataSource: dataSource.cloneWithRows(this.initData),
             clientHeight: document.body.clientHeight,
-            defaultPageNo: 1,
             listViewDisplay: false,
-        };
+            defaultPageNo:1
+        }
     }
 
-
-
-    componentDidMount() {
+    componentDidMount(){
         var locationHref = window.location.href;
         var locationSearch = locationHref.substr(locationHref.indexOf("?") + 1);
         var classId = locationSearch.split("=")[1];
         this.setState({"classId":classId})
-        this.getHomeworkData(classId);
+        this.getNoticeReadMore(classId);
     }
 
-
-    getHomeworkData(classId) {
+      /**
+     * getNoticeReadMore获取出勤的方法
+     */
+    getNoticeReadMore(classId){
         var _this = this;
         _this.state.listViewDisplay = true;
         const dataBlob = {};
         var pageNo = _this.state.defaultPageNo;
+        /**
+         * 这里需要传入参数
+         */
         var param = {
             "method": 'getTopicsByClazzId',
             "clazzIds": classId,
             "pageNo": pageNo
-        };
+        }
+        console.log(param)
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
-            onResponse: function (result) {
-                // console.log(result);
+            onResponse:function(result){
                 if (result.success == true && result.msg == "调用成功") {
                     if (result.response.length === 0) {
                         _this.setState({"isLoadingLeft": false})
@@ -77,12 +77,27 @@ export default class homeworkModule extends React.Component {
                     }
                 }
             },
-            onError: function (error) {
+            onError:function(error){
+
             }
-        });
+            
+        })
     }
 
     /**
+     * getTimeFormat时间戳转换格式
+     */
+    getTimeFormat(t){
+        var   _time=new Date(t);
+        // var   year=_time.getFullYear();//年
+        var   month=(_time.getMonth()+1) < 10 ? ("0"+(_time.getMonth()+1)) : (_time.getMonth()+1);//月
+        var   date=_time.getDate() < 10 ? "0"+_time.getDate(): _time.getDate();//日
+        var   hour=_time.getHours() < 10 ? "0" + _time.getHours() : _time.getHours();//时
+        var   minute=_time.getMinutes() < 10 ? "0" + _time.getMinutes() : _time.getMinutes();//分
+        // var   second=_time.getSeconds();//秒
+        return  month+"/"+date+" "+hour+":"+minute;
+    }
+     /**
      *  ListView数据全部渲染完毕的回调
      */
     onEndReached = (event) => {
@@ -92,35 +107,31 @@ export default class homeworkModule extends React.Component {
         }
         currentPageNo += 1;
         this.setState({isLoadingLeft: true, defaultPageNo: currentPageNo});
-        this.getHomeworkData(this.state.classId);
+        this.getNoticeReadMore(this.state.classId);
         this.setState({
             dataSource: this.state.dataSource.cloneWithRows(this.initData),
             isLoadingLeft: true,
         });
     };
 
-    render() {
-        var _this = this;
+
+
+    render(){
         const row = (rowData, sectionID, rowID) => {
             return (
                 <div>
-                    {/* <WhiteSpace size="lg"/> */}
                     <Card full>
                         <Card.Header
                             title={rowData.fromUser.userName}
-                            thumb={rowData.fromUser.avatar}
                             extra={
-                                <span>{WebServiceUtil.formatYMD(rowData.createTime)}</span>}
+                                <span>{this.getTimeFormat(rowData.createTime)}</span>}
                         />
-                        <Card.Body>
-                            <div>{rowData.content}</div>
-                        </Card.Body>
                     </Card>
                 </div>
             )
         };
         return (
-            <div id="homeworkModule" style={{height: document.body.clientHeight}}>
+            <div id="noticeReadMore" style={{height: document.body.clientHeight}}>
                 <ListView
                     ref={el => this.lv = el}
                     dataSource={this.state.dataSource}    //数据类型是 ListViewDataSource
@@ -143,6 +154,6 @@ export default class homeworkModule extends React.Component {
                     }}
                 />
             </div>
-        );
+        )
     }
 }
