@@ -24,15 +24,15 @@ export default class noticeReadMore extends React.Component{
     componentDidMount(){
         var locationHref = window.location.href;
         var locationSearch = locationHref.substr(locationHref.indexOf("?") + 1);
-        var classId = locationSearch.split("=")[1];
-        this.setState({"classId":classId})
-        this.getNoticeReadMore(classId);
+        var classroomId = locationSearch.split("=")[1];
+        this.setState({"classroomId":classroomId})
+        this.getNoticeReadMore(classroomId);
     }
 
       /**
-     * getNoticeReadMore获取出勤的方法
+     * getNoticeReadMore获取出勤的方法x
      */
-    getNoticeReadMore(classId){
+    getNoticeReadMore(classroomId){
         var _this = this;
         _this.state.listViewDisplay = true;
         const dataBlob = {};
@@ -41,13 +41,15 @@ export default class noticeReadMore extends React.Component{
          * 这里需要传入参数
          */
         var param = {
-            "method": 'getTopicsByClazzId',
-            "clazzIds": classId,
+            "method": 'getClassBrandNoticeListByClassroomId',
+            "classroomId": classroomId,
             "pageNo": pageNo
         }
-        console.log(param)
+        console.log(param);
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
             onResponse:function(result){
+                console.log(result);
+                
                 if (result.success == true && result.msg == "调用成功") {
                     if (result.response.length === 0) {
                         _this.setState({"isLoadingLeft": false})
@@ -107,7 +109,7 @@ export default class noticeReadMore extends React.Component{
         }
         currentPageNo += 1;
         this.setState({isLoadingLeft: true, defaultPageNo: currentPageNo});
-        this.getNoticeReadMore(this.state.classId);
+        this.getNoticeReadMore(this.state.classroomId);
         this.setState({
             dataSource: this.state.dataSource.cloneWithRows(this.initData),
             isLoadingLeft: true,
@@ -122,7 +124,7 @@ export default class noticeReadMore extends React.Component{
                 <div>
                     <Card full>
                         <Card.Header
-                            title={rowData.fromUser.userName}
+                            title={rowData.noticeTitle}
                             extra={
                                 <span>{this.getTimeFormat(rowData.createTime)}</span>}
                         />
