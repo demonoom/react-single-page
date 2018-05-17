@@ -2,9 +2,10 @@
   .showImg {
     min-height: 18rem;
     background-color: #fff;
+    padding: 15px;
     .uploadImgBtn {
-      width: 5rem;
-      height: 5rem;
+      max-width: 100%;
+      max-height: 100%;
     }
     .delImgBtn {
       width: 1rem;
@@ -15,12 +16,35 @@
     min-height: 10rem;
     background-color: #fff;
     .uploadImgBtn {
-      width: 5rem;
-      height: 5rem;
+      max-width: 100%;
+      max-height: 100%;
     }
     .delImgBtn {
       width: 1rem;
       height: 1rem;
+    }
+  }
+
+  .flex_addElement div{
+    -webkit-box-flex: 1;
+    -webkit-flex: 1;
+    -ms-flex: 1;
+    flex: 1;
+    margin-left: 8px;
+    min-width: 10px;
+  }
+  .listImg{
+    width: 7.5rem;
+    height:7.5rem;
+    text-align: center;
+    margin: 0;
+    position: relative;
+    justify-content: center;
+    align-items: center;
+    display: flex;
+     img{
+        max-height: 100%;
+        max-width: 100%;
     }
   }
 }

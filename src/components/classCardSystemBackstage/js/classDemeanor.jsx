@@ -155,11 +155,12 @@ export default class classDemeanor extends React.Component {
                     <List.Item arrow="horizontal">班级</List.Item>
                 </Picker>
                 <WhiteSpace size="lg"/>
-                <div className='showImg'>
-                    <div>风采展示</div>
+                <div>风采展示</div>
+                <div className='showImg my_flex my_flex_wrap'>
+
                     {/*imgArr*/}
                     {this.state.imgArr.map((v) => {
-                        return <div>
+                        return <div className="listImg">
                             <img className='uploadImgBtn' src={v.imagePath} alt=""/>
                             <img className='delImgBtn' src={require('../imgs/delPic.png')} alt=""/>
                         </div>
