@@ -212,6 +212,17 @@ const classDemeanor = (location, cb) => {
     })
 }
 
+const moralEducation = (location, cb) => {
+    require.ensure([], require => {
+        cb(null, require("./components/classCardSystemBackstage/js/moralEducation").default)
+    })
+}
+
+const addMoralEducation = (location, cb) => {
+    require.ensure([], require => {
+        cb(null, require("./components/classCardSystemBackstage/js/addMoralEducation").default)
+    })
+}
 import './index.less';
 
 class Index extends React.Component {
@@ -272,6 +283,9 @@ class Index extends React.Component {
                     <li><Link
                         to="/classDemeanor?ident=23836&access=23836"
                         style={{fontSize: '24px'}}>班级风采</Link></li>
+                    <li><Link
+                        to="/moralEducation?ident=23836"
+                        style={{fontSize: '24px'}}>德育评价</Link></li>
                 </ul>
             </div>
         );
@@ -324,6 +338,8 @@ ReactDOM.render(
             <Route path="addCurriculumSchedule" getComponent={addCurriculumSchedule}/>
             <Route path="definedTerm" getComponent={definedTerm}/>
             <Route path="classDemeanor" getComponent={classDemeanor}/>
+            <Route path="moralEducation" getComponent={moralEducation} />
+            <Route path="addMoralEducation" getComponent={addMoralEducation} />
         </Route>
     </Router>
     , document.getElementById('example'));
