@@ -267,12 +267,11 @@ class Index extends React.Component {
                         to="/noticeReadMore?classroomId=1"
                         style={{fontSize: '24px'}}>通知查看更多</Link></li>
                     <li><Link
-                        to="/classroomManage"
+                        to="/classroomManage?uid=23836"
                         style={{fontSize: '24px'}}>教室管理页面</Link></li>
                     <li><Link
                         to="/classDemeanor?ident=23836&access=23836"
                         style={{fontSize: '24px'}}>班级风采</Link></li>
-
                 </ul>
             </div>
         );
