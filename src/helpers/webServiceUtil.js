@@ -65,6 +65,19 @@ WebServiceUtil.formatYMD = function (nS) {
 };
 
 /**
+ * 时间戳转年月
+ * @param nS
+ * @returns {string}
+ */
+WebServiceUtil.formatYM = function (nS) {
+    var da = new Date(parseInt(nS));
+    var year = da.getFullYear();
+    var month = da.getMonth() + 1;
+    var ymdStr = [year, month].join('-');
+    return ymdStr;
+};
+
+/**
  * 时间戳转时分
  * @param nS
  * @returns {string}

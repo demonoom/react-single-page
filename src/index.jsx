@@ -199,6 +199,13 @@ const addCurriculumSchedule = (location, cb) => {
         cb(null, require("./components/classCardSystemBackstage/js/addCurriculumSchedule").default)
     })
 }
+
+const definedTerm = (location, cb) => {
+    require.ensure([], require => {
+        cb(null, require("./components/classCardSystemBackstage/js/definedTerm").default)
+    })
+}
+
 import './index.less';
 
 class Index extends React.Component {
@@ -227,7 +234,7 @@ class Index extends React.Component {
                     {/*<li><Link to="/fileShareLink?shareId=1971&userId=23836&userType=st"*/}
                     {/*style={{fontSize: '24px'}}>文件分享</Link></li>*/}
                     {<li><Link to="/ringBinding?ident=23836"
-                    style={{fontSize: '24px'}}>手环绑定</Link></li>}
+                               style={{fontSize: '24px'}}>手环绑定</Link></li>}
                     {/*<li><Link to="/personalSettings?uid=23836&tid=31837&utype=te"*/}
                     {/*style={{fontSize: '24px'}}>个人设置</Link></li>*/}
                     {/*<li><Link to="/groupSetting?chatGroupId=706&ident=23836&utype=te"*/}
@@ -252,7 +259,7 @@ class Index extends React.Component {
                         style={{fontSize: '24px'}}>出勤</Link></li>
                     <li><Link
                         to="/noticeReadMore?classroomId=1"
-                        style={{fontSize:'24px'}}>通知查看更多</Link></li>
+                        style={{fontSize: '24px'}}>通知查看更多</Link></li>
                     <li><Link
                         to="/classroomManage?uid=23836"
                         style={{fontSize:'24px'}}>教室管理页面</Link></li>
@@ -301,12 +308,13 @@ ReactDOM.render(
             <Route path="brotherXu" getComponent={brotherXu}/>
             <Route path="homeworkModule" getComponent={homeworkModule}/>
             <Route path="curriculumSchedule" getComponent={curriculumSchedule}/>
-            <Route path="workAttendance" getComponent={workAttendance} />
-            <Route path="noticeReadMore" getComponent={noticeReadMore} />
-            <Route path="classroomManage" getComponent={classroomManage} />
+            <Route path="workAttendance" getComponent={workAttendance}/>
+            <Route path="noticeReadMore" getComponent={noticeReadMore}/>
+            <Route path="classroomManage" getComponent={classroomManage}/>
             <Route path="workAttendance" getComponent={workAttendance}/>
             <Route path="noticeReadMore" getComponent={noticeReadMore}/>
             <Route path="addCurriculumSchedule" getComponent={addCurriculumSchedule}/>
+            <Route path="definedTerm" getComponent={definedTerm}/>
         </Route>
     </Router>
     , document.getElementById('example'));
