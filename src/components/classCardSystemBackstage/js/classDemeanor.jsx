@@ -179,44 +179,46 @@ export default class classDemeanor extends React.Component {
         console.log(demeanor.state.imgArr);
         return (
             <div id="classDemeanor" style={{height: document.body.clientHeight}}>
-                <WhiteSpace size="lg"/>
-                {/*日期*/}
-                <Picker
-                    data={this.state.data}
-                    cols={1}
-                    value={this.state.asyncValue}
-                    onPickerChange={this.onPickerChange}
-                    onOk={v => this.chooseClassOnOk(v)}
-                >
-                    <List.Item arrow="horizontal">班级</List.Item>
-                </Picker>
-                <WhiteSpace size="lg"/>
-                <div className='showImg'>
-                    <div>风采展示</div>
-                    {this.state.imgArr.map((v) => {
-                        return <div>
-                            <img className='uploadImgBtn' src={v.imagePath} alt=""/>
-                            <img onClick={this.deleteClassDemeanorInfo.bind(this, v.id)} className='delImgBtn'
-                                 src={require('../imgs/delPic.png')} alt=""/>
-                        </div>
-                    })}
-                </div>
-                <WhiteSpace size="lg"/>
-                <div className='uploadImg'>
-                    <div>上传照片</div>
-                    {this.state.imgFromAndArr.map((v, i) => {
-                        return <div>
-                            <img className='uploadImgBtn' src={v} alt=""/>
-                            <img onClick={this.deleteimgFromAndArr.bind(this, i)} className='delImgBtn'
-                                 src={require('../imgs/delPic.png')} alt=""/>
-                        </div>
-                    })}
-                    <img
-                        className='uploadImgBtn'
-                        src={require('../imgs/addPic.png')}
-                        alt=""
-                        onClick={this.uploadImgBtn}
-                    />
+                <div className="Img_cont">
+                    <WhiteSpace size="lg"/>
+                    {/*日期*/}
+                    <Picker
+                        data={this.state.data}
+                        cols={1}
+                        value={this.state.asyncValue}
+                        onPickerChange={this.onPickerChange}
+                        onOk={v => this.chooseClassOnOk(v)}
+                    >
+                        <List.Item arrow="horizontal">班级</List.Item>
+                    </Picker>
+                    <WhiteSpace size="lg"/>
+                    <div className="classDemeanor_title">风采展示</div>
+                    <div className='showImg my_flex my_flex_wrap'>
+                        {this.state.imgArr.map((v) => {
+                            return <div className="listImg flex_center">
+                                <img className='uploadImgBtn' src={v.imagePath} alt=""/>
+                                <img onClick={this.deleteClassDemeanorInfo.bind(this, v.id)} className='delImgBtn'
+                                     src={require('../imgs/delPic.png')} alt=""/>
+                            </div>
+                        })}
+                    </div>
+                    <WhiteSpace size="lg"/>
+                    <div className="classDemeanor_title">上传照片</div>
+                    <div className='uploadImg my_flex my_flex_wrap'>
+                        {this.state.imgFromAndArr.map((v, i) => {
+                            return <div className="listImg flex_center">
+                                <img className='uploadImgBtn' src={v} alt=""/>
+                                <img onClick={this.deleteimgFromAndArr.bind(this, i)} className='delImgBtn'
+                                     src={require('../imgs/delPic.png')} alt=""/>
+                            </div>
+                        })}
+                        <img
+                            className='uploadImgBtn'
+                            src={require('../imgs/addPic.png')}
+                            alt=""
+                            onClick={this.uploadImgBtn}
+                        />
+                    </div>
                 </div>
                 <div className='addCourseButton'>
                     <WhiteSpace size="lg"/>

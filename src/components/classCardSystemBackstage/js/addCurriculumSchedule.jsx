@@ -144,7 +144,7 @@ export default class addCurriculumSchedule extends React.Component {
                         title='开始时间'
                         onOk={(time) => _this.startTimeOnOk(time, i)}
                     >
-                        <span className="add_element">{_this.state.ClassTableDataArr[i].startTimeData}</span>
+                        <span className="add_element">{_this.state.ClassTableDataArr[i].startTimeData}<i className="icon_triangle"></i></span>
                     </DatePicker>
                     <DatePicker
                         mode="time"
@@ -152,7 +152,7 @@ export default class addCurriculumSchedule extends React.Component {
                         title='结束时间'
                         onOk={(time) => _this.endTimeOnOk(time, i)}
                     >
-                        <span className="add_element">{_this.state.ClassTableDataArr[i].endTimeData}</span>
+                        <span className="add_element">{_this.state.ClassTableDataArr[i].endTimeData}<i className="icon_triangle"></i></span>
                     </DatePicker>
                     {/*上课地点*/}
                     <Picker
@@ -162,7 +162,7 @@ export default class addCurriculumSchedule extends React.Component {
                         onPickerChange={_this.onPosPickerChange}
                         onOk={v => console.log(v)}
                     >
-                        <span className="add_element">上课地点</span>
+                        <span className="add_element">上课地点<i className="icon_triangle"></i></span>
                     </Picker>
                 </div>
                 <div className="flex_container my_flex flex_addElement">
@@ -258,48 +258,50 @@ export default class addCurriculumSchedule extends React.Component {
     render() {
         return (
             <div id="addCurriculumSchedule" style={{height: document.body.clientHeight}}>
-                <WhiteSpace size="lg"/>
-                {/*选择班级*/}
-                <Picker
-                    data={this.state.classData}
-                    cols={1}
-                    value={this.state.classAsyncValue}
-                    onPickerChange={this.onClassPickerChange}
-                    onOk={v => console.log(v)}
-                >
-                    <List.Item arrow="horizontal">选择班级</List.Item>
-                </Picker>
-                <WhiteSpace size="lg"/>
-                {/*选择学期*/}
-                <Picker
-                    data={this.state.termData}
-                    cols={1}
-                    value={this.state.termAsyncValue}
-                    onPickerChange={this.onTermPickerChange}
-                    onOk={v => this.termOnOk(v)}
-                >
-                    <List.Item arrow="horizontal" onClick={this.chooseWeeks}>选择学期</List.Item>
-                </Picker>
-                <WhiteSpace size="lg"/>
-                {/*选择星期*/}
-                <Picker
-                    data={this.state.data}
-                    cols={1}
-                    value={this.state.asyncValue}
-                    onPickerChange={this.onPickerChange}
-                    onOk={v => console.log(v)}
-                >
-                    <List.Item arrow="horizontal">选择星期</List.Item>
-                </Picker>
-                <WhiteSpace size="lg"/>
-                <div className='CourseTableArea'>
-                    {
-                        this.state.ClassTableArr.map((v) => {
-                            return <div>{v}</div>
-                        })
-                    }
-                    <img onClick={this.addClassTable} className='addClassTable'
-                         src={require('../imgs/addClassTable.png')} alt=""/>
+                <div className="addCurriculum_cont">
+                    <WhiteSpace size="lg"/>
+                    {/*选择班级*/}
+                    <Picker
+                        data={this.state.classData}
+                        cols={1}
+                        value={this.state.classAsyncValue}
+                        onPickerChange={this.onClassPickerChange}
+                        onOk={v => console.log(v)}
+                    >
+                        <List.Item arrow="horizontal">选择班级</List.Item>
+                    </Picker>
+                    <WhiteSpace size="lg"/>
+                    {/*选择学期*/}
+                    <Picker
+                        data={this.state.termData}
+                        cols={1}
+                        value={this.state.termAsyncValue}
+                        onPickerChange={this.onTermPickerChange}
+                        onOk={v => this.termOnOk(v)}
+                    >
+                        <List.Item arrow="horizontal" onClick={this.chooseWeeks}>选择学期</List.Item>
+                    </Picker>
+                    <WhiteSpace size="lg"/>
+                    {/*选择星期*/}
+                    <Picker
+                        data={this.state.data}
+                        cols={1}
+                        value={this.state.asyncValue}
+                        onPickerChange={this.onPickerChange}
+                        onOk={v => console.log(v)}
+                    >
+                        <List.Item arrow="horizontal">选择星期</List.Item>
+                    </Picker>
+                    <WhiteSpace size="lg"/>
+                    <div className='CourseTableArea'>
+                        {
+                            this.state.ClassTableArr.map((v) => {
+                                return <div>{v}</div>
+                            })
+                        }
+                        <img onClick={this.addClassTable} className='addClassTable'
+                             src={require('../imgs/addClassTable.png')} alt=""/>
+                    </div>
                 </div>
                 <div className='addCourseButton'>
                     <WhiteSpace size="lg"/>
