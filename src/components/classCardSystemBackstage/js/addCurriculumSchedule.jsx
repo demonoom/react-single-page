@@ -1,5 +1,5 @@
 import React from 'react';
-import {Picker, List, WhiteSpace, Button, WingBlank, InputItem, DatePicker, TextareaItem} from 'antd-mobile';
+import {Picker, List,  WhiteSpace, Button, WingBlank, InputItem, DatePicker, TextareaItem} from 'antd-mobile';
 import '../css/addCurriculumSchedule.less'
 
 export default class addCurriculumSchedule extends React.Component {
@@ -143,23 +143,23 @@ export default class addCurriculumSchedule extends React.Component {
         var _this = this;
         var ClassTableArr = [];
         this.state.ClassTableDataArr.forEach(function (v, i) {
-            ClassTableArr.push(<div>
-                <div>
+            ClassTableArr.push(<div className="">
+                <div className="flex_container my_flex flex_addElement">
                     <DatePicker
                         mode="time"
                         use24Hours
-                        title='课程开始时间'
+                        title='开始时间'
                         onOk={(time) => _this.startTimeOnOk(time, i)}
                     >
-                        <span>{_this.state.ClassTableDataArr[i].startTimeData}</span>
+                        <span className="add_element">{_this.state.ClassTableDataArr[i].startTimeData}</span>
                     </DatePicker>
                     <DatePicker
                         mode="time"
                         use24Hours
-                        title='课程结束时间'
+                        title='结束时间'
                         onOk={(time) => _this.endTimeOnOk(time, i)}
                     >
-                        <span>{_this.state.ClassTableDataArr[i].endTimeData}</span>
+                        <span className="add_element">{_this.state.ClassTableDataArr[i].endTimeData}</span>
                     </DatePicker>
                     {/*上课地点*/}
                     <Picker
@@ -169,25 +169,28 @@ export default class addCurriculumSchedule extends React.Component {
                         onPickerChange={_this.onPosPickerChange}
                         onOk={v => console.log(v)}
                     >
-                        <span>上课地点</span>
+                        <span className="add_element">上课地点</span>
                     </Picker>
                 </div>
-                <List>
+                <div className="flex_container my_flex flex_addElement">
                     <InputItem
+                        className="add_element"
                         placeholder="请输入课程名称"
                         value={v.clazzName}
                         onChange={_this.inputOnChange.bind(this, i)}
-                    >课程名称</InputItem>
-                </List>
-                <div onClick={_this.addNotes.bind(this, i)}>添加备注</div>
-                <List style={{display: _this.state.ClassTableDataArr[i].nodeDisplay}}>
+                    ></InputItem>
+                </div>
+                <div className="flex_container my_flex flex_addElement" onClick={_this.addNotes.bind(this, i)}>添加备注</div>
+                <div className="flex_container my_flex flex_addElement" style={{display: _this.state.ClassTableDataArr[i].nodeDisplay}}>
                     <TextareaItem
                         rows={2}
+                        className="add_element"
+                        placeholder="添加备注"
                         labelNumber={2}
                         value={v.nodeDetal}
                         onChange={_this.textareaOnChange.bind(this, i)}
                     />
-                </List>
+                </div>
             </div>)
             _this.setState({ClassTableArr})
         })
@@ -205,8 +208,8 @@ export default class addCurriculumSchedule extends React.Component {
          * clazzName课程名称
          */
         this.state.ClassTableDataArr.push({
-            startTimeData: '课程开始时间',
-            endTimeData: '课程结束时间',
+            startTimeData: '开始时间',
+            endTimeData: '结束时间',
             classAd: '',
             clazzName: '',
             nodeDisplay: 'none',
