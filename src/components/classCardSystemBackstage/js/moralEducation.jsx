@@ -2,7 +2,7 @@ import React from 'react';
 import { Picker, List, WhiteSpace,DatePicker } from 'antd-mobile';
 import enUs from 'antd-mobile/lib/date-picker/locale/en_US';
 import '../css/moralEducation.less'
-
+const mEducation = this;
 const nowTimeStamp = Date.now();
 const now = new Date(nowTimeStamp);
 // GMT is not currently observed in the UK. So use UTC now.
@@ -125,7 +125,7 @@ export default class curriculumSchedule extends React.Component {
 
  
     getSelectData(){
-       console.log(this.state.date);
+       console.log("123");
     }
     /**
      * 增加课程表的回调

@@ -19,15 +19,15 @@ function formatDate(date) {
     const timeStr = `${pad(date.getHours())}:${pad(date.getMinutes())}`;
     return `${dateStr} ${timeStr}`;
 }
-const CustomChildren = ({ extra, onClick, children }) => (
-    <div
-        onClick={onClick}
-        style={{ backgroundColor: '#fff', height: '45px', lineHeight: '45px', padding: '0 15px' }}
-    >
-        {children}
-        <span style={{ float: 'right', color: '#888' }}>{extra}</span>
-    </div>
-);
+// const CustomChildren = ({ extra, onClick, children }) => (
+//     <div
+//         onClick={onClick}
+//         style={{ backgroundColor: '#fff', height: '45px', lineHeight: '45px', padding: '0 15px' }}
+//     >
+//         {children}
+//         <span style={{ float: 'right', color: '#888' }}>{extra}</span>
+//     </div>
+// );
 export default class addCurriculumSchedule extends React.Component {
     constructor(props) {
         super(props);
@@ -199,8 +199,9 @@ export default class addCurriculumSchedule extends React.Component {
             }
         });
     }
-
+    
     render() {
+
         return (
             <div id="addMoralEducation" style={{ height: document.body.clientHeight }}>
                 <WhiteSpace size="lg" />
