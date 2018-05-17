@@ -283,9 +283,9 @@ export default class classroomManage extends React.Component {
             return (<div>
                 {
                     <div className="classInfo">
-                        <span className="classroom">{rowData.name}</span>
+                        <span className="classroom textOver">{rowData.name}</span>
                         {
-                            rowData.defaultBindedClazz ? <span className="grade">{rowData.defaultBindedClazz.name}</span> : <span className="grade"></span>
+                            rowData.defaultBindedClazz ? <span className="grade textOver">{rowData.defaultBindedClazz.name}</span> : <span className="grade"></span>
                         }
                         <span className='calmCardUnbind'
                         >修改</span>
@@ -336,7 +336,7 @@ export default class classroomManage extends React.Component {
                                 data-seed="logId"
                                 onChange={this.inputOnChange.bind(this)}
                                 value={this.state.classroomValue}
-                            >教室名称</InputItem>
+                            >教室名称<i className='redStar'>*</i></InputItem>
                         </div>
                         <div className="bindGrade">
                             <AgreeItem data-seed="logId" onChange={e => this.getbindGradeState(e)}>
@@ -349,8 +349,8 @@ export default class classroomManage extends React.Component {
                                 data-seed="logId"
                                 onChange={this.inputChange.bind(this)}
                                 value={this.state.gradeNameValue}
-                            >班级名称</InputItem>
-                            <img id='stIcon' className='stIcon' src={require('../imgs/search.png')}
+                            >班级名称<i className='redStar'>*</i></InputItem>
+                            <img id='stIcon' className='stIcon' src={require('../imgs/down.png')}
                                 onClick={this.searchClassroomName} />
 
                         </div>
