@@ -240,7 +240,6 @@ export default class HomeWorkUnderstandAnalysisByClassSubject extends React.Comp
     };
 
     averageUnderrstanding = () => {
-        debugger
         var analysisUrl = WebServiceUtil.mobileServiceURL + "homeWorkUnderstandAnalysisByClassSubject?clazzId=" + this.state.clazzId + "&pushTime=" + this.state.pushTime + "&ident=" + this.state.ident + "&censusType=1" + "&queId=" + 1;
 
         var data = {

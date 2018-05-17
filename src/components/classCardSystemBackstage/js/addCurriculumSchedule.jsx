@@ -16,8 +16,7 @@ export default class addCurriculumSchedule extends React.Component {
                 {value: '7', label: '星期日'}],
             classData: [],
             posData: [],
-            termData: [{value: '-1', label: '自定义学期'},
-                {value: '7', label: '星期日'}],
+            termData: [{value: '-1', label: '自定义学期'}],
             asyncValue: [],
             termAsyncValue: [],
             classAsyncValue: [],
@@ -131,7 +130,6 @@ export default class addCurriculumSchedule extends React.Component {
     }
 
     addNotes = (i) => {
-        debugger
         this.state.ClassTableDataArr[i].nodeDisplay = 'block';
         this.buildClassTable();
     }
@@ -233,6 +231,34 @@ export default class addCurriculumSchedule extends React.Component {
         }
     }
 
+    chooseWeeks = () => {
+        var _this = this;
+        var param = {
+            "method": 'getSemesterList',
+            "uid": JSON.parse(localStorage.getItem('loginUserSchedule')).colUid
+        };
+        WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
+            onResponse: function (result) {
+                if (result.msg == '调用成功' || result.success == true) {
+                    if (WebServiceUtil.isEmpty(result.response) == false) {
+                        var arr = []
+                        result.response.forEach(function (v, i) {
+                            arr.push(
+                                {
+                                    value: v.id,
+                                    label: v.name
+                                })
+                        })
+                        _this.setState({termData: _this.state.termData.concat(arr)})
+                    }
+                }
+            },
+            onError: function (error) {
+                // message.error(error);
+            }
+        });
+    }
+
     render() {
         return (
             <div id="addCurriculumSchedule" style={{height: document.body.clientHeight}}>
@@ -256,7 +282,7 @@ export default class addCurriculumSchedule extends React.Component {
                     onPickerChange={this.onTermPickerChange}
                     onOk={v => this.termOnOk(v)}
                 >
-                    <List.Item arrow="horizontal">选择学期</List.Item>
+                    <List.Item arrow="horizontal" onClick={this.chooseWeeks}>选择学期</List.Item>
                 </Picker>
                 <WhiteSpace size="lg"/>
                 {/*选择星期*/}
