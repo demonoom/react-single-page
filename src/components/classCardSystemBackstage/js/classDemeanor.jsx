@@ -79,7 +79,6 @@ export default class classDemeanor extends React.Component {
         };
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
             onResponse: function (result) {
-                console.log(result);
                 if (result.msg == '调用成功' || result.success == true) {
                     demeanor.setState({imgArr: result.response});
                 }
@@ -130,6 +129,9 @@ export default class classDemeanor extends React.Component {
                     if (result.msg == '调用成功' || result.success == true) {
                         if (i == demeanor.state.imgFromAndArr.length - 1) {
                             Toast.success('上传成功');
+                            //刷新上半部
+                            demeanor.getClassDemeanorInfo(demeanor.state.asyncValue[0])
+                            demeanor.state.imgFromAndArr.splice(0)
                         }
                     }
                 },
@@ -140,7 +142,41 @@ export default class classDemeanor extends React.Component {
         })
     }
 
+    deleteClassDemeanorInfo(id) {
+        var param = {
+            "method": 'deleteClassDemeanorInfo',
+            "id": id,
+        };
+        WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
+            onResponse: function (result) {
+                if (result.msg == '调用成功' || result.success == true) {
+                    var arr = demeanor.state.imgArr
+                    demeanor.state.imgArr.forEach((v, i) => {
+                        if (v.id == id) {
+                            arr.splice(i, 1);
+                        }
+                    })
+                    demeanor.setState({imgArr: arr})
+                }
+            },
+            onError: function (error) {
+                // message.error(error);
+            }
+        });
+    }
+
+    deleteimgFromAndArr(index) {
+        var arr = demeanor.state.imgFromAndArr;
+        demeanor.state.imgFromAndArr.forEach((v, i) => {
+            if (i == index) {
+                arr.splice(i, 1);
+            }
+        })
+        demeanor.setState({imgFromAndArr: arr})
+    }
+
     render() {
+        console.log(demeanor.state.imgArr);
         return (
             <div id="classDemeanor" style={{height: document.body.clientHeight}}>
                 <WhiteSpace size="lg"/>
@@ -155,24 +191,31 @@ export default class classDemeanor extends React.Component {
                     <List.Item arrow="horizontal">班级</List.Item>
                 </Picker>
                 <WhiteSpace size="lg"/>
+<<<<<<< HEAD
                 <div>风采展示</div>
                 <div className='showImg my_flex my_flex_wrap'>
 
                     {/*imgArr*/}
+=======
+                <div className='showImg'>
+                    <div>风采展示</div>
+>>>>>>> b2a3b50f23a5f0e19be8533fef39b8e080ba818a
                     {this.state.imgArr.map((v) => {
                         return <div className="listImg">
                             <img className='uploadImgBtn' src={v.imagePath} alt=""/>
-                            <img className='delImgBtn' src={require('../imgs/delPic.png')} alt=""/>
+                            <img onClick={this.deleteClassDemeanorInfo.bind(this, v.id)} className='delImgBtn'
+                                 src={require('../imgs/delPic.png')} alt=""/>
                         </div>
                     })}
                 </div>
                 <WhiteSpace size="lg"/>
                 <div className='uploadImg'>
                     <div>上传照片</div>
-                    {this.state.imgFromAndArr.map((v) => {
+                    {this.state.imgFromAndArr.map((v, i) => {
                         return <div>
                             <img className='uploadImgBtn' src={v} alt=""/>
-                            <img className='delImgBtn' src={require('../imgs/delPic.png')} alt=""/>
+                            <img onClick={this.deleteimgFromAndArr.bind(this, i)} className='delImgBtn'
+                                 src={require('../imgs/delPic.png')} alt=""/>
                         </div>
                     })}
                     <img
