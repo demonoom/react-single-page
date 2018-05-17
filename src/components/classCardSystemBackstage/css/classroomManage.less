@@ -1,19 +1,30 @@
 
 #classroomManage {
+     .textOver{
+       overflow: hidden;
+       white-space: nowrap;
+       text-overflow:ellipsis;
+       display: block;
 
+     }
+    .whiteBack{
+      background-color: #fff;
+    }
     .am-pull-to-refresh-content-wrapper {
       height: 100%;
+      overflow-y: auto;
     }
     .am-list-view-scrollview-content {
       height: 100%;
+      overflow-y: auto;
     }
     .am-pull-to-refresh-indicator {
       font-size: 1rem !important;
     }
-    font-size: 20px;
+    font-size: 17px;
+
     .tableDiv {
       position: relative;
-  
       .am-card-body {
         min-height: 1.5rem !important;
         color: #888 !important;
@@ -24,9 +35,30 @@
       .calmCardUnbind {
         background: #f55d45;
         color: #fff !important;
-        padding: 0.15rem 1.3rem;
+        padding: 0 10px;
+        text-align: center;
+        -webkit-border-radius: 2px;
+        -moz-border-radius: 2px;
+        border-radius: 2px;
+        position: absolute;
+        right: 15px;
+        font-size: 14px;
+        line-height: 24px;
       }
-      
+      .classInfo{
+        display: flex;
+        display: -webkit-flex;
+        flex-direction: row;
+        position: relative;
+        padding: 15px 15px;
+        border-bottom: 1px #eee solid;
+        line-height: 24px;
+
+      }
+      .grade{
+        color: #a9a9a9;
+        padding-left: 10px;
+      }
       .noomCardUnbind {
         color: #ff144e;
       }
@@ -52,6 +84,16 @@
       // flex-direction: column;
       // background-color: #fff;
       position: relative;
+      .am-checkbox-inner{
+        -webkit-border-radius: 0;
+        -moz-border-radius: 0;
+        border-radius: 0;
+      }
+      .am-checkbox-agree{
+        .am-checkbox-agree-label{
+          line-height: 1.7;
+        }
+      }
       .am-list {
         .am-list-body::before {
           display: none !important;
@@ -61,24 +103,20 @@
         }
         .am-list-body {
           background: transparent;
-  
+
           .macAddress {
             margin-bottom: 1rem;
           }
           .chooseResult {
             .am-list-item {
-              box-sizing: border-box;
-              margin: 0rem 1rem;
-              background: #eee;
-              margin-bottom: 0px;
+              background: #e4e4e4;
               padding: 0;
               .am-list-line {
-                padding: 0;
+                padding: 0 20px;
                 .am-list-content {
-                  font-size: 1.5rem;
-                  margin: 0rem 1rem;
+                  font-size: 17px;
                   padding: 1.5rem 1.5rem;
-                  border-bottom: 1px solid #a2a2a2;
+                  border-bottom: 1px solid #d5d5d5;
                   color: #676767;
                   .am-list-brief {
                     font-size: 1.4rem;
@@ -100,8 +138,11 @@
           }
           .am-list-item {
             // padding: 2rem 2rem;
-            .am-input-label, {
+            .am-input-label{
               color: #3c3c3c;
+            }
+            .am-input-control{
+              line-height: 25px;
             }
             .am-input-control input {
               color: #3c3c3c;
@@ -113,7 +154,9 @@
           }
           .am-list-line {
             .am-input-label.am-input-label-5 {
-              width: 80px !important;
+              width: auto !important;
+              position: relative;
+              padding-right:15px;
             }
             .am-input-control {
               input {
@@ -152,13 +195,21 @@
       .classroomName,
       .gradeName {
         position: relative;
+        .redStar{
+          color: red;
+          font-size: 22px;
+          position: absolute;
+          right: 2px;
+          top: 2px;
+
+        }
         .stIcon {
-          width: 30px;
-          height: 30px;
+          width: 14px;
+          height: 13px;
           position: absolute;
           right: 10px;
           top: 50%;
-          transform: translateY(-50%);
+          margin-top: -6px;
         }
       }
   
@@ -181,5 +232,6 @@
         }
   
       }
+
     }
   }
