@@ -270,7 +270,7 @@ class Index extends React.Component {
                         to="/classroomManage"
                         style={{fontSize: '24px'}}>教室管理页面</Link></li>
                     <li><Link
-                        to="/classDemeanor?ident=23836"
+                        to="/classDemeanor?ident=23836&access=23836"
                         style={{fontSize: '24px'}}>班级风采</Link></li>
 
                 </ul>

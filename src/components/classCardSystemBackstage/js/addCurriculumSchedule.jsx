@@ -1,5 +1,5 @@
 import React from 'react';
-import {Picker, List,  WhiteSpace, Button, WingBlank, InputItem, DatePicker, TextareaItem} from 'antd-mobile';
+import {Picker, List, WhiteSpace, Button, WingBlank, InputItem, DatePicker, TextareaItem} from 'antd-mobile';
 import '../css/addCurriculumSchedule.less'
 
 export default class addCurriculumSchedule extends React.Component {
@@ -129,11 +129,6 @@ export default class addCurriculumSchedule extends React.Component {
         this.buildClassTable();
     }
 
-    addNotes = (i) => {
-        this.state.ClassTableDataArr[i].nodeDisplay = 'block';
-        this.buildClassTable();
-    }
-
     /**
      * 根据数据构建,完成数据的动态绑定
      */
@@ -178,8 +173,7 @@ export default class addCurriculumSchedule extends React.Component {
                         onChange={_this.inputOnChange.bind(this, i)}
                     ></InputItem>
                 </div>
-                <div className="flex_container my_flex flex_addElement" onClick={_this.addNotes.bind(this, i)}>添加备注</div>
-                <div className="flex_container my_flex flex_addElement" style={{display: _this.state.ClassTableDataArr[i].nodeDisplay}}>
+                <div className="flex_container my_flex flex_addElement">
                     <TextareaItem
                         rows={2}
                         className="add_element"
@@ -210,7 +204,6 @@ export default class addCurriculumSchedule extends React.Component {
             endTimeData: '结束时间',
             classAd: '',
             clazzName: '',
-            nodeDisplay: 'none',
             nodeDetal: ''
         });
         this.buildClassTable();

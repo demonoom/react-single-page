@@ -1,14 +1,19 @@
 import React from 'react';
-import {Picker, List, WhiteSpace, WingBlank, Button} from 'antd-mobile';
+import {Picker, List, WhiteSpace, WingBlank, Button, Toast} from 'antd-mobile';
 import '../css/classDemeanor.less'
+
+var demeanor;
 
 export default class classDemeanor extends React.Component {
 
     constructor(props) {
         super(props);
+        demeanor = this;
         this.state = {
             data: [],
             asyncValue: [],
+            imgFromAndArr: [],
+            imgArr: [],
         };
     }
 
@@ -16,7 +21,7 @@ export default class classDemeanor extends React.Component {
         document.title = '班级风采';
         var locationHref = window.location.href;
         var locationSearch = locationHref.substr(locationHref.indexOf("?") + 1);
-        var ident = locationSearch.split("=")[1];
+        var ident = locationSearch.split("&")[0].split('=')[1];
         this.getClazzesByUserId(ident)
     }
 
@@ -75,7 +80,7 @@ export default class classDemeanor extends React.Component {
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
             onResponse: function (result) {
                 if (result.msg == '调用成功' || result.success == true) {
-                    console.log(result);
+                    demeanor.setState({imgArr: result.response});
                 }
             },
             onError: function (error) {
@@ -88,14 +93,50 @@ export default class classDemeanor extends React.Component {
      * 原生上传照片返回地址
      */
     uploadImgBtn() {
+        var data = {
+            method: 'uploadClassDemeanor',
+        };
 
+        Bridge.callHandler(data, function (res) {
+            //拿到图片地址,显示在页面等待上传
+            var arr = res.split(',');
+            demeanor.setState({imgFromAndArr: arr});
+        }, function (error) {
+            console.log(error);
+        });
     }
 
     /**
      * 本地上传照片
      */
-    uploadImg() {
-
+    uploadImg = () => {
+        if (demeanor.state.imgFromAndArr.length == 0) {
+            Toast.fail('请先选择照片')
+            return
+        }
+        if (WebServiceUtil.isEmpty(demeanor.state.asyncValue)) {
+            Toast.fail('请先选择班级')
+            return
+        }
+        demeanor.state.imgFromAndArr.forEach(function (v, i) {
+            var param = {
+                "method": 'saveClassDemeanorInfo',
+                "clazzId": demeanor.state.asyncValue[0],
+                "imagePath": v,
+            };
+            WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
+                onResponse: function (result) {
+                    if (result.msg == '调用成功' || result.success == true) {
+                        if (i == demeanor.state.imgFromAndArr.length - 1) {
+                            Toast.success('上传成功');
+                        }
+                    }
+                },
+                onError: function (error) {
+                    // message.error(error);
+                }
+            });
+        })
     }
 
     render() {
@@ -115,10 +156,23 @@ export default class classDemeanor extends React.Component {
                 <WhiteSpace size="lg"/>
                 <div className='showImg'>
                     <div>风采展示</div>
+                    {/*imgArr*/}
+                    {this.state.imgArr.map((v) => {
+                        return <div>
+                            <img className='uploadImgBtn' src={v.imagePath} alt=""/>
+                            <img className='delImgBtn' src={require('../imgs/delPic.png')} alt=""/>
+                        </div>
+                    })}
                 </div>
                 <WhiteSpace size="lg"/>
                 <div className='uploadImg'>
                     <div>上传照片</div>
+                    {this.state.imgFromAndArr.map((v) => {
+                        return <div>
+                            <img className='uploadImgBtn' src={v} alt=""/>
+                            <img className='delImgBtn' src={require('../imgs/delPic.png')} alt=""/>
+                        </div>
+                    })}
                     <img
                         className='uploadImgBtn'
                         src={require('../imgs/addPic.png')}
