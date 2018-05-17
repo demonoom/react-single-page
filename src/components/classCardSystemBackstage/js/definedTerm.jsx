@@ -1,0 +1,106 @@
+import React from 'react';
+import {List, WhiteSpace, DatePicker, InputItem, WingBlank, Button, Toast} from 'antd-mobile';
+import '../css/definedTerm.less'
+
+const nowTimeStamp = Date.now();
+const now = new Date(nowTimeStamp);
+
+export default class definedTerm extends React.Component {
+
+    constructor(props) {
+        super(props);
+        this.state = {
+            startDate: now,
+            startDateTime: WebServiceUtil.formatYMD(new Date(now).getTime()),
+            endDate: now,
+            endDateTime: WebServiceUtil.formatYMD(new Date(now).getTime()),
+            inputValue: '',
+        };
+    }
+
+    componentDidMount() {
+        document.title = '自定义学期';
+    }
+
+    /**
+     * 开始时间确定的回调
+     */
+    startDateOnOk(v) {
+        this.setState({startDateTime: WebServiceUtil.formatYMD(new Date(v).getTime())})
+    }
+
+    /**
+     * 结束时间确定的回调
+     * @param v
+     */
+    endDateOnOk(v) {
+        this.setState({endDateTime: WebServiceUtil.formatYMD(new Date(v).getTime())})
+    }
+
+    /**
+     * 学期名称输入的回调
+     * @param e
+     */
+    inputOnChange(e) {
+        this.setState({inputValue: e})
+    }
+
+    /**
+     * 提交的回调
+     */
+    addCourseTableItem = () => {
+        var inputValue = this.state.inputValue;
+        var startDateTime = this.state.startDateTime;
+        var endDateTime = this.state.endDateTime;
+        if (WebServiceUtil.isEmpty(inputValue)) {
+            Toast.fail('请确定已选择时间并填写学期名称');
+            return
+        }
+        if (startDateTime === endDateTime) {
+            Toast.fail('日期设置错误,请检查');
+            return
+        }
+        console.log(inputValue);
+        console.log(startDateTime);
+        console.log(endDateTime);
+    }
+
+    render() {
+        return (
+            <div id="definedTerm" style={{height: document.body.clientHeight}}>
+                <WhiteSpace size="lg"/>
+                <DatePicker
+                    mode="date"
+                    extra="Optional"
+                    value={this.state.startDate}
+                    onChange={date => this.setState({startDate: date})}
+                    onOk={v => this.startDateOnOk(v)}
+                >
+                    <List.Item arrow="horizontal">学期开始时间</List.Item>
+                </DatePicker>
+                <WhiteSpace size="lg"/>
+                <DatePicker
+                    mode="date"
+                    extra="Optional"
+                    value={this.state.endDate}
+                    onChange={date => this.setState({endDate: date})}
+                    onOk={v => this.endDateOnOk(v)}
+                >
+                    <List.Item arrow="horizontal">学期结束时间</List.Item>
+                </DatePicker>
+                <WhiteSpace size="lg"/>
+                <InputItem
+                    placeholder="请输入学期名称"
+                    onChange={this.inputOnChange.bind(this)}
+                    value={this.state.inputValue}
+                >学期名称</InputItem>
+                <div className='addCourseButton'>
+                    <WhiteSpace size="lg"/>
+                    <WingBlank>
+                        <Button type="warning" onClick={this.addCourseTableItem}>提交</Button>
+                    </WingBlank>
+                </div>
+            </div>
+        );
+    }
+}

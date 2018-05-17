@@ -90,16 +90,16 @@ export default class curriculumSchedule extends React.Component {
      */
     viewCourseTableItemPage(v) {
         console.log(v);
+        //String uid, String sid, String w, String cid, String ri
     }
 
     render() {
-        var _this = this;
         return (
             <div id="curriculumSchedule" style={{height: document.body.clientHeight}}>
                 <WhiteSpace size="lg"/>
+                {/*班级,学期*/}
                 <Picker
                     data={seasons}
-                    title="请选择"
                     cascade={false}
                     value={this.state.sValue}
                     onChange={v => this.setState({sValue: v})}
@@ -108,6 +108,7 @@ export default class curriculumSchedule extends React.Component {
                     <List.Item arrow="horizontal">班级,学期</List.Item>
                 </Picker>
                 <WhiteSpace size="lg"/>
+                {/*日期*/}
                 <Picker
                     data={this.state.data}
                     cols={1}

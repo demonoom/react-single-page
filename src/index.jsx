@@ -194,6 +194,11 @@ const addCurriculumSchedule = (location, cb) => {
         cb(null, require("./components/classCardSystemBackstage/js/addCurriculumSchedule").default)
     })
 }
+const definedTerm = (location, cb) => {
+    require.ensure([], require => {
+        cb(null, require("./components/classCardSystemBackstage/js/definedTerm").default)
+    })
+}
 
 import './index.less';
 
@@ -296,6 +301,7 @@ ReactDOM.render(
             <Route path="workAttendance" getComponent={workAttendance}/>
             <Route path="noticeReadMore" getComponent={noticeReadMore}/>
             <Route path="addCurriculumSchedule" getComponent={addCurriculumSchedule}/>
+            <Route path="definedTerm" getComponent={definedTerm}/>
         </Route>
     </Router>
     , document.getElementById('example'));
