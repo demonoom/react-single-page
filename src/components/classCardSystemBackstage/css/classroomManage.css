@@ -1,5 +1,11 @@
 #classroomManage {
-  font-size: 20px;
+  font-size: 1.4rem;
+}
+#classroomManage .textOver {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  display: block;
 }
 #classroomManage .am-pull-to-refresh-content-wrapper {
   height: 100%;
@@ -24,6 +30,24 @@
   background: #f55d45;
   color: #fff !important;
   padding: 0.15rem 1.3rem;
+  text-align: center;
+  -webkit-border-radius: 4px;
+  -moz-border-radius: 4px;
+  border-radius: 4px;
+}
+#classroomManage .tableDiv .classInfo {
+  display: flex;
+  display: -webkit-flex;
+  flex-direction: row;
+  position: relative;
+  padding: .7rem 2rem ;
+}
+#classroomManage .tableDiv .classInfo .calmCardUnbind {
+  position: absolute;
+  right: 10px;
+}
+#classroomManage .tableDiv .grade {
+  color: #a9a9a9;
 }
 #classroomManage .tableDiv .noomCardUnbind {
   color: #ff144e;
@@ -156,3 +180,4 @@
   background: #e46a51;
   color: #fff;
 }
+/*# sourceMappingURL=classroomManage.css.map */

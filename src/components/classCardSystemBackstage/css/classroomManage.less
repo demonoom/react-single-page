@@ -1,6 +1,11 @@
 
 #classroomManage {
-
+     .textOver{
+       overflow: hidden;
+       white-space: nowrap;
+       text-overflow:ellipsis;
+       display: block;
+     }
     .am-pull-to-refresh-content-wrapper {
       height: 100%;
     }
@@ -10,7 +15,7 @@
     .am-pull-to-refresh-indicator {
       font-size: 1rem !important;
     }
-    font-size: 20px;
+    font-size: 1.4rem;
     .tableDiv {
       position: relative;
   
@@ -25,8 +30,25 @@
         background: #f55d45;
         color: #fff !important;
         padding: 0.15rem 1.3rem;
+        text-align: center;
+        -webkit-border-radius: 4px;
+        -moz-border-radius: 4px;
+        border-radius: 4px;
       }
-      
+      .classInfo{
+        display: flex;
+        display: -webkit-flex;
+        flex-direction: row;
+        position: relative;
+        padding:.7rem 2rem ;
+        .calmCardUnbind{
+          position: absolute;
+          right: 10px;
+        }
+      }
+      .grade{
+        color: #a9a9a9;
+      }
       .noomCardUnbind {
         color: #ff144e;
       }
@@ -61,7 +83,7 @@
         }
         .am-list-body {
           background: transparent;
-  
+
           .macAddress {
             margin-bottom: 1rem;
           }
@@ -100,7 +122,7 @@
           }
           .am-list-item {
             // padding: 2rem 2rem;
-            .am-input-label, {
+            .am-input-label{
               color: #3c3c3c;
             }
             .am-input-control input {
