@@ -42,18 +42,22 @@
         border-radius: 2px;
         position: absolute;
         right: 15px;
+        top: 15px;
         font-size: 14px;
         line-height: 24px;
       }
       .classInfo{
-        display: flex;
-        display: -webkit-flex;
-        flex-direction: row;
         position: relative;
         padding: 15px 15px;
         border-bottom: 1px #eee solid;
         line-height: 24px;
-
+        .textOver{
+          width: calc(~"100%" - 70px);
+          color: #a9a9a9;
+        }
+      }
+      .classroom{
+        color:#000;
       }
       .grade{
         color: #a9a9a9;
@@ -66,7 +70,7 @@
         width: 3.5rem;
         height: 3.5rem;
         position: absolute;
-        right: 3rem;
+        right: 5.2rem;
         bottom: 5rem;
   
         img {
