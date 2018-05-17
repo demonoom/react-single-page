@@ -283,10 +283,12 @@ export default class classroomManage extends React.Component {
             return (<div>
                 {
                     <div className="classInfo">
-                        <span className="classroom textOver">{rowData.name}</span>
+                        <div className="textOver">
+                        <span className="classroom">{rowData.name}</span>
                         {
-                            rowData.defaultBindedClazz ? <span className="grade textOver">{rowData.defaultBindedClazz.name}</span> : <span className="grade"></span>
+                            rowData.defaultBindedClazz ? <span className="grade">{rowData.defaultBindedClazz.name}</span> : <span className="grade"></span>
                         }
+                        </div>
                         <span className='calmCardUnbind'
                         >修改</span>
                     </div>

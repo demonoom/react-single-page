@@ -1,26 +1,71 @@
 #classDemeanor {
+  .Img_cont{
+    height: calc(~"100%" - 77px);
+    overflow-y: auto;
+    overflow-x: hidden;
+  }
   .showImg {
-    min-height: 18rem;
+    min-height: 17rem;
     background-color: #fff;
+    padding: 0px 15px 15px 5px;
     .uploadImgBtn {
-      width: 5rem;
-      height: 5rem;
+      max-width: 100%;
+      max-height: 100%;
+    }
+    .delImgBtn {
+      position: absolute;
+      right: 3px;
+      top: 3px;
+      width: 1.2rem;
+      height: 1.2rem;
+    }
+  }
+  .uploadImg {
+    min-height: 7.5rem;
+    background-color: #fff;
+    padding: 0px 15px 15px 5px;
+    .uploadImgBtn {
+      width: 7.5rem;
+      height:7.5rem;
+      margin-left: 10px;
     }
     .delImgBtn {
       width: 1rem;
       height: 1rem;
     }
   }
-  .uploadImg {
-    min-height: 10rem;
-    background-color: #fff;
-    .uploadImgBtn {
-      width: 5rem;
-      height: 5rem;
+
+  .flex_addElement div{
+    -webkit-box-flex: 1;
+    -webkit-flex: 1;
+    -ms-flex: 1;
+    flex: 1;
+    margin-left: 8px;
+    min-width: 10px;
+  }
+  .listImg{
+    width: 7.5rem;
+    height:7.5rem;
+    text-align: center;
+    position: relative;
+    border: 1px solid #e5e5e5;
+    margin-left: 10px;
+
+    display: flex;
+     img{
+        max-height: 100%;
+        max-width: 100%;
     }
-    .delImgBtn {
-      width: 1rem;
-      height: 1rem;
-    }
+  }
+  .classDemeanor_title{
+    background: #fff;
+    line-height: 44px;
+    padding-left: 15px;
+    font-size: 17px;
+  }
+  .addCourseButton {
+    position: absolute;
+    bottom: 15px;
+    width: 100%;
   }
 }
