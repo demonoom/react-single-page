@@ -54,6 +54,13 @@ export default class curriculumSchedule extends React.Component {
 
     componentDidMount() {
         document.title = '班级课程表';
+        var locationHref = window.location.href;
+        var locationSearch = locationHref.substr(locationHref.indexOf("?") + 1);
+        var ident = locationSearch.split("=")[1];
+        var loginUser = {
+            "colUid": ident,
+        };
+        localStorage.setItem("loginUserSchedule", JSON.stringify(loginUser));
     }
 
     /**

@@ -1,5 +1,5 @@
 import React from 'react';
-import {Picker, List,  WhiteSpace, Button, WingBlank, InputItem, DatePicker, TextareaItem} from 'antd-mobile';
+import {Picker, List, WhiteSpace, Button, WingBlank, InputItem, DatePicker, TextareaItem} from 'antd-mobile';
 import '../css/addCurriculumSchedule.less'
 
 export default class addCurriculumSchedule extends React.Component {
@@ -16,8 +16,7 @@ export default class addCurriculumSchedule extends React.Component {
                 {value: '7', label: '星期日'}],
             classData: [],
             posData: [],
-            termData: [{value: '-1', label: '自定义学期'},
-                {value: '7', label: '星期日'}],
+            termData: [{value: '-1', label: '自定义学期'}],
             asyncValue: [],
             termAsyncValue: [],
             classAsyncValue: [],
@@ -130,12 +129,6 @@ export default class addCurriculumSchedule extends React.Component {
         this.buildClassTable();
     }
 
-    addNotes = (i) => {
-        debugger
-        this.state.ClassTableDataArr[i].nodeDisplay = 'block';
-        this.buildClassTable();
-    }
-
     /**
      * 根据数据构建,完成数据的动态绑定
      */
@@ -180,8 +173,7 @@ export default class addCurriculumSchedule extends React.Component {
                         onChange={_this.inputOnChange.bind(this, i)}
                     ></InputItem>
                 </div>
-                <div className="flex_container my_flex flex_addElement" onClick={_this.addNotes.bind(this, i)}>添加备注</div>
-                <div className="flex_container my_flex flex_addElement" style={{display: _this.state.ClassTableDataArr[i].nodeDisplay}}>
+                <div className="flex_container my_flex flex_addElement">
                     <TextareaItem
                         rows={2}
                         className="add_element"
@@ -212,7 +204,6 @@ export default class addCurriculumSchedule extends React.Component {
             endTimeData: '结束时间',
             classAd: '',
             clazzName: '',
-            nodeDisplay: 'none',
             nodeDetal: ''
         });
         this.buildClassTable();
@@ -234,6 +225,34 @@ export default class addCurriculumSchedule extends React.Component {
                 window.location.href = url;
             });
         }
+    }
+
+    chooseWeeks = () => {
+        var _this = this;
+        var param = {
+            "method": 'getSemesterList',
+            "uid": JSON.parse(localStorage.getItem('loginUserSchedule')).colUid
+        };
+        WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
+            onResponse: function (result) {
+                if (result.msg == '调用成功' || result.success == true) {
+                    if (WebServiceUtil.isEmpty(result.response) == false) {
+                        var arr = []
+                        result.response.forEach(function (v, i) {
+                            arr.push(
+                                {
+                                    value: v.id,
+                                    label: v.name
+                                })
+                        })
+                        _this.setState({termData: _this.state.termData.concat(arr)})
+                    }
+                }
+            },
+            onError: function (error) {
+                // message.error(error);
+            }
+        });
     }
 
     render() {
@@ -259,7 +278,7 @@ export default class addCurriculumSchedule extends React.Component {
                     onPickerChange={this.onTermPickerChange}
                     onOk={v => this.termOnOk(v)}
                 >
-                    <List.Item arrow="horizontal">选择学期</List.Item>
+                    <List.Item arrow="horizontal" onClick={this.chooseWeeks}>选择学期</List.Item>
                 </Picker>
                 <WhiteSpace size="lg"/>
                 {/*选择星期*/}

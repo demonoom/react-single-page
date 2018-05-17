@@ -60,9 +60,37 @@ export default class definedTerm extends React.Component {
             Toast.fail('日期设置错误,请检查');
             return
         }
-        console.log(inputValue);
-        console.log(startDateTime);
-        console.log(endDateTime);
+        var param = {
+            "method": 'addSemester',
+            "term":
+                {
+                    "creatorId": JSON.parse(localStorage.getItem('loginUserSchedule')).colUid,
+                    "name": inputValue,
+                    "begin": startDateTime,
+                    "end": endDateTime
+                }
+        };
+        WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
+            onResponse: function (result) {
+                if (result.msg == '调用成功' || result.success == true) {
+                    //添加成功
+                    Toast.success('添加成功');
+                    setTimeout(function () {
+                        var data = {
+                            method: 'finish',
+                        };
+
+                        Bridge.callHandler(data, null, function (error) {
+                            // Toast.fail(error);
+                            console.log(error);
+                        });
+                    }, 1000)
+                }
+            },
+            onError: function (error) {
+                // message.error(error);
+            }
+        });
     }
 
     render() {
