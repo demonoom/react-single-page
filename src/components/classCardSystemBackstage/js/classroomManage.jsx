@@ -210,6 +210,16 @@ export default class classroomManage extends React.Component {
     }
 
     /**
+     * 关闭添加的界面
+     */
+    cancelAddModel = () => {
+        $('.tableDiv').show("fast");
+        this.state.gradeNameValue = '';
+        this.state.classroomValue = '';
+        this.setState({chooseResultDiv: 'none'});
+    };
+
+    /**
      * 获取绑定班级的状态，是否显示
      */
     getbindGradeState(e) {
@@ -359,6 +369,7 @@ export default class classroomManage extends React.Component {
                         </div>
                     </List>
                     <div className="bottomBox">
+                        <span onClick={this.cancelAddModel} className="close">关闭</span>
                         <span className="bind" onClick={this.binding}>提交</span>
                     </div>
 
