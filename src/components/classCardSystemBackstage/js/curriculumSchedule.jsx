@@ -34,8 +34,7 @@ export default class curriculumSchedule extends React.Component {
         };
     }
 
-    componentDidMount() {
-        document.title = '班级课程表';
+    componentWillMount() {
         var locationHref = window.location.href;
         var locationSearch = locationHref.substr(locationHref.indexOf("?") + 1);
         var ident = locationSearch.split("&")[0].split('=')[1];
@@ -43,6 +42,10 @@ export default class curriculumSchedule extends React.Component {
             "colUid": ident,
         };
         localStorage.setItem("loginUserSchedule", JSON.stringify(loginUser));
+    }
+
+    componentDidMount() {
+        document.title = '班级课程表';
     }
 
     /**
@@ -91,11 +94,15 @@ export default class curriculumSchedule extends React.Component {
     }
 
     buildSeasons(cList, sList) {
+        var cListArr = [{
+            label: '请选择',
+            value: '0',
+        }]
+        var sListArr = [{
+            label: '请选择',
+            value: '0',
+        }];
         if (WebServiceUtil.isEmpty(cList) == false) {
-            var cListArr = [{
-                label: '请选择',
-                value: '0',
-            }]
             cList.forEach(function (v, i) {
                 cListArr.push({
                     label: v.name,
@@ -104,10 +111,6 @@ export default class curriculumSchedule extends React.Component {
             })
         }
         if (WebServiceUtil.isEmpty(sList) == false) {
-            var sListArr = [{
-                label: '请选择',
-                value: '0',
-            }];
             sList.forEach(function (item, index) {
                 sListArr.push({
                     label: item.name,
@@ -212,10 +215,13 @@ export default class curriculumSchedule extends React.Component {
                     <List.Item arrow="horizontal">日期</List.Item>
                 </Picker>
                 <div>
-                    {this.state.classTableArray.map((v) => {
-                        console.log(v);
+                    {this.state.classTableArray.map((v, i) => {
                         return <li>
-                            <span>{v.openTime + '-' + v.closeTime}</span><span>{v.courseName}</span><span>{v.classRoom.name}</span>
+                            <span>第{i + 1}节</span>
+                            <span>{v.openTime + '-' + v.closeTime}</span>
+                            <span>{v.classRoom.name}</span>
+                            <span>{v.courseName}</span>
+                            <span>修改</span>
                         </li>
                     })}
                 </div>
