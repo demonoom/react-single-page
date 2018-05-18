@@ -15,6 +15,16 @@ export default class currentAttendance extends React.Component {
 
     }
 
+    componentWillReceiveProps(nextProps) {
+        if (nextProps.messageUtilObj.command == 'brand_class_open') {
+            console.log('开课')
+            console.log(nextProps.messageUtilObj.command.data);
+        } else if (nextProps.messageUtilObj.command == 'brand_class_close') {
+            console.log('下课')
+            console.log(nextProps.messageUtilObj.command.data);
+        }
+    }
+
     componentDidMount() {
 
     }
