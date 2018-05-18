@@ -1,3 +1,80 @@
 #homeworkModule {
     color: green;
+    .textOver{
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow:ellipsis;
+        display: block;
+    }
+
+        .homeworkInfo{
+            padding: 0 2.2rem 2.8rem 2.8rem;
+            display: -webkit-flex;
+            display: flex;
+            border-bottom: 2px #e5ebf7 solid;
+            .homeworkL{
+                width: 9rem;
+            .subject{
+                margin-top: 1.5rem;
+                margin-bottom: 0;
+                font-weight: normal;
+                text-align: center;
+                width: 8.6rem;
+                padding:.64rem 0;
+                color: #fff;
+                font-size: 1.9rem;
+                -webkit-border-radius: 1.8rem;
+                -moz-border-radius: 1.8rem;
+                border-radius: 1.8rem;
+                background: -webkit-linear-gradient(#4f90fd, #3773ee); /* Safari 5.1 - 6.0 */
+                background: -o-linear-gradient(#4f90fd, #3773ee); /* Opera 11.1 - 12.0 */
+                background: -moz-linear-gradient(#4f90fd, #3773ee); /* Firefox 3.6 - 15 */
+                background: linear-gradient(#4f90fd, #3773ee);
+            }
+            .imgInfo{
+                text-align: center;
+                img{
+                    width: 6.4rem;
+                    height: 6.4rem;
+                    -webkit-border-radius: 50%;
+                    -moz-border-radius: 50%;
+                    border-radius: 50%;
+                    overflow: hidden;
+                    margin: 2.6rem 0 1.4rem;
+
+                }
+                span{
+                    color: #565c72;
+                    font-size: 2rem;
+
+                }
+            }
+
+        }
+    }
+
+    .homeworkM{
+        width: calc(~"100% - 48rem");
+        padding:.3rem 7.5rem 0;
+        h3{
+            color: #2a3350;
+            font-size: 2rem;
+            margin-bottom:1.8rem;
+            line-height: 2.2rem;
+        }
+        p{
+            color:#565c72;
+            font-size:1.8rem;
+            line-height:2.6rem ;
+        }
+
+    }
+    .homeworkR{
+        margin-top: 1.8rem;
+        color: #2a3350;
+        font-size: 1.7rem;
+        width:28rem ;
+        text-align: right;
+    }
+
 }
