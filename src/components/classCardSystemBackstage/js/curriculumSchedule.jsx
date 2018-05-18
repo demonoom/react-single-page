@@ -1,37 +1,6 @@
 import React from 'react';
-import {Picker, List, WhiteSpace} from 'antd-mobile';
+import {Picker, List, WhiteSpace, Toast} from 'antd-mobile';
 import '../css/curriculumSchedule.less'
-
-const seasons = [
-    [
-        {
-            label: '请选择',
-            value: '0',
-        },
-        {
-            label: '二年级一班',
-            value: '2013',
-        },
-        {
-            label: '二年级二班',
-            value: '2014',
-        },
-    ],
-    [
-        {
-            label: '请选择',
-            value: '0',
-        },
-        {
-            label: '春',
-            value: '春',
-        },
-        {
-            label: '夏',
-            value: '夏',
-        },
-    ],
-];
 
 export default class curriculumSchedule extends React.Component {
 
@@ -49,6 +18,19 @@ export default class curriculumSchedule extends React.Component {
             asyncValue: [],
             sValue: ['0', '0'],
             visible: false,
+            classTableArray: [],
+            seasons: [[
+                {
+                    label: '请选择',
+                    value: '0',
+                }
+            ],
+                [
+                    {
+                        label: '请选择',
+                        value: '0',
+                    }
+                ],]
         };
     }
 
@@ -56,11 +38,85 @@ export default class curriculumSchedule extends React.Component {
         document.title = '班级课程表';
         var locationHref = window.location.href;
         var locationSearch = locationHref.substr(locationHref.indexOf("?") + 1);
-        var ident = locationSearch.split("=")[1];
+        var ident = locationSearch.split("&")[0].split('=')[1];
         var loginUser = {
             "colUid": ident,
         };
         localStorage.setItem("loginUserSchedule", JSON.stringify(loginUser));
+    }
+
+    /**
+     *  获得定义的学期列表
+     * @param ident
+     */
+    getSemesterList(ident) {
+        var _this = this;
+        var param = {
+            "method": 'getSemesterList',
+            "uid": ident
+        };
+        WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
+            onResponse: function (result) {
+                if (result.msg == '调用成功' || result.success == true) {
+                    _this.getClazzesByUserId(ident, result.response)
+                }
+            },
+            onError: function (error) {
+                // message.error(error);
+            }
+        });
+    }
+
+    /**
+     * 获取此用户所在班级
+     * @param ident
+     * @param semesterList
+     */
+    getClazzesByUserId(ident, semesterList) {
+        var _this = this;
+        var param = {
+            "method": 'getClazzesByUserId',
+            "userId": ident
+        };
+        WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
+            onResponse: function (result) {
+                if (result.msg == '调用成功' || result.success == true) {
+                    _this.buildSeasons(result.response, semesterList)
+                }
+            },
+            onError: function (error) {
+                // message.error(error);
+            }
+        });
+    }
+
+    buildSeasons(cList, sList) {
+        if (WebServiceUtil.isEmpty(cList) == false) {
+            var cListArr = [{
+                label: '请选择',
+                value: '0',
+            }]
+            cList.forEach(function (v, i) {
+                cListArr.push({
+                    label: v.name,
+                    value: v.id,
+                })
+            })
+        }
+        if (WebServiceUtil.isEmpty(sList) == false) {
+            var sListArr = [{
+                label: '请选择',
+                value: '0',
+            }];
+            sList.forEach(function (item, index) {
+                sListArr.push({
+                    label: item.name,
+                    value: item.id,
+                })
+            })
+        }
+        var arr = [cListArr, sListArr];
+        this.setState({seasons: arr})
     }
 
     /**
@@ -96,8 +152,35 @@ export default class curriculumSchedule extends React.Component {
      * @param v
      */
     viewCourseTableItemPage(v) {
-        console.log(v);
-        //String uid, String sid, String w, String cid, String ri
+        var _this = this;
+        this.setState({asyncValue: v})
+        if (this.state.sValue[0] == 0) {
+            Toast.fail('请选择班级')
+            return
+        }
+        if (this.state.sValue[1] == 0) {
+            Toast.fail('请选择学期')
+            return
+        }
+        var param = {
+            "method": 'viewCourseTableItemPage',
+            "sid": this.state.sValue[1],
+            "w": v[0],
+            "cid": this.state.sValue[0],
+            "rid": -1,
+            "uid": JSON.parse(localStorage.getItem('loginUserSchedule')).colUid
+        };
+        WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
+            onResponse: function (result) {
+                if (result.msg == '调用成功' || result.success == true) {
+                    var arr = result.response[0].courseList
+                    _this.setState({classTableArray: arr});
+                }
+            },
+            onError: function (error) {
+                // message.error(error);
+            }
+        });
     }
 
     render() {
@@ -106,13 +189,16 @@ export default class curriculumSchedule extends React.Component {
                 <WhiteSpace size="lg"/>
                 {/*班级,学期*/}
                 <Picker
-                    data={seasons}
+                    data={this.state.seasons}
                     cascade={false}
                     value={this.state.sValue}
                     onChange={v => this.setState({sValue: v})}
                     onOk={v => this.setState({sValue: v})}
                 >
-                    <List.Item arrow="horizontal">班级,学期</List.Item>
+                    <List.Item
+                        arrow="horizontal"
+                        onClick={this.getSemesterList.bind(this, JSON.parse(localStorage.getItem('loginUserSchedule')).colUid)}
+                    >班级,学期</List.Item>
                 </Picker>
                 <WhiteSpace size="lg"/>
                 {/*日期*/}
@@ -125,6 +211,14 @@ export default class curriculumSchedule extends React.Component {
                 >
                     <List.Item arrow="horizontal">日期</List.Item>
                 </Picker>
+                <div>
+                    {this.state.classTableArray.map((v) => {
+                        console.log(v);
+                        return <li>
+                            <span>{v.openTime + '-' + v.closeTime}</span><span>{v.courseName}</span><span>{v.classRoom.name}</span>
+                        </li>
+                    })}
+                </div>
                 <div className='addBunton' onClick={this.addSchedule}>
                     <img src={require("../../ringBindInformation/imgs/addBtn.png")}/>
                 </div>

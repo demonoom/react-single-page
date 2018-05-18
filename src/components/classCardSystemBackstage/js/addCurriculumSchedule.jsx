@@ -1,5 +1,5 @@
 import React from 'react';
-import {Picker, List, WhiteSpace, Button, WingBlank, InputItem, DatePicker, TextareaItem} from 'antd-mobile';
+import {Toast, Picker, List, WhiteSpace, Button, WingBlank, InputItem, DatePicker, TextareaItem} from 'antd-mobile';
 import '../css/addCurriculumSchedule.less'
 
 export default class addCurriculumSchedule extends React.Component {
@@ -16,11 +16,13 @@ export default class addCurriculumSchedule extends React.Component {
                 {value: '7', label: '星期日'}],
             classData: [],
             posData: [],
+            terData: [],
             termData: [{value: '-1', label: '自定义学期'}],
             asyncValue: [],
             termAsyncValue: [],
             classAsyncValue: [],
             posAsyncValue: [],
+            terAsyncValue: [],
             ClassTableArr: [],  //课表结构
             ClassTableDataArr: [],  //课表数据
         };
@@ -28,6 +30,8 @@ export default class addCurriculumSchedule extends React.Component {
 
     componentDidMount() {
         document.title = '添加课程表';
+        this.viewClassRoomPage();
+        this.getTeacherByCreator();
     }
 
     /**
@@ -82,11 +86,81 @@ export default class addCurriculumSchedule extends React.Component {
         });
     }
 
+    onTerPickerChange = (val) => {
+        const d = [...this.state.terData];
+        const terAsyncValue = [...val];
+        this.setState({
+            terData: d,
+            terAsyncValue,
+        });
+    }
+
     /**
      * 新增课表项
      */
     addCourseTableItem = () => {
-        console.log(this.state.ClassTableDataArr);
+        var _this = this;
+        if (this.state.classAsyncValue.length == 0) {
+            Toast.fail('请选择班级');
+            return
+        }
+        if (this.state.termAsyncValue.length == 0) {
+            Toast.fail('请选择学期');
+            return
+        }
+        if (this.state.asyncValue.length == 0) {
+            Toast.fail('请选择星期');
+            return
+        }
+        if (this.state.ClassTableDataArr.length == 0) {
+            Toast.fail('课表不能为空');
+            return
+        }
+        for (var i = 0; i < this.state.ClassTableDataArr.length; i++) {
+            var v = this.state.ClassTableDataArr[i];
+            if (v.classAd == '上课地点' || v.startTimeData == '开始时间' || v.endTimeData == '结束时间' || v.clazzName == '' || v.teacherName == '') {
+                Toast.fail('课表存在空值');
+                return false
+            }
+        }
+        var param = {
+            "method": 'addCourseTableItem',
+            "cti": {
+                "creatorId": JSON.parse(localStorage.getItem('loginUserSchedule')).colUid,
+                "week": this.state.asyncValue[0],
+                "classId": this.state.classAsyncValue[0],
+                "semesterId": this.state.termAsyncValue[0]
+            }
+        };
+        var classArray = [];
+        this.state.ClassTableDataArr.forEach(function (v, i) {
+            classArray.push({
+                "courseName": v.clazzName,
+                "index": i + 1,
+                "teacherId": v.teacherName,
+                "classRoomId": v.classAddress,
+                "isPublic": false,
+                "openTime": v.startTimeData,
+                "closeTime": v.endTimeData,
+                "comment": v.nodeDetal
+            })
+        })
+        param.cti.schedules = classArray;
+        WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
+            onResponse: function (result) {
+                if (result.msg == '调用成功' || result.success == true) {
+                    Toast.success('成功');
+                    // _this.state.asyncValue.splice(0);
+                    // _this.state.classAsyncValue.splice(0);
+                    // _this.state.termAsyncValue.splice(0);
+                    // _this.state.ClassTableDataArr.splice(0);
+                    // _this.buildClassTable();
+                }
+            },
+            onError: function (error) {
+                // message.error(error);
+            }
+        });
     }
 
     /**
@@ -129,6 +203,83 @@ export default class addCurriculumSchedule extends React.Component {
         this.buildClassTable();
     }
 
+    getTeacherByCreator = () => {
+        var _this = this;
+        var param = {
+            "method": 'getTeacherByCreator',
+            "aid": JSON.parse(localStorage.getItem('loginUserSchedule')).colUid
+        };
+        WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
+            onResponse: function (result) {
+                if (result.msg == '调用成功' || result.success == true) {
+                    if (WebServiceUtil.isEmpty(result.response) == false) {
+                        var arr = [];
+                        result.response.forEach(function (v, i) {
+                            arr.push({
+                                value: v.colUid, label: v.userName
+                            })
+                        })
+                        _this.setState({terData: arr});
+                    }
+                }
+            },
+            onError: function (error) {
+                // message.error(error);
+            }
+        });
+    }
+
+    viewClassRoomPage = () => {
+        var _this = this;
+        var param = {
+            "method": 'viewClassRoomPage',
+            "uid": JSON.parse(localStorage.getItem('loginUserSchedule')).colUid,
+            "pn": -1
+        };
+        WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
+            onResponse: function (result) {
+                if (result.msg == '调用成功' || result.success == true) {
+                    if (WebServiceUtil.isEmpty(result.response) == false) {
+                        var arr = [];
+                        result.response.forEach(function (v, i) {
+                            arr.push({
+                                value: v.id, label: v.name
+                            })
+                        })
+                        _this.setState({posData: arr});
+                    }
+                }
+            },
+            onError: function (error) {
+                // message.error(error);
+            }
+        });
+    }
+
+    posPickerOnOk(v, i) {
+        var classAd = ''
+        this.state.posData.forEach(function (item, index) {
+            if (item.value == v) {
+                classAd = item.label
+            }
+        })
+        this.state.ClassTableDataArr[i].classAd = classAd;
+        this.state.ClassTableDataArr[i].classAddress = v[0];
+        this.buildClassTable();
+    }
+
+    terPickerOnOk(v, i) {
+        var terName = ''
+        this.state.terData.forEach(function (item, index) {
+            if (item.value == v) {
+                terName = item.label
+            }
+        })
+        this.state.ClassTableDataArr[i].teacherId = terName;
+        this.state.ClassTableDataArr[i].teacherName = v[0];
+        this.buildClassTable();
+    }
+
     /**
      * 根据数据构建,完成数据的动态绑定
      */
@@ -160,9 +311,18 @@ export default class addCurriculumSchedule extends React.Component {
                         cols={1}
                         value={_this.state.posAsyncValue}
                         onPickerChange={_this.onPosPickerChange}
-                        onOk={v => console.log(v)}
+                        onOk={v => _this.posPickerOnOk(v, i)}
                     >
-                        <span className="add_element">上课地点</span>
+                        <span className="add_element">{_this.state.ClassTableDataArr[i].classAd}</span>
+                    </Picker>
+                    <Picker
+                        data={_this.state.terData}
+                        cols={1}
+                        value={_this.state.terAsyncValue}
+                        onPickerChange={_this.onTerPickerChange}
+                        onOk={v => _this.terPickerOnOk(v, i)}
+                    >
+                        <span className="add_element">{_this.state.ClassTableDataArr[i].teacherId}</span>
                     </Picker>
                 </div>
                 <div className="flex_container my_flex flex_addElement">
@@ -202,7 +362,9 @@ export default class addCurriculumSchedule extends React.Component {
         this.state.ClassTableDataArr.push({
             startTimeData: '开始时间',
             endTimeData: '结束时间',
-            classAd: '',
+            classAd: '上课地点',
+            teacherId: '选择老师',
+            tercherName: '',
             clazzName: '',
             nodeDetal: ''
         });
@@ -255,6 +417,36 @@ export default class addCurriculumSchedule extends React.Component {
         });
     }
 
+    getClazzesByUserId(id) {
+        var _this = this;
+        var param = {
+            "method": 'getClazzesByUserId',
+            "userId": id
+        };
+        WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
+            onResponse: function (result) {
+                if (result.msg == '调用成功' || result.success == true) {
+                    if (WebServiceUtil.isEmpty(result.response) == false) {
+                        var arr = [];
+                        result.response.forEach(function (v, i) {
+                            arr.push({
+                                value: v.id, label: v.name
+                            })
+                        })
+                        _this.setState({classData: arr})
+                    }
+                }
+            },
+            onError: function (error) {
+                // message.error(error);
+            }
+        });
+    }
+
+    classOnOk(v) {
+        this.setState({classAsyncValue: v});
+    }
+
     render() {
         return (
             <div id="addCurriculumSchedule" style={{height: document.body.clientHeight}}>
@@ -265,9 +457,12 @@ export default class addCurriculumSchedule extends React.Component {
                     cols={1}
                     value={this.state.classAsyncValue}
                     onPickerChange={this.onClassPickerChange}
-                    onOk={v => console.log(v)}
+                    onOk={v => this.classOnOk(v)}
                 >
-                    <List.Item arrow="horizontal">选择班级</List.Item>
+                    <List.Item
+                        arrow="horizontal"
+                        onClick={this.getClazzesByUserId.bind(this, JSON.parse(localStorage.getItem('loginUserSchedule')).colUid)}
+                    >选择班级</List.Item>
                 </Picker>
                 <WhiteSpace size="lg"/>
                 {/*选择学期*/}
@@ -287,7 +482,6 @@ export default class addCurriculumSchedule extends React.Component {
                     cols={1}
                     value={this.state.asyncValue}
                     onPickerChange={this.onPickerChange}
-                    onOk={v => console.log(v)}
                 >
                     <List.Item arrow="horizontal">选择星期</List.Item>
                 </Picker>
