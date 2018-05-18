@@ -287,8 +287,9 @@ export default class addCurriculumSchedule extends React.Component {
         var _this = this;
         var ClassTableArr = [];
         this.state.ClassTableDataArr.forEach(function (v, i) {
-            ClassTableArr.push(<div className="">
-                <div className="flex_container my_flex flex_addElement">
+            ClassTableArr.push(<div>
+                <div className="cont_communal add_title">第{i + 1}节</div>
+                <div className="flex_container my_flex teacher_list">
                     <DatePicker
                         mode="time"
                         use24Hours
@@ -307,16 +308,6 @@ export default class addCurriculumSchedule extends React.Component {
                         <span className="add_element">{_this.state.ClassTableDataArr[i].endTimeData}<i
                             className="icon_triangle"></i></span>
                     </DatePicker>
-                    {/*上课地点*/}
-                    <Picker
-                        data={_this.state.posData}
-                        cols={1}
-                        value={_this.state.posAsyncValue}
-                        onPickerChange={_this.onPosPickerChange}
-                        onOk={v => _this.posPickerOnOk(v, i)}
-                    >
-                        <span className="add_element">{_this.state.ClassTableDataArr[i].classAd}</span>
-                    </Picker>
                     <Picker
                         data={_this.state.terData}
                         cols={1}
@@ -324,8 +315,27 @@ export default class addCurriculumSchedule extends React.Component {
                         onPickerChange={_this.onTerPickerChange}
                         onOk={v => _this.terPickerOnOk(v, i)}
                     >
-                        <span className="add_element">{_this.state.ClassTableDataArr[i].teacherId}</span>
+                        <span className="add_element">
+                            <span className="text_hidden overflow_width">{_this.state.ClassTableDataArr[i].teacherId}</span>
+                            <i className="icon_triangle"></i>
+                        </span>
                     </Picker>
+                    {/*上课地点*/}
+                </div>
+                <div className="flex_container my_flex flex_addElement">
+                    <Picker
+                        data={_this.state.posData}
+                        cols={1}
+                        value={_this.state.posAsyncValue}
+                        onPickerChange={_this.onPosPickerChange}
+                        onOk={v => _this.posPickerOnOk(v, i)}
+                    >
+                        <span className="add_element">
+                            <span className="text_hidden overflow_width">{_this.state.ClassTableDataArr[i].classAd}</span>
+                            <i className="icon_triangle"></i>
+                        </span>
+                    </Picker>
+
                 </div>
                 <div className="flex_container my_flex flex_addElement">
                     <InputItem
