@@ -5,8 +5,9 @@ import '../css/moralEducation.less'
 
 const nowTimeStamp = Date.now();
 const now = new Date(nowTimeStamp);
-// GMT is not currently observed in the UK. So use UTC now.
 const utcNow = new Date(now.getTime() + (now.getTimezoneOffset() * 60000));
+
+
 
 export default class moralEducation extends React.Component {
 
@@ -49,10 +50,11 @@ export default class moralEducation extends React.Component {
         };
         localStorage.setItem("userIdKey", JSON.stringify(loginUser));
     }
-
     componentDidMount() {
         document.title = '德育评价';
     }
+
+    
 
     /**
      * 获取班级，学期和日期
@@ -67,7 +69,6 @@ export default class moralEducation extends React.Component {
             "termId": JSON.parse(localStorage.getItem("classAndTermKey")).termId,
             "createTime": newTime
         }
-        console.log(param);
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
             onResponse: function (result) {
                 if (result.msg == '调用成功' || result.success == true) {
@@ -77,7 +78,6 @@ export default class moralEducation extends React.Component {
                 }
             },
             onError: function (error) {
-                // message.error(error);
             }
         });
     }
@@ -106,7 +106,6 @@ export default class moralEducation extends React.Component {
                 }
             },
             onError: function (error) {
-                // message.error(error);
             }
         });
     }
@@ -127,7 +126,6 @@ export default class moralEducation extends React.Component {
                 }
             },
             onError: function (error) {
-                // message.error(error);
             }
         });
     }

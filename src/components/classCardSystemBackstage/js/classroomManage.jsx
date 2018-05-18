@@ -123,7 +123,6 @@ export default class classroomManage extends React.Component {
                 }
             },
             onError: function (error) {
-                // message.error(error);
             }
         });
     }
@@ -242,15 +241,7 @@ export default class classroomManage extends React.Component {
     inputChange(e) {
         this.setState({ gradeNameValue: e })
     }
-    /**
-     * 点击搜索结果的回调
-     */
-    // searchResultOnChange = (i) => {
-    //     this.setState({
-    //         gradeNameValue: $(".chooseResult .am-list-line .am-list-content").text()
-    //     })
-    // };
-
+   
     /**
      *  ListView数据全部渲染完毕的回调
      */
