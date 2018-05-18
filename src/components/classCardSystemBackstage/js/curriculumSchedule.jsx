@@ -218,12 +218,13 @@ export default class curriculumSchedule extends React.Component {
                 <div className="curriculum_cont cont_communal">
                     {this.state.classTableArray.map((v, i) => {
                         return <li>
-                            <div className="font_gray add_title">第{i + 1}节</div>
+                            <div className="add_title"><span className="font_gray">第{i + 1}节</span><span className="amend_btn">修改</span></div>
                             <div className="list_high list">
                                 <span className="text_hidden text_cont1">{v.openTime + '-' + v.closeTime}</span>
-                                <span className="text_hidden text_cont2">{v.classRoom.name}</span>
-                                <span className="text_hidden text_cont3">{v.courseName}</span>
-                                <span className="amend_btn">修改</span>
+                                <span className="text_hidden text_cont2">{v.courseName}</span>
+                            </div>
+                            <div className="list_high list lineList">
+                                <span className="text_hidden text_cont3">{v.classRoom.name}</span>
                             </div>
                         </li>
                     })}
