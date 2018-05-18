@@ -188,6 +188,28 @@ const noticeReadMore = (location, cb) => {
         cb(null,require("./components/classCardSystem/js/noticeReadMore").default)
     })
 }
+
+const studentDutyList = (location, cb) => {
+    require.ensure([], require => {
+            cb(null, require("./components/classCardSystemBackstage/js/studentDutyList").default)
+        }
+    )
+}
+
+const addStudentDuty = (location, cb) => {
+    require.ensure([], require => {
+            cb(null, require("./components/classCardSystemBackstage/js/addStudentDuty").default)
+        }
+    )
+}
+
+const editStudentDuty = (location, cb) => {
+    require.ensure([], require => {
+            cb(null, require("./components/classCardSystemBackstage/js/editStudentDuty").default)
+        }
+    )
+}
+
 import './index.less';
 
 class Index extends React.Component {
@@ -242,6 +264,9 @@ class Index extends React.Component {
                     <li><Link
                         to="/noticeReadMore?classId=819"
                         style={{fontSize:'24px'}}>通知查看更多</Link></li>
+                    <li><Link
+                        to="/studentDutyList?access_user=23836"
+                        style={{fontSize:'24px'}}>班级值日表</Link></li>
                 </ul>
             </div>
         );
@@ -288,6 +313,9 @@ ReactDOM.render(
             <Route path="curriculumSchedule" getComponent={curriculumSchedule}/>
             <Route path="workAttendance" getComponent={workAttendance} />
             <Route path="noticeReadMore" getComponent={noticeReadMore} />
+            <Route path="studentDutyList" getComponent={studentDutyList} />
+            <Route path="addStudentDuty" getComponent={addStudentDuty} />
+            <Route path="editStudentDuty" getComponent={editStudentDuty} />
         </Route>
     </Router>
     , document.getElementById('example'));
