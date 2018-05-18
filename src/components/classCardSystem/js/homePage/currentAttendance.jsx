@@ -17,16 +17,37 @@ export default class currentAttendance extends React.Component {
 
     componentWillReceiveProps(nextProps) {
         if (nextProps.messageUtilObj.command == 'brand_class_open') {
-            console.log('开课')
-            console.log(nextProps.messageUtilObj.command.data);
+            //查看某个课表项
+            this.getBraceletAttend(nextProps.messageUtilObj.data)
         } else if (nextProps.messageUtilObj.command == 'brand_class_close') {
             console.log('下课')
-            console.log(nextProps.messageUtilObj.command.data);
         }
     }
 
     componentDidMount() {
+        this.getBraceletAttend()
+    }
 
+    /**
+     * 获取手环考勤数据
+     * @param data
+     */
+    getBraceletAttend(data) {
+        var param = {
+            "method": 'getBraceletAttend',
+            // "cid": data.classTableId
+            "cid": 3
+        };
+        WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
+            onResponse: function (result) {
+                if (result.msg == '调用成功' || result.success == true) {
+                    console.log(result);
+                }
+            },
+            onError: function (error) {
+                // message.error(error);
+            }
+        });
     }
 
     render() {

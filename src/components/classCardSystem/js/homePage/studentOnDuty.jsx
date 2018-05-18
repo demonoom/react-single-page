@@ -22,7 +22,10 @@ export default class studentOnDuty extends React.Component {
     render() {
         return (
             <div id="studentOnDuty">
-                值日生
+                <span>今日值日生</span>
+                <div>
+
+                </div>
             </div>
         );
     }
