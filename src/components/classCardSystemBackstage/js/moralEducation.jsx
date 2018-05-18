@@ -48,10 +48,10 @@ export default class moralEducation extends React.Component {
         var loginUser = {
             "userId": ident,
         };
+        localStorage.setItem("userIdKey", JSON.stringify(loginUser));
     }
     componentDidMount() {
         document.title = '德育评价';
-        localStorage.setItem("userIdKey", JSON.stringify(loginUser));
     }
 
     
