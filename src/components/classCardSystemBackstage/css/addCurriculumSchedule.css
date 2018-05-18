@@ -28,8 +28,10 @@
   text-indent: 8px;
   font-size: 17px;
   position: relative;
+  overflow: hidden;
 }
-#addCurriculumSchedule .flex_addElement {
+#addCurriculumSchedule .flex_addElement,
+#addCurriculumSchedule .teacher_list {
   padding-top: 15px;
 }
 #addCurriculumSchedule .flex_addElement div {
@@ -42,6 +44,12 @@
 }
 #addCurriculumSchedule .flex_addElement div:first-child {
   margin-left: 0;
+}
+#addCurriculumSchedule .addElement_teacher div:nth-child(2) {
+  -webkit-box-flex: 2;
+  -webkit-flex: 2;
+  -ms-flex: 2;
+  flex: 2;
 }
 #addCurriculumSchedule .flex_addElement .am-list-item .am-list-line,
 #addCurriculumSchedule .flex_addElement .am-list-item.am-input-item {
@@ -67,4 +75,22 @@
   position: absolute;
   right: 10px;
   top: 19px;
+}
+#addCurriculumSchedule .overflow_width {
+  width: calc(100% - 30px);
+  float: left;
+}
+#addCurriculumSchedule .teacher_list div {
+  margin-left: 8px;
+  min-width: 10px;
+}
+#addCurriculumSchedule .teacher_list div:first-child {
+  margin-left: 0;
+}
+#addCurriculumSchedule .teacher_list div:first-child,
+#addCurriculumSchedule .teacher_list div:nth-child(2) {
+  width: 30%;
+}
+#addCurriculumSchedule .teacher_list div:nth-child(3) {
+  width: 40%;
 }

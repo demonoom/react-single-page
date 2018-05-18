@@ -224,6 +224,17 @@ const addMoralEducation = (location, cb) => {
     })
 }
 
+const classCardHomePage = (location, cb) => {
+    require.ensure([], require => {
+        cb(null, require("./components/classCardSystem/js/homePage/classCardHomePage").default)
+    })
+}
+
+const notifyBack = (location, cb) => {
+    require.ensure([], require => {
+        cb(null, require("./components/classCardSystemBackstage/js/notify").default)
+    })
+}
 const updateClassroom = (location, cb) => {
     require.ensure([], require => {
         cb(null, require("./components/classCardSystemBackstage/js/updateClassroom").default)
@@ -248,7 +259,7 @@ class Index extends React.Component {
                     {/*<li><Link to="/searchUserLocationInfo" style={{fontSize: '24px'}}>搜索查看用户位置信息</Link></li>*/}
                     {/*<li><Link to="/studentFaceStatistics" style={{fontSize: '24px'}}>学生脸部表情分析折线图</Link></li>*/}
                     <li><Link to="/termitePlateLibrary?ident=23836&fileId=-1&title=蚁盘题目&phoneType=0"
-                    style={{fontSize: '24px'}}>蚁盘题库</Link>
+                              style={{fontSize: '24px'}}>蚁盘题库</Link>
                     </li>
                     {/*<li><Link to="/pushSubjectsFromTLibrary?ident=23836&fileId=-1"*/}
                     {/*style={{fontSize: '24px'}}>蚁盘推题</Link></li>*/}
@@ -292,6 +303,12 @@ class Index extends React.Component {
                     <li><Link
                         to="/moralEducation?ident=23836"
                         style={{fontSize: '24px'}}>德育评价</Link></li>
+                    <li><Link
+                        to="/classCardHomePage"
+                        style={{fontSize: '24px'}}>班牌首页</Link></li>
+                    <li><Link
+                        to="/notifyBack"
+                        style={{fontSize: '24px'}}>通知后台</Link></li>
                 </ul>
             </div>
         );
@@ -344,9 +361,11 @@ ReactDOM.render(
             <Route path="addCurriculumSchedule" getComponent={addCurriculumSchedule}/>
             <Route path="definedTerm" getComponent={definedTerm}/>
             <Route path="classDemeanor" getComponent={classDemeanor}/>
-            <Route path="moralEducation" getComponent={moralEducation} />
-            <Route path="addMoralEducation" getComponent={addMoralEducation} />
-            <Route path="updateClassroom" getComponent={updateClassroom} />
+            <Route path="classCardHomePage" getComponent={classCardHomePage}/>
+            <Route path="notifyBack" getComponent={notifyBack}/>
+            <Route path="moralEducation" getComponent={moralEducation}/>
+            <Route path="addMoralEducation" getComponent={addMoralEducation}/>
+            <Route path="updateClassroom" getComponent={updateClassroom}/>
         </Route>
     </Router>
     , document.getElementById('example'));
