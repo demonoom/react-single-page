@@ -30,36 +30,7 @@ function formatDate(date) {
     return `${dateStr} ${timeStr}`;
 }
 
-const seasons = [
-    [
-        {
-            label: '请选择',
-            value: '0',
-        },
-        {
-            label: '二年级一班',
-            value: '2013',
-        },
-        {
-            label: '二年级二班',
-            value: '2014',
-        },
-    ],
-    [
-        {
-            label: '请选择',
-            value: '0',
-        },
-        {
-            label: '春',
-            value: '春',
-        },
-        {
-            label: '夏',
-            value: '夏',
-        },
-    ],
-];
+
 
 export default class curriculumSchedule extends React.Component {
 
@@ -77,7 +48,19 @@ export default class curriculumSchedule extends React.Component {
             dpValue: null,
             customChildValue: null,
             visible: false,
-            moralEducationSelectData: {}
+            moralEducationSelectData: {},
+            seasons: [[
+                {
+                    label: '请选择',
+                    value: '0',
+                }
+            ],
+                [
+                    {
+                        label: '请选择',
+                        value: '0',
+                    }
+                ],]
         };
     }
 
@@ -87,9 +70,9 @@ export default class curriculumSchedule extends React.Component {
         var locationSearch = locationHref.substr(locationHref.indexOf("?") + 1);
         var ident = locationSearch.split("=")[1];
         var loginUser = {
-            "colUid": ident,
+            "userId": ident,
         };
-        localStorage.setItem("loginUserSchedule", JSON.stringify(loginUser));
+        localStorage.setItem("userIdKey", JSON.stringify(loginUser));
     }
 
     /**
@@ -99,17 +82,15 @@ export default class curriculumSchedule extends React.Component {
         var _this = this;
         var d = new Date(v);
         var newTime = d.getFullYear() + '-' + (d.getMonth() + 1) + '-' + d.getDate();
-        // var newClassAndTermValue = JSON.parse(localStorage.getItem("classAndTermKey"));
         var param = {
             "method": 'getMoralEducationInfo',
-            "clazzId": 14,
-            "termId": 1,
+            "clazzId": JSON.parse(localStorage.getItem("classAndTermKey")).classId,
+            "termId": JSON.parse(localStorage.getItem("classAndTermKey")).termId,
             "createTime": newTime
         }
         console.log(param);
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
             onResponse: function (result) {
-                console.log(result);
                 if (result.msg == '调用成功' || result.success == true) {
                     if (WebServiceUtil.isEmpty(result.response) == false) {
                         _this.setState({ moralEducationSelectData: result.response })
@@ -120,19 +101,84 @@ export default class curriculumSchedule extends React.Component {
                 // message.error(error);
             }
         });
-        //    console.log(newClassAndTermValue.classValue);
     }
     getClassAndTerm = (v) => {
         this.setState({ sValue: v })
-        console.log(v);
         var classAndTerm = {
-            "classValue": v[0],
-            "termValue": v[1]
+            "classId": v[0],
+            "termId": v[1]
         }
         localStorage.setItem("classAndTermKey", JSON.stringify(classAndTerm));
     }
+    /**
+     * 获取学期的ID
+     */
+    getSemesterList(ident){
+         var _this = this;
+         var param = {
+            "method": 'getSemesterList',
+            "uid": ident
+        };
+        WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
+            onResponse: function (result) {
+                if (result.msg == '调用成功' || result.success == true) {
+                    _this.getClazzesByUserId(ident, result.response)
+                }
+            },
+            onError: function (error) {
+                // message.error(error);
+            }
+        });
+    }
 
-
+    /**
+     * 获取班级ID
+     */
+    getClazzesByUserId(ident, semesterList) {
+        var _this = this;
+        var param = {
+            "method": 'getClazzesByUserId',
+            "userId": ident
+        };
+        WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
+            onResponse: function (result) {
+                if (result.msg == '调用成功' || result.success == true) {
+                    _this.buildSeasons(result.response, semesterList)
+                }
+            },
+            onError: function (error) {
+                // message.error(error);
+            }
+        });
+    }
+    buildSeasons(cList, sList) {
+        var cListArr = [{
+            label: '请选择',
+            value: '0',
+        }]
+        var sListArr = [{
+            label: '请选择',
+            value: '0',
+        }];
+        if (WebServiceUtil.isEmpty(cList) == false) {
+            cList.forEach(function (v, i) {
+                cListArr.push({
+                    label: v.name,
+                    value: v.id,
+                })
+            })
+        }
+        if (WebServiceUtil.isEmpty(sList) == false) {
+            sList.forEach(function (item, index) {
+                sListArr.push({
+                    label: item.name,
+                    value: item.id,
+                })
+            })
+        }
+        var arr = [cListArr, sListArr];
+        this.setState({seasons: arr})
+    }
     /**
      * 增加课程表的回调
      */
@@ -148,15 +194,7 @@ export default class curriculumSchedule extends React.Component {
         });
     }
 
-    /**
-     * 查看德育评价管理页
-     * @param v
-     */
-    viewCourseTableItemPage(v) {
-        // console.log(v);
-
-    }
-
+  
     render() {
         var _this = this;
         return (
@@ -164,14 +202,16 @@ export default class curriculumSchedule extends React.Component {
                 <WhiteSpace size="lg" />
                 {/*班级,学期*/}
                 <Picker
-                    data={seasons}
+                    data={this.state.seasons}
                     cascade={false}
                     value={this.state.sValue}
                     className="gradeAndTerm"
                     onChange={v => this.setState({ sValue: v })}
                     onOk={this.getClassAndTerm}
                 >
-                    <List.Item arrow="horizontal">班级,学期</List.Item>
+                    <List.Item arrow="horizontal"
+                        onClick={this.getSemesterList.bind(this,JSON.parse(localStorage.getItem("userIdKey")).userId)}
+                    >班级,学期</List.Item>
                 </Picker>
                 <WhiteSpace size="lg" />
                 {/*日期*/}

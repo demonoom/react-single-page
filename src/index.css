@@ -76,7 +76,7 @@ hr {
   font-size: 14px;
 }
 .color_red {
-  color: #f46a55;
+  color: #F46A55;
 }
 .line_item {
   height: 8px;
@@ -184,4 +184,38 @@ hr {
   -webkit-align-items: center;
   -ms-flex-align: center;
   align-items: center;
+}
+.cont_communal {
+  color: #333;
+  font-size: 17px;
+  padding: 0 15px;
+  background: #fff;
+}
+.cont_font {
+  color: #333;
+  font-size: 17px;
+}
+.cont_padding {
+  padding: 0 15px;
+}
+.bg_white {
+  background: #fff;
+}
+.list_high {
+  height: 44px;
+  line-height: 44px;
+  width: 100%;
+}
+.text_hidden {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: inline-block;
+  white-space: nowrap;
+}
+.font_gray {
+  color: #5f5f5f;
+}
+.add_title {
+  height: 44px;
+  line-height: 3.5;
 }
