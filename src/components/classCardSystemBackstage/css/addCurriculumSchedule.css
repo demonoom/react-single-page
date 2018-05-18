@@ -1,71 +1,81 @@
-(node) util.print is deprecated. Use console.log instead.
 #addCurriculumSchedule {
-  overflow-y: auto;
+    overflow-y: auto;
 }
+
 #addCurriculumSchedule .CourseTableArea {
-  min-height: 280px;
-  background-color: #fff;
+    min-height: 280px;
+    background-color: #fff;
 }
+
 #addCurriculumSchedule .CourseTableArea .addClassTable {
-  width: 3rem;
-  height: 3rem;
-  margin-top: 1.07rem;
-  margin-left: 1.07rem;
-  margin-bottom: 1.07rem;
+    width: 3rem;
+    height: 3rem;
+    margin-top: 1.07rem;
+    margin-left: 1.07rem;
+    margin-bottom: 1.07rem;
 }
+
 #addCurriculumSchedule .addCourseButton {
-  position: absolute;
-  bottom: 15px;
-  width: 100%;
+    position: absolute;
+    bottom: 15px;
+    width: 100%;
 }
+
 #addCurriculumSchedule .add_element {
-  background-color: #f6f6f6;
-  color: #333;
-  text-align: left;
-  height: 44px;
-  line-height: 44px;
-  width: 100%;
-  display: inline-block;
-  text-indent: 8px;
-  font-size: 17px;
-  position: relative;
+    background-color: #f6f6f6;
+    color: #333;
+    text-align: left;
+    height: 44px;
+    line-height: 44px;
+    width: 100%;
+    display: inline-block;
+    text-indent: 8px;
+    font-size: 17px;
+    position: relative;
 }
+
 #addCurriculumSchedule .flex_addElement {
-  padding-top: 15px;
+    padding-top: 15px;
 }
+
 #addCurriculumSchedule .flex_addElement div {
-  -webkit-box-flex: 1;
-  -webkit-flex: 1;
-  -ms-flex: 1;
-  flex: 1;
-  margin-left: 8px;
-  min-width: 10px;
+    -webkit-box-flex: 1;
+    -webkit-flex: 1;
+    -ms-flex: 1;
+    flex: 1;
+    margin-left: 8px;
+    min-width: 10px;
 }
+
 #addCurriculumSchedule .flex_addElement div:first-child {
-  margin-left: 0;
+    margin-left: 0;
 }
+
 #addCurriculumSchedule .flex_addElement .am-list-item .am-list-line,
 #addCurriculumSchedule .flex_addElement .am-list-item.am-input-item {
-  padding-right: 0 !important;
-  padding-left: 0;
+    padding-right: 0 !important;
+    padding-left: 0;
 }
+
 #addCurriculumSchedule .am-list-body,
 #addCurriculumSchedule .am-list-body::before {
-  border: none;
-  background: #fff;
+    border: none;
+    background: #fff;
 }
+
 #addCurriculumSchedule .addCurriculum_cont {
-  height: calc(100% - 77px);
-  overflow-y: auto;
-  overflow-x: hidden;
+    height: calc(100% - 77px);
+    overflow-y: auto;
+    overflow-x: hidden;
 }
+
 #addCurriculumSchedule .icon_triangle {
-  width: 0;
-  height: 0;
-  border-width: 7px 5px;
-  border-style: solid;
-  border-color: #a9a9a9 transparent transparent transparent;
-  position: absolute;
-  right: 10px;
-  top: 19px;
+    width: 0;
+    height: 0;
+    border-width: 7px 5px;
+    border-style: solid;
+    border-color: #a9a9a9 transparent transparent transparent;
+    position: absolute;
+    right: 10px;
+    top: 19px;
 }
