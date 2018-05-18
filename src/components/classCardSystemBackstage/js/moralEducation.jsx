@@ -1,8 +1,10 @@
 import React from 'react';
-import { Picker, List, WhiteSpace,DatePicker } from 'antd-mobile';
+import { Picker, List, WhiteSpace, DatePicker } from 'antd-mobile';
 import enUs from 'antd-mobile/lib/date-picker/locale/en_US';
 import '../css/moralEducation.less'
-const mEducation = this;
+
+
+
 const nowTimeStamp = Date.now();
 const now = new Date(nowTimeStamp);
 // GMT is not currently observed in the UK. So use UTC now.
@@ -75,45 +77,12 @@ export default class curriculumSchedule extends React.Component {
             dpValue: null,
             customChildValue: null,
             visible: false,
+            moralEducationSelectData: {}
         };
     }
-    onSubmit = () => {
-        this.props.form.validateFields({ force: true }, (error) => {
-            if (!error) {
-                console.log(this.props.form.getFieldsValue());
-            } else {
-                console.log(error);
-                alert('Validation failed');
-            }
-        });
-    }
-    onReset = () => {
-        this.props.form.resetFields();
-        setTimeout(() => console.log(this.state), 0);
-    }
-    validateIdp = (rule, date, callback) => {
-        if (isNaN(Date.parse(date))) {
-            callback(new Error('Invalid Date'));
-        } else {
-            const cDate = new Date(date);
-            const newDate = new Date(+this.state.dpValue);
-            newDate.setFullYear(cDate.getFullYear());
-            newDate.setMonth(cDate.getMonth());
-            newDate.setDate(cDate.getDate());
-            // this.setState({ dpValue: newDate });
-            setTimeout(() => this.props.form.setFieldsValue({ dp: newDate }), 10);
-            callback();
-        }
-    }
-    validateDatePicker = (rule, date, callback) => {
-        if (date && date.getMinutes() !== 15) {
-            callback();
-        } else {
-            callback(new Error('15 is invalid'));
-        }
-    }
+
     componentDidMount() {
-        document.title = '班级课程表';
+        document.title = '德育评价';
         var locationHref = window.location.href;
         var locationSearch = locationHref.substr(locationHref.indexOf("?") + 1);
         var ident = locationSearch.split("=")[1];
@@ -123,10 +92,47 @@ export default class curriculumSchedule extends React.Component {
         localStorage.setItem("loginUserSchedule", JSON.stringify(loginUser));
     }
 
- 
-    getSelectData(){
-       console.log("123");
+    /**
+     * 获取班级，学期和日期
+     */
+    getSelectData = (v) => {
+        var _this = this;
+        var d = new Date(v);
+        var newTime = d.getFullYear() + '-' + (d.getMonth() + 1) + '-' + d.getDate();
+        var newClassAndTermValue = JSON.parse(localStorage.getItem("classAndTermKey"));
+        var param = {
+            "method": 'getMoralEducationInfo',
+            "clazzId": 14,
+            "termId": 1,
+            "createTime": newTime
+        }
+        console.log(param);
+        WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
+            onResponse: function (result) {
+                console.log(result);
+                if (result.msg == '调用成功' || result.success == true) {
+                    if (WebServiceUtil.isEmpty(result.response) == false) {
+                        _this.setState({ moralEducationSelectData: result.response })
+                    }
+                }
+            },
+            onError: function (error) {
+                // message.error(error);
+            }
+        });
+        //    console.log(newClassAndTermValue.classValue);
     }
+    getClassAndTerm = (v) => {
+        this.setState({ sValue: v })
+        console.log(v);
+        var classAndTerm = {
+            "classValue": v[0],
+            "termValue": v[1]
+        }
+        localStorage.setItem("classAndTermKey", JSON.stringify(classAndTerm));
+    }
+
+
     /**
      * 增加课程表的回调
      */
@@ -143,16 +149,16 @@ export default class curriculumSchedule extends React.Component {
     }
 
     /**
-     * 查看课表项管理页
+     * 查看德育评价管理页
      * @param v
      */
     viewCourseTableItemPage(v) {
-        console.log(v);
-        //String uid, String sid, String w, String cid, String ri
+        // console.log(v);
+
     }
 
     render() {
-
+        var _this = this;
         return (
             <div id="moralEducation" style={{ height: document.body.clientHeight }}>
                 <WhiteSpace size="lg" />
@@ -161,8 +167,9 @@ export default class curriculumSchedule extends React.Component {
                     data={seasons}
                     cascade={false}
                     value={this.state.sValue}
+                    className="gradeAndTerm"
                     onChange={v => this.setState({ sValue: v })}
-                    onOk={v => this.setState({ sValue: v })}
+                    onOk={this.getClassAndTerm}
                 >
                     <List.Item arrow="horizontal">班级,学期</List.Item>
                 </Picker>
@@ -175,18 +182,24 @@ export default class curriculumSchedule extends React.Component {
                     value={this.state.date}
                     onOk={this.getSelectData}
                     onChange={date => this.setState({ date })
-                    
-                }
+
+                    }
                 >
                     <List.Item arrow="horizontal">日期</List.Item>
                 </DatePicker>
                 <WhiteSpace size="lg" />
                 <div className='classSearchResult'>
                     <div className="classSearchResultInfo">
-                        <span className="resultName">班级礼貌评分</span>
-                        <span className="resultGrade">89分</span>
+                        <div className="classHealth">
+                            <span className="resultName">班级健康评分</span>
+                            <span className="resultGrade">{_this.state.moralEducationSelectData.health}分</span>
+                        </div>
+                        <div className="classPoliteness">
+                            <span className="resultName">班级礼貌评分</span>
+                            <span className="resultGrade">{_this.state.moralEducationSelectData.politeness}分</span>
+                        </div>
                     </div>
-                  
+
                 </div>
                 <div className='addBunton' onClick={this.addSchedule}>
                     <img src={require("../../ringBindInformation/imgs/addBtn.png")} />

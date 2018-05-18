@@ -250,8 +250,8 @@ class Index extends React.Component {
                     {/*style={{fontSize: '24px'}}>布置作业</Link></li>*/}
                     {/*<li><Link to="/fileShareLink?shareId=1971&userId=23836&userType=st"*/}
                     {/*style={{fontSize: '24px'}}>文件分享</Link></li>*/}
-                    {/*{<li><Link to="/ringBinding?ident=23836"*/}
-                    {/*style={{fontSize: '24px'}}>手环绑定</Link></li>}*/}
+                    {<li><Link to="/ringBinding?ident=23836"
+                               style={{fontSize: '24px'}}>手环绑定</Link></li>}
                     {/*<li><Link to="/personalSettings?uid=23836&tid=31837&utype=te"*/}
                     {/*style={{fontSize: '24px'}}>个人设置</Link></li>*/}
                     {/*<li><Link to="/groupSetting?chatGroupId=706&ident=23836&utype=te"*/}
@@ -269,7 +269,7 @@ class Index extends React.Component {
                         to="/homeworkModule?classId=819"
                         style={{fontSize: '24px'}}>作业模块</Link></li>
                     <li><Link
-                        to="/curriculumSchedule?ident=23836"
+                        to="/curriculumSchedule?ident=23836&access=23836"
                         style={{fontSize: '24px'}}>课程表列表</Link></li>
                     <li><Link
                         to="/workAttendance"
