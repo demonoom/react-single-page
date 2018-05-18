@@ -3,6 +3,8 @@ import { Picker, List, WhiteSpace, Button, WingBlank, InputItem, DatePicker, Tex
 import enUs from 'antd-mobile/lib/date-picker/locale/en_US';
 
 import '../css/addMoralEducation.less'
+const moralEdu = this;
+const prompt = Modal.prompt;
 const nowTimeStamp = Date.now();
 const now = new Date(nowTimeStamp);
 // GMT is not currently observed in the UK. So use UTC now.
@@ -104,45 +106,48 @@ export default class addCurriculumSchedule extends React.Component {
      * 日期切换的回调
      * @param val
      */
-    onDatePickerChange = (val) => {
+    onDatePickerChange = (v) => {
         // const d = [...this.state.posData];
         // const posAsyncValue = [...val];
         // this.setState({
         //     posData: d,
         //     posAsyncValue,
         // });
-        console.log(val);
+        var d = new Date(v);
+        var newTime = d.getFullYear() + '-' + (d.getMonth() + 1) + '-' + d.getDate();
+        console.log(newTime);
+        localStorage.setItem("createTimeKey",JSON.stringify(newTime));
     }
 
     /**
      * 提交新增的德育项
      */
     addMoralEducationTableItem = () => {
+        var createTime = JSON.parse(localStorage.getItem("createTimeKey"));
         const param = {
+            "method": "saveMoralEducation",
             "moralEducationJson": {
-                "id": 1,
-                "cid": 2,
-                "health": 3,
-                "politeness": 4,
-                "termid": 5,
-                "createTime": 6
+                "cid": 14,
+                "health": $(".healthValue input").val(),
+                "politeness": $(".politeValue input").val(),
+                "termid": 1,
+                "createTime": createTime
             }
+        
         }
 
         console.log(param);
-        // WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
-        //     onResponse: function (result) {
-        //         console.log(result);
-        //         if (result.msg == '调用成功' || result.success == true) {
-        //             if (WebServiceUtil.isEmpty(result.response) == false) {
-        //                 _this.setState({ moralEducationSelectData: result.response })
-        //             }
-        //         }
-        //     },
-        //     onError: function (error) {
-        //         // message.error(error);
-        //     }
-        // });
+        WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
+            onResponse: function (result) {
+                console.log(result);
+                if (result.msg == '调用成功' || result.success == true) {
+                    
+                }
+            },
+            onError: function (error) {
+                // message.error(error);
+            }
+        });
         // console.log(this.state.ClassTableDataArr);
     }
 
@@ -183,33 +188,15 @@ export default class addCurriculumSchedule extends React.Component {
     }
 
     addMoralEduction() {
-        const prompt = Modal.prompt;
-        const DefaultModal = () => (
-            <WingBlank size="lg" >
-                <Button onClick={this.showModal('modal1')}>basic</Button>
-                <WhiteSpace />
-                <Modal
-                    visible={true}
-                    maskClosable={false}
-                    onClose={this.onClose('modal1')}
-                    title="Title"
-                    footer={[{ text: 'Ok', onPress: () => { console.log('ok'); this.onClose('modal1')(); } }]}
-                    wrapProps={{ onTouchStart: this.onWrapTouchStart }}
-                >
-                    <div style={{ height: 100, overflow: 'scroll' }}>
-                        scoll content...<br />
-                        scoll content...<br />
-                        scoll content...<br />
-                        scoll content...<br />
-                        scoll content...<br />
-                        scoll content...<br />
-                    </div>
-                </Modal>
-            </WingBlank>
-        )
-        return (
-            <DefaultModal></DefaultModal>
-        )
+        // if (moralEdu.state.phoneType == '-1') {
+        //     var phone = 'ios'
+        // } else {
+        //     var phone = 'android'
+        // }
+        prompt('请输入您修改的名称', '', [
+            {text: '取消'},
+            {text: '确定', onPress: value => moralEdu.renameFile(value, rowData)},
+        ], 'default', '', [], 'ios')
     }
 
     chooseWeeks = () => {
@@ -288,13 +275,15 @@ export default class addCurriculumSchedule extends React.Component {
                         <div className="classSearchResultInfo">
                             <List>
                                 <InputItem
+                                    className="politeValue"
                                     clear
                                     placeholder="请输入班级礼貌评分"
                                     defaultValue=""
-                                    value="123"
+                                    // value="123"
                                     ref={el => this.autoFocusInst = el}
                                 >班级礼貌评分</InputItem>
                                 <InputItem
+                                    className="healthValue"
                                     clear
                                     placeholder="请输入班级健康评分"
                                     ref={el => this.autoFocusInst = el}

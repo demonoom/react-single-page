@@ -99,7 +99,7 @@ export default class curriculumSchedule extends React.Component {
         var _this = this;
         var d = new Date(v);
         var newTime = d.getFullYear() + '-' + (d.getMonth() + 1) + '-' + d.getDate();
-        var newClassAndTermValue = JSON.parse(localStorage.getItem("classAndTermKey"));
+        // var newClassAndTermValue = JSON.parse(localStorage.getItem("classAndTermKey"));
         var param = {
             "method": 'getMoralEducationInfo',
             "clazzId": 14,
