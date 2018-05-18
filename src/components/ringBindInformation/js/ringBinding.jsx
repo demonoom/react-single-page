@@ -27,7 +27,14 @@ export default class ringBinding extends React.Component {
      */
     braceletOnclick() {
         var url = WebServiceUtil.mobileServiceURL + "bindingBracelet";
-        ``
+        var data = {
+            method: 'openNewPage',
+            url: url
+        };
+
+        Bridge.callHandler(data, null, function (error) {
+            window.location.href = url;
+        });
     }
 
     /**

@@ -288,7 +288,7 @@ export default class addCurriculumSchedule extends React.Component {
         var ClassTableArr = [];
         this.state.ClassTableDataArr.forEach(function (v, i) {
             ClassTableArr.push(<div>
-                <div className="cont_communal add_title">第{i + 1}节</div>
+                <div className="cont_communal add_title font_gray">第{i + 1}节</div>
                 <div className="flex_container my_flex teacher_list">
                     <DatePicker
                         mode="time"

@@ -47,7 +47,7 @@ export default class homeworkModule extends React.Component {
         };
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
             onResponse: function (result) {
-                // console.log(result);
+                console.log(result);
                 if (result.success == true && result.msg == "调用成功") {
                     if (result.response.length === 0) {
                         _this.setState({"isLoadingLeft": false})
@@ -105,7 +105,24 @@ export default class homeworkModule extends React.Component {
             return (
                 <div>
                     {/* <WhiteSpace size="lg"/> */}
-                    <Card full>
+                    <div className="homeworkInfo">
+                        <div className="homeworkL">
+                            <h3 className="subject">{rowData.title}</h3>
+                            <div className="imgInfo">
+                                <img src={rowData.fromUser.avatar} />
+                                <span>{rowData.fromUser.userName}</span>    
+                            </div>
+                        </div>
+                        <div className="homeworkM">
+                            <h3>{rowData.title}</h3>
+                            <p>{rowData.content}</p>
+                        </div>
+                        <div className="homeworkR">
+                        {WebServiceUtil.formatYMD(rowData.createTime)}
+                        </div>
+                        
+                    </div>
+                    {/* <Card full>
                         <Card.Header
                             title={rowData.fromUser.userName}
                             thumb={rowData.fromUser.avatar}
@@ -115,7 +132,7 @@ export default class homeworkModule extends React.Component {
                         <Card.Body>
                             <div>{rowData.content}</div>
                         </Card.Body>
-                    </Card>
+                    </Card> */}
                 </div>
             )
         };
