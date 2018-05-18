@@ -196,19 +196,19 @@ export default class addCurriculumSchedule extends React.Component {
         this.state.ClassTableDataArr[i].endTimeData = WebServiceUtil.formatHM(new Date(v).getTime());
     }
 
-    addMoralEduction() {
-        var phoneType = navigator.userAgent;
-        var phone;
-        if (phoneType.indexOf('iPhone') > -1 || phoneType.indexOf('iPad') > -1) {
-            phone = 'ios'
-        } else {
-            phone = 'android'
-        }
-        prompt('请输入您修改的名称', '', [
-            {text: '取消'},
-            {text: '确定', onPress: value => moralEdu.userDefined(value)},
-        ], 'default', '', [], phone)
-    }
+    // addMoralEduction() {
+    //     var phoneType = navigator.userAgent;
+    //     var phone;
+    //     if (phoneType.indexOf('iPhone') > -1 || phoneType.indexOf('iPad') > -1) {
+    //         phone = 'ios'
+    //     } else {
+    //         phone = 'android'
+    //     }
+    //     prompt('请输入您修改的名称', '', [
+    //         {text: '取消'},
+    //         {text: '确定', onPress: value => moralEdu.userDefined(value)},
+    //     ], 'default', '', [], phone)
+    // }
 
     chooseWeeks = () => {
         var _this = this;
@@ -377,8 +377,6 @@ export default class addCurriculumSchedule extends React.Component {
                 </DatePicker>
                 <WhiteSpace size="lg" />
                 <div className='CourseTableArea'>
-                    <div>
-                        <button onClick={this.addMoralEduction}>自定义</button>
                         <div className="classSearchResultInfo">
                             <List>
                                 <InputItem
@@ -396,7 +394,6 @@ export default class addCurriculumSchedule extends React.Component {
                                     ref={el => this.autoFocusInst = el}
                                 >班级健康评分</InputItem>
                             </List>
-                        </div>
                     </div>
                 </div>
                 <div className='addCourseButton'>
