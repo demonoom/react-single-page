@@ -1,4 +1,3 @@
-(node) util.print is deprecated. Use console.log instead.
 #classroomManage {
   font-size: 17px;
 }
@@ -50,7 +49,7 @@
 #classroomManage .tableDiv .classInfo {
   position: relative;
   padding: 15px 15px;
-  border-bottom: 1px #eee solid;
+  border-bottom: 1px #f4f4f4 solid;
   line-height: 24px;
 }
 #classroomManage .tableDiv .classInfo .textOver {

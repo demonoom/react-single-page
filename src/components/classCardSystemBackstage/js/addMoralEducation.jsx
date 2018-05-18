@@ -350,7 +350,7 @@ export default class addCurriculumSchedule extends React.Component {
                     onPickerChange={this.onClassPickerChange}
                     onOk={this.getClassKey}
                 >
-                    <List.Item arrow="horizontal" onClick={this.getClazzesByUserId.bind(this,JSON.parse(localStorage.getItem("userIdKey")).userId)}>选择班级</List.Item>
+                    <List.Item arrow="horizontal" onClick={this.getClazzesByUserId.bind(this,JSON.parse(localStorage.getItem("userIdKey")).userId)}>选择班级<i className="redStar">*</i></List.Item>
                 </Picker>
                 <WhiteSpace size="lg" />
                 {/*选择学期*/}
@@ -361,7 +361,7 @@ export default class addCurriculumSchedule extends React.Component {
                     onPickerChange={this.onTermPickerChange}
                     onOk={this.getTermKey}
                 >
-                    <List.Item arrow="horizontal" onClick={this.chooseWeeks}>选择学期</List.Item>
+                    <List.Item arrow="horizontal" onClick={this.chooseWeeks}>选择学期<i className="redStar">*</i></List.Item>
                 </Picker>
                 <WhiteSpace size="lg" />
                 {/*选择日期*/}
@@ -373,7 +373,7 @@ export default class addCurriculumSchedule extends React.Component {
                     onOk={this.onDatePickerChange}
                     onChange={date => this.setState({ date })}
                 >
-                    <List.Item arrow="horizontal">选择日期</List.Item>
+                    <List.Item arrow="horizontal">选择日期<i className="redStar">*</i></List.Item>
                 </DatePicker>
                 <WhiteSpace size="lg" />
                 <div className='CourseTableArea'>
@@ -382,7 +382,7 @@ export default class addCurriculumSchedule extends React.Component {
                                 <InputItem
                                     className="politeValue"
                                     clear
-                                    placeholder="请输入班级礼貌评分"
+                                    placeholder="请输入分数"
                                     defaultValue=""
                                     // value="123"
                                     ref={el => this.autoFocusInst = el}
@@ -390,7 +390,7 @@ export default class addCurriculumSchedule extends React.Component {
                                 <InputItem
                                     className="healthValue"
                                     clear
-                                    placeholder="请输入班级健康评分"
+                                    placeholder="请输入分数"
                                     ref={el => this.autoFocusInst = el}
                                 >班级健康评分</InputItem>
                             </List>

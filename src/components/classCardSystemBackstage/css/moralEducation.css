@@ -16,3 +16,17 @@
   background-color: #fff;
   overflow-y: auto;
 }
+#moralEducation .classSearchResult .classSearchResultInfo {
+  padding: 5px 15px;
+}
+#moralEducation .classSearchResult .classSearchResultInfo > div {
+  padding: 12px 0;
+  font-size: 17px;
+  border-bottom: 1px #f4f4f4 solid;
+}
+#moralEducation .classHealth {
+  overflow: hidden;
+}
+#moralEducation .classHealth .resultGrade {
+  float: right;
+}
