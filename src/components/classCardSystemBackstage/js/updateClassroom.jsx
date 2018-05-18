@@ -362,10 +362,8 @@ export default class classroomManage extends React.Component {
                                 onChange={this.inputChange.bind(this)}
                                 value={this.state.gradeNameValue}
                             >班级名称<i className='redStar'>*</i></InputItem>
-                            <div id='stIcon' className='stIcon' onClick={this.searchClassroomName}>
-                                <img  src={require('../imgs/down.png')}/>
-                            </div>
-
+                            <img id='stIcon' className='stIcon' src={require('../imgs/down.png')}
+                                onClick={this.searchClassroomName} />
 
                         </div>
                         <div className='chooseResult'

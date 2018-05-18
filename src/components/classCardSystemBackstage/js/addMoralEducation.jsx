@@ -1,8 +1,10 @@
 import React from 'react';
-import { Picker, List, WhiteSpace, Button, WingBlank, InputItem, DatePicker, TextareaItem } from 'antd-mobile';
+import { Picker, List, WhiteSpace, Button, WingBlank, InputItem, DatePicker, TextareaItem, Modal, Toast } from 'antd-mobile';
 import enUs from 'antd-mobile/lib/date-picker/locale/en_US';
 
 import '../css/addMoralEducation.less'
+const moralEdu = this;
+const prompt = Modal.prompt;
 const nowTimeStamp = Date.now();
 const now = new Date(nowTimeStamp);
 // GMT is not currently observed in the UK. So use UTC now.
@@ -11,7 +13,6 @@ const utcNow = new Date(now.getTime() + (now.getTimezoneOffset() * 60000));
 // Make sure that in `time` mode, the maxDate and minDate are within one day.
 let minDate = new Date(nowTimeStamp - 1e7);
 const maxDate = new Date(nowTimeStamp + 1e7);
-
 function formatDate(date) {
     /* eslint no-confusing-arrow: 0 */
     const pad = n => n < 10 ? `0${n}` : n;
@@ -59,7 +60,7 @@ export default class addCurriculumSchedule extends React.Component {
     }
 
     componentDidMount() {
-        document.title = '添加课程表';
+        document.title = '添加德育评价';
     }
 
     /**
@@ -102,23 +103,52 @@ export default class addCurriculumSchedule extends React.Component {
     };
 
     /**
-     * 上课地点切换的回调
+     * 日期切换的回调
      * @param val
      */
-    onPosPickerChange = (val) => {
-        const d = [...this.state.posData];
-        const posAsyncValue = [...val];
-        this.setState({
-            posData: d,
-            posAsyncValue,
-        });
+    onDatePickerChange = (v) => {
+        // const d = [...this.state.posData];
+        // const posAsyncValue = [...val];
+        // this.setState({
+        //     posData: d,
+        //     posAsyncValue,
+        // });
+        var d = new Date(v);
+        var newTime = d.getFullYear() + '-' + (d.getMonth() + 1) + '-' + d.getDate();
+        console.log(newTime);
+        localStorage.setItem("createTimeKey",JSON.stringify(newTime));
     }
 
     /**
-     * 新增课表项
+     * 提交新增的德育项
      */
-    addCourseTableItem = () => {
-        console.log(this.state.ClassTableDataArr);
+    addMoralEducationTableItem = () => {
+        var createTime = JSON.parse(localStorage.getItem("createTimeKey"));
+        const param = {
+            "method": "saveMoralEducation",
+            "moralEducationJson": {
+                "cid": 14,
+                "health": $(".healthValue input").val(),
+                "politeness": $(".politeValue input").val(),
+                "termid": 1,
+                "createTime": createTime
+            }
+        
+        }
+
+        console.log(param);
+        WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
+            onResponse: function (result) {
+                console.log(result);
+                if (result.msg == '调用成功' || result.success == true) {
+                    
+                }
+            },
+            onError: function (error) {
+                // message.error(error);
+            }
+        });
+        // console.log(this.state.ClassTableDataArr);
     }
 
     /**
@@ -158,21 +188,19 @@ export default class addCurriculumSchedule extends React.Component {
     }
 
     addMoralEduction() {
-        if (v[0] == -1) {
-            //跳转到编辑学期页面
-            var url = WebServiceUtil.mobileServiceURL + "definedTerm";
-            var data = {
-                method: 'openNewPage',
-                url: url
-            };
-
-            Bridge.callHandler(data, null, function (error) {
-                window.location.href = url;
-            });
-        }
+        // if (moralEdu.state.phoneType == '-1') {
+        //     var phone = 'ios'
+        // } else {
+        //     var phone = 'android'
+        // }
+        prompt('请输入您修改的名称', '', [
+            {text: '取消'},
+            {text: '确定', onPress: value => moralEdu.renameFile(value, rowData)},
+        ], 'default', '', [], 'ios')
     }
 
     chooseWeeks = () => {
+        // console.log("123");
         var _this = this;
         var param = {
             "method": 'getSemesterList',
@@ -199,9 +227,11 @@ export default class addCurriculumSchedule extends React.Component {
             }
         });
     }
-    
+    handleClick = () => {
+        this.customFocusInst.focus();
+    }
     render() {
-
+        // const { getFieldProps } = this.props.form;
         return (
             <div id="addMoralEducation" style={{ height: document.body.clientHeight }}>
                 <WhiteSpace size="lg" />
@@ -233,6 +263,7 @@ export default class addCurriculumSchedule extends React.Component {
                     title="选择日期"
                     extra="Optional"
                     value={this.state.date}
+                    onOk={this.onDatePickerChange}
                     onChange={date => this.setState({ date })}
                 >
                     <List.Item arrow="horizontal">选择日期</List.Item>
@@ -242,15 +273,29 @@ export default class addCurriculumSchedule extends React.Component {
                     <div>
                         <button onClick={this.addMoralEduction}>自定义</button>
                         <div className="classSearchResultInfo">
-                            <span className="resultName">班级礼貌评分</span>
-                            <span className="resultGrade">89分</span>
+                            <List>
+                                <InputItem
+                                    className="politeValue"
+                                    clear
+                                    placeholder="请输入班级礼貌评分"
+                                    defaultValue=""
+                                    // value="123"
+                                    ref={el => this.autoFocusInst = el}
+                                >班级礼貌评分</InputItem>
+                                <InputItem
+                                    className="healthValue"
+                                    clear
+                                    placeholder="请输入班级健康评分"
+                                    ref={el => this.autoFocusInst = el}
+                                >班级健康评分</InputItem>
+                            </List>
                         </div>
                     </div>
                 </div>
                 <div className='addCourseButton'>
                     <WhiteSpace size="lg" />
                     <WingBlank>
-                        <Button type="warning" onClick={this.addCourseTableItem}>提交</Button>
+                        <Button type="warning" onClick={this.addMoralEducationTableItem}>提交</Button>
                     </WingBlank>
                 </div>
             </div>
