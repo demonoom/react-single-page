@@ -1,35 +1,17 @@
 import React from 'react';
 import { Picker, List, WhiteSpace, Button, WingBlank, InputItem, DatePicker, TextareaItem, Modal, Toast } from 'antd-mobile';
 import enUs from 'antd-mobile/lib/date-picker/locale/en_US';
+import '../css/addMoralEducation.less';
 
-import '../css/addMoralEducation.less'
 var moralEdu;
 const prompt = Modal.prompt;
 const nowTimeStamp = Date.now();
 const now = new Date(nowTimeStamp);
-// GMT is not currently observed in the UK. So use UTC now.
 const utcNow = new Date(now.getTime() + (now.getTimezoneOffset() * 60000));
 
-// Make sure that in `time` mode, the maxDate and minDate are within one day.
-let minDate = new Date(nowTimeStamp - 1e7);
-const maxDate = new Date(nowTimeStamp + 1e7);
-function formatDate(date) {
-    /* eslint no-confusing-arrow: 0 */
-    const pad = n => n < 10 ? `0${n}` : n;
-    const dateStr = `${date.getFullYear()}-${pad(date.getMonth() + 1)}-${pad(date.getDate())}`;
-    const timeStr = `${pad(date.getHours())}:${pad(date.getMinutes())}`;
-    return `${dateStr} ${timeStr}`;
-}
-// const CustomChildren = ({ extra, onClick, children }) => (
-//     <div
-//         onClick={onClick}
-//         style={{ backgroundColor: '#fff', height: '45px', lineHeight: '45px', padding: '0 15px' }}
-//     >
-//         {children}
-//         <span style={{ float: 'right', color: '#888' }}>{extra}</span>
-//     </div>
-// );
-export default class addCurriculumSchedule extends React.Component {
+
+
+export default class addMoralEducation extends React.Component {
     constructor(props) {
         super(props);
         moralEdu = this;
@@ -108,15 +90,9 @@ export default class addCurriculumSchedule extends React.Component {
      * @param val
      */
     onDatePickerChange = (v) => {
-        // const d = [...this.state.posData];
-        // const posAsyncValue = [...val];
-        // this.setState({
-        //     posData: d,
-        //     posAsyncValue,
-        // });
+      
         var d = new Date(v);
         var newTime = d.getFullYear() + '-' + (d.getMonth() + 1) + '-' + d.getDate();
-        console.log(newTime);
         localStorage.setItem("createTimeKey",JSON.stringify(newTime));
     }
 
@@ -135,11 +111,9 @@ export default class addCurriculumSchedule extends React.Component {
             }
         
         }
-        console.log(param)
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
             onResponse: function (result) {
                 if (result.msg == '调用成功' || result.success == true) {
-                    console.log(result);
                     Toast.success('添加成功');
                     setTimeout(function () {
                         var data = {
@@ -147,17 +121,13 @@ export default class addCurriculumSchedule extends React.Component {
                         };
 
                         Bridge.callHandler(data, null, function (error) {
-                            // Toast.fail(error);
-                            console.log(error);
                         });
                     }, 1000)
                 }
             },
             onError: function (error) {
-                // message.error(error);
             }
         });
-        // console.log(this.state.ClassTableDataArr);
     }
 
     /**
@@ -196,20 +166,6 @@ export default class addCurriculumSchedule extends React.Component {
         this.state.ClassTableDataArr[i].endTimeData = WebServiceUtil.formatHM(new Date(v).getTime());
     }
 
-    // addMoralEduction() {
-    //     var phoneType = navigator.userAgent;
-    //     var phone;
-    //     if (phoneType.indexOf('iPhone') > -1 || phoneType.indexOf('iPad') > -1) {
-    //         phone = 'ios'
-    //     } else {
-    //         phone = 'android'
-    //     }
-    //     prompt('请输入您修改的名称', '', [
-    //         {text: '取消'},
-    //         {text: '确定', onPress: value => moralEdu.userDefined(value)},
-    //     ], 'default', '', [], phone)
-    // }
-
     chooseWeeks = () => {
         var _this = this;
         var param = {
@@ -218,7 +174,6 @@ export default class addCurriculumSchedule extends React.Component {
         };
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
             onResponse: function (result) {
-                console.log(result);
                 if (result.msg == '调用成功' || result.success == true) {
                     if (WebServiceUtil.isEmpty(result.response) == false) {
                         var arr = []
@@ -263,30 +218,24 @@ export default class addCurriculumSchedule extends React.Component {
                 }
             },
             onError: function (error) {
-                // message.error(error);
             }
         });
     }
     getClassKey = (v) => {
-        // console.log(v);
         this.setState({classAsyncValue: v});
         var classKey = {
             "classId":v
         }
         localStorage.setItem("getClassKey",JSON.stringify(classKey))
-        console.log(JSON.parse(localStorage.getItem("getClassKey")).classId);
     }
     getTermKey = (v) => {
         var termKey = {
             "termId":v
         }
         localStorage.setItem("getTermKey",JSON.stringify(termKey));
-        console.log(JSON.parse(localStorage.getItem("getTermKey")).termId);
-        // console.log(v);
     }
 
     userDefined(value){
-        console.log(value);
         if (value.length == 0) {
             Toast.fail('文件夹名称不能为空', 1);
             return
@@ -320,25 +269,16 @@ export default class addCurriculumSchedule extends React.Component {
                     _this.setState({
                         dataSource: _this.state.dataSource.cloneWithRows(_this.initData)
                     });
-                    //解决安卓键盘改变窗口高度问题,所以延迟100
-                    // setTimeout(function () {
-                    //     _this.setState({
-                    //         dataSource: _this.state.dataSource.cloneWithRows(_this.initData)
-                    //     });
-                    // }, 100);
+                    
                 } else {
                     Toast.fail('重命名失败', 1);
                 }
             },
             onError: function (error) {
-                // message.error(error);
             }
         });
-        // console.log(rowData)
-        // console.log("2213");
     }
     render() {
-        // const { getFieldProps } = this.props.form;
         return (
             <div id="addMoralEducation" style={{ height: document.body.clientHeight }}>
                 <WhiteSpace size="lg" />

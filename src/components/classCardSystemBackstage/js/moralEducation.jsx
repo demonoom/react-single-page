@@ -7,32 +7,11 @@ import '../css/moralEducation.less'
 
 const nowTimeStamp = Date.now();
 const now = new Date(nowTimeStamp);
-// GMT is not currently observed in the UK. So use UTC now.
 const utcNow = new Date(now.getTime() + (now.getTimezoneOffset() * 60000));
 
-// Make sure that in `time` mode, the maxDate and minDate are within one day.
-let minDate = new Date(nowTimeStamp - 1e7);
-const maxDate = new Date(nowTimeStamp + 1e7);
-// const CustomChildren = ({ extra, onClick, children }) => (
-//     <div
-//         onClick={onClick}
-//         style={{ backgroundColor: '#fff', height: '45px', lineHeight: '45px', padding: '0 15px' }}
-//     >
-//         {children}
-//         <span style={{ float: 'right', color: '#888' }}>{extra}</span>
-//     </div>
-// );
-function formatDate(date) {
-    /* eslint no-confusing-arrow: 0 */
-    const pad = n => n < 10 ? `0${n}` : n;
-    const dateStr = `${date.getFullYear()}-${pad(date.getMonth() + 1)}-${pad(date.getDate())}`;
-    const timeStr = `${pad(date.getHours())}:${pad(date.getMinutes())}`;
-    return `${dateStr} ${timeStr}`;
-}
 
 
-
-export default class curriculumSchedule extends React.Component {
+export default class moralEducation extends React.Component {
 
     constructor(props) {
         super(props);
@@ -63,8 +42,7 @@ export default class curriculumSchedule extends React.Component {
                 ],]
         };
     }
-
-    componentDidMount() {
+    componentWillMount(){
         document.title = '德育评价';
         var locationHref = window.location.href;
         var locationSearch = locationHref.substr(locationHref.indexOf("?") + 1);
@@ -72,6 +50,8 @@ export default class curriculumSchedule extends React.Component {
         var loginUser = {
             "userId": ident,
         };
+    }
+    componentDidMount() {
         localStorage.setItem("userIdKey", JSON.stringify(loginUser));
     }
 
@@ -88,7 +68,6 @@ export default class curriculumSchedule extends React.Component {
             "termId": JSON.parse(localStorage.getItem("classAndTermKey")).termId,
             "createTime": newTime
         }
-        console.log(param);
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
             onResponse: function (result) {
                 if (result.msg == '调用成功' || result.success == true) {
@@ -98,7 +77,6 @@ export default class curriculumSchedule extends React.Component {
                 }
             },
             onError: function (error) {
-                // message.error(error);
             }
         });
     }
@@ -126,7 +104,6 @@ export default class curriculumSchedule extends React.Component {
                 }
             },
             onError: function (error) {
-                // message.error(error);
             }
         });
     }
@@ -147,7 +124,6 @@ export default class curriculumSchedule extends React.Component {
                 }
             },
             onError: function (error) {
-                // message.error(error);
             }
         });
     }
