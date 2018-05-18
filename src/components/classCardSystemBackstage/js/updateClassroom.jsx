@@ -13,7 +13,7 @@ import {
     PullToRefresh,
     Checkbox, Flex
 } from 'antd-mobile';
-import '../css/classroomManage.less'
+import '../css/updateClassroom.less'
 import { ucs2 } from 'punycode';
 
 const CheckboxItem = Checkbox.CheckboxItem;
@@ -22,7 +22,7 @@ const alert = Modal.alert;
 const RadioItem = Radio.RadioItem;
 var classBinding;
 
-export default class classroomManage extends React.Component {
+export default class updateClassroom extends React.Component {
 
     constructor(props) {
         super(props);
@@ -308,7 +308,7 @@ export default class classroomManage extends React.Component {
             )
         };
         return (
-            <div id="classroomManage" style={{ height: classBinding.state.clientHeight }}>
+            <div id="updateClassroom" style={{ height: classBinding.state.clientHeight }}>
                 <div className='tableDiv' style={{ height: classBinding.state.clientHeight }}>
                     {/*这是列表数据,包括添加按钮*/}
                     <ListView
@@ -362,8 +362,10 @@ export default class classroomManage extends React.Component {
                                 onChange={this.inputChange.bind(this)}
                                 value={this.state.gradeNameValue}
                             >班级名称<i className='redStar'>*</i></InputItem>
-                            <img id='stIcon' className='stIcon' src={require('../imgs/down.png')}
-                                onClick={this.searchClassroomName} />
+                            <div id='stIcon' className='stIcon' onClick={this.searchClassroomName}>
+                                <img  src={require('../imgs/down.png')}/>
+                            </div>
+
 
                         </div>
                         <div className='chooseResult'

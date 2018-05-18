@@ -107,10 +107,10 @@ export default class homeworkModule extends React.Component {
                     {/* <WhiteSpace size="lg"/> */}
                     <div className="homeworkInfo">
                         <div className="homeworkL">
-                            <h3 className="subject">{rowData.title}</h3>
+                            <h3 className="subject textOver">{rowData.title}</h3>
                             <div className="imgInfo">
                                 <img src={rowData.fromUser.avatar} />
-                                <span>{rowData.fromUser.userName}</span>    
+                                <span className="textOver">{rowData.fromUser.userName}</span>
                             </div>
                         </div>
                         <div className="homeworkM">
