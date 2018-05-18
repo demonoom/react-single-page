@@ -7,8 +7,6 @@ var moralEdu;
 const prompt = Modal.prompt;
 const nowTimeStamp = Date.now();
 const now = new Date(nowTimeStamp);
-const utcNow = new Date(now.getTime() + (now.getTimezoneOffset() * 60000));
-
 
 
 export default class addMoralEducation extends React.Component {
@@ -35,10 +33,10 @@ export default class addMoralEducation extends React.Component {
             ClassTableDataArr: [],  //课表数据
             date: now,
             time: now,
-            utcDate: utcNow,
             dpValue: null,
             customChildValue: null,
             visible: false,
+            timeValue:null
         };
     }
 
@@ -93,21 +91,44 @@ export default class addMoralEducation extends React.Component {
       
         var d = new Date(v);
         var newTime = d.getFullYear() + '-' + (d.getMonth() + 1) + '-' + d.getDate();
-        localStorage.setItem("createTimeKey",JSON.stringify(newTime));
+        this.setState({
+            timeValue:newTime
+        })
+        
     }
 
     /**
      * 提交新增的德育项
      */
     addMoralEducationTableItem = () => {
+        if(moralEdu.state.classAsyncValue[0] == 0){
+            Toast.fail('请选择班级')
+            return
+        }
+        if(moralEdu.state.termAsyncValue[0] == 0){
+            Toast.fail('请选择学期')
+            return
+        }
+        if(moralEdu.state.timeValue == null) {
+            Toast.fail('请选择日期')
+            return
+        }
+        if($(".healthValue input").val().trim() == '' || $(".healthValue input").val().trim().length == 0){
+            Toast.fail('请填写礼貌评分')
+            return
+        }
+        if($(".politeValue input").val().trim() == '' || $(".healthValue input").val().trim().length == 0){
+            Toast.fail('请填写健康评分')
+            return
+        }
         const param = {
             "method": "saveMoralEducation",
             "moralEducationJson": {
-                "cid": JSON.parse(localStorage.getItem("getClassKey")).classId[0],
+                "cid": moralEdu.state.classAsyncValue[0],
                 "health": $(".healthValue input").val(),
                 "politeness": $(".politeValue input").val(),
-                "termid": JSON.parse(localStorage.getItem("getTermKey")).termId[0],
-                "createTime": JSON.parse(localStorage.getItem("createTimeKey"))
+                "termid": moralEdu.state.termAsyncValue[0],
+                "createTime": moralEdu.state.timeValue
             }
         
         }
@@ -166,7 +187,9 @@ export default class addMoralEducation extends React.Component {
         this.state.ClassTableDataArr[i].endTimeData = WebServiceUtil.formatHM(new Date(v).getTime());
     }
 
-    chooseWeeks = () => {
+ 
+
+    chooseTerms = () => {
         var _this = this;
         var param = {
             "method": 'getSemesterList',
@@ -223,16 +246,12 @@ export default class addMoralEducation extends React.Component {
     }
     getClassKey = (v) => {
         this.setState({classAsyncValue: v});
-        var classKey = {
-            "classId":v
-        }
-        localStorage.setItem("getClassKey",JSON.stringify(classKey))
     }
     getTermKey = (v) => {
-        var termKey = {
-            "termId":v
-        }
-        localStorage.setItem("getTermKey",JSON.stringify(termKey));
+        this.setState({
+            termAsyncValue:v
+        })
+        
     }
 
     userDefined(value){
@@ -244,11 +263,11 @@ export default class addMoralEducation extends React.Component {
         var param = {
             "method": 'updateMoralEducation',
             "moralEducationJson": {
-                "cid": JSON.parse(localStorage.getItem("getClassKey")).classId[0],
+                "cid": moralEdu.state.classAsyncValue,
                 "health": $(".healthValue input").val(),
                 "politeness": $(".politeValue input").val(),
-                "termid": JSON.parse(localStorage.getItem("getTermKey")).termId[0],
-                "createTime": JSON.parse(localStorage.getItem("createTimeKey"))
+                "termid": moralEdu.state.termAsyncValue,
+                "createTime": moralEdu.state.timeValue
             }
         };
 
@@ -301,7 +320,7 @@ export default class addMoralEducation extends React.Component {
                     onPickerChange={this.onTermPickerChange}
                     onOk={this.getTermKey}
                 >
-                    <List.Item arrow="horizontal" onClick={this.chooseWeeks}>选择学期</List.Item>
+                    <List.Item arrow="horizontal" onClick={this.chooseTerms}>选择学期</List.Item>
                 </Picker>
                 <WhiteSpace size="lg" />
                 {/*选择日期*/}
@@ -323,8 +342,6 @@ export default class addMoralEducation extends React.Component {
                                     className="politeValue"
                                     clear
                                     placeholder="请输入班级礼貌评分"
-                                    defaultValue=""
-                                    // value="123"
                                     ref={el => this.autoFocusInst = el}
                                 >班级礼貌评分</InputItem>
                                 <InputItem

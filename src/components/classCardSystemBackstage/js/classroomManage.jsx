@@ -48,16 +48,17 @@ export default class classroomManage extends React.Component {
         
     };
 
-    
-   
-
     componentDidMount() {
         Bridge.setShareAble("false");
         document.title = '绑定教室信息';
         var locationHref = window.location.href;
         var locationSearch = locationHref.substr(locationHref.indexOf("?") + 1);
         var uid = locationSearch.split("=")[1];
-        this.setState({ "uid": uid })
+        this.setState({ "uid": uid });
+        var uidKey = {
+            "uidKey":uid
+        }
+        localStorage.setItem("uIdKey",JSON.stringify(uidKey));
         this.viewClassRoomPage(uid);
         //添加对视窗大小的监听,在屏幕转换以及键盘弹起时重设各项高度
         window.addEventListener('resize', classBinding.onWindowResize)
@@ -78,7 +79,7 @@ export default class classroomManage extends React.Component {
     }
 
     /**
-     * 查看绑定的设备
+     * 查看教室信息
      */
     viewClassRoomPage(uid) {
         var _this = this;
@@ -266,8 +267,8 @@ export default class classroomManage extends React.Component {
         this.setState({ defaultPageNo: 1, refreshing: true, isLoadingLeft: true });
         this.viewClassRoomPage(this.state.uid);
     }
-    toUpdatePage(){
-        var url = WebServiceUtil.mobileServiceURL + "updateClassroom";
+    toUpdatePage(id){
+        var url = WebServiceUtil.mobileServiceURL + "updateClassroom"+"?classId="+id.id;
         var data = {
             method: 'openNewPage',
             url: url
@@ -290,7 +291,7 @@ export default class classroomManage extends React.Component {
                             rowData.defaultBindedClazz ? <span className="grade">{rowData.defaultBindedClazz.name}</span> : <span className="grade"></span>
                         }
                         </div>
-                        <span className='calmCardUnbind' onClick={this.toUpdatePage}
+                        <span className='calmCardUnbind' onClick={this.toUpdatePage.bind(this,rowData)}
                         >修改</span>
                     </div>
                 }

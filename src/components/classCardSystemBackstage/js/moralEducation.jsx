@@ -5,14 +5,13 @@ import '../css/moralEducation.less'
 
 const nowTimeStamp = Date.now();
 const now = new Date(nowTimeStamp);
-const utcNow = new Date(now.getTime() + (now.getTimezoneOffset() * 60000));
-
-
+var mEducation;
 
 export default class moralEducation extends React.Component {
 
     constructor(props) {
         super(props);
+        mEducation = this;
         this.state = {
             data: [],
             cols: 1,
@@ -21,7 +20,6 @@ export default class moralEducation extends React.Component {
             visible: false,
             date: now,
             time: now,
-            utcDate: utcNow,
             dpValue: null,
             customChildValue: null,
             visible: false,
@@ -65,8 +63,8 @@ export default class moralEducation extends React.Component {
         var newTime = d.getFullYear() + '-' + (d.getMonth() + 1) + '-' + d.getDate();
         var param = {
             "method": 'getMoralEducationInfo',
-            "clazzId": JSON.parse(localStorage.getItem("classAndTermKey")).classId,
-            "termId": JSON.parse(localStorage.getItem("classAndTermKey")).termId,
+            "clazzId": mEducation.state.sValue[0],
+            "termId": mEducation.state.sValue[1],
             "createTime": newTime
         }
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
@@ -81,13 +79,10 @@ export default class moralEducation extends React.Component {
             }
         });
     }
+    
     getClassAndTerm = (v) => {
         this.setState({sValue: v})
-        var classAndTerm = {
-            "classId": v[0],
-            "termId": v[1]
-        }
-        localStorage.setItem("classAndTermKey", JSON.stringify(classAndTerm));
+       
     }
 
     /**
