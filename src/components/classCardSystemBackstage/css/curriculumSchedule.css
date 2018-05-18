@@ -1,3 +1,4 @@
+(node) util.print is deprecated. Use console.log instead.
 #curriculumSchedule .addBunton {
   width: 3rem;
   height: 3rem;
@@ -12,28 +13,31 @@
   border-bottom: 1px solid #e5e5e5;
 }
 #curriculumSchedule .curriculum_cont li div.list span {
-  margin-left: 15px;
+  margin-left: 20px;
   font-size: 16px;
 }
 #curriculumSchedule .curriculum_cont li div.list span:first-child {
   margin-left: 0;
 }
 #curriculumSchedule .curriculum_cont li .text_cont1 {
-  max-width: 26%;
+  max-width: 28%;
 }
 #curriculumSchedule .curriculum_cont li .text_cont2 {
-  max-width: 27%;
+  max-width: 68%;
 }
 #curriculumSchedule .curriculum_cont li .text_cont3 {
-  max-width: 17%;
+  max-width: 100%;
 }
-#curriculumSchedule .curriculum_cont li .amend_btn {
+#curriculumSchedule .amend_btn {
   float: right;
   background: #f55d45;
   line-height: 24px;
   padding: 0 15px;
   font-size: 1rem !important;
-  margin-top: 10px;
+  margin-top: 15px;
   color: #fff;
   border-radius: 2px;
+}
+#curriculumSchedule .lineList {
+  line-height: 1.5;
 }
