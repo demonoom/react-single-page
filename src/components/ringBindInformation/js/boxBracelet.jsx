@@ -78,7 +78,8 @@ export default class boxBracelet extends React.Component {
         var param = {
             "method": 'viewAndroidBoxPage',
             "aid": loginUser.ident,
-            "cid": -1,
+            "cid": -2,
+            "rid": -1,
             "pn": -1,
         };
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
@@ -204,8 +205,8 @@ export default class boxBracelet extends React.Component {
             return
         }
         var param = {
-            "method": 'bindAndroidBox',
-            "cid": this.state.searchCheckValue,
+            "method": 'bindAndroidBoxtoRoom',
+            "rid": this.state.searchCheckValue,
             "mac": bindDing.state.macId,
             "opId": this.state.loginUser.ident,
         };
@@ -237,11 +238,11 @@ export default class boxBracelet extends React.Component {
         this.setState({searchData: []});
         var _this = this;
         if (this.state.stNameValue.trim().length == 0) {
-            Toast.fail('请输入班级', 1)
+            Toast.fail('请输入教室', 1)
             return
         }
         var param = {
-            "method": 'searchBoxBindCandidate',
+            "method": 'searchClassRoom',
             "keyWord": this.state.stNameValue.trim(),
             "aid": this.state.loginUser.ident
         };
@@ -325,6 +326,7 @@ export default class boxBracelet extends React.Component {
         var _this = this;
 
         const row = (rowData, sectionID, rowID) => {
+            console.log(rowData);
 
             return (
                 <WingBlank size="lg">
@@ -332,7 +334,7 @@ export default class boxBracelet extends React.Component {
                     <Card>
                         <Card.Header
                             className='noomCardHeader'
-                            title={rowData.bindingClazz.name}
+                            title={rowData.room.name}
                             extra={<span className='noomCardUnbind'
                                          onClick={_this.showAlert.bind(this, rowData)}>解绑</span>}
                         />
@@ -378,7 +380,6 @@ export default class boxBracelet extends React.Component {
                     </div>
                 </div>
                 <div className='addModel' style={{height: bindDing.state.clientHeight}}>
-
 
                     <List>
                         <div className='macAddress'>

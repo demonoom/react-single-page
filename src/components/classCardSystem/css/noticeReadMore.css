@@ -1,0 +1,35 @@
+(node) util.print is deprecated. Use console.log instead.
+#noticeReadMore .am-card {
+  min-height: 7.1rem;
+  padding-bottom: 0;
+  line-height: 7.1rem;
+}
+#noticeReadMore .am-card-header {
+  padding-left: 2.8rem;
+  padding-right: 2.2rem;
+  padding-top: 0;
+  padding-bottom: 0;
+}
+#noticeReadMore .am-card-header-content {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  font-size: 28px;
+  line-height: 28px;
+  color: #2a3350;
+  width: calc(100% - 15rem);
+}
+#noticeReadMore .am-card-header-content::before {
+  content: "";
+  width: 8px;
+  height: 8px;
+  background-color: #7f5dff;
+  -webkit-border-radius: 50%;
+  -moz-border-radius: 50%;
+  border-radius: 50%;
+  margin-right: 14px;
+}
+#noticeReadMore .am-card-header-extra {
+  color: #444e6f;
+  font-size: 20px;
+}

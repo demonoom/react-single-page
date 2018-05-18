@@ -182,10 +182,62 @@ const workAttendance = (location, cb) => {
         }
     )
 }
-
+// 通知查看
 const noticeReadMore = (location, cb) => {
-    require.ensure([],require => {
-        cb(null,require("./components/classCardSystem/js/noticeReadMore").default)
+    require.ensure([], require => {
+        cb(null, require("./components/classCardSystem/js/noticeReadMore").default)
+    })
+}
+const classroomManage = (location, cb) => {
+    require.ensure([], require => {
+        cb(null, require("./components/classCardSystemBackstage/js/classroomManage").default)
+    })
+}
+
+const addCurriculumSchedule = (location, cb) => {
+    require.ensure([], require => {
+        cb(null, require("./components/classCardSystemBackstage/js/addCurriculumSchedule").default)
+    })
+}
+
+const definedTerm = (location, cb) => {
+    require.ensure([], require => {
+        cb(null, require("./components/classCardSystemBackstage/js/definedTerm").default)
+    })
+}
+
+const classDemeanor = (location, cb) => {
+    require.ensure([], require => {
+        cb(null, require("./components/classCardSystemBackstage/js/classDemeanor").default)
+    })
+}
+
+const moralEducation = (location, cb) => {
+    require.ensure([], require => {
+        cb(null, require("./components/classCardSystemBackstage/js/moralEducation").default)
+    })
+}
+
+const addMoralEducation = (location, cb) => {
+    require.ensure([], require => {
+        cb(null, require("./components/classCardSystemBackstage/js/addMoralEducation").default)
+    })
+}
+
+const classCardHomePage = (location, cb) => {
+    require.ensure([], require => {
+        cb(null, require("./components/classCardSystem/js/homePage/classCardHomePage").default)
+    })
+}
+
+const notifyBack = (location, cb) => {
+    require.ensure([], require => {
+        cb(null, require("./components/classCardSystemBackstage/js/notify").default)
+    })
+}
+const updateClassroom = (location, cb) => {
+    require.ensure([], require => {
+        cb(null, require("./components/classCardSystemBackstage/js/updateClassroom").default)
     })
 }
 
@@ -228,17 +280,17 @@ class Index extends React.Component {
                     {/*<li><Link to="/analysisList?access_user=23836" style={{fontSize: '24px'}}>成绩分析</Link></li>*/}
                     {/*<li><Link to="/searchUserLocationInfo" style={{fontSize: '24px'}}>搜索查看用户位置信息</Link></li>*/}
                     {/*<li><Link to="/studentFaceStatistics" style={{fontSize: '24px'}}>学生脸部表情分析折线图</Link></li>*/}
-                    {/*<li><Link to="/termitePlateLibrary?ident=23836&fileId=-1&title=蚁盘题目&phoneType=0"*/}
-                    {/*style={{fontSize: '24px'}}>蚁盘题库</Link>*/}
-                    {/*</li>*/}
+                    <li><Link to="/termitePlateLibrary?ident=23836&fileId=-1&title=蚁盘题目&phoneType=0"
+                              style={{fontSize: '24px'}}>蚁盘题库</Link>
+                    </li>
                     {/*<li><Link to="/pushSubjectsFromTLibrary?ident=23836&fileId=-1"*/}
                     {/*style={{fontSize: '24px'}}>蚁盘推题</Link></li>*/}
                     {/*<li><Link to="/arrangementWork?ident=23836&fileId=-1"*/}
                     {/*style={{fontSize: '24px'}}>布置作业</Link></li>*/}
                     {/*<li><Link to="/fileShareLink?shareId=1971&userId=23836&userType=st"*/}
                     {/*style={{fontSize: '24px'}}>文件分享</Link></li>*/}
-                    <li><Link to="/ringBinding?ident=23836"
-                              style={{fontSize: '24px'}}>手环绑定</Link></li>
+                    {<li><Link to="/ringBinding?ident=23836"
+                               style={{fontSize: '24px'}}>手环绑定</Link></li>}
                     {/*<li><Link to="/personalSettings?uid=23836&tid=31837&utype=te"*/}
                     {/*style={{fontSize: '24px'}}>个人设置</Link></li>*/}
                     {/*<li><Link to="/groupSetting?chatGroupId=706&ident=23836&utype=te"*/}
@@ -256,14 +308,29 @@ class Index extends React.Component {
                         to="/homeworkModule?classId=819"
                         style={{fontSize: '24px'}}>作业模块</Link></li>
                     <li><Link
-                        to="/curriculumSchedule"
+                        to="/curriculumSchedule?ident=23836&access=23836"
                         style={{fontSize: '24px'}}>课程表列表</Link></li>
                     <li><Link
                         to="/workAttendance"
                         style={{fontSize: '24px'}}>出勤</Link></li>
                     <li><Link
-                        to="/noticeReadMore?classId=819"
-                        style={{fontSize:'24px'}}>通知查看更多</Link></li>
+                        to="/noticeReadMore?classroomId=1"
+                        style={{fontSize: '24px'}}>通知查看更多</Link></li>
+                    <li><Link
+                        to="/classroomManage?uid=23836"
+                        style={{fontSize: '24px'}}>教室管理页面</Link></li>
+                    <li><Link
+                        to="/classDemeanor?ident=23836&access=23836"
+                        style={{fontSize: '24px'}}>班级风采</Link></li>
+                    <li><Link
+                        to="/moralEducation?ident=23836"
+                        style={{fontSize: '24px'}}>德育评价</Link></li>
+                    <li><Link
+                        to="/classCardHomePage"
+                        style={{fontSize: '24px'}}>班牌首页</Link></li>
+                    <li><Link
+                        to="/notifyBack"
+                        style={{fontSize: '24px'}}>通知后台</Link></li>
                     <li><Link
                         to="/studentDutyList?access_user=23836"
                         style={{fontSize:'24px'}}>班级值日表</Link></li>
@@ -311,8 +378,19 @@ ReactDOM.render(
             <Route path="brotherXu" getComponent={brotherXu}/>
             <Route path="homeworkModule" getComponent={homeworkModule}/>
             <Route path="curriculumSchedule" getComponent={curriculumSchedule}/>
-            <Route path="workAttendance" getComponent={workAttendance} />
-            <Route path="noticeReadMore" getComponent={noticeReadMore} />
+            <Route path="workAttendance" getComponent={workAttendance}/>
+            <Route path="noticeReadMore" getComponent={noticeReadMore}/>
+            <Route path="classroomManage" getComponent={classroomManage}/>
+            <Route path="workAttendance" getComponent={workAttendance}/>
+            <Route path="noticeReadMore" getComponent={noticeReadMore}/>
+            <Route path="addCurriculumSchedule" getComponent={addCurriculumSchedule}/>
+            <Route path="definedTerm" getComponent={definedTerm}/>
+            <Route path="classDemeanor" getComponent={classDemeanor}/>
+            <Route path="classCardHomePage" getComponent={classCardHomePage}/>
+            <Route path="notifyBack" getComponent={notifyBack}/>
+            <Route path="moralEducation" getComponent={moralEducation}/>
+            <Route path="addMoralEducation" getComponent={addMoralEducation}/>
+            <Route path="updateClassroom" getComponent={updateClassroom}/>
             <Route path="studentDutyList" getComponent={studentDutyList} />
             <Route path="addStudentDuty" getComponent={addStudentDuty} />
             <Route path="editStudentDuty" getComponent={editStudentDuty} />
