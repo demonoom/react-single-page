@@ -15,6 +15,7 @@
       overflow-y: auto;
     }
     .am-list-view-scrollview-content {
+      /*height: calc(~"100% - 70px");*/
       height: 100%;
       overflow-y: auto;
     }
@@ -35,7 +36,7 @@
       .calmCardUnbind {
         background: #f55d45;
         color: #fff !important;
-        padding: 0 10px;
+        padding: 0 15px;
         text-align: center;
         -webkit-border-radius: 2px;
         -moz-border-radius: 2px;
@@ -52,8 +53,9 @@
         border-bottom: 1px #eee solid;
         line-height: 24px;
         .textOver{
-          width: calc(~"100%" - 70px);
+          width: calc(~"100% - 70px");
           color: #a9a9a9;
+          font-size: 16px;
         }
       }
       .classroom{
@@ -62,6 +64,7 @@
       .grade{
         color: #a9a9a9;
         padding-left: 10px;
+        font-size: 15px;
       }
       .noomCardUnbind {
         color: #ff144e;
@@ -70,8 +73,8 @@
         width: 3.5rem;
         height: 3.5rem;
         position: absolute;
-        right: 5.2rem;
-        bottom: 5rem;
+        right: 15px;
+        bottom: 10px;
   
         img {
           width: 100%;
@@ -88,6 +91,9 @@
       // flex-direction: column;
       // background-color: #fff;
       position: relative;
+      .bindGrade{
+        padding: 4px 0;
+      }
       .am-checkbox-inner{
         -webkit-border-radius: 0;
         -moz-border-radius: 0;
@@ -208,12 +214,16 @@
 
         }
         .stIcon {
-          width: 14px;
-          height: 13px;
+          width: 18px;
+          height: 18px;
           position: absolute;
-          right: 10px;
+          right: 15px;
           top: 50%;
-          margin-top: -6px;
+          margin-top: -10px;
+          img{
+            width: 10px;
+            height: 9px;
+          }
         }
       }
   
