@@ -60,8 +60,8 @@ export default class classDemeanor extends React.Component {
 
     render() {
         return (
-            <div id="classDemeanor">
-                <div>班级风采</div>
+            <div id="classDemeanor"  className="home_card classDemeanor_height">
+                <h3 className="home_title">班级风采</h3>
                 <div>
                     <marquee direction="left">
                         {this.state.classDemeanorList}

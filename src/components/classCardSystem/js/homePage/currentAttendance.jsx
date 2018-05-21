@@ -101,13 +101,13 @@ export default class currentAttendance extends React.Component {
 
     render() {
         return (
-            <div id="currentAttendance">
-                <div onClick={this.turnToAttendanceList}>考勤详情</div>
+            <div id="currentAttendance" className="home_card currentAttendance_height">
+                <h3 className="home_title" onClick={this.turnToAttendanceList}>考勤详情</h3>
                 {!this.state.openClass ?
                     <div className='classTableA'>暂未开课</div> :
                     <div className='classTableA'>
-                        <div>应到人数:{this.state.peopleNum}</div>
-                        <div>实到人数:{this.state.peopleNumReality}</div>
+                        <div className="due">应到人数：<span className="number">{this.state.peopleNum}</span></div>
+                        <div className="due">实到人数：<span className="number">{this.state.peopleNumReality}</span></div>
                     </div>}
             </div>
         );

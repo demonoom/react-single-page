@@ -44,19 +44,19 @@ export default class moralEducationScore extends React.Component {
     }
     render() {
         return (
-            <div id="moralEducationScore">
-                <h1>班级德育评分</h1>
-                <div className="mEScoreInfo">
-                    <div className="mEScoreInfoT">
-                        <div className="">全级排名<span>{MEScore.state.scoreData.schoolRank}</span></div>
-                        <div className="">年级排名<span>{MEScore.state.scoreData.clazzRank}</span></div>
+            <div id="moralEducationScore" className="home_card moralEducationScore_height">
+                <h3 className="home_title">班级德育评分</h3>
+                <div className="mEScoreInfo home_cardCont">
+                    <div className="mEScoreInfoT" >
+                        <span className="font_title2">全级排名：<span className="blue_text">{MEScore.state.scoreData.schoolRank}</span></span>
+                        <span className="font_title2 float_ri">年级排名：<span className="blue_text">{MEScore.state.scoreData.clazzRank}</span></span>
                     </div>
-                    <div className="mEScoreInfoM">
-                        总分<span>{MEScore.state.scoreData.totalScore}</span>
+                    <div className="mEScoreInfoM font_title2 ">
+                        总分<span className="blue_big">{MEScore.state.scoreData.totalScore}</span>
                     </div>
                     <div className="mEScoreInfoB">
-                        <div className="">礼仪：<span>{MEScore.state.scoreData.politeness}</span></div>
-                        <div className="">健康：<span>{MEScore.state.scoreData.health}</span></div>
+                        <span className="font_title2">礼仪：<span className="blue_text">{MEScore.state.scoreData.politeness}</span></span>
+                        <span className="font_title2 float_ri">健康：<span className="blue_text">{MEScore.state.scoreData.health}</span></span>
                     </div>
                 </div>
             </div>
