@@ -235,6 +235,16 @@ const notifyBack = (location, cb) => {
         cb(null, require("./components/classCardSystemBackstage/js/notify").default)
     })
 }
+const addNotify = (location, cb) => {
+    require.ensure([], require => {
+        cb(null, require("./components/classCardSystemBackstage/js/addNotify").default)
+    })
+}
+const notifyDetail = (location, cb) => {
+    require.ensure([], require => {
+        cb(null, require("./components/classCardSystemBackstage/js/notifyDetail").default)
+    })
+}
 const updateClassroom = (location, cb) => {
     require.ensure([], require => {
         cb(null, require("./components/classCardSystemBackstage/js/updateClassroom").default)
@@ -307,8 +317,14 @@ class Index extends React.Component {
                         to="/classCardHomePage"
                         style={{fontSize: '24px'}}>班牌首页</Link></li>
                     <li><Link
-                        to="/notifyBack"
+                        to="/notifyBack?access_user=23836"
                         style={{fontSize: '24px'}}>通知后台</Link></li>
+                    <li><Link
+                        to="/addNotify"
+                        style={{fontSize: '24px'}}>添加通知</Link></li>
+                    <li><Link
+                        to="/notifyDetail"
+                        style={{fontSize: '24px'}}>通知详情</Link></li>
                 </ul>
             </div>
         );
@@ -362,10 +378,12 @@ ReactDOM.render(
             <Route path="definedTerm" getComponent={definedTerm}/>
             <Route path="classDemeanor" getComponent={classDemeanor}/>
             <Route path="classCardHomePage" getComponent={classCardHomePage}/>
-            <Route path="notifyBack" getComponent={notifyBack}/>
             <Route path="moralEducation" getComponent={moralEducation}/>
             <Route path="addMoralEducation" getComponent={addMoralEducation}/>
             <Route path="updateClassroom" getComponent={updateClassroom}/>
+            <Route path="notifyBack" getComponent={notifyBack}/>
+            <Route path="addNotify" getComponent={addNotify}/>
+            <Route path="notifyDetail" getComponent={notifyDetail}/>
         </Route>
     </Router>
     , document.getElementById('example'));
