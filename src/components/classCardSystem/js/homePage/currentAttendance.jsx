@@ -11,7 +11,7 @@ export default class currentAttendance extends React.Component {
         super(props);
         demeanor = this;
         this.state = {
-            openClass: false
+            openClass: true
         };
         this.turnToAttendanceList = this.turnToAttendanceList.bind(this);
     }
@@ -33,8 +33,8 @@ export default class currentAttendance extends React.Component {
     }
 
     componentDidMount() {
-        // this.getBraceletAttend()
-        // this.getStudentByCourseTableItem()
+        this.getBraceletAttend()
+        this.getStudentByCourseTableItem()
         // this.openTimeInterVal()
     }
 
@@ -52,8 +52,8 @@ export default class currentAttendance extends React.Component {
         var _this = this;
         var param = {
             "method": 'getStudentByCourseTableItem',
-            "id": data.classTableId
-            // "id": 3
+            // "id": data.classTableId
+            "id": 3
         };
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
             onResponse: function (result) {
@@ -76,8 +76,8 @@ export default class currentAttendance extends React.Component {
         var _this = this;
         var param = {
             "method": 'getBraceletAttend',
-            "cid": data.classTableId
-            // "cid": 3
+            // "cid": data.classTableId
+            "cid": 3
         };
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
             onResponse: function (result) {

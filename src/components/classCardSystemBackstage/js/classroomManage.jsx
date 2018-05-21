@@ -4,11 +4,7 @@ import {
     InputItem,
     List,
     Radio,
-    Icon,
     ListView,
-    Card,
-    WingBlank,
-    WhiteSpace,
     Modal,
     PullToRefresh,
     Checkbox, 
@@ -54,7 +50,7 @@ export default class classroomManage extends React.Component {
         document.title = '绑定教室信息';
         var locationHref = window.location.href;
         var locationSearch = locationHref.substr(locationHref.indexOf("?") + 1);
-        var uid = locationSearch.split("=")[1];
+        var uid = locationSearch.split("&")[0].split("=")[1];
         this.setState({ "uid": uid });
         var uidKey = {
             "uidKey":uid
@@ -134,7 +130,7 @@ export default class classroomManage extends React.Component {
     /**
      * 开启添加教室管理的界面
      */
-    addRing = () => {
+    addClassroomM = () => {
         $('.tableDiv').hide("fast");
     };
 
@@ -150,10 +146,7 @@ export default class classroomManage extends React.Component {
         };
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
             onResponse: function (result) {
-                console.log(result.response);
-
                 if (result.msg == '调用成功' && result.success == true) {
-
                     classBinding.setState({
                         searchData: result.response,
                         chooseResultDiv: "block",
@@ -333,7 +326,7 @@ export default class classroomManage extends React.Component {
                             distanceToRefresh={80}
                         />}
                     />
-                    <div className='addBunton' onClick={this.addRing}>
+                    <div className='addBunton' onClick={this.addClassroomM}>
                         <img src={require("../imgs/addBtn.png")} />
                     </div>
                 </div>
