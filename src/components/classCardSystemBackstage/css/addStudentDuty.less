@@ -1,0 +1,54 @@
+#addStudentDuty{
+  .redStar{
+    color: red;
+    font-size: 22px;
+    position: absolute;
+    left: 73px;
+    top: 7px;
+
+  }
+  .am-list-content{
+    position: relative;
+  }
+  .am-checkbox-inner{
+    -webkit-border-radius: 0;
+    -moz-border-radius: 0;
+    border-radius: 0;
+  }
+  .am-list-header{
+    font-size: 17px;
+    color: #000;
+  }
+  .am-list-body{
+    border: 0;
+    padding: 0 30px 30px 72px;
+    &::before,&::after{
+      background-color:#fff;
+    }
+    .am-list-item{
+    border-bottom: 1px #f4f4f4 solid;
+    }
+    .am-list-line::after{
+      background-color: #fff;
+    }
+  }
+  .am-list-body div:not(:last-child) .am-list-line{
+    border-bottom:0;
+  }
+  .submitBtn{
+    padding: 0 15px;
+    position: absolute;
+    bottom: 0.1rem;
+    width: 100%;
+    box-sizing: border-box;
+    .am-button-primary{
+      background-color: #e94f4f;
+      border: 1PX solid #e94f4f;
+      &::before{
+        border: 1PX solid #e94f4f;
+      }
+    }
+
+  }
+
+}

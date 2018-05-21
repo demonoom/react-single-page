@@ -240,7 +240,7 @@ export default class studentDutyList extends React.Component {
         console.log(1);
         var _this = this;
         return (
-            <div id="curriculumSchedule" style={{height: document.body.clientHeight}}>
+            <div id="studentDutyList" style={{height: document.body.clientHeight}}>
                 <WhiteSpace size="lg"/>
                 <Picker
                     data={seasons}
@@ -249,7 +249,7 @@ export default class studentDutyList extends React.Component {
                     value={this.state.sValue}
                     onOk={v => this.onClassChange(v)}
                 >
-                    <List.Item arrow="horizontal">班级</List.Item>
+                    <List.Item arrow="horizontal">班级名称 学期</List.Item>
                 </Picker>
                 <WhiteSpace size="lg"/>
                 <Picker
@@ -258,12 +258,17 @@ export default class studentDutyList extends React.Component {
                     value={this.state.asyncValue}
                     onOk={v => this.onPickerChange(v)}
                 >
-                    <List.Item arrow="horizontal" onClick={this.onClick}>日期</List.Item>
+                    <List.Item arrow="horizontal" onClick={this.onClick}>选择星期</List.Item>
                 </Picker>
                 <WhiteSpace size="lg"/>
-                <Button type="primary" inline size="small" className="am-button-borderfix modifyBtn" onClick={this.editStudentDuty}>修改</Button>
-                <Grid data={_this.state.studentList} columnNum={3} activeStyle={false}/>
-                <Icon type="plus" onClick={this.turnToAddDutyPage}/>
+                <div className="dutyList">
+                    <div className="planTitle">
+                        <span>值日安排</span>
+                        <Button type="primary" inline size="small" className="am-button-borderfix modifyBtn" onClick={this.editStudentDuty}>修改</Button>
+                    </div>
+                    <Grid data={_this.state.studentList} columnNum={3} activeStyle={false}/>
+                    <div className="addBunton"><Icon type="plus" onClick={this.turnToAddDutyPage}/></div>
+                </div>
             </div>
         );
     }

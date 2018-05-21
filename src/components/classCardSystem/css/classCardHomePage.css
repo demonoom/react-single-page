@@ -1,3 +1,7 @@
+#classCardHomePage .home_content {
+  padding: 0.83rem;
+  clear: both;
+}
 #classCardHomePage .home_right {
   width: 13.33rem;
   float: right;

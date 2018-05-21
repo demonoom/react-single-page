@@ -6,4 +6,86 @@
   -webkit-border-radius: 2px;
   -moz-border-radius: 2px;
   border-radius: 2px;
+  border: 0 !important;
+  font-size: 14px;
+  line-height: 24px;
+  height: 24px;
+  position: absolute;
+  right: 15px;
+  top: 0;
+}
+#studentDutyList .am-button-small:before {
+  border: 0;
+}
+#studentDutyList .am-grid-line::before,
+#studentDutyList .am-grid-line::after,
+#studentDutyList .am-flexbox-item::before,
+#studentDutyList .am-flexbox-item::after,
+#studentDutyList .am-flexbox::after {
+  background-color: #fff;
+}
+#studentDutyList .addBunton {
+  width: 3rem;
+  height: 3rem;
+  position: absolute;
+  right: 2.5rem;
+  bottom: 0.5rem;
+  background-color: #F56A55;
+  -webkit-border-radius: 50%;
+  -moz-border-radius: 50%;
+  border-radius: 50%;
+  color: #fff;
+  line-height: 2.8rem;
+  text-align: center;
+}
+#studentDutyList .am-icon-md {
+  width: 1.8rem;
+  height: 1.8rem;
+  vertical-align: middle;
+}
+#studentDutyList .am-grid.am-grid-line:not(.am-grid-carousel),
+#studentDutyList .am-grid.am-grid-line .am-flexbox,
+#studentDutyList .am-grid.am-grid-line .am-flexbox .am-flexbox-item:not(:last-child),
+#studentDutyList .am-grid.am-grid-line .am-flexbox .am-flexbox-item:first-child {
+  border: 0;
+  height: auto;
+}
+#studentDutyList .dutyList {
+  background-color: #fff;
+  padding: 10px 15px;
+}
+#studentDutyList .dutyList .planTitle {
+  position: relative;
+  font-size: 17px;
+  line-height: 24px;
+}
+#studentDutyList .am-grid .am-flexbox .am-flexbox-item .am-grid-item-content .am-grid-item-inner-content {
+  -webkit-flex-direction: row !important;
+  -ms-flex-direction: row !important;
+  flex-direction: row !important;
+  height: auto;
+}
+#studentDutyList .am-grid.am-grid-square .am-grid-item:before {
+  padding-bottom: 0;
+}
+#studentDutyList .am-grid.am-grid-square .am-grid-item .am-grid-item-content {
+  height: auto;
+  transform: translateY(0);
+}
+#studentDutyList .am-grid.am-grid-square .am-grid-item .am-grid-item-inner-content {
+  height: auto;
+  padding: 20px 0;
+}
+#studentDutyList .am-grid.am-grid-square .am-grid-item .am-grid-item-inner-content .am-grid-icon {
+  -webkit-border-radius: 50%;
+  -moz-border-radius: 50%;
+  border-radius: 50%;
+}
+#studentDutyList .am-grid.am-grid-square .am-grid-item .am-grid-item-inner-content .am-grid-text {
+  padding-left: 10px;
+}
+#studentDutyList .am-grid.am-grid-line .am-flexbox,
+#studentDutyList .am-grid .am-flexbox .am-flexbox-item.am-grid-item,
+#studentDutyList .am-grid.am-grid-square .am-grid-item .am-grid-item-content {
+  position: static;
 }
