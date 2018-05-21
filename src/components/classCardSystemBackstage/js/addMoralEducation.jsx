@@ -1,35 +1,15 @@
 import React from 'react';
 import { Picker, List, WhiteSpace, Button, WingBlank, InputItem, DatePicker, TextareaItem, Modal, Toast } from 'antd-mobile';
 import enUs from 'antd-mobile/lib/date-picker/locale/en_US';
+import '../css/addMoralEducation.less';
 
-import '../css/addMoralEducation.less'
 var moralEdu;
 const prompt = Modal.prompt;
 const nowTimeStamp = Date.now();
 const now = new Date(nowTimeStamp);
-// GMT is not currently observed in the UK. So use UTC now.
-const utcNow = new Date(now.getTime() + (now.getTimezoneOffset() * 60000));
 
-// Make sure that in `time` mode, the maxDate and minDate are within one day.
-let minDate = new Date(nowTimeStamp - 1e7);
-const maxDate = new Date(nowTimeStamp + 1e7);
-function formatDate(date) {
-    /* eslint no-confusing-arrow: 0 */
-    const pad = n => n < 10 ? `0${n}` : n;
-    const dateStr = `${date.getFullYear()}-${pad(date.getMonth() + 1)}-${pad(date.getDate())}`;
-    const timeStr = `${pad(date.getHours())}:${pad(date.getMinutes())}`;
-    return `${dateStr} ${timeStr}`;
-}
-// const CustomChildren = ({ extra, onClick, children }) => (
-//     <div
-//         onClick={onClick}
-//         style={{ backgroundColor: '#fff', height: '45px', lineHeight: '45px', padding: '0 15px' }}
-//     >
-//         {children}
-//         <span style={{ float: 'right', color: '#888' }}>{extra}</span>
-//     </div>
-// );
-export default class addCurriculumSchedule extends React.Component {
+
+export default class addMoralEducation extends React.Component {
     constructor(props) {
         super(props);
         moralEdu = this;
@@ -53,10 +33,10 @@ export default class addCurriculumSchedule extends React.Component {
             ClassTableDataArr: [],  //课表数据
             date: now,
             time: now,
-            utcDate: utcNow,
             dpValue: null,
             customChildValue: null,
             visible: false,
+            timeValue:null
         };
     }
 
@@ -108,38 +88,53 @@ export default class addCurriculumSchedule extends React.Component {
      * @param val
      */
     onDatePickerChange = (v) => {
-        // const d = [...this.state.posData];
-        // const posAsyncValue = [...val];
-        // this.setState({
-        //     posData: d,
-        //     posAsyncValue,
-        // });
+      
         var d = new Date(v);
         var newTime = d.getFullYear() + '-' + (d.getMonth() + 1) + '-' + d.getDate();
-        console.log(newTime);
-        localStorage.setItem("createTimeKey",JSON.stringify(newTime));
+        this.setState({
+            timeValue:newTime
+        })
+        
     }
 
     /**
      * 提交新增的德育项
      */
     addMoralEducationTableItem = () => {
+        if(moralEdu.state.classAsyncValue[0] == 0){
+            Toast.fail('请选择班级')
+            return
+        }
+        if(moralEdu.state.termAsyncValue[0] == 0){
+            Toast.fail('请选择学期')
+            return
+        }
+        if(moralEdu.state.timeValue == null) {
+            Toast.fail('请选择日期')
+            return
+        }
+        if($(".healthValue input").val().trim() == '' || $(".healthValue input").val().trim().length == 0){
+            Toast.fail('请填写礼貌评分')
+            return
+        }
+        if($(".politeValue input").val().trim() == '' || $(".healthValue input").val().trim().length == 0){
+            Toast.fail('请填写健康评分')
+            return
+        }
         const param = {
             "method": "saveMoralEducation",
             "moralEducationJson": {
-                "cid": JSON.parse(localStorage.getItem("getClassKey")).classId[0],
+                "cid": moralEdu.state.classAsyncValue[0],
                 "health": $(".healthValue input").val(),
                 "politeness": $(".politeValue input").val(),
-                "termid": JSON.parse(localStorage.getItem("getTermKey")).termId[0],
-                "createTime": JSON.parse(localStorage.getItem("createTimeKey"))
+                "termid": moralEdu.state.termAsyncValue[0],
+                "createTime": moralEdu.state.timeValue
             }
         
         }
-        console.log(param)
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
             onResponse: function (result) {
                 if (result.msg == '调用成功' || result.success == true) {
-                    console.log(result);
                     Toast.success('添加成功');
                     setTimeout(function () {
                         var data = {
@@ -147,17 +142,13 @@ export default class addCurriculumSchedule extends React.Component {
                         };
 
                         Bridge.callHandler(data, null, function (error) {
-                            // Toast.fail(error);
-                            console.log(error);
                         });
                     }, 1000)
                 }
             },
             onError: function (error) {
-                // message.error(error);
             }
         });
-        // console.log(this.state.ClassTableDataArr);
     }
 
     /**
@@ -196,21 +187,9 @@ export default class addCurriculumSchedule extends React.Component {
         this.state.ClassTableDataArr[i].endTimeData = WebServiceUtil.formatHM(new Date(v).getTime());
     }
 
-    // addMoralEduction() {
-    //     var phoneType = navigator.userAgent;
-    //     var phone;
-    //     if (phoneType.indexOf('iPhone') > -1 || phoneType.indexOf('iPad') > -1) {
-    //         phone = 'ios'
-    //     } else {
-    //         phone = 'android'
-    //     }
-    //     prompt('请输入您修改的名称', '', [
-    //         {text: '取消'},
-    //         {text: '确定', onPress: value => moralEdu.userDefined(value)},
-    //     ], 'default', '', [], phone)
-    // }
+ 
 
-    chooseWeeks = () => {
+    chooseTerms = () => {
         var _this = this;
         var param = {
             "method": 'getSemesterList',
@@ -218,7 +197,6 @@ export default class addCurriculumSchedule extends React.Component {
         };
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
             onResponse: function (result) {
-                console.log(result);
                 if (result.msg == '调用成功' || result.success == true) {
                     if (WebServiceUtil.isEmpty(result.response) == false) {
                         var arr = []
@@ -263,30 +241,20 @@ export default class addCurriculumSchedule extends React.Component {
                 }
             },
             onError: function (error) {
-                // message.error(error);
             }
         });
     }
     getClassKey = (v) => {
-        // console.log(v);
         this.setState({classAsyncValue: v});
-        var classKey = {
-            "classId":v
-        }
-        localStorage.setItem("getClassKey",JSON.stringify(classKey))
-        console.log(JSON.parse(localStorage.getItem("getClassKey")).classId);
     }
     getTermKey = (v) => {
-        var termKey = {
-            "termId":v
-        }
-        localStorage.setItem("getTermKey",JSON.stringify(termKey));
-        console.log(JSON.parse(localStorage.getItem("getTermKey")).termId);
-        // console.log(v);
+        this.setState({
+            termAsyncValue:v
+        })
+        
     }
 
     userDefined(value){
-        console.log(value);
         if (value.length == 0) {
             Toast.fail('文件夹名称不能为空', 1);
             return
@@ -295,11 +263,11 @@ export default class addCurriculumSchedule extends React.Component {
         var param = {
             "method": 'updateMoralEducation',
             "moralEducationJson": {
-                "cid": JSON.parse(localStorage.getItem("getClassKey")).classId[0],
+                "cid": moralEdu.state.classAsyncValue,
                 "health": $(".healthValue input").val(),
                 "politeness": $(".politeValue input").val(),
-                "termid": JSON.parse(localStorage.getItem("getTermKey")).termId[0],
-                "createTime": JSON.parse(localStorage.getItem("createTimeKey"))
+                "termid": moralEdu.state.termAsyncValue,
+                "createTime": moralEdu.state.timeValue
             }
         };
 
@@ -320,25 +288,16 @@ export default class addCurriculumSchedule extends React.Component {
                     _this.setState({
                         dataSource: _this.state.dataSource.cloneWithRows(_this.initData)
                     });
-                    //解决安卓键盘改变窗口高度问题,所以延迟100
-                    // setTimeout(function () {
-                    //     _this.setState({
-                    //         dataSource: _this.state.dataSource.cloneWithRows(_this.initData)
-                    //     });
-                    // }, 100);
+                    
                 } else {
                     Toast.fail('重命名失败', 1);
                 }
             },
             onError: function (error) {
-                // message.error(error);
             }
         });
-        // console.log(rowData)
-        // console.log("2213");
     }
     render() {
-        // const { getFieldProps } = this.props.form;
         return (
             <div id="addMoralEducation" style={{ height: document.body.clientHeight }}>
                 <WhiteSpace size="lg" />
@@ -350,7 +309,7 @@ export default class addCurriculumSchedule extends React.Component {
                     onPickerChange={this.onClassPickerChange}
                     onOk={this.getClassKey}
                 >
-                    <List.Item arrow="horizontal" onClick={this.getClazzesByUserId.bind(this,JSON.parse(localStorage.getItem("userIdKey")).userId)}>选择班级</List.Item>
+                    <List.Item arrow="horizontal" onClick={this.getClazzesByUserId.bind(this,JSON.parse(localStorage.getItem("userIdKey")).userId)}>选择班级<i className="redStar">*</i></List.Item>
                 </Picker>
                 <WhiteSpace size="lg" />
                 {/*选择学期*/}
@@ -361,7 +320,11 @@ export default class addCurriculumSchedule extends React.Component {
                     onPickerChange={this.onTermPickerChange}
                     onOk={this.getTermKey}
                 >
-                    <List.Item arrow="horizontal" onClick={this.chooseWeeks}>选择学期</List.Item>
+<<<<<<< HEAD
+                    <List.Item arrow="horizontal" onClick={this.chooseTerms}>选择学期</List.Item>
+=======
+                    <List.Item arrow="horizontal" onClick={this.chooseWeeks}>选择学期<i className="redStar">*</i></List.Item>
+>>>>>>> ccf9451ae4e480032e660acdc453a67a68e9ef30
                 </Picker>
                 <WhiteSpace size="lg" />
                 {/*选择日期*/}
@@ -373,7 +336,7 @@ export default class addCurriculumSchedule extends React.Component {
                     onOk={this.onDatePickerChange}
                     onChange={date => this.setState({ date })}
                 >
-                    <List.Item arrow="horizontal">选择日期</List.Item>
+                    <List.Item arrow="horizontal">选择日期<i className="redStar">*</i></List.Item>
                 </DatePicker>
                 <WhiteSpace size="lg" />
                 <div className='CourseTableArea'>
@@ -382,15 +345,19 @@ export default class addCurriculumSchedule extends React.Component {
                                 <InputItem
                                     className="politeValue"
                                     clear
+<<<<<<< HEAD
                                     placeholder="请输入班级礼貌评分"
+=======
+                                    placeholder="请输入分数"
                                     defaultValue=""
                                     // value="123"
+>>>>>>> ccf9451ae4e480032e660acdc453a67a68e9ef30
                                     ref={el => this.autoFocusInst = el}
                                 >班级礼貌评分</InputItem>
                                 <InputItem
                                     className="healthValue"
                                     clear
-                                    placeholder="请输入班级健康评分"
+                                    placeholder="请输入分数"
                                     ref={el => this.autoFocusInst = el}
                                 >班级健康评分</InputItem>
                             </List>
