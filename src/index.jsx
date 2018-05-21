@@ -262,6 +262,27 @@ const editStudentDuty = (location, cb) => {
     )
 }
 
+const currentAttendanceList = (location, cb) => {
+    require.ensure([], require => {
+            cb(null, require("./components/classCardSystem/js/homePage/currentAttendanceList").default)
+        }
+    )
+}
+
+const classHonor = (location, cb) => {
+    require.ensure([], require => {
+            cb(null, require("./components/classCardSystemBackstage/js/classHonor").default)
+        }
+    )
+}
+
+const tableItemDetil = (location, cb) => {
+    require.ensure([], require => {
+            cb(null, require("./components/classCardSystem/js/tableItemDetil").default)
+        }
+    )
+}
+
 import './index.less';
 
 class Index extends React.Component {
@@ -323,6 +344,9 @@ class Index extends React.Component {
                         to="/classDemeanor?ident=23836&access=23836"
                         style={{fontSize: '24px'}}>班级风采</Link></li>
                     <li><Link
+                        to="/classHonor?ident=23836&access=23836"
+                        style={{fontSize: '24px'}}>班级荣誉</Link></li>
+                    <li><Link
                         to="/moralEducation?ident=23836"
                         style={{fontSize: '24px'}}>德育评价</Link></li>
                     <li><Link
@@ -333,7 +357,10 @@ class Index extends React.Component {
                         style={{fontSize: '24px'}}>通知后台</Link></li>
                     <li><Link
                         to="/studentDutyList?access_user=23836"
-                        style={{fontSize:'24px'}}>班级值日表</Link></li>
+                        style={{fontSize: '24px'}}>班级值日表</Link></li>
+                    <li><Link
+                        to="/tableItemDetil"
+                        style={{fontSize: '24px'}}>课程表内页</Link></li>
                 </ul>
             </div>
         );
@@ -391,9 +418,12 @@ ReactDOM.render(
             <Route path="moralEducation" getComponent={moralEducation}/>
             <Route path="addMoralEducation" getComponent={addMoralEducation}/>
             <Route path="updateClassroom" getComponent={updateClassroom}/>
-            <Route path="studentDutyList" getComponent={studentDutyList} />
-            <Route path="addStudentDuty" getComponent={addStudentDuty} />
-            <Route path="editStudentDuty" getComponent={editStudentDuty} />
+            <Route path="studentDutyList" getComponent={studentDutyList}/>
+            <Route path="addStudentDuty" getComponent={addStudentDuty}/>
+            <Route path="editStudentDuty" getComponent={editStudentDuty}/>
+            <Route path="currentAttendanceList" getComponent={currentAttendanceList}/>
+            <Route path="classHonor" getComponent={classHonor}/>
+            <Route path="tableItemDetil" getComponent={tableItemDetil}/>
         </Route>
     </Router>
     , document.getElementById('example'));

@@ -172,7 +172,7 @@ export default class addMoralEducation extends React.Component {
                                     label: v.name
                                 })
                         })
-                        _this.setState({ termData: _this.state.termData.concat(arr) })
+                        _this.setState({termData: _this.state.termData.concat(arr)})
                     }
                 }
             },
@@ -201,7 +201,7 @@ export default class addMoralEducation extends React.Component {
                                 value: v.id, label: v.name
                             })
                         })
-                        _this.setState({ classData: arr })
+                        _this.setState({classData: arr})
                     }
                 }
             },
@@ -211,7 +211,7 @@ export default class addMoralEducation extends React.Component {
     }
 
     getClassKey = (v) => {
-        this.setState({ classAsyncValue: v });
+        this.setState({classAsyncValue: v});
     }
     getTermKey = (v) => {
         this.setState({
@@ -221,8 +221,8 @@ export default class addMoralEducation extends React.Component {
 
     render() {
         return (
-            <div id="addMoralEducation" style={{ height: document.body.clientHeight }}>
-                <WhiteSpace size="lg" />
+            <div id="addMoralEducation" style={{height: document.body.clientHeight}}>
+                <WhiteSpace size="lg"/>
                 {/*选择班级*/}
                 <Picker
                     data={this.state.classData}
@@ -235,7 +235,7 @@ export default class addMoralEducation extends React.Component {
                                onClick={this.getClazzesByUserId.bind(this, JSON.parse(localStorage.getItem("userIdKey")).userId)}>选择班级<i
                         className="redStar">*</i></List.Item>
                 </Picker>
-                <WhiteSpace size="lg" />
+                <WhiteSpace size="lg"/>
                 {/*选择学期*/}
                 <Picker
                     data={this.state.termData}
@@ -244,9 +244,10 @@ export default class addMoralEducation extends React.Component {
                     onPickerChange={this.onTermPickerChange}
                     onOk={this.getTermKey}
                 >
-                    <List.Item arrow="horizontal" onClick={this.chooseTerms}>选择学期<i className="redStar">*</i></List.Item>
+                    <List.Item arrow="horizontal" onClick={this.chooseTerms}>选择学期<i
+                        className="redStar">*</i></List.Item>
                 </Picker>
-                <WhiteSpace size="lg" />
+                <WhiteSpace size="lg"/>
                 {/*选择日期*/}
                 <DatePicker
                     mode="date"
@@ -254,11 +255,11 @@ export default class addMoralEducation extends React.Component {
                     extra="Optional"
                     value={this.state.date}
                     onOk={this.onDatePickerChange}
-                    onChange={date => this.setState({ date })}
+                    onChange={date => this.setState({date})}
                 >
                     <List.Item arrow="horizontal">选择日期<i className="redStar">*</i></List.Item>
                 </DatePicker>
-                <WhiteSpace size="lg" />
+                <WhiteSpace size="lg"/>
                 <div className='CourseTableArea'>
                     <div className="classSearchResultInfo">
                         <List>
@@ -278,7 +279,7 @@ export default class addMoralEducation extends React.Component {
                     </div>
                 </div>
                 <div className='addCourseButton'>
-                    <WhiteSpace size="lg" />
+                    <WhiteSpace size="lg"/>
                     <WingBlank>
                         <Button type="warning" onClick={this.addMoralEducationTableItem}>提交</Button>
                     </WingBlank>

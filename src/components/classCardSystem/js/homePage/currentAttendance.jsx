@@ -96,7 +96,17 @@ export default class currentAttendance extends React.Component {
      * 进入考勤详情页
      */
     turnToAttendanceList(){
+        var currentAttendanceListUrl = WebServiceUtil.mobileServiceURL + "currentAttendanceList";
+        location.href = currentAttendanceListUrl;
 
+        /*var data = {
+            method: 'openNewPage',
+            url: editStudentDutyUrl
+        };
+
+        Bridge.callHandler(data, null, function (error) {
+            window.location.href = url;
+        });*/
     }
 
     render() {
