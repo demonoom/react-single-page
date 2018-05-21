@@ -1,10 +1,14 @@
 import React from 'react';
-import {} from 'antd-mobile';
+import {Toast} from 'antd-mobile';
 import '../../css/classCardHomePage.less'
 import {MsgConnection} from '../../../../helpers/msg_websocket_connection';
 import CurrentAttendance from './currentAttendance'
 import Course from './course'
 import Notify from './notify'
+import Application from './application'
+import ClassDemeanor from './classDemeanor'
+import StudentOnDuty from './studentOnDuty'
+import MoralEducationScore from './moralEducationScore'
 
 var demeanor;
 //消息通信js
@@ -15,12 +19,14 @@ export default class classCardHomePage extends React.Component {
     constructor(props) {
         super(props);
         demeanor = this;
-        this.state = {};
+        this.state = {
+            messageInfo: '1',
+        };
     }
 
     componentWillMount() {
         var pro = {
-            "command": "messagerConnect",
+            "command": "braceletBoxConnect",
             "data": {
                 "type": "web",
                 "machine": '02:00:00:00:00:00',
@@ -28,20 +34,48 @@ export default class classCardHomePage extends React.Component {
             }
         };
         ms = new MsgConnection();
-        // ms.connect(pro);
+        ms.connect(pro);
     }
 
     componentDidMount() {
+        this.msListener()
+    }
 
+    msListener() {
+        ms.msgWsListener = {
+            onError: function (errorMsg) {
+                Toast.fail(errorMsg)
+            }, onWarn: function (warnMsg) {
+                Toast.fail(warnMsg)
+            }, onMessage: function (info) {
+                demeanor.setState({messageInfo: info});
+            }
+        }
     }
 
     render() {
         return (
             <div id="classCardHomePage" style={{height: document.body.clientHeight}}>
-                {/*班牌首页*/}
-                <CurrentAttendance/>
-                <Course/>
-                <Notify/>
+                <div className="home_content">
+                    {/*班牌首页*/}
+                    <div className="home_right">
+                        <CurrentAttendance
+                            messageUtilObj={this.state.messageInfo}
+                        />
+                        <Course
+                            messageUtilObj={this.state.messageInfo}
+                        />
+                    </div>
+                    <div className="home_left">
+                        <StudentOnDuty/>
+                        <MoralEducationScore/>
+                    </div>
+                    <div className="home_center">
+                        <Notify/>
+                        <Application/>
+                        <ClassDemeanor/>
+                    </div>
+                </div>
             </div>
         );
     }

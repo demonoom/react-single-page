@@ -4,14 +4,11 @@ import {
     InputItem,
     List,
     Radio,
-    Icon,
     ListView,
-    Card,
-    WingBlank,
-    WhiteSpace,
     Modal,
     PullToRefresh,
-    Checkbox, Flex
+    Checkbox, 
+    Flex
 } from 'antd-mobile';
 import '../css/classroomManage.less'
 import { ucs2 } from 'punycode';
@@ -48,16 +45,17 @@ export default class classroomManage extends React.Component {
         
     };
 
-    
-   
-
     componentDidMount() {
         Bridge.setShareAble("false");
         document.title = '绑定教室信息';
         var locationHref = window.location.href;
         var locationSearch = locationHref.substr(locationHref.indexOf("?") + 1);
-        var uid = locationSearch.split("=")[1];
-        this.setState({ "uid": uid })
+        var uid = locationSearch.split("&")[0].split("=")[1];
+        this.setState({ "uid": uid });
+        var uidKey = {
+            "uidKey":uid
+        }
+        localStorage.setItem("uIdKey",JSON.stringify(uidKey));
         this.viewClassRoomPage(uid);
         //添加对视窗大小的监听,在屏幕转换以及键盘弹起时重设各项高度
         window.addEventListener('resize', classBinding.onWindowResize)
@@ -78,7 +76,7 @@ export default class classroomManage extends React.Component {
     }
 
     /**
-     * 查看绑定的设备
+     * 查看教室信息
      */
     viewClassRoomPage(uid) {
         var _this = this;
@@ -123,7 +121,6 @@ export default class classroomManage extends React.Component {
                 }
             },
             onError: function (error) {
-                // message.error(error);
             }
         });
     }
@@ -133,7 +130,7 @@ export default class classroomManage extends React.Component {
     /**
      * 开启添加教室管理的界面
      */
-    addRing = () => {
+    addClassroomM = () => {
         $('.tableDiv').hide("fast");
     };
 
@@ -149,10 +146,7 @@ export default class classroomManage extends React.Component {
         };
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
             onResponse: function (result) {
-                console.log(result.response);
-
                 if (result.msg == '调用成功' && result.success == true) {
-
                     classBinding.setState({
                         searchData: result.response,
                         chooseResultDiv: "block",
@@ -224,10 +218,16 @@ export default class classroomManage extends React.Component {
      */
     getbindGradeState(e) {
         if (e.target.checked) {
+            classBinding.setState({
+                gradeNameValue:''
+            })
             $('.gradeName').css({
                 display: 'block'
             })
         } else {
+            classBinding.setState({
+                chooseResultDiv:'none'
+            })
             $('.gradeName').css({
                 display: 'none'
             })
@@ -242,15 +242,7 @@ export default class classroomManage extends React.Component {
     inputChange(e) {
         this.setState({ gradeNameValue: e })
     }
-    /**
-     * 点击搜索结果的回调
-     */
-    // searchResultOnChange = (i) => {
-    //     this.setState({
-    //         gradeNameValue: $(".chooseResult .am-list-line .am-list-content").text()
-    //     })
-    // };
-
+   
     /**
      *  ListView数据全部渲染完毕的回调
      */
@@ -275,8 +267,8 @@ export default class classroomManage extends React.Component {
         this.setState({ defaultPageNo: 1, refreshing: true, isLoadingLeft: true });
         this.viewClassRoomPage(this.state.uid);
     }
-    toUpdatePage(){
-        var url = WebServiceUtil.mobileServiceURL + "updateClassroom";
+    toUpdatePage(id){
+        var url = WebServiceUtil.mobileServiceURL + "updateClassroom"+"?classId="+id.id+"&access_user=23836";
         var data = {
             method: 'openNewPage',
             url: url
@@ -287,7 +279,6 @@ export default class classroomManage extends React.Component {
         });
     }
     render() {
-       
         var _this = this;
         const row = (rowData, sectionID, rowID) => {
             return (<div>
@@ -299,7 +290,7 @@ export default class classroomManage extends React.Component {
                             rowData.defaultBindedClazz ? <span className="grade">{rowData.defaultBindedClazz.name}</span> : <span className="grade"></span>
                         }
                         </div>
-                        <span className='calmCardUnbind' onClick={this.toUpdatePage}
+                        <span className='calmCardUnbind' onClick={this.toUpdatePage.bind(this,rowData)}
                         >修改</span>
                     </div>
                 }
@@ -335,7 +326,7 @@ export default class classroomManage extends React.Component {
                             distanceToRefresh={80}
                         />}
                     />
-                    <div className='addBunton' onClick={this.addRing}>
+                    <div className='addBunton' onClick={this.addClassroomM}>
                         <img src={require("../imgs/addBtn.png")} />
                     </div>
                 </div>

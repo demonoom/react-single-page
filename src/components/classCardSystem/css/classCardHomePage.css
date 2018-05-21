@@ -1,1 +1,17 @@
 (node) util.print is deprecated. Use console.log instead.
+#classCardHomePage .home_content {
+  padding: 0.83rem;
+  clear: both;
+}
+#classCardHomePage .home_right {
+  width: 13.33rem;
+  float: right;
+}
+#classCardHomePage .home_left {
+  width: 11.67rem;
+  float: left;
+}
+#classCardHomePage .home_center {
+  width: calc(100% - 26.66rem);
+  float: left;
+}

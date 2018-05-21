@@ -1,0 +1,36 @@
+#noticeReadMore{
+  .am-card{
+    min-height: 2.7rem;
+    padding-bottom: 0;
+    line-height:  2.7rem;
+  }
+  .am-card-header{
+    padding-left:1.11rem;
+    padding-right:.83rem;
+    padding-top: 0;
+    padding-bottom: 0;
+  }
+  .am-card-header-content{
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow:ellipsis;
+    font-size: .78rem;
+    line-height: .78rem;
+    color:#2a3350;
+    width: calc(~"100% - 5.8rem");
+    &::before{
+      content: "";
+      width:.2rem;
+      height:.2rem;
+      background-color: #7f5dff;
+      -webkit-border-radius: 50%;
+      -moz-border-radius: 50%;
+      border-radius: 50%;
+      margin-right: .38rem;
+    }
+  }
+  .am-card-header-extra{
+    color: #444e6f;
+    font-size: .55rem;
+  }
+}

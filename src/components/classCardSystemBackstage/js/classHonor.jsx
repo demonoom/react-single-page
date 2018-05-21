@@ -4,7 +4,7 @@ import '../css/classDemeanor.less'
 
 var demeanor;
 
-export default class classDemeanor extends React.Component {
+export default class classHonor extends React.Component {
 
     constructor(props) {
         super(props);
@@ -18,7 +18,7 @@ export default class classDemeanor extends React.Component {
     }
 
     componentDidMount() {
-        document.title = '班级风采';
+        document.title = '班级荣誉';
         var locationHref = window.location.href;
         var locationSearch = locationHref.substr(locationHref.indexOf("?") + 1);
         var ident = locationSearch.split("&")[0].split('=')[1];
@@ -76,7 +76,7 @@ export default class classDemeanor extends React.Component {
         var param = {
             "method": 'getClassDemeanorInfo',
             "clazzId": id,
-            "type": 1
+            "type": 2
         };
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
             onResponse: function (result) {
@@ -124,7 +124,7 @@ export default class classDemeanor extends React.Component {
                 "method": 'saveClassDemeanorInfo',
                 "clazzId": demeanor.state.asyncValue[0],
                 "imagePath": v,
-                "type": 1
+                "type": 2
             };
             WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
                 onResponse: function (result) {
@@ -194,7 +194,7 @@ export default class classDemeanor extends React.Component {
                         <List.Item arrow="horizontal">班级</List.Item>
                     </Picker>
                     <WhiteSpace size="lg"/>
-                    <div className="classDemeanor_title">风采展示</div>
+                    <div className="classDemeanor_title">荣誉展示</div>
                     <div className='showImg my_flex my_flex_wrap'>
                         {this.state.imgArr.map((v) => {
                             return <div className="listImg flex_center">

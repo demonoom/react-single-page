@@ -1,11 +1,9 @@
 import React from 'react';
-import {SearchBar, ListView, WhiteSpace, Card} from 'antd-mobile';
-
+import {ListView} from 'antd-mobile';
 import '../css/homeworkModule.less';
 
 
 export default class homeworkModule extends React.Component {
-
     constructor(props) {
         super(props);
         /**
@@ -47,7 +45,6 @@ export default class homeworkModule extends React.Component {
         };
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
             onResponse: function (result) {
-                console.log(result);
                 if (result.success == true && result.msg == "调用成功") {
                     if (result.response.length === 0) {
                         _this.setState({"isLoadingLeft": false})
@@ -104,13 +101,12 @@ export default class homeworkModule extends React.Component {
         const row = (rowData, sectionID, rowID) => {
             return (
                 <div>
-                    {/* <WhiteSpace size="lg"/> */}
                     <div className="homeworkInfo">
                         <div className="homeworkL">
-                            <h3 className="subject">{rowData.title}</h3>
+                            {/* <h3 className="subject textOver">{rowData.title}</h3> */}
                             <div className="imgInfo">
                                 <img src={rowData.fromUser.avatar} />
-                                <span>{rowData.fromUser.userName}</span>    
+                                <span className="textOver">{rowData.fromUser.userName}</span>
                             </div>
                         </div>
                         <div className="homeworkM">
@@ -122,17 +118,7 @@ export default class homeworkModule extends React.Component {
                         </div>
                         
                     </div>
-                    {/* <Card full>
-                        <Card.Header
-                            title={rowData.fromUser.userName}
-                            thumb={rowData.fromUser.avatar}
-                            extra={
-                                <span>{WebServiceUtil.formatYMD(rowData.createTime)}</span>}
-                        />
-                        <Card.Body>
-                            <div>{rowData.content}</div>
-                        </Card.Body>
-                    </Card> */}
+                
                 </div>
             )
         };

@@ -1,115 +1,77 @@
 import React from 'react';
-import { Picker, List, WhiteSpace, DatePicker } from 'antd-mobile';
-import enUs from 'antd-mobile/lib/date-picker/locale/en_US';
+import { Toast, Picker, List, WhiteSpace, DatePicker } from 'antd-mobile';
 import '../css/moralEducation.less'
-
 
 
 const nowTimeStamp = Date.now();
 const now = new Date(nowTimeStamp);
-// GMT is not currently observed in the UK. So use UTC now.
-const utcNow = new Date(now.getTime() + (now.getTimezoneOffset() * 60000));
+var mEducation;
 
-// Make sure that in `time` mode, the maxDate and minDate are within one day.
-let minDate = new Date(nowTimeStamp - 1e7);
-const maxDate = new Date(nowTimeStamp + 1e7);
-// const CustomChildren = ({ extra, onClick, children }) => (
-//     <div
-//         onClick={onClick}
-//         style={{ backgroundColor: '#fff', height: '45px', lineHeight: '45px', padding: '0 15px' }}
-//     >
-//         {children}
-//         <span style={{ float: 'right', color: '#888' }}>{extra}</span>
-//     </div>
-// );
-function formatDate(date) {
-    /* eslint no-confusing-arrow: 0 */
-    const pad = n => n < 10 ? `0${n}` : n;
-    const dateStr = `${date.getFullYear()}-${pad(date.getMonth() + 1)}-${pad(date.getDate())}`;
-    const timeStr = `${pad(date.getHours())}:${pad(date.getMinutes())}`;
-    return `${dateStr} ${timeStr}`;
-}
-
-const seasons = [
-    [
-        {
-            label: '请选择',
-            value: '0',
-        },
-        {
-            label: '二年级一班',
-            value: '2013',
-        },
-        {
-            label: '二年级二班',
-            value: '2014',
-        },
-    ],
-    [
-        {
-            label: '请选择',
-            value: '0',
-        },
-        {
-            label: '春',
-            value: '春',
-        },
-        {
-            label: '夏',
-            value: '夏',
-        },
-    ],
-];
-
-export default class curriculumSchedule extends React.Component {
-
+export default class moralEducation extends React.Component {
     constructor(props) {
         super(props);
+        mEducation = this;
         this.state = {
             data: [],
             cols: 1,
-            asyncValue: [],
             sValue: ['0', '0'],
             visible: false,
             date: now,
             time: now,
-            utcDate: utcNow,
-            dpValue: null,
-            customChildValue: null,
             visible: false,
-            moralEducationSelectData: {}
+            moralEducationSelectData: {},
+            seasons: [[
+                {
+                    label: '请选择',
+                    value: '0',
+                }
+            ],
+            [
+                {
+                    label: '请选择',
+                    value: '0',
+                }
+            ],]
         };
     }
 
-    componentDidMount() {
-        document.title = '德育评价';
+    componentWillMount() {
         var locationHref = window.location.href;
         var locationSearch = locationHref.substr(locationHref.indexOf("?") + 1);
-        var ident = locationSearch.split("=")[1];
+        var ident = locationSearch.split("&")[0].split("=")[1];
         var loginUser = {
-            "colUid": ident,
+            "userId": ident,
         };
-        localStorage.setItem("loginUserSchedule", JSON.stringify(loginUser));
+        localStorage.setItem("userIdKey", JSON.stringify(loginUser));
     }
+    componentDidMount() {
+        document.title = '德育评价';
+    }
+
+
 
     /**
      * 获取班级，学期和日期
      */
     getSelectData = (v) => {
+        if (mEducation.state.sValue[0] === '0') {
+            Toast.fail('请先选择班级')
+            return
+        }
+        if (mEducation.state.sValue[1] === '0') {
+            Toast.fail("请先选择学期")
+        }
         var _this = this;
         var d = new Date(v);
         var newTime = d.getFullYear() + '-' + (d.getMonth() + 1) + '-' + d.getDate();
-        // var newClassAndTermValue = JSON.parse(localStorage.getItem("classAndTermKey"));
         var param = {
             "method": 'getMoralEducationInfo',
-            "clazzId": 14,
-            "termId": 1,
+            "clazzId": mEducation.state.sValue[0],
+            "termId": mEducation.state.sValue[1],
             "createTime": newTime
         }
-        console.log(param);
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
             onResponse: function (result) {
-                console.log(result);
                 if (result.msg == '调用成功' || result.success == true) {
                     if (WebServiceUtil.isEmpty(result.response) == false) {
                         _this.setState({ moralEducationSelectData: result.response })
@@ -117,21 +79,83 @@ export default class curriculumSchedule extends React.Component {
                 }
             },
             onError: function (error) {
-                // message.error(error);
             }
         });
-        //    console.log(newClassAndTermValue.classValue);
-    }
-    getClassAndTerm = (v) => {
-        this.setState({ sValue: v })
-        console.log(v);
-        var classAndTerm = {
-            "classValue": v[0],
-            "termValue": v[1]
-        }
-        localStorage.setItem("classAndTermKey", JSON.stringify(classAndTerm));
     }
 
+    getClassAndTerm = (v) => {
+
+        this.setState({ sValue: v })
+    }
+
+    /**
+     * 获取学期的ID
+     */
+    getSemesterList(ident) {
+        var _this = this;
+        var param = {
+            "method": 'getSemesterList',
+            "uid": ident
+        };
+        WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
+            onResponse: function (result) {
+                if (result.msg == '调用成功' || result.success == true) {
+                    _this.getClazzesByUserId(ident, result.response)
+                }
+            },
+            onError: function (error) {
+            }
+        });
+    }
+
+    /**
+     * 获取班级ID
+     */
+    getClazzesByUserId(ident, semesterList) {
+        var _this = this;
+        var param = {
+            "method": 'getClazzesByUserId',
+            "userId": ident
+        };
+        WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
+            onResponse: function (result) {
+                if (result.msg == '调用成功' || result.success == true) {
+                    _this.buildSeasons(result.response, semesterList)
+                }
+            },
+            onError: function (error) {
+            }
+        });
+    }
+
+    buildSeasons(cList, sList) {
+        var cListArr = [{
+            label: '请选择',
+            value: '0',
+        }]
+        var sListArr = [{
+            label: '请选择',
+            value: '0',
+        }];
+        if (WebServiceUtil.isEmpty(cList) == false) {
+            cList.forEach(function (v, i) {
+                cListArr.push({
+                    label: v.name,
+                    value: v.id,
+                })
+            })
+        }
+        if (WebServiceUtil.isEmpty(sList) == false) {
+            sList.forEach(function (item, index) {
+                sListArr.push({
+                    label: item.name,
+                    value: item.id,
+                })
+            })
+        }
+        var arr = [cListArr, sListArr];
+        this.setState({ seasons: arr })
+    }
 
     /**
      * 增加课程表的回调
@@ -148,14 +172,6 @@ export default class curriculumSchedule extends React.Component {
         });
     }
 
-    /**
-     * 查看德育评价管理页
-     * @param v
-     */
-    viewCourseTableItemPage(v) {
-        // console.log(v);
-
-    }
 
     render() {
         var _this = this;
@@ -164,14 +180,16 @@ export default class curriculumSchedule extends React.Component {
                 <WhiteSpace size="lg" />
                 {/*班级,学期*/}
                 <Picker
-                    data={seasons}
+                    data={this.state.seasons}
                     cascade={false}
                     value={this.state.sValue}
                     className="gradeAndTerm"
                     onChange={v => this.setState({ sValue: v })}
                     onOk={this.getClassAndTerm}
                 >
-                    <List.Item arrow="horizontal">班级,学期</List.Item>
+                    <List.Item arrow="horizontal"
+                        onClick={this.getSemesterList.bind(this, JSON.parse(localStorage.getItem("userIdKey")).userId)}
+                    >班级,学期</List.Item>
                 </Picker>
                 <WhiteSpace size="lg" />
                 {/*日期*/}

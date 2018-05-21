@@ -27,8 +27,9 @@
     text-indent: 8px;
     font-size: 17px;
     position: relative;
+    overflow: hidden;
   }
-  .flex_addElement{
+  .flex_addElement, .teacher_list{
     padding-top: 15px;
   }
   .flex_addElement div{
@@ -41,6 +42,12 @@
   }
   .flex_addElement div:first-child {
     margin-left: 0;
+  }
+  .addElement_teacher div:nth-child(2){
+    -webkit-box-flex: 2;
+    -webkit-flex: 2;
+    -ms-flex: 2;
+    flex: 2;
   }
   .flex_addElement .am-list-item .am-list-line, .flex_addElement .am-list-item.am-input-item{
     padding-right: 0 !important;
@@ -65,5 +72,22 @@
     position: absolute;
     right: 10px;
     top:19px;
+  }
+  .overflow_width{
+    width: calc(~"100%" - 30px);
+    float: left;
+  }
+  .teacher_list div{
+    margin-left: 8px;
+    min-width: 10px;
+  }
+  .teacher_list div:first-child{
+    margin-left: 0;
+  }
+  .teacher_list div:first-child, .teacher_list div:nth-child(2){
+    width: 30%;
+  }
+  .teacher_list div:nth-child(3){
+    width: 40%;
   }
 }
