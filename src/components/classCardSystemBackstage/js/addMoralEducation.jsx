@@ -1,9 +1,11 @@
 import React from 'react';
+
 import {
     Picker,
     List,
     WhiteSpace,
     Button,
+    WingBlank,
     InputItem,
     DatePicker,
     TextareaItem,
@@ -25,19 +27,12 @@ export default class addMoralEducation extends React.Component {
         moralEdu = this;
         this.state = {
             cols: 1,
-            data: [{value: '1', label: '星期一'},
-                {value: '2', label: '星期二'},
-                {value: '3', label: '星期三'},
-                {value: '4', label: '星期四'},
-                {value: '5', label: '星期五'},
-                {value: '6', label: '星期六'},
-                {value: '7', label: '星期日'}],
+            data: [],
             classData: [],
             termData: [],
             asyncValue: [],
             termAsyncValue: [],
             classAsyncValue: [],
-            ClassTableDataArr: [],  //课表数据
             date: now,
             time: now,
             dpValue: null,
@@ -135,7 +130,6 @@ export default class addMoralEducation extends React.Component {
                 "termid": moralEdu.state.termAsyncValue[0],
                 "createTime": moralEdu.state.timeValue
             }
-
         }
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
             onResponse: function (result) {
@@ -155,8 +149,11 @@ export default class addMoralEducation extends React.Component {
             }
         });
     }
-  
 
+
+    /** 
+    *选择学期 
+    */
     chooseTerms = () => {
         var _this = this;
         var param = {
@@ -175,7 +172,7 @@ export default class addMoralEducation extends React.Component {
                                     label: v.name
                                 })
                         })
-                        _this.setState({termData: _this.state.termData.concat(arr)})
+                        _this.setState({ termData: _this.state.termData.concat(arr) })
                     }
                 }
             },
@@ -184,10 +181,11 @@ export default class addMoralEducation extends React.Component {
             }
         });
     }
+
     /**
      *获取班级的ID
      */
-    getClazzesByUserId(id){
+    getClazzesByUserId(id) {
         var _this = this;
         var param = {
             "method": 'getClazzesByUserId',
@@ -203,7 +201,7 @@ export default class addMoralEducation extends React.Component {
                                 value: v.id, label: v.name
                             })
                         })
-                        _this.setState({classData: arr})
+                        _this.setState({ classData: arr })
                     }
                 }
             },
@@ -213,20 +211,18 @@ export default class addMoralEducation extends React.Component {
     }
 
     getClassKey = (v) => {
-        this.setState({classAsyncValue: v});
+        this.setState({ classAsyncValue: v });
     }
     getTermKey = (v) => {
         this.setState({
             termAsyncValue: v
         })
+    }
 
-
-<<<<<<< HEAD
->>>>>>> e11485a9e5491dc0fa8ff9bd07ead7a67fa0c128
     render() {
         return (
-            <div id="addMoralEducation" style={{height: document.body.clientHeight}}>
-                <WhiteSpace size="lg"/>
+            <div id="addMoralEducation" style={{ height: document.body.clientHeight }}>
+                <WhiteSpace size="lg" />
                 {/*选择班级*/}
                 <Picker
                     data={this.state.classData}
@@ -236,10 +232,10 @@ export default class addMoralEducation extends React.Component {
                     onOk={this.getClassKey}
                 >
                     <List.Item arrow="horizontal"
-                               onClick={this.getClazzesByUserId.bind(this, JSON.parse(localStorage.getItem("userIdKey")).userId)}>选择班级<i
-                        className="redStar">*</i></List.Item>
+                        onClick={this.getClazzesByUserId.bind(this, JSON.parse(localStorage.getItem("userIdKey")).userId)}>选择班级<i
+                            className="redStar">*</i></List.Item>
                 </Picker>
-                <WhiteSpace size="lg"/>
+                <WhiteSpace size="lg" />
                 {/*选择学期*/}
                 <Picker
                     data={this.state.termData}
@@ -250,7 +246,7 @@ export default class addMoralEducation extends React.Component {
                 >
                     <List.Item arrow="horizontal" onClick={this.chooseTerms}>选择学期<i className="redStar">*</i></List.Item>
                 </Picker>
-                <WhiteSpace size="lg"/>
+                <WhiteSpace size="lg" />
                 {/*选择日期*/}
                 <DatePicker
                     mode="date"
@@ -258,39 +254,31 @@ export default class addMoralEducation extends React.Component {
                     extra="Optional"
                     value={this.state.date}
                     onOk={this.onDatePickerChange}
-<<<<<<< HEAD
-                    onChange={date => this.setState({date})}
-=======
                     onChange={date => this.setState({ date })}
->>>>>>> e11485a9e5491dc0fa8ff9bd07ead7a67fa0c128
                 >
                     <List.Item arrow="horizontal">选择日期<i className="redStar">*</i></List.Item>
                 </DatePicker>
-                <WhiteSpace size="lg"/>
+                <WhiteSpace size="lg" />
                 <div className='CourseTableArea'>
-                        <div className="classSearchResultInfo">
-                            <List>
-                                <InputItem
-                                    className="politeValue"
-                                    clear
-                                    placeholder="请输入分数"
-                                    ref={el => this.autoFocusInst = el}
-                                >班级礼貌评分</InputItem>
-                                <InputItem
-                                    className="healthValue"
-                                    clear
-                                    placeholder="请输入分数"
-                                    ref={el => this.autoFocusInst = el}
-                                >班级健康评分</InputItem>
-                            </List>
-<<<<<<< HEAD
-                        </div>
-=======
+                    <div className="classSearchResultInfo">
+                        <List>
+                            <InputItem
+                                className="politeValue"
+                                clear
+                                placeholder="请输入分数"
+                                ref={el => this.autoFocusInst = el}
+                            >班级礼貌评分</InputItem>
+                            <InputItem
+                                className="healthValue"
+                                clear
+                                placeholder="请输入分数"
+                                ref={el => this.autoFocusInst = el}
+                            >班级健康评分</InputItem>
+                        </List>
                     </div>
->>>>>>> e11485a9e5491dc0fa8ff9bd07ead7a67fa0c128
                 </div>
                 <div className='addCourseButton'>
-                    <WhiteSpace size="lg"/>
+                    <WhiteSpace size="lg" />
                     <WingBlank>
                         <Button type="warning" onClick={this.addMoralEducationTableItem}>提交</Button>
                     </WingBlank>
