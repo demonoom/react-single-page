@@ -29,9 +29,9 @@ export default class addStudentDuty extends React.Component {
             termValue: [],
             visible: false,
             studentList:[],
-            clazzId: '14',
+            clazzId: '',
             week: '1',
-            termId: '1'
+            termId: ''
         };
         this.getStudentListByClazz = this.getStudentListByClazz.bind(this);
         this.studentCheckboxOnChange = this.studentCheckboxOnChange.bind(this);
@@ -189,8 +189,7 @@ export default class addStudentDuty extends React.Component {
                             var gradeName = grade.name;
                             var clazzJson = {
                                 label: gradeName+clazzName,
-                                // value: clazzId+"",
-                                value: 14+"",
+                                value: clazzId+"",
                             };
                             if(seasons[0]!=null && seasons[0]!=undefined){
                                 seasons[0].push(clazzJson);
