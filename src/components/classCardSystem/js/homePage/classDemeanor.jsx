@@ -44,7 +44,7 @@ export default class classDemeanor extends React.Component {
                             var classDemeanors = result.response;
                             classDemeanors.forEach(function (classDemeanor) {
                                 if (classDemeanor != null && classDemeanor != undefined) {
-                                    var stuImgTag=<img style={{width:'80px',height:'80px'}} id={classDemeanor.id} src={classDemeanor.imagePath}/>;
+                                    var stuImgTag=<img style={{width:'100%',height:'4.17rem'}} id={classDemeanor.id} src={classDemeanor.imagePath}/>;
                                     classDemeanorList.push(stuImgTag)
                                 }
                             })
@@ -81,7 +81,7 @@ export default class classDemeanor extends React.Component {
                             var classRewards = result.response;
                             classRewards.forEach(function (classDemeanor) {
                                 if (classDemeanor != null && classDemeanor != undefined) {
-                                    var stuImgTag=<img style={{width:'80px',height:'80px'}} id={classDemeanor.id} src={classDemeanor.imagePath}/>;
+                                    var stuImgTag=<img style={{width:'100%',height:'7.78rem'}} id={classDemeanor.id} src={classDemeanor.imagePath}/>;
                                     classRewardList.push(stuImgTag);
                                 }
                             })
@@ -100,10 +100,10 @@ export default class classDemeanor extends React.Component {
             <div id="classDemeanor"  className="home_card classDemeanor_height">
                 <h3 className="home_title">班级风采</h3>
                 <div>
-                    <Carousel className="space-carousel"
+                    <Carousel className="space-carousel class_mien1"
                               frameOverflow="visible"
-                              cellSpacing={1}
-                              slideWidth={0.8}
+                              cellSpacing={12}
+                              slideWidth={0.4}
                               autoplay={true}
                               infinite
                               dots={false}
@@ -112,10 +112,10 @@ export default class classDemeanor extends React.Component {
                     >
                         {this.state.classDemeanorList}
                     </Carousel>
-                    <Carousel className="space-carousel"
+                    <Carousel className="space-carousel class_mien2"
                               frameOverflow="visible"
-                              cellSpacing={1}
-                              slideWidth={0.8}
+                              cellSpacing={12}
+                              slideWidth={0.5}
                               autoplay={true}
                               infinite
                               dots={false}
