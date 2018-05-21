@@ -29,9 +29,9 @@ export default class editStudentDuty extends React.Component {
             termValue: [],
             visible: false,
             studentList:[],
-            clazzId: '14',
+            clazzId: '',
             week: '1',
-            termId: '1'
+            termId: ''
         };
         this.studentCheckboxOnChange = this.studentCheckboxOnChange.bind(this);
         this.isHaveSameStudentId = this.isHaveSameStudentId.bind(this);
@@ -50,9 +50,9 @@ export default class editStudentDuty extends React.Component {
         var studentIds = locationSearchArray[3].split("=")[1];
         var dutyId = locationSearchArray[4].split("=")[1];
         var userId = locationSearchArray[5].split("=")[1];
-        var termValue = [termId+''];
+       /* var termValue = [termId+''];
         var sValue = [clazzId+''];
-        var asyncValue = [week+''];
+        var asyncValue = [week+''];*/
         var weekData = [{value: '1', label: '星期一'},
             {value: '2', label: '星期二'},
             {value: '3', label: '星期三'},
@@ -63,8 +63,8 @@ export default class editStudentDuty extends React.Component {
         this.getStudentListByClazz(clazzId,studentIds);
         this.getClazzesByUserId(userId);
         this.getSemesterList(userId);
-        this.setState({clazzId,week,termId,termValue,sValue,asyncValue,data:weekData,studentIds,dutyId});
-        // this.setState({clazzId,week,termId,data:weekData,studentIds,dutyId});
+        // this.setState({clazzId,week,termId,termValue,sValue,asyncValue,data:weekData,studentIds,dutyId});
+        this.setState({clazzId,week,termId,data:weekData,studentIds,dutyId});
     }
 
     onPickerChange = (val) => {
