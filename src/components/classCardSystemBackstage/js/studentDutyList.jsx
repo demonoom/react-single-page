@@ -261,7 +261,7 @@ export default class studentDutyList extends React.Component {
                     <List.Item arrow="horizontal" onClick={this.onClick}>日期</List.Item>
                 </Picker>
                 <WhiteSpace size="lg"/>
-                <Button type="primary" inline size="small" className="am-button-borderfix" onClick={this.editStudentDuty}>修改</Button>
+                <Button type="primary" inline size="small" className="am-button-borderfix modifyBtn" onClick={this.editStudentDuty}>修改</Button>
                 <Grid data={_this.state.studentList} columnNum={3} activeStyle={false}/>
                 <Icon type="plus" onClick={this.turnToAddDutyPage}/>
             </div>
