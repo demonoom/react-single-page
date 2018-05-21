@@ -1,5 +1,5 @@
 import React from 'react';
-import { Picker, List, WhiteSpace, Button, WingBlank, InputItem, DatePicker, TextareaItem, Modal, Toast } from 'antd-mobile';
+import { Picker, List, WhiteSpace, Button, WingBlank, InputItem, DatePicker, Modal, Toast } from 'antd-mobile';
 import enUs from 'antd-mobile/lib/date-picker/locale/en_US';
 import '../css/addMoralEducation.less';
 
@@ -23,13 +23,10 @@ export default class addMoralEducation extends React.Component {
             { value: '6', label: '星期六' },
             { value: '7', label: '星期日' }],
             classData: [],
-            posData: [],
-            termData: [{ value: '-1', label: '自定义学期' }],
+            termData: [],
             asyncValue: [],
             termAsyncValue: [],
             classAsyncValue: [],
-            posAsyncValue: [],
-            ClassTableArr: [],  //课表结构
             ClassTableDataArr: [],  //课表数据
             date: now,
             time: now,
@@ -45,7 +42,7 @@ export default class addMoralEducation extends React.Component {
     }
 
     /**
-     * 星期切换的回调
+     * 班级切换的回调
      * @param val
      */
     onPickerChange = (val) => {
@@ -88,7 +85,6 @@ export default class addMoralEducation extends React.Component {
      * @param val
      */
     onDatePickerChange = (v) => {
-      
         var d = new Date(v);
         var newTime = d.getFullYear() + '-' + (d.getMonth() + 1) + '-' + d.getDate();
         this.setState({
@@ -150,45 +146,11 @@ export default class addMoralEducation extends React.Component {
             }
         });
     }
+  
 
-    /**
-     * 课程名称数据框动态绑定内容的方法
-     * @param index
-     * @param value
-     */
-    inputOnChange = (index, value) => {
-        this.state.ClassTableDataArr[index].clazzName = value;
-    }
-
-    /**
-     * 备注数据框动态绑定内容的方法
-     * @param index
-     * @param value
-     */
-    textareaOnChange = (index, value) => {
-        this.state.ClassTableDataArr[index].nodeDetal = value;
-    }
-
-    /**
-     * 开课时间动态绑定内容的方法
-     * @param v
-     * @param i
-     */
-    startTimeOnOk(v, i) {
-        this.state.ClassTableDataArr[i].startTimeData = WebServiceUtil.formatHM(new Date(v).getTime());
-    }
-
-    /**
-     * 下课时间动态绑定内容的方法
-     * @param v
-     * @param i
-     */
-    endTimeOnOk(v, i) {
-        this.state.ClassTableDataArr[i].endTimeData = WebServiceUtil.formatHM(new Date(v).getTime());
-    }
-
- 
-
+   /**
+    * 选择学期
+    */
     chooseTerms = () => {
         var _this = this;
         var param = {
@@ -212,14 +174,13 @@ export default class addMoralEducation extends React.Component {
                 }
             },
             onError: function (error) {
-                // message.error(error);
+                message.error(error);
             }
         });
     }
-    handleClick = () => {
-        this.customFocusInst.focus();
-    }
-
+    /**
+     *获取班级的ID
+     */
     getClazzesByUserId(id){
         var _this = this;
         var param = {
@@ -254,49 +215,7 @@ export default class addMoralEducation extends React.Component {
         
     }
 
-    userDefined(value){
-        if (value.length == 0) {
-            Toast.fail('文件夹名称不能为空', 1);
-            return
-        }
-        var _this = this;
-        var param = {
-            "method": 'updateMoralEducation',
-            "moralEducationJson": {
-                "cid": moralEdu.state.classAsyncValue,
-                "health": $(".healthValue input").val(),
-                "politeness": $(".politeValue input").val(),
-                "termid": moralEdu.state.termAsyncValue,
-                "createTime": moralEdu.state.timeValue
-            }
-        };
-
-        WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
-            onResponse: function (result) {
-                if (result.msg == '调用成功' || result.success == true) {
-                    // 刷新
-                    Toast.success('重命名成功', 1);
-                    _this.state.dataSource = [];
-                    _this.state.dataSource = new ListView.DataSource({
-                        rowHasChanged: (row1, row2) => row1 !== row2,
-                    });
-                    _this.initData.forEach(function (v, i) {
-                        if (data.id == v.id) {
-                            v.name = str;
-                        }
-                    });
-                    _this.setState({
-                        dataSource: _this.state.dataSource.cloneWithRows(_this.initData)
-                    });
-                    
-                } else {
-                    Toast.fail('重命名失败', 1);
-                }
-            },
-            onError: function (error) {
-            }
-        });
-    }
+    
     render() {
         return (
             <div id="addMoralEducation" style={{ height: document.body.clientHeight }}>
@@ -320,7 +239,7 @@ export default class addMoralEducation extends React.Component {
                     onPickerChange={this.onTermPickerChange}
                     onOk={this.getTermKey}
                 >
-                    <List.Item arrow="horizontal" onClick={this.chooseWeeks}>选择学期<i className="redStar">*</i></List.Item>
+                    <List.Item arrow="horizontal" onClick={this.chooseTerms}>选择学期<i className="redStar">*</i></List.Item>
                 </Picker>
                 <WhiteSpace size="lg" />
                 {/*选择日期*/}
@@ -331,6 +250,7 @@ export default class addMoralEducation extends React.Component {
                     value={this.state.date}
                     onOk={this.onDatePickerChange}
                     onChange={date => this.setState({ date })}
+                    extra='qing'
                 >
                     <List.Item arrow="horizontal">选择日期<i className="redStar">*</i></List.Item>
                 </DatePicker>
@@ -341,7 +261,7 @@ export default class addMoralEducation extends React.Component {
                                 <InputItem
                                     className="politeValue"
                                     clear
-                                    placeholder="请输入班级礼貌评分"
+                                    placeholder="请输入分数"
                                     ref={el => this.autoFocusInst = el}
                                 >班级礼貌评分</InputItem>
                                 <InputItem

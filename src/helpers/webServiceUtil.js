@@ -1,13 +1,7 @@
 var isDebug = true;
 var localDomain = "192.168.50.15";   //请求地址
 var isDebugLocal = true;
-<<<<<<< HEAD
 var localUrl = "192.168.50.72";    //跳转地址http://c/
-=======
-
-var localUrl = "192.168.50.72";    //跳转地址http://c/
-
->>>>>>> 045109780f4813358f74362c428ae1d59f6ffa94
 // //云校本地测试webService地址
 // var elearningWebserviceURLOfLocal = "http://" + localDomain + ":8888/elearning/elearningControl/";
 // //云校的远程服务器地址

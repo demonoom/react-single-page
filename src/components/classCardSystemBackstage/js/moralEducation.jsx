@@ -15,13 +15,10 @@ export default class moralEducation extends React.Component {
         this.state = {
             data: [],
             cols: 1,
-            asyncValue: [],
             sValue: ['0', '0'],
             visible: false,
             date: now,
             time: now,
-            dpValue: null,
-            customChildValue: null,
             visible: false,
             moralEducationSelectData: {},
             seasons: [[
@@ -42,7 +39,7 @@ export default class moralEducation extends React.Component {
     componentWillMount() {
         var locationHref = window.location.href;
         var locationSearch = locationHref.substr(locationHref.indexOf("?") + 1);
-        var ident = locationSearch.split("=")[1];
+        var ident = locationSearch.split("&")[0].split("=")[1];
         var loginUser = {
             "userId": ident,
         };
