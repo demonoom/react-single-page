@@ -1,5 +1,5 @@
 import React from 'react';
-import {} from 'antd-mobile';
+import {Carousel} from 'antd-mobile';
 
 var demeanor;
 
@@ -14,6 +14,7 @@ export default class classDemeanor extends React.Component {
     componentWillMount() {
         var clazzId = '819';
         this.getClassDemeanorInfo(clazzId);
+        this.getClassRewardInfo(clazzId);
     }
 
     componentDidMount() {
@@ -29,6 +30,7 @@ export default class classDemeanor extends React.Component {
         var param = {
             "method": 'getClassDemeanorInfo',
             "clazzId": clazzId,
+            "type":1
         };
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
             onResponse: function (result) {
@@ -42,9 +44,7 @@ export default class classDemeanor extends React.Component {
                             var classDemeanors = result.response;
                             classDemeanors.forEach(function (classDemeanor) {
                                 if (classDemeanor != null && classDemeanor != undefined) {
-                                    var stuImgTag=<div>
-                                        <div><img style={{width:'80px',height:'80px'}} id={classDemeanor.id} src={classDemeanor.imagePath}/></div>
-                                    </div>
+                                    var stuImgTag=<img style={{width:'80px',height:'80px'}} id={classDemeanor.id} src={classDemeanor.imagePath}/>;
                                     classDemeanorList.push(stuImgTag)
                                 }
                             })
@@ -58,14 +58,72 @@ export default class classDemeanor extends React.Component {
         });
     }
 
+    /**
+     * 班牌值日今日信息查询
+     * @param clazzId
+     */
+    getClassRewardInfo(clazzId) {
+        var _this = this;
+        var param = {
+            "method": 'getClassDemeanorInfo',
+            "clazzId": clazzId,
+            "type":2
+        };
+        WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
+            onResponse: function (result) {
+                var classRewardList = [];
+                if (result.success == true && result.msg == "调用成功") {
+                    var response = result.response;
+                    if (response != null && response != undefined) {
+                        if (response.length === 0) {
+                            _this.setState({"isLoadingLeft": false})
+                        } else {
+                            var classRewards = result.response;
+                            classRewards.forEach(function (classDemeanor) {
+                                if (classDemeanor != null && classDemeanor != undefined) {
+                                    var stuImgTag=<img style={{width:'80px',height:'80px'}} id={classDemeanor.id} src={classDemeanor.imagePath}/>;
+                                    classRewardList.push(stuImgTag);
+                                }
+                            })
+                        }
+                    }
+                }
+                _this.setState({classRewardList});
+            },
+            onError: function (error) {
+            }
+        });
+    }
+
     render() {
         return (
-            <div id="classDemeanor">
-                <div>班级风采</div>
+            <div id="classDemeanor"  className="home_card classDemeanor_height">
+                <h3 className="home_title">班级风采</h3>
                 <div>
-                    <marquee direction="left">
+                    <Carousel className="space-carousel"
+                              frameOverflow="visible"
+                              cellSpacing={1}
+                              slideWidth={0.8}
+                              autoplay={true}
+                              infinite
+                              dots={false}
+                              beforeChange={(from, to) => console.log(`slide from ${from} to ${to}`)}
+                              afterChange={index => this.setState({ slideIndex: index })}
+                    >
                         {this.state.classDemeanorList}
-                    </marquee>
+                    </Carousel>
+                    <Carousel className="space-carousel"
+                              frameOverflow="visible"
+                              cellSpacing={1}
+                              slideWidth={0.8}
+                              autoplay={true}
+                              infinite
+                              dots={false}
+                              beforeChange={(from, to) => console.log(`slide from ${from} to ${to}`)}
+                              afterChange={index => this.setState({ slideIndex: index })}
+                    >
+                        {this.state.classRewardList}
+                    </Carousel>
                 </div>
             </div>
         );

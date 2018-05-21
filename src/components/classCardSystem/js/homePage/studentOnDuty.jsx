@@ -52,10 +52,10 @@ export default class studentOnDuty extends React.Component {
                                     var stuName = student.userName;
                                     var icon = student.avatar;
                                     var stuJson = {text: stuName, icon};
-                                    var stuImgTag=<span>
-                                        <div><img style={{width:'80px',height:'80px'}}  src={student.avatar}/></div>
-                                        <div>{stuName}</div>
-                                    </span>
+                                    var stuImgTag=<li className="studentOnDuty_list">
+                                        <div className="studentOnDuty_face"><img  className="studentOnDuty_face"  src={student.avatar}/></div>
+                                        <div className="home_contfont text_hidden studentOnDuty_name">{stuName}</div>
+                                    </li>
                                     studentList.push(stuImgTag)
                                 }
                             })
@@ -71,9 +71,9 @@ export default class studentOnDuty extends React.Component {
 
     render() {
         return (
-            <div id="studentOnDuty">
-                <span>今日值日生</span>
-                <div>
+            <div id="studentOnDuty" className="home_card studentOnDuty_height">
+                <h3 className="home_title">今日值日生</h3>
+                <div className="home_cardCont">
                     {this.state.studentList}
                 </div>
             </div>

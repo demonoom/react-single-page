@@ -1,7 +1,11 @@
 #classCardHomePage {
   .home_content{
+    width: calc(~"100%" - 1.66rem);
     padding: 0.83rem;
+    height: calc(~"100%" - 1.66rem);
     clear: both;
+    background: url("../imgs/bg_web.jpg") no-repeat;
+    background-size: contain;
   }
   .home_right{
     width: 13.33rem;
@@ -14,5 +18,97 @@
   .home_center{
     width: calc(~"100%" - 26.66rem);
     float: left;
+    margin:0 0.83rem;
+  }
+  .home_title{
+    font-size: 0.72rem;
+    color: #2a3350;
+    padding: 0.56rem 0 0.33rem 0.83rem;
+    margin: 0;
+    border-bottom: 1px solid #e5ebf7;
+  }
+  .home_card{
+    background: #fff;
+    border-radius: 6px;
+    color: #2a3350;
+  }
+  .home_cardCont{
+    padding: 0.83rem;
+  }
+  .home_contfont{
+    font-size: 0.61rem;
+    color: #565c72;
+  }
+  .studentOnDuty_face{
+    width: 1.94rem;
+    height: 1.94rem;
+    text-align: center;
+    border-radius: 50%;
+    margin: 0 auto 0.28rem auto;
+  }
+  .studentOnDuty_list{
+    width: 2.28rem;
+    display: inline-block;
+    margin: 0 0.11rem 0.56rem 0.11rem;
+    text-align: center;
+
+  }
+  .studentOnDuty_name{
+    width: 100%;
+  }
+  .studentOnDuty_height, .course_height{
+    height: 12.78rem;
+  }
+  .currentAttendance_height, .moralEducationScore_height{
+    height: 11.67rem;
+    margin-top: 0.83rem;
+  }
+  .classDemeanor_height{
+    height: 16.11rem;
+  }
+  .notify_height, .application_height{
+    height: 8.33rem;
+    margin-top: 0.83rem;
+    float: left;
+    width: calc(~"50%" - 0.42rem);
+
+  }
+  .notify_height{
+    margin-left: 0.83rem;
+  }
+  .font_title2{
+    font-size: 0.67rem;
+    color: #2a3350;
+  }
+  .notify_cont{
+    height: 6.4rem;
+    overflow-x: hidden;
+    overflow-y: auto;
+    li{
+      height: 1.94rem;
+      line-height: 1.94rem;
+      border-bottom: 1px solid #e5ebf7;
+      padding:0 0.83rem;
+    }
+    li:last-child{
+      border-bottom: none;
+    }
+  }
+  .moralEducationScore{
+    .blue_text{
+      font-size: 0.72rem;
+      color: #5091fe;
+    }
+
+
+  }
+  .mEScoreInfoM{
+    text-align: center;
+    margin: 2.3rem 0 2.3rem 0;
+  }
+  .blue_big{
+    font-size: 2.22rem;
+    color: #5091fe;
+
   }
 }
