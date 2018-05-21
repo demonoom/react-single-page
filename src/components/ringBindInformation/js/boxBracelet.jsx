@@ -201,7 +201,7 @@ export default class boxBracelet extends React.Component {
     binding = () => {
         var _this = this;
         if (this.state.searchCheckValue == '' || bindDing.state.macId == '') {
-            Toast.fail('未选择班级或手环',)
+            Toast.fail('未选择教室或手环',)
             return
         }
         var param = {
@@ -266,7 +266,7 @@ export default class boxBracelet extends React.Component {
                         });
                         Toast.hide();
                     } else {
-                        Toast.fail('没有找到该班级', 1)
+                        Toast.fail('没有找到该教室', 1)
                     }
                 } else {
                     Toast.fail(result.msg, 1);
@@ -392,11 +392,11 @@ export default class boxBracelet extends React.Component {
 
                         <div className='stName'>
                             <InputItem
-                                placeholder="请输入班级并搜索"
+                                placeholder="请输入教室并搜索"
                                 data-seed="logId"
                                 onChange={this.inputOnChange.bind(this)}
                                 value={this.state.stNameValue}
-                            >班级:</InputItem>
+                            >教室:</InputItem>
                             <img className='stIcon' src={require("../imgs/search.png")} type='search'
                                  onClick={this.searchWatchBindCandidate}/>
                         </div>
