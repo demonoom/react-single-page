@@ -1,6 +1,6 @@
-var isDebug = false;
+var isDebug = true;
 var localDomain = "192.168.50.15";   //请求地址
-var isDebugLocal = false;
+var isDebugLocal = true;
 var localUrl = "192.168.50.29";    //跳转地址http://c/
 
 // //云校本地测试webService地址
