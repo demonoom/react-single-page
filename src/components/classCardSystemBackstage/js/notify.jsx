@@ -138,7 +138,7 @@ export default class notifyBack extends React.Component {
         };
 
         Bridge.callHandler(data, null, function (error) {
-            window.location.href = url + '?' + notifyId;
+            window.location.href = url + '?nodeId=' + notifyId;
         });
     }
 

@@ -1,5 +1,5 @@
 import React from 'react';
-import {Card,Toast} from 'antd-mobile';
+import {Card, Toast} from 'antd-mobile';
 import '../css/notifyDetail.less'
 
 export default class notifyDetail extends React.Component {
@@ -7,22 +7,23 @@ export default class notifyDetail extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            data:{},
+            data: {},
         };
     }
 
     componentWillMount() {
         var locationHref = window.location.href;
         var locationSearch = locationHref.substr(locationHref.indexOf("?") + 1);
-        console.log(locationSearch);
-        this.getClassBrandStudentDutyById(locationSearch);
+        var locationSearchArray = locationSearch.split("&");
+        var locationSearchId = locationSearchArray[0].split("=")[1];
+        this.getClassBrandStudentDutyById(locationSearchId);
     }
 
     componentDidMount() {
         document.title = "通知详情";
     }
 
-    getClassBrandStudentDutyById(id){
+    getClassBrandStudentDutyById(id) {
         var param = {
             "method": 'getClassBrandNoticeListById',
             "id": id,
@@ -32,7 +33,7 @@ export default class notifyDetail extends React.Component {
                 if (result.msg == '调用成功' || result.success) {
                     console.log(result.response);
                     this.setState({
-                        data:result.response
+                        data: result.response
                     })
                 }
             },
