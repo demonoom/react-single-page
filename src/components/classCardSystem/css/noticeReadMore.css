@@ -1,12 +1,11 @@
-(node) util.print is deprecated. Use console.log instead.
 #noticeReadMore .am-card {
-  min-height: 7.1rem;
+  min-height: 2.7rem;
   padding-bottom: 0;
-  line-height: 7.1rem;
+  line-height: 2.7rem;
 }
 #noticeReadMore .am-card-header {
-  padding-left: 2.8rem;
-  padding-right: 2.2rem;
+  padding-left: 1.11rem;
+  padding-right: .83rem;
   padding-top: 0;
   padding-bottom: 0;
 }
@@ -14,22 +13,22 @@
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
-  font-size: 28px;
-  line-height: 28px;
+  font-size: .78rem;
+  line-height: .78rem;
   color: #2a3350;
-  width: calc(100% - 15rem);
+  width: calc(100% - 5.8rem);
 }
 #noticeReadMore .am-card-header-content::before {
   content: "";
-  width: 8px;
-  height: 8px;
+  width: .2rem;
+  height: .2rem;
   background-color: #7f5dff;
   -webkit-border-radius: 50%;
   -moz-border-radius: 50%;
   border-radius: 50%;
-  margin-right: 14px;
+  margin-right: .38rem;
 }
 #noticeReadMore .am-card-header-extra {
   color: #444e6f;
-  font-size: 20px;
+  font-size: .55rem;
 }
