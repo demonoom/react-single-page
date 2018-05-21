@@ -11,7 +11,8 @@ import {
     WhiteSpace,
     Modal,
     PullToRefresh,
-    Checkbox, Flex
+    Checkbox, 
+    Flex
 } from 'antd-mobile';
 import '../css/classroomManage.less'
 import { ucs2 } from 'punycode';
@@ -224,10 +225,16 @@ export default class classroomManage extends React.Component {
      */
     getbindGradeState(e) {
         if (e.target.checked) {
+            classBinding.setState({
+                gradeNameValue:''
+            })
             $('.gradeName').css({
                 display: 'block'
             })
         } else {
+            classBinding.setState({
+                chooseResultDiv:'none'
+            })
             $('.gradeName').css({
                 display: 'none'
             })
@@ -268,7 +275,7 @@ export default class classroomManage extends React.Component {
         this.viewClassRoomPage(this.state.uid);
     }
     toUpdatePage(id){
-        var url = WebServiceUtil.mobileServiceURL + "updateClassroom"+"?classId="+id.id;
+        var url = WebServiceUtil.mobileServiceURL + "updateClassroom"+"?classId="+id.id+"&access_user=23836";
         var data = {
             method: 'openNewPage',
             url: url
@@ -279,7 +286,6 @@ export default class classroomManage extends React.Component {
         });
     }
     render() {
-       
         var _this = this;
         const row = (rowData, sectionID, rowID) => {
             return (<div>

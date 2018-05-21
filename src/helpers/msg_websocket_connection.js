@@ -1,4 +1,4 @@
-import React, {PropTypes} from 'react';
+import React from 'react';
 
 var isDebug = true;
 var isDebugLocal = false;
