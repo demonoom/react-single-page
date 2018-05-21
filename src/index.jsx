@@ -262,6 +262,13 @@ const editStudentDuty = (location, cb) => {
     )
 }
 
+const currentAttendanceList = (location, cb) => {
+    require.ensure([], require => {
+            cb(null, require("./components/classCardSystem/js/homePage/currentAttendanceList").default)
+        }
+    )
+}
+
 import './index.less';
 
 class Index extends React.Component {
@@ -394,6 +401,7 @@ ReactDOM.render(
             <Route path="studentDutyList" getComponent={studentDutyList} />
             <Route path="addStudentDuty" getComponent={addStudentDuty} />
             <Route path="editStudentDuty" getComponent={editStudentDuty} />
+            <Route path="currentAttendanceList" getComponent={currentAttendanceList} />
         </Route>
     </Router>
     , document.getElementById('example'));
