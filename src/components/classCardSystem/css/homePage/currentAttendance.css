@@ -1,0 +1,9 @@
+(node) util.print is deprecated. Use console.log instead.
+#currentAttendance .classTableA {
+  border: 1px solid #cccccc;
+  padding: 10px;
+  width: 200px;
+  height: 250px;
+  font-size: 25px;
+  text-align: center;
+}

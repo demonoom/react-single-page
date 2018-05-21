@@ -28,7 +28,7 @@ export default class course extends React.Component {
     }
 
     componentDidMount() {
-        // this.viewCourseTableItem()
+
     }
 
     /**
@@ -39,8 +39,7 @@ export default class course extends React.Component {
         var _this = this;
         var param = {
             "method": 'viewCourseTableItem',
-            // "id": data.classTableId
-            "id": 3
+            "id": data.classTableId
         };
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
             onResponse: function (result) {
@@ -64,7 +63,7 @@ export default class course extends React.Component {
                         今日课程
                         <div className='index'>第{classData.index}节</div>
                         <div className='timeNode'>当前时段</div>
-                        <div className='time'></div>
+                        <div className='time'>{classData.openTime + '-' + classData.closeTime}</div>
                         <div className='name'>{classData.courseName}</div>
                         {/*<img className='terPic' src={classData.teacher.avatar} alt=""/>*/}
                         <img
