@@ -1,11 +1,11 @@
 import React from "react";
-import {ListView, WhiteSpace, Card} from "antd-mobile";
+import {ListView,Card} from "antd-mobile";
 import "../css/noticeReadMore.less";
 
 export default class noticeReadMore extends React.Component{
     constructor(props){
         super(props);
-          /**
+        /**
          * dataSource是长列表的数据源
          * initData初始数据
          */
@@ -24,12 +24,12 @@ export default class noticeReadMore extends React.Component{
     componentDidMount(){
         var locationHref = window.location.href;
         var locationSearch = locationHref.substr(locationHref.indexOf("?") + 1);
-        var classroomId = locationSearch.split("=")[1];
+        var classroomId = locationSearch.split("&")[0].split("=")[1];
         this.setState({"classroomId":classroomId})
         this.getNoticeReadMore(classroomId);
     }
 
-      /**
+    /**
      * getNoticeReadMore获取出勤的方法x
      */
     getNoticeReadMore(classroomId){
@@ -37,19 +37,13 @@ export default class noticeReadMore extends React.Component{
         _this.state.listViewDisplay = true;
         const dataBlob = {};
         var pageNo = _this.state.defaultPageNo;
-        /**
-         * 这里需要传入参数
-         */
         var param = {
             "method": 'getClassBrandNoticeListByClassroomId',
             "classroomId": classroomId,
             "pageNo": pageNo
         }
-        console.log(param);
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
             onResponse:function(result){
-                console.log(result);
-                
                 if (result.success == true && result.msg == "调用成功") {
                     if (result.response.length === 0) {
                         _this.setState({"isLoadingLeft": false})
@@ -115,8 +109,6 @@ export default class noticeReadMore extends React.Component{
             isLoadingLeft: true,
         });
     };
-
-
 
     render(){
         const row = (rowData, sectionID, rowID) => {

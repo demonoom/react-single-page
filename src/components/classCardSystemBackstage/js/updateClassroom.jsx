@@ -4,11 +4,7 @@ import {
     InputItem,
     List,
     Radio,
-    Icon,
     ListView,
-    Card,
-    WingBlank,
-    WhiteSpace,
     Modal,
     PullToRefresh,
     Checkbox, Flex
@@ -171,7 +167,6 @@ export default class updateClassroom extends React.Component {
      * 点击提交时，确认绑定教室和班级
      */
     binding = () => {
-        
         var _this = this;
         if (_this.state.gradeNameValue == '' || _this.state.classroomValue == '') {
             Toast.fail('请填写教室名称和班级名称', )
@@ -234,15 +229,6 @@ export default class updateClassroom extends React.Component {
 
     }
 
-    /**
-     * 关闭添加的界面
-     */
-    cancelAddModel = () => {
-        $('.tableDiv').show("fast");
-        this.state.gradeNameValue = '';
-        this.state.classroomValue = '';
-        this.setState({chooseResultDiv: 'none'});
-    };
 
     /**
      * 获取绑定班级的状态，是否显示
