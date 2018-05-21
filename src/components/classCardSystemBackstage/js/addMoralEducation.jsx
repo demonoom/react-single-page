@@ -170,7 +170,7 @@ export default class addMoralEducation extends React.Component {
             }
         });
     }
-  
+
 
 <<<<<<< HEAD
    /**
@@ -289,7 +289,7 @@ export default class addMoralEducation extends React.Component {
     }
 
 <<<<<<< HEAD
-    
+
 =======
     userDefined(value) {
         if (value.length == 0) {
@@ -376,18 +376,13 @@ export default class addMoralEducation extends React.Component {
                     extra="Optional"
                     value={this.state.date}
                     onOk={this.onDatePickerChange}
-<<<<<<< HEAD
                     onChange={date => this.setState({ date })}
                     extra='qing'
-=======
-                    onChange={date => this.setState({date})}
->>>>>>> 00db51f3ac7185412aae8fa260bafc4cfbd52bd3
                 >
                     <List.Item arrow="horizontal">选择日期<i className="redStar">*</i></List.Item>
                 </DatePicker>
                 <WhiteSpace size="lg"/>
                 <div className='CourseTableArea'>
-<<<<<<< HEAD
                         <div className="classSearchResultInfo">
                             <List>
                                 <InputItem
@@ -403,23 +398,6 @@ export default class addMoralEducation extends React.Component {
                                     ref={el => this.autoFocusInst = el}
                                 >班级健康评分</InputItem>
                             </List>
-=======
-                    <div className="classSearchResultInfo">
-                        <List>
-                            <InputItem
-                                className="politeValue"
-                                clear
-                                placeholder="请输入班级礼貌评分"
-                                ref={el => this.autoFocusInst = el}
-                            >班级礼貌评分</InputItem>
-                            <InputItem
-                                className="healthValue"
-                                clear
-                                placeholder="请输入分数"
-                                ref={el => this.autoFocusInst = el}
-                            >班级健康评分</InputItem>
-                        </List>
->>>>>>> 00db51f3ac7185412aae8fa260bafc4cfbd52bd3
                     </div>
                 </div>
                 <div className='addCourseButton'>
