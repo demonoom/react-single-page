@@ -24,9 +24,11 @@
   font-size: 17px;
   border-bottom: 1px #f4f4f4 solid;
 }
-#moralEducation .classHealth {
+#moralEducation .classHealth,
+#moralEducation .classPoliteness {
   overflow: hidden;
 }
-#moralEducation .classHealth .resultGrade {
+#moralEducation .classHealth .resultGrade,
+#moralEducation .classPoliteness .resultGrade {
   float: right;
 }
