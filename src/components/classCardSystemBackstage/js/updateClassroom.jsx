@@ -53,7 +53,6 @@ export default class updateClassroom extends React.Component {
    
 
     componentDidMount() {
-        debugger
         Bridge.setShareAble("false");
         document.title = '绑定教室信息';
         var uid = JSON.parse(localStorage.getItem("uIdKey")).uidKey;
@@ -63,7 +62,7 @@ export default class updateClassroom extends React.Component {
         window.addEventListener('resize', updateCM.onWindowResize)
         var locationHref = window.location.href;
         var locationSearch = locationHref.substr(locationHref.indexOf("?") + 1);
-        var classIdBynoom = locationSearch.split("=")[1];
+        var classIdBynoom = locationSearch.split("&")[0].split("=")[1];
         this.setState({classIdBynoom});
     }
 
@@ -82,7 +81,7 @@ export default class updateClassroom extends React.Component {
     }
 
     /**
-     * 查看绑定的设备
+     * 展示班级页面信息
      */
     viewClassRoomPage(uid) {
         var _this = this;
@@ -153,7 +152,6 @@ export default class updateClassroom extends React.Component {
         };
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
             onResponse: function (result) {
-                console.log(result.response);
                 if (result.msg == '调用成功' && result.success == true) {
 
                     updateCM.setState({
@@ -203,13 +201,9 @@ export default class updateClassroom extends React.Component {
     
             };
         }
-
     
-        console.log(param);
-        console.log(updateCM.state.classId);
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
             onResponse: function (result) {
-                console.log(result);
                 if (result.msg == '调用成功' && result.success == true) {
                     $('.tableDiv').show("fast");
                     _this.state.gradeNameValue = '';
@@ -220,6 +214,15 @@ export default class updateClassroom extends React.Component {
                     $('.gradeName').css({
                         display: 'none'
                     })
+                    Toast.success('添加成功');
+                    setTimeout(function () {
+                        var data = {
+                            method: 'finish',
+                        };
+
+                        Bridge.callHandler(data, null, function (error) {
+                        });
+                    }, 1000)
                 } else {
                     Toast.fail(result.msg, 1);
                 }
@@ -246,15 +249,19 @@ export default class updateClassroom extends React.Component {
      */
     getbindGradeState(e) {
         if (e.target.checked) {
-            this.setState({calmFlag:true})
+            this.setState({calmFlag:true,
+            gradeNameValue:''})
             $('.gradeName').css({
                 display: 'block'
             })
         } else {
-            this.setState({calmFlag:false})
+            this.setState({calmFlag:false,
+                chooseResultDiv:'none'
+            })
             $('.gradeName').css({
                 display: 'none'
             })
+            
         }
     }
     /**
@@ -266,15 +273,7 @@ export default class updateClassroom extends React.Component {
     inputChange(e) {
         this.setState({ gradeNameValue: e })
     }
-    /**
-     * 点击搜索结果的回调
-     */
-    // searchResultOnChange = (i) => {
-    //     this.setState({
-    //         gradeNameValue: $(".chooseResult .am-list-line .am-list-content").text()
-    //     })
-    // };
-
+    
     /**
      *  ListView数据全部渲染完毕的回调
      */
@@ -344,13 +343,9 @@ export default class updateClassroom extends React.Component {
                                     </RadioItem>
                                 ))}
                             </List>
-
-
-
                         </div>
                     </List>
                     <div className="bottomBox">
-                        <span onClick={this.cancelAddModel} className="close">关闭</span>
                         <span className="bind" onClick={this.binding}>提交</span>
                     </div>
 
