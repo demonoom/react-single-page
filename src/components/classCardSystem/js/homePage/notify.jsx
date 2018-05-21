@@ -23,7 +23,7 @@ export default class notify extends React.Component {
             noticeList:[],
             contentModalVisible:false
         };
-        this.getClassBrandNoticeListByClassroomId = this.getClassBrandNoticeListByClassroomId.bind(this);
+        this.getClassBrandNoticeListByClassId = this.getClassBrandNoticeListByClassId.bind(this);
     }
 
     componentWillMount() {
@@ -31,20 +31,20 @@ export default class notify extends React.Component {
     }
 
     componentDidMount() {
-        var classroomId = "1";//819
+        var classId = "819";
         var initPageNo = 1;
-        this.getClassBrandNoticeListByClassroomId(classroomId,initPageNo);
+        this.getClassBrandNoticeListByClassId(classId,initPageNo);
     }
 
     /**
      * 班牌根据教室id查询通知列表
      * @param clazzId
      */
-    getClassBrandNoticeListByClassroomId(classroomId,pageNo) {
+    getClassBrandNoticeListByClassId(classId,pageNo) {
         var _this = this;
         var param = {
-            "method": 'getClassBrandNoticeListByClassroomId',
-            "classroomId": classroomId,
+            "method": 'getClassBrandNoticeListByClassId',
+            "cid": classId,
             "pageNo":pageNo
         };
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {

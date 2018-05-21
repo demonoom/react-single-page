@@ -9,6 +9,7 @@ export default class currentAttendance extends React.Component {
         super(props);
         demeanor = this;
         this.state = {};
+        this.turnToAttendanceList = this.turnToAttendanceList.bind(this);
     }
 
     componentWillMount() {
@@ -50,10 +51,18 @@ export default class currentAttendance extends React.Component {
         });
     }
 
+    /**
+     * 进入考勤详情页
+     */
+    turnToAttendanceList(){
+
+    }
+
     render() {
         return (
             <div id="currentAttendance">
                 考勤
+                <span onClick={this.turnToAttendanceList}>考勤详情</span>
             </div>
         );
     }
