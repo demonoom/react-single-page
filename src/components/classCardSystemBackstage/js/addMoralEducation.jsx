@@ -100,7 +100,6 @@ export default class addMoralEducation extends React.Component {
         this.setState({
             timeValue: newTime
         })
-
     }
 
     /**
@@ -158,9 +157,6 @@ export default class addMoralEducation extends React.Component {
     }
   
 
-   /**
-    * 选择学期
-    */
     chooseTerms = () => {
         var _this = this;
         var param = {
@@ -224,9 +220,9 @@ export default class addMoralEducation extends React.Component {
             termAsyncValue: v
         })
 
-    }
 
-    
+<<<<<<< HEAD
+>>>>>>> e11485a9e5491dc0fa8ff9bd07ead7a67fa0c128
     render() {
         return (
             <div id="addMoralEducation" style={{height: document.body.clientHeight}}>
@@ -262,7 +258,11 @@ export default class addMoralEducation extends React.Component {
                     extra="Optional"
                     value={this.state.date}
                     onOk={this.onDatePickerChange}
+<<<<<<< HEAD
+                    onChange={date => this.setState({date})}
+=======
                     onChange={date => this.setState({ date })}
+>>>>>>> e11485a9e5491dc0fa8ff9bd07ead7a67fa0c128
                 >
                     <List.Item arrow="horizontal">选择日期<i className="redStar">*</i></List.Item>
                 </DatePicker>
@@ -283,7 +283,11 @@ export default class addMoralEducation extends React.Component {
                                     ref={el => this.autoFocusInst = el}
                                 >班级健康评分</InputItem>
                             </List>
+<<<<<<< HEAD
+                        </div>
+=======
                     </div>
+>>>>>>> e11485a9e5491dc0fa8ff9bd07ead7a67fa0c128
                 </div>
                 <div className='addCourseButton'>
                     <WhiteSpace size="lg"/>
