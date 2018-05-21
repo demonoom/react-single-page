@@ -31,7 +31,7 @@ export default class notify extends React.Component {
     }
 
     componentDidMount() {
-        var classId = "819";
+        var classId = localStorage.getItem("clazzId");
         var initPageNo = 1;
         this.getClassBrandNoticeListByClassId(classId,initPageNo);
     }
