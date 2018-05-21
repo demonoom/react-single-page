@@ -78,8 +78,14 @@ export default class moralEducation extends React.Component {
     }
     
     getClassAndTerm = (v) => {
+        if(sValue[0] === 0){
+            Toast.fail('请选择班级')
+            return
+        }
+        if(sValue[1] === 0){
+            Toast.fail("请选择学期")
+        }
         this.setState({sValue: v})
-       
     }
 
     /**
