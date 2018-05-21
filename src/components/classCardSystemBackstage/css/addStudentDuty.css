@@ -1,0 +1,50 @@
+#addStudentDuty .redStar {
+  color: red;
+  font-size: 22px;
+  position: absolute;
+  left: 73px;
+  top: 7px;
+}
+#addStudentDuty .am-list-content {
+  position: relative;
+}
+#addStudentDuty .am-checkbox-inner {
+  -webkit-border-radius: 0;
+  -moz-border-radius: 0;
+  border-radius: 0;
+}
+#addStudentDuty .am-list-header {
+  font-size: 17px;
+  color: #000;
+}
+#addStudentDuty .am-list-body {
+  border: 0;
+  padding: 0 30px 30px 72px;
+}
+#addStudentDuty .am-list-body::before,
+#addStudentDuty .am-list-body::after {
+  background-color: #fff;
+}
+#addStudentDuty .am-list-body .am-list-item {
+  border-bottom: 1px #f4f4f4 solid;
+}
+#addStudentDuty .am-list-body .am-list-line::after {
+  background-color: #fff;
+}
+#addStudentDuty .am-list-body div:not(:last-child) .am-list-line {
+  border-bottom: 0;
+}
+#addStudentDuty .submitBtn {
+  padding: 0 15px;
+  position: absolute;
+  bottom: 0.1rem;
+  width: 100%;
+  box-sizing: border-box;
+}
+#addStudentDuty .submitBtn .am-button-primary {
+  background-color: #e94f4f;
+  border: 1PX solid #e94f4f;
+}
+#addStudentDuty .submitBtn .am-button-primary::before {
+  border: 1PX solid #e94f4f;
+}
