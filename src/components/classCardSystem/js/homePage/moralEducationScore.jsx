@@ -24,7 +24,7 @@ export default class moralEducationScore extends React.Component {
         var _this = this;
         const param = {
             "method": "getMoralEducationInfo",
-            "clazzId":14,
+            "clazzId":819,
             "termId":1,
             "createTime":""
         }
