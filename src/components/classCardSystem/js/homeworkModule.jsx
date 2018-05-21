@@ -46,9 +46,14 @@ export default class homeworkModule extends React.Component {
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
             onResponse: function (result) {
                 if (result.success == true && result.msg == "调用成功") {
+                    console.log(result.response)
+                    
                     if (result.response.length === 0) {
                         _this.setState({"isLoadingLeft": false})
                     } else {
+                        _this.setState({
+                            homeworkData:result.response
+                        })
                         var arr = result.response;
                         var pager = result.pager;
                         for (let i = 0; i < arr.length; i++) {
@@ -115,6 +120,9 @@ export default class homeworkModule extends React.Component {
                         </div>
                         <div className="homeworkR">
                         {WebServiceUtil.formatYMD(rowData.createTime)}
+                    
+                        {rowData.attachMents.length==0?'':<img src={rowData.attachMents[0].address} />}
+                        <img />
                         </div>
                         
                     </div>

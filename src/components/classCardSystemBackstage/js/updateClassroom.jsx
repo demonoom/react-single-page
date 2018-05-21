@@ -130,13 +130,6 @@ export default class updateClassroom extends React.Component {
 
 
     /**
-     * 开启添加教室管理的界面
-     */
-    addRing = () => {
-        $('.tableDiv').hide("fast");
-    };
-
-    /**
      * searchClassroomName搜索班级的名称
      */
     searchClassroomName() {

@@ -235,6 +235,16 @@ const notifyBack = (location, cb) => {
         cb(null, require("./components/classCardSystemBackstage/js/notify").default)
     })
 }
+const addNotify = (location, cb) => {
+    require.ensure([], require => {
+        cb(null, require("./components/classCardSystemBackstage/js/addNotify").default)
+    })
+}
+const notifyDetail = (location, cb) => {
+    require.ensure([], require => {
+        cb(null, require("./components/classCardSystemBackstage/js/notifyDetail").default)
+    })
+}
 const updateClassroom = (location, cb) => {
     require.ensure([], require => {
         cb(null, require("./components/classCardSystemBackstage/js/updateClassroom").default)
@@ -258,6 +268,27 @@ const addStudentDuty = (location, cb) => {
 const editStudentDuty = (location, cb) => {
     require.ensure([], require => {
             cb(null, require("./components/classCardSystemBackstage/js/editStudentDuty").default)
+        }
+    )
+}
+
+const currentAttendanceList = (location, cb) => {
+    require.ensure([], require => {
+            cb(null, require("./components/classCardSystem/js/homePage/currentAttendanceList").default)
+        }
+    )
+}
+
+const classHonor = (location, cb) => {
+    require.ensure([], require => {
+            cb(null, require("./components/classCardSystemBackstage/js/classHonor").default)
+        }
+    )
+}
+
+const tableItemDetil = (location, cb) => {
+    require.ensure([], require => {
+            cb(null, require("./components/classCardSystem/js/tableItemDetil").default)
         }
     )
 }
@@ -323,17 +354,29 @@ class Index extends React.Component {
                         to="/classDemeanor?ident=23836&access=23836"
                         style={{fontSize: '24px'}}>班级风采</Link></li>
                     <li><Link
+                        to="/classHonor?ident=23836&access=23836"
+                        style={{fontSize: '24px'}}>班级荣誉</Link></li>
+                    <li><Link
                         to="/moralEducation?ident=23836"
                         style={{fontSize: '24px'}}>德育评价</Link></li>
                     <li><Link
                         to="/classCardHomePage"
                         style={{fontSize: '24px'}}>班牌首页</Link></li>
                     <li><Link
-                        to="/notifyBack"
+                        to="/notifyBack?access_user=23836"
                         style={{fontSize: '24px'}}>通知后台</Link></li>
                     <li><Link
+                        to="/addNotify"
+                        style={{fontSize: '24px'}}>添加通知</Link></li>
+                    <li><Link
+                        to="/notifyDetail"
+                        style={{fontSize: '24px'}}>通知详情</Link></li>
+                    <li><Link
                         to="/studentDutyList?access_user=23836"
-                        style={{fontSize:'24px'}}>班级值日表</Link></li>
+                        style={{fontSize: '24px'}}>班级值日表</Link></li>
+                    <li><Link
+                        to="/tableItemDetil"
+                        style={{fontSize: '24px'}}>课程表内页</Link></li>
                 </ul>
             </div>
         );
@@ -387,13 +430,18 @@ ReactDOM.render(
             <Route path="definedTerm" getComponent={definedTerm}/>
             <Route path="classDemeanor" getComponent={classDemeanor}/>
             <Route path="classCardHomePage" getComponent={classCardHomePage}/>
-            <Route path="notifyBack" getComponent={notifyBack}/>
             <Route path="moralEducation" getComponent={moralEducation}/>
             <Route path="addMoralEducation" getComponent={addMoralEducation}/>
             <Route path="updateClassroom" getComponent={updateClassroom}/>
-            <Route path="studentDutyList" getComponent={studentDutyList} />
-            <Route path="addStudentDuty" getComponent={addStudentDuty} />
-            <Route path="editStudentDuty" getComponent={editStudentDuty} />
+            <Route path="notifyBack" getComponent={notifyBack}/>
+            <Route path="addNotify" getComponent={addNotify}/>
+            <Route path="notifyDetail" getComponent={notifyDetail}/>
+            <Route path="studentDutyList" getComponent={studentDutyList}/>
+            <Route path="addStudentDuty" getComponent={addStudentDuty}/>
+            <Route path="editStudentDuty" getComponent={editStudentDuty}/>
+            <Route path="currentAttendanceList" getComponent={currentAttendanceList}/>
+            <Route path="classHonor" getComponent={classHonor}/>
+            <Route path="tableItemDetil" getComponent={tableItemDetil}/>
         </Route>
     </Router>
     , document.getElementById('example'));

@@ -1,5 +1,5 @@
 import React from 'react';
-import {Picker, List, WhiteSpace, DatePicker} from 'antd-mobile';
+import { Toast, Picker, List, WhiteSpace, DatePicker } from 'antd-mobile';
 import '../css/moralEducation.less'
 
 
@@ -8,7 +8,6 @@ const now = new Date(nowTimeStamp);
 var mEducation;
 
 export default class moralEducation extends React.Component {
-
     constructor(props) {
         super(props);
         mEducation = this;
@@ -27,12 +26,12 @@ export default class moralEducation extends React.Component {
                     value: '0',
                 }
             ],
-                [
-                    {
-                        label: '请选择',
-                        value: '0',
-                    }
-                ],]
+            [
+                {
+                    label: '请选择',
+                    value: '0',
+                }
+            ],]
         };
     }
 
@@ -49,12 +48,19 @@ export default class moralEducation extends React.Component {
         document.title = '德育评价';
     }
 
-    
+
 
     /**
      * 获取班级，学期和日期
      */
     getSelectData = (v) => {
+        if (mEducation.state.sValue[0] === '0') {
+            Toast.fail('请先选择班级')
+            return
+        }
+        if (mEducation.state.sValue[1] === '0') {
+            Toast.fail("请先选择学期")
+        }
         var _this = this;
         var d = new Date(v);
         var newTime = d.getFullYear() + '-' + (d.getMonth() + 1) + '-' + d.getDate();
@@ -68,7 +74,7 @@ export default class moralEducation extends React.Component {
             onResponse: function (result) {
                 if (result.msg == '调用成功' || result.success == true) {
                     if (WebServiceUtil.isEmpty(result.response) == false) {
-                        _this.setState({moralEducationSelectData: result.response})
+                        _this.setState({ moralEducationSelectData: result.response })
                     }
                 }
             },
@@ -76,10 +82,10 @@ export default class moralEducation extends React.Component {
             }
         });
     }
-    
+
     getClassAndTerm = (v) => {
-        this.setState({sValue: v})
-       
+
+        this.setState({ sValue: v })
     }
 
     /**
@@ -148,7 +154,7 @@ export default class moralEducation extends React.Component {
             })
         }
         var arr = [cListArr, sListArr];
-        this.setState({seasons: arr})
+        this.setState({ seasons: arr })
     }
 
     /**
@@ -170,22 +176,22 @@ export default class moralEducation extends React.Component {
     render() {
         var _this = this;
         return (
-            <div id="moralEducation" style={{height: document.body.clientHeight}}>
-                <WhiteSpace size="lg"/>
+            <div id="moralEducation" style={{ height: document.body.clientHeight }}>
+                <WhiteSpace size="lg" />
                 {/*班级,学期*/}
                 <Picker
                     data={this.state.seasons}
                     cascade={false}
                     value={this.state.sValue}
                     className="gradeAndTerm"
-                    onChange={v => this.setState({sValue: v})}
+                    onChange={v => this.setState({ sValue: v })}
                     onOk={this.getClassAndTerm}
                 >
                     <List.Item arrow="horizontal"
-                               onClick={this.getSemesterList.bind(this, JSON.parse(localStorage.getItem("userIdKey")).userId)}
+                        onClick={this.getSemesterList.bind(this, JSON.parse(localStorage.getItem("userIdKey")).userId)}
                     >班级,学期</List.Item>
                 </Picker>
-                <WhiteSpace size="lg"/>
+                <WhiteSpace size="lg" />
                 {/*日期*/}
                 <DatePicker
                     mode="date"
@@ -193,13 +199,13 @@ export default class moralEducation extends React.Component {
                     extra="Optional"
                     value={this.state.date}
                     onOk={this.getSelectData}
-                    onChange={date => this.setState({date})
+                    onChange={date => this.setState({ date })
 
                     }
                 >
                     <List.Item arrow="horizontal">日期</List.Item>
                 </DatePicker>
-                <WhiteSpace size="lg"/>
+                <WhiteSpace size="lg" />
                 <div className='classSearchResult'>
                     <div className="classSearchResultInfo">
                         <div className="classHealth">
@@ -214,7 +220,7 @@ export default class moralEducation extends React.Component {
 
                 </div>
                 <div className='addBunton' onClick={this.addSchedule}>
-                    <img src={require("../../ringBindInformation/imgs/addBtn.png")}/>
+                    <img src={require("../../ringBindInformation/imgs/addBtn.png")} />
                 </div>
             </div>
         );

@@ -57,7 +57,7 @@ export default class classCardHomePage extends React.Component {
         return (
             <div id="classCardHomePage" style={{height: document.body.clientHeight}}>
                 <div className="home_content">
-                {/*班牌首页*/}
+                    {/*班牌首页*/}
                     <div className="home_right">
                         <CurrentAttendance
                             messageUtilObj={this.state.messageInfo}
