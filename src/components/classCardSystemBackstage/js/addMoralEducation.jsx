@@ -1,11 +1,13 @@
 import React from 'react';
+<<<<<<< HEAD
 
+=======
+>>>>>>> e11485a9e5491dc0fa8ff9bd07ead7a67fa0c128
 import {
     Picker,
     List,
     WhiteSpace,
     Button,
-    WingBlank,
     InputItem,
     DatePicker,
     TextareaItem,
@@ -159,6 +161,7 @@ export default class addMoralEducation extends React.Component {
     }
   
 
+<<<<<<< HEAD
 
     /**
      * 课程名称数据框动态绑定内容的方法
@@ -197,6 +200,11 @@ export default class addMoralEducation extends React.Component {
     }
 
 
+=======
+   /**
+    * 选择学期
+    */
+>>>>>>> e11485a9e5491dc0fa8ff9bd07ead7a67fa0c128
     chooseTerms = () => {
         var _this = this;
         var param = {
@@ -227,8 +235,12 @@ export default class addMoralEducation extends React.Component {
     /**
      *获取班级的ID
      */
+<<<<<<< HEAD
 
     getClazzesByUserId(id) {
+=======
+    getClazzesByUserId(id){
+>>>>>>> e11485a9e5491dc0fa8ff9bd07ead7a67fa0c128
         var _this = this;
         var param = {
             "method": 'getClazzesByUserId',
@@ -263,7 +275,11 @@ export default class addMoralEducation extends React.Component {
 
     }
 
+<<<<<<< HEAD
 
+=======
+    
+>>>>>>> e11485a9e5491dc0fa8ff9bd07ead7a67fa0c128
     render() {
         return (
             <div id="addMoralEducation" style={{height: document.body.clientHeight}}>
@@ -299,7 +315,11 @@ export default class addMoralEducation extends React.Component {
                     extra="Optional"
                     value={this.state.date}
                     onOk={this.onDatePickerChange}
+<<<<<<< HEAD
                     onChange={date => this.setState({date})}
+=======
+                    onChange={date => this.setState({ date })}
+>>>>>>> e11485a9e5491dc0fa8ff9bd07ead7a67fa0c128
                 >
                     <List.Item arrow="horizontal">选择日期<i className="redStar">*</i></List.Item>
                 </DatePicker>
@@ -320,7 +340,11 @@ export default class addMoralEducation extends React.Component {
                                     ref={el => this.autoFocusInst = el}
                                 >班级健康评分</InputItem>
                             </List>
+<<<<<<< HEAD
                         </div>
+=======
+                    </div>
+>>>>>>> e11485a9e5491dc0fa8ff9bd07ead7a67fa0c128
                 </div>
                 <div className='addCourseButton'>
                     <WhiteSpace size="lg"/>
