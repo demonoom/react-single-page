@@ -1,4 +1,3 @@
-(node) util.print is deprecated. Use console.log instead.
 #classroomManage {
   font-size: 17px;
 }
@@ -74,7 +73,7 @@
   height: 3.5rem;
   position: absolute;
   right: 2.5rem;
-  bottom: 2.5rem;
+  bottom: 0.5rem;
 }
 #classroomManage .tableDiv .addBunton img {
   width: 100%;

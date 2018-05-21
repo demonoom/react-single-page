@@ -334,7 +334,8 @@ export default class addMoralEducation extends React.Component {
                     onPickerChange={this.onTermPickerChange}
                     onOk={this.getTermKey}
                 >
-                    <List.Item arrow="horizontal" onClick={this.chooseTerms}>选择学期</List.Item>
+                    <List.Item arrow="horizontal" onClick={this.chooseWeeks}>选择学期<i
+                        className="redStar">*</i></List.Item>
                 </Picker>
                 <WhiteSpace size="lg"/>
                 {/*选择日期*/}
