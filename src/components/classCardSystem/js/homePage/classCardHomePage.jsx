@@ -35,6 +35,13 @@ export default class classCardHomePage extends React.Component {
         };
         ms = new MsgConnection();
         ms.connect(pro);
+        var locationHref = decodeURI(window.location.href);
+        var locationSearch = locationHref.substr(locationHref.indexOf("?") + 1);
+        var searchArray = locationSearch.split("&");
+        var clazzId = searchArray[0].split('=')[1];
+        var roomId = searchArray[1].split('=')[1];
+        localStorage.setItem("clazzId", clazzId);
+        localStorage.setItem("roomId", roomId);
     }
 
     componentDidMount() {
@@ -59,10 +66,10 @@ export default class classCardHomePage extends React.Component {
                 <div className="home_content">
                     {/*班牌首页*/}
                     <div className="home_right">
-                        <CurrentAttendance
+                        <Course
                             messageUtilObj={this.state.messageInfo}
                         />
-                        <Course
+                        <CurrentAttendance
                             messageUtilObj={this.state.messageInfo}
                         />
                     </div>
@@ -71,9 +78,11 @@ export default class classCardHomePage extends React.Component {
                         <MoralEducationScore/>
                     </div>
                     <div className="home_center">
-                        <Notify/>
-                        <Application/>
                         <ClassDemeanor/>
+                        <div>
+                            <Application/>
+                            <Notify/>
+                        </div>
                     </div>
                 </div>
             </div>

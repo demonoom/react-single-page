@@ -1,137 +1,112 @@
 #boxBracelet .am-list-view-scrollview-content {
-    height: 100%;
+  height: 100%;
 }
-
 #boxBracelet .am-pull-to-refresh-indicator {
-    font-size: 1rem !important;
-    color: red !important;
+  font-size: 1rem !important;
+  color: red !important;
 }
-
 #boxBracelet .tableDiv {
-    position: relative;
+  position: relative;
 }
-
 #boxBracelet .tableDiv .am-card-body {
-    min-height: 1.5rem !important;
-    color: #888 !important;
+  min-height: 1.5rem !important;
+  color: #888 !important;
 }
-
 #boxBracelet .tableDiv .am-card-body .am-list-item .am-input-label {
-    color: #3c3c3c;
+  color: #3c3c3c;
 }
-
 #boxBracelet .tableDiv .am-card-body .am-list-item .am-input-control input {
-    color: #3c3c3c;
+  color: #3c3c3c;
 }
-
 #boxBracelet .tableDiv .am-card-footer {
-    margin-bottom: 1rem;
+  margin-bottom: 1rem;
 }
-
 #boxBracelet .tableDiv .noomCardUnbind {
-    background: #f55d45 !important;
-    color: #fff !important;
-    padding: 0.3rem 1.3rem;
+  background: #f55d45 !important;
+  color: #fff !important;
+  padding: 0.3rem 1.3rem;
 }
-
 #boxBracelet .tableDiv .noomCardHeader .am-card-header-content {
-    font-size: 1rem;
-    color: #3c3c3c;
+  font-size: 1rem;
+  color: #3c3c3c;
 }
-
 #boxBracelet .tableDiv .addBunton {
-    width: 3.5rem;
-    height: 3.5rem;
-    position: absolute;
-    right: 3rem;
-    bottom: 5rem;
+  width: 3.5rem;
+  height: 3.5rem;
+  position: absolute;
+  right: 3rem;
+  bottom: 5rem;
 }
-
 #boxBracelet .tableDiv .addBunton img {
-    width: 100%;
+  width: 100%;
 }
-
 #boxBracelet .tableDiv .liName {
-    font-size: 30px;
+  font-size: 30px;
 }
-
 #boxBracelet .addModel {
-    background-color: #fff;
-    position: relative;
+  background-color: #fff;
+  position: relative;
 }
-
 #boxBracelet .addModel .close {
-    font-size: 1.5em;
-    background: #fff;
-    color: #e46a51;
+  font-size: 1.5em;
+  background: #fff;
+  color: #e46a51;
 }
-
 #boxBracelet .addModel .am-list .am-list-body::before {
-    display: none !important;
+  display: none !important;
 }
-
 #boxBracelet .addModel .am-list .am-list-body::after {
-    display: none !important;
+  display: none !important;
 }
-
 #boxBracelet .addModel .am-list .am-list-body .am-input-label-5 {
-    width: 50px !important;
+  width: 50px !important;
 }
-
 #boxBracelet .addModel .chooseResult {
-    height: 30rem !important;
-    overflow: auto;
+  height: 30rem !important;
+  overflow: auto;
 }
-
 #boxBracelet .addModel .macAddress {
-    position: relative;
+  position: relative;
 }
-
 #boxBracelet .addModel .macAddress .scanIcon {
-    width: 30px;
-    height: 30px;
-    position: absolute;
-    right: 10px;
-    top: 50%;
-    transform: translateY(-50%);
+  width: 30px;
+  height: 30px;
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
 }
-
 #boxBracelet .addModel .stName {
-    position: relative;
+  position: relative;
 }
-
 #boxBracelet .addModel .stName .stIcon {
-    position: absolute;
-    right: 13px;
-    top: 50%;
-    transform: translateY(-50%);
+  position: absolute;
+  right: 13px;
+  top: 50%;
+  transform: translateY(-50%);
 }
-
 #boxBracelet .addModel .binding {
-    width: 70%;
-    position: absolute;
-    bottom: 20px;
-    left: 50%;
-    transform: translateX(-50%);
+  width: 70%;
+  position: absolute;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
 }
-
 #boxBracelet .addModel .bottomBox {
-    display: flex;
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    width: 100%;
+  display: flex;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
 }
-
 #boxBracelet .addModel .bottomBox span {
-    flex: 1;
-    text-align: center;
-    font-size: 1rem;
-    padding: 10px;
-    display: block;
+  flex: 1;
+  text-align: center;
+  font-size: 1rem;
+  padding: 10px;
+  display: block;
 }
-
 #boxBracelet .addModel .bottomBox .bind {
-    background: #e46a51;
-    color: #fff;
+  background: #e46a51;
+  color: #fff;
 }

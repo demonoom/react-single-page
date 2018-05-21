@@ -75,3 +75,7 @@
   width: 8rem ;
   text-align: right;
 }
+#homeworkModule .homeworkR img {
+  max-width: 7.78rem;
+  margin-top: .4rem;
+}

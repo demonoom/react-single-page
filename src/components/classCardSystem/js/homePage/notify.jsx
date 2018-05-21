@@ -31,7 +31,7 @@ export default class notify extends React.Component {
     }
 
     componentDidMount() {
-        var classId = "819";
+        var classId = localStorage.getItem("clazzId");
         var initPageNo = 1;
         this.getClassBrandNoticeListByClassId(classId,initPageNo);
     }
@@ -57,9 +57,9 @@ export default class notify extends React.Component {
                             var notices = result.response;
                             notices.forEach(function (notice) {
                                 if (notice != null && notice != undefined) {
-                                    var noticeTag=<div>
+                                    var noticeTag=<li>
                                         <span onClick={_this.showContentModal.bind(_this,notice)}>{notice.noticeTitle}</span>
-                                    </div>
+                                    </li>
                                     noticeList.push(noticeTag);
                                 }
                             })
@@ -102,12 +102,12 @@ export default class notify extends React.Component {
             noticeContent = this.state.notice.noticeContent;
         }
         return (
-            <div id="notify">
-                <div>
+            <div id="notify" className="home_card notify_height">
+                <h3 className="home_title">
                     <span>通知</span>
                     <span>历史通知</span>
-                </div>
-                <div>
+                </h3>
+                <div className="notify_cont">
                     {this.state.noticeList}
                 </div>
                 <Modal

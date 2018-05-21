@@ -28,7 +28,6 @@ export default class notifyBack extends React.Component {
     }
 
     componentWillMount() {
-        // debugger
         // var locationHref = window.location.href;
         // var locationSearch = locationHref.substr(locationHref.indexOf("?") + 1);
         // var ident = locationSearch.split('=')[1];
@@ -270,7 +269,9 @@ export default class notifyBack extends React.Component {
                     />
 
                 </List>
-                <div className="addButton" onClick={this.toAddNotify}>+</div>
+                <div className="addButton" onClick={this.toAddNotify}>
+                    <img src={require("../../ringBindInformation/imgs/addBtn.png")} />
+                </div>
             </div>
         );
     }
