@@ -35,6 +35,8 @@ export default class classCardHomePage extends React.Component {
         };
         ms = new MsgConnection();
         ms.connect(pro);
+        var clazzId = "819";
+        localStorage.setItem("clazzId",clazzId);
     }
 
     componentDidMount() {

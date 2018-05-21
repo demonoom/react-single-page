@@ -24,7 +24,7 @@ export default class currentAttendanceList extends React.Component {
     }
 
     componentDidMount() {
-        var cid = 3;
+        var cid = localStorage.getItem("clazzId");
         this.getStudentByCourseTableItem(cid);
         this.openTimeInterVal(cid);
     }

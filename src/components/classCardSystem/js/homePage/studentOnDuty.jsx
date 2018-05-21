@@ -15,7 +15,7 @@ export default class studentOnDuty extends React.Component {
     }
 
     componentWillMount() {
-        var clazzId = '819';
+        var clazzId = localStorage.getItem("clazzId");
         this.getClassBrandStudentDutyByToday(clazzId);
     }
 

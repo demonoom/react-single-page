@@ -12,7 +12,7 @@ export default class classDemeanor extends React.Component {
     }
 
     componentWillMount() {
-        var clazzId = '819';
+        var clazzId = localStorage.getItem("clazzId");
         this.getClassDemeanorInfo(clazzId);
         this.getClassRewardInfo(clazzId);
     }
