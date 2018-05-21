@@ -1,5 +1,6 @@
 import React from 'react';
 import {Picker, List, WhiteSpace,Button,Toast, Checkbox} from 'antd-mobile';
+import '../css/addStudentDuty.less'
 const CheckboxItem = Checkbox.CheckboxItem;
 
 const seasons = [
@@ -267,7 +268,7 @@ export default class editStudentDuty extends React.Component {
         var _this = this;
 
         return (
-            <div id="curriculumSchedule" style={{height: document.body.clientHeight}}>
+            <div id="addStudentDuty" style={{height: document.body.clientHeight}}>
                 <WhiteSpace size="lg"/>
                 <Picker
                     data={seasons}
@@ -276,7 +277,7 @@ export default class editStudentDuty extends React.Component {
                     value={this.state.sValue}
                     onOk={v => this.onClassChange(v)}
                 >
-                    <List.Item arrow="horizontal">班级</List.Item>
+                    <List.Item arrow="horizontal">选择班级<i className="redStar">*</i></List.Item>
                 </Picker>
 
                 <WhiteSpace size="lg"/>
@@ -287,7 +288,7 @@ export default class editStudentDuty extends React.Component {
                     value={this.state.termValue}
                     onOk={v => this.onTermChange(v)}
                 >
-                    <List.Item arrow="horizontal">选择学期</List.Item>
+                    <List.Item arrow="horizontal">选择学期<i className="redStar">*</i></List.Item>
                 </Picker>
 
                 <WhiteSpace size="lg"/>
@@ -297,14 +298,18 @@ export default class editStudentDuty extends React.Component {
                     value={this.state.asyncValue}
                     onOk={v => this.onPickerChange(v)}
                 >
-                    <List.Item arrow="horizontal" onClick={this.onClick}>选择星期</List.Item>
+                    <List.Item arrow="horizontal" onClick={this.onClick}>选择星期<i className="redStar">*</i></List.Item>
                 </Picker>
 
                 <WhiteSpace size="lg"/>
-                <List renderHeader={() => 'CheckboxItem demo'}>
-                    {_this.state.studentCheckboxItemList}
-                </List>
-                <Button type="primary" onClick={this.updateClassBrandStudentDuty}>提交</Button>
+                <div className="bg_white">
+                    <List renderHeader={() => 'CheckboxItem demo'}>
+                        {_this.state.studentCheckboxItemList}
+                    </List>
+                </div>
+                <div className="submitBtn">
+                    <Button type="primary" onClick={this.updateClassBrandStudentDuty}>提交</Button>
+                </div>
             </div>
         );
     }

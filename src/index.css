@@ -76,7 +76,7 @@ hr {
   font-size: 14px;
 }
 .color_red {
-  color: #F46A55;
+  color: #f46a55;
 }
 .line_item {
   height: 8px;
@@ -217,9 +217,14 @@ hr {
 }
 .add_title {
   height: 44px;
-  line-height: 3.5;
+  line-height: 44px;
 }
 /*班牌屏幕适配*/
+@media only screen and (min-width: 800px) and (max-width: 1023px) {
+  html {
+    font-size: 15px !important;
+  }
+}
 @media only screen and (min-width: 1024px) and (max-width: 1499px) {
   html {
     font-size: 20px !important;

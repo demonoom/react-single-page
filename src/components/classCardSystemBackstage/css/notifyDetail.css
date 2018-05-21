@@ -1,0 +1,12 @@
+#notifyDetail .card {
+  width: 300px;
+  margin: 30px auto;
+  padding-left: 10px;
+  position: relative;
+}
+#notifyDetail .createDate {
+  position: absolute;
+  top: -35px;
+  text-align: center;
+  width: 100%;
+}
