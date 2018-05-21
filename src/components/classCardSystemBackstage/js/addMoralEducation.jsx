@@ -320,11 +320,8 @@ export default class addMoralEducation extends React.Component {
                     onPickerChange={this.onTermPickerChange}
                     onOk={this.getTermKey}
                 >
-<<<<<<< HEAD
-                    <List.Item arrow="horizontal" onClick={this.chooseTerms}>选择学期</List.Item>
-=======
                     <List.Item arrow="horizontal" onClick={this.chooseWeeks}>选择学期<i className="redStar">*</i></List.Item>
->>>>>>> ccf9451ae4e480032e660acdc453a67a68e9ef30
+
                 </Picker>
                 <WhiteSpace size="lg" />
                 {/*选择日期*/}
@@ -345,13 +342,9 @@ export default class addMoralEducation extends React.Component {
                                 <InputItem
                                     className="politeValue"
                                     clear
-<<<<<<< HEAD
-                                    placeholder="请输入班级礼貌评分"
-=======
                                     placeholder="请输入分数"
                                     defaultValue=""
                                     // value="123"
->>>>>>> ccf9451ae4e480032e660acdc453a67a68e9ef30
                                     ref={el => this.autoFocusInst = el}
                                 >班级礼貌评分</InputItem>
                                 <InputItem
