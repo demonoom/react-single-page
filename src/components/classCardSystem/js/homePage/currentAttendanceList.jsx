@@ -154,7 +154,7 @@ export default class currentAttendanceList extends React.Component {
 
     render() {
         return (
-            <div id="currentAttendanceList">
+            <div id="currentAttendanceList" className="home_content">
                 <div className="navBar">
                     <span onClick={this.turnToHomePage}>首页</span>
                     <span className="icon"> &gt; </span>
