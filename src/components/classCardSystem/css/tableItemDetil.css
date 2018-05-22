@@ -1,4 +1,14 @@
+#tableItemDetil {
+  background-color: #323336;
+  color: #fff;
+  overflow-y: auto;
+}
 #tableItemDetil .tableItem {
+  border-collapse: collapse;
+  text-align: center;
   width: 100%;
-  border: 1px;
+}
+#tableItemDetil .tableItem td {
+  border: 2px #55575d solid;
+  padding: 18px 0;
 }
