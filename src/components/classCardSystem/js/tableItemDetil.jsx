@@ -47,7 +47,7 @@ export default class tableItemDetil extends React.Component {
             data[k].forEach(function (v, i) {
                 if (WebServiceUtil.isEmpty(v.courseName) == false) {
                     var td = <td>
-                        <span style={{display: 'block'}}>{v.courseName}</span>
+                        <span className="class_name" style={{display: 'block'}}>{v.courseName}</span>
                         <span style={{display: 'block'}}>{v.classRoom.name}</span>
                         <span style={{display: 'block'}}>{"(" + v.openTime + '-' + v.closeTime + ")"}</span>
                     </td>
@@ -64,24 +64,26 @@ export default class tableItemDetil extends React.Component {
 
     render() {
         return (
-            <div id="tableItemDetil" style={{height: document.body.clientHeight}}>
-                <table className='tableItem'>
-                    <thead>
-                    <tr>
-                        <td>节次</td>
-                        <td>星期一</td>
-                        <td>星期二</td>
-                        <td>星期三</td>
-                        <td>星期四</td>
-                        <td>星期五</td>
-                        <td>星期六</td>
-                        <td>星期日</td>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    {this.state.tbody}
-                    </tbody>
-                </table>
+            <div id="tableItemDetil" className="home_content" style={{height: document.body.clientHeight}}>
+                <div className="black_bg">
+                    <table className='tableItem'>
+                        <thead>
+                        <tr>
+                            <td>节次</td>
+                            <td>星期一</td>
+                            <td>星期二</td>
+                            <td>星期三</td>
+                            <td>星期四</td>
+                            <td>星期五</td>
+                            <td>星期六</td>
+                            <td>星期日</td>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {this.state.tbody}
+                        </tbody>
+                    </table>
+                </div>
             </div>
         )
     }

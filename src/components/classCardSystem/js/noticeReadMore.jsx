@@ -122,7 +122,7 @@ export default class noticeReadMore extends React.Component {
             )
         };
         return (
-            <div id="noticeReadMore" style={{height: document.body.clientHeight}}>
+            <div id="noticeReadMore" className="home_content" style={{height: document.body.clientHeight}}>
                 <ListView
                     ref={el => this.lv = el}
                     dataSource={this.state.dataSource}    //数据类型是 ListViewDataSource

@@ -105,15 +105,17 @@ export default class currentAttendanceList extends React.Component {
                 var colUid = studentOfAll.colUid;
                 var isExist = _this.checkIsExistCurrentStudent(currentStudents, colUid);
                 var checkedTip = "";
+                var classFlag ="imgDiv";
                 if (isExist === false) {
                     checkedTip = "未签到";
+                    classFlag = "imgDiv no";
                 }
                 var studentAvatar = studentOfAll.avatar;
                 if (studentAvatar == null || studentAvatar == undefined || studentAvatar == "") {
                     studentAvatar = "../../img/maaee_face.png";
                 }
                 var studentHeaderTag = <div className="photoItem">
-                    <img src={studentAvatar} />
+                    <div className={classFlag}><img src={studentAvatar}/></div>
                     <div className="signIcon">{checkedTip}</div>
                     <div className="studentName">
                         {studentOfAll.userName}
@@ -155,21 +157,23 @@ export default class currentAttendanceList extends React.Component {
     render() {
         return (
             <div id="currentAttendanceList" className="home_content">
-                <div className="navBar">
-                    <span onClick={this.turnToHomePage}>首页</span>
-                    <span className="icon"> &gt; </span>
-                    <span>考勤详情</span>
-                    <div className="right">
-                        <span style={{marginLeft:'20px'}}>
-                            <span className="item">应到：<span className="blue">{this.state.peopleNum}</span></span>
-                            <span className="item">实到：<span className="blue">{this.state.currentPeopleNum}</span></span>
-                            <span className="noSign"><span className="white btn">未签到</span><span className="text">{parseInt(this.state.peopleNum) - parseInt(this.state.currentPeopleNum)}</span></span>
-                        </span>
+                <div className="inner_bg">
+                    <div className="navBar">
+                        <span onClick={this.turnToHomePage}>首页</span>
+                        <span className="icon"> &gt; </span>
+                        <span>考勤详情</span>
+                        <div className="right">
+                            <span style={{marginLeft:'20px'}}>
+                                <span className="item">应到：<span className="blue">{this.state.peopleNum}</span></span>
+                                <span className="item">实到：<span className="blue">{this.state.currentPeopleNum}</span></span>
+                                <span className="noSign"><span className="white btn">未签到</span><span className="text">{parseInt(this.state.peopleNum) - parseInt(this.state.currentPeopleNum)}</span></span>
+                            </span>
+                        </div>
                     </div>
-                </div>
 
-                <div className="content" style={{display:'inline-flex'}}>
-                    {this.state.studentHeaderTagList}
+                    <div className="content">
+                        {this.state.studentHeaderTagList}
+                    </div>
                 </div>
             </div>
         );
