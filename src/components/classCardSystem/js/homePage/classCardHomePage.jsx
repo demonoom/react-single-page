@@ -35,8 +35,13 @@ export default class classCardHomePage extends React.Component {
         };
         ms = new MsgConnection();
         ms.connect(pro);
-        var clazzId = "819";
-        localStorage.setItem("clazzId",clazzId);
+        var locationHref = decodeURI(window.location.href);
+        var locationSearch = locationHref.substr(locationHref.indexOf("?") + 1);
+        var searchArray = locationSearch.split("&");
+        var clazzId = searchArray[0].split('=')[1];
+        var roomId = searchArray[1].split('=')[1];
+        localStorage.setItem("clazzId", clazzId);
+        localStorage.setItem("roomId", roomId);
     }
 
     componentDidMount() {
@@ -77,7 +82,6 @@ export default class classCardHomePage extends React.Component {
                         <div>
                             <Application/>
                             <Notify/>
-
                         </div>
                     </div>
                 </div>

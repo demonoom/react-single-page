@@ -28,7 +28,7 @@ export default class course extends React.Component {
     }
 
     componentDidMount() {
-        this.viewCourseTableItem()
+        // this.viewCourseTableItem()
     }
 
     /**
@@ -39,8 +39,8 @@ export default class course extends React.Component {
         var _this = this;
         var param = {
             "method": 'viewCourseTableItem',
-            // "id": data.classTableId,
-            "id": 3,
+            "id": data.classTableId,
+            // "id": 3,
         };
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
             onResponse: function (result) {
@@ -54,11 +54,23 @@ export default class course extends React.Component {
         });
     }
 
+    turnToDetil() {
+        var url = WebServiceUtil.mobileServiceURL + "tableItemDetil";
+        var data = {
+            method: 'openNewPage',
+            url: url
+        };
+
+        Bridge.callHandler(data, null, function (error) {
+            window.location.href = url;
+        });
+    }
+
     render() {
         var classData = this.state.data;
         return (
             <div id="course" className="home_card course_height">
-                <h3 className="home_title">今日课程</h3>
+                <h3 className="home_title" onClick={this.turnToDetil}>今日课程</h3>
                 {WebServiceUtil.isEmpty(classData) ?
                     <div className='classTableA'>暂未开课</div> :
                     <div className='classTableB'>

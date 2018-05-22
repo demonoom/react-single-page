@@ -1,9 +1,9 @@
 import React from "react";
-import {ListView,Card} from "antd-mobile";
+import {ListView, Card} from "antd-mobile";
 import "../css/noticeReadMore.less";
 
-export default class noticeReadMore extends React.Component{
-    constructor(props){
+export default class noticeReadMore extends React.Component {
+    constructor(props) {
         super(props);
         /**
          * dataSource是长列表的数据源
@@ -17,33 +17,29 @@ export default class noticeReadMore extends React.Component{
             dataSource: dataSource.cloneWithRows(this.initData),
             clientHeight: document.body.clientHeight,
             listViewDisplay: false,
-            defaultPageNo:1
+            defaultPageNo: 1
         }
     }
 
-    componentDidMount(){
-        var locationHref = window.location.href;
-        var locationSearch = locationHref.substr(locationHref.indexOf("?") + 1);
-        var classroomId = locationSearch.split("&")[0].split("=")[1];
-        this.setState({"classroomId":classroomId})
-        this.getNoticeReadMore(classroomId);
+    componentDidMount() {
+        this.getNoticeReadMore();
     }
 
     /**
      * getNoticeReadMore获取出勤的方法x
      */
-    getNoticeReadMore(classroomId){
+    getNoticeReadMore() {
         var _this = this;
         _this.state.listViewDisplay = true;
         const dataBlob = {};
         var pageNo = _this.state.defaultPageNo;
         var param = {
-            "method": 'getClassBrandNoticeListByClassroomId',
-            "classroomId": classroomId,
+            "method": 'getClassBrandNoticeListByClassId',
+            "cid": localStorage.getItem('clazzId'),
             "pageNo": pageNo
         }
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
-            onResponse:function(result){
+            onResponse: function (result) {
                 if (result.success == true && result.msg == "调用成功") {
                     if (result.response.length === 0) {
                         _this.setState({"isLoadingLeft": false})
@@ -73,27 +69,28 @@ export default class noticeReadMore extends React.Component{
                     }
                 }
             },
-            onError:function(error){
+            onError: function (error) {
 
             }
-            
+
         })
     }
 
     /**
      * getTimeFormat时间戳转换格式
      */
-    getTimeFormat(t){
-        var   _time=new Date(t);
+    getTimeFormat(t) {
+        var _time = new Date(t);
         // var   year=_time.getFullYear();//年
-        var   month=(_time.getMonth()+1) < 10 ? ("0"+(_time.getMonth()+1)) : (_time.getMonth()+1);//月
-        var   date=_time.getDate() < 10 ? "0"+_time.getDate(): _time.getDate();//日
-        var   hour=_time.getHours() < 10 ? "0" + _time.getHours() : _time.getHours();//时
-        var   minute=_time.getMinutes() < 10 ? "0" + _time.getMinutes() : _time.getMinutes();//分
+        var month = (_time.getMonth() + 1) < 10 ? ("0" + (_time.getMonth() + 1)) : (_time.getMonth() + 1);//月
+        var date = _time.getDate() < 10 ? "0" + _time.getDate() : _time.getDate();//日
+        var hour = _time.getHours() < 10 ? "0" + _time.getHours() : _time.getHours();//时
+        var minute = _time.getMinutes() < 10 ? "0" + _time.getMinutes() : _time.getMinutes();//分
         // var   second=_time.getSeconds();//秒
-        return  month+"/"+date+" "+hour+":"+minute;
+        return month + "/" + date + " " + hour + ":" + minute;
     }
-     /**
+
+    /**
      *  ListView数据全部渲染完毕的回调
      */
     onEndReached = (event) => {
@@ -103,14 +100,14 @@ export default class noticeReadMore extends React.Component{
         }
         currentPageNo += 1;
         this.setState({isLoadingLeft: true, defaultPageNo: currentPageNo});
-        this.getNoticeReadMore(this.state.classroomId);
+        this.getNoticeReadMore();
         this.setState({
             dataSource: this.state.dataSource.cloneWithRows(this.initData),
             isLoadingLeft: true,
         });
     };
 
-    render(){
+    render() {
         const row = (rowData, sectionID, rowID) => {
             return (
                 <div>

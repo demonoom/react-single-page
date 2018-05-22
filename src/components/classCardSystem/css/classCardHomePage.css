@@ -1,3 +1,4 @@
+(node) util.print is deprecated. Use console.log instead.
 #classCardHomePage .home_content {
   width: calc(100% - 1.66rem);
   padding: 0.83rem;
@@ -105,4 +106,15 @@
 #classCardHomePage .blue_big {
   font-size: 2.22rem;
   color: #5091fe;
+}
+#classCardHomePage .class_mien1 {
+  padding: 0.83rem 0 0 0.83rem;
+  overflow: hidden;
+}
+#classCardHomePage .class_mien1 .slider-list {
+  height: 4.17rem;
+}
+#classCardHomePage .class_mien2 {
+  margin: 0.83rem;
+  overflow: hidden;
 }
