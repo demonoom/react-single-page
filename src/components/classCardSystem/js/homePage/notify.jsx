@@ -20,8 +20,8 @@ export default class notify extends React.Component {
         super(props);
         demeanor = this;
         this.state = {
-            noticeList:[],
-            contentModalVisible:false
+            noticeList: [],
+            contentModalVisible: false
         };
         this.getClassBrandNoticeListByClassId = this.getClassBrandNoticeListByClassId.bind(this);
     }
@@ -33,19 +33,19 @@ export default class notify extends React.Component {
     componentDidMount() {
         var classId = localStorage.getItem("clazzId");
         var initPageNo = 1;
-        this.getClassBrandNoticeListByClassId(classId,initPageNo);
+        this.getClassBrandNoticeListByClassId(classId, initPageNo);
     }
 
     /**
      * 班牌根据教室id查询通知列表
      * @param clazzId
      */
-    getClassBrandNoticeListByClassId(classId,pageNo) {
+    getClassBrandNoticeListByClassId(classId, pageNo) {
         var _this = this;
         var param = {
             "method": 'getClassBrandNoticeListByClassId',
             "cid": classId,
-            "pageNo":pageNo
+            "pageNo": pageNo
         };
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
             onResponse: function (result) {
@@ -57,8 +57,9 @@ export default class notify extends React.Component {
                             var notices = result.response;
                             notices.forEach(function (notice) {
                                 if (notice != null && notice != undefined) {
-                                    var noticeTag=<li>
-                                        <span onClick={_this.showContentModal.bind(_this,notice)}>{notice.noticeTitle}</span>
+                                    var noticeTag = <li>
+                                        <span
+                                            onClick={_this.showContentModal.bind(_this, notice)}>{notice.noticeTitle}</span>
                                     </li>
                                     noticeList.push(noticeTag);
                                 }
@@ -90,20 +91,32 @@ export default class notify extends React.Component {
         }
     }
 
-    showContentModal=(notice)=>{
-        this.setState({contentModalVisible:true,notice});
+    showContentModal = (notice) => {
+        this.setState({contentModalVisible: true, notice});
+    }
+
+    notifySeeMore() {
+        var currentAttendanceListUrl = WebServiceUtil.mobileServiceURL + "noticeReadMore";
+        var data = {
+            method: 'openNewPage',
+            url: currentAttendanceListUrl
+        };
+
+        Bridge.callHandler(data, null, function (error) {
+            window.location.href = currentAttendanceListUrl;
+        });
     }
 
     render() {
         var noticeTitle = null;
         var noticeContent = null;
-        if(this.state.notice!=null && this.state.notice!=undefined){
+        if (this.state.notice != null && this.state.notice != undefined) {
             noticeTitle = this.state.notice.noticeTitle;
             noticeContent = this.state.notice.noticeContent;
         }
         return (
             <div id="notify" className="home_card notify_height">
-                <h3 className="home_title">
+                <h3 className="home_title" onClick={this.notifySeeMore}>
                     <span>通知</span>
                     <span>历史通知</span>
                 </h3>
@@ -116,10 +129,15 @@ export default class notify extends React.Component {
                     maskClosable={false}
                     onClose={this.onClose('modal1')}
                     title={noticeTitle}
-                    footer={[{ text: 'Ok', onPress: () => { console.log('ok'); this.onClose('modal1')(); } }]}
-                    wrapProps={{ onTouchStart: this.onWrapTouchStart }}
+                    footer={[{
+                        text: 'Ok', onPress: () => {
+                            console.log('ok');
+                            this.onClose('modal1')();
+                        }
+                    }]}
+                    wrapProps={{onTouchStart: this.onWrapTouchStart}}
                 >
-                    <div style={{ height: 200, overflow: 'scroll' }}>
+                    <div style={{height: 200, overflow: 'scroll'}}>
                         {noticeContent}
                     </div>
                 </Modal>
