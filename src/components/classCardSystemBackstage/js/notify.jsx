@@ -224,7 +224,7 @@ export default class notifyBack extends React.Component {
         var _this = this;
         const row = (item, sectionID, rowID) => {
             return (
-                <div style={{paddingLeft: 90 + 'px', position: 'relative'}}>
+                <div className="listCont">
                     <Item onClick={this.toNotifyDetail.bind(this, item.id)} extra={item.createTime} align="top"
                           multipleLine>
                         {item.noticeTitle} <Brief>{item.noticeContent}</Brief>
