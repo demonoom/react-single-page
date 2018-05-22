@@ -135,7 +135,7 @@ export default class notify extends React.Component {
                     footer={false}
                     wrapProps={{onTouchStart: this.onWrapTouchStart}}
                 >
-                    <div className="" style={{height: '100%', padding:'0 2.22rem 0 2.22rem' , overflow: 'scroll'}}>
+                    <div className="" style={{height: '100%', padding:'0 2.22rem 0 2.22rem' , 'overflow-x': 'hidden', 'overflow-y':'auto'}}>
                         {noticeContent}
                     </div>
                 </Modal>
