@@ -104,6 +104,7 @@ export default class currentAttendance extends React.Component {
     turnToAttendanceList() {
         if (!this.state.openClass) {
             Toast.fail('暂未开课')
+            return
         }
 
         var currentAttendanceListUrl = WebServiceUtil.mobileServiceURL + "currentAttendanceList?clazzId=" + this.state.clazzId;
