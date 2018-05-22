@@ -1,5 +1,5 @@
 import React from "react";
-import {ListView, Card} from "antd-mobile";
+import {ListView, Accordion, List} from "antd-mobile";
 import "../css/noticeReadMore.less";
 
 export default class noticeReadMore extends React.Component {
@@ -40,6 +40,7 @@ export default class noticeReadMore extends React.Component {
         }
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
             onResponse: function (result) {
+                console.log(result)
                 if (result.success == true && result.msg == "调用成功") {
                     if (result.response.length === 0) {
                         _this.setState({"isLoadingLeft": false})
@@ -111,17 +112,29 @@ export default class noticeReadMore extends React.Component {
         history.back()
     }
 
+    onClick = (e) => {
+        $('.ulBox li').find('.noticeContent').css({
+            display: 'none'
+        })
+
+
+        $(e.target).next().css({
+            display: 'block'
+        })
+    }
+
     render() {
         const row = (rowData, sectionID, rowID) => {
             return (
                 <div>
-                    <Card full>
-                        <Card.Header
-                            title={rowData.noticeTitle}
-                            extra={
-                                <span>{this.getTimeFormat(rowData.createTime)}</span>}
-                        />
-                    </Card>
+                    <ul className="ulBox">
+                        <li onClick={this.onClick}>
+                            <h1>{rowData.noticeTitle}</h1>
+                            <div className="noticeContent" style={{display: 'none'}}>
+                                {rowData.noticeContent}<span>{this.getTimeFormat(rowData.createTime)}</span>
+                            </div>
+                        </li>
+                    </ul>
                 </div>
             )
         };

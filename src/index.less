@@ -212,7 +212,60 @@ hr {
 .float_ri{
   float: right;
 }
+.addBunton{
+  width: 3rem;
+  height: 3rem;
+  position: absolute;
+  right: 2.5rem;
+  bottom: 2.5rem;
+  background-color: #F56A55;
+  -webkit-border-radius: 50%;
+  -moz-border-radius: 50%;
+  border-radius: 50%;
+  color: #fff;
+  line-height: 2.8rem;
+  text-align: center;
+  img {
+    width: 100%;
+  }
+}
+.submitBtn{
+  padding: 0 15px;
+  position: absolute;
+  bottom: 15px;
+  width: 100%;
+  box-sizing: border-box;
+  .am-button-primary {
+    background-color: #e94f4f;
+    border: 1PX solid #e94f4f;
+    &::before{
+      border: 1PX solid #e94f4f !important;
+    }
+  }
+}
+/*班牌内页返回首页*/
+.navBar{
+  font-size: .89rem;
+  color: #2a3350;
+  font-weight: bold;
+  height: 2.22rem;
+  line-height: 2.22rem;
+  border-bottom: 2px #f4f4f4 solid;
+  padding: 0 .83rem;
+  .icon{
+    padding: 0 .56rem;
+  }
 
+}
+.home_content{
+  width: calc(~"100%" - 1.66rem);
+  padding: 0.83rem;
+  height: calc(~"100%" - 1.66rem);
+  clear: both;
+  background: url("components/classCardSystem/imgs/bg_web.jpg") no-repeat;
+  background-size: 100% 100%;
+  position: relative;
+}
 /*班牌屏幕适配*/
 @media only screen and (min-width: 768px) and (max-width: 799px){
   html{
@@ -238,4 +291,5 @@ hr {
   html{
     font-size: 36px !important;
   }
+
 }

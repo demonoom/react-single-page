@@ -79,7 +79,10 @@ export default class course extends React.Component {
         var classData = this.state.data;
         return (
             <div id="course" className="home_card course_height">
-                <h3 className="home_title" onClick={this.turnToDetil}>今日课程</h3>
+                <h3 className="home_title" onClick={this.turnToDetil}>
+                    <span>今日课程</span>
+                    <span className="home_titleMore">课程表<i className="titleMore"></i></span>
+                </h3>
                 {WebServiceUtil.isEmpty(classData) ?
                     <div className='classTableA'>暂未开课</div> :
                     <div className='classTableB'>

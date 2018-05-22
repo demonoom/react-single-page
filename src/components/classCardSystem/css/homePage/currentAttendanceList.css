@@ -1,0 +1,86 @@
+(node) util.print is deprecated. Use console.log instead.
+#currentAttendanceList {
+  background-color: #fff;
+}
+#currentAttendanceList .navBar {
+  position: relative;
+}
+#currentAttendanceList .navBar .right {
+  top: 50%;
+  margin-top: -1.1rem;
+  position: absolute;
+  right: 0;
+  font-weight: normal;
+  font-size: .67rem;
+}
+#currentAttendanceList .navBar .right .blue {
+  color: #5091fe;
+  font-size: .72rem;
+  padding: 0 .33rem;
+}
+#currentAttendanceList .navBar .right .white {
+  color: #fff;
+}
+#currentAttendanceList .navBar .right .item {
+  padding-right: 1.67rem;
+}
+#currentAttendanceList .navBar .right .btn {
+  padding: .2rem .6rem;
+  font-size: .56rem;
+  -webkit-border-radius: .6rem;
+  -moz-border-radius: .6rem;
+  border-radius: .6rem;
+  margin-right: .56rem;
+}
+#currentAttendanceList .navBar .right .noSign {
+  margin-right: .56rem;
+  font-size: 1rem;
+}
+#currentAttendanceList .navBar .right .noSign .btn {
+  background-color: #f13010;
+}
+#currentAttendanceList .navBar .right .noSign .text {
+  vertical-align: bottom;
+}
+#currentAttendanceList .content {
+  padding: .83rem 0;
+}
+#currentAttendanceList .photoItem {
+  width: 4.61rem;
+  margin-right: .39rem;
+  margin-bottom: .22rem;
+  text-align: center;
+  padding: .67rem 0 .28rem;
+  position: relative;
+}
+#currentAttendanceList .photoItem.no img {
+  -webkit-box-shadow: 0 0 0.44rem 0.11rem rgba(255, 103, 103, 0.2);
+  -moz-box-shadow: 0 0 0.44rem 0.11rem rgba(255, 103, 103, 0.2);
+  box-shadow: 0 0 0.44rem 0.11rem rgba(255, 103, 103, 0.2);
+}
+#currentAttendanceList .photoItem img {
+  width: 3.33rem;
+  height: 3.33rem;
+  -webkit-border-radius: 50%;
+  -moz-border-radius: 50%;
+  border-radius: 50%;
+  margin: .67rem auto .56rem;
+  border: .66rem #fff solid;
+}
+#currentAttendanceList .photoItem .studentName {
+  font-size: .72rem;
+  color: #565c72;
+}
+#currentAttendanceList .photoItem .signIcon {
+  font-size: .61rem;
+  color: #fff;
+  padding: .2rem .6rem;
+  -webkit-border-radius: .6rem;
+  -moz-border-radius: .6rem;
+  border-radius: .6rem;
+  position: absolute;
+  top: .6rem;
+  left: 50%;
+  margin-left: -1.2rem;
+  background-color: #f13010;
+}

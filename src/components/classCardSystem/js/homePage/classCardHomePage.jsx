@@ -65,24 +65,26 @@ export default class classCardHomePage extends React.Component {
         return (
             <div id="classCardHomePage" style={{height: document.body.clientHeight}}>
                 <div className="home_content">
+                    <div className="">
                     {/*班牌首页*/}
-                    <div className="home_right">
-                        <Course
-                            messageUtilObj={this.state.messageInfo}
-                        />
-                        <CurrentAttendance
-                            messageUtilObj={this.state.messageInfo}
-                        />
-                    </div>
-                    <div className="home_left">
-                        <StudentOnDuty/>
-                        <MoralEducationScore/>
-                    </div>
-                    <div className="home_center">
-                        <ClassDemeanor/>
-                        <div>
-                            <Application/>
-                            <Notify/>
+                        <div className="home_right">
+                            <Course
+                                messageUtilObj={this.state.messageInfo}
+                            />
+                            <CurrentAttendance
+                                messageUtilObj={this.state.messageInfo}
+                            />
+                        </div>
+                        <div className="home_left">
+                            <StudentOnDuty/>
+                            <MoralEducationScore/>
+                        </div>
+                        <div className="home_center">
+                            <ClassDemeanor/>
+                            <div>
+                                <Application/>
+                                <Notify/>
+                            </div>
                         </div>
                     </div>
                 </div>
