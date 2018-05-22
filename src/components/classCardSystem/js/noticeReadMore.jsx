@@ -123,11 +123,11 @@ export default class noticeReadMore extends React.Component {
     render() {
         const row = (rowData, sectionID, rowID) => {
             return (
-                <div>
+                <div className="divBox">
                     <ul className="ulBox">
                         <li onClick={this.onClick}>
                             <h1>{rowData.noticeTitle}</h1>
-                            <div className="noticeContent" style={{ display: 'none' }}>
+                            <div className="noticeContent" style={{ display: rowID=='0'?"block":"none" }}>
                                 {rowData.noticeContent}<span>{this.getTimeFormat(rowData.createTime)}</span>
                             </div>
                         </li>
