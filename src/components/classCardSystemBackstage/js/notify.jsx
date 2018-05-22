@@ -28,10 +28,10 @@ export default class notifyBack extends React.Component {
     }
 
     componentWillMount() {
-        // var locationHref = window.location.href;
-        // var locationSearch = locationHref.substr(locationHref.indexOf("?") + 1);
-        // var ident = locationSearch.split('=')[1];
-        // this.setState({ident});
+        var locationHref = window.location.href;
+        var locationSearch = locationHref.substr(locationHref.indexOf("?") + 1);
+        var ident = locationSearch.split('=')[1];
+        this.setState({ident});
     }
 
     componentDidMount() {
@@ -45,7 +45,7 @@ export default class notifyBack extends React.Component {
         //获取班级选择项
         var param = {
             "method": 'getClazzesByUserId',
-            "userId": JSON.parse(localStorage.getItem('loginUserSchedule')).colUid,
+            "userId": _this.state.ident,
         };
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
             onResponse: (result) => {
@@ -270,7 +270,7 @@ export default class notifyBack extends React.Component {
 
                 </List>
                 <div className="addBunton" onClick={this.toAddNotify}>
-                    <img src={require("../../ringBindInformation/imgs/addBtn.png")} />
+                    <img src={require("../../ringBindInformation/imgs/addBtn.png")}/>
                 </div>
             </div>
         );
