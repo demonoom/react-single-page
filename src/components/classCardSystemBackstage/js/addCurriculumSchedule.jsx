@@ -28,10 +28,14 @@ export default class addCurriculumSchedule extends React.Component {
         };
     }
 
-    componentDidMount() {
+    componentWillMount() {
         document.title = '添加课程表';
+        var locationHref = window.location.href;
+        var locationSearch = locationHref.substr(locationHref.indexOf("?") + 1);
+        var curriculumType = locationSearch.split("&")[0].split('=')[1];
         this.viewClassRoomPage();
         this.getTeacherByCreator();
+        this.setState({curriculumType});
     }
 
     /**
@@ -101,7 +105,11 @@ export default class addCurriculumSchedule extends React.Component {
     addCourseTableItem = () => {
         var _this = this;
         if (this.state.classAsyncValue.length == 0) {
-            Toast.fail('请选择班级');
+            var tipMessage = "请选择班级";
+            if(_this.state.curriculumType == 2){
+                tipMessage = "请选择教室";
+            }
+            Toast.fail(tipMessage);
             return
         }
         if (this.state.termAsyncValue.length == 0) {
@@ -128,24 +136,33 @@ export default class addCurriculumSchedule extends React.Component {
             "cti": {
                 "creatorId": JSON.parse(localStorage.getItem('loginUserSchedule')).colUid,
                 "week": this.state.asyncValue[0],
-                "classId": this.state.classAsyncValue[0],
+                // "classId": this.state.classAsyncValue[0],
                 "semesterId": this.state.termAsyncValue[0]
             }
         };
         var classArray = [];
         this.state.ClassTableDataArr.forEach(function (v, i) {
+            var isPublic = false;
+            if(_this.state.curriculumType == 2){
+                //如果是公共教室，则isPublic固定为true
+                isPublic = true;
+            }
             classArray.push({
                 "courseName": v.clazzName,
                 "index": i + 1,
                 "teacherId": v.teacherName,
                 "classRoomId": v.classAddress,
-                "isPublic": false,
+                "isPublic": isPublic,
                 "openTime": v.startTimeData,
                 "closeTime": v.endTimeData,
                 "comment": v.nodeDetal
             })
         })
         param.cti.schedules = classArray;
+        if(_this.state.curriculumType == 1){
+            //班级课程表，只有在给班级定制课程表时才需要给定该参数
+            param.cti.classId = _this.state.classAsyncValue[0];
+        }
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
             onResponse: function (result) {
                 if (result.msg == '调用成功' || result.success == true) {
@@ -455,11 +472,54 @@ export default class addCurriculumSchedule extends React.Component {
         });
     }
 
+    /**
+     * 获取此用户所管理的教室
+     * @param ident
+     * @param semesterList
+     */
+    getClazzRoomsByUserId(ident) {
+        var _this = this;
+        var param = {
+            "method": 'viewClassRoomPage',
+            "uid": ident,
+            "pn":-1
+        };
+        WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
+            onResponse: function (result) {
+                if (result.msg == '调用成功' || result.success == true) {
+                    if (WebServiceUtil.isEmpty(result.response) == false) {
+                        var arr = [];
+                        result.response.forEach(function (v, i) {
+                            arr.push({
+                                value: v.id, label: v.name
+                            })
+                        })
+                        _this.setState({classData: arr})
+                    }
+                }
+            },
+            onError: function (error) {
+                // message.error(error);
+            }
+        });
+    }
+
     classOnOk(v) {
         this.setState({classAsyncValue: v});
     }
 
     render() {
+        var clazzOrRoom = <List.Item
+            arrow="horizontal"
+            onClick={this.getClazzesByUserId.bind(this, JSON.parse(localStorage.getItem('loginUserSchedule')).colUid)}
+        >选择班级</List.Item>;
+        if(this.state.curriculumType==2){
+            clazzOrRoom = <List.Item
+                arrow="horizontal"
+                onClick={this.getClazzRoomsByUserId.bind(this, JSON.parse(localStorage.getItem('loginUserSchedule')).colUid)}
+            >选择教室</List.Item>;
+        }
+
         return (
             <div id="addCurriculumSchedule" style={{height: document.body.clientHeight}}>
                 <div className="addCurriculum_cont">
@@ -472,10 +532,7 @@ export default class addCurriculumSchedule extends React.Component {
                         onPickerChange={this.onClassPickerChange}
                         onOk={v => this.classOnOk(v)}
                     >
-                        <List.Item
-                            arrow="horizontal"
-                            onClick={this.getClazzesByUserId.bind(this, JSON.parse(localStorage.getItem('loginUserSchedule')).colUid)}
-                        >选择班级</List.Item>
+                        {clazzOrRoom}
                     </Picker>
                     <WhiteSpace size="lg"/>
                     {/*选择学期*/}

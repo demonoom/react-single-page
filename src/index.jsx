@@ -346,8 +346,11 @@ class Index extends React.Component {
                         to="/homeworkModule?classId=819"
                         style={{fontSize: '24px'}}>作业模块</Link></li>
                     <li><Link
-                        to="/curriculumSchedule?ident=23836&access=23836"
+                        to="/curriculumSchedule?ident=23836&curriculumType=1&access=23836"
                         style={{fontSize: '24px'}}>课程表列表</Link></li>
+                    <li><Link
+                        to="/curriculumSchedule?ident=23836&curriculumType=2&access=23836"
+                        style={{fontSize: '24px'}}>公共教室课程表列表</Link></li>
                     <li><Link
                         to="/workAttendance"
                         style={{fontSize: '24px'}}>出勤</Link></li>
