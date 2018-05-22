@@ -35,6 +35,8 @@ export default class classCardHomePage extends React.Component {
         };
         ms = new MsgConnection();
         ms.connect(pro);
+        var clazzId = "819";
+        localStorage.setItem("clazzId",clazzId);
     }
 
     componentDidMount() {
@@ -59,10 +61,10 @@ export default class classCardHomePage extends React.Component {
                 <div className="home_content">
                     {/*班牌首页*/}
                     <div className="home_right">
-                        <CurrentAttendance
+                        <Course
                             messageUtilObj={this.state.messageInfo}
                         />
-                        <Course
+                        <CurrentAttendance
                             messageUtilObj={this.state.messageInfo}
                         />
                     </div>
@@ -71,9 +73,12 @@ export default class classCardHomePage extends React.Component {
                         <MoralEducationScore/>
                     </div>
                     <div className="home_center">
-                        <Notify/>
-                        <Application/>
                         <ClassDemeanor/>
+                        <div>
+                            <Application/>
+                            <Notify/>
+
+                        </div>
                     </div>
                 </div>
             </div>

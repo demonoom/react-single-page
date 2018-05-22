@@ -57,15 +57,15 @@ export default class course extends React.Component {
     render() {
         var classData = this.state.data;
         return (
-            <div id="course">
+            <div id="course" className="home_card course_height">
+                <h3 className="home_title">今日课程</h3>
                 {WebServiceUtil.isEmpty(classData) ?
                     <div className='classTableA'>暂未开课</div> :
                     <div className='classTableB'>
-                        今日课程
                         <div className='index'>第{classData.index}节</div>
                         <div className='timeNode'>当前时段</div>
                         <div className='time'>{classData.openTime + '-' + classData.closeTime}</div>
-                        <div className='name'>{classData.courseName}</div>
+                        <div><span className='name'>{classData.courseName}</span></div>
                         {/*<img className='terPic' src={classData.teacher.avatar} alt=""/>*/}
                         <img
                             className='terPic'

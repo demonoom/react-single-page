@@ -147,7 +147,9 @@ export default class addNotify extends React.Component {
                         onChange={this.contentHandleChange}
                     />
                 </List>
-                <Button type="primary" onClick={this.submitClass}>提交</Button>
+                <div className="submitBtn">
+                    <Button type="primary" onClick={this.submitClass}>提交</Button>
+                </div>
             </div>
         );
     }
