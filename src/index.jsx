@@ -230,6 +230,13 @@ const classCardHomePage = (location, cb) => {
     })
 }
 
+/*公共教室的班牌首页*/
+const publicClassCardHomePage = (location, cb) => {
+    require.ensure([], require => {
+        cb(null, require("./components/classCardSystem/js/homePage/publicClassCardHomePage").default)
+    })
+}
+
 const notifyBack = (location, cb) => {
     require.ensure([], require => {
         cb(null, require("./components/classCardSystemBackstage/js/notify").default)
@@ -311,9 +318,9 @@ class Index extends React.Component {
                     {/*<li><Link to="/analysisList?access_user=23836" style={{fontSize: '24px'}}>成绩分析</Link></li>*/}
                     {/*<li><Link to="/searchUserLocationInfo" style={{fontSize: '24px'}}>搜索查看用户位置信息</Link></li>*/}
                     {/*<li><Link to="/studentFaceStatistics" style={{fontSize: '24px'}}>学生脸部表情分析折线图</Link></li>*/}
-                    <li><Link to="/termitePlateLibrary?ident=23836&fileId=-1&title=蚁盘题目&phoneType=0"
-                              style={{fontSize: '24px'}}>蚁盘题库</Link>
-                    </li>
+                    {/*<li><Link to="/termitePlateLibrary?ident=23836&fileId=-1&title=蚁盘题目&phoneType=0"*/}
+                    {/*style={{fontSize: '24px'}}>蚁盘题库</Link>*/}
+                    {/*</li>*/}
                     {/*<li><Link to="/pushSubjectsFromTLibrary?ident=23836&fileId=-1"*/}
                     {/*style={{fontSize: '24px'}}>蚁盘推题</Link></li>*/}
                     {/*<li><Link to="/arrangementWork?ident=23836&fileId=-1"*/}
@@ -360,23 +367,26 @@ class Index extends React.Component {
                         to="/moralEducation?ident=23836"
                         style={{fontSize: '24px'}}>德育评价</Link></li>
                     <li><Link
-                        to="/classCardHomePage?clazzId=819&roomId=1"
+                        to="/classCardHomePage?clazzId=819&roomId=1&mac=02:00:00:00:00:00"
                         style={{fontSize: '24px'}}>班牌首页</Link></li>
+                    <li><Link
+                        to="/publicClassCardHomePage?clazzId=819&roomId=1"
+                        style={{fontSize: '24px'}}>公共教室班牌首页</Link></li>
                     <li><Link
                         to="/notifyBack?access_user=23836"
                         style={{fontSize: '24px'}}>通知后台</Link></li>
-                    <li><Link
-                        to="/addNotify"
-                        style={{fontSize: '24px'}}>添加通知</Link></li>
-                    <li><Link
-                        to="/notifyDetail"
-                        style={{fontSize: '24px'}}>通知详情</Link></li>
+                    {/*<li><Link*/}
+                    {/*to="/addNotify"*/}
+                    {/*style={{fontSize: '24px'}}>添加通知</Link></li>*/}
+                    {/*<li><Link*/}
+                    {/*to="/notifyDetail"*/}
+                    {/*style={{fontSize: '24px'}}>通知详情</Link></li>*/}
                     <li><Link
                         to="/studentDutyList?access_user=23836"
                         style={{fontSize: '24px'}}>班级值日表</Link></li>
-                    <li><Link
-                        to="/tableItemDetil"
-                        style={{fontSize: '24px'}}>课程表内页</Link></li>
+                    {/*<li><Link*/}
+                    {/*to="/tableItemDetil"*/}
+                    {/*style={{fontSize: '24px'}}>课程表内页</Link></li>*/}
                 </ul>
             </div>
         );
@@ -430,6 +440,7 @@ ReactDOM.render(
             <Route path="definedTerm" getComponent={definedTerm}/>
             <Route path="classDemeanor" getComponent={classDemeanor}/>
             <Route path="classCardHomePage" getComponent={classCardHomePage}/>
+            <Route path="publicClassCardHomePage" getComponent={publicClassCardHomePage}/>
             <Route path="moralEducation" getComponent={moralEducation}/>
             <Route path="addMoralEducation" getComponent={addMoralEducation}/>
             <Route path="updateClassroom" getComponent={updateClassroom}/>

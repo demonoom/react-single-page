@@ -1,3 +1,6 @@
+#noticeReadMore .list-view-section-body .divBox:first-child .noticeContent {
+  display: "block" !important;
+}
 #noticeReadMore .am-card {
   min-height: 2.7rem;
   padding-bottom: 0;

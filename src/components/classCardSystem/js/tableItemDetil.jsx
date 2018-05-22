@@ -60,6 +60,10 @@ export default class tableItemDetil extends React.Component {
             tbody.push(tr);
         }
         this.setState({tbody});
+    };
+
+    historyGoBack() {
+        history.back()
     }
 
     render() {
