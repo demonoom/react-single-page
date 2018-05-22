@@ -3,6 +3,9 @@ import {} from 'antd-mobile';
 
 var demeanor;
 
+/**
+ * 班牌首页显示的今日值日生列表
+ */
 export default class studentOnDuty extends React.Component {
 
     constructor(props) {
@@ -17,10 +20,6 @@ export default class studentOnDuty extends React.Component {
     componentWillMount() {
         var clazzId = localStorage.getItem("clazzId");
         this.getClassBrandStudentDutyByToday(clazzId);
-    }
-
-    componentDidMount() {
-
     }
 
     /**
@@ -43,9 +42,7 @@ export default class studentOnDuty extends React.Component {
                             _this.setState({"isLoadingLeft": false})
                         } else {
                             var clazzObj = result.response;
-                            console.log(clazzObj);
                             var users = clazzObj.users;
-
                             users.forEach(function (student) {
                                 if (student != null && student != undefined) {
                                     var stuId = student.colUid;
