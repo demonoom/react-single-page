@@ -97,14 +97,15 @@ export default class notify extends React.Component {
 
     notifySeeMore() {
         var currentAttendanceListUrl = WebServiceUtil.mobileServiceURL + "noticeReadMore";
-        var data = {
-            method: 'openNewPage',
-            url: currentAttendanceListUrl
-        };
-
-        Bridge.callHandler(data, null, function (error) {
-            window.location.href = currentAttendanceListUrl;
-        });
+        window.location.href = currentAttendanceListUrl;
+        // var data = {
+        //     method: 'openNewPage',
+        //     url: currentAttendanceListUrl
+        // };
+        //
+        // Bridge.callHandler(data, null, function (error) {
+        //     window.location.href = currentAttendanceListUrl;
+        // });
     }
 
     render() {

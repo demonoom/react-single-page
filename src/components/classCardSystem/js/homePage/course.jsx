@@ -19,12 +19,20 @@ export default class course extends React.Component {
     }
 
     componentWillReceiveProps(nextProps) {
+        var roomId = localStorage.getItem('roomId');
         if (nextProps.messageUtilObj.command == 'brand_class_open') {
             //查看某个课表项(一接收到开课命令就获取当前开课)
-            this.viewCourseTableItem(nextProps.messageUtilObj.data)
+            if (roomId == nextProps.messageUtilObj.data.classroomId) {
+                this.viewCourseTableItem(nextProps.messageUtilObj.data)
+            }
+
         } else if (nextProps.messageUtilObj.command == 'brand_class_close') {
-            this.setState({data: null})
+            if (roomId == nextProps.messageUtilObj.data.classroomId) {
+                this.setState({data: null})
+            }
         }
+
+
     }
 
     componentDidMount() {
@@ -56,14 +64,15 @@ export default class course extends React.Component {
 
     turnToDetil() {
         var url = WebServiceUtil.mobileServiceURL + "tableItemDetil";
-        var data = {
-            method: 'openNewPage',
-            url: url
-        };
-
-        Bridge.callHandler(data, null, function (error) {
-            window.location.href = url;
-        });
+        window.location.href = url;
+        // var data = {
+        //     method: 'openNewPage',
+        //     url: url
+        // };
+        //
+        // Bridge.callHandler(data, null, function (error) {
+        //     window.location.href = url;
+        // });
     }
 
     render() {
