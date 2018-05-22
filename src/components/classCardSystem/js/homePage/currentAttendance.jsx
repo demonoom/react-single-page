@@ -116,7 +116,7 @@ export default class currentAttendance extends React.Component {
     render() {
         return (
             <div id="currentAttendance" className="home_card currentAttendance_height">
-                <h3 className="home_title" onClick={this.turnToAttendanceList}>考勤详情</h3>
+                <span>本节考勤</span>   <h3 className="home_title" onClick={this.turnToAttendanceList}>考勤详情&gt;</h3>
                 {!this.state.openClass ?
                     <div className='classTableA'>暂未开课</div> :
                     <div className='classTableA'>
