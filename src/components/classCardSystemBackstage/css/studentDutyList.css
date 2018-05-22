@@ -1,3 +1,4 @@
+(node) util.print is deprecated. Use console.log instead.
 #studentDutyList .am-button-small {
   background: #f55d45;
   color: #fff !important;
@@ -71,6 +72,7 @@
 #studentDutyList .am-grid.am-grid-square .am-grid-item .am-grid-item-content {
   height: auto;
   transform: translateY(0);
+  padding: 0;
 }
 #studentDutyList .am-grid.am-grid-square .am-grid-item .am-grid-item-inner-content {
   height: auto;
@@ -80,9 +82,11 @@
   -webkit-border-radius: 50%;
   -moz-border-radius: 50%;
   border-radius: 50%;
+  width: 38px!important;
+  height: 38px!important;
 }
 #studentDutyList .am-grid.am-grid-square .am-grid-item .am-grid-item-inner-content .am-grid-text {
-  padding-left: 10px;
+  padding-left: 6px;
 }
 #studentDutyList .am-grid.am-grid-line .am-flexbox,
 #studentDutyList .am-grid .am-flexbox .am-flexbox-item.am-grid-item,

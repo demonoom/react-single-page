@@ -1,6 +1,11 @@
+(node) util.print is deprecated. Use console.log instead.
 #classCardHomePage .home_content {
+  width: calc(100% - 1.66rem);
   padding: 0.83rem;
+  height: calc(100% - 1.66rem);
   clear: both;
+  background: url("../imgs/bg_web.jpg") no-repeat;
+  background-size: contain;
 }
 #classCardHomePage .home_right {
   width: 13.33rem;
@@ -13,4 +18,103 @@
 #classCardHomePage .home_center {
   width: calc(100% - 26.66rem);
   float: left;
+  margin: 0 0.83rem;
+}
+#classCardHomePage .home_title {
+  font-size: 0.72rem;
+  color: #2a3350;
+  padding: 0.56rem 0 0.33rem 0.83rem;
+  margin: 0;
+  border-bottom: 1px solid #e5ebf7;
+}
+#classCardHomePage .home_card {
+  background: #fff;
+  border-radius: 6px;
+  color: #2a3350;
+}
+#classCardHomePage .home_cardCont {
+  padding: 0.83rem;
+}
+#classCardHomePage .home_contfont {
+  font-size: 0.61rem;
+  color: #565c72;
+}
+#classCardHomePage .studentOnDuty_face {
+  width: 1.94rem;
+  height: 1.94rem;
+  text-align: center;
+  border-radius: 50%;
+  margin: 0 auto 0.28rem auto;
+}
+#classCardHomePage .studentOnDuty_list {
+  width: 2.28rem;
+  display: inline-block;
+  margin: 0 0.11rem 0.56rem 0.11rem;
+  text-align: center;
+}
+#classCardHomePage .studentOnDuty_name {
+  width: 100%;
+}
+#classCardHomePage .studentOnDuty_height,
+#classCardHomePage .course_height {
+  height: 12.78rem;
+}
+#classCardHomePage .currentAttendance_height,
+#classCardHomePage .moralEducationScore_height {
+  height: 11.67rem;
+  margin-top: 0.83rem;
+}
+#classCardHomePage .classDemeanor_height {
+  height: 16.11rem;
+}
+#classCardHomePage .notify_height,
+#classCardHomePage .application_height {
+  height: 8.33rem;
+  margin-top: 0.83rem;
+  float: left;
+  width: calc(50% - 0.42rem);
+}
+#classCardHomePage .notify_height {
+  margin-left: 0.83rem;
+}
+#classCardHomePage .font_title2 {
+  font-size: 0.67rem;
+  color: #2a3350;
+}
+#classCardHomePage .notify_cont {
+  height: 6.4rem;
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+#classCardHomePage .notify_cont li {
+  height: 1.94rem;
+  line-height: 1.94rem;
+  border-bottom: 1px solid #e5ebf7;
+  padding: 0 0.83rem;
+}
+#classCardHomePage .notify_cont li:last-child {
+  border-bottom: none;
+}
+#classCardHomePage .moralEducationScore .blue_text {
+  font-size: 0.72rem;
+  color: #5091fe;
+}
+#classCardHomePage .mEScoreInfoM {
+  text-align: center;
+  margin: 2.3rem 0 2.3rem 0;
+}
+#classCardHomePage .blue_big {
+  font-size: 2.22rem;
+  color: #5091fe;
+}
+#classCardHomePage .class_mien1 {
+  padding: 0.83rem 0 0 0.83rem;
+  overflow: hidden;
+}
+#classCardHomePage .class_mien1 .slider-list {
+  height: 4.17rem;
+}
+#classCardHomePage .class_mien2 {
+  margin: 0.83rem;
+  overflow: hidden;
 }

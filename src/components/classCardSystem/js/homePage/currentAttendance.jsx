@@ -11,7 +11,7 @@ export default class currentAttendance extends React.Component {
         super(props);
         demeanor = this;
         this.state = {
-            openClass: true
+            openClass: false
         };
         this.turnToAttendanceList = this.turnToAttendanceList.bind(this);
     }
@@ -25,7 +25,7 @@ export default class currentAttendance extends React.Component {
             //获取应到人数
             this.getStudentByCourseTableItem(nextProps.messageUtilObj.data);
             this.openTimeInterVal(nextProps.messageUtilObj.data);
-            this.setState({openClass: true})
+            this.setState({openClass: true, clazzId: nextProps.messageUtilObj.data.classTableId})
         } else if (nextProps.messageUtilObj.command == 'brand_class_close') {
             this.setState({openClass: false});
             clearInterval(timer)
@@ -33,8 +33,9 @@ export default class currentAttendance extends React.Component {
     }
 
     componentDidMount() {
-        this.getBraceletAttend()
-        this.getStudentByCourseTableItem()
+        // this.getBraceletAttend()
+        // this.getStudentByCourseTableItem()
+        // this.setState({clazzId: 3})
         // this.openTimeInterVal()
     }
 
@@ -52,8 +53,8 @@ export default class currentAttendance extends React.Component {
         var _this = this;
         var param = {
             "method": 'getStudentByCourseTableItem',
-            // "id": data.classTableId
-            "id": 3
+            "id": data.classTableId
+            // "id": 3
         };
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
             onResponse: function (result) {
@@ -76,8 +77,8 @@ export default class currentAttendance extends React.Component {
         var _this = this;
         var param = {
             "method": 'getBraceletAttend',
-            // "cid": data.classTableId
-            "cid": 3
+            "cid": data.classTableId
+            // "cid": 3
         };
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
             onResponse: function (result) {
@@ -95,24 +96,30 @@ export default class currentAttendance extends React.Component {
     /**
      * 进入考勤详情页
      */
-    turnToAttendanceList(){
-        var currentAttendanceListUrl = WebServiceUtil.mobileServiceURL + "currentAttendanceList";
-        location.href = currentAttendanceListUrl;
+    turnToAttendanceList() {
+        if (!this.state.openClass) {
+            return
+        }
 
-        /*var data = {
+        var currentAttendanceListUrl = WebServiceUtil.mobileServiceURL + "currentAttendanceList?clazzId=" + this.state.clazzId;
+
+        var data = {
             method: 'openNewPage',
-            url: editStudentDutyUrl
+            url: currentAttendanceListUrl
         };
 
         Bridge.callHandler(data, null, function (error) {
-            window.location.href = url;
-        });*/
+            window.location.href = currentAttendanceListUrl;
+        });
     }
 
     render() {
         return (
             <div id="currentAttendance" className="home_card currentAttendance_height">
-                <h3 className="home_title" onClick={this.turnToAttendanceList}>考勤详情</h3>
+                <h3 className="home_title" onClick={this.turnToAttendanceList}>
+                    <span>本节考勤</span>
+                    <span className="home_titleMore">考勤详情<i className="titleMore"></i></span>
+                </h3>
                 {!this.state.openClass ?
                     <div className='classTableA'>暂未开课</div> :
                     <div className='classTableA'>

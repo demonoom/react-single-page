@@ -1,0 +1,5 @@
+(node) util.print is deprecated. Use console.log instead.
+#tableItemDetil .tableItem {
+  width: 100%;
+  border: 1px;
+}

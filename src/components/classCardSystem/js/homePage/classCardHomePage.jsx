@@ -35,6 +35,13 @@ export default class classCardHomePage extends React.Component {
         };
         ms = new MsgConnection();
         ms.connect(pro);
+        var locationHref = decodeURI(window.location.href);
+        var locationSearch = locationHref.substr(locationHref.indexOf("?") + 1);
+        var searchArray = locationSearch.split("&");
+        var clazzId = searchArray[0].split('=')[1];
+        var roomId = searchArray[1].split('=')[1];
+        localStorage.setItem("clazzId", clazzId);
+        localStorage.setItem("roomId", roomId);
     }
 
     componentDidMount() {
@@ -57,25 +64,26 @@ export default class classCardHomePage extends React.Component {
         return (
             <div id="classCardHomePage" style={{height: document.body.clientHeight}}>
                 <div className="home_content">
+                    <div className="">
                     {/*班牌首页*/}
-                    <div className="home_right">
-                        <Course
-                            messageUtilObj={this.state.messageInfo}
-                        />
-                        <CurrentAttendance
-                            messageUtilObj={this.state.messageInfo}
-                        />
-                    </div>
-                    <div className="home_left">
-                        <StudentOnDuty/>
-                        <MoralEducationScore/>
-                    </div>
-                    <div className="home_center">
-                        <ClassDemeanor/>
-                        <div>
-                            <Application/>
-                            <Notify/>
-
+                        <div className="home_right">
+                            <Course
+                                messageUtilObj={this.state.messageInfo}
+                            />
+                            <CurrentAttendance
+                                messageUtilObj={this.state.messageInfo}
+                            />
+                        </div>
+                        <div className="home_left">
+                            <StudentOnDuty/>
+                            <MoralEducationScore/>
+                        </div>
+                        <div className="home_center">
+                            <ClassDemeanor/>
+                            <div>
+                                <Application/>
+                                <Notify/>
+                            </div>
                         </div>
                     </div>
                 </div>
