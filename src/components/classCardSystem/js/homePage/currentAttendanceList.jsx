@@ -9,15 +9,18 @@ export default class currentAttendanceList extends React.Component {
 
     constructor(props) {
         super(props);
-        demeanor  = this;
-        this.state = {
-        };
+        demeanor = this;
+        this.state = {};
         this.getBraceletAttend = this.getBraceletAttend.bind(this);
         this.getStudentByCourseTableItem = this.getStudentByCourseTableItem.bind(this);
     }
 
     componentWillMount() {
-
+        var locationHref = decodeURI(window.location.href);
+        var locationSearch = locationHref.substr(locationHref.indexOf("?") + 1);
+        var searchArray = locationSearch.split("&");
+        var clazzId = searchArray[0].split('=')[1];
+        this.setState({clazzId})
     }
 
     componentWillReceiveProps(nextProps) {
@@ -25,7 +28,7 @@ export default class currentAttendanceList extends React.Component {
     }
 
     componentDidMount() {
-        var cid = localStorage.getItem("clazzId");
+        var cid = this.state.clazzId;
         this.getStudentByCourseTableItem(cid);
         this.openTimeInterVal(cid);
     }
@@ -45,10 +48,10 @@ export default class currentAttendanceList extends React.Component {
         var param = {
             "method": 'getStudentByCourseTableItem',
             "id": cid
-            // "id": 3
         };
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
             onResponse: function (result) {
+                console.log(result);
                 if (result.msg == '调用成功' || result.success == true) {
                     allStudents = result.response;
                     _this.setState({peopleNum: result.response.length});
@@ -76,7 +79,7 @@ export default class currentAttendanceList extends React.Component {
             onResponse: function (result) {
                 var response = result.response;
                 if (result.msg == '调用成功' || result.success == true) {
-                    _this.setState({"currentPeopleNum":result.response.length});
+                    _this.setState({"currentPeopleNum": result.response.length});
                     console.log('getBraceletAttend', result.response.length);
                 }
                 _this.buildStudentList(response);
@@ -91,21 +94,21 @@ export default class currentAttendanceList extends React.Component {
      * 构建学生头像列表，其中要判断当前学生是否已签到
      * @param currentStudents
      */
-    buildStudentList(currentStudents){
+    buildStudentList(currentStudents) {
         var _this = this;
         //应到人数
         // var allStudents = this.state.allStudents;
         var studentHeaderTagList = [];
-        if(allStudents!=null && allStudents!= undefined){
+        if (allStudents != null && allStudents != undefined) {
             allStudents.forEach(function (studentOfAll) {
                 var colUid = studentOfAll.colUid;
-                var isExist = _this.checkIsExistCurrentStudent(currentStudents,colUid);
+                var isExist = _this.checkIsExistCurrentStudent(currentStudents, colUid);
                 var checkedTip = "";
-                if(isExist === false){
+                if (isExist === false) {
                     checkedTip = "未签到";
                 }
                 var studentAvatar = studentOfAll.avatar;
-                if(studentAvatar == null || studentAvatar == undefined || studentAvatar==""){
+                if (studentAvatar == null || studentAvatar == undefined || studentAvatar == "") {
                     studentAvatar = "../../img/maaee_face.png";
                 }
                 var studentHeaderTag = <div className="photoItem">
@@ -124,11 +127,11 @@ export default class currentAttendanceList extends React.Component {
     /**
      * 检查当前学生是否在已签到的用户数组中
      */
-    checkIsExistCurrentStudent(currentStudents,colUid){
+    checkIsExistCurrentStudent(currentStudents, colUid) {
         var isExist = false;
-        for(var i=0;i<currentStudents.length;i++){
+        for (var i = 0; i < currentStudents.length; i++) {
             var currentStudent = currentStudents[i];
-            if(currentStudent != null && currentStudent.colUid == colUid){
+            if (currentStudent != null && currentStudent.colUid == colUid) {
                 isExist = true;
                 break;
             }
@@ -138,11 +141,10 @@ export default class currentAttendanceList extends React.Component {
     }
 
 
-
     /**
      * 回首页
      */
-    turnToHomePage(){
+    turnToHomePage() {
         clearInterval(timer)
         var classCardHomePageUrl = WebServiceUtil.mobileServiceURL + "classCardHomePage";
         location.href = classCardHomePageUrl;

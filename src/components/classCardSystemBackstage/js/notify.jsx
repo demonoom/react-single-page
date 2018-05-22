@@ -28,7 +28,6 @@ export default class notifyBack extends React.Component {
     }
 
     componentWillMount() {
-        // debugger
         // var locationHref = window.location.href;
         // var locationSearch = locationHref.substr(locationHref.indexOf("?") + 1);
         // var ident = locationSearch.split('=')[1];
