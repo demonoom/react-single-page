@@ -1,11 +1,5 @@
-<<<<<<< HEAD
 There is no no-color option ("less --help" for help)
 html, body {
-=======
-(node) util.print is deprecated. Use console.log instead.
-html,
-body {
->>>>>>> 9af1928e68a180714f9b7c511fd5462087eaf6bb
   height: 100%;
   font-size: 14px;
   font-family:  "Helvetica Neue", "Hiragino Sans GB", Helvetica, "Microsoft YaHei", Arial
@@ -76,13 +70,8 @@ hr {
 .font_14{
   font-size: 14px;
 }
-<<<<<<< HEAD
 .color_red{
   color:#F46A55
-=======
-.color_red {
-  color: #f46a55;
->>>>>>> 9af1928e68a180714f9b7c511fd5462087eaf6bb
 }
 .line_item{
   height: 8px;
@@ -277,6 +266,12 @@ hr {
   background: url("components/classCardSystem/imgs/bg_web.jpg") no-repeat;
   background-size: 100% 100%;
   position: relative;
+  .inner_bg{
+    background-color: #fff;
+    -webkit-border-radius: 6px;
+    -moz-border-radius: 6px;
+    border-radius: 6px;
+  }
 }
 .notify_contModal{
   width: 26.31rem !important;
