@@ -97,9 +97,9 @@ export default class currentAttendance extends React.Component {
      * 进入考勤详情页
      */
     turnToAttendanceList() {
-        if (!this.state.openClass) {
+        /*if (!this.state.openClass) {
             return
-        }
+        }*/
 
         var currentAttendanceListUrl = WebServiceUtil.mobileServiceURL + "currentAttendanceList?clazzId=" + this.state.clazzId;
 
