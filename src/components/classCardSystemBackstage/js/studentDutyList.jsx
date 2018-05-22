@@ -7,6 +7,9 @@ const seasons = [
     []
 ];
 
+/**
+ * 值日生查询页
+ */
 export default class studentDutyList extends React.Component {
 
     constructor(props) {
@@ -27,7 +30,8 @@ export default class studentDutyList extends React.Component {
             studentList: [],
             clazzId: '',
             week: '1',
-            termId: '1'
+            termId: '1',
+            editButtonDisabled:true
         };
         this.getClassBrandStudentDuty = this.getClassBrandStudentDuty.bind(this);
         this.getClazzesByUserId = this.getClazzesByUserId.bind(this);
@@ -45,14 +49,11 @@ export default class studentDutyList extends React.Component {
         this.setState({userId});
     }
 
-    onClick = () => {
-        this.setState({
-
-        });
-    };
-
-    onPickerChange = (val) => {
-        console.log("week:" + val);
+    /**
+     * 星期改变时查询当前星期对应的值日生列表
+     * @param val
+     */
+    onWeekPickerChange = (val) => {
         const d = [...this.state.data];
         const asyncValue = [...val];
         var week = val[0];
@@ -66,19 +67,12 @@ export default class studentDutyList extends React.Component {
         this.getClassBrandStudentDuty(this.state.clazzId, week, this.state.termId);
     };
 
-    turnToAddDutyPage = () => {
-        var addStudentDutyUrl = WebServiceUtil.mobileServiceURL + "addStudentDuty?access_user="+this.state.userId;
-        location.href = addStudentDutyUrl;
-        /*var data = {
-            method: 'openNewPage',
-            url: addStudentDutyUrl
-        };
-
-        Bridge.callHandler(data, null, function (error) {
-            window.location.href = url;
-        });*/
-    }
-
+    /**
+     * 获取班级值日生的列表
+     * @param clazzId 班级id
+     * @param week 星期
+     * @param termId 学期
+     */
     getClassBrandStudentDuty(clazzId, week, termId) {
         var _this = this;
         var param = {
@@ -92,6 +86,7 @@ export default class studentDutyList extends React.Component {
                 var studentList = [];
                 var studentIdList=[];
                 var dutyId = -1;
+                var editButtonDisabled = true;
                 if (result.success == true && result.msg == "调用成功") {
                     var response = result.response;
                     if (response != null && response != undefined) {
@@ -99,10 +94,9 @@ export default class studentDutyList extends React.Component {
                             _this.setState({"isLoadingLeft": false})
                         } else {
                             var clazzObj = result.response;
-                            console.log(clazzObj);
                             dutyId = clazzObj.id;
                             var users = clazzObj.users;
-
+                            editButtonDisabled = false;
                             users.forEach(function (student) {
                                 if (student != null && student != undefined) {
                                     var stuId = student.colUid;
@@ -116,7 +110,7 @@ export default class studentDutyList extends React.Component {
                         }
                     }
                 }
-                _this.setState({studentList,studentIdList,dutyId});
+                _this.setState({studentList,studentIdList,dutyId,editButtonDisabled});
             },
             onError: function (error) {
             }
@@ -138,8 +132,6 @@ export default class studentDutyList extends React.Component {
                 var studentList = [];
                 var studentIdList=[];
                 var dutyId = -1;
-                console.log(result);
-                // seasons[0].splice(0);
                 if (result.success == true && result.msg == "调用成功") {
                     var response = result.response;
                     if (response != null && response != undefined) {
@@ -153,7 +145,6 @@ export default class studentDutyList extends React.Component {
                             var clazzJson = {
                                 label: gradeName+clazzName,
                                 value: clazzId+"",
-                                // value: 14+"",
                             };
                             if(seasons[0]!=null && seasons[0]!=undefined){
                                 seasons[0].push(clazzJson);
@@ -171,7 +162,7 @@ export default class studentDutyList extends React.Component {
 
 
     /**
-     * 进入学生值日页面时，根据用户id获取当前用户的班级
+     * 进入学生值日页面时，根据用户id获取当前用户的学期
      * @param userId
      */
     getSemesterList(userId){
@@ -182,10 +173,8 @@ export default class studentDutyList extends React.Component {
         };
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
             onResponse: function (result) {
-                console.log(result);
                 if (result.success == true && result.msg == "调用成功") {
                     var response = result.response;
-                    console.log(response);
                     if (response != null && response != undefined) {
                         response.forEach(function (term) {
                             var id = term.id;
@@ -198,7 +187,6 @@ export default class studentDutyList extends React.Component {
                                 seasons[1].push(termJson);
                             }
                         })
-
                     }
                 }
                 _this.setState({seasons});
@@ -208,7 +196,11 @@ export default class studentDutyList extends React.Component {
         });
     }
 
-
+    /**
+     * 班级选项改变的响应函数
+     * 切换班级时，查询当前班级对应条件下的值日生
+     * @param val
+     */
     onClassChange = (val) => {
         var clazzId = val[0];
         var termId = val[1];
@@ -236,8 +228,23 @@ export default class studentDutyList extends React.Component {
         });*/
     };
 
+    /**
+     * 跳转到添加值日生的页面
+     */
+    turnToAddDutyPage = () => {
+        var addStudentDutyUrl = WebServiceUtil.mobileServiceURL + "addStudentDuty?access_user="+this.state.userId;
+        location.href = addStudentDutyUrl;
+        /*var data = {
+            method: 'openNewPage',
+            url: addStudentDutyUrl
+        };
+
+        Bridge.callHandler(data, null, function (error) {
+            window.location.href = url;
+        });*/
+    }
+
     render() {
-        console.log(1);
         var _this = this;
         return (
             <div id="studentDutyList" style={{height: document.body.clientHeight}}>
@@ -256,7 +263,7 @@ export default class studentDutyList extends React.Component {
                     data={this.state.data}
                     cols={1}
                     value={this.state.asyncValue}
-                    onOk={v => this.onPickerChange(v)}
+                    onOk={v => this.onWeekPickerChange(v)}
                 >
                     <List.Item arrow="horizontal" onClick={this.onClick}>选择星期</List.Item>
                 </Picker>
@@ -264,7 +271,7 @@ export default class studentDutyList extends React.Component {
                 <div className="dutyList">
                     <div className="planTitle">
                         <span>值日安排</span>
-                        <Button type="primary" inline size="small" className="am-button-borderfix modifyBtn" onClick={this.editStudentDuty}>修改</Button>
+                        <Button type="primary" inline size="small" className="am-button-borderfix modifyBtn" disabled={this.state.editButtonDisabled} onClick={this.editStudentDuty}>修改</Button>
                     </div>
                     <Grid data={_this.state.studentList} columnNum={3} activeStyle={false}/>
                     <div className="addBunton"><Icon type="plus" onClick={this.turnToAddDutyPage}/></div>

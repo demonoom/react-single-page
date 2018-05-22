@@ -18,8 +18,8 @@ export default class currentAttendanceList extends React.Component {
         var locationHref = decodeURI(window.location.href);
         var locationSearch = locationHref.substr(locationHref.indexOf("?") + 1);
         var searchArray = locationSearch.split("&");
-        var clazzId = searchArray[0].split('=')[1];
-        this.setState({clazzId})
+        var classTableId = searchArray[0].split('=')[1];
+        this.setState({classTableId})
     }
 
     componentWillReceiveProps(nextProps) {
@@ -27,26 +27,27 @@ export default class currentAttendanceList extends React.Component {
     }
 
     componentDidMount() {
-        var cid = this.state.clazzId;
-        this.getStudentByCourseTableItem(cid);
-        this.openTimeInterVal(cid);
+        var classTableId = this.state.classTableId;
+        this.getStudentByCourseTableItem(classTableId);
+        this.openTimeInterVal(classTableId);
     }
 
-    openTimeInterVal(cid) {
+    openTimeInterVal(classTableId) {
         //开启定时器获取实到人数
         timer = setInterval(function () {
-            demeanor.getBraceletAttend(cid);
+            demeanor.getBraceletAttend(classTableId);
         }, 10000)
     }
 
     /**
      * 应到人数
      */
-    getStudentByCourseTableItem(cid) {
+    getStudentByCourseTableItem(classTableId) {
         var _this = this;
         var param = {
             "method": 'getStudentByCourseTableItem',
-            "id": cid
+            // "id": classTableId
+            "id": 3
         };
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
             onResponse: function (result) {
@@ -55,7 +56,7 @@ export default class currentAttendanceList extends React.Component {
                     allStudents = result.response;
                     _this.setState({peopleNum: result.response.length});
                 }
-                _this.getBraceletAttend(cid);
+                _this.getBraceletAttend(classTableId);
             },
             onError: function (error) {
                 // message.error(error);
@@ -68,11 +69,11 @@ export default class currentAttendanceList extends React.Component {
      * 实到人数
      * @param data
      */
-    getBraceletAttend(cid) {
+    getBraceletAttend(classTableId) {
         var _this = this;
         var param = {
             "method": 'getBraceletAttend',
-            "cid": cid
+            "cid": classTableId
         };
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
             onResponse: function (result) {
