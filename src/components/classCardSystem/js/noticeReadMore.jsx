@@ -1,5 +1,5 @@
 import React from "react";
-import {ListView, Card} from "antd-mobile";
+import { ListView, Accordion, List } from "antd-mobile";
 import "../css/noticeReadMore.less";
 
 export default class noticeReadMore extends React.Component {
@@ -43,7 +43,7 @@ export default class noticeReadMore extends React.Component {
                 console.log(result)
                 if (result.success == true && result.msg == "调用成功") {
                     if (result.response.length === 0) {
-                        _this.setState({"isLoadingLeft": false})
+                        _this.setState({ "isLoadingLeft": false })
                     } else {
                         var arr = result.response;
                         var pager = result.pager;
@@ -100,35 +100,48 @@ export default class noticeReadMore extends React.Component {
             return;
         }
         currentPageNo += 1;
-        this.setState({isLoadingLeft: true, defaultPageNo: currentPageNo});
+        this.setState({ isLoadingLeft: true, defaultPageNo: currentPageNo });
         this.getNoticeReadMore();
         this.setState({
             dataSource: this.state.dataSource.cloneWithRows(this.initData),
             isLoadingLeft: true,
         });
     };
+    showFirst() {
 
+    }
+    onClick = (e) => {
+        $('.ulBox li').find('.noticeContent').css({
+            display: 'none'
+        })
+
+
+        $(e.target).next().css({
+            display: 'block'
+        })
+    }
     render() {
         const row = (rowData, sectionID, rowID) => {
             return (
                 <div>
-                    <Card full>
-                        <Card.Header
-                            title={rowData.noticeTitle}
-                            extra={
-                                <span>{this.getTimeFormat(rowData.createTime)}</span>}
-                        />
-                    </Card>
+                    <ul className="ulBox">
+                        <li onClick={this.onClick}>
+                            <h1>{rowData.noticeTitle}</h1>
+                            <div className="noticeContent" style={{ display: 'none' }}>
+                                {rowData.noticeContent}<span>{this.getTimeFormat(rowData.createTime)}</span>
+                            </div>
+                        </li>
+                    </ul>
                 </div>
             )
         };
         return (
-            <div id="noticeReadMore" style={{height: document.body.clientHeight}}>
+            <div id="noticeReadMore" style={{ height: document.body.clientHeight }}>
                 <ListView
                     ref={el => this.lv = el}
                     dataSource={this.state.dataSource}    //数据类型是 ListViewDataSource
                     renderFooter={() => (
-                        <div style={{paddingTop: 5, paddingBottom: 40, textAlign: 'center'}}>
+                        <div style={{ paddingTop: 5, paddingBottom: 40, textAlign: 'center' }}>
                             {this.state.isLoadingLeft ? '正在加载' : '已经全部加载完毕'}
                         </div>)}
                     renderRow={row}   //需要的参数包括一行数据等,会返回一个可渲染的组件为这行数据渲染  返回renderable
