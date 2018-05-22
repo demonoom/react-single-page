@@ -1,5 +1,10 @@
+<<<<<<< HEAD
 There is no no-color option ("less --help" for help)
 html, body {
+=======
+html,
+body {
+>>>>>>> a1fb498b4718c9b188b9327d66ec4e5a93d052ec
   height: 100%;
   font-size: 14px;
   font-family:  "Helvetica Neue", "Hiragino Sans GB", Helvetica, "Microsoft YaHei", Arial
@@ -70,8 +75,13 @@ hr {
 .font_14{
   font-size: 14px;
 }
+<<<<<<< HEAD
 .color_red{
   color:#F46A55
+=======
+.color_red {
+  color: #F46A55;
+>>>>>>> a1fb498b4718c9b188b9327d66ec4e5a93d052ec
 }
 .line_item{
   height: 8px;
@@ -261,7 +271,11 @@ hr {
 .home_content{
   width: calc(~"100%" - 1.66rem);
   padding: 0.83rem;
+<<<<<<< HEAD
   height: calc(~"100%" - 1.66rem);
+=======
+  height: calc(100% - 1.66rem) !important;
+>>>>>>> a1fb498b4718c9b188b9327d66ec4e5a93d052ec
   clear: both;
   background: url("components/classCardSystem/imgs/bg_web.jpg") no-repeat;
   background-size: 100% 100%;
@@ -273,6 +287,7 @@ hr {
     border-radius: 6px;
   }
 }
+<<<<<<< HEAD
 .notify_contModal{
   width: 26.31rem !important;
   height:23.67rem;
@@ -301,6 +316,17 @@ hr {
     color: #565c72;
     text-align: left;
   }
+=======
+.home_content .inner_bg {
+  background-color: #fff;
+  -webkit-border-radius: 6px;
+  -moz-border-radius: 6px;
+  border-radius: 6px;
+  height: 100%;
+  padding: 10px;
+  box-sizing: border-box;
+  overflow: hidden;
+>>>>>>> a1fb498b4718c9b188b9327d66ec4e5a93d052ec
 }
 /*班牌屏幕适配*/
 @media only screen and (min-width: 768px) and (max-width: 799px){
