@@ -69,12 +69,12 @@ export default class tableItemDetil extends React.Component {
     render() {
         return (
             <div id="tableItemDetil" className="home_content" style={{height: document.body.clientHeight}}>
+                <div>
+                    <span onClick={this.historyGoBack}>首页</span>
+                    <span> > </span>
+                    <span>课程表</span>
+                </div>
                 <div className="black_bg">
-                    <div>
-                        <span onClick={this.historyGoBack}>首页</span>
-                        <span> > </span>
-                        <span>课程表</span>
-                    </div>
                     <table className='tableItem'>
                         <thead>
                         <tr>
