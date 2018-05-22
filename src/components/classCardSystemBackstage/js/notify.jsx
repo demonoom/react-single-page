@@ -270,7 +270,7 @@ export default class notifyBack extends React.Component {
                     />
 
                 </List>
-                <div className="addButton" onClick={this.toAddNotify}>
+                <div className="addBunton" onClick={this.toAddNotify}>
                     <img src={require("../../ringBindInformation/imgs/addBtn.png")} />
                 </div>
             </div>

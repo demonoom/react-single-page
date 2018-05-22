@@ -34,17 +34,3 @@
 #addStudentDuty .am-list-body div:not(:last-child) .am-list-line {
   border-bottom: 0;
 }
-#addStudentDuty .submitBtn {
-  padding: 0 15px;
-  position: absolute;
-  bottom: 0.1rem;
-  width: 100%;
-  box-sizing: border-box;
-}
-#addStudentDuty .submitBtn .am-button-primary {
-  background-color: #e94f4f;
-  border: 1PX solid #e94f4f;
-}
-#addStudentDuty .submitBtn .am-button-primary::before {
-  border: 1PX solid #e94f4f;
-}

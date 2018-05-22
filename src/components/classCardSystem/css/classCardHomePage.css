@@ -106,3 +106,14 @@
   font-size: 2.22rem;
   color: #5091fe;
 }
+#classCardHomePage .class_mien1 {
+  padding: 0.83rem 0 0 0.83rem;
+  overflow: hidden;
+}
+#classCardHomePage .class_mien1 .slider-list {
+  height: 4.17rem;
+}
+#classCardHomePage .class_mien2 {
+  margin: 0.83rem;
+  overflow: hidden;
+}
