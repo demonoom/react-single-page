@@ -22,7 +22,7 @@ export default class tableItemDetil extends React.Component {
         var _this = this;
         var param = {
             "method": 'viewCourseTable',
-            "rid": JSON.parse(localStorage.getItem('roomId')),
+            "rid": localStorage.getItem('roomId'),
         };
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
             onResponse: function (result) {

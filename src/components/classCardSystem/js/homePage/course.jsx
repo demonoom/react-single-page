@@ -28,7 +28,7 @@ export default class course extends React.Component {
     }
 
     componentDidMount() {
-        this.viewCourseTableItem()
+        // this.viewCourseTableItem()
     }
 
     /**
@@ -39,8 +39,8 @@ export default class course extends React.Component {
         var _this = this;
         var param = {
             "method": 'viewCourseTableItem',
-            // "id": data.classTableId,
-            "id": 3,
+            "id": data.classTableId,
+            // "id": 3,
         };
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
             onResponse: function (result) {
