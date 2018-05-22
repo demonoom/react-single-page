@@ -1,5 +1,5 @@
 import React from 'react';
-import {} from 'antd-mobile';
+import {Toast} from 'antd-mobile';
 import '../../css/homePage/currentAttendance.less'
 
 var demeanor;
@@ -21,15 +21,21 @@ export default class currentAttendance extends React.Component {
     }
 
     componentWillReceiveProps(nextProps) {
+        var roomId = localStorage.getItem('roomId');
         if (nextProps.messageUtilObj.command == 'brand_class_open') {
             //获取应到人数
-            this.getStudentByCourseTableItem(nextProps.messageUtilObj.data);
-            this.openTimeInterVal(nextProps.messageUtilObj.data);
-            this.setState({openClass: true, clazzId: nextProps.messageUtilObj.data.classTableId})
+            if (roomId == nextProps.messageUtilObj.data.classroomId) {
+                this.getStudentByCourseTableItem(nextProps.messageUtilObj.data);
+                this.openTimeInterVal(nextProps.messageUtilObj.data);
+                this.setState({openClass: true, clazzId: nextProps.messageUtilObj.data.classTableId})
+            }
         } else if (nextProps.messageUtilObj.command == 'brand_class_close') {
-            this.setState({openClass: false});
-            clearInterval(timer)
+            if (roomId == nextProps.messageUtilObj.data.classroomId) {
+                this.setState({openClass: false});
+                clearInterval(timer)
+            }
         }
+
     }
 
     componentDidMount() {
@@ -83,7 +89,6 @@ export default class currentAttendance extends React.Component {
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
             onResponse: function (result) {
                 if (result.msg == '调用成功' || result.success == true) {
-                    console.log('getBraceletAttend', result.response.length);
                     _this.setState({peopleNumReality: result.response.length})
                 }
             },
@@ -97,20 +102,22 @@ export default class currentAttendance extends React.Component {
      * 进入考勤详情页
      */
     turnToAttendanceList() {
-        /*if (!this.state.openClass) {
+        if (!this.state.openClass) {
+            Toast.fail('暂未开课')
             return
-        }*/
+        }
 
         var currentAttendanceListUrl = WebServiceUtil.mobileServiceURL + "currentAttendanceList?clazzId=" + this.state.clazzId;
+        window.location.href = currentAttendanceListUrl;
 
-        var data = {
-            method: 'openNewPage',
-            url: currentAttendanceListUrl
-        };
-
-        Bridge.callHandler(data, null, function (error) {
-            window.location.href = currentAttendanceListUrl;
-        });
+        // var data = {
+        //     method: 'openNewPage',
+        //     url: currentAttendanceListUrl
+        // };
+        //
+        // Bridge.callHandler(data, null, function (error) {
+        //     window.location.href = currentAttendanceListUrl;
+        // });
     }
 
     render() {

@@ -184,16 +184,15 @@
 #classroomManage .addModel .classroomName .stIcon,
 #classroomManage .addModel .gradeName .stIcon {
   width: 18px;
-  height: 18px;
+  height: 28px;
   position: absolute;
   right: 15px;
   top: 50%;
-  margin-top: -10px;
+  margin-top: -12px;
 }
 #classroomManage .addModel .classroomName .stIcon img,
 #classroomManage .addModel .gradeName .stIcon img {
-  width: 10px;
-  height: 9px;
+  width: 100%;
 }
 #classroomManage .addModel .bottomBox {
   display: flex;
