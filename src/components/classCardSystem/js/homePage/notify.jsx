@@ -126,19 +126,15 @@ export default class notify extends React.Component {
                 <Modal
                     visible={this.state.contentModalVisible}
                     transparent
+                    closable
                     maskClosable={false}
                     onClose={this.onClose('modal1')}
                     title={noticeTitle}
                     className="notify_contModal"
-                    footer={[{
-                        text: 'Ok', onPress: () => {
-                            console.log('ok');
-                            this.onClose('modal1')();
-                        }
-                    }]}
+                    footer={false}
                     wrapProps={{onTouchStart: this.onWrapTouchStart}}
                 >
-                    <div className="" style={{height: 200, overflow: 'scroll'}}>
+                    <div className="" style={{height: '100%', padding:'0 2.22rem 0 2.22rem' , overflow: 'scroll'}}>
                         {noticeContent}
                     </div>
                 </Modal>

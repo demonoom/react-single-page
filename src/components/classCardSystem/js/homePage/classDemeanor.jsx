@@ -44,7 +44,7 @@ export default class classDemeanor extends React.Component {
                             var classDemeanors = result.response;
                             classDemeanors.forEach(function (classDemeanor) {
                                 if (classDemeanor != null && classDemeanor != undefined) {
-                                    var stuImgTag=<img style={{width:'100%',height:'150px'}} id={classDemeanor.id} src={classDemeanor.imagePath}/>;
+                                    var stuImgTag=<img style={{width:'100%',height:'81px'}} id={classDemeanor.id} src={classDemeanor.imagePath}/>;
                                     classDemeanorList.push(stuImgTag)
                                 }
                             })
@@ -81,7 +81,7 @@ export default class classDemeanor extends React.Component {
                             var classRewards = result.response;
                             classRewards.forEach(function (classDemeanor) {
                                 if (classDemeanor != null && classDemeanor != undefined) {
-                                    var stuImgTag=<img style={{width:'100%',height:'280px'}} id={classDemeanor.id} src={classDemeanor.imagePath}/>;
+                                    var stuImgTag=<img style={{width:'100%',height:'150px'}} id={classDemeanor.id} src={classDemeanor.imagePath}/>;
                                     classRewardList.push(stuImgTag);
                                 }
                             })
@@ -103,7 +103,7 @@ export default class classDemeanor extends React.Component {
                     <Carousel className="space-carousel class_mien1"
                               frameOverflow="visible"
                               cellSpacing={12}
-                              slideWidth={"225px"}
+                              slideWidth={"120px"}
                               autoplay={true}
                               infinite
                               dots={false}
@@ -115,7 +115,7 @@ export default class classDemeanor extends React.Component {
                     <Carousel className="space-carousel class_mien2"
                               frameOverflow="visible"
                               cellSpacing={12}
-                              slideWidth={"405px"}
+                              slideWidth={"215px"}
                               autoplay={true}
                               infinite
                               dots={false}
