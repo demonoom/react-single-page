@@ -145,8 +145,7 @@ export default class currentAttendanceList extends React.Component {
      */
     turnToHomePage() {
         clearInterval(timer)
-        var classCardHomePageUrl = WebServiceUtil.mobileServiceURL + "classCardHomePage";
-        location.href = classCardHomePageUrl;
+        history.back()
     }
 
 

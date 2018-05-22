@@ -60,11 +60,20 @@ export default class tableItemDetil extends React.Component {
             tbody.push(tr);
         }
         this.setState({tbody});
+    };
+
+    historyGoBack() {
+        history.back()
     }
 
     render() {
         return (
             <div id="tableItemDetil" style={{height: document.body.clientHeight}}>
+                <div>
+                    <span onClick={this.historyGoBack}>首页</span>
+                    <span> > </span>
+                    <span>课程表</span>
+                </div>
                 <table className='tableItem'>
                     <thead>
                     <tr>

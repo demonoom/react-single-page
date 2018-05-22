@@ -107,6 +107,10 @@ export default class noticeReadMore extends React.Component {
         });
     };
 
+    historyGoBack() {
+        history.back()
+    }
+
     render() {
         const row = (rowData, sectionID, rowID) => {
             return (
@@ -123,6 +127,11 @@ export default class noticeReadMore extends React.Component {
         };
         return (
             <div id="noticeReadMore" style={{height: document.body.clientHeight}}>
+                <div>
+                    <span onClick={this.historyGoBack}>首页</span>
+                    <span> > </span>
+                    <span>通知</span>
+                </div>
                 <ListView
                     ref={el => this.lv = el}
                     dataSource={this.state.dataSource}    //数据类型是 ListViewDataSource
