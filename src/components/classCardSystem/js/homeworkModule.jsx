@@ -104,6 +104,8 @@ export default class homeworkModule extends React.Component {
     render() {
         var _this = this;
         const row = (rowData, sectionID, rowID) => {
+            var color = "#ccc";
+            var borderW = ""
             return (
                 <div>
                     <div className="homeworkInfo">
@@ -120,7 +122,6 @@ export default class homeworkModule extends React.Component {
                         </div>
                         <div className="homeworkR">
                         {WebServiceUtil.formatYMD(rowData.createTime)}
-                    
                         {rowData.attachMents.length==0?'':<img src={rowData.attachMents[0].address} />}
                         <img />
                         </div>
