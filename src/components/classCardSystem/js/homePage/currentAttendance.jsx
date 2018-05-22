@@ -101,7 +101,7 @@ export default class currentAttendance extends React.Component {
             return
         }*/
 
-        var currentAttendanceListUrl = WebServiceUtil.mobileServiceURL + "currentAttendanceList?clazzId=" + localStorage.getItem("clazzId");
+        var currentAttendanceListUrl = WebServiceUtil.mobileServiceURL + "currentAttendanceList?clazzId=" + this.state.clazzId;
 
         var data = {
             method: 'openNewPage',
