@@ -1,5 +1,6 @@
 import React from 'react';
 import {} from 'antd-mobile';
+import "../../css/homePage/currentAttendanceList.less"
 
 var demeanor;
 var timer;
@@ -111,10 +112,10 @@ export default class currentAttendanceList extends React.Component {
                 if (studentAvatar == null || studentAvatar == undefined || studentAvatar == "") {
                     studentAvatar = "../../img/maaee_face.png";
                 }
-                var studentHeaderTag = <div>
-                    <img style={{width: 40, height: 40}} src={studentAvatar}/>
-                    <div>{checkedTip}</div>
-                    <div>
+                var studentHeaderTag = <div className="photoItem">
+                    <img src={studentAvatar} />
+                    <div className="signIcon">{checkedTip}</div>
+                    <div className="studentName">
                         {studentOfAll.userName}
                     </div>
                 </div>
@@ -154,17 +155,20 @@ export default class currentAttendanceList extends React.Component {
     render() {
         return (
             <div id="currentAttendanceList">
-                <div>
+                <div className="navBar">
                     <span onClick={this.turnToHomePage}>首页</span>
-                    <span> &gt; </span>
+                    <span className="icon"> &gt; </span>
                     <span>考勤详情</span>
-                    <span style={{marginLeft: '20px'}}>
-                        <span>应到：{this.state.peopleNum}</span>
-                        <span>实到：{this.state.currentPeopleNum}</span>
-                        <span>未签到：{parseInt(this.state.peopleNum) - parseInt(this.state.currentPeopleNum)}</span>
-                    </span>
+                    <div className="right">
+                        <span style={{marginLeft:'20px'}}>
+                            <span className="item">应到：<span className="blue">{this.state.peopleNum}</span></span>
+                            <span className="item">实到：<span className="blue">{this.state.currentPeopleNum}</span></span>
+                            <span className="noSign"><span className="white btn">未签到</span><span className="text">{parseInt(this.state.peopleNum) - parseInt(this.state.currentPeopleNum)}</span></span>
+                        </span>
+                    </div>
                 </div>
-                <div style={{display: 'inline-flex'}}>
+
+                <div className="content" style={{display:'inline-flex'}}>
                     {this.state.studentHeaderTagList}
                 </div>
             </div>

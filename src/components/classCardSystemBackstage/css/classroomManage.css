@@ -68,16 +68,6 @@
 #classroomManage .tableDiv .noomCardUnbind {
   color: #ff144e;
 }
-#classroomManage .tableDiv .addBunton {
-  width: 3.5rem;
-  height: 3.5rem;
-  position: absolute;
-  right: 2.5rem;
-  bottom: 0.5rem;
-}
-#classroomManage .tableDiv .addBunton img {
-  width: 100%;
-}
 #classroomManage .tableDiv .liName {
   font-size: 30px;
 }
