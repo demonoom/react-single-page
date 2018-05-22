@@ -1,4 +1,27 @@
+(node) util.print is deprecated. Use console.log instead.
+#tableItemDetil {
+  color: #fff;
+  overflow-y: auto;
+  font-size: .72rem;
+}
+#tableItemDetil .black_bg {
+  background-color: #323336;
+  padding: 1.9rem;
+}
 #tableItemDetil .tableItem {
+  border-collapse: collapse;
+  text-align: center;
   width: 100%;
-  border: 1px;
+}
+#tableItemDetil .tableItem td {
+  border: 0.06rem #55575d solid;
+  padding: .5rem 0;
+}
+#tableItemDetil .tableItem td span {
+  font-size: .56rem;
+  padding-top: .28rem;
+}
+#tableItemDetil .tableItem td span.class_name {
+  font-size: .72rem;
+  padding-top: .39rem;
 }

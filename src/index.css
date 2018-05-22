@@ -276,6 +276,12 @@ hr {
   background-size: 100% 100%;
   position: relative;
 }
+.home_content .inner_bg {
+  background-color: #fff;
+  -webkit-border-radius: 6px;
+  -moz-border-radius: 6px;
+  border-radius: 6px;
+}
 /*班牌屏幕适配*/
 @media only screen and (min-width: 768px) and (max-width: 799px) {
   html {
