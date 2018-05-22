@@ -36,7 +36,8 @@ export default class classCardHomePage extends React.Component {
             "data": {
                 "type": "web",
                 "machine": mac,
-                "version": '1.0'
+                "version": '1.0',
+                "webDevice": WebServiceUtil.createUUID()
             }
         };
         ms = new MsgConnection();
@@ -66,7 +67,7 @@ export default class classCardHomePage extends React.Component {
             <div id="classCardHomePage" style={{height: document.body.clientHeight}}>
                 <div className="home_content">
                     <div className="">
-                    {/*班牌首页*/}
+                        {/*班牌首页*/}
                         <div className="home_right">
                             <Course
                                 messageUtilObj={this.state.messageInfo}

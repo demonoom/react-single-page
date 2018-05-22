@@ -1,36 +1,54 @@
-#noticeReadMore .list-view-section-body .divBox:first-child .noticeContent {
-  display: "block" !important;
-}
-#noticeReadMore .am-card {
-  min-height: 2.7rem;
-  padding-bottom: 0;
-  line-height: 2.7rem;
-}
-#noticeReadMore .am-card-header {
-  padding-left: 1.11rem;
-  padding-right: .83rem;
-  padding-top: 0;
-  padding-bottom: 0;
-}
-#noticeReadMore .am-card-header-content {
-  overflow: hidden;
-  white-space: nowrap;
-  text-overflow: ellipsis;
-  font-size: .78rem;
-  color: #2a3350;
-  width: calc(100% - 5.8rem);
-}
-#noticeReadMore .am-card-header-content::before {
-  content: "";
-  width: .2rem;
-  height: .2rem;
-  background-color: #7f5dff;
-  -webkit-border-radius: 50%;
-  -moz-border-radius: 50%;
-  border-radius: 50%;
-  margin-right: .38rem;
-}
-#noticeReadMore .am-card-header-extra {
-  color: #444e6f;
-  font-size: .55rem;
+There is no no-color option ("less --help" for help)
+#noticeReadMore{
+
+  .am-list-body{
+    border-top: 0;
+  }
+  .ulBox{
+    padding: 0 .83rem;
+    li{
+      padding: 1.11rem 0 .83rem;
+      border-bottom: 1px #f4f4f4 solid;
+      .title{
+        font-size: .78rem;
+        color:#2a3350;
+        margin: 0;
+        position: relative;
+        padding-left: .5rem;
+        font-weight: bold;
+        &::before{
+          content: '';
+          width:.2rem;
+          height:.2rem;
+          background-color: #7f5dff;
+          -webkit-border-radius: 50%;
+          -moz-border-radius: 50%;
+          border-radius: 50%;
+          margin-right: .38rem;
+          position: absolute;
+          top:50%;
+          left: 0;
+          margin-top: -.1rem;
+        }
+        .time{
+          position: absolute;
+          right: 0;
+          top:0;
+          color: #444e6f;
+          font-size: .67rem;
+          font-weight: normal;
+        }
+      }
+      .noticeContent{
+        font-size: .72rem;
+        color: #565c72;
+        position: relative;
+        padding-left: .5rem;
+        padding-top: .5rem;
+        text-indent: 1.5rem;
+        line-height: 1.1rem;
+      }
+
+    }
+  }
 }

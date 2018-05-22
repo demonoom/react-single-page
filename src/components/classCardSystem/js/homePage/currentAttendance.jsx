@@ -21,6 +21,7 @@ export default class currentAttendance extends React.Component {
     }
 
     componentWillReceiveProps(nextProps) {
+        console.log(nextProps.messageUtilObj);
         var roomId = localStorage.getItem('roomId');
         if (nextProps.messageUtilObj.command == 'brand_class_open') {
             //获取应到人数
