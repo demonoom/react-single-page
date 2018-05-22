@@ -21,21 +21,21 @@ export default class publicClassCardHomePage extends React.Component {
     }
 
     componentWillMount() {
-        var pro = {
-            "command": "braceletBoxConnect",
-            "data": {
-                "type": "web",
-                "machine": '02:00:00:00:00:00',
-                "version": '1.0'
-            }
-        };
-        ms = new MsgConnection();
-        ms.connect(pro);
         var locationHref = decodeURI(window.location.href);
         var locationSearch = locationHref.substr(locationHref.indexOf("?") + 1);
         var searchArray = locationSearch.split("&");
         var clazzId = searchArray[0].split('=')[1];
         var roomId = searchArray[1].split('=')[1];
+        var pro = {
+            "command": "braceletBoxConnect",
+            "data": {
+                "type": "web",
+                "machine": '02:00:00:00:00:00',
+                "version": '1.0',
+            }
+        };
+        ms = new MsgConnection();
+        ms.connect(pro);
         localStorage.setItem("clazzId", clazzId);
         localStorage.setItem("roomId", roomId);
     }
