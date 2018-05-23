@@ -298,7 +298,7 @@ hr {
 }
 .notify_contModal .am-modal-header {
   padding: 2.06rem 0 0.33rem 0;
-  border-bottom: 2px solid #f35454;
+  border-bottom: 0.05rem solid #f35454;
   margin: 0 2.22rem;
 }
 .notify_contModal .am-modal-title {

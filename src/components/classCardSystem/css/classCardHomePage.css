@@ -1,234 +1,235 @@
-There is no no-color option ("less --help" for help)
-#classCardHomePage {
-  .home_right{
-    width: 13.33rem;
-    float: right;
-  }
-  .home_left{
-    width: 11.67rem;
-    float: left;
-  }
-  .home_center{
-    width: calc(~"100%" - 26.66rem);
-    float: left;
-    margin:0 0.83rem;
-  }
-  .home_title{
-    font-size: 0.72rem;
-    color: #2a3350;
-    padding: 0.56rem 0 0.33rem 0.83rem;
-    margin: 0;
-    border-bottom: 1px solid #e5ebf7;
-  }
-  .home_titleMore{
-    padding-right: 0.83rem;
-    float: right;
-    font-size: 0.61rem;
-    font-weight: normal;
-  }
-  i.titleMore{
-    background: url("../imgs/next_s_icon.png") no-repeat;
-    width: 0.83rem;
-    height: 0.83rem;
-    display: inline-block;
-    background-size: 100% 100%;
-    float: right;
-    margin-top: -2px;
-  }
-  i.notify_titleMore{
-    margin-top: 0.6rem;
-  }
-  .home_card{
-    background: #fff;
-    border-radius: 6px;
-    color: #2a3350;
-  }
-  .home_cardCont{
-    padding: 0.83rem;
-  }
-  .home_contfont{
-    font-size: 0.61rem;
-    color: #565c72;
-  }
-  .studentOnDuty_face{
-    width: 1.94rem;
-    height: 1.94rem;
-    text-align: center;
-    border-radius: 50%;
-    margin: 0 auto 0.28rem auto;
-  }
-  .studentOnDuty_list{
-    width: 2.28rem;
-    display: inline-block;
-    margin: 0 0.11rem 0.56rem 0.11rem;
-    text-align: center;
-
-  }
-  .studentOnDuty_name{
-    width: 100%;
-  }
-  .studentOnDuty_height, .course_height{
-    height: 12.78rem;
-  }
-  .currentAttendance_height, .moralEducationScore_height{
-    height: 11.67rem;
-    margin-top: 0.83rem;
-  }
-  .classDemeanor_height{
-    padding-bottom:0.83rem
-  }
-  .notify_height, .application_height{
-    height: 8.33rem;
-    margin-top: 0.83rem;
-    float: left;
-    width: calc(~"50%" - 0.42rem);
-
-  }
-  .notify_height{
-    margin-left: 0.83rem;
-  }
-  .font_title2{
-    font-size: 0.67rem;
-    color: #2a3350;
-  }
-  .notify_cont{
-    height: 6.4rem;
-    overflow-x: hidden;
-    overflow-y: auto;
-    li{
-      height: 1.94rem;
-      line-height: 1.94rem;
-      border-bottom: 1px solid #e5ebf7;
-      padding:0 0.83rem;
-    }
-    li:last-child{
-      border-bottom: none;
-    }
-  }
-  .moralEducationScore{
-    .blue_text{
-      font-size: 0.72rem;
-      color: #5091fe;
-    }
-
-
-  }
-  .mEScoreInfoM{
-    text-align: center;
-    margin: 2.3rem 0 2.3rem 0;
-  }
-  .blue_big{
-    font-size: 2.22rem;
-    color: #5091fe;
-    margin: 0 0.4rem;
-
-  }
-  .class_mien1{
-    padding: 0.83rem 0 0 0;
-    overflow: hidden;
-    .slider-list{
-      height: 4.17rem;
-    }
-  }
-  .class_mien2{
-    margin: 0.83rem 0 0 0;
-    overflow: hidden;
-  }
-  .application_cont{
-    padding:0.56rem 0.83rem 0.56rem 0.61rem;
-    height: 5.28rem;
-    overflow-x: hidden;
-    overflow-y: auto;
-  }
-  .app_list{
-    width: 3rem;
-    display: inline-block;
-    margin-left: 0.16rem;
-    text-align: center;
-    margin-bottom: 0.61rem;
-  }
-  .app_list_img{
-    width: 1.94rem;
-    height: 1.94rem;
-    border-radius: 6px;
-    background: #cfd3dd;
-    margin: 0 auto 0.44rem auto;
-
-  }
-  .app_list_text{
-    font-size: 0.61rem;
-    width: 100%;
-  }
-  .notify_list{
-    width: calc(~"100%" - 1rem);
-  }
-  .demeanor_margin{
-    margin: 0 0.83rem;
-  }
-  .publicHome_left {
-    width: 13.61rem;
-    height: 25.28rem;
-    float: left;
-    .notify_height {
-      margin-left: 0;
-      margin-top: 0;
-      width: 100%;
-      height: 100%;
-      overflow: hidden;
-    }
-    .notify_cont {
-      height: 23.6rem;
-    }
-  }
-  .publicHome_center {
-    width: calc(~"100%" - 28.88rem);
-    margin: 0 0.83rem;
-    float: left;
-    height: 25.28rem;
-    .course_height{
-      height: 100%;
-    }
-  }
-  .publicHome_right{
-    width: 13.61rem;
-    height: 12.64rem;
-    float: right;
-    .currentAttendance_height{
-      margin-top: 0;
-    }
-  }
-  .empty_icon{
-    width: 3rem;
-    height: 3rem;
-    margin-bottom:0.56rem ;
-    display: inline-block;
-  }
-  .empty_text{
-    font-size:0.56rem ;
-    color: #959ab1;
-  }
-  .empty_currentAttendance{
-    background: url("../imgs/empty_currentAttendance.png") no-repeat;
-    background-size: 100%;
-  }
-  .empty_activity{
-    background: url("../imgs/empty_activity.png") no-repeat;
-    background-size: 100%;
-  }
-  .empty_honor{
-    background: url("../imgs/empty_honor.png") no-repeat;
-    background-size: 100%;
-  }
-  .empty_moralEducationScore{
-    background: url("../imgs/empty_moralEducationScore.png") no-repeat;
-    background-size: 100%;
-  }
-  .empty_notify{
-    background: url("../imgs/empty_notify.png") no-repeat;
-    background-size: 100%;
-  }
-  .empty_course{
-    background: url("../imgs/empty_course.png") no-repeat;
-    background-size: 100%;
-  }
+#classCardHomePage .home_right {
+  width: 13.33rem;
+  float: right;
+}
+#classCardHomePage .home_left {
+  width: 11.67rem;
+  float: left;
+}
+#classCardHomePage .home_center {
+  width: calc(100% - 26.66rem);
+  float: left;
+  margin: 0 0.83rem;
+}
+#classCardHomePage .home_title {
+  font-size: 0.72rem;
+  color: #2a3350;
+  padding: 0.56rem 0 0.33rem 0.83rem;
+  margin: 0;
+  border-bottom: 1px solid #e5ebf7;
+}
+#classCardHomePage .home_titleMore {
+  padding-right: 0.83rem;
+  float: right;
+  font-size: 0.61rem;
+  font-weight: normal;
+}
+#classCardHomePage i.titleMore {
+  background: url("../imgs/next_s_icon.png") no-repeat;
+  width: 0.83rem;
+  height: 0.83rem;
+  display: inline-block;
+  background-size: 100% 100%;
+  float: right;
+  margin-top: -2px;
+}
+#classCardHomePage i.notify_titleMore {
+  margin-top: 0.6rem;
+}
+#classCardHomePage .home_card {
+  background: #fff;
+  border-radius: 6px;
+  color: #2a3350;
+}
+#classCardHomePage .home_cardCont {
+  padding: 0.83rem;
+}
+#classCardHomePage .home_contfont {
+  font-size: 0.61rem;
+  color: #565c72;
+}
+#classCardHomePage .studentOnDuty_face {
+  width: 1.94rem;
+  height: 1.94rem;
+  text-align: center;
+  border-radius: 50%;
+  margin: 0 auto 0.28rem auto;
+}
+#classCardHomePage .studentOnDuty_list {
+  width: 2.28rem;
+  display: inline-block;
+  margin: 0 0.11rem 0.56rem 0.11rem;
+  text-align: center;
+}
+#classCardHomePage .studentOnDuty_name {
+  width: 100%;
+}
+#classCardHomePage .studentOnDuty_height,
+#classCardHomePage .course_height {
+  height: 12.78rem;
+}
+#classCardHomePage .currentAttendance_height,
+#classCardHomePage .moralEducationScore_height {
+  height: 11.67rem;
+  margin-top: 0.83rem;
+}
+#classCardHomePage .classDemeanor_height {
+  padding-bottom: 0.83rem;
+}
+#classCardHomePage .notify_height,
+#classCardHomePage .application_height {
+  height: 8.33rem;
+  margin-top: 0.83rem;
+  float: left;
+  width: calc(50% - 0.42rem);
+}
+#classCardHomePage .notify_height {
+  margin-left: 0.83rem;
+}
+#classCardHomePage .font_title2 {
+  font-size: 0.67rem;
+  color: #2a3350;
+}
+#classCardHomePage .notify_cont {
+  height: 6.4rem;
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+#classCardHomePage .notify_cont li {
+  height: 1.94rem;
+  line-height: 1.94rem;
+  border-bottom: 1px solid #e5ebf7;
+  padding: 0 0.83rem;
+}
+#classCardHomePage .notify_cont li:last-child {
+  border-bottom: none;
+}
+#classCardHomePage .moralEducationScore .blue_text {
+  font-size: 0.72rem;
+  color: #5091fe;
+}
+#classCardHomePage .mEScoreInfoM {
+  text-align: center;
+  margin: 2.3rem 0 2.3rem 0;
+}
+#classCardHomePage .blue_big {
+  font-size: 2.22rem;
+  color: #5091fe;
+  margin: 0 0.4rem;
+}
+#classCardHomePage .class_mien1 {
+  padding: 0.83rem 0 0 0;
+  overflow: hidden;
+}
+#classCardHomePage .class_mien1 .slider-list {
+  height: 4.17rem !important;
+}
+#classCardHomePage .class_mien1 .slider-list li {
+  height: 100% !important;
+}
+#classCardHomePage .class_mien2 {
+  margin: 0.83rem 0 0 0;
+  overflow: hidden;
+}
+#classCardHomePage .class_mien2 .slider-list {
+  height: 7.78rem !important;
+}
+#classCardHomePage .class_mien2 .slider-list li {
+  height: 100% !important;
+}
+#classCardHomePage .application_cont {
+  padding: 0.56rem 0.83rem 0.56rem 0.61rem;
+  height: 5.28rem;
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+#classCardHomePage .app_list {
+  width: 3rem;
+  display: inline-block;
+  margin-left: 0.16rem;
+  text-align: center;
+  margin-bottom: 0.61rem;
+}
+#classCardHomePage .app_list_img {
+  width: 1.94rem;
+  height: 1.94rem;
+  border-radius: 6px;
+  background: #cfd3dd;
+  margin: 0 auto 0.44rem auto;
+}
+#classCardHomePage .app_list_text {
+  font-size: 0.61rem;
+  width: 100%;
+}
+#classCardHomePage .notify_list {
+  width: calc(100% - 1rem);
+}
+#classCardHomePage .demeanor_margin {
+  margin: 0 0.83rem;
+}
+#classCardHomePage .publicHome_left {
+  width: 13.61rem;
+  height: 25.28rem;
+  float: left;
+}
+#classCardHomePage .publicHome_left .notify_height {
+  margin-left: 0;
+  margin-top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+#classCardHomePage .publicHome_left .notify_cont {
+  height: 23.6rem;
+}
+#classCardHomePage .publicHome_center {
+  width: calc(100% - 28.88rem);
+  margin: 0 0.83rem;
+  float: left;
+  height: 25.28rem;
+}
+#classCardHomePage .publicHome_center .course_height {
+  height: 100%;
+}
+#classCardHomePage .publicHome_right {
+  width: 13.61rem;
+  height: 12.64rem;
+  float: right;
+}
+#classCardHomePage .publicHome_right .currentAttendance_height {
+  margin-top: 0;
+}
+#classCardHomePage .empty_icon {
+  width: 3rem;
+  height: 3rem;
+  margin-bottom: 0.36rem ;
+  display: inline-block;
+}
+#classCardHomePage .empty_text {
+  font-size: 0.56rem ;
+  color: #959ab1;
+}
+#classCardHomePage .empty_currentAttendance {
+  background: url("../imgs/empty_currentAttendance.png") no-repeat;
+  background-size: 100%;
+}
+#classCardHomePage .empty_activity {
+  background: url("../imgs/empty_activity.png") no-repeat;
+  background-size: 100%;
+}
+#classCardHomePage .empty_honor {
+  background: url("../imgs/empty_honor.png") no-repeat;
+  background-size: 100%;
+}
+#classCardHomePage .empty_moralEducationScore {
+  background: url("../imgs/empty_moralEducationScore.png") no-repeat;
+  background-size: 100%;
+}
+#classCardHomePage .empty_notify {
+  background: url("../imgs/empty_notify.png") no-repeat;
+  background-size: 100%;
+}
+#classCardHomePage .empty_course {
+  background: url("../imgs/empty_course.png") no-repeat;
+  background-size: 100%;
 }
