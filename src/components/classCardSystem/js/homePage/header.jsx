@@ -68,11 +68,13 @@ export default class header extends React.Component {
             timeHeader: '',
             timeFoot: '',
             abcode: '',
+            classroomName: '',
         };
     }
 
     componentWillMount() {
         this.makeTime();
+        this.viewClassRoom()
         var data = {
             method: 'getAbCode',
         };
@@ -100,6 +102,24 @@ export default class header extends React.Component {
         if (this.state.timeFoot == '00:10:00' || this.state.timeFoot == '12:10:00') {
             demeanor.weatherInfo(demeanor.state.abcode)
         }
+    }
+
+    viewClassRoom() {
+        var param = {
+            "method": 'viewClassRoom',
+            "id": localStorage.getItem('roomId'),
+        };
+        WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
+            onResponse: function (result) {
+                if (result.msg == '调用成功' || result.success == true) {
+                    if (WebServiceUtil.isEmpty(result.response) == false) {
+                        demeanor.setState({classroomName: result.response.defaultBindedClazz.name})
+                    }
+                }
+            },
+            onError: function (error) {
+            }
+        });
     }
 
     /**
@@ -130,6 +150,7 @@ export default class header extends React.Component {
     render() {
         return (
             <div id="header">
+                <div>{this.state.classroomName}</div>
                 <div>
                     {
                         this.state.weatherArr.map(function (v, i) {
