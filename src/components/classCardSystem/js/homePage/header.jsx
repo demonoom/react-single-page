@@ -120,7 +120,7 @@ export default class header extends React.Component {
     render() {
         return (
             <div id="header">
-                <div>
+                <div className="header_weather float_ri">
                     {
                         this.state.weatherArr.map(function (v, i) {
                             if (i == 0) {
@@ -139,10 +139,12 @@ export default class header extends React.Component {
                                 } else if (v.dayweather.indexOf('雪') != -1) {
                                     img = <img src={require('../../img/snow_icon.png')} alt=""/>
                                 }
-                                return <span>
-                                    {img}
-                                    <div>{v.dayweather}</div>
-                                    <div>{v.nighttemp + '℃~' + v.daytemp + '℃'}</div>
+                                return <span className="header_date3 float_ri">
+                                    <div>{img}</div>
+                                    <div>
+                                        <div>{v.dayweather}</div>
+                                        <div>{v.nighttemp + '℃~' + v.daytemp + '℃'}</div>
+                                    </div>
                                 </span>
                             } else if (i == 1) {
                                 return <span>
@@ -160,7 +162,7 @@ export default class header extends React.Component {
                         })
                     }
                 </div>
-                <div>
+                <div className="header_date float_ri">
                     {this.state.timeHeader + '' + this.state.timeFoot}
                 </div>
             </div>

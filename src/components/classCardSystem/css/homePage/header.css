@@ -1,6 +1,34 @@
-#header div {
-  background-color: #4f90fd;
+#header {
+  background: url("../../imgs/bg_web.jpg") no-repeat;
+  background-size: 100%;
+  height: 3.61rem;
+  color: #fff;
 }
-#header div span {
+#header .header_date {
+  text-align: right;
+  margin-left: 1.67rem;
+  background: transparent;
   display: inline-block;
+}
+#header span {
+  display: inline-block;
+}
+#header .header_weather {
+  float: right;
+}
+#header .header_weather .header_date3 {
+  font-size: 0.56rem;
+  text-align: right;
+  padding-top: 0.83rem;
+}
+#header .header_weather .header_date3 div {
+  display: inline-block;
+}
+#header .header_weather .header_date3 div div {
+  display: block;
+}
+#header .header_weather .header_date3 img {
+  margin-right: 1.08rem;
+  width: 2.22rem;
+  height: 2.22rem;
 }
