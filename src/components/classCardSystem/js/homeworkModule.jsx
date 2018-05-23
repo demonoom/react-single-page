@@ -46,8 +46,6 @@ export default class homeworkModule extends React.Component {
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
             onResponse: function (result) {
                 if (result.success == true && result.msg == "调用成功") {
-                    console.log(result.response)
-                    
                     if (result.response.length === 0) {
                         _this.setState({"isLoadingLeft": false})
                     } else {

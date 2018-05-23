@@ -51,7 +51,6 @@ export default class publicClassCardHomePage extends React.Component {
             }, onWarn: function (warnMsg) {
                 Toast.fail(warnMsg)
             }, onMessage: function (info) {
-                console.log(info);
                 demeanor.setState({messageInfo: info});
             }
         }

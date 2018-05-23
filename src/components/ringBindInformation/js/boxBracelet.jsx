@@ -326,7 +326,6 @@ export default class boxBracelet extends React.Component {
         var _this = this;
 
         const row = (rowData, sectionID, rowID) => {
-            console.log(rowData);
 
             return (
                 <WingBlank size="lg">

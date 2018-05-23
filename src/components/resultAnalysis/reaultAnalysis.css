@@ -1,3 +1,4 @@
+(node) util.print is deprecated. Use console.log instead.
 .result {
   /* 这是针对缺省样式 (必须的) */
   /* 滑块颜色 */
@@ -83,7 +84,7 @@
   color: #EE9D36;
 }
 .result .am-tabs-default-bar-underline {
-  border: 1px #EE9D36 solid;
+  border: 1px #ee9d36 solid;
 }
 .result .am-flexbox .am-flexbox-item {
   margin-left: 0;

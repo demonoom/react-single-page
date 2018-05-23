@@ -187,7 +187,6 @@ export default class notifyBack extends React.Component {
 
     //选择器确定事件
     viewCourseTableItemPage = (val) => {
-        console.log(val[0]);
         const d = [...this.state.pickerData];
         const asyncValue = [...val];
         this.setState({

@@ -21,7 +21,6 @@ export default class currentAttendance extends React.Component {
     }
 
     componentWillReceiveProps(nextProps) {
-        console.log(nextProps.messageUtilObj);
         var roomId = localStorage.getItem('roomId');
         if (nextProps.messageUtilObj.command == 'brand_class_open') {
             //获取应到人数
@@ -130,8 +129,10 @@ export default class currentAttendance extends React.Component {
                 </h3>
                 {!this.state.openClass ?
                     <div className='classTableA'>
-                        <div className="empty_icon empty_currentAttendance"></div>
-                        <div className="empty_text">暂无考勤</div>
+                        <div className="empty_center">
+                            <div className="empty_icon empty_currentAttendance"></div>
+                            <div className="empty_text">暂无考勤</div>
+                        </div>
                     </div> :
                     <div className='classTableA'>
                         <div className="due">应到人数：<span className="number">{this.state.peopleNum}</span></div>
