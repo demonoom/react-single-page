@@ -22,6 +22,9 @@
 #classroomManage .am-pull-to-refresh-indicator {
   font-size: 1rem !important;
 }
+#classroomManage .am-list-body {
+  border: 0;
+}
 #classroomManage .tableDiv {
   position: relative;
 }
