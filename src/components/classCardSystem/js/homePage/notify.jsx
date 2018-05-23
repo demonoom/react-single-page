@@ -58,7 +58,8 @@ export default class notify extends React.Component {
                             notices.forEach(function (notice) {
                                 if (notice != null && notice != undefined) {
                                     var noticeTag = <li>
-                                        <span className="notify_list text_hidden" onClick={_this.showContentModal.bind(_this, notice)}>{notice.noticeTitle}</span>
+                                        <span className="notify_list text_hidden"
+                                              onClick={_this.showContentModal.bind(_this, notice)}>{notice.noticeTitle}</span>
                                         <i className="titleMore notify_titleMore"></i>
                                     </li>
                                     noticeList.push(noticeTag);
@@ -123,25 +124,28 @@ export default class notify extends React.Component {
                 </h3>
                 <div className="notify_cont">
                     {this.state.noticeList}
+                    <div className="empty_center">
+                        <div className="empty_icon empty_notify"></div>
+                        <div className="empty_text">暂无通知</div>
+                    </div>
                 </div>
                 <Modal
                     visible={this.state.contentModalVisible}
                     transparent
+                    closable
                     maskClosable={false}
-                    id="999"
                     onClose={this.onClose('modal1')}
                     title={noticeTitle}
-                    wrapClassName="notify_contModal"
-                    className={'notify_contModal'}
-                    footer={[{
-                        text: 'Ok', onPress: () => {
-                            console.log('ok');
-                            this.onClose('modal1')();
-                        }
-                    }]}
+                    className="notify_contModal"
+                    footer={false}
                     wrapProps={{onTouchStart: this.onWrapTouchStart}}
                 >
-                    <div className="notify_contModal" style={{height: 200, overflow: 'scroll'}}>
+                    <div className="" style={{
+                        height: '100%',
+                        padding: '0 2.22rem 0 2.22rem',
+                        'overflow-x': 'hidden',
+                        'overflow-y': 'auto'
+                    }}>
                         {noticeContent}
                     </div>
                 </Modal>

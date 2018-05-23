@@ -71,7 +71,6 @@ export default class Demo extends React.Component {
             .then(data => ({data}))
             .catch(err => ({err}))
             .then(function (result) {
-            console.log(result);
             var response = result.data.response;
             for (let i = 0; i < response.length; i++) {
                 var topic = response[i];
@@ -82,7 +81,6 @@ export default class Demo extends React.Component {
                 dataSource: _this.state.dataSource.cloneWithRows(_this.initData),
                 isLoading: false,
             })
-            // console.log(dataBlob);
             // return dataBlob;
         });
     }

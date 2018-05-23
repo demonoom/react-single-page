@@ -84,7 +84,12 @@ export default class course extends React.Component {
                     <span className="home_titleMore">课程表<i className="titleMore"></i></span>
                 </h3>
                 {WebServiceUtil.isEmpty(classData) ?
-                    <div className='classTableA'>暂未开课</div> :
+                    <div className='classTableA'>
+                        <div className="empty_center">
+                            <div className="empty_icon empty_course"></div>
+                            <div className="empty_text">暂无课程</div>
+                        </div>
+                    </div> :
                     <div className='classTableB'>
                         <div className='index'>第{classData.index}节</div>
                         <div className='timeNode'>当前时段</div>

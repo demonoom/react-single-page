@@ -44,7 +44,7 @@ export default class classDemeanor extends React.Component {
                             var classDemeanors = result.response;
                             classDemeanors.forEach(function (classDemeanor) {
                                 if (classDemeanor != null && classDemeanor != undefined) {
-                                    var stuImgTag=<img style={{width:'100%',height:'150px'}} id={classDemeanor.id} src={classDemeanor.imagePath}/>;
+                                    var stuImgTag=<img style={{width:'100%',height:'100%'}} id={classDemeanor.id} src={classDemeanor.imagePath}/>;
                                     classDemeanorList.push(stuImgTag)
                                 }
                             })
@@ -81,7 +81,7 @@ export default class classDemeanor extends React.Component {
                             var classRewards = result.response;
                             classRewards.forEach(function (classDemeanor) {
                                 if (classDemeanor != null && classDemeanor != undefined) {
-                                    var stuImgTag=<img style={{width:'100%',height:'280px'}} id={classDemeanor.id} src={classDemeanor.imagePath}/>;
+                                    var stuImgTag=<img style={{width:'100%',height:'100%'}} id={classDemeanor.id} src={classDemeanor.imagePath}/>;
                                     classRewardList.push(stuImgTag);
                                 }
                             })
@@ -96,34 +96,53 @@ export default class classDemeanor extends React.Component {
     }
 
     render() {
+        var clazzDemeanor = <Carousel className="space-carousel class_mien1"
+                                      frameOverflow="visible"
+                                      cellSpacing={12}
+                                      slideWidth={0.25}
+                                      autoplay={true}
+                                      infinite
+                                      dots={false}
+                                      beforeChange={(from, to) => console.log(`slide from ${from} to ${to}`)}
+                                      afterChange={index => this.setState({ slideIndex: index })}
+        >
+            {this.state.classDemeanorList}
+        </Carousel>;
+        var classReward = <Carousel className="space-carousel class_mien2"
+                                    frameOverflow="visible"
+                                    cellSpacing={12}
+                                    slideWidth={0.45}
+                                    autoplay={true}
+                                    infinite
+                                    dots={false}
+                                    beforeChange={(from, to) => console.log(`slide from ${from} to ${to}`)}
+                                    afterChange={index => this.setState({ slideIndex: index })}
+        >
+            {this.state.classRewardList}
+        </Carousel>;
+        if(WebServiceUtil.isEmpty(this.state.classDemeanorList)===true || this.state.classDemeanorList.length == 0){
+            clazzDemeanor = <div className="demeanor_list1">
+                <div className="empty_center">
+                    <div className="empty_icon empty_honor"></div>
+                    <div className="empty_text">暂无荣誉</div>
+                </div>
+            </div>
+        }
+        if(WebServiceUtil.isEmpty(this.state.classRewardList)===true || this.state.classRewardList.length == 0){
+            classReward = <div className="demeanor_list2">
+                <div className="empty_center">
+                    <div className="empty_icon empty_activity"></div>
+                    <div className="empty_text">暂无活动</div>
+                </div>
+            </div>
+        }
+
         return (
             <div id="classDemeanor"  className="home_card classDemeanor_height">
                 <h3 className="home_title">班级风采</h3>
                 <div className="demeanor_margin">
-                    <Carousel className="space-carousel class_mien1"
-                              frameOverflow="visible"
-                              cellSpacing={12}
-                              slideWidth={"225px"}
-                              autoplay={true}
-                              infinite
-                              dots={false}
-                              beforeChange={(from, to) => console.log(`slide from ${from} to ${to}`)}
-                              afterChange={index => this.setState({ slideIndex: index })}
-                    >
-                        {this.state.classDemeanorList}
-                    </Carousel>
-                    <Carousel className="space-carousel class_mien2"
-                              frameOverflow="visible"
-                              cellSpacing={12}
-                              slideWidth={"405px"}
-                              autoplay={true}
-                              infinite
-                              dots={false}
-                              beforeChange={(from, to) => console.log(`slide from ${from} to ${to}`)}
-                              afterChange={index => this.setState({ slideIndex: index })}
-                    >
-                        {this.state.classRewardList}
-                    </Carousel>
+                    {clazzDemeanor}
+                    {classReward}
                 </div>
             </div>
         );

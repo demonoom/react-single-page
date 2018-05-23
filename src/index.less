@@ -1,7 +1,7 @@
 html, body {
   height: 100%;
   font-size: 14px;
-  font-family:  "Helvetica Neue", "Hiragino Sans GB", Helvetica, "Microsoft YaHei", Arial
+  font-family:  "Helvetica Neue", "Hiragino Sans GB", Helvetica, "Microsoft YaHei", Arial;
 }
 body {
   overflow: auto !important;
@@ -153,7 +153,7 @@ hr {
   -webkit-flex-wrap: wrap;
 }
 .list_padding_no_b{
-  border-bottom: 0px;
+  border-bottom: 0;
 }
 .am-checkbox.am-checkbox-checked .am-checkbox-inner{
   border-color: #f46a55 !important;
@@ -260,11 +260,61 @@ hr {
 .home_content{
   width: calc(~"100%" - 1.66rem);
   padding: 0.83rem;
-  height: calc(~"100%" - 1.66rem);
+  height: calc(~"100%" - 1.66rem) !important;
   clear: both;
   background: url("components/classCardSystem/imgs/bg_web.jpg") no-repeat;
   background-size: 100% 100%;
   position: relative;
+  .inner_bg{
+    background-color: #fff;
+    -webkit-border-radius: 6px;
+    -moz-border-radius: 6px;
+    border-radius: 6px;
+    height: 100%;
+    padding:0 10px 10px;
+    box-sizing: border-box;
+    overflow: hidden;
+  }
+
+}
+.notify_contModal{
+  width: 26.31rem !important;
+  height:23.67rem;
+  margin: auto;
+  .am-modal-close{
+    top: 15px;
+  }
+  .am-modal-content{
+    padding-top: 0 !important;
+  }
+  .am-modal-header{
+    padding: 2.06rem 0 0.33rem 0;
+    border-bottom: 0.05rem solid #f35454;
+    margin: 0 2.22rem;
+
+  }
+  .am-modal-title{
+    color: #191c26;
+    font-size: 0.67rem;
+    font-weight: bold;
+  }
+  .am-modal-content .am-modal-body{
+    padding: 0.28rem 0 2.22rem 0 !important;
+    height: 17.84rem;
+    font-size: 0.56rem;
+    color: #565c72;
+    text-align: left;
+  }
+}
+.empty_center{
+  position: absolute;
+  top:50%;
+  left:50%;
+  transform:translate(-50%, -50%);
+  -ms-transform:translate(-50%, -50%); /* IE 9 */
+  -moz-transform:translate(-50%, -50%); /* Firefox */
+  -webkit-transform:translate(-50%, -50%); /* Safari 和 Chrome */
+  -o-transform:translate(-50%, -50%);
 }
 /*班牌屏幕适配*/
 @media only screen and (min-width: 768px) and (max-width: 799px){

@@ -128,7 +128,12 @@ export default class currentAttendance extends React.Component {
                     <span className="home_titleMore">考勤详情<i className="titleMore"></i></span>
                 </h3>
                 {!this.state.openClass ?
-                    <div className='classTableA'>暂未开课</div> :
+                    <div className='classTableA'>
+                        <div className="empty_center">
+                            <div className="empty_icon empty_currentAttendance"></div>
+                            <div className="empty_text">暂无考勤</div>
+                        </div>
+                    </div> :
                     <div className='classTableA'>
                         <div className="due">应到人数：<span className="number">{this.state.peopleNum}</span></div>
                         <div className="due">实到人数：<span className="number">{this.state.peopleNumReality}</span></div>

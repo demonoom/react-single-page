@@ -7,6 +7,7 @@
     width:50px;
     height:50px;
     border-radius: 50%;
+    margin-top: 8px;
   }
 
   .deleteNoifty {
@@ -17,9 +18,10 @@
     background: #ccc;
     border-radius: 50%;
     color: white;
+    margin-top: 8px;
   }
   .am-list-line::after{
-    background-color:#fff;
+    background:none;
   }
   .am-input-control{
     text-align: right;
@@ -32,8 +34,17 @@
   .am-list-item{
     border-top: 15px #f4f4f4 solid;
   }
+  .am-list-body div:not(:last-child) .am-list-line{
+    border-bottom: 0;
+  }
   .am-textarea-control textarea{
     text-align: right;
     font-size: 16px;
+  }
+  .listCont{
+    position: relative;
+    .am-list-item{
+      padding-left: 105px;
+    }
   }
 }

@@ -21,21 +21,21 @@ export default class publicClassCardHomePage extends React.Component {
     }
 
     componentWillMount() {
-        var pro = {
-            "command": "braceletBoxConnect",
-            "data": {
-                "type": "web",
-                "machine": '02:00:00:00:00:00',
-                "version": '1.0'
-            }
-        };
-        ms = new MsgConnection();
-        ms.connect(pro);
         var locationHref = decodeURI(window.location.href);
         var locationSearch = locationHref.substr(locationHref.indexOf("?") + 1);
         var searchArray = locationSearch.split("&");
         var clazzId = searchArray[0].split('=')[1];
         var roomId = searchArray[1].split('=')[1];
+        var pro = {
+            "command": "braceletBoxConnect",
+            "data": {
+                "type": "web",
+                "machine": '02:00:00:00:00:00',
+                "version": '1.0',
+            }
+        };
+        ms = new MsgConnection();
+        ms.connect(pro);
         localStorage.setItem("clazzId", clazzId);
         localStorage.setItem("roomId", roomId);
     }
@@ -61,15 +61,15 @@ export default class publicClassCardHomePage extends React.Component {
             <div id="classCardHomePage" style={{height: document.body.clientHeight}}>
                 <div className="home_content">
                     {/*公共教室班牌首页*/}
-                    <div className="home_left">
+                    <div className="publicHome_left">
                         <Notify/>
                     </div>
-                    <div className="home_right">
+                    <div className="publicHome_right">
                         <CurrentAttendance
                             messageUtilObj={this.state.messageInfo}
                         />
                     </div>
-                    <div className="home_center">
+                    <div className="publicHome_center">
                         <Course
                             messageUtilObj={this.state.messageInfo}
                         />

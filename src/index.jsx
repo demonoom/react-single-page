@@ -346,8 +346,11 @@ class Index extends React.Component {
                         to="/homeworkModule?classId=819"
                         style={{fontSize: '24px'}}>作业模块</Link></li>
                     <li><Link
-                        to="/curriculumSchedule?ident=23836&access=23836"
+                        to="/curriculumSchedule?ident=23836&curriculumType=1&access=23836"
                         style={{fontSize: '24px'}}>课程表列表</Link></li>
+                    <li><Link
+                        to="/curriculumSchedule?ident=23836&curriculumType=2&access=23836"
+                        style={{fontSize: '24px'}}>公共教室课程表列表</Link></li>
                     <li><Link
                         to="/workAttendance"
                         style={{fontSize: '24px'}}>出勤</Link></li>
@@ -367,7 +370,7 @@ class Index extends React.Component {
                         to="/moralEducation?ident=23836"
                         style={{fontSize: '24px'}}>德育评价</Link></li>
                     <li><Link
-                        to="/classCardHomePage?clazzId=819&roomId=1&mac=02:00:00:00:00:00"
+                        to="/classCardHomePage?clazzId=819&roomId=6&mac=02:00:00:00:00:00"
                         style={{fontSize: '24px'}}>班牌首页</Link></li>
                     <li><Link
                         to="/publicClassCardHomePage?clazzId=819&roomId=1"
