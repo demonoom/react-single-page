@@ -2,16 +2,19 @@ import React from 'react';
 import {List, Picker, InputItem, TextareaItem, Button,Toast} from 'antd-mobile';
 import '../css/notify.less'
 
+var calm;
+
 export default class addNotify extends React.Component {
 
     constructor(props) {
         super(props);
+        calm = this;
         this.state = {
             pickerData: [],  //选择项容器
             asyncValue: [],
             title: '',
             content: '',
-            classId: ''  //所选班级id
+            classroomId: ''  //所选班级id
         };
     }
 
@@ -21,14 +24,15 @@ export default class addNotify extends React.Component {
 
     componentDidMount() {
         document.title = "通知列表";
-        this.getClazzesByUserId();
+        // this.getClazzesByUserId();
     }
-    getClazzesByUserId(){
+    getClassRoomId(){
         var _this = this;
         //获取班级选择项
         var param = {
-            "method": 'getClazzesByUserId',
-            "userId": JSON.parse(localStorage.getItem('loginUserSchedule')).colUid,
+            "method": 'viewClassRoomPage',
+            "uid": JSON.parse(localStorage.getItem('loginUserSchedule')).colUid,
+            "pn":1
         };
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
             onResponse: (result) => {
@@ -40,7 +44,7 @@ export default class addNotify extends React.Component {
                                 value: v.id, label: v.name
                             })
                         })
-                        _this.setState({pickerData: arr});
+                        calm.setState({pickerData: arr});
                     }
                 }
             },
@@ -65,15 +69,17 @@ export default class addNotify extends React.Component {
         this.setState({
             data: d,
             asyncValue,
-            classId: asyncValue[0],
+            classroomId: asyncValue[0],
         });
+
+        
     };
 
     //提交
     submitClass = () => {
         let warn = '', classInfo = this.state;
         var _this = this;
-        if (classInfo.classId == '') {
+        if (classInfo.classroomId == '') {
             warn = '请选择班级';
         } else if (classInfo.title == '') {
             warn = '请输入标题'
@@ -86,8 +92,9 @@ export default class addNotify extends React.Component {
             let classObject = {
                 uid:JSON.parse(localStorage.getItem('loginUserSchedule')).colUid,
                 noticeContent:classInfo.content,
-                cid:classInfo.classId,
-                noticeTitle:classInfo.title
+                classroomId:classInfo.classroomId,
+                noticeTitle:classInfo.title,
+                type:1
             };
             var param = {
                 "method": 'saveClassBrandNotice',
@@ -96,7 +103,6 @@ export default class addNotify extends React.Component {
             WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
                 onResponse: (result) => {
                     if (result.msg == '调用成功' || result.success == true) {
-
                     }
                 },
                 onError: function (error) {
@@ -115,7 +121,7 @@ export default class addNotify extends React.Component {
     contentHandleChange = event => {
         this.setState({content: event});
     }
-
+   
     render() {
         return (
             <div id="notify" style={{height: document.body.clientHeight}}>
@@ -125,7 +131,7 @@ export default class addNotify extends React.Component {
                         value={this.state.asyncValue}
                         onPickerChange={this.onPickerChange}
                         onOk={v => this.viewCourseTableItemPage(v)}>
-                    <List.Item arrow="horizontal">选择班级</List.Item>
+                    <List.Item arrow="horizontal" onClick={this.getClassRoomId}>选择教室</List.Item>
                 </Picker>
                 <InputItem
                     placeholder="请输入标题"
