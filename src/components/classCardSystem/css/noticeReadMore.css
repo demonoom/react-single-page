@@ -1,5 +1,5 @@
-#noticeReadMore .list-view-section-body .divBox:first-child .noticeContent {
-  display: "block" !important;
+#noticeReadMore .createTime {
+  float: right;
 }
 #noticeReadMore .am-card {
   min-height: 2.7rem;
