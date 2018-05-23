@@ -5,7 +5,7 @@ import {MsgConnection} from '../../../../helpers/msg_websocket_connection';
 import CurrentAttendance from './currentAttendance'
 import Course from './course'
 import Notify from './notify'
-import Header from './Header'
+import Header from './header'
 
 var demeanor;
 //消息通信js
