@@ -94,6 +94,7 @@
   height: 6.4rem;
   overflow-x: hidden;
   overflow-y: auto;
+  position: relative;
 }
 #classCardHomePage .notify_cont li {
   height: 1.94rem;
@@ -108,9 +109,13 @@
   font-size: 0.72rem;
   color: #5091fe;
 }
+#classCardHomePage .mEScoreInfo {
+  height: 8.25rem;
+  position: relative;
+}
 #classCardHomePage .mEScoreInfoM {
   text-align: center;
-  margin: 2.3rem 0 2.3rem 0;
+  margin: 2rem 0 2.1rem 0;
 }
 #classCardHomePage .blue_big {
   font-size: 2.22rem;
