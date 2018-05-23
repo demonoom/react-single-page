@@ -111,6 +111,7 @@ export default class header extends React.Component {
         };
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
             onResponse: function (result) {
+                console.log(result);
                 if (result.msg == '调用成功' || result.success == true) {
                     if (WebServiceUtil.isEmpty(result.response) == false) {
                         demeanor.setState({classroomName: result.response.defaultBindedClazz.name})
@@ -143,16 +144,17 @@ export default class header extends React.Component {
      */
     weatherInfo(adcode) {
         $.get('http://restapi.amap.com/v3/weather/weatherInfo?key=fce57f3f5ed99a1b7925992439e5a224&city=' + adcode + '&extensions=all', function (res) {
-            demeanor.setState({weatherArr: res.forecasts[0].casts.splice(0, 3)})
+            demeanor.setState({weatherArr: res.forecasts[0].casts.splice(0, 2)})
         })
     }
 
     render() {
         return (
             <div id="header">
-                <div>{this.state.classroomName}</div>
+                <div className="headTitle"><span className="headTitleT text_hidden">{this.state.classroomName}</span></div>
                 <div className="header_date float_ri">
-                    {this.state.timeHeader + '' + this.state.timeFoot}
+                    <div className="weatherColor2 space_high4">{this.state.timeFoot}</div>
+                    <div>{this.state.timeHeader}</div>
                 </div>
                 <div className="header_weather float_ri">
                     {
