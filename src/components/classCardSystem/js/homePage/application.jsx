@@ -37,7 +37,7 @@ export default class application extends React.Component {
                 <h3 className="home_title">应用</h3>
                 <div className="application_cont">
                     <li className="app_list" onClick={this.intoApplication}>
-                        <div className="app_list_img"></div>
+                        <div className="app_list_img"><span className="task"></span></div>
                         <div className="app_list_text text_hidden">蚁巢作业</div>
                     </li>
                 </div>

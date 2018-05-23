@@ -83,13 +83,12 @@ export default class studentOnDuty extends React.Component {
     render() {
         return (
             <div id="studentOnDuty" className="home_card studentOnDuty_height">
-                <h3 className="home_title">今日值日生</h3>
-                <div className="home_cardCont">
-                    {this.state.todyDuty}
-                </div>
-                <h3 className="home_title">明日值日生</h3>
-                <div className="home_cardCont">
-                    {this.state.nextDuty}
+                <h3 className="home_title">值日生</h3>
+                <div className="home_cardCont studentOnDuty_cont">
+                    <h4 className="studentOnDuty_today">今日值日生</h4>
+                    <div>{this.state.todyDuty}</div>
+                    <h4 className="studentOnDuty_today">明日值日生</h4>
+                    <div>{this.state.nextDuty}</div>
                 </div>
             </div>
         );
