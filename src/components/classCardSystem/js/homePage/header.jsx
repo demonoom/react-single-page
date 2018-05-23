@@ -111,7 +111,6 @@ export default class header extends React.Component {
         };
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
             onResponse: function (result) {
-                console.log(result);
                 if (result.msg == '调用成功' || result.success == true) {
                     if (WebServiceUtil.isEmpty(result.response) == false) {
                         demeanor.setState({classroomName: result.response.defaultBindedClazz.name})
