@@ -64,15 +64,15 @@ export default class course extends React.Component {
 
     turnToDetil() {
         var url = WebServiceUtil.mobileServiceURL + "tableItemDetil";
-        window.location.href = url;
-        // var data = {
-        //     method: 'openNewPage',
-        //     url: url
-        // };
-        //
-        // Bridge.callHandler(data, null, function (error) {
-        //     window.location.href = url;
-        // });
+        // window.location.href = url;
+        var data = {
+            method: 'openNewPage',
+            url: url
+        };
+
+        Bridge.callHandler(data, null, function (error) {
+            window.location.href = url;
+        });
     }
 
     render() {

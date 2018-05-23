@@ -67,28 +67,59 @@ export default class header extends React.Component {
             weatherArr: [],
             timeHeader: '',
             timeFoot: '',
+            abcode: '',
+            classroomName: '',
         };
     }
 
     componentWillMount() {
+        this.makeTime();
+        this.viewClassRoom()
         var data = {
             method: 'getAbCode',
         };
 
         /**
          * 从客户端获取abcode用于请求天气
+         * 客户端没有传abcode将按照西安天气展示
          */
         Bridge.callHandler(data, function (res) {
             demeanor.weatherInfo(res)
+            demeanor.setState({abcode: res})
         }, function (error) {
-            Toast.fail(error, 5);
-            demeanor.weatherInfo(610113)
+            Toast.fail('地点获取失败', 5);
+            demeanor.weatherInfo(610113);
+            demeanor.setState({abcode: 610113})
         });
-        this.makeTime()
     }
 
     componentDidMount() {
 
+    }
+
+    componentDidUpdate() {
+        //每天刷新天气两次
+        if (this.state.timeFoot == '00:10:00' || this.state.timeFoot == '12:10:00') {
+            demeanor.weatherInfo(demeanor.state.abcode)
+        }
+    }
+
+    viewClassRoom() {
+        var param = {
+            "method": 'viewClassRoom',
+            "id": localStorage.getItem('roomId'),
+        };
+        WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
+            onResponse: function (result) {
+                if (result.msg == '调用成功' || result.success == true) {
+                    if (WebServiceUtil.isEmpty(result.response) == false) {
+                        demeanor.setState({classroomName: result.response.defaultBindedClazz.name})
+                    }
+                }
+            },
+            onError: function (error) {
+            }
+        });
     }
 
     /**
@@ -107,7 +138,7 @@ export default class header extends React.Component {
 
     /**
      * 获取未来天气
-     * 一天调用一次
+     * 一天调用两次
      * @param adcode
      */
     weatherInfo(adcode) {
@@ -116,10 +147,13 @@ export default class header extends React.Component {
         })
     }
 
-
     render() {
         return (
             <div id="header">
+                <div>{this.state.classroomName}</div>
+                <div className="header_date float_ri">
+                    {this.state.timeHeader + '' + this.state.timeFoot}
+                </div>
                 <div className="header_weather float_ri">
                     {
                         this.state.weatherArr.map(function (v, i) {
@@ -139,32 +173,30 @@ export default class header extends React.Component {
                                 } else if (v.dayweather.indexOf('雪') != -1) {
                                     img = <img src={require('../../img/snow_icon.png')} alt=""/>
                                 }
-                                return <span className="header_date3 float_ri">
+                                return <span className="header_date3">
                                     <div>{img}</div>
                                     <div>
-                                        <div>{v.dayweather}</div>
+                                        <div className="weatherColor1 space_high">{v.dayweather}</div>
                                         <div>{v.nighttemp + '℃~' + v.daytemp + '℃'}</div>
                                     </div>
                                 </span>
                             } else if (i == 1) {
-                                return <span>
-                                    <div>明天</div>
-                                    <div>{v.dayweather}</div>
+                                return <span className="header_date2">
+                                    <div className="space_high2">明天</div>
+                                    <div className="space_high3">{v.dayweather}</div>
                                     <div>{v.nighttemp + '℃~' + v.daytemp + '℃'}</div>
                                 </span>
                             } else {
-                                return <span>
-                                    <div>后天</div>
-                                    <div>{v.dayweather}</div>
+                                return <span className="header_date2">
+                                    <div className="space_high2">后天</div>
+                                    <div className="space_high3">{v.dayweather}</div>
                                     <div>{v.nighttemp + '℃~' + v.daytemp + '℃'}</div>
                                 </span>
                             }
                         })
                     }
                 </div>
-                <div className="header_date float_ri">
-                    {this.state.timeHeader + '' + this.state.timeFoot}
-                </div>
+
             </div>
         );
     }

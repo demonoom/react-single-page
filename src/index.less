@@ -238,11 +238,16 @@ hr {
   bottom: 15px;
   width: 100%;
   box-sizing: border-box;
+  z-index: 99;
   .am-button-primary {
     background-color: #e94f4f;
     border: 1PX solid #e94f4f;
     &::before{
       border: 1PX solid #e94f4f !important;
+    }
+    &.am-button-active{
+      background-color: #e94f4f;
+      opcity:0.3;
     }
   }
 }

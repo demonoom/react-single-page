@@ -63,7 +63,14 @@ export default class tableItemDetil extends React.Component {
     };
 
     historyGoBack() {
-        history.back()
+        var data = {
+            method: 'finish',
+        };
+
+        Bridge.callHandler(data, null, function (error) {
+            console.log(error);
+        });
+        // history.back()
     }
 
     render() {
