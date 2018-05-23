@@ -9,12 +9,6 @@ const seasons = [
     ]
 ];
 
-const terms = [
-    [
-
-    ]
-];
-
 var studentCheckedArray=[];
 
 export default class addStudentDuty extends React.Component {
@@ -33,18 +27,15 @@ export default class addStudentDuty extends React.Component {
             pickerValue: [],
             asyncValue: ['1'],
             sValue: [],
-            termValue: [],
             visible: false,
             studentList:[],
             clazzId: '',
             week: '1',
-            termId: '1'
         };
         this.getStudentListByClazz = this.getStudentListByClazz.bind(this);
         this.studentCheckboxOnChange = this.studentCheckboxOnChange.bind(this);
         this.isHaveSameStudentId = this.isHaveSameStudentId.bind(this);
         this.getClazzesByUserId = this.getClazzesByUserId.bind(this);
-        this.getSemesterList = this.getSemesterList.bind(this);
     }
 
     componentDidMount() {
@@ -54,7 +45,6 @@ export default class addStudentDuty extends React.Component {
         var locationSearchArray = locationSearch.split("&");
         var userId = locationSearchArray[0].split("=")[1];
         this.getClazzesByUserId(userId);
-        this.getSemesterList(userId);
     }
 
     onPickerChange = (val) => {
@@ -75,12 +65,6 @@ export default class addStudentDuty extends React.Component {
         this.getStudentListByClazz(clazzId);
         this.setState({sValue: val, clazzId});
     };
-
-    onTermChange = (val) => {
-        var termId = val[0];
-        this.setState({termId,termValue:val});
-    };
-
 
     studentCheckboxOnChange(val){
         this.buildStudentCheckedArray(val);
@@ -129,7 +113,6 @@ export default class addStudentDuty extends React.Component {
             users.push(userObjJson);
         })
         stuJson.cid = this.state.clazzId;
-        stuJson.termid = this.state.termId;
         stuJson.week = this.state.week;
         stuJson.users = users;
         var param = {
@@ -189,43 +172,6 @@ export default class addStudentDuty extends React.Component {
             }
         });
     }
-
-    /**
-     * 进入学生值日页面时，根据用户id获取当前用户的班级
-     * @param userId
-     */
-    getSemesterList(userId){
-        var _this = this;
-        var param = {
-            "method": 'getSemesterList',
-            "uid": userId
-        };
-        WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
-            onResponse: function (result) {
-                if (result.success == true && result.msg == "调用成功") {
-                    var response = result.response;
-                    if (response != null && response != undefined) {
-                        response.forEach(function (term) {
-                            var id = term.id;
-                            var name = term.name;
-                            var termJson = {
-                                label: name,
-                                value: id+"",
-                            };
-                            if(terms[0]!=null && terms[0]!=undefined){
-                                terms[0].push(termJson);
-                            }
-                        })
-
-                    }
-                }
-                _this.setState({seasons});
-            },
-            onError: function (error) {
-            }
-        });
-    }
-
 
     /**
      * 获取班级的学生列表
@@ -312,17 +258,6 @@ export default class addStudentDuty extends React.Component {
                     onOk={v => this.onClassChange(v)}
                 >
                     <List.Item arrow="horizontal">选择班级<i className="redStar">*</i></List.Item>
-                </Picker>
-
-                <WhiteSpace size="lg"/>
-                <Picker
-                    data={terms}
-                    title="请选择"
-                    cascade={false}
-                    value={this.state.termValue}
-                    onOk={v => this.onTermChange(v)}
-                >
-                    <List.Item arrow="horizontal">选择学期<i className="redStar">*</i></List.Item>
                 </Picker>
 
                 <WhiteSpace size="lg"/>

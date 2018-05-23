@@ -19,12 +19,27 @@ export default class application extends React.Component {
 
     }
 
+    intoApplication() {
+        var url = WebServiceUtil.mobileServiceURL + "homeworkModule?classId=" + localStorage.getItem('clazzId');
+        var data = {
+            method: 'openNewPage',
+            url: url
+        };
+
+        Bridge.callHandler(data, null, function (error) {
+            window.location.href = url;
+        });
+    }
+
     render() {
         return (
-            <div id="application"  className="application_height home_card">
+            <div id="application" className="application_height home_card">
                 <h3 className="home_title">应用</h3>
                 <div className="application_cont">
-                    <li className="app_list"><div className="app_list_img"></div><div className="app_list_text text_hidden">蚁巢作业</div></li>
+                    <li className="app_list" onClick={this.intoApplication}>
+                        <div className="app_list_img"></div>
+                        <div className="app_list_text text_hidden">蚁巢作业</div>
+                    </li>
                 </div>
             </div>
         );
