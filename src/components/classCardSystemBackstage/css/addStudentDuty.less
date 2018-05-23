@@ -7,6 +7,20 @@
     top: 7px;
 
   }
+  .bg_white{
+    height: calc(~"100% - 280px");
+    padding-bottom: 20px;
+
+    box-sizing: border-box;
+    position: relative;
+  }
+  .am-list{
+    height: 100%;
+  }
+  .am-list-body{
+    overflow-y: auto;
+    height: calc(~"100% - 43px");
+  }
   .am-list-content{
     position: relative;
   }
@@ -18,12 +32,14 @@
   .am-list-header{
     font-size: 17px;
     color: #000;
+
   }
+
   .am-list-body{
     border: 0;
-    padding: 0 30px 30px 72px;
+    padding: 0 30px 0 72px;
     &::before,&::after{
-      background-color:#fff;
+      background:none !important;
     }
     .am-list-item{
       border-bottom: 1px #f4f4f4 solid;
@@ -35,5 +51,6 @@
   .am-list-body div:not(:last-child) .am-list-line{
     border-bottom:0;
   }
+
 
 }

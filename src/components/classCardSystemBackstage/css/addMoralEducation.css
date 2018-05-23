@@ -22,7 +22,7 @@
 }
 #addMoralEducation .addCourseButton {
   position: absolute;
-  bottom: 0.1rem;
+  bottom: 15px;
   width: 100%;
 }
 #addMoralEducation .add_element {
