@@ -108,7 +108,14 @@ export default class noticeReadMore extends React.Component {
     };
 
     historyGoBack() {
-        history.back()
+        var data = {
+            method: 'finish',
+        };
+
+        Bridge.callHandler(data, null, function (error) {
+            console.log(error);
+        });
+        // history.back()
     }
 
     onClick = (e) => {
@@ -128,8 +135,9 @@ export default class noticeReadMore extends React.Component {
                 <div className="divBox">
                     <ul className="ulBox">
                         <li onClick={this.onClick}>
-                            <p className="title">{rowData.noticeTitle}<span className="time">{this.getTimeFormat(rowData.createTime)}</span></p>
-                            <div className="noticeContent" style={{ display: rowID=='0'?"block":"none" }}>
+                            <p className="title">{rowData.noticeTitle}<span
+                                className="time">{this.getTimeFormat(rowData.createTime)}</span></p>
+                            <div className="noticeContent" style={{display: rowID == '0' ? "block" : "none"}}>
                                 {rowData.noticeContent}
                             </div>
                         </li>

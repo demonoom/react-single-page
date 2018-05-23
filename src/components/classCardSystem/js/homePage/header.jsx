@@ -67,28 +67,39 @@ export default class header extends React.Component {
             weatherArr: [],
             timeHeader: '',
             timeFoot: '',
+            abcode: '',
         };
     }
 
     componentWillMount() {
+        this.makeTime();
         var data = {
             method: 'getAbCode',
         };
 
         /**
          * 从客户端获取abcode用于请求天气
+         * 客户端没有传abcode将按照西安天气展示
          */
         Bridge.callHandler(data, function (res) {
             demeanor.weatherInfo(res)
+            demeanor.setState({abcode: res})
         }, function (error) {
-            Toast.fail(error, 5);
-            demeanor.weatherInfo(610113)
+            Toast.fail('地点获取失败', 5);
+            demeanor.weatherInfo(610113);
+            demeanor.setState({abcode: 610113})
         });
-        this.makeTime()
     }
 
     componentDidMount() {
 
+    }
+
+    componentDidUpdate() {
+        //每天刷新天气两次
+        if (this.state.timeFoot == '00:10:00' || this.state.timeFoot == '12:10:00') {
+            demeanor.weatherInfo(demeanor.state.abcode)
+        }
     }
 
     /**
@@ -107,7 +118,7 @@ export default class header extends React.Component {
 
     /**
      * 获取未来天气
-     * 一天调用一次
+     * 一天调用两次
      * @param adcode
      */
     weatherInfo(adcode) {
@@ -115,7 +126,6 @@ export default class header extends React.Component {
             demeanor.setState({weatherArr: res.forecasts[0].casts.splice(0, 3)})
         })
     }
-
 
     render() {
         return (
