@@ -1,5 +1,5 @@
 import React from 'react';
-import { } from 'antd-mobile';
+import {} from 'antd-mobile';
 
 var MEScore;
 
@@ -19,6 +19,10 @@ export default class moralEducationScore extends React.Component {
 
     componentDidMount() {
         this.getMEScore();
+    }
+
+    componentWillReceiveProps(nextProps) {
+        console.log('moralEducationScore', nextProps.classCommand);
     }
 
     getMEScore() {

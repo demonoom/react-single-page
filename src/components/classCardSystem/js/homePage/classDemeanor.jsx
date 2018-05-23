@@ -17,6 +17,10 @@ export default class classDemeanor extends React.Component {
         this.getClassRewardInfo(clazzId);
     }
 
+    componentWillReceiveProps(nextProps) {
+        console.log('classDemeanor', nextProps.classCommand);
+    }
+
     componentDidMount() {
 
     }
@@ -30,7 +34,7 @@ export default class classDemeanor extends React.Component {
         var param = {
             "method": 'getClassDemeanorInfo',
             "clazzId": clazzId,
-            "type":1
+            "type": 1
         };
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
             onResponse: function (result) {
@@ -44,7 +48,8 @@ export default class classDemeanor extends React.Component {
                             var classDemeanors = result.response;
                             classDemeanors.forEach(function (classDemeanor) {
                                 if (classDemeanor != null && classDemeanor != undefined) {
-                                    var stuImgTag=<img style={{width:'100%',height:'100%'}} id={classDemeanor.id} src={classDemeanor.imagePath}/>;
+                                    var stuImgTag = <img style={{width: '100%', height: '100%'}} id={classDemeanor.id}
+                                                         src={classDemeanor.imagePath}/>;
                                     classDemeanorList.push(stuImgTag)
                                 }
                             })
@@ -67,7 +72,7 @@ export default class classDemeanor extends React.Component {
         var param = {
             "method": 'getClassDemeanorInfo',
             "clazzId": clazzId,
-            "type":2
+            "type": 2
         };
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
             onResponse: function (result) {
@@ -81,7 +86,8 @@ export default class classDemeanor extends React.Component {
                             var classRewards = result.response;
                             classRewards.forEach(function (classDemeanor) {
                                 if (classDemeanor != null && classDemeanor != undefined) {
-                                    var stuImgTag=<img style={{width:'100%',height:'100%'}} id={classDemeanor.id} src={classDemeanor.imagePath}/>;
+                                    var stuImgTag = <img style={{width: '100%', height: '100%'}} id={classDemeanor.id}
+                                                         src={classDemeanor.imagePath}/>;
                                     classRewardList.push(stuImgTag);
                                 }
                             })
@@ -104,7 +110,7 @@ export default class classDemeanor extends React.Component {
                                       infinite
                                       dots={false}
                                       beforeChange={(from, to) => console.log(`slide from ${from} to ${to}`)}
-                                      afterChange={index => this.setState({ slideIndex: index })}
+                                      afterChange={index => this.setState({slideIndex: index})}
         >
             {this.state.classDemeanorList}
         </Carousel>;
@@ -116,11 +122,11 @@ export default class classDemeanor extends React.Component {
                                     infinite
                                     dots={false}
                                     beforeChange={(from, to) => console.log(`slide from ${from} to ${to}`)}
-                                    afterChange={index => this.setState({ slideIndex: index })}
+                                    afterChange={index => this.setState({slideIndex: index})}
         >
             {this.state.classRewardList}
         </Carousel>;
-        if(WebServiceUtil.isEmpty(this.state.classDemeanorList)===true || this.state.classDemeanorList.length == 0){
+        if (WebServiceUtil.isEmpty(this.state.classDemeanorList) === true || this.state.classDemeanorList.length == 0) {
             clazzDemeanor = <div className="demeanor_list1">
                 <div className="empty_center">
                     <div className="empty_icon empty_honor"></div>
@@ -128,7 +134,7 @@ export default class classDemeanor extends React.Component {
                 </div>
             </div>
         }
-        if(WebServiceUtil.isEmpty(this.state.classRewardList)===true || this.state.classRewardList.length == 0){
+        if (WebServiceUtil.isEmpty(this.state.classRewardList) === true || this.state.classRewardList.length == 0) {
             classReward = <div className="demeanor_list2">
                 <div className="empty_center">
                     <div className="empty_icon empty_activity"></div>
@@ -138,7 +144,7 @@ export default class classDemeanor extends React.Component {
         }
 
         return (
-            <div id="classDemeanor"  className="home_card classDemeanor_height">
+            <div id="classDemeanor" className="home_card classDemeanor_height">
                 <h3 className="home_title">班级风采</h3>
                 <div className="demeanor_margin">
                     {clazzDemeanor}

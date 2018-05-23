@@ -22,6 +22,10 @@ export default class studentOnDuty extends React.Component {
         this.getClassBrandStudentDutyByToday(clazzId);
     }
 
+    componentWillReceiveProps(nextProps) {
+        console.log('studentOnDuty', nextProps.classCommand);
+    }
+
     /**
      * 班牌值日今日信息查询
      * @param clazzId
@@ -35,9 +39,9 @@ export default class studentOnDuty extends React.Component {
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
             onResponse: function (result) {
                 var weekOfTody = new Date().getDay();
-                console.log("week:"+weekOfTody);
-                var todyDuty=[];
-                var nextDuty=[];
+                console.log("week:" + weekOfTody);
+                var todyDuty = [];
+                var nextDuty = [];
                 if (result.success == true && result.msg == "调用成功") {
                     var response = result.response;
                     if (response != null && response != undefined) {
@@ -73,7 +77,7 @@ export default class studentOnDuty extends React.Component {
                         }
                     }
                 }
-                _this.setState({todyDuty,nextDuty});
+                _this.setState({todyDuty, nextDuty});
             },
             onError: function (error) {
             }
