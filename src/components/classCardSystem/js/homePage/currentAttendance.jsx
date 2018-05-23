@@ -108,16 +108,16 @@ export default class currentAttendance extends React.Component {
         }
 
         var currentAttendanceListUrl = WebServiceUtil.mobileServiceURL + "currentAttendanceList?clazzId=" + this.state.clazzId;
-        window.location.href = currentAttendanceListUrl;
+        // window.location.href = currentAttendanceListUrl;
 
-        // var data = {
-        //     method: 'openNewPage',
-        //     url: currentAttendanceListUrl
-        // };
-        //
-        // Bridge.callHandler(data, null, function (error) {
-        //     window.location.href = currentAttendanceListUrl;
-        // });
+        var data = {
+            method: 'openNewPage',
+            url: currentAttendanceListUrl
+        };
+
+        Bridge.callHandler(data, null, function (error) {
+            window.location.href = currentAttendanceListUrl;
+        });
     }
 
     render() {

@@ -223,6 +223,9 @@ hr {
 .float_ri {
   float: right;
 }
+.float_l {
+  float: left;
+}
 .addBunton {
   width: 3rem;
   height: 3rem;
@@ -246,6 +249,7 @@ hr {
   bottom: 15px;
   width: 100%;
   box-sizing: border-box;
+  z-index: 99;
 }
 .submitBtn .am-button-primary {
   background-color: #e94f4f;
@@ -253,6 +257,10 @@ hr {
 }
 .submitBtn .am-button-primary::before {
   border: 1PX solid #e94f4f !important;
+}
+.submitBtn .am-button-primary.am-button-active {
+  background-color: #e94f4f;
+  opcity: 0.3;
 }
 /*班牌内页返回首页*/
 .navBar {

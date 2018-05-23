@@ -374,8 +374,8 @@ export default class classroomManage extends React.Component {
                         </div>
                     </List>
                     <div className="bottomBox">
-                        <span onClick={this.cancelAddModel} className="close">关闭</span>
-                        <span className="bind" onClick={this.binding}>提交</span>
+                        <span onClick={this.cancelAddModel} className="close">关 闭</span>
+                        <span className="bind" onClick={this.binding}>提 交</span>
                     </div>
 
                 </div>

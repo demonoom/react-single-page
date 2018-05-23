@@ -103,7 +103,7 @@ export default class currentAttendanceList extends React.Component {
                 var colUid = studentOfAll.colUid;
                 var isExist = _this.checkIsExistCurrentStudent(currentStudents, colUid);
                 var checkedTip = "";
-                var classFlag ="imgDiv";
+                var classFlag = "imgDiv";
                 if (isExist === false) {
                     checkedTip = "未签到";
                     classFlag = "imgDiv no";
@@ -147,7 +147,14 @@ export default class currentAttendanceList extends React.Component {
      */
     turnToHomePage() {
         clearInterval(timer)
-        history.back()
+        var data = {
+            method: 'finish',
+        };
+
+        Bridge.callHandler(data, null, function (error) {
+            console.log(error);
+        });
+        // history.back()
     }
 
 
@@ -160,10 +167,12 @@ export default class currentAttendanceList extends React.Component {
                         <span className="icon"> &gt; </span>
                         <span>考勤详情</span>
                         <div className="right">
-                            <span style={{marginLeft:'20px'}}>
+                            <span style={{marginLeft: '20px'}}>
                                 <span className="item">应到：<span className="blue">{this.state.peopleNum}</span></span>
-                                <span className="item">实到：<span className="blue">{this.state.currentPeopleNum}</span></span>
-                                <span className="noSign"><span className="white btn">未签到</span><span className="text">{parseInt(this.state.peopleNum) - parseInt(this.state.currentPeopleNum)}</span></span>
+                                <span className="item">实到：<span
+                                    className="blue">{this.state.currentPeopleNum}</span></span>
+                                <span className="noSign"><span className="white btn">未签到</span><span
+                                    className="text">{parseInt(this.state.peopleNum) - parseInt(this.state.currentPeopleNum)}</span></span>
                             </span>
                         </div>
                     </div>

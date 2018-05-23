@@ -195,32 +195,33 @@
 #updateClassroom .addModel .classroomName .stIcon,
 #updateClassroom .addModel .gradeName .stIcon {
   width: 18px;
-  height: 18px;
+  height: 28px;
   position: absolute;
   right: 15px;
   top: 50%;
-  margin-top: -10px;
+  margin-top: -12px;
 }
 #updateClassroom .addModel .classroomName .stIcon img,
 #updateClassroom .addModel .gradeName .stIcon img {
-  width: 10px;
-  height: 9px;
+  width: 100%;
 }
 #updateClassroom .addModel .bottomBox {
-  display: flex;
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  width: 100%;
+  text-align: center;
 }
 #updateClassroom .addModel .bottomBox span {
   flex: 1;
-  text-align: center;
-  font-size: 1rem;
-  padding: 1rem;
-  display: inline-block;
+  font-size: 18px;
+  line-height: 47px;
+  display: block;
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  border-radius: 5px;
+  background-color: #e94f4f;
+}
+#updateClassroom .addModel .bottomBox span:active {
+  color: rgba(255, 255, 255, 0.3);
+  background-color: #d24747;
 }
 #updateClassroom .addModel .bottomBox .bind {
-  background: #e46a51;
   color: #fff;
 }

@@ -9,12 +9,6 @@ const seasons = [
     ]
 ];
 
-const terms = [
-    [
-
-    ]
-];
-
 var studentCheckedArray=[];
 
 export default class editStudentDuty extends React.Component {
@@ -33,17 +27,14 @@ export default class editStudentDuty extends React.Component {
             pickerValue: [],
             asyncValue: ['1'],
             sValue: [],
-            termValue: [],
             visible: false,
             studentList:[],
             clazzId: '',
             week: '1',
-            termId: '1'
         };
         this.studentCheckboxOnChange = this.studentCheckboxOnChange.bind(this);
         this.isHaveSameStudentId = this.isHaveSameStudentId.bind(this);
         this.getClazzesByUserId = this.getClazzesByUserId.bind(this);
-        this.getSemesterList = this.getSemesterList.bind(this);
     }
 
     componentDidMount(){
@@ -52,18 +43,15 @@ export default class editStudentDuty extends React.Component {
         var locationSearch = locationHref.substr(locationHref.indexOf("?") + 1);
         var locationSearchArray = locationSearch.split("&");
         var clazzId = locationSearchArray[0].split("=")[1];
-        var termId = locationSearchArray[1].split("=")[1];
-        var week = locationSearchArray[2].split("=")[1];
-        var studentIds = locationSearchArray[3].split("=")[1];
-        var dutyId = locationSearchArray[4].split("=")[1];
-        var userId = locationSearchArray[5].split("=")[1];
+        var week = locationSearchArray[1].split("=")[1];
+        var studentIds = locationSearchArray[2].split("=")[1];
+        var dutyId = locationSearchArray[3].split("=")[1];
+        var userId = locationSearchArray[4].split("=")[1];
         this.getStudentListByClazz(clazzId,studentIds);
         this.getClazzesByUserId(userId);
-        this.getSemesterList(userId);
         var sValue = [clazzId];
-        var termValue = [termId];
         var asyncValue = [week];
-        this.setState({clazzId,week,termId,studentIds,dutyId,sValue,termValue,asyncValue});
+        this.setState({clazzId,week,studentIds,dutyId,sValue,asyncValue});
     }
 
     onPickerChange = (val) => {
@@ -82,11 +70,6 @@ export default class editStudentDuty extends React.Component {
     onClassChange = (val) => {
         var clazzId = val[0];
         this.setState({sValue: val, clazzId});
-    };
-
-    onTermChange = (val) => {
-        var termId = val[0];
-        this.setState({termId,termValue:val});
     };
 
 
@@ -122,42 +105,6 @@ export default class editStudentDuty extends React.Component {
                             };
                             if(seasons[0]!=null && seasons[0]!=undefined){
                                 seasons[0].push(clazzJson);
-                            }
-                        })
-
-                    }
-                }
-                _this.setState({seasons});
-            },
-            onError: function (error) {
-            }
-        });
-    }
-
-    /**
-     * 进入学生值日页面时，根据用户id获取当前用户的班级
-     * @param userId
-     */
-    getSemesterList(userId){
-        var _this = this;
-        var param = {
-            "method": 'getSemesterList',
-            "uid": userId
-        };
-        WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
-            onResponse: function (result) {
-                if (result.success == true && result.msg == "调用成功") {
-                    var response = result.response;
-                    if (response != null && response != undefined) {
-                        response.forEach(function (term) {
-                            var id = term.id;
-                            var name = term.name;
-                            var termJson = {
-                                label: name,
-                                value: id+"",
-                            };
-                            if(terms[0]!=null && terms[0]!=undefined){
-                                terms[0].push(termJson);
                             }
                         })
 
@@ -212,7 +159,6 @@ export default class editStudentDuty extends React.Component {
             "dutyId": this.state.dutyId,
             "clazzId": this.state.clazzId,
             "week": this.state.week,
-            "termId": this.state.termId,
             "dutyStudent": stuStr
         };
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
@@ -284,18 +230,6 @@ export default class editStudentDuty extends React.Component {
                     disabled
                 >
                     <List.Item arrow="horizontal">选择班级<i className="redStar">*</i></List.Item>
-                </Picker>
-
-                <WhiteSpace size="lg"/>
-                <Picker
-                    data={terms}
-                    title="请选择"
-                    cascade={false}
-                    value={this.state.termValue}
-                    onOk={v => this.onTermChange(v)}
-                    disabled
-                >
-                    <List.Item arrow="horizontal">选择学期<i className="redStar">*</i></List.Item>
                 </Picker>
 
                 <WhiteSpace size="lg"/>
