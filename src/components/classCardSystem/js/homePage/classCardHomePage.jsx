@@ -2,6 +2,7 @@ import React from 'react';
 import {Toast} from 'antd-mobile';
 import '../../css/classCardHomePage.less'
 import {MsgConnection} from '../../../../helpers/msg_websocket_connection';
+import {SimpleWebsocketConnection} from '../../../../helpers/simple_websocket_connection';
 import CurrentAttendance from './currentAttendance'
 import Course from './course'
 import Notify from './notify'
@@ -14,6 +15,7 @@ import Header from './header'
 var demeanor;
 //消息通信js
 window.ms = null;
+window.simpleMS = null;
 
 export default class classCardHomePage extends React.Component {
 
@@ -45,10 +47,13 @@ export default class classCardHomePage extends React.Component {
         ms.connect(pro);
         localStorage.setItem("clazzId", clazzId);
         localStorage.setItem("roomId", roomId);
+        simpleMS = new SimpleWebsocketConnection();
+        simpleMS.connect();
     }
 
     componentDidMount() {
         this.msListener()
+        this.simpleListener()
     }
 
     msListener() {
@@ -61,6 +66,19 @@ export default class classCardHomePage extends React.Component {
                 demeanor.setState({messageInfo: info});
             }
         }
+    }
+
+    simpleListener() {
+        simpleMS.msgWsListener = {
+            onError: function (errorMsg) {
+
+            }, onWarn: function (warnMsg) {
+
+            }, onMessage: function (info) {
+                console.log(info);
+                var command = info.command;
+            }
+        };
     }
 
     render() {

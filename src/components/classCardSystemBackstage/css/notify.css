@@ -1,4 +1,3 @@
-(node) util.print is deprecated. Use console.log instead.
 #notify .headPic {
   position: absolute;
   top: 50%;
@@ -32,9 +31,6 @@
 }
 #notify .am-list-item {
   border-top: 15px #f4f4f4 solid;
-}
-#notify .am-list-body div:not(:last-child) .am-list-line {
-  border-bottom: 0;
 }
 #notify .am-textarea-control textarea {
   text-align: right;

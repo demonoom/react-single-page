@@ -23,7 +23,7 @@ export default class notifyBack extends React.Component {
             pickerData: [],  //选择项容器
             asyncValue: [],
             defaultPageNo: 1,
-            classId: '',
+            classroomId: '',
         };
     }
 
@@ -36,49 +36,23 @@ export default class notifyBack extends React.Component {
 
     componentDidMount() {
         document.title = "通知列表";
-        this.getClazzesByUserId();
+        //首页显示全部
+        this.getClassBrandNoticeListByClassId(0);
     }
 
-    //通过uid获取班级信息
-    getClazzesByUserId() {
-        var _this = this;
-        //获取班级选择项
-        var param = {
-            "method": 'getClazzesByUserId',
-            "userId": _this.state.ident,
-        };
-        WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
-            onResponse: (result) => {
-                if (result.msg == '调用成功' || result.success == true) {
-                    if (WebServiceUtil.isEmpty(result.response) == false) {
-                        var arr = [];
-                        result.response.forEach(function (v, i) {
-                            arr.push({
-                                value: v.id, label: v.name
-                            })
-                        })
-                        _this.setState({pickerData: arr});
-                    }
-                }
-            },
-            onError: function (error) {
-                // message.error(error);
-            }
-        });
-    }
-
-    //通过班级id获取通知列表
-    getClassBrandNoticeListByClassId(classId) {
+    //通过教室id获取通知列表
+    getClassBrandNoticeListByClassId(classroomId) {
         var _this = this;
         _this.state.dataSource = [];
         _this.state.dataSource = new ListView.DataSource({
             rowHasChanged: (row1, row2) => row1 !== row2,
         });
-        const dataBlob = {};
+        var dataBlob = {};
+        _this.initData = [];
         var PageNo = this.state.defaultPageNo;
         var param = {
             "method": 'getClassBrandNoticeListByClassId',
-            "cid": classId,
+            "classroomId": classroomId,
             "pageNo": PageNo,
         };
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
@@ -117,7 +91,7 @@ export default class notifyBack extends React.Component {
 
     //新打开添加课程页
     toAddNotify() {
-        var url = WebServiceUtil.mobileServiceURL + "addNotify";
+        var url = WebServiceUtil.mobileServiceURL + "addNotify&ident=" + this.state.ident;
         var data = {
             method: 'openNewPage',
             url: url
@@ -192,7 +166,7 @@ export default class notifyBack extends React.Component {
         this.setState({
             data: d,
             asyncValue,
-            classId: val[0]
+            classroomId: val[0]
         });
         if (val[0]) {
             this.getClassBrandNoticeListByClassId(val[0]);
@@ -211,14 +185,41 @@ export default class notifyBack extends React.Component {
         }
         currentPageNo += 1;
         this.setState({isLoadingLeft: true, defaultPageNo: currentPageNo});
-        _this.getClassBrandNoticeListByClassId(_this.state.classId);
+        _this.getClassBrandNoticeListByClassId(_this.state.classroomId);
         this.setState({
             dataSource: this.state.dataSource.cloneWithRows(this.initData),
             isLoadingLeft: true,
         });
     };
 
-
+    //获取教室ID
+    getClassRoomId(){
+        var _this = this;
+        //获取班级选择项
+        var param = {
+            "method": 'viewClassRoomPage',
+            "uid": JSON.parse(localStorage.getItem('loginUserSchedule')).colUid,
+            "pn":1
+        };
+        WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
+            onResponse: (result) => {
+                if (result.msg == '调用成功' || result.success == true) {
+                    if (WebServiceUtil.isEmpty(result.response) == false) {
+                        var arr = [];
+                        result.response.forEach(function (v, i) {
+                            arr.push({
+                                value: v.id, label: v.name
+                            })
+                        })
+                        classBinding.setState({pickerData: arr});
+                    }
+                }
+            },
+            onError: function (error) {
+                // message.error(error);
+            }
+        });
+    }
     render() {
         var _this = this;
         const row = (item, sectionID, rowID) => {
@@ -243,7 +244,7 @@ export default class notifyBack extends React.Component {
                             value={this.state.asyncValue}
                             onPickerChange={this.onPickerChange}
                             onOk={v => this.viewCourseTableItemPage(v)}>
-                        <Item arrow="horizontal">选择班级</Item>
+                        <Item arrow="horizontal" onClick={this.getClassRoomId}>选择教室</Item>
                     </Picker>
                     <ListView
                         ref={el => this.lv = el}
@@ -264,7 +265,6 @@ export default class notifyBack extends React.Component {
                         style={{
                             height: classBinding.state.clientHeight,
                         }}
-                    />}
                     />
 
                 </List>
