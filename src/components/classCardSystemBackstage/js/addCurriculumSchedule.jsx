@@ -126,7 +126,11 @@ export default class addCurriculumSchedule extends React.Component {
         }
         for (var i = 0; i < this.state.ClassTableDataArr.length; i++) {
             var v = this.state.ClassTableDataArr[i];
-            if (v.classAd == '上课地点' || v.startTimeData == '开始时间' || v.endTimeData == '结束时间' || v.clazzName == '' || v.teacherName == '') {
+            if (v.startTimeData == '开始时间' || v.endTimeData == '结束时间' || v.clazzName == '' || v.teacherName == '') {
+                Toast.fail('课表存在空值');
+                return false
+            }
+            if(_this.state.curriculumType == 1 && v.classAd == '上课地点'){
                 Toast.fail('课表存在空值');
                 return false
             }
@@ -142,16 +146,20 @@ export default class addCurriculumSchedule extends React.Component {
         };
         var classArray = [];
         this.state.ClassTableDataArr.forEach(function (v, i) {
-            var isPublic = false;
-            if(_this.state.curriculumType == 2){
-                //如果是公共教室，则isPublic固定为true
-                isPublic = true;
+            //如果是公共教室，则isPublic固定为true
+            var isPublic = true;
+            //公共教室则以开始选择的教室id为上课地点
+            var classRoomId = _this.state.classAsyncValue[0];
+            if(_this.state.curriculumType == 1){
+                //如果是普通教室，则需要选择上课地点
+                classRoomId = v.classAddress;
+                isPublic = false;
             }
             classArray.push({
                 "courseName": v.clazzName,
                 "index": i + 1,
                 "teacherId": v.teacherName,
-                "classRoomId": v.classAddress,
+                "classRoomId": classRoomId,
                 "isPublic": isPublic,
                 "openTime": v.startTimeData,
                 "closeTime": v.endTimeData,
@@ -339,7 +347,7 @@ export default class addCurriculumSchedule extends React.Component {
                     </Picker>
                     {/*上课地点*/}
                 </div>
-                <div className="flex_container my_flex flex_addElement">
+                {_this.state.curriculumType == 1?<div className="flex_container my_flex flex_addElement">
                     <Picker
                         data={_this.state.posData}
                         cols={1}
@@ -353,7 +361,7 @@ export default class addCurriculumSchedule extends React.Component {
                         </span>
                     </Picker>
 
-                </div>
+                </div>:null}
                 <div className="flex_container my_flex flex_addElement">
                     <InputItem
                         className="add_element"

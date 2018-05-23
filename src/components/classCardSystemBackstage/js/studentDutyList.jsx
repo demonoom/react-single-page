@@ -3,7 +3,6 @@ import {Picker, List, WhiteSpace, Grid, Button, Icon} from 'antd-mobile';
 import '../css/studentDutyList.less'
 
 const seasons = [
-    [],
     []
 ];
 
@@ -30,12 +29,10 @@ export default class studentDutyList extends React.Component {
             studentList: [],
             clazzId: '',
             week: '1',
-            termId: '1',
             editButtonDisabled:true
         };
         this.getClassBrandStudentDuty = this.getClassBrandStudentDuty.bind(this);
         this.getClazzesByUserId = this.getClazzesByUserId.bind(this);
-        this.getSemesterList = this.getSemesterList.bind(this);
     }
 
     componentDidMount(){
@@ -45,7 +42,6 @@ export default class studentDutyList extends React.Component {
         var locationSearchArray = locationSearch.split("&");
         var userId = locationSearchArray[0].split("=")[1];
         this.getClazzesByUserId(userId);
-        this.getSemesterList(userId);
         this.setState({userId});
     }
 
@@ -64,22 +60,20 @@ export default class studentDutyList extends React.Component {
             asyncValue,
             week
         });
-        this.getClassBrandStudentDuty(this.state.clazzId, week, this.state.termId);
+        this.getClassBrandStudentDuty(this.state.clazzId, week);
     };
 
     /**
      * 获取班级值日生的列表
      * @param clazzId 班级id
      * @param week 星期
-     * @param termId 学期
      */
-    getClassBrandStudentDuty(clazzId, week, termId) {
+    getClassBrandStudentDuty(clazzId, week) {
         var _this = this;
         var param = {
             "method": 'getClassBrandStudentDuty',
             "clazzId": clazzId,
-            "week": week,
-            "termId": termId
+            "week": week
         };
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
             onResponse: function (result) {
@@ -160,42 +154,6 @@ export default class studentDutyList extends React.Component {
         });
     }
 
-
-    /**
-     * 进入学生值日页面时，根据用户id获取当前用户的学期
-     * @param userId
-     */
-    getSemesterList(userId){
-        var _this = this;
-        var param = {
-            "method": 'getSemesterList',
-            "uid": userId
-        };
-        WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
-            onResponse: function (result) {
-                if (result.success == true && result.msg == "调用成功") {
-                    var response = result.response;
-                    if (response != null && response != undefined) {
-                        response.forEach(function (term) {
-                            var id = term.id;
-                            var name = term.name;
-                            var termJson = {
-                                label: name,
-                                value: id+"",
-                            };
-                            if(seasons[1]!=null && seasons[1]!=undefined){
-                                seasons[1].push(termJson);
-                            }
-                        })
-                    }
-                }
-                _this.setState({seasons});
-            },
-            onError: function (error) {
-            }
-        });
-    }
-
     /**
      * 班级选项改变的响应函数
      * 切换班级时，查询当前班级对应条件下的值日生
@@ -203,9 +161,8 @@ export default class studentDutyList extends React.Component {
      */
     onClassChange = (val) => {
         var clazzId = val[0];
-        var termId = val[1];
-        this.setState({sValue: val, clazzId, termId});
-        this.getClassBrandStudentDuty(clazzId, this.state.week, termId);
+        this.setState({sValue: val, clazzId});
+        this.getClassBrandStudentDuty(clazzId, this.state.week);
     };
 
     /**
@@ -215,7 +172,7 @@ export default class studentDutyList extends React.Component {
     editStudentDuty=()=>{
         var studentIdStr = this.state.studentIdList.join(",");
         var editStudentDutyUrl = WebServiceUtil.mobileServiceURL + "editStudentDuty";
-        editStudentDutyUrl+="?clazzId="+this.state.clazzId+"&termId="+this.state.termId+"&week="+this.state.week+"&studentIds="+studentIdStr+"&dutyId="+this.state.dutyId+"&access_user="+this.state.userId;
+        editStudentDutyUrl+="?clazzId="+this.state.clazzId+"&week="+this.state.week+"&studentIds="+studentIdStr+"&dutyId="+this.state.dutyId+"&access_user="+this.state.userId;
         location.href = editStudentDutyUrl;
 
         /*var data = {
