@@ -1,6 +1,16 @@
 #comments .my-list {
   position: relative;
 }
+#comments .am-tabs-default-bar-tab-active {
+  color: #f35454;
+}
+#comments .am-tabs-default-bar-tab::after,
+#comments .am-list-line::after {
+  background: none!important;
+}
+#comments .am-tabs-default-bar-underline {
+  border-color: #f35454;
+}
 #comments .bottom_box {
   position: fixed;
   bottom: 50px;
@@ -45,9 +55,13 @@
   position: relative;
 }
 #comments .comment_input {
-  border: 1px solid #ccc;
   margin: 0 auto;
   margin-bottom: 5px;
+  background-color: #f4f4f4;
+  margin: 15px;
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  border-radius: 5px;
 }
 #comments .bottomBox_left {
   float: left;

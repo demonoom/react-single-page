@@ -3,6 +3,15 @@
     position:relative;
 
   }
+  .am-tabs-default-bar-tab-active{
+    color: #f35454;
+  }
+  .am-tabs-default-bar-tab::after,.am-list-line::after{
+    background: none!important;
+  }
+  .am-tabs-default-bar-underline{
+    border-color: #f35454;
+  }
   .bottom_box{
     position: fixed;
     bottom:50px;
@@ -47,10 +56,15 @@
     border-radius: 50%;
     position: relative;
   }
+
   .comment_input{
-    border: 1px solid #ccc;
     margin: 0 auto;
     margin-bottom:5px;
+    background-color: #f4f4f4;
+    margin: 15px;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
   }
   .bottomBox_left{
     float: left;
