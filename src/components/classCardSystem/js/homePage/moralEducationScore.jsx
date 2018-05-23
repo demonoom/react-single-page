@@ -59,7 +59,6 @@ export default class moralEducationScore extends React.Component {
                                 <span className="font_title2 float_ri">年级排名：<span
                                     className="blue_text">{MEScore.state.scoreData.clazzRank}</span></span>
                             </div>
-                            {MEScore.state.scoreData.totalScore}
                             <div className="mEScoreInfoM font_title2 ">
                                 总分<span className="blue_big">{MEScore.state.scoreData.totalScore}</span>
                             </div>
