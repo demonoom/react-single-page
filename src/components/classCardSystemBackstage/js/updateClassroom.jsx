@@ -308,7 +308,7 @@ export default class updateClassroom extends React.Component {
                                 value={this.state.gradeNameValue}
                             >班级名称<i className='redStar'>*</i></InputItem>
                             <div id='stIcon' className='stIcon' onClick={this.searchClassroomName}>
-                                <img  src={require('../imgs/down.png')}/>
+                                <img  src={require('../imgs/icon_search.png')}/>
                             </div>
 
 
@@ -324,8 +324,8 @@ export default class updateClassroom extends React.Component {
                             </List>
                         </div>
                     </List>
-                    <div className="bottomBox">
-                        <span className="bind" onClick={this.binding}>提交</span>
+                    <div className="bottomBox submitBtn">
+                        <span className="bind" onClick={this.binding}>提 交</span>
                     </div>
 
                 </div>

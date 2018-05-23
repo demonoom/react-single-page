@@ -28,6 +28,7 @@
 
   .tableDiv {
     position: relative;
+    background-color: #fff;
     .am-card-body {
       min-height: 1.5rem !important;
       color: #888 !important;
@@ -177,7 +178,7 @@
     .close {
       font-size: 1.5em;
       background: #fff;
-      color: #e46a51;
+      color: #e94f4f;
     }
     > h1 {
       margin-bottom: 50px;
@@ -220,19 +221,23 @@
     .bottomBox {
       display: flex;
       position: absolute;
+      left:0;
       bottom: 0;
-      left: 0;
       width: 100%;
       span {
         flex: 1;
         text-align: center;
-        font-size: 1rem;
+        font-size: 17px;
         padding: 1rem;
         display: inline-block;
       }
       .bind {
-        background: #e46a51;
+        background: #e94f4f;
         color: #fff;
+        &:active{
+          color: rgba(255, 255, 255, 0.3);
+          background-color: #d24747;
+        }
       }
 
     }
