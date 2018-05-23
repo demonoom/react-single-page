@@ -5,11 +5,22 @@
 }
 #tableItemDetil.home_content .inner_bg {
   padding: 0;
+<<<<<<< HEAD
+=======
+  background: none;
+}
+#tableItemDetil.home_content .inner_bg .navBar {
+  background-color: #fff;
+>>>>>>> 17943436b32e10d78aaaa3a10f2f58ae76de36d4
 }
 #tableItemDetil .black_bg {
   background-color: #323336;
   padding: 1.9rem;
   height: calc(100% - 2.22rem);
+<<<<<<< HEAD
+=======
+  box-sizing: border-box;
+>>>>>>> 17943436b32e10d78aaaa3a10f2f58ae76de36d4
 }
 #tableItemDetil .tableItem {
   border-collapse: collapse;
@@ -26,5 +37,10 @@
 }
 #tableItemDetil .tableItem td span.class_name {
   font-size: .72rem;
+<<<<<<< HEAD
   padding-top: .39rem;
+=======
+  padding-top: 0;
+  padding-bottom: .39rem;
+>>>>>>> 17943436b32e10d78aaaa3a10f2f58ae76de36d4
 }

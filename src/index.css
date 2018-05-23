@@ -281,7 +281,11 @@ hr {
   -moz-border-radius: 6px;
   border-radius: 6px;
   height: 100%;
+<<<<<<< HEAD
   padding: 10px;
+=======
+  padding: 0 10px 10px;
+>>>>>>> 17943436b32e10d78aaaa3a10f2f58ae76de36d4
   box-sizing: border-box;
   overflow: hidden;
 }

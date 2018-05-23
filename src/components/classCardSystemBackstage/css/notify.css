@@ -32,6 +32,12 @@
 #notify .am-list-item {
   border-top: 15px #f4f4f4 solid;
 }
+<<<<<<< HEAD
+=======
+#notify .am-list-body div:not(:last-child) .am-list-line {
+  border-bottom: 0;
+}
+>>>>>>> 17943436b32e10d78aaaa3a10f2f58ae76de36d4
 #notify .am-textarea-control textarea {
   text-align: right;
   font-size: 16px;
