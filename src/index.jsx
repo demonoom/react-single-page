@@ -300,6 +300,13 @@ const tableItemDetil = (location, cb) => {
     )
 }
 
+const comments = (location, cb) => {
+    require.ensure([], require => {
+            cb(null, require("./components/commentsModule/js/comments").default)
+        }
+    )
+}
+
 import './index.less';
 
 class Index extends React.Component {
@@ -314,7 +321,7 @@ class Index extends React.Component {
                     {/*<li><Link to="/s4" style={{fontSize: '24px'}}>蚁巢</Link></li>*/}
                     {/*<li><Link to="/s5" style={{fontSize: '24px'}}>实验</Link></li>*/}
                     {/*<li><Link to="/questionBank?ident=54208&pointId=4339&title=nihao"*/}
-                    {/*style={{fontSize: '24px'}}>题库</Link></li>*/}
+                              {/*style={{fontSize: '24px'}}>题库</Link></li>*/}
                     {/*<li><Link to="/analysisList?access_user=23836" style={{fontSize: '24px'}}>成绩分析</Link></li>*/}
                     {/*<li><Link to="/searchUserLocationInfo" style={{fontSize: '24px'}}>搜索查看用户位置信息</Link></li>*/}
                     {/*<li><Link to="/studentFaceStatistics" style={{fontSize: '24px'}}>学生脸部表情分析折线图</Link></li>*/}
@@ -370,7 +377,7 @@ class Index extends React.Component {
                         to="/moralEducation?ident=23836"
                         style={{fontSize: '24px'}}>德育评价</Link></li>
                     <li><Link
-                        to="/classCardHomePage?clazzId=819&roomId=1&mac=02:00:00:00:00:00"
+                        to="/classCardHomePage?clazzId=819&roomId=3&mac=02:00:00:00:00:00"
                         style={{fontSize: '24px'}}>班牌首页</Link></li>
                     <li><Link
                         to="/publicClassCardHomePage?clazzId=819&roomId=1"
@@ -388,8 +395,11 @@ class Index extends React.Component {
                         to="/studentDutyList?access_user=23836"
                         style={{fontSize: '24px'}}>班级值日表</Link></li>
                     {/*<li><Link*/}
-                    {/*to="/tableItemDetil"*/}
-                    {/*style={{fontSize: '24px'}}>课程表内页</Link></li>*/}
+                        {/*to="/tableItemDetil"*/}
+                        {/*style={{fontSize: '24px'}}>课程表内页</Link></li>*/}
+                    <li><Link
+                        to="/comments?access_user=23836&sid=3&access_user=23836"
+                        style={{fontSize: '24px'}}>评论列表</Link></li>
                 </ul>
             </div>
         );
@@ -456,6 +466,7 @@ ReactDOM.render(
             <Route path="currentAttendanceList" getComponent={currentAttendanceList}/>
             <Route path="classHonor" getComponent={classHonor}/>
             <Route path="tableItemDetil" getComponent={tableItemDetil}/>
+            <Route path="comments" getComponent={comments}/>
         </Route>
     </Router>
     , document.getElementById('example'));
