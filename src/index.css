@@ -1,89 +1,83 @@
-(node) util.print is deprecated. Use console.log instead.
-html,
-body {
+There is no no-color option ("less --help" for help)
+html, body {
   height: 100%;
   font-size: 14px;
-  font-family: "Helvetica Neue", "Hiragino Sans GB", Helvetica, "Microsoft YaHei", Arial;
+  font-family:  "Helvetica Neue", "Hiragino Sans GB", Helvetica, "Microsoft YaHei", Arial
 }
 body {
   overflow: auto !important;
   -webkit-overflow-scrolling: touch;
   height: 100%;
 }
-ul,
-li {
+ul, li {
   margin: 0;
   padding: 0;
   list-style: none;
 }
-#example,
-.container {
+#example, .container {
   height: 100%;
 }
 .body {
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  right: 0;
+  position: absolute; top: 0; bottom: 0; left: 0; right: 0;
   overflow: scroll;
 }
 .fixed-bottom {
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  width: 100%;
-  height: 70px;
+  position: fixed; bottom: 0; left: 0;
+  width: 100%; height: 70px;
   background-color: #ddd;
 }
 hr {
   margin: 70px 10px;
 }
+
+// fix style
 .am-modal-content {
   height: auto;
   min-height: 100%;
 }
-.am-refresh-control-pull,
-.am-refresh-control-release {
+// .am-popup-mask, .am-popup-wrap, .am-popup {
+//   position: absolute;
+// }
+.am-refresh-control-pull, .am-refresh-control-release {
   justify-content: flex-start;
 }
-.color_9 {
+.color_9{
   color: #999;
 }
-.color_6 {
+.color_6{
   color: #666;
 }
-.color_6_p {
+.color_6_p{
   padding: 20px 0 10px 15px;
   background: #fff;
 }
-.flex_1 {
+.flex_1{
   flex: 1;
 }
-.flex_auto {
+.flex_auto{
   flex: auto;
 }
-.font_15 {
+.font_15{
   font-size: 15px;
   color: #333;
 }
-.font_13 {
+.font_13{
   font-size: 13px;
 }
-.font_12 {
+.font_12{
   font-size: 12px;
 }
-.font_14 {
+.font_14{
   font-size: 14px;
 }
-.color_red {
-  color: #f46a55;
+.color_red{
+  color:#F46A55
 }
-.line_item {
+.line_item{
   height: 8px;
   background: #f4f4f4;
 }
-.my_flex {
+.my_flex{
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -91,63 +85,59 @@ hr {
   text-align: left;
   overflow: hidden;
 }
-.flex_1 {
+.flex_1{
   -webkit-box-flex: 1;
   -webkit-flex: 1;
   -ms-flex: 1;
   flex: 1;
 }
-.flex_auto {
+.flex_auto{
   flex: auto;
 }
-.h_blue_btn,
-.J {
-  color: #4990E2;
+.h_blue_btn, .J{
+  color:#4990E2;
   border-radius: 2px;
   border: 1px solid #4990E2;
   padding: 2px 4px;
   font-size: 14px;
 }
-.h_orange_btn,
-.MC {
-  color: #F6A623;
+.h_orange_btn, .MC{
+  color:#F6A623;
   border-radius: 2px;
   border: 1px solid #F6A623;
   padding: 2px 4px;
   font-size: 14px;
 }
-.h_red_btn,
-.S {
-  color: #F56A55;
+.h_red_btn, .S{
+  color:#F56A55;
   border-radius: 2px;
   border: 1px solid #F56A55;
   padding: 2px 4px;
   font-size: 14px;
 }
-.h_green_btn,
-.C {
-  color: #6BA52B;
+.h_green_btn, .C{
+  color:#6BA52B;
   border-radius: 2px;
   border: 1px solid #6BA52B;
   padding: 2px 4px;
   font-size: 14px;
 }
-.padding_8 {
+.padding_8{
   padding: 8px 0;
   line-height: 20px;
 }
-.font_20 {
+.font_20{
   font-size: 1.42rem;
   font-family: sans-serif;
 }
-.font_16 {
+.font_16{
   font-size: 1.15rem;
   font-family: sans-serif;
 }
-.tags_blue {
+.tags_blue{
   margin: -5px 0 0 0;
 }
-.tags_blue span {
+.tags_blue span{
   border: 1px solid #a3ceff;
   border-radius: 2px;
   padding: 4px 6px;
@@ -155,7 +145,7 @@ hr {
   margin-right: 10px;
   margin-top: 10px;
 }
-.list_padding {
+.list_padding{
   padding: 15px;
   border-bottom: 10px solid #f4f4f4;
 }
@@ -163,20 +153,20 @@ hr {
   flex-wrap: wrap;
   -webkit-flex-wrap: wrap;
 }
-.list_padding_no_b {
-  border-bottom: 0px;
+.list_padding_no_b{
+  border-bottom: 0;
 }
-.am-checkbox.am-checkbox-checked .am-checkbox-inner {
+.am-checkbox.am-checkbox-checked .am-checkbox-inner{
   border-color: #f46a55 !important;
   background: #f46a55 !important;
 }
-.list_wrap_padding {
-  padding: 15px;
+.list_wrap_padding{
+  padding:15px;
 }
-.flex_container {
+.flex_container{
   margin: 0 15px;
 }
-.flex_center {
+.flex_center{
   -webkit-box-pack: center;
   -webkit-justify-content: center;
   -ms-flex-pack: center;
@@ -186,44 +176,44 @@ hr {
   -ms-flex-align: center;
   align-items: center;
 }
-.cont_communal {
+.cont_communal{
   color: #333;
   font-size: 17px;
-  padding: 0 15px;
+  padding:0 15px;
   background: #fff;
 }
-.cont_font {
+.cont_font{
   color: #333;
   font-size: 17px;
 }
-.cont_padding {
-  padding: 0 15px;
+.cont_padding{
+  padding:0 15px;
 }
-.bg_white {
+.bg_white{
   background: #fff;
 }
-.list_high {
+.list_high{
   height: 44px;
   line-height: 44px;
   width: 100%;
 }
-.text_hidden {
+.text_hidden{
   overflow: hidden;
   text-overflow: ellipsis;
   display: inline-block;
   white-space: nowrap;
 }
-.font_gray {
+.font_gray{
   color: #5f5f5f;
 }
-.add_title {
+.add_title{
   height: 44px;
   line-height: 44px;
 }
-.float_ri {
+.float_ri{
   float: right;
 }
-.addBunton {
+.addBunton{
   width: 3rem;
   height: 3rem;
   position: absolute;
@@ -236,26 +226,26 @@ hr {
   color: #fff;
   line-height: 2.8rem;
   text-align: center;
+  img {
+    width: 100%;
+  }
 }
-.addBunton img {
-  width: 100%;
-}
-.submitBtn {
+.submitBtn{
   padding: 0 15px;
   position: absolute;
   bottom: 15px;
   width: 100%;
   box-sizing: border-box;
-}
-.submitBtn .am-button-primary {
-  background-color: #e94f4f;
-  border: 1PX solid #e94f4f;
-}
-.submitBtn .am-button-primary::before {
-  border: 1PX solid #e94f4f !important;
+  .am-button-primary {
+    background-color: #e94f4f;
+    border: 1PX solid #e94f4f;
+    &::before{
+      border: 1PX solid #e94f4f !important;
+    }
+  }
 }
 /*班牌内页返回首页*/
-.navBar {
+.navBar{
   font-size: .89rem;
   color: #2a3350;
   font-weight: bold;
@@ -263,48 +253,84 @@ hr {
   line-height: 2.22rem;
   border-bottom: 2px #f4f4f4 solid;
   padding: 0 .83rem;
+  .icon{
+    padding: 0 .56rem;
+  }
+
 }
-.navBar .icon {
-  padding: 0 .56rem;
-}
-.home_content {
-  width: calc(100% - 1.66rem);
+.home_content{
+  width: calc(~"100%" - 1.66rem);
   padding: 0.83rem;
-  height: calc(100% - 1.66rem);
+  height: calc(~"100%" - 1.66rem) !important;
   clear: both;
   background: url("components/classCardSystem/imgs/bg_web.jpg") no-repeat;
   background-size: 100% 100%;
   position: relative;
+  .inner_bg{
+    background-color: #fff;
+    -webkit-border-radius: 6px;
+    -moz-border-radius: 6px;
+    border-radius: 6px;
+    height: 100%;
+    padding: 10px;
+    box-sizing: border-box;
+    overflow: hidden;
+  }
+
 }
-.home_content .inner_bg {
-  background-color: #fff;
-  -webkit-border-radius: 6px;
-  -moz-border-radius: 6px;
-  border-radius: 6px;
+.notify_contModal{
+  width: 26.31rem !important;
+  height:23.67rem;
+  margin: auto;
+  .am-modal-close{
+    top: 15px;
+  }
+  .am-modal-content{
+    padding-top: 0 !important;
+  }
+  .am-modal-header{
+    padding: 2.06rem 0 0.33rem 0;
+    border-bottom: 2px solid #f35454;
+    margin: 0 2.22rem;
+
+  }
+  .am-modal-title{
+    color: #191c26;
+    font-size: 0.67rem;
+    font-weight: bold;
+  }
+  .am-modal-content .am-modal-body{
+    padding: 0.28rem 0 2.22rem 0 !important;
+    height: 17.84rem;
+    font-size: 0.56rem;
+    color: #565c72;
+    text-align: left;
+  }
 }
 /*班牌屏幕适配*/
-@media only screen and (min-width: 768px) and (max-width: 799px) {
-  html {
-    font-size: 14.5px !important;
+@media only screen and (min-width: 768px) and (max-width: 799px){
+  html{
+    font-size:14.5px !important;
   }
 }
-@media only screen and (min-width: 800px) and (max-width: 1023px) {
-  html {
-    font-size: 15px !important;
+@media only screen and (min-width: 800px) and (max-width: 1023px){
+  html{
+    font-size:15px !important;
   }
 }
-@media only screen and (min-width: 1024px) and (max-width: 1499px) {
-  html {
+@media only screen and (min-width: 1024px) and (max-width: 1499px){
+  html{
     font-size: 20px !important;
   }
 }
-@media only screen and (min-width: 1500px) and (max-width: 1919px) {
-  html {
+@media only screen and (min-width: 1500px) and (max-width: 1919px){
+  html{
     font-size: 28px !important;
   }
 }
-@media only screen and (min-width: 1920px) {
-  html {
+@media only screen and (min-width: 1920px){
+  html{
     font-size: 36px !important;
   }
+
 }
