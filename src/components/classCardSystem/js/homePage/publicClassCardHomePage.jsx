@@ -5,6 +5,7 @@ import {MsgConnection} from '../../../../helpers/msg_websocket_connection';
 import CurrentAttendance from './currentAttendance'
 import Course from './course'
 import Notify from './notify'
+import Header from './header'
 
 var demeanor;
 //消息通信js
@@ -26,12 +27,14 @@ export default class publicClassCardHomePage extends React.Component {
         var searchArray = locationSearch.split("&");
         var clazzId = searchArray[0].split('=')[1];
         var roomId = searchArray[1].split('=')[1];
+        var mac = searchArray[1].split('=')[1];
         var pro = {
             "command": "braceletBoxConnect",
             "data": {
                 "type": "web",
-                "machine": '02:00:00:00:00:00',
+                "machine": mac,
                 "version": '1.0',
+                "webDevice": WebServiceUtil.createUUID()
             }
         };
         ms = new MsgConnection();
@@ -59,6 +62,7 @@ export default class publicClassCardHomePage extends React.Component {
     render() {
         return (
             <div id="classCardHomePage" style={{height: document.body.clientHeight}}>
+                <Header/>
                 <div className="home_content">
                     {/*公共教室班牌首页*/}
                     <div className="publicHome_left">

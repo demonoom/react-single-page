@@ -19,7 +19,10 @@ export default class addNotify extends React.Component {
     }
 
     componentWillMount() {
-
+        var locationHref = window.location.href;
+        var locationSearch = locationHref.substr(locationHref.indexOf("?") + 1);
+        var ident = locationSearch.split("&")[0].split('=')[1];
+        this.setState({ident});
     }
 
     componentDidMount() {
@@ -31,7 +34,7 @@ export default class addNotify extends React.Component {
         //获取班级选择项
         var param = {
             "method": 'viewClassRoomPage',
-            "uid": JSON.parse(localStorage.getItem('loginUserSchedule')).colUid,
+            "uid": calm.state.ident,
             "pn":1
         };
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
@@ -90,7 +93,7 @@ export default class addNotify extends React.Component {
         if (warn == '') {
             // 通过验证,开始提交
             let classObject = {
-                uid:JSON.parse(localStorage.getItem('loginUserSchedule')).colUid,
+                uid:calm.state.ident,
                 noticeContent:classInfo.content,
                 classroomId:classInfo.classroomId,
                 noticeTitle:classInfo.title,
@@ -103,6 +106,13 @@ export default class addNotify extends React.Component {
             WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
                 onResponse: (result) => {
                     if (result.msg == '调用成功' || result.success == true) {
+                        Toast.success('调用成功', 1);
+                        var data = {
+                            method: 'finishForRefresh',
+                        };
+                        Bridge.callHandler(data, null, function (error) {
+                            console.log(error);
+                        });
                     }
                 },
                 onError: function (error) {
