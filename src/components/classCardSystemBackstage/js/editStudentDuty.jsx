@@ -166,7 +166,15 @@ export default class editStudentDuty extends React.Component {
                 if (result.success == true && result.msg == "调用成功") {
                     var response = result.response;
                     if (response != null && response != undefined) {
-                        Toast.success('保存成功！', 1);
+                        Toast.success('修改成功！', 1);
+                        //关闭当前窗口，并刷新上一个页面
+                        var data = {
+                            method: 'finishForRefresh',
+                        };
+
+                        Bridge.callHandler(data, null, function (error) {
+                            console.log(error);
+                        });
                     }
                 }
             },
