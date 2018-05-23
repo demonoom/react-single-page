@@ -121,10 +121,20 @@ export default class classDemeanor extends React.Component {
             {this.state.classRewardList}
         </Carousel>;
         if(WebServiceUtil.isEmpty(this.state.classDemeanorList)===true || this.state.classDemeanorList.length == 0){
-            clazzDemeanor = <img src="" />
+            clazzDemeanor = <div className="demeanor_list1">
+                <div className="empty_center">
+                    <div className="empty_icon empty_honor"></div>
+                    <div className="empty_text">暂无荣誉</div>
+                </div>
+            </div>
         }
         if(WebServiceUtil.isEmpty(this.state.classRewardList)===true || this.state.classRewardList.length == 0){
-            classReward = <img src="" />
+            classReward = <div className="demeanor_list2">
+                <div className="empty_center">
+                    <div className="empty_icon empty_activity"></div>
+                    <div className="empty_text">暂无活动</div>
+                </div>
+            </div>
         }
 
         return (

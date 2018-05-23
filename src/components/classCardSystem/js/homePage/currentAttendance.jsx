@@ -130,8 +130,10 @@ export default class currentAttendance extends React.Component {
                 </h3>
                 {!this.state.openClass ?
                     <div className='classTableA'>
-                        <div className="empty_icon empty_currentAttendance"></div>
-                        <div className="empty_text">暂无考勤</div>
+                        <div className="empty_center">
+                            <div className="empty_icon empty_currentAttendance"></div>
+                            <div className="empty_text">暂无考勤</div>
+                        </div>
                     </div> :
                     <div className='classTableA'>
                         <div className="due">应到人数：<span className="number">{this.state.peopleNum}</span></div>

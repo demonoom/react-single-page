@@ -137,6 +137,15 @@
 #classCardHomePage .class_mien2 .slider-list li {
   height: 100% !important;
 }
+#classCardHomePage .demeanor_list1 {
+  height: 5.39rem !important;
+  position: relative;
+}
+#classCardHomePage .demeanor_list2 {
+  height: 8.2rem !important;
+  position: relative;
+  border-top: 1px solid #e5ebf7;
+}
 #classCardHomePage .application_cont {
   padding: 0.56rem 0.83rem 0.56rem 0.61rem;
   height: 5.28rem;
@@ -166,6 +175,8 @@
 }
 #classCardHomePage .demeanor_margin {
   margin: 0 0.83rem;
+  height: 13.62rem;
+  position: relative;
 }
 #classCardHomePage .publicHome_left {
   width: 13.61rem;

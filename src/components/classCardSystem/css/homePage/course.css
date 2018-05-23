@@ -1,6 +1,8 @@
 #course .classTableA {
   padding: 0.56rem 0.83rem;
   text-align: center;
+  height: 9.9rem;
+  position: relative;
 }
 #course .classTableB {
   padding: 0 0.83rem;
