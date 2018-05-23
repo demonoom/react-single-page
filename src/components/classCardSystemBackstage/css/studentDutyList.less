@@ -1,0 +1,82 @@
+#studentDutyList{
+  .am-button-small{
+    background: #f55d45;
+    color: #fff !important;
+    padding: 0 15px;
+    text-align: center;
+    -webkit-border-radius: 2px;
+    -moz-border-radius: 2px;
+    border-radius: 2px;
+    border: 0 !important;
+    font-size: 14px;
+    line-height: 24px;
+    height: 24px;
+    position: absolute;
+    right: 15px;
+    top: 0;
+    &:before{
+      border: 0;
+    }
+  }
+  .am-grid-line::before,.am-grid-line::after,.am-flexbox-item::before,.am-flexbox-item::after,.am-flexbox::after{
+    background-color: #fff;
+
+  }
+  .am-icon-md {
+    width: 1.8rem;
+    height: 1.8rem;
+    vertical-align: middle;
+  }
+  .am-grid.am-grid-line:not(.am-grid-carousel),.am-grid.am-grid-line .am-flexbox,.am-grid.am-grid-line .am-flexbox .am-flexbox-item:not(:last-child),.am-grid.am-grid-line .am-flexbox .am-flexbox-item:first-child{
+    border: 0;
+    height: auto;
+  }
+  .dutyList{
+    background-color: #fff;
+    padding: 10px 15px;
+    .planTitle{
+      position: relative;
+      font-size: 17px;
+      line-height: 24px;
+    }
+  }
+  .am-grid .am-flexbox .am-flexbox-item .am-grid-item-content .am-grid-item-inner-content{
+    -webkit-flex-direction: row !important;
+    -ms-flex-direction: row !important;
+    flex-direction: row !important;
+    height: auto;
+  }
+  .am-grid.am-grid-square .am-grid-item{
+    &:before{
+      padding-bottom: 0;
+    }
+    .am-grid-item-content{
+      height: auto;
+      transform: translateY(0);
+      padding: 0;
+    }
+    .am-grid-item-inner-content{
+      height: auto;
+      padding: 20px 0;
+
+      .am-grid-icon{
+        -webkit-border-radius: 50%;
+        -moz-border-radius: 50%;
+        border-radius: 50%;
+        width: 38px!important;
+        height: 38px!important;
+      }
+      .am-grid-text{
+        padding-left: 6px;
+
+      }
+    }
+
+  }
+  .am-grid.am-grid-line .am-flexbox,.am-grid .am-flexbox .am-flexbox-item.am-grid-item,.am-grid.am-grid-square .am-grid-item .am-grid-item-content{
+    position: static;
+  }
+
+
+
+}

@@ -89,15 +89,12 @@ export default class addNotify extends React.Component {
                 cid:classInfo.classId,
                 noticeTitle:classInfo.title
             };
-            console.log(JSON.stringify(classObject));
             var param = {
                 "method": 'saveClassBrandNotice',
                 "classBrandNoticeJson": classObject,
             };
-            console.log(param);
             WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
                 onResponse: (result) => {
-                    console.log(result);
                     if (result.msg == '调用成功' || result.success == true) {
 
                     }
@@ -147,7 +144,9 @@ export default class addNotify extends React.Component {
                         onChange={this.contentHandleChange}
                     />
                 </List>
-                <Button type="primary" onClick={this.submitClass}>提交</Button>
+                <div className="submitBtn">
+                    <Button type="primary" onClick={this.submitClass}>提交</Button>
+                </div>
             </div>
         );
     }

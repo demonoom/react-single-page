@@ -23,12 +23,11 @@ export default class homeworkModule extends React.Component {
     }
 
 
-
     componentDidMount() {
         var locationHref = window.location.href;
         var locationSearch = locationHref.substr(locationHref.indexOf("?") + 1);
         var classId = locationSearch.split("=")[1];
-        this.setState({"classId":classId})
+        this.setState({"classId": classId})
         this.getHomeworkData(classId);
     }
 
@@ -49,6 +48,9 @@ export default class homeworkModule extends React.Component {
                     if (result.response.length === 0) {
                         _this.setState({"isLoadingLeft": false})
                     } else {
+                        _this.setState({
+                            homeworkData: result.response
+                        })
                         var arr = result.response;
                         var pager = result.pager;
                         for (let i = 0; i < arr.length; i++) {
@@ -96,16 +98,29 @@ export default class homeworkModule extends React.Component {
         });
     };
 
+    historyGoBack() {
+        var data = {
+            method: 'finish',
+        };
+
+        Bridge.callHandler(data, null, function (error) {
+            console.log(error);
+        });
+        // history.back()
+    }
+
     render() {
         var _this = this;
         const row = (rowData, sectionID, rowID) => {
+            var color = "#ccc";
+            var borderW = ""
             return (
                 <div>
                     <div className="homeworkInfo">
                         <div className="homeworkL">
                             {/* <h3 className="subject textOver">{rowData.title}</h3> */}
                             <div className="imgInfo">
-                                <img src={rowData.fromUser.avatar} />
+                                <img src={rowData.fromUser.avatar}/>
                                 <span className="textOver">{rowData.fromUser.userName}</span>
                             </div>
                         </div>
@@ -114,16 +129,23 @@ export default class homeworkModule extends React.Component {
                             <p>{rowData.content}</p>
                         </div>
                         <div className="homeworkR">
-                        {WebServiceUtil.formatYMD(rowData.createTime)}
+                            {WebServiceUtil.formatYMD(rowData.createTime)}
+                            {rowData.attachMents.length == 0 ? '' : <img src={rowData.attachMents[0].address}/>}
+                            <img/>
                         </div>
-                        
+
                     </div>
-                
+
                 </div>
             )
         };
         return (
             <div id="homeworkModule" style={{height: document.body.clientHeight}}>
+                <div className="navBar">
+                    <span onClick={this.historyGoBack}>首页</span>
+                    <span className="icon">></span>
+                    <span>蚁巢作业</span>
+                </div>
                 <ListView
                     ref={el => this.lv = el}
                     dataSource={this.state.dataSource}    //数据类型是 ListViewDataSource

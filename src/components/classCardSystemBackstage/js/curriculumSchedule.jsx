@@ -32,20 +32,27 @@ export default class curriculumSchedule extends React.Component {
                     }
                 ],]
         };
+        this.addSchedule = this.addSchedule.bind(this);
     }
 
     componentWillMount() {
         var locationHref = window.location.href;
         var locationSearch = locationHref.substr(locationHref.indexOf("?") + 1);
         var ident = locationSearch.split("&")[0].split('=')[1];
+        var curriculumType = locationSearch.split("&")[1].split('=')[1];
         var loginUser = {
             "colUid": ident,
         };
         localStorage.setItem("loginUserSchedule", JSON.stringify(loginUser));
+        this.setState({curriculumType});
     }
 
     componentDidMount() {
+        var curriculumType = this.state.curriculumType;
         document.title = '班级课程表';
+        if (curriculumType == 2) {
+            document.title = '公共课程表';
+        }
     }
 
     /**
@@ -61,7 +68,11 @@ export default class curriculumSchedule extends React.Component {
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
             onResponse: function (result) {
                 if (result.msg == '调用成功' || result.success == true) {
-                    _this.getClazzesByUserId(ident, result.response)
+                    if (_this.state.curriculumType == 1) {
+                        _this.getClazzesByUserId(ident, result.response)
+                    } else {
+                        _this.getClazzRoomsByUserId(ident, result.response)
+                    }
                 }
             },
             onError: function (error) {
@@ -80,6 +91,30 @@ export default class curriculumSchedule extends React.Component {
         var param = {
             "method": 'getClazzesByUserId',
             "userId": ident
+        };
+        WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
+            onResponse: function (result) {
+                if (result.msg == '调用成功' || result.success == true) {
+                    _this.buildSeasons(result.response, semesterList)
+                }
+            },
+            onError: function (error) {
+                // message.error(error);
+            }
+        });
+    }
+
+    /**
+     * 获取此用户所管理的教室
+     * @param ident
+     * @param semesterList
+     */
+    getClazzRoomsByUserId(ident, semesterList) {
+        var _this = this;
+        var param = {
+            "method": 'viewClassRoomPage',
+            "uid": ident,
+            "pn": -1
         };
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
             onResponse: function (result) {
@@ -139,7 +174,7 @@ export default class curriculumSchedule extends React.Component {
      * 增加课程表的回调
      */
     addSchedule() {
-        var url = WebServiceUtil.mobileServiceURL + "addCurriculumSchedule";
+        var url = WebServiceUtil.mobileServiceURL + "addCurriculumSchedule?curriculumType=" + this.state.curriculumType;
         var data = {
             method: 'openNewPage',
             url: url
@@ -158,19 +193,35 @@ export default class curriculumSchedule extends React.Component {
         var _this = this;
         this.setState({asyncValue: v})
         if (this.state.sValue[0] == 0) {
-            Toast.fail('请选择班级')
+            if (this.state.curriculumType == 1) {
+                Toast.fail('请选择班级')
+            } else {
+                Toast.fail('请选择教室')
+            }
             return
         }
         if (this.state.sValue[1] == 0) {
             Toast.fail('请选择学期')
             return
         }
+        var cid = -1;
+        var rid = -1;
+        if (this.state.curriculumType == 1) {
+            //班级课程表
+            cid = this.state.sValue[0];
+            rid = -1;
+        } else {
+            //公共教室课程表
+            cid = -1;
+            rid = this.state.sValue[0];
+        }
+
         var param = {
             "method": 'viewCourseTableItemPage',
             "sid": this.state.sValue[1],
             "w": v[0],
-            "cid": this.state.sValue[0],
-            "rid": -1,
+            "cid": cid,
+            "rid": rid,
             "uid": JSON.parse(localStorage.getItem('loginUserSchedule')).colUid
         };
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
@@ -187,6 +238,10 @@ export default class curriculumSchedule extends React.Component {
     }
 
     render() {
+        var pickerTip = "班级";
+        if (this.state.curriculumType == 2) {
+            pickerTip = "教室";
+        }
         return (
             <div id="curriculumSchedule" style={{height: document.body.clientHeight}}>
                 <WhiteSpace size="lg"/>
@@ -201,7 +256,7 @@ export default class curriculumSchedule extends React.Component {
                     <List.Item
                         arrow="horizontal"
                         onClick={this.getSemesterList.bind(this, JSON.parse(localStorage.getItem('loginUserSchedule')).colUid)}
-                    >班级,学期</List.Item>
+                    >{pickerTip},学期</List.Item>
                 </Picker>
                 <WhiteSpace size="lg"/>
                 {/*日期*/}
@@ -218,7 +273,8 @@ export default class curriculumSchedule extends React.Component {
                 <div className="curriculum_cont cont_communal">
                     {this.state.classTableArray.map((v, i) => {
                         return <li>
-                            <div className="add_title"><span className="font_gray">第{i + 1}节</span><span className="amend_btn">修改</span></div>
+                            <div className="add_title"><span className="font_gray">第{i + 1}节</span><span
+                                className="amend_btn">修改</span></div>
                             <div className="list_high list">
                                 <span className="text_hidden text_cont1">{v.openTime + '-' + v.closeTime}</span>
                                 <span className="text_hidden text_cont2">{v.courseName}</span>

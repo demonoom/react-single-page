@@ -1,3 +1,4 @@
+(node) util.print is deprecated. Use console.log instead.
 #classDemeanor .Img_cont {
   height: calc(100% - 77px);
   overflow-y: auto;

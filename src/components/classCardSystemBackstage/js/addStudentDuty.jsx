@@ -1,14 +1,9 @@
 import React from 'react';
 import {Picker, List, WhiteSpace,Button,Toast, Checkbox} from 'antd-mobile';
+import '../css/addStudentDuty.less'
 const CheckboxItem = Checkbox.CheckboxItem;
 
 const seasons = [
-    [
-
-    ]
-];
-
-const terms = [
     [
 
     ]
@@ -21,23 +16,26 @@ export default class addStudentDuty extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            data: [],
+            data: [{value: '1', label: '星期一'},
+                {value: '2', label: '星期二'},
+                {value: '3', label: '星期三'},
+                {value: '4', label: '星期四'},
+                {value: '5', label: '星期五'},
+                {value: '6', label: '星期六'},
+                {value: '7', label: '星期日'}],
             cols: 1,
             pickerValue: [],
-            asyncValue: [],
+            asyncValue: ['1'],
             sValue: [],
-            termValue: [],
             visible: false,
             studentList:[],
             clazzId: '',
             week: '1',
-            termId: ''
         };
         this.getStudentListByClazz = this.getStudentListByClazz.bind(this);
         this.studentCheckboxOnChange = this.studentCheckboxOnChange.bind(this);
         this.isHaveSameStudentId = this.isHaveSameStudentId.bind(this);
         this.getClazzesByUserId = this.getClazzesByUserId.bind(this);
-        this.getSemesterList = this.getSemesterList.bind(this);
     }
 
     componentDidMount() {
@@ -46,33 +44,10 @@ export default class addStudentDuty extends React.Component {
         var locationSearch = locationHref.substr(locationHref.indexOf("?") + 1);
         var locationSearchArray = locationSearch.split("&");
         var userId = locationSearchArray[0].split("=")[1];
-        var studentList = [];
-        for(var i=0;i<9;i++){
-            var stuName = 'stu'+i;
-            var icon = 'https://gw.alipayobjects.com/zos/rmsportal/nywPmnTAvTmLusPxHPSu.png';
-            var stuJson = {text:stuName,icon};
-            studentList.push(stuJson);
-        }
-        this.getStudentListByClazz(userId);
         this.getClazzesByUserId(userId);
-        this.getSemesterList(userId);
-        this.setState({studentList});
     }
 
-    onClick = () => {
-        this.setState({
-            data: [{value: '1', label: '星期一'},
-                {value: '2', label: '星期二'},
-                {value: '3', label: '星期三'},
-                {value: '4', label: '星期四'},
-                {value: '5', label: '星期五'},
-                {value: '6', label: '星期六'},
-                {value: '7', label: '星期日'}]
-        });
-    };
-
     onPickerChange = (val) => {
-        console.log("week:" + val);
         const d = [...this.state.data];
         const asyncValue = [...val];
         var week = val[0];
@@ -87,17 +62,11 @@ export default class addStudentDuty extends React.Component {
 
     onClassChange = (val) => {
         var clazzId = val[0];
+        this.getStudentListByClazz(clazzId);
         this.setState({sValue: val, clazzId});
     };
 
-    onTermChange = (val) => {
-        var termId = val[0];
-        this.setState({termId,termValue:val});
-    };
-
-
     studentCheckboxOnChange(val){
-        console.log("studentCheckboxOnChange:"+val);
         this.buildStudentCheckedArray(val);
     }
 
@@ -144,7 +113,6 @@ export default class addStudentDuty extends React.Component {
             users.push(userObjJson);
         })
         stuJson.cid = this.state.clazzId;
-        stuJson.termid = this.state.termId;
         stuJson.week = this.state.week;
         stuJson.users = users;
         var param = {
@@ -206,32 +174,28 @@ export default class addStudentDuty extends React.Component {
     }
 
     /**
-     * 进入学生值日页面时，根据用户id获取当前用户的班级
-     * @param userId
+     * 获取班级的学生列表
+     * @param clazzId
      */
-    getSemesterList(userId){
+    getStudentListByClazz=(clazzId)=>{
         var _this = this;
+        var studentCheckboxItemList = [];
+
         var param = {
-            "method": 'getSemesterList',
-            "uid": userId
+            "method": 'getClassStudents',
+            "clazzId": clazzId
         };
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
             onResponse: function (result) {
-                console.log(result);
                 if (result.success == true && result.msg == "调用成功") {
                     var response = result.response;
-                    console.log(response);
                     if (response != null && response != undefined) {
-                        response.forEach(function (term) {
-                            var id = term.id;
-                            var name = term.name;
-                            var termJson = {
-                                label: name,
-                                value: id+"",
-                            };
-                            if(terms[0]!=null && terms[0]!=undefined){
-                                terms[0].push(termJson);
-                            }
+                        response.forEach(function (student) {
+                            var studentId = student.colUid+'';
+                            var checkBoxItem = <CheckboxItem key={studentId} onChange={() => _this.studentCheckboxOnChange(studentId)}>
+                                {student.userName}
+                            </CheckboxItem>;
+                            studentCheckboxItemList.push(checkBoxItem);
                         })
 
                     }
@@ -241,34 +205,11 @@ export default class addStudentDuty extends React.Component {
             onError: function (error) {
             }
         });
-    }
 
-
-    /**
-     * 获取班级的学生列表
-     * @param clazzId
-     */
-    getStudentListByClazz=(clazzId)=>{
-        var _this = this;
-        var studentCheckboxItemList = [];
-        var studentList = [
-            { colUid: 23836, userName: '王丹蛋' },
-            { colUid: 23991, userName: '美伦' },
-            { colUid: 24827, userName: '邢国文' },
-        ];
-
-        studentList.forEach(function (student) {
-            var studentId = student.colUid+'';
-            var checkBoxItem = <CheckboxItem key={studentId} onChange={() => _this.studentCheckboxOnChange(studentId)}>
-                {student.userName}
-            </CheckboxItem>;
-            studentCheckboxItemList.push(checkBoxItem);
-        })
         this.setState({studentCheckboxItemList});
     }
 
     studentCheckboxOnChange(val){
-        console.log("studentCheckboxOnChange:"+val);
         this.buildStudentCheckedArray(val);
     }
 
@@ -306,13 +247,8 @@ export default class addStudentDuty extends React.Component {
 
     render() {
         var _this = this;
-        const data = [
-            { value: 23836, label: '王丹蛋' },
-            { value: 23991, label: '美伦' },
-            { value: 24827, label: '邢国文' },
-        ];
         return (
-            <div id="curriculumSchedule" style={{height: document.body.clientHeight}}>
+            <div id="addStudentDuty" style={{height: document.body.clientHeight}}>
                 <WhiteSpace size="lg"/>
                 <Picker
                     data={seasons}
@@ -321,18 +257,7 @@ export default class addStudentDuty extends React.Component {
                     value={this.state.sValue}
                     onOk={v => this.onClassChange(v)}
                 >
-                    <List.Item arrow="horizontal">班级</List.Item>
-                </Picker>
-
-                <WhiteSpace size="lg"/>
-                <Picker
-                    data={terms}
-                    title="请选择"
-                    cascade={false}
-                    value={this.state.termValue}
-                    onOk={v => this.onTermChange(v)}
-                >
-                    <List.Item arrow="horizontal">选择学期</List.Item>
+                    <List.Item arrow="horizontal">选择班级<i className="redStar">*</i></List.Item>
                 </Picker>
 
                 <WhiteSpace size="lg"/>
@@ -342,14 +267,18 @@ export default class addStudentDuty extends React.Component {
                     value={this.state.asyncValue}
                     onOk={v => this.onPickerChange(v)}
                 >
-                    <List.Item arrow="horizontal" onClick={this.onClick}>选择星期</List.Item>
+                    <List.Item arrow="horizontal" onClick={this.onClick}>选择星期<i className="redStar">*</i></List.Item>
                 </Picker>
 
                 <WhiteSpace size="lg"/>
-                <List renderHeader={() => 'CheckboxItem demo'}>
-                    {_this.state.studentCheckboxItemList}
-                </List>
-                <Button type="primary" onClick={this.saveStudentDuty}>提交</Button>
+                <div className="bg_white">
+                    <List renderHeader={() => '选择学生'}>
+                        {_this.state.studentCheckboxItemList}
+                    </List>
+                </div>
+                <div className="submitBtn">
+                     <Button type="primary"  onClick={this.saveStudentDuty}>提交</Button>
+                </div>
             </div>
         );
     }

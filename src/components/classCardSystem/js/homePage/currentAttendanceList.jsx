@@ -1,5 +1,6 @@
 import React from 'react';
 import {} from 'antd-mobile';
+import "../../css/homePage/currentAttendanceList.less"
 
 var demeanor;
 var timer;
@@ -8,15 +9,18 @@ export default class currentAttendanceList extends React.Component {
 
     constructor(props) {
         super(props);
-        demeanor  = this;
-        this.state = {
-        };
+        demeanor = this;
+        this.state = {};
         this.getBraceletAttend = this.getBraceletAttend.bind(this);
         this.getStudentByCourseTableItem = this.getStudentByCourseTableItem.bind(this);
     }
 
     componentWillMount() {
-
+        var locationHref = decodeURI(window.location.href);
+        var locationSearch = locationHref.substr(locationHref.indexOf("?") + 1);
+        var searchArray = locationSearch.split("&");
+        var classTableId = searchArray[0].split('=')[1];
+        this.setState({classTableId})
     }
 
     componentWillReceiveProps(nextProps) {
@@ -24,27 +28,27 @@ export default class currentAttendanceList extends React.Component {
     }
 
     componentDidMount() {
-        var cid = 3;
-        this.getStudentByCourseTableItem(cid);
-        this.openTimeInterVal(cid);
+        var classTableId = this.state.classTableId;
+        this.getStudentByCourseTableItem(classTableId);
+        this.openTimeInterVal(classTableId);
     }
 
-    openTimeInterVal(cid) {
+    openTimeInterVal(classTableId) {
         //开启定时器获取实到人数
         timer = setInterval(function () {
-            demeanor.getBraceletAttend(cid);
+            demeanor.getBraceletAttend(classTableId);
         }, 10000)
     }
 
     /**
      * 应到人数
      */
-    getStudentByCourseTableItem(cid) {
+    getStudentByCourseTableItem(classTableId) {
         var _this = this;
         var param = {
             "method": 'getStudentByCourseTableItem',
-            "id": cid
-            // "id": 3
+            // "id": classTableId
+            "id": 3
         };
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
             onResponse: function (result) {
@@ -52,7 +56,7 @@ export default class currentAttendanceList extends React.Component {
                     allStudents = result.response;
                     _this.setState({peopleNum: result.response.length});
                 }
-                _this.getBraceletAttend(cid);
+                _this.getBraceletAttend(classTableId);
             },
             onError: function (error) {
                 // message.error(error);
@@ -65,18 +69,17 @@ export default class currentAttendanceList extends React.Component {
      * 实到人数
      * @param data
      */
-    getBraceletAttend(cid) {
+    getBraceletAttend(classTableId) {
         var _this = this;
         var param = {
             "method": 'getBraceletAttend',
-            "cid": cid
+            "cid": classTableId
         };
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
             onResponse: function (result) {
                 var response = result.response;
                 if (result.msg == '调用成功' || result.success == true) {
-                    _this.setState({"currentPeopleNum":result.response.length});
-                    console.log('getBraceletAttend', result.response.length);
+                    _this.setState({"currentPeopleNum": result.response.length});
                 }
                 _this.buildStudentList(response);
             },
@@ -90,27 +93,29 @@ export default class currentAttendanceList extends React.Component {
      * 构建学生头像列表，其中要判断当前学生是否已签到
      * @param currentStudents
      */
-    buildStudentList(currentStudents){
+    buildStudentList(currentStudents) {
         var _this = this;
         //应到人数
         // var allStudents = this.state.allStudents;
         var studentHeaderTagList = [];
-        if(allStudents!=null && allStudents!= undefined){
+        if (allStudents != null && allStudents != undefined) {
             allStudents.forEach(function (studentOfAll) {
                 var colUid = studentOfAll.colUid;
-                var isExist = _this.checkIsExistCurrentStudent(currentStudents,colUid);
+                var isExist = _this.checkIsExistCurrentStudent(currentStudents, colUid);
                 var checkedTip = "";
-                if(isExist === false){
+                var classFlag = "imgDiv";
+                if (isExist === false) {
                     checkedTip = "未签到";
+                    classFlag = "imgDiv no";
                 }
                 var studentAvatar = studentOfAll.avatar;
-                if(studentAvatar == null || studentAvatar == undefined || studentAvatar==""){
+                if (studentAvatar == null || studentAvatar == undefined || studentAvatar == "") {
                     studentAvatar = "../../img/maaee_face.png";
                 }
-                var studentHeaderTag = <div>
-                    <img style={{width:40,height:40}} src={studentAvatar} />
-                    <div>{checkedTip}</div>
-                    <div>
+                var studentHeaderTag = <div className="photoItem">
+                    <div className={classFlag}><img src={studentAvatar}/></div>
+                    <div className="signIcon">{checkedTip}</div>
+                    <div className="studentName">
                         {studentOfAll.userName}
                     </div>
                 </div>
@@ -123,11 +128,11 @@ export default class currentAttendanceList extends React.Component {
     /**
      * 检查当前学生是否在已签到的用户数组中
      */
-    checkIsExistCurrentStudent(currentStudents,colUid){
+    checkIsExistCurrentStudent(currentStudents, colUid) {
         var isExist = false;
-        for(var i=0;i<currentStudents.length;i++){
+        for (var i = 0; i < currentStudents.length; i++) {
             var currentStudent = currentStudents[i];
-            if(currentStudent != null && currentStudent.colUid == colUid){
+            if (currentStudent != null && currentStudent.colUid == colUid) {
                 isExist = true;
                 break;
             }
@@ -137,32 +142,44 @@ export default class currentAttendanceList extends React.Component {
     }
 
 
-
     /**
      * 回首页
      */
-    turnToHomePage(){
+    turnToHomePage() {
         clearInterval(timer)
-        var classCardHomePageUrl = WebServiceUtil.mobileServiceURL + "classCardHomePage";
-        location.href = classCardHomePageUrl;
+        var data = {
+            method: 'finish',
+        };
+
+        Bridge.callHandler(data, null, function (error) {
+            console.log(error);
+        });
+        // history.back()
     }
 
 
     render() {
         return (
-            <div id="currentAttendanceList">
-                <div>
-                    <span onClick={this.turnToHomePage}>首页</span>
-                    <span> &gt; </span>
-                    <span>考勤详情</span>
-                    <span style={{marginLeft:'20px'}}>
-                        <span>应到：{this.state.peopleNum}</span>
-                        <span>实到：{this.state.currentPeopleNum}</span>
-                        <span>未签到：{parseInt(this.state.peopleNum) - parseInt(this.state.currentPeopleNum)}</span>
-                    </span>
-                </div>
-                <div style={{display:'inline-flex'}}>
-                    {this.state.studentHeaderTagList}
+            <div id="currentAttendanceList" className="home_content">
+                <div className="inner_bg">
+                    <div className="navBar">
+                        <span onClick={this.turnToHomePage}>首页</span>
+                        <span className="icon"> &gt; </span>
+                        <span>考勤详情</span>
+                        <div className="right">
+                            <span style={{marginLeft: '20px'}}>
+                                <span className="item">应到：<span className="blue">{this.state.peopleNum}</span></span>
+                                <span className="item">实到：<span
+                                    className="blue">{this.state.currentPeopleNum}</span></span>
+                                <span className="noSign"><span className="white btn">未签到</span><span
+                                    className="text">{parseInt(this.state.peopleNum) - parseInt(this.state.currentPeopleNum)}</span></span>
+                            </span>
+                        </div>
+                    </div>
+
+                    <div className="content">
+                        {this.state.studentHeaderTagList}
+                    </div>
                 </div>
             </div>
         );

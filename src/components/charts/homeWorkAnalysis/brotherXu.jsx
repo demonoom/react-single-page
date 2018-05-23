@@ -85,7 +85,6 @@ export default class brotherXu extends React.Component {
                         var analysisJson = analysisJsonStr;
                         subjectDivContentArray = _this.buildSubjectArrayContent(subjectDivContentArray, analysisJson);
                     });
-                    console.log(subjectDivContentArray);
                     _this.buildSubjectDivContentArray(subjectDivContentArray,censusType);
                 } else {
 
@@ -124,10 +123,8 @@ export default class brotherXu extends React.Component {
             }
         }
         if(analysisJson.stuId==undefined){
-            console.log(analysisJson);
             for (var key in analysisJson) {
                 for(var i=0;i<subjectDivContentArray.length;i++){
-                    console.log(subjectDivContentArray[i]);
                     if(subjectDivContentArray[i].subjectJson.subjectId==key){
                         subjectDivContentArray[i].avgUnder=analysisJson[key];
                     }

@@ -164,7 +164,7 @@ hr {
   -webkit-flex-wrap: wrap;
 }
 .list_padding_no_b {
-  border-bottom: 0px;
+  border-bottom: 0;
 }
 .am-checkbox.am-checkbox-checked .am-checkbox-inner {
   border-color: #f46a55 !important;
@@ -220,7 +220,124 @@ hr {
   height: 44px;
   line-height: 44px;
 }
+.float_ri {
+  float: right;
+}
+.addBunton {
+  width: 3rem;
+  height: 3rem;
+  position: absolute;
+  right: 2.5rem;
+  bottom: 2.5rem;
+  background-color: #F56A55;
+  -webkit-border-radius: 50%;
+  -moz-border-radius: 50%;
+  border-radius: 50%;
+  color: #fff;
+  line-height: 2.8rem;
+  text-align: center;
+}
+.addBunton img {
+  width: 100%;
+}
+.submitBtn {
+  padding: 0 15px;
+  position: absolute;
+  bottom: 15px;
+  width: 100%;
+  box-sizing: border-box;
+  z-index: 99;
+}
+.submitBtn .am-button-primary {
+  background-color: #e94f4f;
+  border: 1PX solid #e94f4f;
+}
+.submitBtn .am-button-primary::before {
+  border: 1PX solid #e94f4f !important;
+}
+.submitBtn .am-button-primary.am-button-active {
+  background-color: #e94f4f;
+  opcity: 0.3;
+}
+/*班牌内页返回首页*/
+.navBar {
+  font-size: .89rem;
+  color: #2a3350;
+  font-weight: bold;
+  height: 2.22rem;
+  line-height: 2.22rem;
+  border-bottom: 2px #f4f4f4 solid;
+  padding: 0 .83rem;
+}
+.navBar .icon {
+  padding: 0 .56rem;
+}
+.home_content {
+  width: calc(100% - 1.66rem);
+  padding: 0.83rem;
+  height: calc(100% - 1.66rem) !important;
+  clear: both;
+  background: url("components/classCardSystem/imgs/bg_web.jpg") no-repeat;
+  background-size: 100% 100%;
+  position: relative;
+}
+.home_content .inner_bg {
+  background-color: #fff;
+  -webkit-border-radius: 6px;
+  -moz-border-radius: 6px;
+  border-radius: 6px;
+  height: 100%;
+  padding: 0 10px 10px;
+  box-sizing: border-box;
+  overflow: hidden;
+}
+.notify_contModal {
+  width: 26.31rem !important;
+  height: 23.67rem;
+  margin: auto;
+}
+.notify_contModal .am-modal-close {
+  top: 15px;
+}
+.notify_contModal .am-modal-content {
+  padding-top: 0 !important;
+}
+.notify_contModal .am-modal-header {
+  padding: 2.06rem 0 0.33rem 0;
+  border-bottom: 0.05rem solid #f35454;
+  margin: 0 2.22rem;
+}
+.notify_contModal .am-modal-title {
+  color: #191c26;
+  font-size: 0.67rem;
+  font-weight: bold;
+}
+.notify_contModal .am-modal-content .am-modal-body {
+  padding: 0.28rem 0 2.22rem 0 !important;
+  height: 17.84rem;
+  font-size: 0.56rem;
+  color: #565c72;
+  text-align: left;
+}
+.empty_center {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+  /* IE 9 */
+  -moz-transform: translate(-50%, -50%);
+  /* Firefox */
+  -webkit-transform: translate(-50%, -50%);
+  /* Safari 和 Chrome */
+  -o-transform: translate(-50%, -50%);
+}
 /*班牌屏幕适配*/
+@media only screen and (min-width: 768px) and (max-width: 799px) {
+  html {
+    font-size: 14.5px !important;
+  }
+}
 @media only screen and (min-width: 800px) and (max-width: 1023px) {
   html {
     font-size: 15px !important;

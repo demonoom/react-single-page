@@ -1,5 +1,5 @@
 import React from 'react';
-import {} from 'antd-mobile';
+import {Toast} from 'antd-mobile';
 import '../../css/homePage/currentAttendance.less'
 
 var demeanor;
@@ -11,7 +11,7 @@ export default class currentAttendance extends React.Component {
         super(props);
         demeanor = this;
         this.state = {
-            openClass: true
+            openClass: false
         };
         this.turnToAttendanceList = this.turnToAttendanceList.bind(this);
     }
@@ -21,20 +21,27 @@ export default class currentAttendance extends React.Component {
     }
 
     componentWillReceiveProps(nextProps) {
+        var roomId = localStorage.getItem('roomId');
         if (nextProps.messageUtilObj.command == 'brand_class_open') {
             //获取应到人数
-            this.getStudentByCourseTableItem(nextProps.messageUtilObj.data);
-            this.openTimeInterVal(nextProps.messageUtilObj.data);
-            this.setState({openClass: true})
+            if (roomId == nextProps.messageUtilObj.data.classroomId) {
+                this.getStudentByCourseTableItem(nextProps.messageUtilObj.data);
+                this.openTimeInterVal(nextProps.messageUtilObj.data);
+                this.setState({openClass: true, clazzId: nextProps.messageUtilObj.data.classTableId})
+            }
         } else if (nextProps.messageUtilObj.command == 'brand_class_close') {
-            this.setState({openClass: false});
-            clearInterval(timer)
+            if (roomId == nextProps.messageUtilObj.data.classroomId) {
+                this.setState({openClass: false});
+                clearInterval(timer)
+            }
         }
+
     }
 
     componentDidMount() {
-        this.getBraceletAttend()
-        this.getStudentByCourseTableItem()
+        // this.getBraceletAttend()
+        // this.getStudentByCourseTableItem()
+        // this.setState({clazzId: 3})
         // this.openTimeInterVal()
     }
 
@@ -52,8 +59,8 @@ export default class currentAttendance extends React.Component {
         var _this = this;
         var param = {
             "method": 'getStudentByCourseTableItem',
-            // "id": data.classTableId
-            "id": 3
+            "id": data.classTableId
+            // "id": 3
         };
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
             onResponse: function (result) {
@@ -76,13 +83,12 @@ export default class currentAttendance extends React.Component {
         var _this = this;
         var param = {
             "method": 'getBraceletAttend',
-            // "cid": data.classTableId
-            "cid": 3
+            "cid": data.classTableId
+            // "cid": 3
         };
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
             onResponse: function (result) {
                 if (result.msg == '调用成功' || result.success == true) {
-                    console.log('getBraceletAttend', result.response.length);
                     _this.setState({peopleNumReality: result.response.length})
                 }
             },
@@ -95,29 +101,42 @@ export default class currentAttendance extends React.Component {
     /**
      * 进入考勤详情页
      */
-    turnToAttendanceList(){
-        var currentAttendanceListUrl = WebServiceUtil.mobileServiceURL + "currentAttendanceList";
-        location.href = currentAttendanceListUrl;
+    turnToAttendanceList() {
+        if (!this.state.openClass) {
+            Toast.fail('暂未开课')
+            return
+        }
 
-        /*var data = {
+        var currentAttendanceListUrl = WebServiceUtil.mobileServiceURL + "currentAttendanceList?clazzId=" + this.state.clazzId;
+        // window.location.href = currentAttendanceListUrl;
+
+        var data = {
             method: 'openNewPage',
-            url: editStudentDutyUrl
+            url: currentAttendanceListUrl
         };
 
         Bridge.callHandler(data, null, function (error) {
-            window.location.href = url;
-        });*/
+            window.location.href = currentAttendanceListUrl;
+        });
     }
 
     render() {
         return (
-            <div id="currentAttendance">
-                <div onClick={this.turnToAttendanceList}>考勤详情</div>
+            <div id="currentAttendance" className="home_card currentAttendance_height">
+                <h3 className="home_title" onClick={this.turnToAttendanceList}>
+                    <span>本节考勤</span>
+                    <span className="home_titleMore">考勤详情<i className="titleMore"></i></span>
+                </h3>
                 {!this.state.openClass ?
-                    <div className='classTableA'>暂未开课</div> :
                     <div className='classTableA'>
-                        <div>应到人数:{this.state.peopleNum}</div>
-                        <div>实到人数:{this.state.peopleNumReality}</div>
+                        <div className="empty_center">
+                            <div className="empty_icon empty_currentAttendance"></div>
+                            <div className="empty_text">暂无考勤</div>
+                        </div>
+                    </div> :
+                    <div className='classTableA'>
+                        <div className="due">应到人数：<span className="number">{this.state.peopleNum}</span></div>
+                        <div className="due">实到人数：<span className="number">{this.state.peopleNumReality}</span></div>
                     </div>}
             </div>
         );

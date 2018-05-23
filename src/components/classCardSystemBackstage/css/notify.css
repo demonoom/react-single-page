@@ -1,0 +1,48 @@
+(node) util.print is deprecated. Use console.log instead.
+#notify .headPic {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  left: 45px;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  margin-top: 8px;
+}
+#notify .deleteNoifty {
+  position: absolute;
+  top: 50%;
+  left: 15px;
+  transform: translateY(-50%);
+  background: #ccc;
+  border-radius: 50%;
+  color: white;
+  margin-top: 8px;
+}
+#notify .am-list-line::after {
+  background: none;
+}
+#notify .am-input-control {
+  text-align: right;
+  width: calc(100% - 130px);
+}
+#notify .am-input-control input {
+  text-align: right;
+  font-size: 16px;
+}
+#notify .am-list-item {
+  border-top: 15px #f4f4f4 solid;
+}
+#notify .am-list-body div:not(:last-child) .am-list-line {
+  border-bottom: 0;
+}
+#notify .am-textarea-control textarea {
+  text-align: right;
+  font-size: 16px;
+}
+#notify .listCont {
+  position: relative;
+}
+#notify .listCont .am-list-item {
+  padding-left: 105px;
+}

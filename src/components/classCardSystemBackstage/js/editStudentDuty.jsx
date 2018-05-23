@@ -1,14 +1,9 @@
 import React from 'react';
 import {Picker, List, WhiteSpace,Button,Toast, Checkbox} from 'antd-mobile';
+import '../css/addStudentDuty.less'
 const CheckboxItem = Checkbox.CheckboxItem;
 
 const seasons = [
-    [
-
-    ]
-];
-
-const terms = [
     [
 
     ]
@@ -21,22 +16,25 @@ export default class editStudentDuty extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            data: [],
+            data: [{value: '1', label: '星期一'},
+                {value: '2', label: '星期二'},
+                {value: '3', label: '星期三'},
+                {value: '4', label: '星期四'},
+                {value: '5', label: '星期五'},
+                {value: '6', label: '星期六'},
+                {value: '7', label: '星期日'}],
             cols: 1,
             pickerValue: [],
-            asyncValue: [],
+            asyncValue: ['1'],
             sValue: [],
-            termValue: [],
             visible: false,
             studentList:[],
             clazzId: '',
             week: '1',
-            termId: ''
         };
         this.studentCheckboxOnChange = this.studentCheckboxOnChange.bind(this);
         this.isHaveSameStudentId = this.isHaveSameStudentId.bind(this);
         this.getClazzesByUserId = this.getClazzesByUserId.bind(this);
-        this.getSemesterList = this.getSemesterList.bind(this);
     }
 
     componentDidMount(){
@@ -45,30 +43,18 @@ export default class editStudentDuty extends React.Component {
         var locationSearch = locationHref.substr(locationHref.indexOf("?") + 1);
         var locationSearchArray = locationSearch.split("&");
         var clazzId = locationSearchArray[0].split("=")[1];
-        var termId = locationSearchArray[1].split("=")[1];
-        var week = locationSearchArray[2].split("=")[1];
-        var studentIds = locationSearchArray[3].split("=")[1];
-        var dutyId = locationSearchArray[4].split("=")[1];
-        var userId = locationSearchArray[5].split("=")[1];
-       /* var termValue = [termId+''];
-        var sValue = [clazzId+''];
-        var asyncValue = [week+''];*/
-        var weekData = [{value: '1', label: '星期一'},
-            {value: '2', label: '星期二'},
-            {value: '3', label: '星期三'},
-            {value: '4', label: '星期四'},
-            {value: '5', label: '星期五'},
-            {value: '6', label: '星期六'},
-            {value: '7', label: '星期日'}];
+        var week = locationSearchArray[1].split("=")[1];
+        var studentIds = locationSearchArray[2].split("=")[1];
+        var dutyId = locationSearchArray[3].split("=")[1];
+        var userId = locationSearchArray[4].split("=")[1];
         this.getStudentListByClazz(clazzId,studentIds);
         this.getClazzesByUserId(userId);
-        this.getSemesterList(userId);
-        // this.setState({clazzId,week,termId,termValue,sValue,asyncValue,data:weekData,studentIds,dutyId});
-        this.setState({clazzId,week,termId,data:weekData,studentIds,dutyId});
+        var sValue = [clazzId];
+        var asyncValue = [week];
+        this.setState({clazzId,week,studentIds,dutyId,sValue,asyncValue});
     }
 
     onPickerChange = (val) => {
-        console.log("week:" + val);
         const d = [...this.state.data];
         const asyncValue = [...val];
         var week = val[0];
@@ -86,14 +72,8 @@ export default class editStudentDuty extends React.Component {
         this.setState({sValue: val, clazzId});
     };
 
-    onTermChange = (val) => {
-        var termId = val[0];
-        this.setState({termId,termValue:val});
-    };
-
 
     studentCheckboxOnChange(val){
-        console.log("studentCheckboxOnChange:"+val);
         this.buildStudentCheckedArray(val);
     }
 
@@ -121,49 +101,10 @@ export default class editStudentDuty extends React.Component {
                             var gradeName = grade.name;
                             var clazzJson = {
                                 label: gradeName+clazzName,
-                                // value: clazzId+"",
-                                value: 14+"",
+                                value: clazzId+"",
                             };
                             if(seasons[0]!=null && seasons[0]!=undefined){
                                 seasons[0].push(clazzJson);
-                            }
-                        })
-
-                    }
-                }
-                _this.setState({seasons});
-            },
-            onError: function (error) {
-            }
-        });
-    }
-
-    /**
-     * 进入学生值日页面时，根据用户id获取当前用户的班级
-     * @param userId
-     */
-    getSemesterList(userId){
-        var _this = this;
-        var param = {
-            "method": 'getSemesterList',
-            "uid": userId
-        };
-        WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
-            onResponse: function (result) {
-                console.log(result);
-                if (result.success == true && result.msg == "调用成功") {
-                    var response = result.response;
-                    console.log(response);
-                    if (response != null && response != undefined) {
-                        response.forEach(function (term) {
-                            var id = term.id;
-                            var name = term.name;
-                            var termJson = {
-                                label: name,
-                                value: id+"",
-                            };
-                            if(terms[0]!=null && terms[0]!=undefined){
-                                terms[0].push(termJson);
                             }
                         })
 
@@ -218,7 +159,6 @@ export default class editStudentDuty extends React.Component {
             "dutyId": this.state.dutyId,
             "clazzId": this.state.clazzId,
             "week": this.state.week,
-            "termId": this.state.termId,
             "dutyStudent": stuStr
         };
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
@@ -243,23 +183,35 @@ export default class editStudentDuty extends React.Component {
         var _this = this;
         var studentCheckboxItemList = [];
         studentCheckedArray = studentIds.split(",");
-        var studentList = [
-            { colUid: 23836, userName: '王丹蛋' },
-            { colUid: 23991, userName: '美伦' },
-            { colUid: 24827, userName: '邢国文' },
-        ];
 
-        studentList.forEach(function (student) {
-            var studentId = student.colUid+'';
-            var isDefaultChecked = false;
-            if(studentCheckedArray.indexOf(studentId)!=-1){
-                isDefaultChecked = true;
+        var param = {
+            "method": 'getClassStudents',
+            "clazzId": clazzId
+        };
+        WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
+            onResponse: function (result) {
+                if (result.success == true && result.msg == "调用成功") {
+                    var response = result.response;
+                    if (response != null && response != undefined) {
+                        response.forEach(function (student) {
+                            var studentId = student.colUid+'';
+                            var isDefaultChecked = false;
+                            if(studentCheckedArray.indexOf(studentId)!=-1){
+                                isDefaultChecked = true;
+                            }
+                            var checkBoxItem = <CheckboxItem key={studentId} defaultChecked={isDefaultChecked} onChange={() => _this.studentCheckboxOnChange(studentId)}>
+                                {student.userName}
+                            </CheckboxItem>;
+                            studentCheckboxItemList.push(checkBoxItem);
+                        })
+
+                    }
+                }
+                _this.setState({seasons});
+            },
+            onError: function (error) {
             }
-            var checkBoxItem = <CheckboxItem key={studentId} defaultChecked={isDefaultChecked} onChange={() => _this.studentCheckboxOnChange(studentId)}>
-                {student.userName}
-            </CheckboxItem>;
-            studentCheckboxItemList.push(checkBoxItem);
-        })
+        });
         this.setState({studentCheckboxItemList});
     }
 
@@ -267,7 +219,7 @@ export default class editStudentDuty extends React.Component {
         var _this = this;
 
         return (
-            <div id="curriculumSchedule" style={{height: document.body.clientHeight}}>
+            <div id="addStudentDuty" style={{height: document.body.clientHeight}}>
                 <WhiteSpace size="lg"/>
                 <Picker
                     data={seasons}
@@ -275,19 +227,9 @@ export default class editStudentDuty extends React.Component {
                     cascade={false}
                     value={this.state.sValue}
                     onOk={v => this.onClassChange(v)}
+                    disabled
                 >
-                    <List.Item arrow="horizontal">班级</List.Item>
-                </Picker>
-
-                <WhiteSpace size="lg"/>
-                <Picker
-                    data={terms}
-                    title="请选择"
-                    cascade={false}
-                    value={this.state.termValue}
-                    onOk={v => this.onTermChange(v)}
-                >
-                    <List.Item arrow="horizontal">选择学期</List.Item>
+                    <List.Item arrow="horizontal">选择班级<i className="redStar">*</i></List.Item>
                 </Picker>
 
                 <WhiteSpace size="lg"/>
@@ -296,15 +238,20 @@ export default class editStudentDuty extends React.Component {
                     cols={1}
                     value={this.state.asyncValue}
                     onOk={v => this.onPickerChange(v)}
+                    disabled
                 >
-                    <List.Item arrow="horizontal" onClick={this.onClick}>选择星期</List.Item>
+                    <List.Item arrow="horizontal" onClick={this.onClick}>选择星期<i className="redStar">*</i></List.Item>
                 </Picker>
 
                 <WhiteSpace size="lg"/>
-                <List renderHeader={() => 'CheckboxItem demo'}>
-                    {_this.state.studentCheckboxItemList}
-                </List>
-                <Button type="primary" onClick={this.updateClassBrandStudentDuty}>提交</Button>
+                <div className="bg_white">
+                    <List renderHeader={() => '学生列表'}>
+                        {_this.state.studentCheckboxItemList}
+                    </List>
+                </div>
+                <div className="submitBtn">
+                    <Button type="primary" onClick={this.updateClassBrandStudentDuty}>提交</Button>
+                </div>
             </div>
         );
     }

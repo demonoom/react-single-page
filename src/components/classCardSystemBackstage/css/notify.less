@@ -1,5 +1,4 @@
 #notify {
-
   .headPic{
     position: absolute;
     top:50%;
@@ -8,6 +7,7 @@
     width:50px;
     height:50px;
     border-radius: 50%;
+    margin-top: 8px;
   }
 
   .deleteNoifty {
@@ -18,18 +18,33 @@
     background: #ccc;
     border-radius: 50%;
     color: white;
+    margin-top: 8px;
   }
-  .addButton {
-    position: fixed;
-    bottom: 100px;
-    right: 30px;
-    background: orange;
-    color: white;
-    font-size: 50px;
-    text-align: center;
-    line-height: 50px;
-    width: 50px;
-    height: 50px;
-    border-radius: 50%;
+  .am-list-line::after{
+    background:none;
+  }
+  .am-input-control{
+    text-align: right;
+    width: calc(~"100% - 130px");
+    input{
+      text-align: right;
+      font-size: 16px;
+    }
+  }
+  .am-list-item{
+    border-top: 15px #f4f4f4 solid;
+  }
+  .am-list-body div:not(:last-child) .am-list-line{
+    border-bottom: 0;
+  }
+  .am-textarea-control textarea{
+    text-align: right;
+    font-size: 16px;
+  }
+  .listCont{
+    position: relative;
+    .am-list-item{
+      padding-left: 105px;
+    }
   }
 }

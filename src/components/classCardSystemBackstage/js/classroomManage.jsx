@@ -354,7 +354,7 @@ export default class classroomManage extends React.Component {
                                 value={this.state.gradeNameValue}
                             >班级名称<i className='redStar'>*</i></InputItem>
                             <div id='stIcon' className='stIcon' onClick={this.searchClassroomName}>
-                                <img  src={require('../imgs/down.png')}/>
+                                <img  src={require('../imgs/icon_search.png')}/>
                             </div>
 
 

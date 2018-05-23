@@ -1,3 +1,4 @@
+(node) util.print is deprecated. Use console.log instead.
 #classroomManage {
   font-size: 17px;
 }
@@ -21,6 +22,9 @@
 }
 #classroomManage .am-pull-to-refresh-indicator {
   font-size: 1rem !important;
+}
+#classroomManage .am-list-body {
+  border: 0;
 }
 #classroomManage .tableDiv {
   position: relative;
@@ -67,16 +71,6 @@
 }
 #classroomManage .tableDiv .noomCardUnbind {
   color: #ff144e;
-}
-#classroomManage .tableDiv .addBunton {
-  width: 3.5rem;
-  height: 3.5rem;
-  position: absolute;
-  right: 2.5rem;
-  bottom: 0.5rem;
-}
-#classroomManage .tableDiv .addBunton img {
-  width: 100%;
 }
 #classroomManage .tableDiv .liName {
   font-size: 30px;
@@ -194,16 +188,15 @@
 #classroomManage .addModel .classroomName .stIcon,
 #classroomManage .addModel .gradeName .stIcon {
   width: 18px;
-  height: 18px;
+  height: 28px;
   position: absolute;
   right: 15px;
   top: 50%;
-  margin-top: -10px;
+  margin-top: -12px;
 }
 #classroomManage .addModel .classroomName .stIcon img,
 #classroomManage .addModel .gradeName .stIcon img {
-  width: 10px;
-  height: 9px;
+  width: 100%;
 }
 #classroomManage .addModel .bottomBox {
   display: flex;
