@@ -117,7 +117,7 @@ export default class notifyBack extends React.Component {
 
     //新打开添加课程页
     toAddNotify() {
-        var url = WebServiceUtil.mobileServiceURL + "addNotify";
+        var url = WebServiceUtil.mobileServiceURL + "addNotify&ident=" + this.state.ident;
         var data = {
             method: 'openNewPage',
             url: url
