@@ -385,9 +385,9 @@ class Index extends React.Component {
                     <li><Link
                         to="/notifyBack?access_user=23836"
                         style={{fontSize: '24px'}}>通知后台</Link></li>
-                    {/*<li><Link*/}
-                    {/*to="/addNotify"*/}
-                    {/*style={{fontSize: '24px'}}>添加通知</Link></li>*/}
+                    {/* <li><Link
+                    to="/addNotify?ident=23836"
+                    style={{fontSize: '24px'}}>添加通知</Link></li> */}
                     {/*<li><Link*/}
                     {/*to="/notifyDetail"*/}
                     {/*style={{fontSize: '24px'}}>通知详情</Link></li>*/}
