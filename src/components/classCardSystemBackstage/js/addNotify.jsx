@@ -89,15 +89,12 @@ export default class addNotify extends React.Component {
                 cid:classInfo.classId,
                 noticeTitle:classInfo.title
             };
-            console.log(JSON.stringify(classObject));
             var param = {
                 "method": 'saveClassBrandNotice',
                 "classBrandNoticeJson": classObject,
             };
-            console.log(param);
             WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
                 onResponse: (result) => {
-                    console.log(result);
                     if (result.msg == '调用成功' || result.success == true) {
 
                     }

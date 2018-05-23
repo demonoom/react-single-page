@@ -58,7 +58,8 @@ export default class notify extends React.Component {
                             notices.forEach(function (notice) {
                                 if (notice != null && notice != undefined) {
                                     var noticeTag = <li>
-                                        <span className="notify_list text_hidden" onClick={_this.showContentModal.bind(_this, notice)}>{notice.noticeTitle}</span>
+                                        <span className="notify_list text_hidden"
+                                              onClick={_this.showContentModal.bind(_this, notice)}>{notice.noticeTitle}</span>
                                         <i className="titleMore notify_titleMore"></i>
                                     </li>
                                     noticeList.push(noticeTag);
@@ -97,15 +98,14 @@ export default class notify extends React.Component {
 
     notifySeeMore() {
         var currentAttendanceListUrl = WebServiceUtil.mobileServiceURL + "noticeReadMore";
-        window.location.href = currentAttendanceListUrl;
-        // var data = {
-        //     method: 'openNewPage',
-        //     url: currentAttendanceListUrl
-        // };
-        //
-        // Bridge.callHandler(data, null, function (error) {
-        //     window.location.href = currentAttendanceListUrl;
-        // });
+        var data = {
+            method: 'openNewPage',
+            url: currentAttendanceListUrl
+        };
+
+        Bridge.callHandler(data, null, function (error) {
+            window.location.href = currentAttendanceListUrl;
+        });
     }
 
     render() {
@@ -123,6 +123,10 @@ export default class notify extends React.Component {
                 </h3>
                 <div className="notify_cont">
                     {this.state.noticeList}
+                    <div className="empty_center">
+                        <div className="empty_icon empty_notify"></div>
+                        <div className="empty_text">暂无通知</div>
+                    </div>
                 </div>
                 <Modal
                     visible={this.state.contentModalVisible}
@@ -135,7 +139,12 @@ export default class notify extends React.Component {
                     footer={false}
                     wrapProps={{onTouchStart: this.onWrapTouchStart}}
                 >
-                    <div className="" style={{height: '100%', padding:'0 2.22rem 0 2.22rem' , 'overflow-x': 'hidden', 'overflow-y':'auto'}}>
+                    <div className="" style={{
+                        height: '100%',
+                        padding: '0 2.22rem 0 2.22rem',
+                        'overflow-x': 'hidden',
+                        'overflow-y': 'auto'
+                    }}>
                         {noticeContent}
                     </div>
                 </Modal>

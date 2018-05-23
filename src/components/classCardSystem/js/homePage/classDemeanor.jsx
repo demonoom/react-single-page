@@ -44,7 +44,7 @@ export default class classDemeanor extends React.Component {
                             var classDemeanors = result.response;
                             classDemeanors.forEach(function (classDemeanor) {
                                 if (classDemeanor != null && classDemeanor != undefined) {
-                                    var stuImgTag=<img style={{width:'120px',height:'81px'}} id={classDemeanor.id} src={classDemeanor.imagePath}/>;
+                                    var stuImgTag=<img style={{width:'100%',height:'100%'}} id={classDemeanor.id} src={classDemeanor.imagePath}/>;
                                     classDemeanorList.push(stuImgTag)
                                 }
                             })
@@ -81,7 +81,7 @@ export default class classDemeanor extends React.Component {
                             var classRewards = result.response;
                             classRewards.forEach(function (classDemeanor) {
                                 if (classDemeanor != null && classDemeanor != undefined) {
-                                    var stuImgTag=<img style={{width:'215px',height:'150px'}} id={classDemeanor.id} src={classDemeanor.imagePath}/>;
+                                    var stuImgTag=<img style={{width:'100%',height:'100%'}} id={classDemeanor.id} src={classDemeanor.imagePath}/>;
                                     classRewardList.push(stuImgTag);
                                 }
                             })
@@ -99,7 +99,7 @@ export default class classDemeanor extends React.Component {
         var clazzDemeanor = <Carousel className="space-carousel class_mien1"
                                       frameOverflow="visible"
                                       cellSpacing={12}
-                                      slideWidth={"120px"}
+                                      slideWidth={0.25}
                                       autoplay={true}
                                       infinite
                                       dots={false}
@@ -111,7 +111,7 @@ export default class classDemeanor extends React.Component {
         var classReward = <Carousel className="space-carousel class_mien2"
                                     frameOverflow="visible"
                                     cellSpacing={12}
-                                    slideWidth={"215px"}
+                                    slideWidth={0.45}
                                     autoplay={true}
                                     infinite
                                     dots={false}
@@ -121,10 +121,20 @@ export default class classDemeanor extends React.Component {
             {this.state.classRewardList}
         </Carousel>;
         if(WebServiceUtil.isEmpty(this.state.classDemeanorList)===true || this.state.classDemeanorList.length == 0){
-            clazzDemeanor = <img src="" />
+            clazzDemeanor = <div className="demeanor_list1">
+                <div className="empty_center">
+                    <div className="empty_icon empty_honor"></div>
+                    <div className="empty_text">暂无荣誉</div>
+                </div>
+            </div>
         }
         if(WebServiceUtil.isEmpty(this.state.classRewardList)===true || this.state.classRewardList.length == 0){
-            classReward = <img src="" />
+            classReward = <div className="demeanor_list2">
+                <div className="empty_center">
+                    <div className="empty_icon empty_activity"></div>
+                    <div className="empty_text">暂无活动</div>
+                </div>
+            </div>
         }
 
         return (

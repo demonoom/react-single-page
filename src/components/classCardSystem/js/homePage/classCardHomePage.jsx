@@ -9,6 +9,7 @@ import Application from './application'
 import ClassDemeanor from './classDemeanor'
 import StudentOnDuty from './studentOnDuty'
 import MoralEducationScore from './moralEducationScore'
+import Header from './header'
 
 var demeanor;
 //消息通信js
@@ -65,6 +66,7 @@ export default class classCardHomePage extends React.Component {
     render() {
         return (
             <div id="classCardHomePage" style={{height: document.body.clientHeight}}>
+                <Header/>
                 <div className="home_content">
                     <div className="">
                         {/*班牌首页*/}

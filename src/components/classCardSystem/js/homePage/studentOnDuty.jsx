@@ -12,7 +12,7 @@ export default class studentOnDuty extends React.Component {
         super(props);
         demeanor = this;
         this.state = {
-            studentList:[]
+            studentList: []
         };
         this.getClassBrandStudentDutyByToday = this.getClassBrandStudentDutyByToday.bind(this);
     }
@@ -48,23 +48,27 @@ export default class studentOnDuty extends React.Component {
                             clazzDutyList.forEach(function (clazzDuty) {
                                 var users = clazzDuty.users;
                                 var clazzDutyWeek = clazzDuty.week;
-                                users.forEach(function (student) {
-                                    if (student != null && student != undefined) {
-                                        var stuId = student.colUid;
-                                        var stuName = student.userName;
-                                        var icon = student.avatar;
-                                        var stuJson = {text: stuName, icon};
-                                        var stuImgTag=<li className="studentOnDuty_list">
-                                            <div className="studentOnDuty_face"><img  className="studentOnDuty_face"  src={student.avatar}/></div>
-                                            <div className="home_contfont text_hidden studentOnDuty_name">{stuName}</div>
-                                        </li>
-                                        if(clazzDutyWeek == weekOfTody){
-                                            todyDuty.push(stuImgTag)
-                                        }else{
-                                            nextDuty.push(stuImgTag)
+                                if (WebServiceUtil.isEmpty(users) == false) {
+                                    users.forEach(function (student) {
+                                        if (student != null && student != undefined) {
+                                            var stuId = student.colUid;
+                                            var stuName = student.userName;
+                                            var icon = student.avatar;
+                                            var stuJson = {text: stuName, icon};
+                                            var stuImgTag = <li className="studentOnDuty_list">
+                                                <div className="studentOnDuty_face"><img className="studentOnDuty_face"
+                                                                                         src={student.avatar}/></div>
+                                                <div
+                                                    className="home_contfont text_hidden studentOnDuty_name">{stuName}</div>
+                                            </li>;
+                                            if (clazzDutyWeek == weekOfTody) {
+                                                todyDuty.push(stuImgTag)
+                                            } else {
+                                                nextDuty.push(stuImgTag)
+                                            }
                                         }
-                                    }
-                                })
+                                    })
+                                }
                             })
                         }
                     }

@@ -40,7 +40,6 @@ export default class noticeReadMore extends React.Component {
         }
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
             onResponse: function (result) {
-                console.log(result)
                 if (result.success == true && result.msg == "调用成功") {
                     if (result.response.length === 0) {
                         _this.setState({"isLoadingLeft": false})
@@ -109,7 +108,14 @@ export default class noticeReadMore extends React.Component {
     };
 
     historyGoBack() {
-        history.back()
+        var data = {
+            method: 'finish',
+        };
+
+        Bridge.callHandler(data, null, function (error) {
+            console.log(error);
+        });
+        // history.back()
     }
 
     onClick = (e) => {
@@ -129,8 +135,9 @@ export default class noticeReadMore extends React.Component {
                 <div className="divBox">
                     <ul className="ulBox">
                         <li onClick={this.onClick}>
-                            <p className="title">{rowData.noticeTitle}<span className="time">{this.getTimeFormat(rowData.createTime)}</span></p>
-                            <div className="noticeContent" style={{ display: rowID=='0'?"block":"none" }}>
+                            <p className="title">{rowData.noticeTitle}<span
+                                className="time">{this.getTimeFormat(rowData.createTime)}</span></p>
+                            <div className="noticeContent" style={{display: rowID == '0' ? "block" : "none"}}>
                                 {rowData.noticeContent}
                             </div>
                         </li>

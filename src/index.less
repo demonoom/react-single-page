@@ -1,7 +1,7 @@
 html, body {
   height: 100%;
   font-size: 14px;
-  font-family:  "Helvetica Neue", "Hiragino Sans GB", Helvetica, "Microsoft YaHei", Arial
+  font-family:  "Helvetica Neue", "Hiragino Sans GB", Helvetica, "Microsoft YaHei", Arial;
 }
 body {
   overflow: auto !important;
@@ -235,11 +235,16 @@ hr {
   bottom: 15px;
   width: 100%;
   box-sizing: border-box;
+  z-index: 99;
   .am-button-primary {
     background-color: #e94f4f;
     border: 1PX solid #e94f4f;
     &::before{
       border: 1PX solid #e94f4f !important;
+    }
+    &.am-button-active{
+      background-color: #e94f4f;
+      opcity:0.3;
     }
   }
 }
@@ -271,7 +276,7 @@ hr {
     -moz-border-radius: 6px;
     border-radius: 6px;
     height: 100%;
-    padding: 10px;
+    padding:0 10px 10px;
     box-sizing: border-box;
     overflow: hidden;
   }
@@ -289,7 +294,7 @@ hr {
   }
   .am-modal-header{
     padding: 2.06rem 0 0.33rem 0;
-    border-bottom: 2px solid #f35454;
+    border-bottom: 0.05rem solid #f35454;
     margin: 0 2.22rem;
 
   }
@@ -305,6 +310,16 @@ hr {
     color: #565c72;
     text-align: left;
   }
+}
+.empty_center{
+  position: absolute;
+  top:50%;
+  left:50%;
+  transform:translate(-50%, -50%);
+  -ms-transform:translate(-50%, -50%); /* IE 9 */
+  -moz-transform:translate(-50%, -50%); /* Firefox */
+  -webkit-transform:translate(-50%, -50%); /* Safari 和 Chrome */
+  -o-transform:translate(-50%, -50%);
 }
 /*班牌屏幕适配*/
 @media only screen and (min-width: 768px) and (max-width: 799px){

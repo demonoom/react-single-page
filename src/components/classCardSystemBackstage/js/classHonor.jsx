@@ -178,7 +178,6 @@ export default class classHonor extends React.Component {
     }
 
     render() {
-        console.log(demeanor.state.imgArr);
         return (
             <div id="classDemeanor" style={{height: document.body.clientHeight}}>
                 <div className="Img_cont">

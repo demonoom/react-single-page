@@ -1,34 +1,37 @@
-There is no no-color option ("less --help" for help)
+(node) util.print is deprecated. Use console.log instead.
 #tableItemDetil {
-
   color: #fff;
   overflow-y: auto;
   font-size: .72rem;
-  &.home_content .inner_bg{
-    padding: 0;
-  }
-  .black_bg{
-    background-color: #323336;
-    padding: 1.9rem;
-    height: calc(~"100% - 2.22rem");
-  }
-  .tableItem {
-    width: 100%;
-    border-collapse: collapse;
-    text-align: center;
-    width: 100%;
-    td{
-      border: 0.06rem #55575d solid;
-      padding: .5rem 0;
-      span{
-          font-size: .56rem;
-        padding-top: .28rem;
-      }
-      span.class_name{
-        font-size: .72rem;
-        padding-top: .39rem;
-      }
-    }
-
-  }
+}
+#tableItemDetil.home_content .inner_bg {
+  padding: 0;
+  background: none;
+}
+#tableItemDetil.home_content .inner_bg .navBar {
+  background-color: #fff;
+}
+#tableItemDetil .black_bg {
+  background-color: #323336;
+  padding: 1.9rem;
+  height: calc(100% - 2.22rem);
+  box-sizing: border-box;
+}
+#tableItemDetil .tableItem {
+  border-collapse: collapse;
+  text-align: center;
+  width: 100%;
+}
+#tableItemDetil .tableItem td {
+  border: 0.06rem #55575d solid;
+  padding: .5rem 0;
+}
+#tableItemDetil .tableItem td span {
+  font-size: .56rem;
+  padding-top: .28rem;
+}
+#tableItemDetil .tableItem td span.class_name {
+  font-size: .72rem;
+  padding-top: 0;
+  padding-bottom: .39rem;
 }

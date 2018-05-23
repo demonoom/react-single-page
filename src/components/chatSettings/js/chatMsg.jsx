@@ -73,10 +73,8 @@ export default class chatMsg extends React.Component {
             "keywork": e,
             "pn": PageNo + '',
         };
-        console.log(param);
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
             onResponse: function (result) {
-                console.log(result);
                 if (result.msg == '调用成功' && result.success == true) {
                     if (result.response.length == 0) {
                         // _this.state.listViewDisplay = false;
