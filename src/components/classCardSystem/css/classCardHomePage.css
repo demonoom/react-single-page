@@ -200,7 +200,7 @@ There is no no-color option ("less --help" for help)
   .empty_icon{
     width: 3rem;
     height: 3rem;
-    margin-bottom:0.56rem ;
+    margin-bottom:0.36rem ;
     display: inline-block;
   }
   .empty_text{
