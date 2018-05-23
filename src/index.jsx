@@ -380,7 +380,7 @@ class Index extends React.Component {
                         to="/classCardHomePage?clazzId=819&roomId=3&mac=02:00:00:00:00:00"
                         style={{fontSize: '24px'}}>班牌首页</Link></li>
                     <li><Link
-                        to="/publicClassCardHomePage?clazzId=819&roomId=1"
+                        to="/publicClassCardHomePage?clazzId=819&roomId=1&mac=02:00:00:00:00:00"
                         style={{fontSize: '24px'}}>公共教室班牌首页</Link></li>
                     <li><Link
                         to="/notifyBack?access_user=23836"
