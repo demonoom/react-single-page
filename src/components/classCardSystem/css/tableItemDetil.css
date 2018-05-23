@@ -1,11 +1,16 @@
+(node) util.print is deprecated. Use console.log instead.
 #tableItemDetil {
   color: #fff;
   overflow-y: auto;
   font-size: .72rem;
 }
+#tableItemDetil.home_content .inner_bg {
+  padding: 0;
+}
 #tableItemDetil .black_bg {
   background-color: #323336;
   padding: 1.9rem;
+  height: calc(100% - 2.22rem);
 }
 #tableItemDetil .tableItem {
   border-collapse: collapse;

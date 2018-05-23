@@ -153,7 +153,7 @@ hr {
   -webkit-flex-wrap: wrap;
 }
 .list_padding_no_b{
-  border-bottom: 0px;
+  border-bottom: 0;
 }
 .am-checkbox.am-checkbox-checked .am-checkbox-inner{
   border-color: #f46a55 !important;
@@ -260,7 +260,7 @@ hr {
 .home_content{
   width: calc(~"100%" - 1.66rem);
   padding: 0.83rem;
-  height: calc(~"100%" - 1.66rem);
+  height: calc(~"100%" - 1.66rem) !important;
   clear: both;
   background: url("components/classCardSystem/imgs/bg_web.jpg") no-repeat;
   background-size: 100% 100%;
@@ -270,9 +270,42 @@ hr {
     -webkit-border-radius: 6px;
     -moz-border-radius: 6px;
     border-radius: 6px;
+    height: 100%;
+    padding: 10px;
+    box-sizing: border-box;
+    overflow: hidden;
+  }
+
+}
+.notify_contModal{
+  width: 26.31rem !important;
+  height:23.67rem;
+  margin: auto;
+  .am-modal-close{
+    top: 15px;
+  }
+  .am-modal-content{
+    padding-top: 0 !important;
+  }
+  .am-modal-header{
+    padding: 2.06rem 0 0.33rem 0;
+    border-bottom: 2px solid #f35454;
+    margin: 0 2.22rem;
+
+  }
+  .am-modal-title{
+    color: #191c26;
+    font-size: 0.67rem;
+    font-weight: bold;
+  }
+  .am-modal-content .am-modal-body{
+    padding: 0.28rem 0 2.22rem 0 !important;
+    height: 17.84rem;
+    font-size: 0.56rem;
+    color: #565c72;
+    text-align: left;
   }
 }
-
 /*班牌屏幕适配*/
 @media only screen and (min-width: 768px) and (max-width: 799px){
   html{
