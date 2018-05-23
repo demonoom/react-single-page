@@ -48,10 +48,9 @@ export default class curriculumSchedule extends React.Component {
     }
 
     componentDidMount() {
-        console.log("curriculumType==>"+this.state.curriculumType)
         var curriculumType = this.state.curriculumType;
         document.title = '班级课程表';
-        if(curriculumType==2){
+        if (curriculumType == 2) {
             document.title = '公共课程表';
         }
     }
@@ -69,9 +68,9 @@ export default class curriculumSchedule extends React.Component {
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
             onResponse: function (result) {
                 if (result.msg == '调用成功' || result.success == true) {
-                    if(_this.state.curriculumType==1){
+                    if (_this.state.curriculumType == 1) {
                         _this.getClazzesByUserId(ident, result.response)
-                    }else{
+                    } else {
                         _this.getClazzRoomsByUserId(ident, result.response)
                     }
                 }
@@ -115,7 +114,7 @@ export default class curriculumSchedule extends React.Component {
         var param = {
             "method": 'viewClassRoomPage',
             "uid": ident,
-            "pn":-1
+            "pn": -1
         };
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
             onResponse: function (result) {
@@ -175,7 +174,7 @@ export default class curriculumSchedule extends React.Component {
      * 增加课程表的回调
      */
     addSchedule() {
-        var url = WebServiceUtil.mobileServiceURL + "addCurriculumSchedule?curriculumType="+this.state.curriculumType;
+        var url = WebServiceUtil.mobileServiceURL + "addCurriculumSchedule?curriculumType=" + this.state.curriculumType;
         var data = {
             method: 'openNewPage',
             url: url
@@ -194,9 +193,9 @@ export default class curriculumSchedule extends React.Component {
         var _this = this;
         this.setState({asyncValue: v})
         if (this.state.sValue[0] == 0) {
-            if(this.state.curriculumType==1){
+            if (this.state.curriculumType == 1) {
                 Toast.fail('请选择班级')
-            }else{
+            } else {
                 Toast.fail('请选择教室')
             }
             return
@@ -207,11 +206,11 @@ export default class curriculumSchedule extends React.Component {
         }
         var cid = -1;
         var rid = -1;
-        if(this.state.curriculumType==1){
+        if (this.state.curriculumType == 1) {
             //班级课程表
             cid = this.state.sValue[0];
             rid = -1;
-        }else{
+        } else {
             //公共教室课程表
             cid = -1;
             rid = this.state.sValue[0];
@@ -240,7 +239,7 @@ export default class curriculumSchedule extends React.Component {
 
     render() {
         var pickerTip = "班级";
-        if(this.state.curriculumType==2){
+        if (this.state.curriculumType == 2) {
             pickerTip = "教室";
         }
         return (
@@ -274,7 +273,8 @@ export default class curriculumSchedule extends React.Component {
                 <div className="curriculum_cont cont_communal">
                     {this.state.classTableArray.map((v, i) => {
                         return <li>
-                            <div className="add_title"><span className="font_gray">第{i + 1}节</span><span className="amend_btn">修改</span></div>
+                            <div className="add_title"><span className="font_gray">第{i + 1}节</span><span
+                                className="amend_btn">修改</span></div>
                             <div className="list_high list">
                                 <span className="text_hidden text_cont1">{v.openTime + '-' + v.closeTime}</span>
                                 <span className="text_hidden text_cont2">{v.courseName}</span>

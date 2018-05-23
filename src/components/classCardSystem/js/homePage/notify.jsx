@@ -135,7 +135,6 @@ export default class notify extends React.Component {
                     className={'notify_contModal'}
                     footer={[{
                         text: 'Ok', onPress: () => {
-                            console.log('ok');
                             this.onClose('modal1')();
                         }
                     }]}

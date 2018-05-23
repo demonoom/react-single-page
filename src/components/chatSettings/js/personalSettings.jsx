@@ -51,7 +51,6 @@ export default class personalSettings extends React.Component {
             onResponse: function (result) {
                 if (result.msg == '调用成功' && result.success == true) {
                     _this.setState({chatRecordData: result.response});
-                    console.log(_this.state.chatRecordData)
                 } else {
                     Toast.fail(result.msg, 1);
                 }

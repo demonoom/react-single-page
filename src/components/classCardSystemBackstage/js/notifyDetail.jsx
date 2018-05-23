@@ -31,7 +31,6 @@ export default class notifyDetail extends React.Component {
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
             onResponse: result => {
                 if (result.msg == '调用成功' || result.success) {
-                    console.log(result.response);
                     this.setState({
                         data: result.response
                     })

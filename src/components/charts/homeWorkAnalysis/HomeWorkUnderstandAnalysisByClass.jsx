@@ -226,7 +226,6 @@ export default class HomeWorkUnderstandAnalysisByClass extends React.Component {
     };
 
     onChartClick(optional){
-        console.log("1111"+optional);
         var dataIndex = optional.dataIndex;
         // var stuIdArray = _this.state.stuIdArray;
         var stuId = stuIdArray[dataIndex];

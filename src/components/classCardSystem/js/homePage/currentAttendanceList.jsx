@@ -52,7 +52,6 @@ export default class currentAttendanceList extends React.Component {
         };
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
             onResponse: function (result) {
-                console.log(result);
                 if (result.msg == '调用成功' || result.success == true) {
                     allStudents = result.response;
                     _this.setState({peopleNum: result.response.length});
@@ -81,7 +80,6 @@ export default class currentAttendanceList extends React.Component {
                 var response = result.response;
                 if (result.msg == '调用成功' || result.success == true) {
                     _this.setState({"currentPeopleNum": result.response.length});
-                    console.log('getBraceletAttend', result.response.length);
                 }
                 _this.buildStudentList(response);
             },

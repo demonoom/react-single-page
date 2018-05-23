@@ -40,7 +40,6 @@ export default class noticeReadMore extends React.Component {
         }
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
             onResponse: function (result) {
-                console.log(result)
                 if (result.success == true && result.msg == "调用成功") {
                     if (result.response.length === 0) {
                         _this.setState({"isLoadingLeft": false})
