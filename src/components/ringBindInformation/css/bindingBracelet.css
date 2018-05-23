@@ -1,45 +1,116 @@
+(node) util.print is deprecated. Use console.log instead.
+#bindingBracelet {
+  font-size: 20px;
+}
+#bindingBracelet .am-list-view-scrollview-content {
+  height: 100%;
+}
+#bindingBracelet .am-pull-to-refresh-indicator {
+  font-size: 1rem !important;
+}
 #bindingBracelet .tableDiv {
   position: relative;
 }
+#bindingBracelet .tableDiv .am-card-body {
+  min-height: 1.5rem !important;
+  color: #888 !important;
+}
+#bindingBracelet .tableDiv .am-card-footer {
+  margin-bottom: 1rem;
+}
+#bindingBracelet .tableDiv .noomCardUnbind {
+  background: #f55d45;
+  color: #fff !important;
+  padding: 0.15rem 1.3rem;
+}
+#bindingBracelet .tableDiv .noomCardHeader .am-card-header-content {
+  font-size: 1rem;
+  color: #3c3c3c;
+}
 #bindingBracelet .tableDiv .noomCardHeader .am-card-header-content img {
-  width: 50px;
-  height: 50px;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  margin-right: 1rem;
 }
 #bindingBracelet .tableDiv .noomCardUnbind {
   color: #ff144e;
 }
 #bindingBracelet .tableDiv .addBunton {
-  width: 50px;
-  height: 50px;
-  line-height: 50px;
+  width: 3.5rem;
+  height: 3.5rem;
   position: absolute;
-  right: 10px;
-  bottom: 10px;
-  text-align: center;
-  font-size: 20px;
-  background: rgba(0, 0, 0, 0.6);
-  border-radius: 50%;
+  right: 3rem;
+  bottom: 5rem;
+}
+#bindingBracelet .tableDiv .addBunton img {
+  width: 100%;
 }
 #bindingBracelet .tableDiv .liName {
   font-size: 30px;
 }
 #bindingBracelet .addModel {
   box-sizing: border-box;
-  padding: 20px;
-  background-color: #fff;
+  padding: 20px 0px;
   position: relative;
 }
 #bindingBracelet .addModel .am-list .am-list-body::before {
-  display: none!important;
+  display: none !important;
 }
 #bindingBracelet .addModel .am-list .am-list-body::after {
-  display: none!important;
+  display: none !important;
+}
+#bindingBracelet .addModel .am-list .am-list-body {
+  background: transparent;
+}
+#bindingBracelet .addModel .am-list .am-list-body .macAddress {
+  margin-bottom: 1rem;
+}
+#bindingBracelet .addModel .am-list .am-list-body .chooseResult .am-list-item {
+  box-sizing: border-box;
+  margin: 0rem 1rem;
+  background: #eee;
+  margin-bottom: 0px;
+  padding: 0;
+}
+#bindingBracelet .addModel .am-list .am-list-body .chooseResult .am-list-item .am-list-line {
+  padding: 0;
+}
+#bindingBracelet .addModel .am-list .am-list-body .chooseResult .am-list-item .am-list-line .am-list-content {
+  font-size: 1.5rem;
+  margin: 0rem 1rem;
+  padding: 1.5rem 1.5rem;
+  border-bottom: 1px solid #a2a2a2;
+  color: #676767;
+}
+#bindingBracelet .addModel .am-list .am-list-body .chooseResult .am-list-item .am-list-line .am-list-content .am-list-brief {
+  font-size: 1.4rem;
+  color: #a2a2a2;
+}
+#bindingBracelet .addModel .am-list .am-list-body .chooseResult .am-list-item .am-list-line .am-list-extra .am-radio.am-radio-checked {
+  height: 100%;
+}
+#bindingBracelet .addModel .am-list .am-list-body .chooseResult .am-list-item .am-list-line .am-list-extra .am-radio-inner {
+  top: 45%;
+  transform: translateY(-50%);
+}
+#bindingBracelet .addModel .am-list .am-list-body .am-list-item {
+  padding: 2rem 2rem;
+}
+#bindingBracelet .addModel .am-list .am-list-body .am-list-item .am-input-label {
+  color: #3c3c3c;
+}
+#bindingBracelet .addModel .am-list .am-list-body .am-list-item .am-input-control input {
+  color: #3c3c3c;
+}
+#bindingBracelet .addModel .am-list .am-list-body .am-list-line::after {
+  height: 0px;
 }
 #bindingBracelet .addModel .am-list .am-list-body .am-list-line .am-input-label.am-input-label-5 {
-  width: 50px!important;
+  width: 50px !important;
 }
 #bindingBracelet .addModel .am-list .am-list-body .am-list-line .am-input-control input {
-  width: 88%!important;
+  width: 88% !important;
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
@@ -50,6 +121,8 @@
 }
 #bindingBracelet .addModel .close {
   font-size: 1.5em;
+  background: #fff;
+  color: #e46a51;
 }
 #bindingBracelet .addModel > h1 {
   margin-bottom: 50px;
@@ -69,15 +142,28 @@
   position: relative;
 }
 #bindingBracelet .addModel .stName .stIcon {
+  width: 30px;
+  height: 30px;
   position: absolute;
-  right: 13px;
+  right: 10px;
   top: 50%;
   transform: translateY(-50%);
 }
-#bindingBracelet .addModel .binding {
-  width: 70%;
+#bindingBracelet .addModel .bottomBox {
+  display: flex;
   position: absolute;
-  bottom: 20px;
-  left: 50%;
-  transform: translateX(-50%);
+  bottom: 0;
+  left: 0;
+  width: 100%;
+}
+#bindingBracelet .addModel .bottomBox span {
+  flex: 1;
+  text-align: center;
+  font-size: 1rem;
+  padding: 1rem;
+  display: inline-block;
+}
+#bindingBracelet .addModel .bottomBox .bind {
+  background: #e46a51;
+  color: #fff;
 }

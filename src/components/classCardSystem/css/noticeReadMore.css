@@ -4,6 +4,7 @@
 }
 #noticeReadMore .am-list-body {
   border-top: 0;
+  border-bottom: 0 !important;
 }
 #noticeReadMore .ulBox {
   padding: 0 .83rem;

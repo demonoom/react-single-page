@@ -6,11 +6,16 @@
 }
 #tableItemDetil.home_content .inner_bg {
   padding: 0;
+  background: none;
+}
+#tableItemDetil.home_content .inner_bg .navBar {
+  background-color: #fff;
 }
 #tableItemDetil .black_bg {
   background-color: #323336;
   padding: 1.9rem;
   height: calc(100% - 2.22rem);
+  box-sizing: border-box;
 }
 #tableItemDetil .tableItem {
   border-collapse: collapse;
@@ -27,5 +32,6 @@
 }
 #tableItemDetil .tableItem td span.class_name {
   font-size: .72rem;
-  padding-top: .39rem;
+  padding-top: 0;
+  padding-bottom: .39rem;
 }

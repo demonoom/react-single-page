@@ -124,6 +124,10 @@ export default class notify extends React.Component {
                 </h3>
                 <div className="notify_cont">
                     {this.state.noticeList}
+                    <div className="empty_center">
+                        <div className="empty_icon empty_notify"></div>
+                        <div className="empty_text">暂无通知</div>
+                    </div>
                 </div>
                 <Modal
                     visible={this.state.contentModalVisible}

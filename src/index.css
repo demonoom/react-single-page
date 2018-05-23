@@ -1,3 +1,4 @@
+(node) util.print is deprecated. Use console.log instead.
 html,
 body {
   height: 100%;
@@ -281,7 +282,7 @@ hr {
   -moz-border-radius: 6px;
   border-radius: 6px;
   height: 100%;
-  padding: 10px;
+  padding: 0 10px 10px;
   box-sizing: border-box;
   overflow: hidden;
 }
@@ -298,7 +299,7 @@ hr {
 }
 .notify_contModal .am-modal-header {
   padding: 2.06rem 0 0.33rem 0;
-  border-bottom: 2px solid #f35454;
+  border-bottom: 0.05rem solid #f35454;
   margin: 0 2.22rem;
 }
 .notify_contModal .am-modal-title {
@@ -312,6 +313,19 @@ hr {
   font-size: 0.56rem;
   color: #565c72;
   text-align: left;
+}
+.empty_center {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+  /* IE 9 */
+  -moz-transform: translate(-50%, -50%);
+  /* Firefox */
+  -webkit-transform: translate(-50%, -50%);
+  /* Safari 和 Chrome */
+  -o-transform: translate(-50%, -50%);
 }
 /*班牌屏幕适配*/
 @media only screen and (min-width: 768px) and (max-width: 799px) {

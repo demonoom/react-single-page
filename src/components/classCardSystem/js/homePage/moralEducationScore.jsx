@@ -62,6 +62,10 @@ export default class moralEducationScore extends React.Component {
                         <span className="font_title2 float_ri">健康：<span
                             className="blue_text">{MEScore.state.scoreData.health}</span></span>
                     </div>
+                    <div className="empty_center">
+                        <div className="empty_icon empty_moralEducationScore"></div>
+                        <div className="empty_text">暂无通知</div>
+                    </div>
                 </div>
             </div>
         );
