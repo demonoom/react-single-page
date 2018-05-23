@@ -226,7 +226,8 @@
   height: 9.9rem;
   overflow-y: auto;
   overflow-x: hidden;
-  padding: 0.56rem 0.83rem;
+  margin: 0.56rem 0 0.56rem 0.83rem;
+  padding: 0 0.83rem 0 0;
 }
 #classCardHomePage .studentOnDuty_today {
   color: #2a3350 ;
@@ -239,10 +240,12 @@
   height: 3rem;
   margin-bottom: 0.36rem ;
   display: inline-block;
+  margin-top: -1rem;
 }
 #classCardHomePage .empty_text {
   font-size: 0.56rem ;
   color: #959ab1;
+  text-align: center;
 }
 #classCardHomePage .empty_currentAttendance {
   background: url("../imgs/empty_currentAttendance.png") no-repeat;
