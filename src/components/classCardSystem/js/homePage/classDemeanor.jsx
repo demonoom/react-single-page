@@ -18,7 +18,11 @@ export default class classDemeanor extends React.Component {
     }
 
     componentWillReceiveProps(nextProps) {
-        console.log('classDemeanor', nextProps.classCommand);
+        var clazzId = localStorage.getItem("clazzId");
+        if (nextProps.classCommand.command == "classDemeanor" && nextProps.classCommand.data.cid == clazzId) {
+            this.getClassDemeanorInfo(clazzId);
+            this.getClassRewardInfo(clazzId);
+        }
     }
 
     componentDidMount() {

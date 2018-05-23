@@ -38,6 +38,10 @@ export default class notify extends React.Component {
 
     componentWillReceiveProps(nextProps) {
         console.log('notify', nextProps.classCommand);
+        var clazzId = localStorage.getItem("clazzId");
+        if (nextProps.classCommand.command == "classBrandNotice" && nextProps.classCommand.data.classroomid == clazzId) {
+            this.getClassBrandNoticeListByClassId(classId, 1);
+        }
     }
 
     /**
