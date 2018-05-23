@@ -264,7 +264,6 @@ export default class notifyBack extends React.Component {
                         style={{
                             height: classBinding.state.clientHeight,
                         }}
-                    />}
                     />
 
                 </List>
