@@ -35,8 +35,8 @@ export default class comments extends React.Component {
                 {title: '赞'},
                 {title: '评论'}
             ],
-            focus:false,
-            clientHeight:'',
+            focus: false,
+            clientHeight: '',
             // paraiseStatus: false,
         };
     }
@@ -48,7 +48,7 @@ export default class comments extends React.Component {
         this.setState({
             userId: searchArray[0].split('=')[1],
             sid: searchArray[1].split('=')[1],
-            clientHeight:document.body.clientHeight,
+            clientHeight: document.body.clientHeight,
         })
     }
 
@@ -56,20 +56,23 @@ export default class comments extends React.Component {
         document.title = "通知列表";
         this.getListCommentOrPraise(1);   //获取点赞列表
         this.getListCommentOrPraise(0);   //获取评论列表
-        window.addEventListener('resize',this.onWindwoResize);
+        window.addEventListener('resize', this.onWindwoResize);
+        // console.log(document.getElementsByClassName('.bottom_input_box').clientHeight);
+
     }
 
-    componentWillUnmount(){
-        window.removeEventListener('resize',this.onWindwoResize);
+    componentWillUnmount() {
+        window.removeEventListener('resize', this.onWindwoResize);
     }
 
     //监听窗口改变时间
-    onWindwoResize(){
-        setTimeout(()=>{
-            this.setState({
-                clientHeight:document.body.clientHeight,
+    onWindwoResize() {
+        // this
+        setTimeout(() => {
+            classBinding.setState({
+                clientHeight: document.body.clientHeight,
             })
-        },100)
+        }, 100)
     }
 
 
@@ -273,26 +276,18 @@ export default class comments extends React.Component {
             anonymous: !this.state.anonymous,
         })
         //获取焦点
-        document.getElementsByTagName('input')[0].focus();
+        document.getElementsByTagName('input')[1].focus();
     }
-    // focusMethods(){
-    //     console.log(123);
-    //     this.setState({
-    //         focus:true,
-    //     })
-    // }
 
     // 输入框完成事件
     confirm() {
-        // console.log(this.state.defaultPageNo,'赞的页码');
-        // console.log(this.state.defaultPageNoOther,'评论的页码');
         if (this.state.content == '' || !this.state.content) {
             Toast.fail('评论内容不能为空')
         } else {
             console.log(this.state.content);
             this.AddCommentOrPraise(1, function () {
                 Toast.success('评论成功', 1);
-                document.getElementsByTagName('input')[0].blur();
+                document.getElementsByTagName('input')[1].blur();
                 this.initDataOther = [];
                 const dataSourceOther = new ListView.DataSource({
                     rowHasChanged: (row1, row2) => row1 !== row2,
@@ -301,7 +296,7 @@ export default class comments extends React.Component {
                     dataSourceOther: dataSourceOther.cloneWithRows(this.initDataOther),
                     defaultPageNoOther: 1,
                     content: '',
-                    focus:false,
+                    focus: false,
                 })
                 this.getListCommentOrPraise(0);
             }.bind(this))
@@ -310,7 +305,6 @@ export default class comments extends React.Component {
     }
 
     inputChange(event) {
-        // console.log(event)
         this.setState({
             content: event,
         })
@@ -321,7 +315,6 @@ export default class comments extends React.Component {
             classBinding.confirm();
         }
     }
-
 
     render() {
         //点赞
@@ -339,7 +332,7 @@ export default class comments extends React.Component {
         //评论
         const rowOther = (item) => {
             return (
-                <div  style={{paddingLeft: 50 + 'px',position: 'relative'}}>
+                <div style={{paddingLeft: 50 + 'px', position: 'relative'}}>
                     <Item align="top"
                           extra={WebServiceUtil.formatYMD(item.commentTime) + ' ' + WebServiceUtil.formatHM(item.commentTime)}
                           multipleLine>
@@ -385,55 +378,59 @@ export default class comments extends React.Component {
                         </ListView>
                     </List>
                     {/*//评论*/}
-                    <List className="my-list" >
-                        <ListView
-                            ref={el => this.lv = el}
-                            dataSource={this.state.dataSourceOther}    //数据类型是 ListViewDataSource
-                            renderFooter={() => (
-                                <div style={{paddingTop: 5, paddingBottom: 5, textAlign: 'center'}}>
-                                    {this.state.isLoadingLeft ? '正在加载' : '已经全部加载完毕'}
-                                </div>)}
-                            renderRow={rowOther}   //需要的参数包括一行数据等,会返回一个可渲染的组件为这行数据渲染  返回renderable
-                            className="am-list views"
-                            pageSize={30}    //每次事件循环（每帧）渲染的行数
-                            //useBodyScroll  //使用 html 的 body 作为滚动容器   bool类型   不应这么写  否则无法下拉刷新
-                            scrollRenderAheadDistance={200}   //当一个行接近屏幕范围多少像素之内的时候，就开始渲染这一行
-                            onEndReached={this.onEndReached}  //当所有的数据都已经渲染过，并且列表被滚动到距离最底部不足onEndReachedThreshold个像素的距离时调用
-                            onEndReachedThreshold={10}  //调用onEndReached之前的临界值，单位是像素  number类型
-                            initialListSize={30}   //指定在组件刚挂载的时候渲染多少行数据，用这个属性来确保首屏显示合适数量的数据
-                            scrollEventThrottle={20}     //控制在滚动过程中,scroll事件被调用的频率
-                            style={{
-                                height: classBinding.state.clientHeight - 44.5,
-                                // boxSizing:'border-box',
-                                // paddingBottom:'83.5px'
-                            }}
-                        >
-                        </ListView>
-                            <div style={this.state.focus?{bottom:'50px'}:{bottom:'0px'}} hidden={this.state.tabIndex == 0} className="bottom_input_box">
-                                <div className="input_box">
-                                    <div className="headBox">
-                                        <InputItem
-                                            clear
-                                            placeholder="请输入评论信息"
-                                            ref={el => this.autoFocusInst = el}
-                                            className="comment_input"
-                                            onChange={this.inputChange.bind(this)}
-                                            value={this.state.content}
-                                            onKeyUp={this.inputItemOnKeyUp}
-                                            // onFocus={this.focusMethods}
-                                        ></InputItem>
+                    <div>
+                        <List className="my-list">
+                            <ListView
+                                ref={el => this.lv = el}
+                                dataSource={this.state.dataSourceOther}    //数据类型是 ListViewDataSource
+                                renderFooter={() => (
+                                    <div style={{paddingTop: 5, paddingBottom: 5, textAlign: 'center'}}>
+                                        {this.state.isLoadingLeft ? '正在加载' : '已经全部加载完毕'}
+                                    </div>)}
+                                renderRow={rowOther}   //需要的参数包括一行数据等,会返回一个可渲染的组件为这行数据渲染  返回renderable
+                                className="am-list views"
+                                pageSize={30}    //每次事件循环（每帧）渲染的行数
+                                //useBodyScroll  //使用 html 的 body 作为滚动容器   bool类型   不应这么写  否则无法下拉刷新
+                                scrollRenderAheadDistance={200}   //当一个行接近屏幕范围多少像素之内的时候，就开始渲染这一行
+                                onEndReached={this.onEndReached}  //当所有的数据都已经渲染过，并且列表被滚动到距离最底部不足onEndReachedThreshold个像素的距离时调用
+                                onEndReachedThreshold={10}  //调用onEndReached之前的临界值，单位是像素  number类型
+                                initialListSize={30}   //指定在组件刚挂载的时候渲染多少行数据，用这个属性来确保首屏显示合适数量的数据
+                                scrollEventThrottle={20}     //控制在滚动过程中,scroll事件被调用的频率
+                                style={{
+                                    height: classBinding.state.clientHeight - 44.5 - 125,
+                                    // boxSizing:'border-box',
+                                    // paddingBottom:'83.5px'
+                                }}
+                            >
+                            </ListView>
+
+                        </List>
+                        <div hidden={this.state.tabIndex == 0} className="bottom_input_box">
+                            <div className="input_box">
+                                <div className="bottomBox">
+                                    <div className="bottomBox_left">
+                                        <input onClick={this.anonymous.bind(this)} type="checkBox"/>匿名
                                     </div>
-                                    <div className="bottomBox">
-                                        <div className="bottomBox_left">
-                                            <input onClick={this.anonymous.bind(this)} type="checkBox"/>匿名
-                                        </div>
-                                        <div className="bottomBox_right">
-                                            您写的评论会以匿名的形式展现
-                                        </div>
+                                    <div className="bottomBox_right">
+                                        您写的评论会以匿名的形式展现
                                     </div>
                                 </div>
+                                <div className="headBox">
+                                    <InputItem
+                                        clear
+                                        placeholder="请输入评论信息"
+                                        ref={el => this.autoFocusInst = el}
+                                        className="comment_input"
+                                        onChange={this.inputChange.bind(this)}
+                                        value={this.state.content}
+                                        onKeyUp={this.inputItemOnKeyUp}
+                                    ></InputItem>
+                                </div>
+
                             </div>
-                    </List>
+                        </div>
+                    </div>
+
                 </Tabs>
 
             </div>
