@@ -31,18 +31,18 @@ export default class notify extends React.Component {
     }
 
     componentDidMount() {
-        var classId = localStorage.getItem("clazzId");
+        var roomId = localStorage.getItem("roomId");
         var initPageNo = 1;
-        this.getClassBrandNoticeListByClassId(classId, initPageNo);
+        this.getClassBrandNoticeListByClassId(roomId, initPageNo);
     }
 
     componentWillReceiveProps(nextProps) {
         // jsonObject.put("command", "classBrandNotice");
         // jsonObject.put("classroomid", classroomid);
         console.log('notify', nextProps.classCommand);
-        var clazzId = localStorage.getItem("clazzId");
-        if (nextProps.classCommand.command == "classBrandNotice" && nextProps.classCommand.data.classroomid == clazzId) {
-            this.getClassBrandNoticeListByClassId(classId, 1);
+        var roomId = localStorage.getItem("roomId");
+        if (nextProps.classCommand.command == "classBrandNotice" && nextProps.classCommand.data.classroomid == roomId) {
+            this.getClassBrandNoticeListByClassId(roomId, 1);
         }
     }
 
@@ -50,11 +50,11 @@ export default class notify extends React.Component {
      * 班牌根据教室id查询通知列表
      * @param clazzId
      */
-    getClassBrandNoticeListByClassId(classId, pageNo) {
+    getClassBrandNoticeListByClassId(roomId, pageNo) {
         var _this = this;
         var param = {
             "method": 'getClassBrandNoticeListByClassId',
-            "cid": classId,
+            "classroomId": roomId,
             "pageNo": pageNo
         };
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
