@@ -322,7 +322,7 @@ export default class comments extends React.Component {
         //点赞
         const row = (item) => {
             return (
-                <div className="good" style={{paddingLeft: 50 + 'px', position: 'relative'}}>
+                <div className="good" style={{paddingLeft: 55 + 'px', position: 'relative'}}>
                     <Item align="top"
                           multipleLine>
                         {item.user.userName}
@@ -334,7 +334,7 @@ export default class comments extends React.Component {
         //评论
         const rowOther = (item) => {
             return (
-                <div style={{paddingLeft: 50 + 'px', position: 'relative'}}>
+                <div  style={{paddingLeft: 40 + 'px',position: 'relative'}}>
                     <Item align="top"
                           multipleLine>
                         <span className="student_name">{item.user.userName}</span><span

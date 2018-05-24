@@ -1,4 +1,3 @@
-(node) util.print is deprecated. Use console.log instead.
 #comments {
   position: relative;
   overflow: hidden;
@@ -17,7 +16,8 @@
 }
 #comments .am-tabs-default-bar-tab::after,
 #comments .am-list-line::after,
-#comments .am-list-body::after {
+#comments .am-list-body::after,
+#comments .am-list-body::before {
   background: none!important;
 }
 #comments .am-tabs-default-bar-underline {
@@ -35,8 +35,11 @@
 #comments .good .am-list-content {
   font-size: 16px;
 }
-#comments .views .am-list-view-scrollview-content {
-  padding-bottom: 125px;
+#comments .views .list-view-section-body {
+  padding-left: 15px;
+}
+#comments .views .headPic {
+  left: 0;
 }
 #comments .views .am-list-view-scrollview-content .am-list-content {
   width: 100%;
@@ -55,6 +58,7 @@
   overflow: visible;
   white-space: normal;
   font-size: 16px;
+  margin-top: 0;
 }
 #comments .views .am-list-view-scrollview-content .am-list-content .time {
   float: right;
@@ -68,12 +72,9 @@
 }
 #comments .bottom_input_box {
   width: 100%;
-  position: absolute;
-  left: 0px;
-  bottom: 0px;
+  height: 125px;
   background: white;
   z-index: 99;
-  height: 125px;
 }
 #comments .bottomBox {
   padding: 15px;
@@ -93,7 +94,7 @@
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
-  left: 8px;
+  left: 15px;
   width: 40px;
   height: 40px;
   border-radius: 50%;

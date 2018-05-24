@@ -13,7 +13,7 @@
   .am-tabs-default-bar-tab-active{
     color: #f35454;
   }
-  .am-tabs-default-bar-tab::after,.am-list-line::after,.am-list-body::after{
+  .am-tabs-default-bar-tab::after,.am-list-line::after,.am-list-body::after,.am-list-body::before{
     background: none!important;
   }
   .am-tabs-default-bar-underline{
@@ -32,6 +32,12 @@
     }
   }
   .views{
+    .list-view-section-body{
+      padding-left: 15px;
+    }
+    .headPic{
+      left: 0;
+    }
     .am-list-view-scrollview-content{
      //padding-bottom: 125px;
       .am-list-content{
@@ -50,6 +56,7 @@
           overflow:visible;
           white-space: normal;
           font-size: 16px;
+          margin-top:0;
         }
         .time{
           float: right;
@@ -92,7 +99,7 @@
     position: absolute;
     top: 50%;
     transform: translateY(-50%);
-    left: 8px;
+    left: 15px;
     width: 40px;
     height: 40px;
     border-radius: 50%;
