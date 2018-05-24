@@ -35,6 +35,8 @@ export default class comments extends React.Component {
                 {title: '赞'},
                 {title: '评论'}
             ],
+            focus:false,
+            clientHeight:'',
             // paraiseStatus: false,
         };
     }
@@ -45,7 +47,8 @@ export default class comments extends React.Component {
         var searchArray = locationSearch.split("&");
         this.setState({
             userId: searchArray[0].split('=')[1],
-            sid: searchArray[1].split('=')[1]
+            sid: searchArray[1].split('=')[1],
+            clientHeight:document.body.clientHeight,
         })
     }
 
@@ -53,6 +56,20 @@ export default class comments extends React.Component {
         document.title = "通知列表";
         this.getListCommentOrPraise(1);   //获取点赞列表
         this.getListCommentOrPraise(0);   //获取评论列表
+        window.addEventListener('resize',this.onWindwoResize);
+    }
+
+    componentWillUnmount(){
+        window.removeEventListener('resize',this.onWindwoResize);
+    }
+
+    //监听窗口改变时间
+    onWindwoResize(){
+        setTimeout(()=>{
+            this.setState({
+                clientHeight:document.body.clientHeight,
+            })
+        },100)
     }
 
 
@@ -254,6 +271,7 @@ export default class comments extends React.Component {
     anonymous() {
         this.setState({
             anonymous: !this.state.anonymous,
+            focus:true,
         })
         //获取焦点
         document.getElementsByTagName('input')[0].focus();
@@ -269,6 +287,7 @@ export default class comments extends React.Component {
             console.log(this.state.content);
             this.AddCommentOrPraise(1, function () {
                 Toast.success('评论成功', 1);
+                document.getElementsByTagName('input')[0].blur();
                 this.initDataOther = [];
                 const dataSourceOther = new ListView.DataSource({
                     rowHasChanged: (row1, row2) => row1 !== row2,
@@ -276,7 +295,8 @@ export default class comments extends React.Component {
                 this.setState({
                     dataSourceOther: dataSourceOther.cloneWithRows(this.initDataOther),
                     defaultPageNoOther: 1,
-                    content: ''
+                    content: '',
+                    focus:false,
                 })
                 this.getListCommentOrPraise(0);
             }.bind(this))
