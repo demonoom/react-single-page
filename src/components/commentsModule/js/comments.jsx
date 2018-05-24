@@ -35,7 +35,7 @@ export default class comments extends React.Component {
                 {title: '赞'},
                 {title: '评论'}
             ],
-            clientHeight: '',
+            content: '',
             // paraiseStatus: false,
         };
     }
@@ -221,7 +221,7 @@ export default class comments extends React.Component {
         if (this.state.tabIndex !== index) {
             this.setState({
                 tabIndex: index,
-                isLoadingLeft: true,
+                isLoadingLeft: false,
                 hasMore: true,
             });
         }
