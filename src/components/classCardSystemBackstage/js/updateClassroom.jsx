@@ -42,10 +42,15 @@ export default class updateClassroom extends React.Component {
         updateCM.setState({
             gradeNameValue:value
         });
-        
     };
 
-    
+    componentWillMount() {
+        var locationHref = window.location.href;
+        var locationSearch = locationHref.substr(locationHref.indexOf("?") + 1);
+        var classIdBynoom = locationSearch.split("&")[0].split("=")[1];
+        this.viewClassRoom(classIdBynoom);
+        this.setState({classIdBynoom});
+    }
    
 
     componentDidMount() {
@@ -56,15 +61,32 @@ export default class updateClassroom extends React.Component {
         this.viewClassRoomPage(uid);
         //添加对视窗大小的监听,在屏幕转换以及键盘弹起时重设各项高度
         window.addEventListener('resize', updateCM.onWindowResize)
-        var locationHref = window.location.href;
-        var locationSearch = locationHref.substr(locationHref.indexOf("?") + 1);
-        var classIdBynoom = locationSearch.split("&")[0].split("=")[1];
-        this.setState({classIdBynoom});
     }
 
     componentWillUnmount() {
         //解除监听
         window.removeEventListener('resize', updateCM.onWindowResize)
+    }
+
+    viewClassRoom(roomId){
+        var _this = this;
+        var param = {
+            "method": 'viewClassRoom',
+            "id": roomId,
+        };
+        WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
+            onResponse: function (result) {
+                if (result.msg == '调用成功' && result.success == true) {
+                    var clazzRoom = result.response
+                    var roomName = clazzRoom.name;
+                    console.log("roomName:"+roomName);
+                    _this.setState({'classroomValue':roomName});
+                }
+            },
+            onError: function (error) {
+                // message.error(error);
+            }
+        });
     }
 
     /**
