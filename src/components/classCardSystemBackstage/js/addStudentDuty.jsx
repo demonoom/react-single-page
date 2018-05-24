@@ -125,6 +125,14 @@ export default class addStudentDuty extends React.Component {
                     var response = result.response;
                     if (response != null && response != undefined) {
                         Toast.success('保存成功！', 1);
+                        //关闭当前窗口，并刷新上一个页面
+                        var data = {
+                            method: 'finishForRefresh',
+                        };
+
+                        Bridge.callHandler(data, null, function (error) {
+                            console.log(error);
+                        });
                     }
                 }
             },

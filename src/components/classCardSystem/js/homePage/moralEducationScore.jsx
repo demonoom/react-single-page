@@ -1,5 +1,5 @@
 import React from 'react';
-import { } from 'antd-mobile';
+import {} from 'antd-mobile';
 
 var MEScore;
 
@@ -21,12 +21,21 @@ export default class moralEducationScore extends React.Component {
         this.getMEScore();
     }
 
+    componentWillReceiveProps(nextProps) {
+        // jsonObject.put("command", "moralEducation");
+        // jsonObject.put("cid", cid);
+        console.log('moralEducationScore', nextProps.classCommand);
+        var clazzId = localStorage.getItem("clazzId");
+        if (nextProps.classCommand.command == "moralEducation" && nextProps.classCommand.data.cid == clazzId) {
+            this.getMEScore();
+        }
+    }
+
     getMEScore() {
         var _this = this;
         const param = {
             "method": "getMoralEducationInfo",
-            "clazzId": 819,
-            "termId": 1,
+            "clazzId": localStorage.getItem("clazzId"),
             "createTime": ""
         }
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
@@ -55,7 +64,6 @@ export default class moralEducationScore extends React.Component {
                                 <span className="font_title2 float_ri">年级排名：<span
                                     className="blue_text">{MEScore.state.scoreData.clazzRank}</span></span>
                             </div>
-                            {MEScore.state.scoreData.totalScore}
                             <div className="mEScoreInfoM font_title2 ">
                                 总分<span className="blue_big">{MEScore.state.scoreData.totalScore}</span>
                             </div>

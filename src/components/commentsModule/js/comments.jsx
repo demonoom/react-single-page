@@ -5,7 +5,6 @@ import '../css/comments.less'
 const Item = List.Item;
 const Brief = Item.Brief;
 var classBinding;
-var timer;
 
 export default class comments extends React.Component {
 
@@ -31,12 +30,11 @@ export default class comments extends React.Component {
             anonymous: false,    //是否匿名
             praiseNum: 0,  //赞总数,
             commentNum: 0, // 评论总数
-            likeStatusAnimate:false,
+            likeStatusAnimate: false,
             tabs: [
                 {title: '赞'},
                 {title: '评论'}
             ],
-            test:0,
             // paraiseStatus: false,
         };
     }
@@ -49,15 +47,6 @@ export default class comments extends React.Component {
             userId: searchArray[0].split('=')[1],
             sid: searchArray[1].split('=')[1]
         })
-
-        timer = setInterval(()=>{
-            var s11 = 1;
-            var f11 = 2;
-            this.setState({
-                test:11111,
-            })
-            console.log('...');
-        },0.1)
     }
 
     componentDidMount() {
@@ -66,10 +55,6 @@ export default class comments extends React.Component {
         this.getListCommentOrPraise(0);   //获取评论列表
     }
 
-    componentWillUnmount(){
-        console.log('销毁');
-        clearInterval(timer);
-    }
 
     //通过云盘或资料文件获取点赞或评论列表
     getListCommentOrPraise(cmType) { //cmType 1 点赞 0 评论
@@ -99,7 +84,7 @@ export default class comments extends React.Component {
                         if (arr[i].user.colUid == this.state.userId) {
                             this.setState({
                                 likeStatus: true,
-                                likeStatusAnimate:true
+                                likeStatusAnimate: true
                             })
                         }
                     }
@@ -232,9 +217,9 @@ export default class comments extends React.Component {
             });
             setTimeout(() => {
                 this.setState({
-                    likeStatusAnimate:true
+                    likeStatusAnimate: true
                 })
-            },2000)
+            }, 2000)
             this.AddCommentOrPraise(1, function () {
                 Toast.success("点赞成功", 1);
                 this.initData = [];
@@ -335,7 +320,7 @@ export default class comments extends React.Component {
                           multipleLine>
                         {item.user.userName} <Brief>{item.content}</Brief>
                     </Item>
-                    <img src={item.user.avatar == '' ? require('../imgs/pic.png') : item.user.avatar} alt="头像"
+                    <img src={item.user.avatar} alt="头像"
                          className="headPic"/>
                 </div>
             )

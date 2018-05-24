@@ -36,6 +36,16 @@ export default class notify extends React.Component {
         this.getClassBrandNoticeListByClassId(classId, initPageNo);
     }
 
+    componentWillReceiveProps(nextProps) {
+        // jsonObject.put("command", "classBrandNotice");
+        // jsonObject.put("classroomid", classroomid);
+        console.log('notify', nextProps.classCommand);
+        var clazzId = localStorage.getItem("clazzId");
+        if (nextProps.classCommand.command == "classBrandNotice" && nextProps.classCommand.data.classroomid == clazzId) {
+            this.getClassBrandNoticeListByClassId(classId, 1);
+        }
+    }
+
     /**
      * 班牌根据教室id查询通知列表
      * @param clazzId

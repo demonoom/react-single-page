@@ -30,7 +30,7 @@ export default class notifyBack extends React.Component {
     componentWillMount() {
         var locationHref = window.location.href;
         var locationSearch = locationHref.substr(locationHref.indexOf("?") + 1);
-        var ident = locationSearch.split('=')[1];
+        var ident = locationSearch.split("&")[0].split('=')[1];
         this.setState({ident});
     }
 
@@ -91,7 +91,7 @@ export default class notifyBack extends React.Component {
 
     //新打开添加课程页
     toAddNotify() {
-        var url = WebServiceUtil.mobileServiceURL + "addNotify&ident=" + this.state.ident;
+        var url = WebServiceUtil.mobileServiceURL + "addNotify?ident=" + classBinding.state.ident;
         var data = {
             method: 'openNewPage',
             url: url
