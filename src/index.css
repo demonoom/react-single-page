@@ -1,3 +1,4 @@
+(node) util.print is deprecated. Use console.log instead.
 html,
 body {
   height: 100%;
@@ -238,6 +239,7 @@ hr {
   color: #fff;
   line-height: 2.8rem;
   text-align: center;
+  z-index: 10;
 }
 .addBunton img {
   width: 100%;

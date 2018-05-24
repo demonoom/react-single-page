@@ -334,9 +334,9 @@ export default class comments extends React.Component {
             return (
                 <div style={{paddingLeft: 50 + 'px', position: 'relative'}}>
                     <Item align="top"
-                          extra={WebServiceUtil.formatYMD(item.commentTime) + ' ' + WebServiceUtil.formatHM(item.commentTime)}
                           multipleLine>
                         {item.user.userName}<Brief>{item.content}</Brief>
+                        <span className="student_name">{item.user.userName}</span><span className="time">{WebServiceUtil.formatYMD(item.commentTime) + ' ' + WebServiceUtil.formatHM(item.commentTime)}</span><Brief>{item.content}</Brief>
                     </Item>
                     <img src={item.user.avatar} alt="头像"
                          className="headPic"/>
@@ -372,7 +372,7 @@ export default class comments extends React.Component {
                             <div hidden={this.state.tabIndex == 1} className="bottom_box">
                                 <img hidden={this.state.likeStatusAnimate} className="likeImage"
                                      onClick={this.likeClick.bind(this)}
-                                     src={this.state.likeStatus ? require('../imgs/like_after.jpg') : require('../imgs/like_before.jpg')}
+                                     src={this.state.likeStatus ? require('../imgs/like_after.png') : require('../imgs/like_before.png')}
                                      alt=""/>
                             </div>
                         </ListView>

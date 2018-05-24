@@ -1,6 +1,10 @@
+(node) util.print is deprecated. Use console.log instead.
 #comments {
   position: relative;
   overflow: hidden;
+}
+#comments .am-tabs-default-bar-tab {
+  font-size: 16px;
 }
 #comments .am-list-body {
   background: none;
@@ -22,11 +26,38 @@
 #comments .am-list-view-scrollview-content {
   width: 100%;
 }
+#comments .am-list-item .am-input-control input {
+  font-size: 15px;
+}
 #comments .good {
   padding: 10px 0;
 }
+#comments .good .am-list-content {
+  font-size: 16px;
+}
 #comments .views .am-list-view-scrollview-content {
   padding-bottom: 125px;
+}
+#comments .views .am-list-view-scrollview-content .am-list-content {
+  width: 100%;
+  font-size: 12px;
+  color: #888;
+}
+#comments .views .am-list-view-scrollview-content .am-list-content .student_name {
+  max-width: calc(100% - 120px);
+  display: inline-block;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+#comments .views .am-list-view-scrollview-content .am-list-content .am-list-brief {
+  color: #000;
+  overflow: visible;
+  white-space: normal;
+  font-size: 16px;
+}
+#comments .views .am-list-view-scrollview-content .am-list-content .time {
+  float: right;
 }
 #comments .bottom_box {
   position: fixed;
