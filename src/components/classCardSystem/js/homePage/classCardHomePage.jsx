@@ -24,6 +24,7 @@ export default class classCardHomePage extends React.Component {
         demeanor = this;
         this.state = {
             messageInfo: '1',
+            classCommand: '',
         };
     }
 
@@ -75,8 +76,7 @@ export default class classCardHomePage extends React.Component {
             }, onWarn: function (warnMsg) {
 
             }, onMessage: function (info) {
-                console.log(info);
-                var command = info.command;
+                demeanor.setState({classCommand: info});
             }
         };
     }
@@ -97,14 +97,22 @@ export default class classCardHomePage extends React.Component {
                             />
                         </div>
                         <div className="home_left">
-                            <StudentOnDuty/>
-                            <MoralEducationScore/>
+                            <StudentOnDuty
+                                classCommand={this.state.classCommand}
+                            />
+                            <MoralEducationScore
+                                classCommand={this.state.classCommand}
+                            />
                         </div>
                         <div className="home_center">
-                            <ClassDemeanor/>
+                            <ClassDemeanor
+                                classCommand={this.state.classCommand}
+                            />
                             <div>
                                 <Application/>
-                                <Notify/>
+                                <Notify
+                                    classCommand={this.state.classCommand}
+                                />
                             </div>
                         </div>
                     </div>

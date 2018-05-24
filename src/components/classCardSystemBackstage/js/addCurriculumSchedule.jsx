@@ -175,6 +175,14 @@ export default class addCurriculumSchedule extends React.Component {
             onResponse: function (result) {
                 if (result.msg == '调用成功' || result.success == true) {
                     Toast.success('成功');
+                    //关闭当前窗口，并刷新上一个页面
+                    var data = {
+                        method: 'finishForRefresh',
+                    };
+
+                    Bridge.callHandler(data, null, function (error) {
+                        console.log(error);
+                    });
                     // _this.state.asyncValue.splice(0);
                     // _this.state.classAsyncValue.splice(0);
                     // _this.state.termAsyncValue.splice(0);

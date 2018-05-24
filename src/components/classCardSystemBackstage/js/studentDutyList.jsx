@@ -175,14 +175,14 @@ export default class studentDutyList extends React.Component {
         editStudentDutyUrl+="?clazzId="+this.state.clazzId+"&week="+this.state.week+"&studentIds="+studentIdStr+"&dutyId="+this.state.dutyId+"&access_user="+this.state.userId;
         location.href = editStudentDutyUrl;
 
-        /*var data = {
+        var data = {
             method: 'openNewPage',
             url: editStudentDutyUrl
         };
 
         Bridge.callHandler(data, null, function (error) {
             window.location.href = url;
-        });*/
+        });
     };
 
     /**

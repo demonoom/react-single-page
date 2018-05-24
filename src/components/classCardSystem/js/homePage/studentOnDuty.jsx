@@ -22,6 +22,14 @@ export default class studentOnDuty extends React.Component {
         this.getClassBrandStudentDutyByToday(clazzId);
     }
 
+    componentWillReceiveProps(nextProps) {
+        console.log('studentOnDuty', nextProps.classCommand);
+        var clazzId = localStorage.getItem("clazzId");
+        if (nextProps.classCommand.command == "studentDuty" && nextProps.classCommand.data.cid == clazzId) {
+            this.getClassBrandStudentDutyByToday(clazzId);
+        }
+    }
+
     /**
      * 班牌值日今日信息查询
      * @param clazzId
@@ -35,9 +43,9 @@ export default class studentOnDuty extends React.Component {
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
             onResponse: function (result) {
                 var weekOfTody = new Date().getDay();
-                console.log("week:"+weekOfTody);
-                var todyDuty=[];
-                var nextDuty=[];
+                console.log("week:" + weekOfTody);
+                var todyDuty = [];
+                var nextDuty = [];
                 if (result.success == true && result.msg == "调用成功") {
                     var response = result.response;
                     if (response != null && response != undefined) {
@@ -73,7 +81,7 @@ export default class studentOnDuty extends React.Component {
                         }
                     }
                 }
-                _this.setState({todyDuty,nextDuty});
+                _this.setState({todyDuty, nextDuty});
             },
             onError: function (error) {
             }
@@ -83,13 +91,12 @@ export default class studentOnDuty extends React.Component {
     render() {
         return (
             <div id="studentOnDuty" className="home_card studentOnDuty_height">
-                <h3 className="home_title">今日值日生</h3>
-                <div className="home_cardCont">
-                    {this.state.todyDuty}
-                </div>
-                <h3 className="home_title">明日值日生</h3>
-                <div className="home_cardCont">
-                    {this.state.nextDuty}
+                <h3 className="home_title">值日生</h3>
+                <div className="home_cardCont studentOnDuty_cont">
+                    <h4 className="studentOnDuty_today">今日值日生</h4>
+                    <div>{this.state.todyDuty}</div>
+                    <h4 className="studentOnDuty_today">明日值日生</h4>
+                    <div>{this.state.nextDuty}</div>
                 </div>
             </div>
         );
