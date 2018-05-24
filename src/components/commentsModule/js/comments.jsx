@@ -100,7 +100,7 @@ export default class comments extends React.Component {
                     for (let i = 0; i < arr.length; i++) {
                         var topic = arr[i];
                         dataBlob[`${i}`] = topic;
-                        if (arr[i].user.colUid == this.state.userId) {
+                        if (arr[i].user.colUid == this.state.userId && cmType == 1) {
                             console.log(arr[i].user.colUid,'获取到');
                             console.log(this.state.userId);
                             this.setState({
