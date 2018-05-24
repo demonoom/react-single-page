@@ -79,14 +79,14 @@
   }
   .bottom_input_box{
     width:100%;
-    //position: absolute;
-    //left:0px;
-    //bottom:0px;
-    height:115px;
+    position: fixed;
+    left:0px;
+    bottom:0px;
+    height:90px;
     background: white;
   }
   .bottomBox{
-    padding: 15px;
+    padding: 10px 15px;
     overflow: hidden;
     border-top: 1px #f4f4f4 solid;
     .bottomBox_left{
@@ -132,21 +132,31 @@
     border-radius: 50%;
     position: relative;
   }
-
-  .comment_input{
-    margin: 0 auto;
-    margin-bottom:5px;
-    background-color: #f4f4f4;
-    margin: 15px;
-    -webkit-border-radius: 5px;
-    -moz-border-radius: 5px;
-    border-radius: 5px;
-    width: calc(~"100% - 30px");
-    box-sizing: border-box;
-    border: 0;
-    padding: 5px 10px;
-    line-height: 22px;
+  .headBox{
+    padding: 10px 15px;
+    .comment_input{
+      background-color: #f4f4f4;
+      -webkit-border-radius: 5px;
+      -moz-border-radius: 5px;
+      border-radius: 5px;
+      box-sizing: border-box;
+      border: 0;
+      padding: 5px 10px;
+      line-height: 22px;
+      width: calc(~"100% - 87px");
+    }
+    button{
+      background: #f56954;
+      color: #fff;
+      padding: 5px 22px;
+      border: none;
+      line-height: 22px;
+      border-radius: 4px;
+      margin-left: 15px;
+      max-width: 72px;
+    }
   }
+
   .bottomBox_left{
     float: left;
   }
