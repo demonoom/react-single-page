@@ -5,6 +5,7 @@ import '../../css/homePage/header.less'
 var demeanor;
 var timeOffset;
 var now;
+var timer;
 
 /*
      设置日期的方法，针对年月日星期的显示
@@ -94,15 +95,15 @@ export default class header extends React.Component {
         });
     }
 
-    componentDidMount() {
-
-    }
-
     componentDidUpdate() {
         //每天刷新天气两次
         if (this.state.timeFoot == '00:10:00' || this.state.timeFoot == '12:10:00') {
             demeanor.weatherInfo(demeanor.state.abcode)
         }
+    }
+
+    componentWillUnmount() {
+        clearInterval(timer)
     }
 
     viewClassRoom() {
@@ -129,7 +130,7 @@ export default class header extends React.Component {
     makeTime() {
         var date = new Date(),
             time = date.getTime();
-        setInterval(function () {
+        timer = setInterval(function () {
             demeanor.setState({timeFoot: set(time)})
             time = Number(time);
             time += 1000;
@@ -186,12 +187,6 @@ export default class header extends React.Component {
                             } else if (i == 1) {
                                 return <span className="header_date2">
                                     <div className="space_high2">明天</div>
-                                    <div className="space_high3">{v.dayweather}</div>
-                                    <div>{v.nighttemp + '℃~' + v.daytemp + '℃'}</div>
-                                </span>
-                            } else {
-                                return <span className="header_date2">
-                                    <div className="space_high2">后天</div>
                                     <div className="space_high3">{v.dayweather}</div>
                                     <div>{v.nighttemp + '℃~' + v.daytemp + '℃'}</div>
                                 </span>

@@ -1,14 +1,6 @@
 import React from 'react';
-import {Toast, Grid} from 'antd-mobile';
-
-const data = Array.from(new Array(9)).map((_val, i) => ({
-    icon: 'https://gw.alipayobjects.com/zos/rmsportal/nywPmnTAvTmLusPxHPSu.png',
-    text: `name${i}`,
-}));
-
-const data1 = Array.from(new Array(9)).map(() => ({
-    icon: 'https://gw.alipayobjects.com/zos/rmsportal/WXoqXTHrSnRcUwEaQgXJ.png',
-}));
+import {Icon} from 'antd-mobile';
+import '../css/classCardHomePageDoor.less'
 
 export default class classCardHomePageDoor extends React.Component {
 
@@ -26,13 +18,13 @@ export default class classCardHomePageDoor extends React.Component {
     }
 
     componentDidMount() {
-
+        document.title = '班牌系统'
     }
 
     /**
      * 手环绑定
      */
-    turnToRingBinding() {
+    turnToRingBinding = () => {
         var url = WebServiceUtil.mobileServiceURL + "ringBinding?ident=" + this.state.ident;
         var data = {
             method: 'openNewPage',
@@ -46,7 +38,7 @@ export default class classCardHomePageDoor extends React.Component {
     /**
      * 课程表列表
      */
-    turnToCurriculumSchedule(type) {
+    turnToCurriculumSchedule = (type) => {
         var url = WebServiceUtil.mobileServiceURL + "curriculumSchedule?ident=" + this.state.ident + "&curriculumType=" + type;
 
         var data = {
@@ -61,7 +53,7 @@ export default class classCardHomePageDoor extends React.Component {
     /**
      * 教室管理页面
      */
-    turnToClassroomManage() {
+    turnToClassroomManage = () => {
         var url = WebServiceUtil.mobileServiceURL + "classroomManage?uid=" + this.state.ident;
         var data = {
             method: 'openNewPage',
@@ -75,7 +67,7 @@ export default class classCardHomePageDoor extends React.Component {
     /**
      * 班级风采
      */
-    turnToClassDemeanor(type) {
+    turnToClassDemeanor = (type) => {
 
         var url;
         if (type == 1) {
@@ -96,7 +88,7 @@ export default class classCardHomePageDoor extends React.Component {
     /**
      * 德育评价
      */
-    turnToMoralEducation() {
+    turnToMoralEducation = () => {
         var url = WebServiceUtil.mobileServiceURL + "moralEducation?ident=" + this.state.ident;
         var data = {
             method: 'openNewPage',
@@ -110,8 +102,8 @@ export default class classCardHomePageDoor extends React.Component {
     /**
      * 通知后台
      */
-    turnToNotifyBack() {
-        var url = WebServiceUtil.mobileServiceURL + "notifyBack?access_user" + this.state.ident;
+    turnToNotifyBack = () => {
+        var url = WebServiceUtil.mobileServiceURL + "notifyBack?access_user=" + this.state.ident;
         var data = {
             method: 'openNewPage',
             url: url
@@ -124,7 +116,7 @@ export default class classCardHomePageDoor extends React.Component {
     /**
      * 班级值日表
      */
-    turnToStudentDutyList() {
+    turnToStudentDutyList = () => {
         var url = WebServiceUtil.mobileServiceURL + "studentDutyList?access_user=" + this.state.ident;
         var data = {
             method: 'openNewPage',
@@ -138,32 +130,17 @@ export default class classCardHomePageDoor extends React.Component {
     render() {
         return (
             <div id="classCardHomePageDoor" style={{height: document.body.clientHeight}}>
-                <li style={{fontSize: '25px'}} onClick={this.turnToRingBinding}>手环绑定</li>
-                <li style={{fontSize: '25px'}} onClick={this.turnToCurriculumSchedule.bind(this, 1)}>课程表列表</li>
-                <li style={{fontSize: '25px'}} onClick={this.turnToCurriculumSchedule.bind(this, 2)}>公共教室课程表</li>
-                <li style={{fontSize: '25px'}} onClick={this.turnToClassroomManage}>教室管理页面</li>
-                <li style={{fontSize: '25px'}} onClick={this.turnToClassDemeanor.bind(this, 1)}>班级风采</li>
-                <li style={{fontSize: '25px'}} onClick={this.turnToClassDemeanor.bind(this, 2)}>班级荣誉</li>
-                <li style={{fontSize: '25px'}} onClick={this.turnToMoralEducation}>德育评价</li>
-                <li style={{fontSize: '25px'}} onClick={this.turnToNotifyBack}>通知后台</li>
-                <li style={{fontSize: '25px'}} onClick={this.turnToStudentDutyList}>班级值日表</li>
-
-                <div>
-                    <div className="sub-title">Always square grid item </div>
-                    <Grid data={data} activeStyle={false} />
-
-                    <div className="sub-title">Grid item adjust accroiding to img size </div>
-                    <Grid data={data} square={false} className="not-square-grid" />
-
-                    {/*<div className="sub-title">ColumnNum=3 </div>*/}
-                    {/*<Grid data={data} columnNum={3} />*/}
-
-                    {/*<div className="sub-title">No border</div>*/}
-                    {/*<Grid data={data} hasLine={false} />*/}
-
-                    {/*<div className="sub-title">Carousel</div>*/}
-                    {/*<Grid data={data} isCarousel onClick={_el => console.log(_el)} />*/}
-                </div>
+                <ul className="classCardHomePageDoor">
+                    <li onClick={this.turnToRingBinding}><i className="icon icon_bracelet"></i>手环绑定<i className="arrow_right"></i></li>
+                    <li onClick={this.turnToCurriculumSchedule.bind(this, 1)}><i className="icon icon_course"></i>课程表列表<i className="arrow_right"></i></li>
+                    <li onClick={this.turnToCurriculumSchedule.bind(this, 2)}><i className="icon icon_publiCourse"></i>公共教室课程表<i className="arrow_right"></i></li>
+                    <li onClick={this.turnToClassroomManage}><i className="icon icon_ClassroomManagement"></i>教室管理页面<i className="arrow_right"></i></li>
+                    <li onClick={this.turnToClassDemeanor.bind(this, 1)}><i className="icon icon_classDemeanor"></i>班级风采<i className="arrow_right"></i></li>
+                    <li onClick={this.turnToClassDemeanor.bind(this, 2)}><i className="icon icon_honor"></i>班级荣誉<i className="arrow_right"></i></li>
+                    <li onClick={this.turnToMoralEducation}><i className="icon icon_moralEducationScore"></i>德育评价<i className="arrow_right"></i></li>
+                    <li onClick={this.turnToNotifyBack}><i className="icon icon_notify"></i>通知后台<i className="arrow_right"></i></li>
+                    <li onClick={this.turnToStudentDutyList}><i className="icon icon_studentOnDuty"></i>班级值日表<i className="arrow_right"></i></li>
+                </ul>
             </div>
         );
     }
