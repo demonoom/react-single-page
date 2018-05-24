@@ -412,6 +412,7 @@ export default class comments extends React.Component {
                                         value={this.state.content}
                                         onKeyUp={this.inputItemOnKeyUp}
                                     ></input>
+                                    <button className="submit" onClick={this.confirm.bind(this)}>提交</button>
                                 </div>
                                 <div className="bottomBox">
                                     <div className="bottomBox_left" onClick={this.anonymous.bind(this)}>
