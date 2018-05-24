@@ -276,7 +276,7 @@ export default class comments extends React.Component {
             anonymous: !this.state.anonymous,
         })
         //获取焦点
-        document.getElementsByTagName('input')[1].focus();
+        document.getElementsByTagName('input')[0].focus();
     }
 
     // 输入框完成事件
@@ -287,7 +287,7 @@ export default class comments extends React.Component {
             console.log(this.state.content);
             this.AddCommentOrPraise(1, function () {
                 Toast.success('评论成功', 1);
-                document.getElementsByTagName('input')[1].blur();
+                document.getElementsByTagName('input')[0].blur();
                 this.initDataOther = [];
                 const dataSourceOther = new ListView.DataSource({
                     rowHasChanged: (row1, row2) => row1 !== row2,
@@ -305,8 +305,10 @@ export default class comments extends React.Component {
     }
 
     inputChange(event) {
-        this.setState({
-            content: event,
+        console.log(event);
+        console.log(event.target.value);
+        classBinding.setState({
+            content: event.target.value,
         })
     }
 
@@ -335,7 +337,8 @@ export default class comments extends React.Component {
                 <div style={{paddingLeft: 50 + 'px', position: 'relative'}}>
                     <Item align="top"
                           multipleLine>
-                        <span className="student_name">{item.user.userName}</span><span className="time">{WebServiceUtil.formatYMD(item.commentTime) + ' ' + WebServiceUtil.formatHM(item.commentTime)}</span><Brief>{item.content}</Brief>
+                        <span className="student_name">{item.user.userName}</span><span
+                        className="time">{WebServiceUtil.formatYMD(item.commentTime) + ' ' + WebServiceUtil.formatHM(item.commentTime)}</span><Brief>{item.content}</Brief>
                     </Item>
                     <img src={item.user.avatar} alt="头像"
                          className="headPic"/>
@@ -345,7 +348,7 @@ export default class comments extends React.Component {
         return (
             <div id="comments" style={{height: this.state.clientHeight}}>
                 <Tabs onTabClick={this.tabClick.bind(this)} tabs={this.state.tabs} initialPage={0} animated={false}
-                      useOnPan={false}>
+                      useOnPan={false} swipeable={false}>
                     {/*//点赞*/}
                     <List className="my-list">
                         <ListView
@@ -353,7 +356,7 @@ export default class comments extends React.Component {
                             dataSource={this.state.dataSource}    //数据类型是 ListViewDataSource
                             renderFooter={() => (
                                 <div style={{paddingTop: 5, paddingBottom: 5, textAlign: 'center'}}>
-                                    {this.state.isLoadingLeft ? '正在加载' : '已经全部加载完毕'}
+                                    {this.state.isLoadingLeft ? '正在加载...' : '已经全部加载完毕'}
                                 </div>)}
                             renderRow={row}   //需要的参数包括一行数据等,会返回一个可渲染的组件为这行数据渲染  返回renderable
                             className="am-list"
@@ -384,7 +387,7 @@ export default class comments extends React.Component {
                                 dataSource={this.state.dataSourceOther}    //数据类型是 ListViewDataSource
                                 renderFooter={() => (
                                     <div style={{paddingTop: 5, paddingBottom: 5, textAlign: 'center'}}>
-                                        {this.state.isLoadingLeft ? '正在加载' : '已经全部加载完毕'}
+                                        {this.state.isLoadingLeft ? '正在加载...' : '已经全部加载完毕'}
                                     </div>)}
                                 renderRow={rowOther}   //需要的参数包括一行数据等,会返回一个可渲染的组件为这行数据渲染  返回renderable
                                 className="am-list views"
@@ -396,7 +399,7 @@ export default class comments extends React.Component {
                                 initialListSize={30}   //指定在组件刚挂载的时候渲染多少行数据，用这个属性来确保首屏显示合适数量的数据
                                 scrollEventThrottle={20}     //控制在滚动过程中,scroll事件被调用的频率
                                 style={{
-                                    height: classBinding.state.clientHeight - 44.5 - 125,
+                                    height: classBinding.state.clientHeight - 44.5 - 100,
                                     // boxSizing:'border-box',
                                     // paddingBottom:'83.5px'
                                 }}
@@ -406,6 +409,16 @@ export default class comments extends React.Component {
                         </List>
                         <div hidden={this.state.tabIndex == 0} className="bottom_input_box">
                             <div className="input_box">
+
+                                <div className="headBox">
+                                    <input
+                                        placeholder="请输入评论信息"
+                                        className="comment_input"
+                                        onChange={this.inputChange}
+                                        value={this.state.content}
+                                        onKeyUp={this.inputItemOnKeyUp}
+                                    ></input>
+                                </div>
                                 <div className="bottomBox">
                                     <div className="bottomBox_left">
                                         <input onClick={this.anonymous.bind(this)} type="checkBox"/>匿名
@@ -413,17 +426,6 @@ export default class comments extends React.Component {
                                     <div className="bottomBox_right">
                                         您写的评论会以匿名的形式展现
                                     </div>
-                                </div>
-                                <div className="headBox">
-                                    <InputItem
-                                        clear
-                                        placeholder="请输入评论信息"
-                                        ref={el => this.autoFocusInst = el}
-                                        className="comment_input"
-                                        onChange={this.inputChange.bind(this)}
-                                        value={this.state.content}
-                                        onKeyUp={this.inputItemOnKeyUp}
-                                    ></InputItem>
                                 </div>
 
                             </div>
