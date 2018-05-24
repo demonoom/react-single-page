@@ -415,7 +415,6 @@ export default class comments extends React.Component {
                                             onChange={this.inputChange.bind(this)}
                                             value={this.state.content}
                                             onKeyUp={this.inputItemOnKeyUp}
-                                            // focus={this.inputItemFocus}
                                         ></InputItem>
                                     </div>
                                     <div className="bottomBox">
