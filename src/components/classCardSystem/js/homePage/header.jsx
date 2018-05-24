@@ -3,6 +3,8 @@ import {Toast} from 'antd-mobile';
 import '../../css/homePage/header.less'
 
 var demeanor;
+var timeOffset;
+var now;
 
 /*
      设置日期的方法，针对年月日星期的显示
@@ -45,9 +47,8 @@ function setTodayDate(today) {
  设置北京时间的方法，针对时分秒的显示
 */
 function set(time) {
-    var beijingTimeZone = 8;
-    var timeOffset = ((-1 * (new Date()).getTimezoneOffset()) - (beijingTimeZone * 60)) * 60000;
-    var now = new Date(time - timeOffset);
+    timeOffset = ((-1 * (new Date()).getTimezoneOffset()) - (8 * 60)) * 60000;
+    now = new Date(time - timeOffset);
     return p(now.getHours()) + ':' + p(now.getMinutes()) + ':' + p(now.getSeconds())
 }
 
@@ -150,7 +151,8 @@ export default class header extends React.Component {
     render() {
         return (
             <div id="header">
-                <div className="headTitle"><span className="headTitleT text_hidden">{this.state.classroomName}</span></div>
+                <div className="headTitle"><span className="headTitleT text_hidden">{this.state.classroomName}</span>
+                </div>
                 <div className="header_date float_ri">
                     <div className="weatherColor2 space_high4">{this.state.timeFoot}</div>
                     <div>{this.state.timeHeader}</div>

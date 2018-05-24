@@ -37,6 +37,8 @@ export default class notify extends React.Component {
     }
 
     componentWillReceiveProps(nextProps) {
+        // jsonObject.put("command", "classBrandNotice");
+        // jsonObject.put("classroomid", classroomid);
         console.log('notify', nextProps.classCommand);
         var clazzId = localStorage.getItem("clazzId");
         if (nextProps.classCommand.command == "classBrandNotice" && nextProps.classCommand.data.classroomid == clazzId) {
