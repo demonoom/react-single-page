@@ -414,8 +414,8 @@ export default class comments extends React.Component {
                                     ></input>
                                 </div>
                                 <div className="bottomBox">
-                                    <div className="bottomBox_left">
-                                        <input onClick={this.anonymous.bind(this)} type="checkBox"/>匿名
+                                    <div className="bottomBox_left" onClick={this.anonymous.bind(this)}>
+                                        <input checked={this.state.anonymous} type="checkBox"/>匿名
                                     </div>
                                     <div className="bottomBox_right">
                                         您写的评论会以匿名的形式展现
