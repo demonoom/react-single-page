@@ -76,7 +76,7 @@ hr {
   font-size: 14px;
 }
 .color_red {
-  color: #f46a55;
+  color: #F46A55;
 }
 .line_item {
   height: 8px;
@@ -238,6 +238,7 @@ hr {
   color: #fff;
   line-height: 2.8rem;
   text-align: center;
+  z-index: 10;
 }
 .addBunton img {
   width: 100%;
