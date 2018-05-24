@@ -4,6 +4,15 @@
   .am-tabs-default-bar-tab{
     font-size: 16px;
   }
+  .my-list{
+    height: calc(~"100% - 91px");
+  }
+  .am-list-view-scrollview{
+    height: 100% !important;
+  }
+  .am-tabs-pane-wrap > div, .am-tabs-pane-wrap > div .am-list-body{
+    height:100%;
+  }
   .am-list-body{
     background: none;
   }
@@ -61,6 +70,7 @@
           white-space: normal;
           font-size: 16px;
           margin-top:0;
+          word-break: break-all;
         }
         .time{
           float: right;
@@ -171,4 +181,5 @@
       border-bottom: 1px #f4f4f4 solid !important;
     }
   }
+
 }
