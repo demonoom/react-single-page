@@ -302,7 +302,7 @@ export default class comments extends React.Component {
         //点赞
         const row = (item) => {
             return (
-                <div style={{paddingLeft: 50 + 'px', position: 'relative'}}>
+                <div className="good" style={{paddingLeft: 50 + 'px', position: 'relative'}}>
                     <Item align="top"
                           multipleLine>
                         {item.user.userName}

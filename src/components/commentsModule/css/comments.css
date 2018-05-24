@@ -22,6 +22,9 @@
 #comments .am-list-view-scrollview-content {
   width: 100%;
 }
+#comments .good {
+  padding: 10px 0;
+}
 #comments .views {
   overflow: hidden!important;
 }
