@@ -335,7 +335,6 @@ export default class comments extends React.Component {
                 <div style={{paddingLeft: 50 + 'px', position: 'relative'}}>
                     <Item align="top"
                           multipleLine>
-                        {item.user.userName}<Brief>{item.content}</Brief>
                         <span className="student_name">{item.user.userName}</span><span className="time">{WebServiceUtil.formatYMD(item.commentTime) + ' ' + WebServiceUtil.formatHM(item.commentTime)}</span><Brief>{item.content}</Brief>
                     </Item>
                     <img src={item.user.avatar} alt="头像"
