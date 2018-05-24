@@ -326,7 +326,7 @@ export default class comments extends React.Component {
             )
         }
         return (
-            <div id="comments" style={{height: document.body.clientHeight}}>
+            <div id="comments" className={this.state.tabIndex == 1?'paddingBottom':''} style={{height: document.body.clientHeight}}>
                 <Tabs onTabClick={this.tabClick.bind(this)} tabs={this.state.tabs} initialPage={0} animated={false}
                       useOnPan={false}>
                     {/*//点赞*/}
@@ -360,7 +360,7 @@ export default class comments extends React.Component {
                         </ListView>
                     </List>
                     {/*//评论*/}
-                    <List className="my-list" style={{paddingBottom: '50px'}}>
+                    <List className="my-list">
                         <ListView
                             ref={el => this.lv = el}
                             dataSource={this.state.dataSourceOther}    //数据类型是 ListViewDataSource
@@ -379,10 +379,7 @@ export default class comments extends React.Component {
                             scrollEventThrottle={20}     //控制在滚动过程中,scroll事件被调用的频率
                             style={{
                                 height: classBinding.state.clientHeight,
-                                // boxSizing:'border-box',
-                                // paddingBottom:'83.5px'
-                            }}
-                        >
+                            }}>
                             <div hidden={this.state.tabIndex == 0} className="bottom_input_box">
                                 <div className="input_box">
                                     <div className="headBox">
