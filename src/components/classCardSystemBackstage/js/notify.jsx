@@ -1,5 +1,5 @@
 import React from 'react';
-import {List, Icon, Toast, Picker, ListView} from 'antd-mobile';
+import { List, Icon, Toast, Picker, ListView } from 'antd-mobile';
 import '../css/notify.less'
 
 const Item = List.Item;
@@ -19,7 +19,7 @@ export default class notifyBack extends React.Component {
             dataSource: dataSource.cloneWithRows(this.initData),
             clientHeight: document.body.clientHeight,
             // data: [],
-            Icon: <Icon type='cross-circle-o'/>,
+            Icon: <Icon type='cross-circle-o' />,
             pickerData: [],  //选择项容器
             asyncValue: [],
             defaultPageNo: 1,
@@ -31,13 +31,13 @@ export default class notifyBack extends React.Component {
         var locationHref = window.location.href;
         var locationSearch = locationHref.substr(locationHref.indexOf("?") + 1);
         var ident = locationSearch.split("&")[0].split('=')[1];
-        this.setState({ident});
+        this.setState({ ident });
     }
 
     componentDidMount() {
         document.title = "通知列表";
         //首页显示全部
-        this.getClassBrandNoticeListByClassId(0);
+        this.getClassBrandNoticeListByClassId(false);
     }
 
     //通过教室id获取通知列表
@@ -48,13 +48,22 @@ export default class notifyBack extends React.Component {
             rowHasChanged: (row1, row2) => row1 !== row2,
         });
         var dataBlob = {};
-        _this.initData = [];
         var PageNo = this.state.defaultPageNo;
-        var param = {
-            "method": 'getClassBrandNoticeListByClassId',
-            "classroomId": classroomId,
-            "pageNo": PageNo,
-        };
+        var param;
+        if(classroomId){
+            _this.initData = [];
+            param = {
+                "method": 'getClassBrandNoticeListByClassId',
+                "classroomId": classroomId,
+                "pageNo": PageNo,
+            }
+        }else {
+            param = {
+                "method": 'getClassBrandNoticeListByClassId',
+                "classroomId": "",
+                "pageNo": PageNo,
+            }
+        }
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
             onResponse: result => {
                 if (result.msg == '调用成功' || result.success) {
@@ -184,7 +193,7 @@ export default class notifyBack extends React.Component {
             return;
         }
         currentPageNo += 1;
-        this.setState({isLoadingLeft: true, defaultPageNo: currentPageNo});
+        this.setState({ isLoadingLeft: true, defaultPageNo: currentPageNo });
         _this.getClassBrandNoticeListByClassId(_this.state.classroomId);
         this.setState({
             dataSource: this.state.dataSource.cloneWithRows(this.initData),
@@ -193,13 +202,13 @@ export default class notifyBack extends React.Component {
     };
 
     //获取教室ID
-    getClassRoomId(){
+    getClassRoomId() {
         var _this = this;
         //获取班级选择项
         var param = {
             "method": 'viewClassRoomPage',
-            "uid": JSON.parse(localStorage.getItem('loginUserSchedule')).colUid,
-            "pn":1
+            "uid": classBinding.state.ident,
+            "pn": classBinding.state.defaultPageNo
         };
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
             onResponse: (result) => {
@@ -211,7 +220,7 @@ export default class notifyBack extends React.Component {
                                 value: v.id, label: v.name
                             })
                         })
-                        classBinding.setState({pickerData: arr});
+                        classBinding.setState({ pickerData: arr });
                     }
                 }
             },
@@ -236,21 +245,21 @@ export default class notifyBack extends React.Component {
             )
         };
         return (
-            <div id="notify" style={{height: document.body.clientHeight}}>
+            <div id="notify" style={{ height: document.body.clientHeight }}>
                 <List className="my-list">
                     <Picker data={this.state.pickerData}
-                            cols={1}
-                            className="forss"
-                            value={this.state.asyncValue}
-                            onPickerChange={this.onPickerChange}
-                            onOk={v => this.viewCourseTableItemPage(v)}>
+                        cols={1}
+                        className="forss"
+                        value={this.state.asyncValue}
+                        onPickerChange={this.onPickerChange}
+                        onOk={v => this.viewCourseTableItemPage(v)}>
                         <Item arrow="horizontal" onClick={this.getClassRoomId}>选择教室</Item>
                     </Picker>
                     <ListView
                         ref={el => this.lv = el}
                         dataSource={this.state.dataSource}    //数据类型是 ListViewDataSource
                         renderFooter={() => (
-                            <div style={{paddingTop: 5, paddingBottom: 5, textAlign: 'center'}}>
+                            <div style={{ paddingTop: 5, paddingBottom: 40, textAlign: 'center' }}>
                                 {this.state.isLoadingLeft ? '正在加载' : '已经全部加载完毕'}
                             </div>)}
                         renderRow={row}   //需要的参数包括一行数据等,会返回一个可渲染的组件为这行数据渲染  返回renderable
@@ -269,7 +278,7 @@ export default class notifyBack extends React.Component {
 
                 </List>
                 <div className="addBunton" onClick={this.toAddNotify}>
-                    <img src={require("../../ringBindInformation/imgs/addBtn.png")}/>
+                    <img src={require("../../ringBindInformation/imgs/addBtn.png")} />
                 </div>
             </div>
         );

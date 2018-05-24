@@ -10,10 +10,15 @@
   .list-view-section-body{
     background-color: #fff;
   }
+  .am-list-item.am-input-item{
+    height: 32px;
+    min-height: 32px;
+    margin: 10px 15px;
+  }
   .am-tabs-default-bar-tab-active{
     color: #f35454;
   }
-  .am-tabs-default-bar-tab::after,.am-list-line::after,.am-list-body::after{
+  .am-tabs-default-bar-tab::after,.am-list-line::after,.am-list-body::after,.am-list-body::before{
     background: none!important;
   }
   .am-tabs-default-bar-underline{
@@ -32,14 +37,19 @@
     }
   }
   .views{
+    .list-view-section-body{
+      padding-left: 15px;
+    }
+    .headPic{
+      left: 0;
+    }
     .am-list-view-scrollview-content{
-     padding-bottom: 125px;
       .am-list-content{
         width: 100%;
         font-size: 12px;
         color: #888;
         .student_name{
-          max-width: calc(~"100% - 120px");
+          max-width: calc(~"100% - 100px");
           display: inline-block;
           overflow: hidden;
           text-overflow: ellipsis;
@@ -50,6 +60,7 @@
           overflow:visible;
           white-space: normal;
           font-size: 16px;
+          margin-top:0;
         }
         .time{
           float: right;
@@ -68,12 +79,11 @@
   }
   .bottom_input_box{
     width:100%;
-    position: absolute;
-    left:0px;
-    bottom:0px;
+    //position: absolute;
+    //left:0px;
+    //bottom:0px;
+    height:115px;
     background: white;
-    z-index: 99;
-    height: 125px;
   }
   .bottomBox{
     padding: 15px;
@@ -97,7 +107,7 @@
     position: absolute;
     top: 50%;
     transform: translateY(-50%);
-    left: 8px;
+    left: 15px;
     width: 40px;
     height: 40px;
     border-radius: 50%;
@@ -131,6 +141,11 @@
     -webkit-border-radius: 5px;
     -moz-border-radius: 5px;
     border-radius: 5px;
+    width: calc(~"100% - 30px");
+    box-sizing: border-box;
+    border: 0;
+    padding: 5px 10px;
+    line-height: 22px;
   }
   .bottomBox_left{
     float: left;
