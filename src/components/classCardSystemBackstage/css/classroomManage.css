@@ -27,7 +27,6 @@
 }
 #classroomManage .tableDiv {
   position: relative;
-  background-color: #fff;
 }
 #classroomManage .tableDiv .am-card-body {
   min-height: 1.5rem !important;

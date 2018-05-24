@@ -326,7 +326,7 @@ export default class comments extends React.Component {
             )
         }
         return (
-            <div id="comments" className={this.state.tabIndex == 1?'paddingBottom':''} style={{height: document.body.clientHeight}}>
+            <div id="comments" style={{height: document.body.clientHeight}}>
                 <Tabs onTabClick={this.tabClick.bind(this)} tabs={this.state.tabs} initialPage={0} animated={false}
                       useOnPan={false}>
                     {/*//点赞*/}
