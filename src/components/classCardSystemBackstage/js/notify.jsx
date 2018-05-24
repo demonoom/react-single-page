@@ -37,7 +37,7 @@ export default class notifyBack extends React.Component {
     componentDidMount() {
         document.title = "通知列表";
         //首页显示全部
-        this.getClassBrandNoticeListByClassId(0);
+        this.getClassBrandNoticeListByClassId(false);
     }
 
     //通过教室id获取通知列表
@@ -48,13 +48,22 @@ export default class notifyBack extends React.Component {
             rowHasChanged: (row1, row2) => row1 !== row2,
         });
         var dataBlob = {};
-        _this.initData = [];
         var PageNo = this.state.defaultPageNo;
-        var param = {
-            "method": 'getClassBrandNoticeListByClassId',
-            "classroomId": classroomId,
-            "pageNo": PageNo,
-        };
+        var param;
+        if (classroomId) {
+            _this.initData = [];
+            param = {
+                "method": 'getClassBrandNoticeListByClassId',
+                "classroomId": classroomId,
+                "pageNo": PageNo,
+            }
+        } else {
+            param = {
+                "method": 'getClassBrandNoticeListByClassId',
+                "classroomId": "",
+                "pageNo": PageNo,
+            }
+        }
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
             onResponse: result => {
                 if (result.msg == '调用成功' || result.success) {
@@ -104,14 +113,14 @@ export default class notifyBack extends React.Component {
 
     //新打开通知详情页
     toNotifyDetail(notifyId) {
-        var url = WebServiceUtil.mobileServiceURL + "notifyDetail?nodeId=" + notifyId;
+        var url = WebServiceUtil.mobileServiceURL + "notifyDetail";
         var data = {
             method: 'openNewPage',
             url: url
         };
 
         Bridge.callHandler(data, null, function (error) {
-            window.location.href = url;
+            window.location.href = url + '?nodeId=' + notifyId;
         });
     }
 
@@ -198,8 +207,8 @@ export default class notifyBack extends React.Component {
         //获取班级选择项
         var param = {
             "method": 'viewClassRoomPage',
-            "uid": JSON.parse(localStorage.getItem('loginUserSchedule')).colUid,
-            "pn": 1
+            "uid": classBinding.state.ident,
+            "pn": classBinding.state.defaultPageNo
         };
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
             onResponse: (result) => {
@@ -252,7 +261,7 @@ export default class notifyBack extends React.Component {
                         ref={el => this.lv = el}
                         dataSource={this.state.dataSource}    //数据类型是 ListViewDataSource
                         renderFooter={() => (
-                            <div style={{paddingTop: 5, paddingBottom: 5, textAlign: 'center'}}>
+                            <div style={{paddingTop: 5, paddingBottom: 40, textAlign: 'center'}}>
                                 {this.state.isLoadingLeft ? '正在加载' : '已经全部加载完毕'}
                             </div>)}
                         renderRow={row}   //需要的参数包括一行数据等,会返回一个可渲染的组件为这行数据渲染  返回renderable
