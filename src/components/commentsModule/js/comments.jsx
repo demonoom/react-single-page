@@ -152,6 +152,7 @@ export default class comments extends React.Component {
 
     //点赞或者评论增加
     AddCommentOrPraise(stype, callback) {
+        var _this = this;
         var param = {
             "method": 'addCommentOrPraise',
             "sid": _this.state.sid,
