@@ -37,7 +37,7 @@ export default class notifyBack extends React.Component {
     componentDidMount() {
         document.title = "通知列表";
         //首页显示全部
-        this.getClassBrandNoticeListByClassId("");
+        this.getClassBrandNoticeListByClassId(false);
     }
 
     //通过教室id获取通知列表
@@ -48,12 +48,21 @@ export default class notifyBack extends React.Component {
             rowHasChanged: (row1, row2) => row1 !== row2,
         });
         var dataBlob = {};
-        _this.initData = [];
         var PageNo = this.state.defaultPageNo;
-        var param = {
-            "method": 'getClassBrandNoticeListByClassId',
-            "classroomId": classroomId,
-            "pageNo": PageNo,
+        var param;
+        if(classroomId){
+            _this.initData = [];
+            param = {
+                "method": 'getClassBrandNoticeListByClassId',
+                "classroomId": classroomId,
+                "pageNo": PageNo,
+            }
+        }else {
+            param = {
+                "method": 'getClassBrandNoticeListByClassId',
+                "classroomId": "",
+                "pageNo": PageNo,
+            }
         }
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
             onResponse: result => {
