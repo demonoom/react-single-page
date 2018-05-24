@@ -200,6 +200,13 @@ const addCurriculumSchedule = (location, cb) => {
     })
 }
 
+/*修改班牌课程表*/
+const updateCurriculumSchedule = (location, cb) => {
+    require.ensure([], require => {
+        cb(null, require("./components/classCardSystemBackstage/js/updateCurriculumSchedule").default)
+    })
+}
+
 const definedTerm = (location, cb) => {
     require.ensure([], require => {
         cb(null, require("./components/classCardSystemBackstage/js/definedTerm").default)
@@ -470,6 +477,7 @@ ReactDOM.render(
             <Route path="workAttendance" getComponent={workAttendance}/>
             <Route path="noticeReadMore" getComponent={noticeReadMore}/>
             <Route path="addCurriculumSchedule" getComponent={addCurriculumSchedule}/>
+            <Route path="updateCurriculumSchedule" getComponent={updateCurriculumSchedule}/>
             <Route path="definedTerm" getComponent={definedTerm}/>
             <Route path="classDemeanor" getComponent={classDemeanor}/>
             <Route path="classCardHomePage" getComponent={classCardHomePage}/>
