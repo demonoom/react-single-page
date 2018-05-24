@@ -1,6 +1,9 @@
 #comments{
   position: relative;
   overflow: hidden;
+  .am-tabs-default-bar-tab{
+    font-size: 16px;
+  }
   .am-list-body{
     background: none;
   }
@@ -19,13 +22,39 @@
   .am-list-view-scrollview-content{
     width: 100%;
   }
+  .am-list-item .am-input-control input{
+    font-size: 15px;
+  }
   .good{
     padding: 10px 0;
+    .am-list-content{
+      font-size: 16px;
+    }
   }
   .views{
-
     .am-list-view-scrollview-content{
      padding-bottom: 125px;
+      .am-list-content{
+        width: 100%;
+        font-size: 12px;
+        color: #888;
+        .student_name{
+          max-width: calc(~"100% - 120px");
+          display: inline-block;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          white-space: nowrap;
+        }
+        .am-list-brief{
+          color: #000;
+          overflow:visible;
+          white-space: normal;
+          font-size: 16px;
+        }
+        .time{
+          float: right;
+        }
+      }
     }
   }
 
