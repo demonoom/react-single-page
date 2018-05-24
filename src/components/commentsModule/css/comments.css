@@ -25,16 +25,8 @@
 #comments .good {
   padding: 10px 0;
 }
-#comments .views {
-  overflow: hidden!important;
-}
 #comments .views .am-list-view-scrollview-content {
-  position: static !important;
-  height: calc(100% - 120px);
-  overflow-y: auto;
-}
-#comments .views .am-list-view-scrollview-content .am-list-body {
-  height: auto !important;
+  padding-bottom: 125px;
 }
 #comments .bottom_box {
   position: fixed;

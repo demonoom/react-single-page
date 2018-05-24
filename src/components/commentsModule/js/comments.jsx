@@ -314,7 +314,7 @@ export default class comments extends React.Component {
         //评论
         const rowOther = (item) => {
             return (
-                <div  style={{paddingLeft: 50 + 'px'}}>
+                <div  style={{paddingLeft: 50 + 'px',position: 'relative'}}>
                     <Item align="top"
                           extra={WebServiceUtil.formatYMD(item.commentTime) + ' ' + WebServiceUtil.formatHM(item.commentTime)}
                           multipleLine>
