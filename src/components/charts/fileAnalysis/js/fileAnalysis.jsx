@@ -9,7 +9,9 @@ export default class fileAnalysis extends React.Component {
 
     constructor(props) {
         super(props);
-        this.state = {};
+        this.state = {
+            divContentArray: ''
+        };
     }
 
     componentDidMount() {
@@ -263,7 +265,7 @@ export default class fileAnalysis extends React.Component {
                         }
                     },
                     axisLabel: {
-                        formatter: '{value} 秒'
+                        formatter: '{value}'
                     }
                 },
 

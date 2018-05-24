@@ -412,7 +412,7 @@ class Index extends React.Component {
                     {/*to="/tableItemDetil"*/}
                     {/*style={{fontSize: '24px'}}>课程表内页</Link></li>*/}
                     <li><Link
-                        to="/comments?access_user=23836&sid=3&access_user=23836"
+                        to="/comments?access_user=23836&sid=1021&stype=1"
                         style={{fontSize: '24px'}}>评论列表</Link></li>
                     <li><Link
                         to="/classCardHomePageDoor?access_user=23836"

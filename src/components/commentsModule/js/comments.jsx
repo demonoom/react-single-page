@@ -47,6 +47,7 @@ export default class comments extends React.Component {
         this.setState({
             userId: searchArray[0].split('=')[1],
             sid: searchArray[1].split('=')[1],
+            stype: searchArray[2].split('=')[1],
             clientHeight: document.body.clientHeight,
         })
     }
@@ -56,7 +57,6 @@ export default class comments extends React.Component {
         this.getListCommentOrPraise(1);   //获取点赞列表
         this.getListCommentOrPraise(0);   //获取评论列表
         window.addEventListener('resize', this.onWindwoResize);
-        // console.log(document.getElementsByClassName('.bottom_input_box').clientHeight);
 
     }
 
@@ -86,7 +86,7 @@ export default class comments extends React.Component {
         var PageNo = cmType == 1 ? this.state.defaultPageNo : this.state.defaultPageNoOther;
         var param = {
             "method": 'listCommentOrPraise',
-            "sid": '1021',
+            "sid": _this.state.sid,
             "cmType": cmType, //1 点赞 0  评论
             "pn": PageNo
         };
@@ -157,10 +157,10 @@ export default class comments extends React.Component {
             "method": 'addCommentOrPraise',
             "sid": _this.state.sid,
             "stype": stype, //1 评论云盘文件 3  评论资料
-            "uid": this.state.userId,
-            "cmType": Math.abs(this.state.tabIndex - 1), //0 评论  1 点赞
-            "isAnonymous": this.state.anonymous,
-            "content": this.state.content,
+            "uid": _this.state.userId,
+            "cmType": Math.abs(_this.state.tabIndex - 1), //0 评论  1 点赞
+            "isAnonymous": _this.state.anonymous,
+            "content": _this.state.content,
         };
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
             onResponse: result => {
@@ -185,28 +185,28 @@ export default class comments extends React.Component {
     onEndReached = (event) => {
         var _this = this;
         if (Math.abs(this.state.tabIndex - 1) == 1) {
-            var currentPageNo = this.state.defaultPageNo;
-            if (!this.state.isLoadingLeft && !this.state.hasMore) {
+            var currentPageNo = _this.state.defaultPageNo;
+            if (!_this.state.isLoadingLeft && !_this.state.hasMore) {
                 return;
             }
             currentPageNo += 1;
             this.setState({isLoadingLeft: true, defaultPageNo: currentPageNo});
             // _this.getListCommentOrPraise(Math.abs(this.state.tabIndex -1));
             _this.getListCommentOrPraise(1);  //点赞
-            this.setState({
-                dataSource: this.state.dataSource.cloneWithRows(this.initData),
+            _this.setState({
+                dataSource: _this.state.dataSource.cloneWithRows(_this.initData),
                 isLoadingLeft: true,
             });
         } else {
-            var currentPageNo = this.state.defaultPageNoOther;
-            if (!this.state.isLoadingLeft && !this.state.hasMore) {
+            var currentPageNo = _this.state.defaultPageNoOther;
+            if (!_this.state.isLoadingLeft && !_this.state.hasMore) {
                 return;
             }
             currentPageNo += 1;
-            this.setState({isLoadingLeft: true, defaultPageNoOther: currentPageNo});
+            _this.setState({isLoadingLeft: true, defaultPageNoOther: currentPageNo});
             _this.getListCommentOrPraise(0);  //评论
-            this.setState({
-                dataSourceOther: this.state.dataSourceOther.cloneWithRows(this.initDataOther),
+            _this.setState({
+                dataSourceOther: _this.state.dataSourceOther.cloneWithRows(_this.initDataOther),
                 isLoadingLeft: true,
             });
         }
@@ -239,7 +239,7 @@ export default class comments extends React.Component {
                     likeStatusAnimate: true
                 })
             }, 2000)
-            this.AddCommentOrPraise(1, function () {
+            this.AddCommentOrPraise(classBinding.state.stype, function () {
                 Toast.success("点赞成功", 1);
                 this.initData = [];
                 const dataSource = new ListView.DataSource({
@@ -255,18 +255,6 @@ export default class comments extends React.Component {
         } else {
             Toast.info("已赞过~", 1);
         }
-        // var _this = this;
-        // if(!this.state.likeStatus){
-        //     this.AddCommentOrPraise(function () {
-        //         Toast.success("点赞成功", 1);
-        //     });
-        // }else{
-        //     Toast.success("已取消", 1);
-        // }
-        //
-        // this.setState({
-        //     likeStatus: !this.state.likeStatus
-        // });
     }
 
     //改为匿名状态
@@ -284,7 +272,7 @@ export default class comments extends React.Component {
             Toast.fail('评论内容不能为空')
         } else {
             console.log(this.state.content);
-            this.AddCommentOrPraise(1, function () {
+            this.AddCommentOrPraise(classBinding.state.stype, function () {
                 Toast.success('评论成功', 1);
                 document.getElementsByTagName('input')[0].blur();
                 this.initDataOther = [];
@@ -330,7 +318,7 @@ export default class comments extends React.Component {
         //评论
         const rowOther = (item) => {
             return (
-                <div  style={{paddingLeft: 40 + 'px',position: 'relative'}}>
+                <div style={{paddingLeft: 40 + 'px', position: 'relative'}}>
                     <Item align="top"
                           multipleLine>
                         <span className="student_name">{item.user.userName}</span><span
