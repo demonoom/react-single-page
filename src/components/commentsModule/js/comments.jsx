@@ -35,7 +35,6 @@ export default class comments extends React.Component {
                 {title: '赞'},
                 {title: '评论'}
             ],
-            focus: false,
             clientHeight: '',
             // paraiseStatus: false,
         };
@@ -296,7 +295,6 @@ export default class comments extends React.Component {
                     dataSourceOther: dataSourceOther.cloneWithRows(this.initDataOther),
                     defaultPageNoOther: 1,
                     content: '',
-                    focus: false,
                 })
                 this.getListCommentOrPraise(0);
             }.bind(this))
@@ -305,8 +303,6 @@ export default class comments extends React.Component {
     }
 
     inputChange(event) {
-        console.log(event);
-        console.log(event.target.value);
         classBinding.setState({
             content: event.target.value,
         })
@@ -400,8 +396,6 @@ export default class comments extends React.Component {
                                 scrollEventThrottle={20}     //控制在滚动过程中,scroll事件被调用的频率
                                 style={{
                                     height: classBinding.state.clientHeight - 44.5 - 100,
-                                    // boxSizing:'border-box',
-                                    // paddingBottom:'83.5px'
                                 }}
                             >
                             </ListView>
