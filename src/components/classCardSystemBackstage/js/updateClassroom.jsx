@@ -205,7 +205,7 @@ export default class updateClassroom extends React.Component {
                     Toast.success('添加成功');
                     setTimeout(function () {
                         var data = {
-                            method: 'finish',
+                            method: 'finishForRefresh',
                         };
 
                         Bridge.callHandler(data, null, function (error) {
