@@ -154,7 +154,7 @@ export default class comments extends React.Component {
     AddCommentOrPraise(stype, callback) {
         var param = {
             "method": 'addCommentOrPraise',
-            "sid": '1021',
+            "sid": _this.state.sid,
             "stype": stype, //1 评论云盘文件 3  评论资料
             "uid": this.state.userId,
             "cmType": Math.abs(this.state.tabIndex - 1), //0 评论  1 点赞
@@ -230,7 +230,6 @@ export default class comments extends React.Component {
     //点赞事件
     likeClick() {
         if (!this.state.likeStatus) {
-
             this.setState({
                 likeStatus: true
             });
