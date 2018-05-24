@@ -4,11 +4,12 @@ import './studentFaceStatistics.css'
 import {
     Toast, List
 } from 'antd-mobile';
-
+var colors = ['#5793f3', '#d14a61'];
 export default class studentFaceStatistics extends React.Component {
     classOpenSend = 1;
     closeCollectData=0;
     isClassOver=false;
+
     constructor(props) {
         super(props);
         this.state = {
@@ -24,9 +25,9 @@ export default class studentFaceStatistics extends React.Component {
         Bridge.setShareAble("false");
         Bridge.setRefreshAble("false");
 
-        this.getVclassFaceEmotionsStatistics();
+        //this.getVclassFaceEmotionsStatistics();
         var _this=this;
-
+        this.getLocalClassEachStudentFaceEmotion();
         //setInterval(this.fetchNewDate, 4000);
         window.addEventListener( "message",
             function(e){
@@ -37,7 +38,8 @@ export default class studentFaceStatistics extends React.Component {
             },false);
 
     }
-
+    onChartClick = (optional) => {
+    };
     fetchNewDate = () => {
         if (this.classOpenSend == 0||this.isClassOver) {
             console.log("arthur test");
@@ -49,7 +51,6 @@ export default class studentFaceStatistics extends React.Component {
         var locationSearch = locationHref.substr(locationHref.indexOf("?") + 1);
         var searchArray = locationSearch.split("&");
         var vid = searchArray[0].split('=')[1];
-        console.log(this.classOpenSend);
         const dataBlob = {};
         var param = {
             "method": 'getVclassFaceEmotionsBySecondsPoint',
@@ -112,7 +113,176 @@ export default class studentFaceStatistics extends React.Component {
     }
     classOver() {
         this.isClassOver=true;
+        this.getLocalClassEachStudentFaceEmotion();
     }
+    initEachStudentFaceEmotionCharts=(dataMap)=>{
+        var vid = this.state.vid;
+        var columnarChartOption = null;
+        columnarChartOption = this.buildChartOption();
+        let onEvents = {
+            'click': this.onChartClick,
+        };
+        var divContentArray = [];
+        columnarChartOption = this.buildChartOption();
+        var avgUnderstand=0;
+        var number=0;
+        if (!this.isEmptyObject(dataMap)) {
+            for (var key in dataMap) {
+                var faceEmotionData = dataMap[key];
+                (columnarChartOption.xAxis)[0].data.push(faceEmotionData.users.userName);
+                (columnarChartOption.series)[0].data.push(Math.abs(parseInt(faceEmotionData.understand/faceEmotionData.count)));
+                avgUnderstand+=faceEmotionData.understand;
+                number++;
+
+            }
+
+        }
+        (columnarChartOption.series)[1].data.push(Math.abs(parseInt(avgUnderstand/number)));
+        var subjectJsonDiv = <div style={{height: '100%'}}>
+            <div style={{height: '100%'}} className="echarts_wrap">
+                <ReactEcharts
+                    option={columnarChartOption}
+                    style={{height: '100%', width: '100%'}}
+                    // loadingOption={this.getLoadingOption()}
+                    // showLoading={true}
+                    // onChartReady={this.onChartReady}
+                    onEvents={onEvents}
+                    className=''/>
+            </div>
+        </div>;
+
+        divContentArray.push(subjectJsonDiv);
+        this.setState({divContentArray});
+
+    };
+    getLocalClassEachStudentFaceEmotion = () =>  {
+        var locationHref = window.location.href;
+        var locationSearch = locationHref.substr(locationHref.indexOf("?") + 1);
+        var searchArray = locationSearch.split("&");
+        var vid = searchArray[0].split('=')[1];
+        var _this = this;
+        var param;
+        param = {
+            "method": 'getLocalClassEachStudentFaceEmotion',
+            "vid": vid,
+        };
+        WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
+            onResponse: function (result) {
+                var dataMap = result.response;
+                console.log(dataMap);
+                _this.initEachStudentFaceEmotionCharts(dataMap);
+            },
+            onError: function (error) {
+                console.log(error);
+            }
+        });
+    }
+    buildChartOption = () => {
+        var _this = this;
+        return {
+            color: colors,
+
+            tooltip: {
+                trigger: 'axis',
+                axisPointer: {
+                    type: 'cross'
+                }
+            },
+            grid: {
+                left: '15%'
+            },
+            /*      toolbox: {
+             feature: {
+             dataView: {show: true, readOnly: false},
+             restore: {show: true},
+             saveAsImage: {show: true}
+             }
+             },*/
+            // legend: {
+            //     // data:['理解度','时长']
+            //     data:['理解度']
+            // },
+            dataZoom: [
+                {
+                    show: true,
+                    //开始位置的百分比，0 - 100
+                    start: 0,
+                    //结束位置的百分比，0 - 100
+                    end: 100
+                }
+            ],
+            xAxis: [
+                {
+                    type: 'category',
+                    axisTick: {
+                        alignWithLabel: true
+                    },
+                    // data: ['学生A','学生B','学生C','学生D','学生E','学生F','学生G','学生H','学生I','学生J','学生K','学生L'],
+                    data: [],
+                    triggerEvent: true
+                }
+            ],
+            yAxis: [
+                {
+                    type: 'value',
+                    name: '理解度',
+                    min: 0,
+                    max: 100,
+                    position: 'left',
+                    axisLine: {
+                        lineStyle: {
+                            color: colors[0]
+                        }
+                    },
+                    axisLabel: {
+                        formatter: '{value} %'
+                    }
+                },
+
+                {
+                    type: 'value',
+                    name: '班级平均理解度',
+                    min: 0,
+                    //max: 20,
+                    position: 'right',
+                    axisLine: {
+                        lineStyle: {
+                            color: colors[1]
+                        }
+                    },
+                    axisTick: {
+                        show: true
+                    },
+                    axisLabel: {
+                        show: true,
+                        formatter: '{value}  %'
+                    }
+                }
+            ],
+            series: [
+                {
+                    name: '理解度',
+                    type: 'bar',
+                    showLabel: true,
+                    // data:[-2.0, -40.9, 7.0, 23.2, -25.6, 76.7, -13.6, 62.2, 32.6, 20.0, 6.4, 3.3],
+                    data: [],
+                    itemStyle: {normal: {label: {show: true}}}
+                },
+                {
+                    name: '班级平均理解度',
+                    type: 'line',
+                    yAxisIndex: 1,
+                    // data:[2.0, 2, 3, 4, 6, 10, 19, 10, 15.0, 16, 12.0, 6],
+                    data: [],
+                    itemStyle: {
+                        normal: {
+                            color: 'red'
+                        }
+                    },
+                }
+            ]
+        };
+    };
     getVclassFaceEmotionsStatistics = () => {
         var loginUser = JSON.parse(localStorage.getItem('loginUser'));
         var _this = this;
@@ -120,6 +290,7 @@ export default class studentFaceStatistics extends React.Component {
         var locationSearch = locationHref.substr(locationHref.indexOf("?") + 1);
         var searchArray = locationSearch.split("&");
         var vid = searchArray[0].split('=')[1];
+        this.setState({vid: vid});
         const dataBlob = {};
         var param = {
             "method": 'getVclassFaceEmotionsStatistics',
@@ -136,7 +307,7 @@ export default class studentFaceStatistics extends React.Component {
                 }
                 var resourse = data.response;
                 _this.handleResourse(resourse);
-                setTimeout(function(){ setInterval(_this.fetchNewDate, 4000); }, 3000);
+                //setTimeout(function(){ setInterval(_this.fetchNewDate, 4000); }, 3000);
             },
             onError: function (error) {
                 // message.error(error);
@@ -177,7 +348,6 @@ export default class studentFaceStatistics extends React.Component {
             return;
         }
         var faceEmotionDatas = resourse;
-        console.log(faceEmotionDatas);
         var lineChartOption = this.state.lineChartOption;
         var i = 1;
         var lastPoint;
@@ -553,6 +723,9 @@ export default class studentFaceStatistics extends React.Component {
                             <pre></pre>
                         </div>
                     </div>
+                </div>
+                <div className="list_wrap_padding face_cont_wrap3">
+                    {this.state.divContentArray}
                 </div>
             </div>
         );

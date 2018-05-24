@@ -1,5 +1,5 @@
 var isDebug = true;
-var localDomain = "192.168.50.34";   //请求地址
+var localDomain = "192.168.50.15";   //请求地址
 var isDebugLocal = true;
 var localUrl = "192.168.50.139";    //跳转地址http:
 
@@ -34,7 +34,7 @@ WebServiceUtil.requestLittleAntApi = function (data, listener) {
         success: function (result) {
             listener.onResponse(result);
         }, error: function (error) {
-            listener.onError(result);
+            listener.onError(error);
         }
     });
 }
