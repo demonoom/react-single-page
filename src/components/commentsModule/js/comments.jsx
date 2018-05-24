@@ -271,11 +271,16 @@ export default class comments extends React.Component {
     anonymous() {
         this.setState({
             anonymous: !this.state.anonymous,
-            focus:true,
         })
         //获取焦点
         document.getElementsByTagName('input')[0].focus();
     }
+    // focusMethods(){
+    //     console.log(123);
+    //     this.setState({
+    //         focus:true,
+    //     })
+    // }
 
     // 输入框完成事件
     confirm() {
@@ -338,7 +343,7 @@ export default class comments extends React.Component {
                     <Item align="top"
                           extra={WebServiceUtil.formatYMD(item.commentTime) + ' ' + WebServiceUtil.formatHM(item.commentTime)}
                           multipleLine>
-                        {item.user.userName} <Brief>{item.content}</Brief>
+                        {item.user.userName}<Brief>{item.content}</Brief>
                     </Item>
                     <img src={item.user.avatar} alt="头像"
                          className="headPic"/>
@@ -404,7 +409,7 @@ export default class comments extends React.Component {
                             }}
                         >
                         </ListView>
-                            <div hidden={this.state.tabIndex == 0} className="bottom_input_box">
+                            <div style={this.state.focus?{bottom:'50px'}:{bottom:'0px'}} hidden={this.state.tabIndex == 0} className="bottom_input_box">
                                 <div className="input_box">
                                     <div className="headBox">
                                         <InputItem
@@ -415,6 +420,7 @@ export default class comments extends React.Component {
                                             onChange={this.inputChange.bind(this)}
                                             value={this.state.content}
                                             onKeyUp={this.inputItemOnKeyUp}
+                                            // onFocus={this.focusMethods}
                                         ></InputItem>
                                     </div>
                                     <div className="bottomBox">
