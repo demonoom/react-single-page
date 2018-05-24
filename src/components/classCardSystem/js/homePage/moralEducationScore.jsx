@@ -1,5 +1,5 @@
 import React from 'react';
-import { } from 'antd-mobile';
+import {} from 'antd-mobile';
 
 var MEScore;
 
@@ -21,12 +21,21 @@ export default class moralEducationScore extends React.Component {
         this.getMEScore();
     }
 
+    componentWillReceiveProps(nextProps) {
+        // jsonObject.put("command", "moralEducation");
+        // jsonObject.put("cid", cid);
+        console.log('moralEducationScore', nextProps.classCommand);
+        var clazzId = localStorage.getItem("clazzId");
+        if (nextProps.classCommand.command == "moralEducation" && nextProps.classCommand.data.cid == clazzId) {
+            this.getMEScore();
+        }
+    }
+
     getMEScore() {
         var _this = this;
         const param = {
             "method": "getMoralEducationInfo",
-            "clazzId": 819,
-            "termId": 1,
+            "clazzId": localStorage.getItem("clazzId"),
             "createTime": ""
         }
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {

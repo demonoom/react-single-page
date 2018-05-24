@@ -225,6 +225,7 @@ export default class notifyBack extends React.Component {
         const row = (item, sectionID, rowID) => {
             return (
                 <div className="listCont">
+<<<<<<< HEAD
                     <Item onClick={this.toNotifyDetail.bind(this, item.id)} extra={item.createTime} align="top"
                         multipleLine>
                         {item.noticeTitle} <Brief>{item.noticeContent}</Brief>
@@ -232,6 +233,15 @@ export default class notifyBack extends React.Component {
                     <Icon onClick={this.deleteNotify.bind(this, item.id)} type='cross-circle'
                         className="deleteNoifty"></Icon>
                     <img src={require("../imgs/pic.png")} alt="头像" className="headPic" />
+=======
+                    <Item onClick={this.toNotifyDetail.bind(this, item.id)} align="top"
+                          multipleLine>
+                        <span className="title text_hidden">{item.noticeTitle}</span><span className="time">{item.createTime}</span><Brief>{item.noticeContent}</Brief>
+                    </Item>
+                    <Icon onClick={this.deleteNotify.bind(this, item.id)} type='cross-circle-o'
+                          className="deleteNoifty"></Icon>
+                    <img src={require("../imgs/icon_notifyList.png")} alt="头像" className="headPic"/>
+>>>>>>> b6c04738871031bf4dad271e28955644cefc8e55
                 </div>
             )
         };
@@ -250,11 +260,15 @@ export default class notifyBack extends React.Component {
                         ref={el => this.lv = el}
                         dataSource={this.state.dataSource}    //数据类型是 ListViewDataSource
                         renderFooter={() => (
+<<<<<<< HEAD
                             <div style={{ paddingTop: 5, paddingBottom: 40, textAlign: 'center' }}>
+=======
+                            <div style={{paddingTop: 5, paddingBottom: 5, textAlign: 'center'}}>
+>>>>>>> b6c04738871031bf4dad271e28955644cefc8e55
                                 {this.state.isLoadingLeft ? '正在加载' : '已经全部加载完毕'}
                             </div>)}
                         renderRow={row}   //需要的参数包括一行数据等,会返回一个可渲染的组件为这行数据渲染  返回renderable
-                        className="am-list"
+                        className="am-list notifyList"
                         pageSize={30}    //每次事件循环（每帧）渲染的行数
                         //useBodyScroll  //使用 html 的 body 作为滚动容器   bool类型   不应这么写  否则无法下拉刷新
                         scrollRenderAheadDistance={200}   //当一个行接近屏幕范围多少像素之内的时候，就开始渲染这一行
