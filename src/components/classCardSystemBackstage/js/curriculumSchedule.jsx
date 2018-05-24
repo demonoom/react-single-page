@@ -33,6 +33,7 @@ export default class curriculumSchedule extends React.Component {
                 ],]
         };
         this.addSchedule = this.addSchedule.bind(this);
+        this.turnToUpdatePage = this.turnToUpdatePage.bind(this);
     }
 
     componentWillMount() {
@@ -237,6 +238,26 @@ export default class curriculumSchedule extends React.Component {
         });
     }
 
+    /**
+     * 跳转到课程表更新页面
+     */
+    turnToUpdatePage(currentSchedule){
+        console.log("currentSchedule:"+currentSchedule);
+        var currentScheduleId = currentSchedule.id;
+        var clazzOrRoomId = this.state.sValue[0];
+        var termId = this.state.sValue[1];
+        var week = this.state.asyncValue[0];
+        var url = WebServiceUtil.mobileServiceURL + "updateCurriculumSchedule?currentScheduleId=" + currentScheduleId+"&clazzOrRoomId="+clazzOrRoomId+"&termId="+termId+"&week="+week+"&curriculumType="+this.state.curriculumType;
+        var data = {
+            method: 'openNewPage',
+            url: url
+        };
+
+        Bridge.callHandler(data, null, function (error) {
+            window.location.href = url;
+        });
+    }
+
     render() {
         var pickerTip = "班级";
         if (this.state.curriculumType == 2) {
@@ -274,7 +295,7 @@ export default class curriculumSchedule extends React.Component {
                     {this.state.classTableArray.map((v, i) => {
                         return <li>
                             <div className="add_title"><span className="font_gray">第{i + 1}节</span><span
-                                className="amend_btn">修改</span></div>
+                                className="amend_btn" onClick={this.turnToUpdatePage.bind(this,v)} >修改</span></div>
                             <div className="list_high list">
                                 <span className="text_hidden text_cont1">{v.openTime + '-' + v.closeTime}</span>
                                 <span className="text_hidden text_cont2">{v.courseName}</span>
