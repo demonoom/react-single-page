@@ -16,7 +16,8 @@
 }
 #comments .am-tabs-default-bar-tab::after,
 #comments .am-list-line::after,
-#comments .am-list-body::after {
+#comments .am-list-body::after,
+#comments .am-list-body::before {
   background: none!important;
 }
 #comments .am-tabs-default-bar-underline {
@@ -33,6 +34,12 @@
 }
 #comments .good .am-list-content {
   font-size: 16px;
+}
+#comments .views .list-view-section-body {
+  padding-left: 15px;
+}
+#comments .views .headPic {
+  left: 0;
 }
 #comments .views .am-list-view-scrollview-content {
   padding-bottom: 125px;
@@ -54,6 +61,7 @@
   overflow: visible;
   white-space: normal;
   font-size: 16px;
+  margin-top: 0;
 }
 #comments .views .am-list-view-scrollview-content .am-list-content .time {
   float: right;
@@ -92,7 +100,7 @@
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
-  left: 8px;
+  left: 15px;
   width: 40px;
   height: 40px;
   border-radius: 50%;

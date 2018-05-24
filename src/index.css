@@ -269,7 +269,7 @@ hr {
   font-weight: bold;
   height: 2.22rem;
   line-height: 2.22rem;
-  border-bottom: 2px #f4f4f4 solid;
+  border-bottom: .05rem #f4f4f4 solid;
   padding: 0 .83rem;
 }
 .navBar .icon {
