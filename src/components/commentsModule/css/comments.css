@@ -111,3 +111,7 @@
 #comments .list-view-section-body > div {
   border-bottom: 1px #f4f4f4 solid !important;
 }
+.paddingBottom {
+  padding-bottom: 6rem;
+  box-sizing: border-box;
+}
