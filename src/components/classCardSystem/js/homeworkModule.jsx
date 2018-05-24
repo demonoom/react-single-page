@@ -129,7 +129,7 @@ export default class homeworkModule extends React.Component {
                             <p>{rowData.content}</p>
                         </div>
                         <div className="homeworkR">
-                            {WebServiceUtil.formatYMD(rowData.createTime)}
+                            <p>{WebServiceUtil.formatYMD(rowData.createTime)}</p>
                             {rowData.attachMents.length == 0 ? '' : <img src={rowData.attachMents[0].address}/>}
                             <img/>
                         </div>
