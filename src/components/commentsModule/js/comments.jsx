@@ -5,6 +5,7 @@ import '../css/comments.less'
 const Item = List.Item;
 const Brief = Item.Brief;
 var classBinding;
+var timer;
 
 export default class comments extends React.Component {
 
@@ -30,13 +31,14 @@ export default class comments extends React.Component {
             anonymous: false,    //是否匿名
             praiseNum: 0,  //赞总数,
             commentNum: 0, // 评论总数
+            likeStatusAnimate:false,
             tabs: [
                 {title: '赞'},
                 {title: '评论'}
             ],
+            test:0,
             // paraiseStatus: false,
         };
-
     }
 
     componentWillMount() {
@@ -47,12 +49,26 @@ export default class comments extends React.Component {
             userId: searchArray[0].split('=')[1],
             sid: searchArray[1].split('=')[1]
         })
+
+        timer = setInterval(()=>{
+            var s11 = 1;
+            var f11 = 2;
+            this.setState({
+                test:11111,
+            })
+            console.log('...');
+        },0.1)
     }
 
     componentDidMount() {
         document.title = "通知列表";
         this.getListCommentOrPraise(1);   //获取点赞列表
         this.getListCommentOrPraise(0);   //获取评论列表
+    }
+
+    componentWillUnmount(){
+        console.log('销毁');
+        clearInterval(timer);
     }
 
     //通过云盘或资料文件获取点赞或评论列表
@@ -82,7 +98,8 @@ export default class comments extends React.Component {
                         dataBlob[`${i}`] = topic;
                         if (arr[i].user.colUid == this.state.userId) {
                             this.setState({
-                                likeStatus: true
+                                likeStatus: true,
+                                likeStatusAnimate:true
                             })
                         }
                     }
@@ -209,9 +226,15 @@ export default class comments extends React.Component {
     //点赞事件
     likeClick() {
         if (!this.state.likeStatus) {
+
             this.setState({
                 likeStatus: true
             });
+            setTimeout(() => {
+                this.setState({
+                    likeStatusAnimate:true
+                })
+            },2000)
             this.AddCommentOrPraise(1, function () {
                 Toast.success("点赞成功", 1);
                 this.initData = [];
@@ -247,6 +270,8 @@ export default class comments extends React.Component {
         this.setState({
             anonymous: !this.state.anonymous,
         })
+        //获取焦点
+        document.getElementsByTagName('input')[0].focus();
     }
 
     // 输入框完成事件
@@ -275,7 +300,7 @@ export default class comments extends React.Component {
     }
 
     inputChange(event) {
-        console.log(event)
+        // console.log(event)
         this.setState({
             content: event,
         })
@@ -342,7 +367,7 @@ export default class comments extends React.Component {
                             }}
                         >
                             <div hidden={this.state.tabIndex == 1} className="bottom_box">
-                                <img hidden={this.state.likeStatus} className="likeImage"
+                                <img hidden={this.state.likeStatusAnimate} className="likeImage"
                                      onClick={this.likeClick.bind(this)}
                                      src={this.state.likeStatus ? require('../imgs/like_after.jpg') : require('../imgs/like_before.jpg')}
                                      alt=""/>
@@ -372,7 +397,6 @@ export default class comments extends React.Component {
                                 // boxSizing:'border-box',
                                 // paddingBottom:'83.5px'
                             }}
-
                         >
                             <div hidden={this.state.tabIndex == 0} className="bottom_input_box">
                                 <div className="input_box">
@@ -386,8 +410,9 @@ export default class comments extends React.Component {
                                             onChange={this.inputChange.bind(this)}
                                             value={this.state.content}
                                             onKeyUp={this.inputItemOnKeyUp}
+                                            // focus={this.inputItemFocus}
                                         ></InputItem>
-                                        <button onClick={this.confirm.bind(this)}>发送</button>
+                                        {/*<button onClick={this.confirm.bind(this)}>发送</button>*/}
                                     </div>
                                     <div className="bottomBox">
                                         <div className="bottomBox_left">
