@@ -353,7 +353,7 @@ export default class comments extends React.Component {
                             <div hidden={this.state.tabIndex == 1} className="bottom_box">
                                 <img hidden={this.state.likeStatusAnimate} className="likeImage"
                                      onClick={this.likeClick.bind(this)}
-                                     src={this.state.likeStatus ? require('../imgs/like_after.jpg') : require('../imgs/like_before.jpg')}
+                                     src={this.state.likeStatus ? require('../imgs/like_after.png') : require('../imgs/like_before.png')}
                                      alt=""/>
                             </div>
                         </ListView>
