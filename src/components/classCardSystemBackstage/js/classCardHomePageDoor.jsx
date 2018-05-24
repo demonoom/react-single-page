@@ -1,5 +1,6 @@
 import React from 'react';
-import {} from 'antd-mobile';
+import {Icon} from 'antd-mobile';
+import '../css/classCardHomePageDoor.less'
 
 export default class classCardHomePageDoor extends React.Component {
 
@@ -129,15 +130,17 @@ export default class classCardHomePageDoor extends React.Component {
     render() {
         return (
             <div id="classCardHomePageDoor" style={{height: document.body.clientHeight}}>
-                <li style={{fontSize: '25px'}} onClick={this.turnToRingBinding}>手环绑定</li>
-                <li style={{fontSize: '25px'}} onClick={this.turnToCurriculumSchedule.bind(this, 1)}>课程表列表</li>
-                <li style={{fontSize: '25px'}} onClick={this.turnToCurriculumSchedule.bind(this, 2)}>公共教室课程表</li>
-                <li style={{fontSize: '25px'}} onClick={this.turnToClassroomManage}>教室管理页面</li>
-                <li style={{fontSize: '25px'}} onClick={this.turnToClassDemeanor.bind(this, 1)}>班级风采</li>
-                <li style={{fontSize: '25px'}} onClick={this.turnToClassDemeanor.bind(this, 2)}>班级荣誉</li>
-                <li style={{fontSize: '25px'}} onClick={this.turnToMoralEducation}>德育评价</li>
-                <li style={{fontSize: '25px'}} onClick={this.turnToNotifyBack}>通知后台</li>
-                <li style={{fontSize: '25px'}} onClick={this.turnToStudentDutyList}>班级值日表</li>
+                <ul className="classCardHomePageDoor">
+                    <li onClick={this.turnToRingBinding}><i className="icon icon_bracelet"></i>手环绑定<i className="arrow_right"></i></li>
+                    <li onClick={this.turnToCurriculumSchedule.bind(this, 1)}><i className="icon icon_course"></i>课程表列表<i className="arrow_right"></i></li>
+                    <li onClick={this.turnToCurriculumSchedule.bind(this, 2)}><i className="icon icon_publiCourse"></i>公共教室课程表<i className="arrow_right"></i></li>
+                    <li onClick={this.turnToClassroomManage}><i className="icon icon_ClassroomManagement"></i>教室管理页面<i className="arrow_right"></i></li>
+                    <li onClick={this.turnToClassDemeanor.bind(this, 1)}><i className="icon icon_classDemeanor"></i>班级风采<i className="arrow_right"></i></li>
+                    <li onClick={this.turnToClassDemeanor.bind(this, 2)}><i className="icon icon_honor"></i>班级荣誉<i className="arrow_right"></i></li>
+                    <li onClick={this.turnToMoralEducation}><i className="icon icon_moralEducationScore"></i>德育评价<i className="arrow_right"></i></li>
+                    <li onClick={this.turnToNotifyBack}><i className="icon icon_notify"></i>通知后台<i className="arrow_right"></i></li>
+                    <li onClick={this.turnToStudentDutyList}><i className="icon icon_studentOnDuty"></i>班级值日表<i className="arrow_right"></i></li>
+                </ul>
             </div>
         );
     }
