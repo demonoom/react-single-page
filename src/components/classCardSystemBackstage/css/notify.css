@@ -42,3 +42,18 @@
 #notify .listCont .am-list-item {
   padding-left: 105px;
 }
+#notify .a .am-list-line-multiple {
+  width: calc(100% - 105px);
+}
+#notify .a .am-list-line-multiple .am-list-extra {
+  width: 120px;
+}
+#notify .a .am-list-content {
+  width: calc(100% - 120px);
+}
+#notify .a .am-list-view-scrollview-content {
+  width: 100% !important;
+}
+#notify .am-list-body {
+  background: #f4f4f4;
+}
