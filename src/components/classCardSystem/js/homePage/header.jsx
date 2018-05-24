@@ -189,12 +189,6 @@ export default class header extends React.Component {
                                     <div className="space_high3">{v.dayweather}</div>
                                     <div>{v.nighttemp + '℃~' + v.daytemp + '℃'}</div>
                                 </span>
-                            } else {
-                                return <span className="header_date2">
-                                    <div className="space_high2">后天</div>
-                                    <div className="space_high3">{v.dayweather}</div>
-                                    <div>{v.nighttemp + '℃~' + v.daytemp + '℃'}</div>
-                                </span>
                             }
                         })
                     }

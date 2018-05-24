@@ -35,7 +35,7 @@ export default class noticeReadMore extends React.Component {
         var pageNo = _this.state.defaultPageNo;
         var param = {
             "method": 'getClassBrandNoticeListByClassId',
-            "cid": localStorage.getItem('clazzId'),
+            "classroomId": localStorage.getItem('roomId'),
             "pageNo": pageNo
         }
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
