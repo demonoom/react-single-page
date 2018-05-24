@@ -239,6 +239,7 @@ hr {
   color: #fff;
   line-height: 2.8rem;
   text-align: center;
+  z-index: 10;
 }
 .addBunton img {
   width: 100%;

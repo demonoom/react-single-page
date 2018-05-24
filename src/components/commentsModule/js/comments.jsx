@@ -302,7 +302,7 @@ export default class comments extends React.Component {
         //点赞
         const row = (item) => {
             return (
-                <div style={{paddingLeft: 50 + 'px', position: 'relative', borderBottom: '1px solid #ccc'}}>
+                <div className="good" style={{paddingLeft: 50 + 'px', position: 'relative'}}>
                     <Item align="top"
                           multipleLine>
                         {item.user.userName}
@@ -314,11 +314,10 @@ export default class comments extends React.Component {
         //评论
         const rowOther = (item) => {
             return (
-                <div style={{paddingLeft: 50 + 'px', position: 'relative'}}>
+                <div  style={{paddingLeft: 50 + 'px',position: 'relative'}}>
                     <Item align="top"
-                          extra={WebServiceUtil.formatYMD(item.commentTime) + ' ' + WebServiceUtil.formatHM(item.commentTime)}
                           multipleLine>
-                        {item.user.userName} <Brief>{item.content}</Brief>
+                        <span className="student_name">{item.user.userName}</span><span className="time">{WebServiceUtil.formatYMD(item.commentTime) + ' ' + WebServiceUtil.formatHM(item.commentTime)}</span><Brief>{item.content}</Brief>
                     </Item>
                     <img src={item.user.avatar} alt="头像"
                          className="headPic"/>
@@ -335,7 +334,7 @@ export default class comments extends React.Component {
                             ref={el => this.lv = el}
                             dataSource={this.state.dataSource}    //数据类型是 ListViewDataSource
                             renderFooter={() => (
-                                <div style={{paddingTop: 5, paddingBottom: 40, textAlign: 'center'}}>
+                                <div style={{paddingTop: 5, paddingBottom: 5, textAlign: 'center'}}>
                                     {this.state.isLoadingLeft ? '正在加载' : '已经全部加载完毕'}
                                 </div>)}
                             renderRow={row}   //需要的参数包括一行数据等,会返回一个可渲染的组件为这行数据渲染  返回renderable
@@ -348,28 +347,28 @@ export default class comments extends React.Component {
                             initialListSize={30}   //指定在组件刚挂载的时候渲染多少行数据，用这个属性来确保首屏显示合适数量的数据
                             scrollEventThrottle={20}     //控制在滚动过程中，scroll事件被调用的频率
                             style={{
-                                height: classBinding.state.clientHeight,
+                                height: classBinding.state.clientHeight - 44.5,
                             }}
                         >
                             <div hidden={this.state.tabIndex == 1} className="bottom_box">
                                 <img hidden={this.state.likeStatusAnimate} className="likeImage"
                                      onClick={this.likeClick.bind(this)}
-                                     src={this.state.likeStatus ? require('../imgs/like_after.jpg') : require('../imgs/like_before.jpg')}
+                                     src={this.state.likeStatus ? require('../imgs/like_after.png') : require('../imgs/like_before.png')}
                                      alt=""/>
                             </div>
                         </ListView>
                     </List>
                     {/*//评论*/}
-                    <List className="my-list" style={{paddingBottom: '50px'}}>
+                    <List className="my-list" >
                         <ListView
                             ref={el => this.lv = el}
                             dataSource={this.state.dataSourceOther}    //数据类型是 ListViewDataSource
                             renderFooter={() => (
-                                <div style={{paddingTop: 5, paddingBottom: 40, textAlign: 'center'}}>
+                                <div style={{paddingTop: 5, paddingBottom: 5, textAlign: 'center'}}>
                                     {this.state.isLoadingLeft ? '正在加载' : '已经全部加载完毕'}
                                 </div>)}
                             renderRow={rowOther}   //需要的参数包括一行数据等,会返回一个可渲染的组件为这行数据渲染  返回renderable
-                            className="am-list"
+                            className="am-list views"
                             pageSize={30}    //每次事件循环（每帧）渲染的行数
                             //useBodyScroll  //使用 html 的 body 作为滚动容器   bool类型   不应这么写  否则无法下拉刷新
                             scrollRenderAheadDistance={200}   //当一个行接近屏幕范围多少像素之内的时候，就开始渲染这一行
@@ -378,11 +377,13 @@ export default class comments extends React.Component {
                             initialListSize={30}   //指定在组件刚挂载的时候渲染多少行数据，用这个属性来确保首屏显示合适数量的数据
                             scrollEventThrottle={20}     //控制在滚动过程中,scroll事件被调用的频率
                             style={{
-                                height: classBinding.state.clientHeight,
+                                height: classBinding.state.clientHeight - 44.5,
                                 // boxSizing:'border-box',
                                 // paddingBottom:'83.5px'
                             }}
                         >
+                        </ListView>
+
                             <div hidden={this.state.tabIndex == 0} className="bottom_input_box">
                                 <div className="input_box">
                                     <div className="headBox">
@@ -398,6 +399,7 @@ export default class comments extends React.Component {
                                             // focus={this.inputItemFocus}
                                         ></InputItem>
                                         {/*<button onClick={this.confirm.bind(this)}>发送</button>*/}
+
                                     </div>
                                     <div className="bottomBox">
                                         <div className="bottomBox_left">
@@ -409,7 +411,6 @@ export default class comments extends React.Component {
                                     </div>
                                 </div>
                             </div>
-                        </ListView>
                     </List>
                 </Tabs>
 

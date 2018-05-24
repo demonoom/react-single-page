@@ -1,3 +1,4 @@
+(node) util.print is deprecated. Use console.log instead.
 #classroomManage {
   font-size: 17px;
 }
@@ -27,7 +28,6 @@
 }
 #classroomManage .tableDiv {
   position: relative;
-  background-color: #fff;
 }
 #classroomManage .tableDiv .am-card-body {
   min-height: 1.5rem !important;

@@ -1,20 +1,61 @@
 #comments{
   position: relative;
-  .my-list{
-    position:relative;
-    padding-bottom: 0!important;
-    height: calc(~"100% - 45px");
-
-
+  overflow: hidden;
+  .am-tabs-default-bar-tab{
+    font-size: 16px;
+  }
+  .am-list-body{
+    background: none;
+  }
+  .list-view-section-body{
+    background-color: #fff;
   }
   .am-tabs-default-bar-tab-active{
     color: #f35454;
   }
-  .am-tabs-default-bar-tab::after,.am-list-line::after{
+  .am-tabs-default-bar-tab::after,.am-list-line::after,.am-list-body::after{
     background: none!important;
   }
   .am-tabs-default-bar-underline{
     border-color: #f35454;
+  }
+  .am-list-view-scrollview-content{
+    width: 100%;
+  }
+  .am-list-item .am-input-control input{
+    font-size: 15px;
+  }
+  .good{
+    padding: 10px 0;
+    .am-list-content{
+      font-size: 16px;
+    }
+  }
+  .views{
+    .am-list-view-scrollview-content{
+     padding-bottom: 125px;
+      .am-list-content{
+        width: 100%;
+        font-size: 12px;
+        color: #888;
+        .student_name{
+          max-width: calc(~"100% - 120px");
+          display: inline-block;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          white-space: nowrap;
+        }
+        .am-list-brief{
+          color: #000;
+          overflow:visible;
+          white-space: normal;
+          font-size: 16px;
+        }
+        .time{
+          float: right;
+        }
+      }
+    }
   }
 
   .bottom_box{
@@ -27,20 +68,22 @@
   }
   .bottom_input_box{
     width:100%;
-    position: fixed;
+    position: absolute;
     left:0px;
     bottom:0px;
     background: white;
+    z-index: 99;
+    height: 125px;
   }
   .bottomBox{
-    padding: 15px 15px 0;
+    padding: 15px;
     overflow: hidden;
     border-top: 1px #f4f4f4 solid;
     .bottomBox_left{
       input{
         margin-right: 5px;
-        width: 15px;
-        height: 15px;
+        width: 17px;
+        height: 17px;
         vertical-align: bottom;
       }
 
@@ -49,9 +92,7 @@
       color: #666;
     }
   }
-  .input_box{
-    height: 110px;
-  }
+
   .headPic {
     position: absolute;
     top: 50%;
@@ -105,5 +146,4 @@
       border-bottom: 1px #f4f4f4 solid !important;
     }
   }
-
 }
