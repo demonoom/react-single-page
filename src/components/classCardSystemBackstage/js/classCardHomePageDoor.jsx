@@ -17,7 +17,7 @@ export default class classCardHomePageDoor extends React.Component {
     }
 
     componentDidMount() {
-
+        document.title = '班牌系统'
     }
 
     /**
@@ -102,7 +102,7 @@ export default class classCardHomePageDoor extends React.Component {
      * 通知后台
      */
     turnToNotifyBack = () => {
-        var url = WebServiceUtil.mobileServiceURL + "notifyBack?access_user" + this.state.ident;
+        var url = WebServiceUtil.mobileServiceURL + "notifyBack?access_user=" + this.state.ident;
         var data = {
             method: 'openNewPage',
             url: url

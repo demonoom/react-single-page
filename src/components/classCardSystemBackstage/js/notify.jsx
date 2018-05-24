@@ -104,14 +104,14 @@ export default class notifyBack extends React.Component {
 
     //新打开通知详情页
     toNotifyDetail(notifyId) {
-        var url = WebServiceUtil.mobileServiceURL + "notifyDetail";
+        var url = WebServiceUtil.mobileServiceURL + "notifyDetail?nodeId=" + notifyId;
         var data = {
             method: 'openNewPage',
             url: url
         };
 
         Bridge.callHandler(data, null, function (error) {
-            window.location.href = url + '?nodeId=' + notifyId;
+            window.location.href = url;
         });
     }
 
@@ -193,13 +193,13 @@ export default class notifyBack extends React.Component {
     };
 
     //获取教室ID
-    getClassRoomId(){
+    getClassRoomId() {
         var _this = this;
         //获取班级选择项
         var param = {
             "method": 'viewClassRoomPage',
             "uid": JSON.parse(localStorage.getItem('loginUserSchedule')).colUid,
-            "pn":1
+            "pn": 1
         };
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
             onResponse: (result) => {
@@ -220,6 +220,7 @@ export default class notifyBack extends React.Component {
             }
         });
     }
+
     render() {
         var _this = this;
         const row = (item, sectionID, rowID) => {
@@ -227,7 +228,8 @@ export default class notifyBack extends React.Component {
                 <div className="listCont">
                     <Item onClick={this.toNotifyDetail.bind(this, item.id)} align="top"
                           multipleLine>
-                        <span className="title text_hidden">{item.noticeTitle}</span><span className="time">{item.createTime}</span><Brief>{item.noticeContent}</Brief>
+                        <span className="title text_hidden">{item.noticeTitle}</span><span
+                        className="time">{item.createTime}</span><Brief>{item.noticeContent}</Brief>
                     </Item>
                     <Icon onClick={this.deleteNotify.bind(this, item.id)} type='cross-circle-o'
                           className="deleteNoifty"></Icon>
