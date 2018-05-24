@@ -1,14 +1,5 @@
 import React from 'react';
-import {Toast, Grid} from 'antd-mobile';
-
-const data = Array.from(new Array(9)).map((_val, i) => ({
-    icon: 'https://gw.alipayobjects.com/zos/rmsportal/nywPmnTAvTmLusPxHPSu.png',
-    text: `name${i}`,
-}));
-
-const data1 = Array.from(new Array(9)).map(() => ({
-    icon: 'https://gw.alipayobjects.com/zos/rmsportal/WXoqXTHrSnRcUwEaQgXJ.png',
-}));
+import {} from 'antd-mobile';
 
 export default class classCardHomePageDoor extends React.Component {
 
@@ -32,7 +23,7 @@ export default class classCardHomePageDoor extends React.Component {
     /**
      * 手环绑定
      */
-    turnToRingBinding() {
+    turnToRingBinding = () => {
         var url = WebServiceUtil.mobileServiceURL + "ringBinding?ident=" + this.state.ident;
         var data = {
             method: 'openNewPage',
@@ -46,7 +37,7 @@ export default class classCardHomePageDoor extends React.Component {
     /**
      * 课程表列表
      */
-    turnToCurriculumSchedule(type) {
+    turnToCurriculumSchedule = (type) => {
         var url = WebServiceUtil.mobileServiceURL + "curriculumSchedule?ident=" + this.state.ident + "&curriculumType=" + type;
 
         var data = {
@@ -61,7 +52,7 @@ export default class classCardHomePageDoor extends React.Component {
     /**
      * 教室管理页面
      */
-    turnToClassroomManage() {
+    turnToClassroomManage = () => {
         var url = WebServiceUtil.mobileServiceURL + "classroomManage?uid=" + this.state.ident;
         var data = {
             method: 'openNewPage',
@@ -75,7 +66,7 @@ export default class classCardHomePageDoor extends React.Component {
     /**
      * 班级风采
      */
-    turnToClassDemeanor(type) {
+    turnToClassDemeanor = (type) => {
 
         var url;
         if (type == 1) {
@@ -96,7 +87,7 @@ export default class classCardHomePageDoor extends React.Component {
     /**
      * 德育评价
      */
-    turnToMoralEducation() {
+    turnToMoralEducation = () => {
         var url = WebServiceUtil.mobileServiceURL + "moralEducation?ident=" + this.state.ident;
         var data = {
             method: 'openNewPage',
@@ -110,7 +101,7 @@ export default class classCardHomePageDoor extends React.Component {
     /**
      * 通知后台
      */
-    turnToNotifyBack() {
+    turnToNotifyBack = () => {
         var url = WebServiceUtil.mobileServiceURL + "notifyBack?access_user" + this.state.ident;
         var data = {
             method: 'openNewPage',
@@ -124,7 +115,7 @@ export default class classCardHomePageDoor extends React.Component {
     /**
      * 班级值日表
      */
-    turnToStudentDutyList() {
+    turnToStudentDutyList = () => {
         var url = WebServiceUtil.mobileServiceURL + "studentDutyList?access_user=" + this.state.ident;
         var data = {
             method: 'openNewPage',
@@ -147,23 +138,6 @@ export default class classCardHomePageDoor extends React.Component {
                 <li style={{fontSize: '25px'}} onClick={this.turnToMoralEducation}>德育评价</li>
                 <li style={{fontSize: '25px'}} onClick={this.turnToNotifyBack}>通知后台</li>
                 <li style={{fontSize: '25px'}} onClick={this.turnToStudentDutyList}>班级值日表</li>
-
-                <div>
-                    <div className="sub-title">Always square grid item </div>
-                    <Grid data={data} activeStyle={false} />
-
-                    <div className="sub-title">Grid item adjust accroiding to img size </div>
-                    <Grid data={data} square={false} className="not-square-grid" />
-
-                    {/*<div className="sub-title">ColumnNum=3 </div>*/}
-                    {/*<Grid data={data} columnNum={3} />*/}
-
-                    {/*<div className="sub-title">No border</div>*/}
-                    {/*<Grid data={data} hasLine={false} />*/}
-
-                    {/*<div className="sub-title">Carousel</div>*/}
-                    {/*<Grid data={data} isCarousel onClick={_el => console.log(_el)} />*/}
-                </div>
             </div>
         );
     }
