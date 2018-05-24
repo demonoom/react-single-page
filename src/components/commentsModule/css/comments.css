@@ -1,21 +1,72 @@
-(node) util.print is deprecated. Use console.log instead.
 #comments {
   position: relative;
+  overflow: hidden;
 }
-#comments .my-list {
-  position: relative;
-  padding-bottom: 0!important;
-  height: calc(100% - 45px);
+#comments .am-tabs-default-bar-tab {
+  font-size: 16px;
+}
+#comments .am-list-body {
+  background: none;
+}
+#comments .list-view-section-body {
+  background-color: #fff;
+}
+#comments .am-list-item.am-input-item {
+  height: 32px;
+  min-height: 32px;
+  margin: 10px 15px;
 }
 #comments .am-tabs-default-bar-tab-active {
   color: #f35454;
 }
 #comments .am-tabs-default-bar-tab::after,
-#comments .am-list-line::after {
+#comments .am-list-line::after,
+#comments .am-list-body::after,
+#comments .am-list-body::before {
   background: none!important;
 }
 #comments .am-tabs-default-bar-underline {
   border-color: #f35454;
+}
+#comments .am-list-view-scrollview-content {
+  width: 100%;
+}
+#comments .am-list-item .am-input-control input {
+  font-size: 15px;
+}
+#comments .good {
+  padding: 10px 0;
+}
+#comments .good .am-list-content {
+  font-size: 16px;
+}
+#comments .views .list-view-section-body {
+  padding-left: 15px;
+}
+#comments .views .headPic {
+  left: 0;
+}
+#comments .views .am-list-view-scrollview-content .am-list-content {
+  width: 100%;
+  font-size: 12px;
+  color: #888;
+}
+#comments .views .am-list-view-scrollview-content .am-list-content .student_name {
+  max-width: calc(100% - 100px);
+  display: inline-block;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+#comments .views .am-list-view-scrollview-content .am-list-content .am-list-brief {
+  color: #000;
+  overflow: visible;
+  white-space: normal;
+  font-size: 16px;
+  margin-top: 0;
+}
+#comments .views .am-list-view-scrollview-content .am-list-content .time {
+  float: right;
 }
 #comments .bottom_box {
   position: fixed;
@@ -26,33 +77,28 @@
 }
 #comments .bottom_input_box {
   width: 100%;
-  position: fixed;
-  left: 0px;
-  bottom: 0px;
+  height: 115px;
   background: white;
 }
 #comments .bottomBox {
-  padding: 15px 15px 0;
+  padding: 15px;
   overflow: hidden;
   border-top: 1px #f4f4f4 solid;
 }
 #comments .bottomBox .bottomBox_left input {
   margin-right: 5px;
-  width: 15px;
-  height: 15px;
+  width: 17px;
+  height: 17px;
   vertical-align: bottom;
 }
 #comments .bottomBox .bottomBox_right {
   color: #666;
 }
-#comments .input_box {
-  height: 110px;
-}
 #comments .headPic {
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
-  left: 8px;
+  left: 15px;
   width: 40px;
   height: 40px;
   border-radius: 50%;
@@ -83,6 +129,11 @@
   -webkit-border-radius: 5px;
   -moz-border-radius: 5px;
   border-radius: 5px;
+  width: calc(100% - 30px);
+  box-sizing: border-box;
+  border: 0;
+  padding: 5px 10px;
+  line-height: 22px;
 }
 #comments .bottomBox_left {
   float: left;
