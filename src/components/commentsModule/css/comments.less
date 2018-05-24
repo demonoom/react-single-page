@@ -1,12 +1,29 @@
 #comments{
+  position: relative;
   .my-list{
     position:relative;
+    padding-bottom: 0!important;
+    height: calc(~"100% - 45px");
+
 
   }
+  .am-tabs-default-bar-tab-active{
+    color: #f35454;
+  }
+  .am-tabs-default-bar-tab::after,.am-list-line::after{
+    background: none!important;
+  }
+  .am-tabs-default-bar-underline{
+    border-color: #f35454;
+  }
+
   .bottom_box{
     position: fixed;
-    bottom:50px;
-    right:50px;
+    right: 2.5rem;
+    bottom: 2.5rem;
+    width: 3rem;
+    height: 3rem;
+
   }
   .bottom_input_box{
     width:100%;
@@ -14,6 +31,26 @@
     left:0px;
     bottom:0px;
     background: white;
+  }
+  .bottomBox{
+    padding: 15px 15px 0;
+    overflow: hidden;
+    border-top: 1px #f4f4f4 solid;
+    .bottomBox_left{
+      input{
+        margin-right: 5px;
+        width: 15px;
+        height: 15px;
+        vertical-align: bottom;
+      }
+
+    }
+    .bottomBox_right{
+      color: #666;
+    }
+  }
+  .input_box{
+    height: 110px;
   }
   .headPic {
     position: absolute;
@@ -26,12 +63,9 @@
 
   }
   .likeImage{
-    width:60px;
-    height:60px;
-    position: absolute;
-    top:50%;
-    left:50%;
-    transform: translate(-50%,-50%);
+    width:3rem;
+    height:3rem;
+
   }
   .like_box_after{
     width:50px;
@@ -47,10 +81,15 @@
     border-radius: 50%;
     position: relative;
   }
+
   .comment_input{
-    border: 1px solid #ccc;
     margin: 0 auto;
     margin-bottom:5px;
+    background-color: #f4f4f4;
+    margin: 15px;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
   }
   .bottomBox_left{
     float: left;
@@ -61,4 +100,10 @@
   .am-list-extra{
     font-size: 14px;
   }
+  .list-view-section-body{
+    &>div{
+      border-bottom: 1px #f4f4f4 solid !important;
+    }
+  }
+
 }
