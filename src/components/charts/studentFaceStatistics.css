@@ -137,15 +137,18 @@
 /*扫码进去第二种状态－－－三个图表*/
 .face_cont_wrap1{
     height: calc(40% - 40px);
+    padding: 0;
 }
 .face_cont_wrap2{
-    height: 25%;
+    height:calc(30% - 30px);
+    padding: 0;
 }
 .face_cont_wrap3{
-    height: calc(35% - 90px);
+    height: 18%;
+    padding: 0;
 }
 .face_cont_2_1{
-    height: calc(100% - 60px);
+    height: calc(100% - 65px);
 }
 /*扫码进去第一种状态－－－二个图表*/
 
@@ -154,4 +157,16 @@
 }
 .face_cont2_2{
     height: 30%;
+}
+.face_cont_wrap2_a{
+    position: absolute;
+    bottom: 18%;
+    left: 0;
+    width: 100%;
+}
+.face_cont_wrap3_a{
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
 }

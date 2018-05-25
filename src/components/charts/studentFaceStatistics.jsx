@@ -26,10 +26,9 @@ export default class studentFaceStatistics extends React.Component {
         document.title = '学生听课认真度分析';
         Bridge.setShareAble("false");
         Bridge.setRefreshAble("false");
-
-        this.getVclassFaceEmotionsStatistics();
         var _this=this;
-        //this.classOver();
+        this.getVclassFaceEmotionsStatistics();
+
         //setInterval(this.fetchNewDate, 4000);
         window.addEventListener( "message",
             function(e){
@@ -116,7 +115,7 @@ export default class studentFaceStatistics extends React.Component {
     classOver() {
         this.isClassOver=true;
         var faceCont='over_flow_auto concentration_bottom my_flex flex_justify face_cont_wrap1';
-        var faceCont2='over_flow_auto face_cont_wrap2';
+        var faceCont2='over_flow_auto face_cont_wrap2 face_cont_wrap2_a';
         this.setState({faceCont: faceCont});
         this.setState({faceCont2: faceCont2});
 
@@ -133,7 +132,7 @@ export default class studentFaceStatistics extends React.Component {
         columnarChartOption = this.buildChartOption();
         var avgUnderstand=0;
         var number=0;
-        if (!this.isEmptyObject(dataMap)) {
+        //if (!this.isEmptyObject(dataMap)) {
             for (var key in dataMap) {
                 var faceEmotionData = dataMap[key];
                 (columnarChartOption.xAxis)[0].data.push(faceEmotionData.users.userName);
@@ -143,8 +142,10 @@ export default class studentFaceStatistics extends React.Component {
 
             }
 
+       // }
+        for (var key in dataMap) {
+            (columnarChartOption.series)[1].data.push(Math.abs(parseInt((faceEmotionData.understand / faceEmotionData.count) / number)));
         }
-        (columnarChartOption.series)[1].data.push(Math.abs(parseInt((faceEmotionData.understand/faceEmotionData.count)/number)));
         var subjectJsonDiv = <div style={{height: '100%'}}>
             <div style={{height: '100%'}} className="echarts_wrap">
                 <ReactEcharts
@@ -195,6 +196,9 @@ export default class studentFaceStatistics extends React.Component {
                     type: 'cross'
                 }
             },
+            title: {
+                text: '学生课堂理解度'
+            },
             grid: {
                 left: '3%',
                 right: '4%',
@@ -237,7 +241,7 @@ export default class studentFaceStatistics extends React.Component {
                     type: 'value',
                     name: '理解度',
                     min: 0,
-                    max: 100,
+                    //max: 100,
                     position: 'left',
                     axisLine: {
                         lineStyle: {
@@ -300,7 +304,12 @@ export default class studentFaceStatistics extends React.Component {
         var locationSearch = locationHref.substr(locationHref.indexOf("?") + 1);
         var searchArray = locationSearch.split("&");
         var vid = searchArray[0].split('=')[1];
+        var status = searchArray[1].split('=')[1];
         this.setState({vid: vid});
+        debugger
+        if(status=='close') {
+            this.classOver();
+        }
         const dataBlob = {};
         var param = {
             "method": 'getVclassFaceEmotionsStatistics',
@@ -317,7 +326,7 @@ export default class studentFaceStatistics extends React.Component {
                 }
                 var resourse = data.response;
                 _this.handleResourse(resourse);
-                //setTimeout(function(){ setInterval(_this.fetchNewDate, 4000); }, 3000);
+                setTimeout(function(){ setInterval(_this.fetchNewDate, 4000); }, 3000);
             },
             onError: function (error) {
                 // message.error(error);
@@ -427,7 +436,7 @@ export default class studentFaceStatistics extends React.Component {
                 }
             },
             title: {
-                text: ''
+                text: '课堂表情数据分析'
             },
             tooltip: {
                 trigger: 'axis'
@@ -719,25 +728,25 @@ export default class studentFaceStatistics extends React.Component {
                         <div className="concentration_user_cont">{thinkRecord}</div>
                     </div>
                 </div>
-                <div className={_this.state.faceCont2}>
-                    <span className="student_f_left">占比/％</span>
-                    <span className="student_f_right">时间/M</span>
-                    <div className="face_cont_wrap">
-                        <div className="face_cont_2_1">
-                            <ReactEcharts
-                                option={lineChartOption}
-                                style={{height: '100%', width: '100%'}}
-                                // loadingOption={this.getLoadingOption()}
-                                // showLoading={true}
-                                // onChartReady={this.onChartReady}
-                                className=''/>
-                            <pre></pre>
+                    <div className={_this.state.faceCont2}>
+                        <span className="student_f_left">占比/％</span>
+                        <span className="student_f_right">时间/M</span>
+                        <div className="face_cont_wrap">
+                            <div className="face_cont_2_1">
+                                <ReactEcharts
+                                    option={lineChartOption}
+                                    style={{height: '100%', width: '100%'}}
+                                    // loadingOption={this.getLoadingOption()}
+                                    // showLoading={true}
+                                    // onChartReady={this.onChartReady}
+                                    className=''/>
+                                <pre></pre>
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div className="list_wrap_padding face_cont_wrap3">
-                    {this.state.divContentArray}
-                </div>
+                    <div className="list_wrap_padding face_cont_wrap3 face_cont_wrap3_a">
+                        {this.state.divContentArray}
+                    </div>
             </div>
         );
     }
