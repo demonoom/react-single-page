@@ -48,7 +48,6 @@ export default class curriculumSchedule extends React.Component {
         };
         localStorage.setItem("loginUserSchedule", JSON.stringify(loginUser));
         this.setState({curriculumType});
-        this.setWeek();
     }
 
     componentDidMount() {
@@ -64,11 +63,14 @@ export default class curriculumSchedule extends React.Component {
         var that = this;
         var d = new Date();
         var week = d.getDay();
+        var noomValue;
         this.state.data.forEach((v, i) => {
             if (week == v.value) {
+                noomValue = [v.value]
                 that.setState({
-                    asyncValue: v.value
+                    asyncValue: [v.value],
                 })
+                that.viewCourseTableItemPage(noomValue)
             }
         })
     }
@@ -176,6 +178,7 @@ export default class curriculumSchedule extends React.Component {
         var array = [cListArr[0].value, sListArr[0].value];
         var arr = [cListArr, sListArr];
         this.setState({seasons: arr, sValue: array})
+        cSchedule.setWeek();
     }
 
     /**
@@ -185,6 +188,8 @@ export default class curriculumSchedule extends React.Component {
     onPickerChange = (val) => {
         const d = [...this.state.data];
         const asyncValue = [...val];
+        console.log(d);
+        console.log(asyncValue);
         this.setState({
             data: d,
             asyncValue,

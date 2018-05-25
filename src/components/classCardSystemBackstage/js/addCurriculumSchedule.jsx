@@ -40,6 +40,7 @@ export default class addCurriculumSchedule extends React.Component {
             terAsyncValue: [],
             ClassTableArr: [],  //课表结构
             ClassTableDataArr: [],  //课表数据
+            search_bg: false
         };
     }
 
@@ -108,7 +109,6 @@ export default class addCurriculumSchedule extends React.Component {
      * 新增课表项
      */
     addCourseTableItem = () => {
-        console.log(this.state.ClassTableDataArr);
         var _this = this;
         if (this.state.classAsyncValue.length == 0) {
             var tipMessage = "请选择班级";
@@ -291,12 +291,11 @@ export default class addCurriculumSchedule extends React.Component {
      * 搜索老师
      */
     getTeacherData(i) {
+        teacherV.state.terData = []
         if (teacherV.state.ClassTableDataArr[i].teacherId == '') {
             Toast.fail('请输入老师姓名搜索')
             return
         }
-        document.getElementById('searchTerRes').className = 'searchTerRes ding_enter'
-        teacherV.setState({modelNum: i});
         let param = {
             "method": 'searchTeacher',
             "aid": JSON.parse(localStorage.getItem('loginUserSchedule')).colUid,
@@ -314,8 +313,12 @@ export default class addCurriculumSchedule extends React.Component {
                                 })
                             })
                             teacherV.setState({terData: arr});
+                            document.getElementById('searchTerRes').className = 'searchTerRes ding_enter'
+                            teacherV.setState({modelNum: i, search_bg: true});
                             // teacherV.state.terData = arr;
                             // teacherV.buildClassTable();
+                        } else {
+                            Toast.fail('未搜到相关老师')
                         }
                     }
                 }
@@ -336,7 +339,7 @@ export default class addCurriculumSchedule extends React.Component {
         this.state.ClassTableDataArr.forEach(function (v, i) {
             ClassTableArr.push(<div>
                 <div className="cont_communal add_title font_gray">第{i + 1}节</div>
-                <div className="flex_container my_flex teacher_list teacher_list_p" >
+                <div className="flex_container my_flex teacher_list teacher_list_p">
                     <DatePicker
                         mode="time"
                         use24Hours
@@ -553,6 +556,7 @@ export default class addCurriculumSchedule extends React.Component {
         var index = teacherV.state.modelNum
         teacherV.state.ClassTableDataArr[index].teacherId = teacherV.state.teacherName;
         teacherV.state.ClassTableDataArr[index].tercherName = teacherV.state.value;
+        teacherV.setState({search_bg: false})
         teacherV.buildClassTable()
     }
 
@@ -570,7 +574,7 @@ export default class addCurriculumSchedule extends React.Component {
 
         return (
             <div id="addCurriculumSchedule" style={{height: document.body.clientHeight}}>
-                <div className="search_bg"></div>
+                <div className="search_bg" style={{display: this.state.search_bg ? 'block' : 'none'}}></div>
                 <div className="addCurriculum_cont">
                     <WhiteSpace size="lg"/>
                     {/*选择班级*/}
