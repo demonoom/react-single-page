@@ -35,7 +35,7 @@ export default class comments extends React.Component {
                 {title: '赞'},
                 {title: '评论'}
             ],
-            clientHeight: '',
+            content: '',
             // paraiseStatus: false,
         };
     }
@@ -100,7 +100,9 @@ export default class comments extends React.Component {
                     for (let i = 0; i < arr.length; i++) {
                         var topic = arr[i];
                         dataBlob[`${i}`] = topic;
-                        if (arr[i].user.colUid == this.state.userId) {
+                        if (arr[i].user.colUid == this.state.userId && cmType == 1) {
+                            console.log(arr[i].user.colUid,'获取到');
+                            console.log(this.state.userId);
                             this.setState({
                                 likeStatus: true,
                                 likeStatusAnimate: true
@@ -219,7 +221,7 @@ export default class comments extends React.Component {
         if (this.state.tabIndex !== index) {
             this.setState({
                 tabIndex: index,
-                isLoadingLeft: true,
+                isLoadingLeft: false,
                 hasMore: true,
             });
         }
@@ -239,7 +241,7 @@ export default class comments extends React.Component {
                     likeStatusAnimate: true
                 })
             }, 2000)
-            this.AddCommentOrPraise(classBinding.state.stype, function () {
+            this.AddCommentOrPraise(classBinding.state.stype, function() {
                 Toast.success("点赞成功", 1);
                 this.initData = [];
                 const dataSource = new ListView.DataSource({
@@ -285,7 +287,9 @@ export default class comments extends React.Component {
                     content: '',
                 })
                 this.getListCommentOrPraise(0);
-            }.bind(this))
+            }.bind(this),function(){
+                Toast.info('评论失败')
+            })
 
         }
     }
