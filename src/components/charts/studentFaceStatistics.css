@@ -134,6 +134,7 @@
 .face_cont_wrap{
     height:100%
 }
+/*扫码进去第二种状态－－－三个图表*/
 .face_cont_wrap1{
     height: calc(40% - 40px);
 }
@@ -145,4 +146,12 @@
 }
 .face_cont_2_1{
     height: calc(100% - 60px);
+}
+/*扫码进去第一种状态－－－二个图表*/
+
+.face_cont2_1{
+    height: calc(70% - 30px);
+}
+.face_cont2_2{
+    height: 30%;
 }

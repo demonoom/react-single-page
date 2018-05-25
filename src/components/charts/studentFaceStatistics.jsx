@@ -16,7 +16,9 @@ export default class studentFaceStatistics extends React.Component {
             lineChartOption: this.initChartOption(),
             lastPoint: '0',
             currentFaceEmotion: {},
-            screenHeight: screen.height
+            screenHeight: screen.height,
+            faceCont:'over_flow_auto concentration_bottom my_flex flex_justify face_cont2_1',
+            faceCont2:'over_flow_auto face_cont2_2'
         };
     }
 
@@ -25,9 +27,9 @@ export default class studentFaceStatistics extends React.Component {
         Bridge.setShareAble("false");
         Bridge.setRefreshAble("false");
 
-        //this.getVclassFaceEmotionsStatistics();
+        this.getVclassFaceEmotionsStatistics();
         var _this=this;
-        this.getLocalClassEachStudentFaceEmotion();
+        //this.classOver();
         //setInterval(this.fetchNewDate, 4000);
         window.addEventListener( "message",
             function(e){
@@ -113,6 +115,11 @@ export default class studentFaceStatistics extends React.Component {
     }
     classOver() {
         this.isClassOver=true;
+        var faceCont='over_flow_auto concentration_bottom my_flex flex_justify face_cont_wrap1';
+        var faceCont2='over_flow_auto face_cont_wrap2';
+        this.setState({faceCont: faceCont});
+        this.setState({faceCont2: faceCont2});
+
         this.getLocalClassEachStudentFaceEmotion();
     }
     initEachStudentFaceEmotionCharts=(dataMap)=>{
@@ -137,7 +144,7 @@ export default class studentFaceStatistics extends React.Component {
             }
 
         }
-        (columnarChartOption.series)[1].data.push(Math.abs(parseInt(avgUnderstand/number)));
+        (columnarChartOption.series)[1].data.push(Math.abs(parseInt((faceEmotionData.understand/faceEmotionData.count)/number)));
         var subjectJsonDiv = <div style={{height: '100%'}}>
             <div style={{height: '100%'}} className="echarts_wrap">
                 <ReactEcharts
@@ -189,7 +196,10 @@ export default class studentFaceStatistics extends React.Component {
                 }
             },
             grid: {
-                left: '15%'
+                left: '3%',
+                right: '4%',
+                bottom: '3%',
+                containLabel: true
             },
             /*      toolbox: {
              feature: {
@@ -668,11 +678,13 @@ export default class studentFaceStatistics extends React.Component {
                 })
             }
         }
+
+
         return (
 
             <div className="face_cont_wrap">
                 <div className='over_flow_auto student_f_auto concentration_title concentration_top'>FaceMind课堂实时表情分析</div>
-                <div className='over_flow_auto concentration_bottom my_flex flex_justify face_cont_wrap1'>
+                <div className={_this.state.faceCont}>
                     <div className="concentration_list">
                         <div className="concentration_title concentration_title3">专注度{attention}%</div>
                         <div className="concentration_title2">（专注度高的学生）</div>
@@ -708,7 +720,7 @@ export default class studentFaceStatistics extends React.Component {
                         <div className="concentration_user_cont">{thinkRecord}</div>
                     </div>
                 </div>
-                <div className='over_flow_auto face_cont_wrap2'>
+                <div className={_this.state.faceCont2}>
                     <span className="student_f_left">占比/％</span>
                     <span className="student_f_right">时间/M</span>
                     <div className="face_cont_wrap">
