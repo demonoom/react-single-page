@@ -20,6 +20,7 @@ export default class moralEducation extends React.Component {
             time: now,
             visible: false,
             moralEducationSelectData: {},
+            customChildValue:null,
             seasons: [[
                 {
                     label: '请选择',
@@ -67,11 +68,12 @@ export default class moralEducation extends React.Component {
         var param = {
             "method": 'getMoralEducationInfo',
             "clazzId": mEducation.state.sValue[0],
-            "termId": mEducation.state.sValue[1],
+            // "termId": mEducation.state.sValue[1],
             "createTime": newTime
         }
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
             onResponse: function (result) {
+                console.log(result);
                 if (result.msg == '调用成功' || result.success == true) {
                     if (WebServiceUtil.isEmpty(result.response) == false) {
                         _this.setState({moralEducationSelectData: result.response})
@@ -175,6 +177,16 @@ export default class moralEducation extends React.Component {
 
     render() {
         var _this = this;
+        const CustomChildren = ({ extra, onClick, children }) => (
+            <div
+              onClick={onClick}
+              style={{ backgroundColor: '#fff', height: '45px', lineHeight: '45px', padding: '0 15px' }}
+            >
+              {children}
+              <span style={{ float: 'right', color: '#888' }}>{extra}</span>
+            </div>
+          );
+          
         return (
             <div id="moralEducation" style={{height: document.body.clientHeight}}>
                 <WhiteSpace size="lg"/>
@@ -197,13 +209,13 @@ export default class moralEducation extends React.Component {
                     mode="date"
                     title="选择日期"
                     extra="Optional"
-                    value={this.state.date}
+                    value={this.state.customChildValue}
                     onOk={this.getSelectData}
-                    onChange={date => this.setState({date})
-
-                    }
-                >
-                    <List.Item arrow="horizontal">日期</List.Item>
+                    onChange={v => this.setState({ customChildValue: v })}
+                    extra="请选择"
+                >   
+                    <CustomChildren>选择日期</CustomChildren>
+                    {/* <List.Item arrow="horizontal">日期</List.Item> */}
                 </DatePicker>
                 <WhiteSpace size="lg"/>
                 <div className='classSearchResult'>
