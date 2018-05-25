@@ -1,5 +1,6 @@
 #addCurriculumSchedule {
   overflow-y: auto;
+  /*创建动画*/
 }
 #addCurriculumSchedule .CourseTableArea {
   min-height: 280px;
@@ -102,9 +103,69 @@
   border-radius: 0;
   background: #f6f6f6;
 }
-#addCurriculumSchedule .search_list div {
-  display: inline-block;
+#addCurriculumSchedule .search_list input {
+  width: calc(100% - 30px);
+  background: #f6f6f6;
+  border: none;
+  text-indent: 8px;
+  font-size: 17px;
 }
-#addCurriculumSchedule .search_list div img {
+#addCurriculumSchedule .search_list input::-webkit-input-placeholder {
+  color: #bbbbbe;
+}
+#addCurriculumSchedule .search_list input::-moz-placeholder {
+  /* Mozilla Firefox 19+ */
+  color: #bbbbbe;
+}
+#addCurriculumSchedule .search_list input:-moz-placeholder {
+  /* Mozilla Firefox 4 to 18 */
+  color: #bbbbbe;
+}
+#addCurriculumSchedule .search_list input:-ms-input-placeholder {
+  /* Internet Explorer 10-11 */
+  color: #bbbbbe;
+}
+#addCurriculumSchedule .search_list img {
   width: 15px;
+  height: 19px;
+  margin-top: 12px;
+}
+#addCurriculumSchedule .searchTerRes {
+  z-index: 99999;
+  background-color: #cccccc;
+  width: 100%;
+  height: 280px;
+  position: absolute;
+  bottom: -280px;
+}
+#addCurriculumSchedule .ding_enter {
+  animation-name: moveLeave;
+  animation-duration: 0.5s;
+  animation-timing-function: linear;
+  animation-fill-mode: forwards;
+  /*设置动画的播放状态  paused:暂停   running:播放*/
+  animation-play-state: running;
+}
+@keyframes moveTest {
+  from {
+    transform: translate(0, -280px);
+  }
+  to {
+    transform: translate(0, 0);
+  }
+}
+#addCurriculumSchedule .ding_leave {
+  animation-name: moveTest;
+  animation-duration: 0.5s;
+  animation-timing-function: linear;
+  animation-fill-mode: forwards;
+  animation-play-state: running;
+}
+@keyframes moveLeave {
+  from {
+    transform: translate(0, 0);
+  }
+  to {
+    transform: translate(0, -280px);
+  }
 }
