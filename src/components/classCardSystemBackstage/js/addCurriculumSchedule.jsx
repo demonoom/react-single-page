@@ -315,12 +315,11 @@ export default class addCurriculumSchedule extends React.Component {
      * 搜索老师
      */
     getTeacherData(i) {
-        document.getElementById('searchTerRes').className = 'searchTerRes ding_enter'
-
         if (teacherV.state.ClassTableDataArr[i].teacherId == '') {
             Toast.fail('请输入老师姓名搜索')
             return
         }
+        document.getElementById('searchTerRes').className = 'searchTerRes ding_enter'
         let param = {
             "method": 'searchTeacher',
             "aid": JSON.parse(localStorage.getItem('loginUserSchedule')).colUid,
