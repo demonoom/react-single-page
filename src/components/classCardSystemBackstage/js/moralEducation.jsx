@@ -67,11 +67,13 @@ export default class moralEducation extends React.Component {
         var param = {
             "method": 'getMoralEducationInfo',
             "clazzId": mEducation.state.sValue[0],
-            "termId": mEducation.state.sValue[1],
+            // "termId": mEducation.state.sValue[1],
             "createTime": newTime
         }
+        console.log(param);
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
             onResponse: function (result) {
+                console.log(result);
                 if (result.msg == '调用成功' || result.success == true) {
                     if (WebServiceUtil.isEmpty(result.response) == false) {
                         _this.setState({moralEducationSelectData: result.response})
