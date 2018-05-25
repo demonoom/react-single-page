@@ -26,7 +26,7 @@ export default class studentFaceStatistics extends React.Component {
         document.title = '学生听课认真度分析';
         Bridge.setShareAble("false");
         Bridge.setRefreshAble("false");
-
+        var _this=this;
         this.getVclassFaceEmotionsStatistics();
 
         //setInterval(this.fetchNewDate, 4000);

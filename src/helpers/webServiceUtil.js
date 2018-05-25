@@ -1,5 +1,5 @@
 
-var isDebug = true;
+var isDebug = false;
 var localDomain = "192.168.50.34";   //请求地址
 //var localDomain = "192.168.50.15";   //请求地址
 var isDebug = false;
