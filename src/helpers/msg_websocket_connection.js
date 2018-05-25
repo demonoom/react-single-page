@@ -1,6 +1,6 @@
 import React from 'react';
 
-var isDebug = true;
+var isDebug = false;
 var isDebugLocal = false;
 
 export function MsgConnection() {
