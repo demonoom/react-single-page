@@ -100,6 +100,10 @@ export default class header extends React.Component {
         if (this.state.timeFoot == '00:10:00' || this.state.timeFoot == '12:10:00') {
             demeanor.weatherInfo(demeanor.state.abcode)
         }
+        if (this.state.timeFoot == '00:10:00') {
+            var date = new Date();
+            demeanor.setState({timeHeader: setTodayDate(date)});
+        }
     }
 
     componentWillUnmount() {

@@ -134,10 +134,8 @@ export default class HomeWorkUnderstandAnalysisByClassSubject extends React.Comp
             }
         }
         if (analysisJson.stuId == undefined) {
-            console.log(analysisJson);
             for (var key in analysisJson) {
                 for (var i = 0; i < subjectDivContentArray.length; i++) {
-                    console.log(subjectDivContentArray[i]);
                     if (subjectDivContentArray[i].subjectJson.subjectId == key) {
                         subjectDivContentArray[i].avgUnder = analysisJson[key];
                     }
