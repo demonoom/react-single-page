@@ -121,6 +121,7 @@ export default class addCurriculumSchedule extends React.Component {
      * 新增课表项
      */
     addCourseTableItem = () => {
+        console.log(this.state.ClassTableDataArr);
         var _this = this;
         if (this.state.classAsyncValue.length == 0) {
             var tipMessage = "请选择班级";
@@ -293,18 +294,6 @@ export default class addCurriculumSchedule extends React.Component {
         this.buildClassTable();
     }
 
-    terPickerOnOk(v, i) {
-        var terName = ''
-        this.state.terData.forEach(function (item, index) {
-            if (item.value == v) {
-                terName = item.label
-            }
-        })
-        this.state.ClassTableDataArr[i].teacherId = terName;
-        this.state.ClassTableDataArr[i].teacherName = v[0];
-        this.buildClassTable();
-    }
-
     teacgerChange(i, e) {
         var tValue = e.target.value;
         teacherV.state.ClassTableDataArr[i].teacherId = tValue
@@ -320,6 +309,7 @@ export default class addCurriculumSchedule extends React.Component {
             return
         }
         document.getElementById('searchTerRes').className = 'searchTerRes ding_enter'
+        teacherV.setState({modelNum: i});
         let param = {
             "method": 'searchTeacher',
             "aid": JSON.parse(localStorage.getItem('loginUserSchedule')).colUid,
@@ -378,8 +368,6 @@ export default class addCurriculumSchedule extends React.Component {
                         <span className="add_element">{_this.state.ClassTableDataArr[i].endTimeData}<i
                             className="icon_triangle"></i></span>
                     </DatePicker>
-
-
                     {/*上课地点*/}
                 </div>
                 <div>
@@ -388,15 +376,7 @@ export default class addCurriculumSchedule extends React.Component {
                            placeholder="请输入老师姓名"
                            value={teacherV.state.ClassTableDataArr[i].teacherId}
                     />
-                    {/*<Picker*/}
-                    {/*data={teacherV.state.terData}*/}
-                    {/*cols={1}*/}
-                    {/*value={teacherV.state.terAsyncValue}*/}
-                    {/*onPickerChange={teacherV.onTerPickerChange}*/}
-                    {/*onOk={v => teacherV.terPickerOnOk(v, i)}*/}
-                    {/*>*/}
                     <img onClick={teacherV.getTeacherData.bind(this, i)} src={require("../imgs/icon_search.png")}/>
-                    {/*</Picker>*/}
                 </div>
                 {_this.state.curriculumType == 1 ? <div className="flex_container my_flex flex_addElement">
                     <Picker
@@ -568,14 +548,24 @@ export default class addCurriculumSchedule extends React.Component {
         this.setState({classAsyncValue: v});
     }
 
-    radioItemOnChange(value) {
+    radioItemOnChange(i) {
         this.setState({
-            value,
+            value: i.value,
+            teacherName: i.label
         });
     }
 
+    /**
+     * 点击确定
+     * 收面板
+     * 设置名字,id
+     */
     searchTerResLeave() {
         document.getElementById('searchTerRes').className = 'searchTerRes ding_leave'
+        var index = teacherV.state.modelNum
+        teacherV.state.ClassTableDataArr[index].teacherId = teacherV.state.teacherName;
+        teacherV.state.ClassTableDataArr[index].tercherName = teacherV.state.value;
+        teacherV.buildClassTable()
     }
 
     render() {
@@ -649,7 +639,7 @@ export default class addCurriculumSchedule extends React.Component {
                     <List>
                         {this.state.terData.map(i => (
                             <RadioItem key={i.value} checked={this.state.value === i.value}
-                                       onChange={() => this.radioItemOnChange(i.value)}>
+                                       onChange={() => this.radioItemOnChange(i)}>
                                 {i.label}
                             </RadioItem>
                         ))}
