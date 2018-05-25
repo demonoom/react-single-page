@@ -41,7 +41,7 @@ export default class classHonor extends React.Component {
                         var arr = []
                         result.response.forEach(function (v, i) {
                             arr.push({
-                                value: v.id, label: v.name
+                                value: v.id, label: v.grade.name + v.name
                             })
                         })
                         _this.setState({data: arr})
@@ -97,11 +97,10 @@ export default class classHonor extends React.Component {
         var data = {
             method: 'uploadClassDemeanor',
         };
-
         Bridge.callHandler(data, function (res) {
             //拿到图片地址,显示在页面等待上传
             var arr = res.split(',');
-            demeanor.setState({imgFromAndArr: arr});
+            demeanor.setState({imgFromAndArr: demeanor.state.imgFromAndArr.concat(arr)});
         }, function (error) {
             console.log(error);
         });

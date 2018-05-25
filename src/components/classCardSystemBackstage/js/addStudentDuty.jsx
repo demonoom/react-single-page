@@ -156,7 +156,7 @@ export default class addStudentDuty extends React.Component {
                 if (result.success == true && result.msg == "调用成功") {
                     var response = result.response;
                     if (response != null && response != undefined) {
-                        response.forEach(function (clazz) {
+                        response.forEach(function (clazz,index) {
                             var clazzId = clazz.id;
                             //班级
                             var clazzName = clazz.name;
@@ -167,6 +167,9 @@ export default class addStudentDuty extends React.Component {
                                 label: gradeName+clazzName,
                                 value: clazzId+"",
                             };
+                            if(index == 0){
+                                _this.getStudentListByClazz(clazzId);
+                            }
                             if(seasons[0]!=null && seasons[0]!=undefined){
                                 seasons[0].push(clazzJson);
                             }
@@ -208,7 +211,11 @@ export default class addStudentDuty extends React.Component {
 
                     }
                 }
-                _this.setState({seasons});
+                var weekOfTody = new Date().getDay();
+                weekOfTody=(weekOfTody==0?7:weekOfTody);
+                var sValue = [clazzId+''];
+                var asyncValue = [weekOfTody+''];
+                _this.setState({seasons,sValue,'week':weekOfTody,asyncValue,clazzId});
             },
             onError: function (error) {
             }

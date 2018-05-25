@@ -42,7 +42,7 @@ export default class boxBracelet extends React.Component {
 
     componentDidMount() {
         Bridge.setShareAble("false");
-        document.title = '绑定课堂盒子信息';
+        document.title = '盒子绑定教室信息';
         var loginUser = JSON.parse(localStorage.getItem('loginUserRingBind'));
         this.setState({loginUser});
         this.viewAndroidBoxPage(loginUser);
