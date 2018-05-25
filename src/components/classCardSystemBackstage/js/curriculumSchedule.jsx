@@ -293,15 +293,18 @@ export default class curriculumSchedule extends React.Component {
         };
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
             onResponse: (result) => {
-                Toast.success('删除成功', 1);
-                var arr = cSchedule.state.classTableArray
-                arr.forEach((v, i) => {
-                    if (v.id == sId) {
-                        arr.splice(i, 1);
-                    }
-                })
-                cSchedule.setState({classTableArray: arr})
-
+                if (result.msg == '调用成功' || result.success == true) {
+                    Toast.success('删除成功', 1);
+                    var arr = cSchedule.state.classTableArray
+                    arr.forEach((v, i) => {
+                        if (v.id == sId) {
+                            arr.splice(i, 1);
+                        }
+                    })
+                    cSchedule.setState({classTableArray: arr})
+                } else {
+                    Toast.fail(result.msg)
+                }
             },
             onError: function (error) {
                 Toast.info('删除失败');
