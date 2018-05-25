@@ -43,7 +43,8 @@
   border-radius: 2px;
 }
 #curriculumSchedule .lineList {
-  line-height: 1.5;
+  line-height: 23px;
+  height: 26px;
 }
 #curriculumSchedule .delete {
   color: #F56A55;
