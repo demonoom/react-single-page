@@ -150,6 +150,7 @@ export default class addNotify extends React.Component {
                     clear
                     moneyKeyboardAlign="left"
                     value={this.state.title}
+                    maxLength={30}
                     onChange={this.titleHandleChange}
                 >输入标题</InputItem>
                 <WhiteSpace size="lg"/>
