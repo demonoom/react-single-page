@@ -384,7 +384,7 @@ export default class addCurriculumSchedule extends React.Component {
 
                     {/*上课地点*/}
                 </div>
-                <div >
+                <div className="search_list my_flex">
                    <input type="text" 
                         placeholder="123213" 
                         onChange={teacherV.teacgerChange}  
@@ -395,6 +395,7 @@ export default class addCurriculumSchedule extends React.Component {
                         value={teacherV.state.terAsyncValue}
                         onPickerChange={teacherV.onTerPickerChange}
                         onOk={v => teacherV.terPickerOnOk(v, i)}
+                        className="0000"
                     >
                         <img onClick={teacherV.getTeacherData} src={require("../imgs/icon_search.png")} />
                     </Picker>
