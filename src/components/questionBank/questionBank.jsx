@@ -458,7 +458,7 @@ export default class questionBank extends React.Component {
         var data = {
             pointId: loginUser.pointId,
             title: loginUser.title,
-            isPractive: 'false',
+            isPrivate: 'false',
         };
         if (buttonIndex == 0) {
             data.method = 'singleChoice';

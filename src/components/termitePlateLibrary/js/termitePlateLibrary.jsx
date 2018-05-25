@@ -320,7 +320,7 @@ export default class termitePlateLibrary extends React.Component {
         //0>>单选题  1>>简答题  2>>判断题  3>>多选题
         var data = {
             parentCloudFileId: parentCloudFileId,
-            isPractive: 'true',
+            isPrivate: 'true',
         };
         if (buttonIndex == 0) {
             data.method = 'singleChoiceInCloud';
