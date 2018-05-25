@@ -4,9 +4,11 @@ import './studentFaceStatistics.css'
 import {
     Toast, List
 } from 'antd-mobile';
-
+var colors = ['#5793f3', '#d14a61'];
 export default class studentFaceStatistics extends React.Component {
-    classOpenSend = 0;
+    classOpenSend = 1;
+    closeCollectData=0;
+    isClassOver=false;
 
     constructor(props) {
         super(props);
@@ -14,7 +16,9 @@ export default class studentFaceStatistics extends React.Component {
             lineChartOption: this.initChartOption(),
             lastPoint: '0',
             currentFaceEmotion: {},
-            screenHeight: screen.height
+            screenHeight: screen.height,
+            faceCont:'over_flow_auto concentration_bottom my_flex flex_justify face_cont2_1',
+            faceCont2:'over_flow_auto face_cont2_2'
         };
     }
 
@@ -22,14 +26,25 @@ export default class studentFaceStatistics extends React.Component {
         document.title = '学生听课认真度分析';
         Bridge.setShareAble("false");
         Bridge.setRefreshAble("false");
-        this.getVclassFaceEmotionsStatistics();
 
-        setInterval(this.fetchNewDate, 4000);
+        this.getVclassFaceEmotionsStatistics();
+        var _this=this;
+        //this.classOver();
+        //setInterval(this.fetchNewDate, 4000);
+        window.addEventListener( "message",
+            function(e){
+            console.log(e.data);
+            if(e.data=='classOver') {
+                _this.classOver();
+            }
+            },false);
 
     }
-
+    onChartClick = (optional) => {
+    };
     fetchNewDate = () => {
-        if (this.classOpenSend == 0) {
+        if (this.classOpenSend == 0||this.isClassOver) {
+            console.log("arthur test");
             return;
         }
         var loginUser = JSON.parse(localStorage.getItem('loginUser'));
@@ -38,7 +53,6 @@ export default class studentFaceStatistics extends React.Component {
         var locationSearch = locationHref.substr(locationHref.indexOf("?") + 1);
         var searchArray = locationSearch.split("&");
         var vid = searchArray[0].split('=')[1];
-        console.log(this.classOpenSend);
         const dataBlob = {};
         var param = {
             "method": 'getVclassFaceEmotionsBySecondsPoint',
@@ -99,7 +113,186 @@ export default class studentFaceStatistics extends React.Component {
         error.response = response;
         throw error;
     }
+    classOver() {
+        this.isClassOver=true;
+        var faceCont='over_flow_auto concentration_bottom my_flex flex_justify face_cont_wrap1';
+        var faceCont2='over_flow_auto face_cont_wrap2';
+        this.setState({faceCont: faceCont});
+        this.setState({faceCont2: faceCont2});
 
+        this.getLocalClassEachStudentFaceEmotion();
+    }
+    initEachStudentFaceEmotionCharts=(dataMap)=>{
+        var vid = this.state.vid;
+        var columnarChartOption = null;
+        columnarChartOption = this.buildChartOption();
+        let onEvents = {
+            'click': this.onChartClick,
+        };
+        var divContentArray = [];
+        columnarChartOption = this.buildChartOption();
+        var avgUnderstand=0;
+        var number=0;
+        if (!this.isEmptyObject(dataMap)) {
+            for (var key in dataMap) {
+                var faceEmotionData = dataMap[key];
+                (columnarChartOption.xAxis)[0].data.push(faceEmotionData.users.userName);
+                (columnarChartOption.series)[0].data.push(Math.abs(parseInt(faceEmotionData.understand/faceEmotionData.count)));
+                avgUnderstand+=faceEmotionData.understand;
+                number++;
+
+            }
+
+        }
+        (columnarChartOption.series)[1].data.push(Math.abs(parseInt((faceEmotionData.understand/faceEmotionData.count)/number)));
+        var subjectJsonDiv = <div style={{height: '100%'}}>
+            <div style={{height: '100%'}} className="echarts_wrap">
+                <ReactEcharts
+                    option={columnarChartOption}
+                    style={{height: '100%', width: '100%'}}
+                    // loadingOption={this.getLoadingOption()}
+                    // showLoading={true}
+                    // onChartReady={this.onChartReady}
+                    onEvents={onEvents}
+                    className=''/>
+            </div>
+        </div>;
+
+        divContentArray.push(subjectJsonDiv);
+        this.setState({divContentArray});
+
+    };
+    getLocalClassEachStudentFaceEmotion = () =>  {
+        var locationHref = window.location.href;
+        var locationSearch = locationHref.substr(locationHref.indexOf("?") + 1);
+        var searchArray = locationSearch.split("&");
+        var vid = searchArray[0].split('=')[1];
+        var _this = this;
+        var param;
+        param = {
+            "method": 'getLocalClassEachStudentFaceEmotion',
+            "vid": vid,
+        };
+        WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
+            onResponse: function (result) {
+                var dataMap = result.response;
+                console.log(dataMap);
+                _this.initEachStudentFaceEmotionCharts(dataMap);
+            },
+            onError: function (error) {
+                console.log(error);
+            }
+        });
+    }
+    buildChartOption = () => {
+        var _this = this;
+        return {
+            color: colors,
+
+            tooltip: {
+                trigger: 'axis',
+                axisPointer: {
+                    type: 'cross'
+                }
+            },
+            grid: {
+                left: '3%',
+                right: '4%',
+                bottom: '3%',
+                containLabel: true
+            },
+            /*      toolbox: {
+             feature: {
+             dataView: {show: true, readOnly: false},
+             restore: {show: true},
+             saveAsImage: {show: true}
+             }
+             },*/
+            // legend: {
+            //     // data:['理解度','时长']
+            //     data:['理解度']
+            // },
+            dataZoom: [
+                {
+                    show: true,
+                    //开始位置的百分比，0 - 100
+                    start: 0,
+                    //结束位置的百分比，0 - 100
+                    end: 100
+                }
+            ],
+            xAxis: [
+                {
+                    type: 'category',
+                    axisTick: {
+                        alignWithLabel: true
+                    },
+                    // data: ['学生A','学生B','学生C','学生D','学生E','学生F','学生G','学生H','学生I','学生J','学生K','学生L'],
+                    data: [],
+                    triggerEvent: true
+                }
+            ],
+            yAxis: [
+                {
+                    type: 'value',
+                    name: '理解度',
+                    min: 0,
+                    max: 100,
+                    position: 'left',
+                    axisLine: {
+                        lineStyle: {
+                            color: colors[0]
+                        }
+                    },
+                    axisLabel: {
+                        formatter: '{value} %'
+                    }
+                },
+
+                {
+                    type: 'value',
+                    name: '班级平均理解度',
+                    min: 0,
+                    //max: 20,
+                    position: 'right',
+                    axisLine: {
+                        lineStyle: {
+                            color: colors[1]
+                        }
+                    },
+                    axisTick: {
+                        show: true
+                    },
+                    axisLabel: {
+                        show: true,
+                        formatter: '{value}  %'
+                    }
+                }
+            ],
+            series: [
+                {
+                    name: '理解度',
+                    type: 'bar',
+                    showLabel: true,
+                    // data:[-2.0, -40.9, 7.0, 23.2, -25.6, 76.7, -13.6, 62.2, 32.6, 20.0, 6.4, 3.3],
+                    data: [],
+                    itemStyle: {normal: {label: {show: true}}}
+                },
+                {
+                    name: '班级平均理解度',
+                    type: 'line',
+                    yAxisIndex: 1,
+                    // data:[2.0, 2, 3, 4, 6, 10, 19, 10, 15.0, 16, 12.0, 6],
+                    data: [],
+                    itemStyle: {
+                        normal: {
+                            color: 'red'
+                        }
+                    },
+                }
+            ]
+        };
+    };
     getVclassFaceEmotionsStatistics = () => {
         var loginUser = JSON.parse(localStorage.getItem('loginUser'));
         var _this = this;
@@ -107,6 +300,7 @@ export default class studentFaceStatistics extends React.Component {
         var locationSearch = locationHref.substr(locationHref.indexOf("?") + 1);
         var searchArray = locationSearch.split("&");
         var vid = searchArray[0].split('=')[1];
+        this.setState({vid: vid});
         const dataBlob = {};
         var param = {
             "method": 'getVclassFaceEmotionsStatistics',
@@ -123,6 +317,7 @@ export default class studentFaceStatistics extends React.Component {
                 }
                 var resourse = data.response;
                 _this.handleResourse(resourse);
+                //setTimeout(function(){ setInterval(_this.fetchNewDate, 4000); }, 3000);
             },
             onError: function (error) {
                 // message.error(error);
@@ -151,12 +346,6 @@ export default class studentFaceStatistics extends React.Component {
         var vid = searchArray[0].split('=')[1];
         var url = mobileServiceURL + "studentFaceStatistics?vid=" + vid;
         window.open(url);
-        // var data = {};
-        // data.method = 'openNewPage';
-        // data.url = url;
-        // Bridge.callHandler(data, null, function (error) {
-        //     window.location.href = url;
-        // });
     };
     onChartReady = (chart) => {
         this._t = setTimeout(function () {
@@ -169,7 +358,6 @@ export default class studentFaceStatistics extends React.Component {
             return;
         }
         var faceEmotionDatas = resourse;
-        console.log(faceEmotionDatas);
         var lineChartOption = this.state.lineChartOption;
         var i = 1;
         var lastPoint;
@@ -181,55 +369,21 @@ export default class studentFaceStatistics extends React.Component {
                 var faceEmotionData = faceEmotionDatas[key];
                 currentFaceEmotion = faceEmotionData;
                 var xMinuite = this.formatSeconds(key);
+                this.closeCollectData=xMinuite;
                 if (xMinuite > 60) {
                     break;
                 }
                 (lineChartOption.xAxis)[0].data.push(xMinuite);
-                (lineChartOption.series)[0].data.push(faceEmotionData.attention.toFixed(2));
-                (lineChartOption.series)[1].data.push(faceEmotionData.confuse.toFixed(2));
-                (lineChartOption.series)[2].data.push(faceEmotionData.thinking.toFixed(2));
-                (lineChartOption.series)[3].data.push(faceEmotionData.joy.toFixed(2));
-                (lineChartOption.series)[4].data.push(faceEmotionData.surprise.toFixed(2));
-                (lineChartOption.series)[5].data.push(faceEmotionData.understand.toFixed(2));
+                var count=faceEmotionData.count;
+                (lineChartOption.series)[0].data.push(faceEmotionData.attention.toFixed(2)/count);
+                (lineChartOption.series)[1].data.push(faceEmotionData.confuse.toFixed(2)/count);
+                (lineChartOption.series)[2].data.push(faceEmotionData.thinking.toFixed(2)/count);
+                (lineChartOption.series)[3].data.push(faceEmotionData.joy.toFixed(2)/count);
+                (lineChartOption.series)[4].data.push(faceEmotionData.surprise.toFixed(2)/count);
+                (lineChartOption.series)[5].data.push(faceEmotionData.understand.toFixed(2)/count);
                 lastPoint = key;
             }
 
-            /*  var user={};
-              user.userName='成旭';
-              user.avatar='http://60.205.86.217/upload6/2018-02-01/0/5f8ff939-a387-47b4-a5b3-898776aded40.jpg?size=100x100';
-              (currentFaceEmotion.understandUserList)[0]=user;
-              (currentFaceEmotion.understandUserList)[1]=user;
-              (currentFaceEmotion.understandUserList)[2]=user;
-              (currentFaceEmotion.understandUserList)[3]=user;
-              (currentFaceEmotion.understandUserList)[4]=user;
-              (currentFaceEmotion.understandUserList)[5]=user;
-              (currentFaceEmotion.understandUserList)[6]=user;
-              (currentFaceEmotion.understandUserList)[7]=user;
-              (currentFaceEmotion.understandUserList)[8]=user;
-              (currentFaceEmotion.understandUserList)[9]=user;
-              (currentFaceEmotion.understandUserList)[10]=user;
-              (currentFaceEmotion.understandUserList)[11]=user;
-              (currentFaceEmotion.understandUserList)[12]=user;
-              (currentFaceEmotion.understandUserList)[13]=user;
-              (currentFaceEmotion.understandUserList)[14]=user;
-              (currentFaceEmotion.understandUserList)[15]=user;
-              (currentFaceEmotion.understandUserList)[16]=user;
-
-
-              (currentFaceEmotion.attentionUserList)[0]=user;
-              (currentFaceEmotion.attentionUserList)[1]=user;
-              (currentFaceEmotion.attentionUserList)[2]=user;
-              (currentFaceEmotion.attentionUserList)[3]=user;
-
-              (currentFaceEmotion.noUnderstandUserList)[0]=user;
-              (currentFaceEmotion.noUnderstandUserList)[1]=user;
-              (currentFaceEmotion.noUnderstandUserList)[2]=user;
-              (currentFaceEmotion.noUnderstandUserList)[3]=user;
-
-              (currentFaceEmotion.confuseUserList)[0]=user;
-              (currentFaceEmotion.confuseUserList)[1]=user;
-              (currentFaceEmotion.confuseUserList)[2]=user;
-              (currentFaceEmotion.confuseUserList)[3]=user;*/
             this.showUserHandleByScreenWidth(currentFaceEmotion);
             this.setState({lineChartOption: lineChartOption});
             this.setState({lastPoint: lastPoint});
@@ -254,7 +408,6 @@ export default class studentFaceStatistics extends React.Component {
         if (!number) {
             return 0.00;
         }
-        console.log(number)
         return number.toFixed(i);
     }
     initChartOption = () => {
@@ -410,20 +563,20 @@ export default class studentFaceStatistics extends React.Component {
         if (!thinkUserList) {
             thinkUserList = new Array();
         }
-        console.log(thinkUserList.length / aliveUserList.length);
-        var attention = this.formateNumer(_this.state.currentFaceEmotion.attention / aliveUserList.length, 0);
-        var confuse = this.formateNumer((confuseUserList.length / aliveUserList.length) * 100, 0);
-        var understand = this.formateNumer((understandUserList.length / aliveUserList.length) * 100, 0);
-        var thinking = this.formateNumer((thinkUserList.length / aliveUserList.length) * 100, 0);
-        var understandLow25 = this.formateNumer((noUnderstandUserList.length / aliveUserList.length) * 100, 0);
-        var screenHeight = _this.state.screenHeight;
-        var showConutByScreenHeight = 16;
-        if (screenHeight == 1080) {//16
-            showConutByScreenHeight = 16;
-        } else if (screenHeight == 768) {//12
-            showConutByScreenHeight = 12;
-        } else if (screenHeight == 2160) {
-            showConutByScreenHeight = 32;
+        var aliveUserNumber=(aliveUserList.length-1)==0?1:aliveUserList.length-1;
+        var attention=this.formateNumer(attentionUserList.length/(aliveUserNumber)*100,0);
+        var confuse=this.formateNumer((confuseUserList.length/(aliveUserNumber)*100),0);
+        var understand=this.formateNumer((understandUserList.length/(aliveUserNumber))*100,0);
+        var thinking=this.formateNumer((thinkUserList.length/(aliveUserNumber))*100,0);
+        var understandLow25=this.formateNumer((noUnderstandUserList.length/(aliveUserNumber))*100,0);
+        var screenHeight=_this.state.screenHeight;
+        var showConutByScreenHeight=16;
+        if(screenHeight==1080){//16
+            showConutByScreenHeight=16;
+        }else if(screenHeight==768){//12
+            showConutByScreenHeight=12;
+        }else if(screenHeight==2160){
+            showConutByScreenHeight=32;
         }
         const jump = () => {
             return ( <div onClick={() => this.openNewPage()} className="top_right_btn">新页面打开</div>);
@@ -524,11 +677,13 @@ export default class studentFaceStatistics extends React.Component {
                 })
             }
         }
+
+
         return (
 
             <div className="face_cont_wrap">
-                <div className='over_flow_auto student_f_auto concentration_title concentration_top'>课堂实时表情分析</div>
-                <div className='over_flow_auto concentration_bottom my_flex flex_justify face_cont_wrap1'>
+                <div className='over_flow_auto student_f_auto concentration_title concentration_top'>FaceMind课堂实时表情分析</div>
+                <div className={_this.state.faceCont}>
                     <div className="concentration_list">
                         <div className="concentration_title concentration_title3">专注度{attention}%</div>
                         <div className="concentration_title2">（专注度高的学生）</div>
@@ -564,7 +719,7 @@ export default class studentFaceStatistics extends React.Component {
                         <div className="concentration_user_cont">{thinkRecord}</div>
                     </div>
                 </div>
-                <div className='over_flow_auto face_cont_wrap2'>
+                <div className={_this.state.faceCont2}>
                     <span className="student_f_left">占比/％</span>
                     <span className="student_f_right">时间/M</span>
                     <div className="face_cont_wrap">
@@ -579,6 +734,9 @@ export default class studentFaceStatistics extends React.Component {
                             <pre></pre>
                         </div>
                     </div>
+                </div>
+                <div className="list_wrap_padding face_cont_wrap3">
+                    {this.state.divContentArray}
                 </div>
             </div>
         );

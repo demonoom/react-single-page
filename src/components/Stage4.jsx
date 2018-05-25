@@ -71,7 +71,6 @@ export default class Demo extends React.Component {
             .then(data => ({data}))
             .catch(err => ({err}))
             .then(function (result) {
-            console.log(result);
             var response = result.data.response;
             for (let i = 0; i < response.length; i++) {
                 var topic = response[i];
@@ -82,7 +81,6 @@ export default class Demo extends React.Component {
                 dataSource: _this.state.dataSource.cloneWithRows(_this.initData),
                 isLoading: false,
             })
-            // console.log(dataBlob);
             // return dataBlob;
         });
     }
@@ -108,7 +106,6 @@ export default class Demo extends React.Component {
     }
 
     onRefresh = () => {
-        console.log('onRefresh');
         var _this = this;
         _this.initData.splice(0);
         pageIndex = 0;
@@ -120,11 +117,8 @@ export default class Demo extends React.Component {
     }
 
     render() {
-        console.log(this.state.dataSource);
         var _this = this;
         const row = (rowData, sectionID, rowID) => {
-            console.log(22);
-            console.log(rowData);
             var fromUser = rowData.fromUser;
             return (
                 <div key={rowID} style={{padding: '0 15px'}}>

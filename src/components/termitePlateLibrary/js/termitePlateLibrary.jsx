@@ -35,7 +35,7 @@ export default class termitePlateLibrary extends React.Component {
 
     componentDidMount() {
         Bridge.setShareAble("false");
-        var locationHref = window.location.href;
+        var locationHref = decodeURI(window.location.href);
         var locationSearch = locationHref.substr(locationHref.indexOf("?") + 1);
         var searchArray = locationSearch.split("&");
         var ident = searchArray[0].split('=')[1];
@@ -208,7 +208,7 @@ export default class termitePlateLibrary extends React.Component {
         event.stopPropagation();
         var loginUser = JSON.parse(localStorage.getItem('loginUserTLibrary'));
         //新开这个jsx,传递文件夹id和文件夹tittle
-        var url = WebServiceUtil.mobileServiceURL + "termitePlateLibrary?ident=" + loginUser.ident + "&fileId=" + obj.id + "&fileTitle=" + obj.name + "&phoneType=" + this.state.phoneType;
+        var url = encodeURI(WebServiceUtil.mobileServiceURL + "termitePlateLibrary?ident=" + loginUser.ident + "&fileId=" + obj.id + "&fileTitle=" + obj.name + "&phoneType=" + this.state.phoneType);
         var data = {};
         data.method = 'openNewPage';
         data.url = url;
@@ -224,7 +224,7 @@ export default class termitePlateLibrary extends React.Component {
         event.stopPropagation();
         //进入题目详情,使用原来页面
         var subjectId = obj.id;
-        var url = WebServiceUtil.mobileServiceURL + "questionDetil?courseId=" + subjectId;
+        var url = encodeURI(WebServiceUtil.mobileServiceURL + "questionDetil?courseId=" + subjectId);
         var data = {};
         data.method = 'openNewPage';
         data.url = url;

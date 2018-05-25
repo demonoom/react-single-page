@@ -1,0 +1,102 @@
+#notify {
+  .headPic{
+    position: absolute;
+    top:50%;
+    transform: translateY(-50%);
+    left:15px;
+    width:44px;
+    height:44px;
+    border-radius: 50%;
+    margin-top: 0;
+  }
+
+  .deleteNoifty {
+    position: absolute;
+    top: 50%;
+    right: 15px;
+    transform:translateY(-50%);
+    border-radius: 50%;
+    color: #9b9b9b;
+  }
+  .am-list-line{
+    border-bottom: 0;
+  }
+    .am-list-line::after {
+      right: 15px !important;
+      width: calc(~"100%" - 15px);
+      background: none;
+    }
+  .am-input-control{
+    text-align: right;
+    width: calc(~"100% - 130px");
+    input{
+      text-align: right;
+      font-size: 16px;
+    }
+  }
+  .am-textarea-control textarea{
+    text-align: right;
+    font-size: 16px;
+  }
+  .listCont{
+    position: relative;
+    .am-list-item{
+      padding-left: 75px;
+      padding-right: 0;
+    }
+  }
+  .notifyList .am-list-view-scrollview-content{
+    width: 100% !important;
+  }
+  .am-list-body{
+    background: #f4f4f4;
+  }
+  .notifyList .am-list-footer{
+    height: 75px;
+  }
+  .am-list-brief{
+    line-height: 1;
+    margin-top: 0;
+  }
+  .am-list-item .am-list-line-multiple{
+     padding:15px 15px 15px 0
+  }
+  .am-list-item .am-list-line-multiple:before{
+    content: '';
+    position: absolute;
+    background-color: #ddd;
+    display: block;
+    z-index: 1;
+    top: auto;
+    right: 15px;
+    bottom: 0;
+    left: 0;
+    width: calc(~"100%" - 15px);
+    height: 1PX;
+    -webkit-transform-origin: 50% 100%;
+    -ms-transform-origin: 50% 100%;
+    transform-origin: 50% 100%;
+    -webkit-transform: scaleY(0.5);
+    -ms-transform: scaleY(0.5);
+    transform: scaleY(0.5);
+  }
+  .listCont:last-child .am-list-item .am-list-line-multiple:before{
+    background-color: transparent;
+  }
+  .time{
+    float: right;
+    color: #999;
+    font-size: 14px;
+  }
+  .title{
+    width: calc(~"100%" - 120px);
+  }
+  .am-list-content{
+    padding-right: 45px;
+  }
+  .am-icon-md{
+    width: 18px;
+    height:18px;
+  }
+
+}

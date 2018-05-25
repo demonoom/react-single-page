@@ -1,0 +1,123 @@
+#groupSetting {
+  overflow: auto;
+}
+#groupSetting .maaee_group_face,
+#groupSetting .maaee_group_face1,
+#groupSetting .maaee_group_face2,
+#groupSetting .maaee_group_face3 {
+  background: #eee;
+  margin: 20px auto;
+  width: 80px !important;
+  height: 80px !important;
+  border-radius: 50%;
+  cursor: pointer;
+  padding: 15px;
+  background: #eeeeee;
+}
+#groupSetting .maaee_group_face1 {
+  padding: 0;
+}
+#groupSetting .maaee_group_face1 img {
+  border-radius: 50%;
+  width: 100%;
+  height: 100%;
+}
+#groupSetting .maaee_group_face2 {
+  padding: 0;
+}
+#groupSetting .maaee_group_face2 img {
+  margin: 20px 2px 0px 2px;
+  border-radius: 50%;
+  width: 45%;
+  height: 45%;
+}
+#groupSetting .maaee_group_face3 {
+  padding: 8px;
+}
+#groupSetting .maaee_group_face3 img {
+  border-radius: 50%;
+  width: 45%;
+  height: 45%;
+}
+#groupSetting .maaee_group_face3 img:first-child {
+  margin: auto 20px;
+}
+#groupSetting .maaee_group_face3 img:nth-child(2) {
+  margin-right: 3px;
+  margin-left: 2px;
+}
+#groupSetting .maaee_group_face {
+  padding: 8px;
+}
+#groupSetting .maaee_group_face img {
+  margin: 3px;
+  border-radius: 50%;
+  width: 40%;
+  height: 40%;
+}
+#groupSetting .maaee_group_face img:first-child {
+  margin-left: 5px;
+}
+#groupSetting .maaee_group_face img:nth-child(3) {
+  margin-left: 5px;
+}
+#groupSetting .calmGroupMember {
+  padding: 0px 15px;
+}
+#groupSetting .calmGroupMember .allMembers {
+  height: 40px;
+  line-height: 40px;
+}
+#groupSetting .calmGroupMember .groupMemeberRight {
+  float: right;
+  position: relative;
+  overflow: hidden;
+}
+#groupSetting .calmGroupMember .groupMemeberRight .countMembers {
+  margin-right: 20px;
+}
+#groupSetting .calmGroupMember .groupMemeberRight .iconRight {
+  position: absolute;
+  top: 9px;
+  right: 0;
+}
+#groupSetting .noomImgL {
+  height: 40px;
+  overflow: hidden;
+}
+#groupSetting .noomImgL img {
+  float: left;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  margin-right: 10px;
+}
+#groupSetting .searchChatMsg {
+  margin: 20px 0;
+  padding: 15px;
+  background-color: #fff;
+  font-size: 16px;
+}
+#groupSetting .searchChatMsg .rightArrow {
+  float: right;
+}
+#groupSetting .ingoreMsg {
+  margin: 20px 0;
+  padding: 0px 15px;
+  background-color: #fff;
+}
+#groupSetting .ingoreMsg .am-list .am-list-body::before {
+  height: 0;
+}
+#groupSetting .ingoreMsg .am-list .am-list-body::after {
+  height: 0;
+}
+#groupSetting .ingoreMsg .am-list .am-list-body .am-list-item.am-list-item-middle {
+  padding-left: 0;
+}
+#groupSetting .ingoreMsg .am-list .am-list-body .am-list-line {
+  padding-right: 0px;
+}
+#groupSetting .ingoreMsg .am-list .am-list-body .am-list-line .am-list-content {
+  font-size: 16px;
+}

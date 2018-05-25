@@ -1,0 +1,99 @@
+(node) util.print is deprecated. Use console.log instead.
+#notify .headPic {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  left: 15px;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  margin-top: 0;
+}
+#notify .deleteNoifty {
+  position: absolute;
+  top: 50%;
+  right: 15px;
+  transform: translateY(-50%);
+  border-radius: 50%;
+  color: #9b9b9b;
+}
+#notify .am-list-line {
+  border-bottom: 0;
+}
+#notify .am-list-line::after {
+  right: 15px !important;
+  width: calc(100% - 15px);
+  background: none;
+}
+#notify .am-input-control {
+  text-align: right;
+  width: calc(100% - 130px);
+}
+#notify .am-input-control input {
+  text-align: right;
+  font-size: 16px;
+}
+#notify .am-textarea-control textarea {
+  text-align: right;
+  font-size: 16px;
+}
+#notify .listCont {
+  position: relative;
+}
+#notify .listCont .am-list-item {
+  padding-left: 75px;
+  padding-right: 0;
+}
+#notify .notifyList .am-list-view-scrollview-content {
+  width: 100% !important;
+}
+#notify .am-list-body {
+  background: #f4f4f4;
+}
+#notify .notifyList .am-list-footer {
+  height: 75px;
+}
+#notify .am-list-brief {
+  line-height: 1;
+  margin-top: 0;
+}
+#notify .am-list-item .am-list-line-multiple {
+  padding: 15px 15px 15px 0;
+}
+#notify .am-list-item .am-list-line-multiple:before {
+  content: '';
+  position: absolute;
+  background-color: #ddd;
+  display: block;
+  z-index: 1;
+  top: auto;
+  right: 15px;
+  bottom: 0;
+  left: 0;
+  width: calc(100% - 15px);
+  height: 1PX;
+  -webkit-transform-origin: 50% 100%;
+  -ms-transform-origin: 50% 100%;
+  transform-origin: 50% 100%;
+  -webkit-transform: scaleY(0.5);
+  -ms-transform: scaleY(0.5);
+  transform: scaleY(0.5);
+}
+#notify .listCont:last-child .am-list-item .am-list-line-multiple:before {
+  background-color: transparent;
+}
+#notify .time {
+  float: right;
+  color: #999;
+  font-size: 14px;
+}
+#notify .title {
+  width: calc(100% - 120px);
+}
+#notify .am-list-content {
+  padding-right: 45px;
+}
+#notify .am-icon-md {
+  width: 18px;
+  height: 18px;
+}

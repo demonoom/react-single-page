@@ -1,0 +1,51 @@
+#webMiddlePage .content_noom {
+  text-align: center;
+  padding: 0 20px;
+  height: 100%;
+  background: #fff;
+}
+#webMiddlePage .content_noom .noom_img {
+  width: 70px;
+  height: 70px;
+  margin-top: 90px;
+}
+#webMiddlePage .content_noom .noom_title {
+  margin-top: 14px;
+  font-size: 16px;
+  color: #333;
+}
+#webMiddlePage .content_noom .noom_userName {
+  margin-top: 24px;
+  font-size: 13px;
+  color: #999;
+}
+#webMiddlePage .content_noom .noom_createTime {
+  margin-top: 12px;
+  font-size: 13px;
+  color: #999;
+}
+#webMiddlePage .content_noom .noom_btn {
+  margin: 0 auto;
+  width: 88px;
+  height: 33px;
+  line-height: 33px;
+  background-color: #e3725d;
+  border-radius: 4px;
+  margin-top: 50px;
+  color: #ffffff;
+  font-size: 14px;
+  text-align: center;
+  letter-spacing: 8px;
+  display: inline-block;
+  text-indent: 8px;
+}
+#webMiddlePage .content_noom .noom_btn_text {
+  margin: 0 auto;
+  height: 33px;
+  line-height: 33px;
+  margin-top: 50px;
+  color: #858585;
+  font-size: 13px;
+  text-align: center;
+  display: inline-block;
+}

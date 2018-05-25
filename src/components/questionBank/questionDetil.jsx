@@ -13,7 +13,7 @@ export default class Demo extends React.Component {
     componentDidMount() {
         Bridge.setShareAble("false");
         document.title = '题目详情';
-        var locationHref = window.location.href;
+        var locationHref = decodeURI(window.location.href);
         var locationSearch = locationHref.substr(locationHref.indexOf("?") + 1);
         var searchArray = locationSearch.split("&");
         var id = searchArray[0].split('=')[1];

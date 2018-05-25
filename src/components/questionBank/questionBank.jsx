@@ -24,17 +24,17 @@ const tabs = [
 /*假数据*/
 // const data = [
 //     {
-//         img: 'https://zos.alipayobjects.com/rmsportal/dKbkpPXKfvZzWCM.png',
+//         imgs: 'https://zos.alipayobjects.com/rmsportal/dKbkpPXKfvZzWCM.png',
 //         title: 'Meet hotel',
 //         des: '不是所有的兼职汪都需要风吹日晒',
 //     },
 //     {
-//         img: 'https://zos.alipayobjects.com/rmsportal/XmwCzSeJiqpkuMB.png',
+//         imgs: 'https://zos.alipayobjects.com/rmsportal/XmwCzSeJiqpkuMB.png',
 //         title: 'McDonald\'s invites you',
 //         des: '不是所有的兼职汪都需要风吹日晒',
 //     },
 //     {
-//         img: 'https://zos.alipayobjects.com/rmsportal/hfVtzEhPzTUewPm.png',
+//         imgs: 'https://zos.alipayobjects.com/rmsportal/hfVtzEhPzTUewPm.png',
 //         title: 'Eat the week',
 //         des: '不是所有的兼职汪都需要风吹日晒',
 //     },
@@ -92,12 +92,15 @@ export default class questionBank extends React.Component {
 
         Bridge.setShareAble("false");
 
-        var locationHref = window.location.href;
+        var locationHref = decodeURI(window.location.href);
         var locationSearch = locationHref.substr(locationHref.indexOf("?") + 1);
         var searchArray = locationSearch.split("&");
         var ident = searchArray[0].split('=')[1];
         var pointId = searchArray[1].split('=')[1];
         var title = searchArray[2].split('=')[1];
+        if (WebServiceUtil.isEmpty(searchArray[3])) {
+            this.setState({phoneType: 'production'});  //ios-1
+        }
         document.title = title;   //设置title
         var loginUser = {
             "ident": ident,
@@ -335,7 +338,7 @@ export default class questionBank extends React.Component {
         var subjectId = res.id;
         var subjectType = res.subjectType;
         // window.open("/#/questionDetil?courseId=" + subjectId + "&subjectType=" + subjectType);
-        var url = WebServiceUtil.mobileServiceURL + "questionDetil?courseId=" + subjectId + "&subjectType=" + subjectType;
+        var url = encodeURI(WebServiceUtil.mobileServiceURL + "questionDetil?courseId=" + subjectId + "&subjectType=" + subjectType);
         var data = {};
         data.method = 'openNewPage';
         data.url = url;
@@ -392,9 +395,15 @@ export default class questionBank extends React.Component {
                     this.state.delCheckBoxCheckedArr.splice(0);
                 } else if (buttonIndex == 2) {
                     if (this.state.checkBoxCheckedArr.length == 0) {
-                        Toast.fail('还未选择课程', 1);
+                        Toast.fail('还未选择题目', 1);
                         return
                     }
+                    //对于ios过审之前的处理
+                    if (this.state.phoneType == 'production') {
+                        Toast.fail('暂不可用,请等待下个版本更新', 1);
+                        return
+                    }
+
                     var array = this.state.checkBoxCheckedArr.join(',');
 
                     var data = {
@@ -417,7 +426,7 @@ export default class questionBank extends React.Component {
                     // this.onOpenChange()
                 } else if (buttonIndex == 3) {
                     if (this.state.delCheckBoxCheckedArr.length == 0) {
-                        Toast.fail('还未选择课程', 1);
+                        Toast.fail('还未选择题目', 1);
                         return
                     }
                     this.delClass()
