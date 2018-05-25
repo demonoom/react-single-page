@@ -28,8 +28,7 @@ export default class studentFaceStatistics extends React.Component {
         Bridge.setRefreshAble("false");
 
         this.getVclassFaceEmotionsStatistics();
-        var _this=this;
-        //this.classOver();
+
         //setInterval(this.fetchNewDate, 4000);
         window.addEventListener( "message",
             function(e){
@@ -305,7 +304,12 @@ export default class studentFaceStatistics extends React.Component {
         var locationSearch = locationHref.substr(locationHref.indexOf("?") + 1);
         var searchArray = locationSearch.split("&");
         var vid = searchArray[0].split('=')[1];
+        var status = searchArray[1].split('=')[1];
         this.setState({vid: vid});
+        debugger
+        if(status=='close') {
+            this.classOver();
+        }
         const dataBlob = {};
         var param = {
             "method": 'getVclassFaceEmotionsStatistics',
