@@ -46,9 +46,11 @@ export default class notifyDetail extends React.Component {
         return (
             <div id="notifyDetail" style={{height: document.body.clientHeight}}>
                 <Card title={"卡片标题"} className="card">
-                    <p>{this.state.data.noticeTitle}</p>
-                    <div>{this.state.data.noticeContent}</div>
                     <p className="createDate">{this.state.data.createTime}</p>
+                    <div className="content" style={{maxHeight: document.body.clientHeight - 85}}>
+                        <p className="title">{this.state.data.noticeTitle}</p>
+                        <div className="text">{this.state.data.noticeContent}</div>
+                    </div>
                 </Card>
             </div>
         );

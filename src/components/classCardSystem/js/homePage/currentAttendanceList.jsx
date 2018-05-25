@@ -47,8 +47,8 @@ export default class currentAttendanceList extends React.Component {
         var _this = this;
         var param = {
             "method": 'getStudentByCourseTableItem',
-            // "id": classTableId
-            "id": 3
+            "id": classTableId
+            // "id": 3
         };
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
             onResponse: function (result) {
