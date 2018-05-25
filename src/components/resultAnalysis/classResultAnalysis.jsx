@@ -202,7 +202,6 @@ export default class classReaultAnalysis extends React.Component {
                 seriesValue.push(hit);
             });
         }
-        console.log(data.topics);
         this.buildRadarOption(radarIndicator, seriesValue);
         this.setState({top5StudentListArr, last5StudentListArr, topDataArr, topDiv, studentList, tableArr});
     }

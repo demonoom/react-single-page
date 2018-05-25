@@ -1,3 +1,4 @@
+(node) util.print is deprecated. Use console.log instead.
 #comments {
   position: relative;
   overflow: hidden;
@@ -21,15 +22,11 @@
 }
 #comments .am-tabs-default-bar-tab::after,
 #comments .am-list-line::after,
-#comments .am-list-body::after,
-#comments .am-list-body::before {
+#comments .am-list-body::after {
   background: none!important;
 }
 #comments .am-tabs-default-bar-underline {
   border-color: #f35454;
-}
-#comments .am-list-view-scrollview-content {
-  width: 100%;
 }
 #comments .am-list-item .am-input-control input {
   font-size: 15px;
@@ -64,12 +61,13 @@
   white-space: normal;
   font-size: 16px;
   margin-top: 0;
+  word-break: break-all;
 }
 #comments .views .am-list-view-scrollview-content .am-list-content .time {
   float: right;
 }
 #comments .bottom_box {
-  position: fixed;
+  position: absolute;
   right: 2.5rem;
   bottom: 2.5rem;
   width: 3rem;
@@ -77,11 +75,15 @@
 }
 #comments .bottom_input_box {
   width: 100%;
-  height: 115px;
+  position: absolute;
+  left: 100%;
+  bottom: 0px;
+  height: 90px;
+  border-top: 1px #f4f4f4 solid;
   background: white;
 }
 #comments .bottomBox {
-  padding: 15px;
+  padding: 10px 15px;
   overflow: hidden;
   border-top: 1px #f4f4f4 solid;
 }
@@ -91,13 +93,9 @@
   height: 17px;
   vertical-align: bottom;
 }
-#comments .bottomBox .bottomBox_right {
-  color: #666;
-}
 #comments .headPic {
   position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
+  top: 13px;
   left: 15px;
   width: 40px;
   height: 40px;
@@ -121,25 +119,37 @@
   border-radius: 50%;
   position: relative;
 }
-#comments .comment_input {
-  margin: 0 auto;
-  margin-bottom: 5px;
+#comments .headBox {
+  padding: 10px 15px;
+}
+#comments .headBox .comment_input {
   background-color: #f4f4f4;
-  margin: 15px;
   -webkit-border-radius: 5px;
   -moz-border-radius: 5px;
   border-radius: 5px;
-  width: calc(100% - 30px);
   box-sizing: border-box;
   border: 0;
   padding: 5px 10px;
   line-height: 22px;
+  width: calc(100% - 87px);
+}
+#comments .headBox button {
+  background: #f56954;
+  color: #fff;
+  padding: 5px 22px;
+  border: none;
+  line-height: 22px;
+  border-radius: 4px;
+  margin-left: 15px;
+  max-width: 72px;
 }
 #comments .bottomBox_left {
   float: left;
+  color: #666;
 }
 #comments .bottomBox_right {
   float: right;
+  color: #999;
 }
 #comments .am-list-extra {
   font-size: 14px;
