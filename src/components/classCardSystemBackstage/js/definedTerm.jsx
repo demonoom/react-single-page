@@ -85,6 +85,8 @@ export default class definedTerm extends React.Component {
                             console.log(error);
                         });
                     }, 1000)
+                } else {
+                    Toast.fail(result.msg)
                 }
             },
             onError: function (error) {

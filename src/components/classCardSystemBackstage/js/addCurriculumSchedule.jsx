@@ -40,7 +40,8 @@ export default class addCurriculumSchedule extends React.Component {
             terAsyncValue: [],
             ClassTableArr: [],  //课表结构
             ClassTableDataArr: [],  //课表数据
-            search_bg: false
+            search_bg: false,
+            clientHeight: document.body.clientHeight,
         };
     }
 
@@ -51,6 +52,21 @@ export default class addCurriculumSchedule extends React.Component {
         var curriculumType = locationSearch.split("&")[0].split('=')[1];
         this.viewClassRoomPage();
         this.setState({curriculumType});
+        window.addEventListener('resize', this.onWindwoResize);
+    }
+
+    componentWillUnmount() {
+        window.removeEventListener('resize', this.onWindwoResize);
+    }
+
+    //监听窗口改变时间
+    onWindwoResize() {
+        // this
+        setTimeout(() => {
+            teacherV.setState({
+                clientHeight: document.body.clientHeight,
+            })
+        }, 100)
     }
 
     /**
@@ -194,6 +210,8 @@ export default class addCurriculumSchedule extends React.Component {
                     // _this.state.termAsyncValue.splice(0);
                     // _this.state.ClassTableDataArr.splice(0);
                     // _this.buildClassTable();
+                } else {
+                    Toast.fail(result.msg, 5);
                 }
             },
             onError: function (error) {
@@ -573,7 +591,7 @@ export default class addCurriculumSchedule extends React.Component {
         }
 
         return (
-            <div id="addCurriculumSchedule" style={{height: document.body.clientHeight}}>
+            <div id="addCurriculumSchedule" style={{height: this.state.clientHeight}}>
                 <div className="search_bg" style={{display: this.state.search_bg ? 'block' : 'none'}}></div>
                 <div className="addCurriculum_cont">
                     <WhiteSpace size="lg"/>

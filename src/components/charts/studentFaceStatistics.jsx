@@ -306,7 +306,6 @@ export default class studentFaceStatistics extends React.Component {
         var vid = searchArray[0].split('=')[1];
         var status = searchArray[1].split('=')[1];
         this.setState({vid: vid});
-        debugger
         if(status=='close') {
             this.classOver();
         }

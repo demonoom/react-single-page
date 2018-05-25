@@ -44,7 +44,6 @@ export default class HomeWorkUnderstandAnalysisByClassSubject extends React.Comp
     }
 
     componentDidMount() {
-        debugger
         document.title = '学生作业表情分析报告';
         Bridge.setShareAble("false");
         Bridge.setRefreshAble("false");
