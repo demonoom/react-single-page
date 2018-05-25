@@ -215,7 +215,7 @@ export default class addStudentDuty extends React.Component {
                 weekOfTody=(weekOfTody==0?7:weekOfTody);
                 var sValue = [clazzId+''];
                 var asyncValue = [weekOfTody+''];
-                _this.setState({seasons,sValue,'week':weekOfTody,asyncValue});
+                _this.setState({seasons,sValue,'week':weekOfTody,asyncValue,clazzId});
             },
             onError: function (error) {
             }
