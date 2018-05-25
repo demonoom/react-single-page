@@ -33,7 +33,7 @@ WebServiceUtil.requestLittleAntApi = function (data, listener) {
         success: function (result) {
             listener.onResponse(result);
         }, error: function (error) {
-            listener.onError(result);
+            listener.onError(error);
         }
     });
 }
