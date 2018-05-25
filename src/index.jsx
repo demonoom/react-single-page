@@ -367,8 +367,8 @@ class Index extends React.Component {
                     {/*style={{fontSize: '24px'}}>布置作业</Link></li>*/}
                     {/*<li><Link to="/fileShareLink?shareId=1971&userId=23836&userType=st"*/}
                     {/*style={{fontSize: '24px'}}>文件分享</Link></li>*/}
-                    {<li><Link to="/ringBinding?ident=23836"
-                               style={{fontSize: '24px'}}>手环绑定</Link></li>}
+                    {/*{<li><Link to="/ringBinding?ident=23836"*/}
+                               {/*style={{fontSize: '24px'}}>手环绑定</Link></li>}*/}
                     {/*<li><Link to="/personalSettings?uid=23836&tid=31837&utype=te"*/}
                     {/*style={{fontSize: '24px'}}>个人设置</Link></li>*/}
                     {/*<li><Link to="/groupSetting?chatGroupId=706&ident=23836&utype=te"*/}
@@ -379,54 +379,54 @@ class Index extends React.Component {
                     {/*<li><Link*/}
                     {/*to="/m3u8Player?path=http://bpic.588ku.com/video_listen/588ku_video/18/04/17/17/03/11/video5ad5b84f167d6.mp4"*/}
                     {/*style={{fontSize: '24px'}}>m3u8Player</Link></li>*/}
-                    <li><Link
-                        to="/HomeWorkUnderstandAnalysisGuideByNoom?ident=23836"
-                        style={{fontSize: '24px'}}>作业表情分析NOOM</Link></li>
-                    <li><Link
-                        to="/homeworkModule?classId=819"
-                        style={{fontSize: '24px'}}>作业模块</Link></li>
-                    <li><Link
-                        to="/curriculumSchedule?ident=23836&curriculumType=1&access=23836"
-                        style={{fontSize: '24px'}}>课程表列表</Link></li>
-                    <li><Link
-                        to="/curriculumSchedule?ident=23836&curriculumType=2&access=23836"
-                        style={{fontSize: '24px'}}>公共教室课程表列表</Link></li>
-                    <li><Link
-                        to="/workAttendance"
-                        style={{fontSize: '24px'}}>出勤</Link></li>
-                    <li><Link
-                        to="/noticeReadMore?classroomId=1"
-                        style={{fontSize: '24px'}}>通知查看更多</Link></li>
-                    <li><Link
-                        to="/classroomManage?uid=23836"
-                        style={{fontSize: '24px'}}>教室管理页面</Link></li>
-                    <li><Link
-                        to="/classDemeanor?ident=23836&access=23836"
-                        style={{fontSize: '24px'}}>班级风采</Link></li>
-                    <li><Link
-                        to="/classHonor?ident=23836&access=23836"
-                        style={{fontSize: '24px'}}>班级荣誉</Link></li>
-                    <li><Link
-                        to="/moralEducation?ident=23836"
-                        style={{fontSize: '24px'}}>德育评价</Link></li>
+                    {/*<li><Link*/}
+                        {/*to="/HomeWorkUnderstandAnalysisGuideByNoom?ident=23836"*/}
+                        {/*style={{fontSize: '24px'}}>作业表情分析NOOM</Link></li>*/}
+                    {/*<li><Link*/}
+                        {/*to="/homeworkModule?classId=819"*/}
+                        {/*style={{fontSize: '24px'}}>作业模块</Link></li>*/}
+                    {/*<li><Link*/}
+                        {/*to="/curriculumSchedule?ident=23836&curriculumType=1&access=23836"*/}
+                        {/*style={{fontSize: '24px'}}>课程表列表</Link></li>*/}
+                    {/*<li><Link*/}
+                        {/*to="/curriculumSchedule?ident=23836&curriculumType=2&access=23836"*/}
+                        {/*style={{fontSize: '24px'}}>公共教室课程表列表</Link></li>*/}
+                    {/*<li><Link*/}
+                        {/*to="/workAttendance"*/}
+                        {/*style={{fontSize: '24px'}}>出勤</Link></li>*/}
+                    {/*<li><Link*/}
+                        {/*to="/noticeReadMore?classroomId=1"*/}
+                        {/*style={{fontSize: '24px'}}>通知查看更多</Link></li>*/}
+                    {/*<li><Link*/}
+                        {/*to="/classroomManage?uid=23836"*/}
+                        {/*style={{fontSize: '24px'}}>教室管理页面</Link></li>*/}
+                    {/*<li><Link*/}
+                        {/*to="/classDemeanor?ident=23836&access=23836"*/}
+                        {/*style={{fontSize: '24px'}}>班级风采</Link></li>*/}
+                    {/*<li><Link*/}
+                        {/*to="/classHonor?ident=23836&access=23836"*/}
+                        {/*style={{fontSize: '24px'}}>班级荣誉</Link></li>*/}
+                    {/*<li><Link*/}
+                        {/*to="/moralEducation?ident=23836"*/}
+                        {/*style={{fontSize: '24px'}}>德育评价</Link></li>*/}
                     <li><Link
                         to="/classCardHomePage?clazzId=819&roomId=3&mac=02:00:00:00:00:00"
                         style={{fontSize: '24px'}}>班牌首页</Link></li>
                     <li><Link
                         to="/publicClassCardHomePage?roomId=2&mac=02:00:00:00:00:00"
                         style={{fontSize: '24px'}}>公共教室班牌首页</Link></li>
-                    <li><Link
-                        to="/notifyBack?access_user=23836"
-                        style={{fontSize: '24px'}}>通知后台</Link></li>
+                    {/*<li><Link*/}
+                        {/*to="/notifyBack?access_user=23836"*/}
+                        {/*style={{fontSize: '24px'}}>通知后台</Link></li>*/}
                     {/* <li><Link
                     to="/addNotify?ident=23836"
                     style={{fontSize: '24px'}}>添加通知</Link></li> */}
                     {/*<li><Link*/}
                     {/*to="/notifyDetail"*/}
                     {/*style={{fontSize: '24px'}}>通知详情</Link></li>*/}
-                    <li><Link
-                        to="/studentDutyList?access_user=23836"
-                        style={{fontSize: '24px'}}>班级值日表</Link></li>
+                    {/*<li><Link*/}
+                        {/*to="/studentDutyList?access_user=23836"*/}
+                        {/*style={{fontSize: '24px'}}>班级值日表</Link></li>*/}
                     {/*<li><Link*/}
                     {/*to="/tableItemDetil"*/}
                     {/*style={{fontSize: '24px'}}>课程表内页</Link></li>*/}
@@ -439,9 +439,9 @@ class Index extends React.Component {
                     <li><Link
                         to="/fileAnalysis?aid=3"
                         style={{fontSize: '24px'}}>文件表情分析</Link></li>
-                    <li><Link
-                        to="/studentSelectCourse?access_user=23852"
-                        style={{fontSize: '24px'}}>学生选课系统</Link></li>
+                    {/*<li><Link*/}
+                        {/*to="/studentSelectCourse?access_user=23852"*/}
+                        {/*style={{fontSize: '24px'}}>学生选课系统</Link></li>*/}
                 </ul>
             </div>
         );
