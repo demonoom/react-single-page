@@ -105,19 +105,6 @@ export default class addCurriculumSchedule extends React.Component {
     }
 
     /**
-     * 老师的切换
-     * @param val
-     */
-    onTerPickerChange = (val) => {
-        const d = [...this.state.terData];
-        const terAsyncValue = [...val];
-        this.setState({
-            terData: d,
-            terAsyncValue,
-        });
-    }
-
-    /**
      * 新增课表项
      */
     addCourseTableItem = () => {
