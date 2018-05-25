@@ -1,5 +1,5 @@
 import React from 'react';
-import {List, Picker, InputItem, TextareaItem, Button,Toast} from 'antd-mobile';
+import {List, Picker, InputItem, TextareaItem, Button, WhiteSpace, Toast} from 'antd-mobile';
 import '../css/notify.less'
 
 var calm;
@@ -135,6 +135,7 @@ export default class addNotify extends React.Component {
     render() {
         return (
             <div id="notify" style={{height: document.body.clientHeight}}>
+                <WhiteSpace size="lg"/>
                 <Picker data={this.state.pickerData}
                         cols={1}
                         className="forss"
@@ -143,16 +144,20 @@ export default class addNotify extends React.Component {
                         onOk={v => this.viewCourseTableItemPage(v)}>
                     <List.Item arrow="horizontal" onClick={this.getClassRoomId}>选择教室</List.Item>
                 </Picker>
+                <WhiteSpace size="lg"/>
                 <InputItem
                     placeholder="请输入标题"
                     clear
                     moneyKeyboardAlign="left"
                     value={this.state.title}
+                    maxLength={30}
                     onChange={this.titleHandleChange}
                 >输入标题</InputItem>
+                <WhiteSpace size="lg"/>
                 <List>
+                    <div className="import_title">输入内容</div>
                     <TextareaItem
-                        title={"输入内容"}
+                        title={""}
                         placeholder={"请输入添加内容"}
                         rows={5}
                         count={100}

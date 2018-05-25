@@ -38,7 +38,7 @@ export default class addMoralEducation extends React.Component {
             dpValue: null,
             customChildValue: null,
             visible: false,
-            timeValue: null
+            timeValue: null,
         };
     }
 
@@ -220,6 +220,15 @@ export default class addMoralEducation extends React.Component {
     }
 
     render() {
+        const CustomChildren = ({ extra, onClick, children }) => (
+            <div
+              onClick={onClick}
+              style={{ backgroundColor: '#fff', height: '45px', lineHeight: '45px', padding: '0 15px' }}
+            >
+              {children}
+              <span style={{ float: 'right', color: '#888' }}>{extra}</span>
+            </div>
+          );
         return (
             <div id="addMoralEducation" style={{height: document.body.clientHeight}}>
                 <WhiteSpace size="lg"/>
@@ -253,11 +262,13 @@ export default class addMoralEducation extends React.Component {
                     mode="date"
                     title="选择日期"
                     extra="Optional"
-                    value={this.state.date}
+                    value={this.state.customChildValue}
                     onOk={this.onDatePickerChange}
-                    onChange={date => this.setState({date})}
+                    onChange={v => this.setState({customChildValue:v})}
+                    extra="请选择"
                 >
-                    <List.Item arrow="horizontal">选择日期<i className="redStar">*</i></List.Item>
+                 <CustomChildren>选择日期</CustomChildren>
+                    {/* <List.Item arrow="horizontal">选择日期<i className="redStar">*</i></List.Item> */}
                 </DatePicker>
                 <WhiteSpace size="lg"/>
                 <div className='CourseTableArea'>

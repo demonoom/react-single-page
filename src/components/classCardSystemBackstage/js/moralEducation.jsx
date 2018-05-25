@@ -20,6 +20,7 @@ export default class moralEducation extends React.Component {
             time: now,
             visible: false,
             moralEducationSelectData: {},
+            customChildValue:null,
             seasons: [[
                 {
                     label: '请选择',
@@ -177,6 +178,18 @@ export default class moralEducation extends React.Component {
 
     render() {
         var _this = this;
+        const CustomChildren = ({ extra, onClick, children }) => (
+
+            <div className="am-list-item am-list-item-middle"
+              onClick={onClick}
+            >
+                <div className="am-list-line">
+                  <div className="am-list-content">{children}</div>
+                  <span className="choiceData am-list-extra" style={{ float: 'right', color: '#888' }}>{extra}</span><div className="am-list-arrow am-list-arrow-horizontal"></div>
+                </div>
+            </div>
+          );
+          
         return (
             <div id="moralEducation" style={{height: document.body.clientHeight}}>
                 <WhiteSpace size="lg"/>
@@ -199,13 +212,13 @@ export default class moralEducation extends React.Component {
                     mode="date"
                     title="选择日期"
                     extra="Optional"
-                    value={this.state.date}
+                    value={this.state.customChildValue}
                     onOk={this.getSelectData}
-                    onChange={date => this.setState({date})
-
-                    }
-                >
-                    <List.Item arrow="horizontal">日期</List.Item>
+                    onChange={v => this.setState({ customChildValue: v })}
+                    extra="请选择"
+                >   
+                    <CustomChildren>选择日期</CustomChildren>
+                    {/* <List.Item arrow="horizontal">日期</List.Item> */}
                 </DatePicker>
                 <WhiteSpace size="lg"/>
                 <div className='classSearchResult'>

@@ -12,7 +12,7 @@
   line-height: 24px;
   height: 24px;
   position: absolute;
-  right: 15px;
+  right: 5px;
   top: 0;
 }
 #studentDutyList .am-button-small:before {
@@ -51,6 +51,7 @@
   -ms-flex-direction: row !important;
   flex-direction: row !important;
   height: auto;
+  justify-content: left;
 }
 #studentDutyList .am-grid.am-grid-square .am-grid-item:before {
   padding-bottom: 0;
@@ -78,4 +79,13 @@
 #studentDutyList .am-grid .am-flexbox .am-flexbox-item.am-grid-item,
 #studentDutyList .am-grid.am-grid-square .am-grid-item .am-grid-item-content {
   position: static;
+}
+@media only screen and (min-width: 600px) {
+  #studentDutyList .am-grid.am-grid-square .am-grid-item .am-grid-item-inner-content .am-grid-icon {
+    width: 65px !important;
+    height: 65px !important;
+  }
+  #studentDutyList .am-grid.am-grid-square .am-grid-item .am-grid-item-inner-content .am-grid-text {
+    padding-left: 10px;
+  }
 }
