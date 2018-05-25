@@ -13,6 +13,8 @@ export default class studentDutyList extends React.Component {
 
     constructor(props) {
         super(props);
+        var weekOfTody = new Date().getDay();
+        weekOfTody=(weekOfTody==0?7:weekOfTody);
         this.state = {
             data: [{value: '1', label: '星期一'},
                 {value: '2', label: '星期二'},
@@ -23,19 +25,19 @@ export default class studentDutyList extends React.Component {
                 {value: '7', label: '星期日'}],
             cols: 1,
             pickerValue: [],
-            asyncValue: ['1'],
+            asyncValue: [weekOfTody+''],
             sValue: [],
             visible: false,
             studentList: [],
             clazzId: '',
-            week: '1',
+            week: weekOfTody+'',
             editButtonDisabled: true
         };
         this.getClassBrandStudentDuty = this.getClassBrandStudentDuty.bind(this);
         this.getClazzesByUserId = this.getClazzesByUserId.bind(this);
     }
 
-    componentDidMount() {
+    componentWillMount() {
         document.title = '值日表';
         var locationHref = window.location.href;
         var locationSearch = locationHref.substr(locationHref.indexOf("?") + 1);
@@ -43,6 +45,10 @@ export default class studentDutyList extends React.Component {
         var userId = locationSearchArray[0].split("=")[1];
         this.getClazzesByUserId(userId);
         this.setState({userId});
+    }
+
+    componentDidMount() {
+        document.title = '值日表';
     }
 
     /**
@@ -104,7 +110,8 @@ export default class studentDutyList extends React.Component {
                         }
                     }
                 }
-                _this.setState({studentList, studentIdList, dutyId, editButtonDisabled});
+                var sValue = [clazzId+''];
+                _this.setState({studentList, studentIdList, dutyId, editButtonDisabled,clazzId,sValue});
             },
             onError: function (error) {
             }
@@ -129,7 +136,7 @@ export default class studentDutyList extends React.Component {
                 if (result.success == true && result.msg == "调用成功") {
                     var response = result.response;
                     if (response != null && response != undefined) {
-                        response.forEach(function (clazz) {
+                        response.forEach(function (clazz,index) {
                             var clazzId = clazz.id;
                             //班级
                             var clazzName = clazz.name;
@@ -140,6 +147,9 @@ export default class studentDutyList extends React.Component {
                                 label: gradeName + clazzName,
                                 value: clazzId + "",
                             };
+                            if(index==0){
+                                _this.getClassBrandStudentDuty(clazzId,_this.state.week);
+                            }
                             if (seasons[0] != null && seasons[0] != undefined) {
                                 seasons[0].push(clazzJson);
                             }
