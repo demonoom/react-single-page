@@ -349,7 +349,7 @@ export default class addCurriculumSchedule extends React.Component {
         this.state.ClassTableDataArr.forEach(function (v, i) {
             ClassTableArr.push(<div>
                 <div className="cont_communal add_title font_gray">第{i + 1}节</div>
-                <div className="flex_container my_flex teacher_list">
+                <div className="flex_container my_flex teacher_list teacher_list_p" >
                     <DatePicker
                         mode="time"
                         use24Hours
@@ -583,6 +583,7 @@ export default class addCurriculumSchedule extends React.Component {
 
         return (
             <div id="addCurriculumSchedule" style={{height: document.body.clientHeight}}>
+                <div className="search_bg"></div>
                 <div className="addCurriculum_cont">
                     <WhiteSpace size="lg"/>
                     {/*选择班级*/}
@@ -636,15 +637,17 @@ export default class addCurriculumSchedule extends React.Component {
                     </WingBlank>
                 </div>
                 <div className='searchTerRes' id='searchTerRes'>
-                    <span onClick={this.searchTerResLeave}>确定</span>
-                    <List>
-                        {this.state.terData.map(i => (
-                            <RadioItem key={i.value} checked={this.state.value === i.value}
-                                       onChange={() => this.radioItemOnChange(i)}>
-                                {i.label}
-                            </RadioItem>
-                        ))}
-                    </List>
+                    <div className="search_btn"><span onClick={this.searchTerResLeave}>确定</span></div>
+                    <div className="search_wraplist">
+                        <List>
+                            {this.state.terData.map(i => (
+                                <RadioItem key={i.value} checked={this.state.value === i.value}
+                                           onChange={() => this.radioItemOnChange(i)}>
+                                    {i.label}
+                                </RadioItem>
+                            ))}
+                        </List>
+                    </div>
                 </div>
             </div>
         );
