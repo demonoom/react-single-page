@@ -132,11 +132,11 @@ export default class notify extends React.Component {
                     <span className="home_titleMore">历史通知<i className="titleMore"></i></span>
                 </h3>
                 <div className="notify_cont">
-                    {this.state.noticeList}
-                    <div className="empty_center">
-                        <div className="empty_icon empty_notify"></div>
-                        <div className="empty_text">暂无通知</div>
-                    </div>
+                    {WebServiceUtil.isEmpty(this.state.noticeList) == false && this.state.noticeList.length > 0 ? this.state.noticeList :
+                        <div className="empty_center">
+                            <div className="empty_icon empty_notify"></div>
+                            <div className="empty_text">暂无通知</div>
+                        </div>}
                 </div>
                 <Modal
                     visible={this.state.contentModalVisible}

@@ -42,7 +42,7 @@ export default class bindingBracelet extends React.Component {
 
     componentDidMount() {
         Bridge.setShareAble("false");
-        document.title = '绑定学生手环信息';
+        document.title = '手环绑定学生信息';
         var loginUser = JSON.parse(localStorage.getItem('loginUserRingBind'));
         this.setState({loginUser});
         this.viewWatchPage(loginUser);
