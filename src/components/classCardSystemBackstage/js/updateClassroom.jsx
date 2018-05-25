@@ -79,7 +79,6 @@ export default class updateClassroom extends React.Component {
                 if (result.msg == '调用成功' && result.success == true) {
                     var clazzRoom = result.response
                     var roomName = clazzRoom.name;
-                    console.log("roomName:"+roomName);
                     _this.setState({'classroomValue':roomName});
                 }
             },

@@ -25,7 +25,6 @@ export default class studentOnDuty extends React.Component {
     componentWillReceiveProps(nextProps) {
         // jsonObject.put("command", "studentDuty");
         // jsonObject.put("cid", cid);
-        console.log('studentOnDuty', nextProps.classCommand);
         var clazzId = localStorage.getItem("clazzId");
         if (nextProps.classCommand.command == "studentDuty" && nextProps.classCommand.data.cid == clazzId) {
             this.getClassBrandStudentDutyByToday(clazzId);

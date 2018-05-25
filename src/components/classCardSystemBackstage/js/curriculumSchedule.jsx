@@ -242,7 +242,6 @@ export default class curriculumSchedule extends React.Component {
      * 跳转到课程表更新页面
      */
     turnToUpdatePage(currentSchedule){
-        console.log("currentSchedule:"+currentSchedule);
         var currentScheduleId = currentSchedule.id;
         var clazzOrRoomId = this.state.sValue[0];
         var termId = this.state.sValue[1];

@@ -24,7 +24,6 @@ export default class moralEducationScore extends React.Component {
     componentWillReceiveProps(nextProps) {
         // jsonObject.put("command", "moralEducation");
         // jsonObject.put("cid", cid);
-        console.log('moralEducationScore', nextProps.classCommand);
         var clazzId = localStorage.getItem("clazzId");
         if (nextProps.classCommand.command == "moralEducation" && nextProps.classCommand.data.cid == clazzId) {
             this.getMEScore();
