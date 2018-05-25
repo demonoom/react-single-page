@@ -105,9 +105,6 @@
   height: 17px;
   vertical-align: bottom;
 }
-#comments .bottomBox .bottomBox_right {
-  color: #666;
-}
 #comments .headPic {
   position: absolute;
   top: 50%;
@@ -161,9 +158,11 @@
 }
 #comments .bottomBox_left {
   float: left;
+  color: #666;
 }
 #comments .bottomBox_right {
   float: right;
+  color: #999;
 }
 #comments .am-list-extra {
   font-size: 14px;
