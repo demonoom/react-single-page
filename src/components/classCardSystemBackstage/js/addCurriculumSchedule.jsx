@@ -315,6 +315,8 @@ export default class addCurriculumSchedule extends React.Component {
      * 搜索老师
      */
     getTeacherData(i) {
+        document.getElementById('searchTerRes').className = 'searchTerRes ding_enter'
+
         if (teacherV.state.ClassTableDataArr[i].teacherId == '') {
             Toast.fail('请输入老师姓名搜索')
             return
@@ -573,6 +575,10 @@ export default class addCurriculumSchedule extends React.Component {
         });
     }
 
+    searchTerResLeave() {
+        document.getElementById('searchTerRes').className = 'searchTerRes ding_leave'
+    }
+
     render() {
         var clazzOrRoom = <List.Item
             arrow="horizontal"
@@ -639,8 +645,8 @@ export default class addCurriculumSchedule extends React.Component {
                         <Button type="warning" onClick={this.addCourseTableItem}>提交</Button>
                     </WingBlank>
                 </div>
-                <div>
-                    <span>确定</span>
+                <div className='searchTerRes' id='searchTerRes'>
+                    <span onClick={this.searchTerResLeave}>确定</span>
                     <List>
                         {this.state.terData.map(i => (
                             <RadioItem key={i.value} checked={this.state.value === i.value}

@@ -1,6 +1,7 @@
 (node) util.print is deprecated. Use console.log instead.
 #addCurriculumSchedule {
   overflow-y: auto;
+  /*创建动画*/
 }
 #addCurriculumSchedule .CourseTableArea {
   min-height: 280px;
@@ -98,4 +99,39 @@
 #addCurriculumSchedule .searchTerRes {
   z-index: 99999;
   background-color: #cccccc;
+  width: 100%;
+  height: 280px;
+  position: absolute;
+  bottom: -280px;
+}
+#addCurriculumSchedule .ding_enter {
+  animation-name: moveLeave;
+  animation-duration: 0.5s;
+  animation-timing-function: linear;
+  animation-fill-mode: forwards;
+  /*设置动画的播放状态  paused:暂停   running:播放*/
+  animation-play-state: running;
+}
+@keyframes moveTest {
+  from {
+    transform: translate(0, -280px);
+  }
+  to {
+    transform: translate(0, 0);
+  }
+}
+#addCurriculumSchedule .ding_leave {
+  animation-name: moveTest;
+  animation-duration: 0.5s;
+  animation-timing-function: linear;
+  animation-fill-mode: forwards;
+  animation-play-state: running;
+}
+@keyframes moveLeave {
+  from {
+    transform: translate(0, 0);
+  }
+  to {
+    transform: translate(0, -280px);
+  }
 }
