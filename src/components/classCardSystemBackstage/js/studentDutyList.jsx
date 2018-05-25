@@ -240,7 +240,7 @@ export default class studentDutyList extends React.Component {
                         <Button type="primary" inline size="small" className="am-button-borderfix modifyBtn"
                                 disabled={this.state.editButtonDisabled} onClick={this.editStudentDuty}>修改</Button>
                     </div>
-                    <Grid data={_this.state.studentList} columnNum={3} activeStyle={false}/>
+                    <Grid data={_this.state.studentList} columnNum={4} activeStyle={false}/>
                     <div className="addBunton"><Icon type="plus" onClick={this.turnToAddDutyPage}/></div>
                 </div>
             </div>
