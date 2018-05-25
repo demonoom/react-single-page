@@ -1,23 +1,25 @@
 import React from 'react';
-import {Toast, Picker, List, WhiteSpace, Button, WingBlank, InputItem, DatePicker, TextareaItem} from 'antd-mobile';
+import { Toast, Picker, List, WhiteSpace, Button, WingBlank, InputItem, DatePicker, TextareaItem } from 'antd-mobile';
 import '../css/addCurriculumSchedule.less'
 
+var teacherV;
 export default class addCurriculumSchedule extends React.Component {
     constructor(props) {
         super(props);
+        teacherV = this;
         this.state = {
             cols: 1,
-            data: [{value: '1', label: '星期一'},
-                {value: '2', label: '星期二'},
-                {value: '3', label: '星期三'},
-                {value: '4', label: '星期四'},
-                {value: '5', label: '星期五'},
-                {value: '6', label: '星期六'},
-                {value: '7', label: '星期日'}],
+            data: [{ value: '1', label: '星期一' },
+            { value: '2', label: '星期二' },
+            { value: '3', label: '星期三' },
+            { value: '4', label: '星期四' },
+            { value: '5', label: '星期五' },
+            { value: '6', label: '星期六' },
+            { value: '7', label: '星期日' }],
             classData: [],
             posData: [],
             terData: [],
-            termData: [{value: '-1', label: '自定义学期'}],
+            termData: [{ value: '-1', label: '自定义学期' }],
             asyncValue: [],
             termAsyncValue: [],
             classAsyncValue: [],
@@ -35,7 +37,7 @@ export default class addCurriculumSchedule extends React.Component {
         var curriculumType = locationSearch.split("&")[0].split('=')[1];
         this.viewClassRoomPage();
         this.getTeacherByCreator();
-        this.setState({curriculumType});
+        this.setState({ curriculumType });
     }
 
     /**
@@ -106,7 +108,7 @@ export default class addCurriculumSchedule extends React.Component {
         var _this = this;
         if (this.state.classAsyncValue.length == 0) {
             var tipMessage = "请选择班级";
-            if(_this.state.curriculumType == 2){
+            if (_this.state.curriculumType == 2) {
                 tipMessage = "请选择教室";
             }
             Toast.fail(tipMessage);
@@ -130,7 +132,7 @@ export default class addCurriculumSchedule extends React.Component {
                 Toast.fail('课表存在空值');
                 return false
             }
-            if(_this.state.curriculumType == 1 && v.classAd == '上课地点'){
+            if (_this.state.curriculumType == 1 && v.classAd == '上课地点') {
                 Toast.fail('课表存在空值');
                 return false
             }
@@ -150,7 +152,7 @@ export default class addCurriculumSchedule extends React.Component {
             var isPublic = true;
             //公共教室则以开始选择的教室id为上课地点
             var classRoomId = _this.state.classAsyncValue[0];
-            if(_this.state.curriculumType == 1){
+            if (_this.state.curriculumType == 1) {
                 //如果是普通教室，则需要选择上课地点
                 classRoomId = v.classAddress;
                 isPublic = false;
@@ -167,7 +169,7 @@ export default class addCurriculumSchedule extends React.Component {
             })
         })
         param.cti.schedules = classArray;
-        if(_this.state.curriculumType == 1){
+        if (_this.state.curriculumType == 1) {
             //班级课程表，只有在给班级定制课程表时才需要给定该参数
             param.cti.classId = _this.state.classAsyncValue[0];
         }
@@ -252,7 +254,7 @@ export default class addCurriculumSchedule extends React.Component {
                                 value: v.colUid, label: v.userName
                             })
                         })
-                        _this.setState({terData: arr});
+                        // _this.setState({ terData: arr });
                     }
                 }
             },
@@ -279,7 +281,7 @@ export default class addCurriculumSchedule extends React.Component {
                                 value: v.id, label: v.name
                             })
                         })
-                        _this.setState({posData: arr});
+                        _this.setState({ posData: arr });
                     }
                 }
             },
@@ -312,11 +314,48 @@ export default class addCurriculumSchedule extends React.Component {
         this.state.ClassTableDataArr[i].teacherName = v[0];
         this.buildClassTable();
     }
-
+    teacgerChange(e){
+        var tValue = e.target.value;
+        teacherV.setState({
+            "teacInputValue":tValue
+        })
+    }
+    getTeacherData(){
+        let param = {
+            "method": 'searchTeacher',
+            "aid":JSON.parse(localStorage.getItem('loginUserSchedule')).colUid,
+            "keyWord":teacherV.state.teacInputValue
+        }
+        WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
+            onResponse: function (result) {
+                if (result.msg == '调用成功' || result.success == true) {
+                    if (result.msg == '调用成功' || result.success == true) {
+                        if (WebServiceUtil.isEmpty(result.response) == false) {
+                            var arr = [];
+                            result.response.forEach(function (v, i) {
+                                arr.push({
+                                    value: v.colUid, label: v.userName
+                                })
+                            })
+                            teacherV.setState({ terData: arr });
+                            teacherV.buildClassTable()
+                        }
+                    }
+                }
+            },
+            onError: function (error) {
+                message.error(error);
+            }
+        });
+        // console.log("onblur",e.target.value)
+        
+    }
+    
     /**
      * 根据数据构建,完成数据的动态绑定
      */
     buildClassTable = () => {
+        
         var _this = this;
         var ClassTableArr = [];
         this.state.ClassTableDataArr.forEach(function (v, i) {
@@ -341,21 +380,26 @@ export default class addCurriculumSchedule extends React.Component {
                         <span className="add_element">{_this.state.ClassTableDataArr[i].endTimeData}<i
                             className="icon_triangle"></i></span>
                     </DatePicker>
-                    <Picker
-                        data={_this.state.terData}
-                        cols={1}
-                        value={_this.state.terAsyncValue}
-                        onPickerChange={_this.onTerPickerChange}
-                        onOk={v => _this.terPickerOnOk(v, i)}
-                    >
-                        <span className="add_element">
-                            <span className="text_hidden overflow_width">{_this.state.ClassTableDataArr[i].teacherId}</span>
-                            <i className="icon_triangle"></i>
-                        </span>
-                    </Picker>
+
+
                     {/*上课地点*/}
                 </div>
-                {_this.state.curriculumType == 1?<div className="flex_container my_flex flex_addElement">
+                <div >
+                   <input type="text" 
+                        placeholder="123213" 
+                        onChange={teacherV.teacgerChange}  
+                   />
+                    <Picker
+                        data={teacherV.state.terData}
+                        cols={1}
+                        value={teacherV.state.terAsyncValue}
+                        onPickerChange={teacherV.onTerPickerChange}
+                        onOk={v => teacherV.terPickerOnOk(v, i)}
+                    >
+                        <img onClick={teacherV.getTeacherData} src={require("../imgs/icon_search.png")} />
+                    </Picker>
+                </div>
+                {_this.state.curriculumType == 1 ? <div className="flex_container my_flex flex_addElement">
                     <Picker
                         data={_this.state.posData}
                         cols={1}
@@ -369,7 +413,7 @@ export default class addCurriculumSchedule extends React.Component {
                         </span>
                     </Picker>
 
-                </div>:null}
+                </div> : null}
                 <div className="flex_container my_flex flex_addElement">
                     <InputItem
                         className="add_element"
@@ -389,7 +433,7 @@ export default class addCurriculumSchedule extends React.Component {
                     />
                 </div>
             </div>)
-            _this.setState({ClassTableArr})
+            _this.setState({ ClassTableArr })
         })
     };
 
@@ -452,7 +496,7 @@ export default class addCurriculumSchedule extends React.Component {
                                     label: v.name
                                 })
                         })
-                        _this.setState({termData: _this.state.termData.concat(arr)})
+                        _this.setState({ termData: _this.state.termData.concat(arr) })
                     }
                 }
             },
@@ -478,7 +522,7 @@ export default class addCurriculumSchedule extends React.Component {
                                 value: v.id, label: v.name
                             })
                         })
-                        _this.setState({classData: arr})
+                        _this.setState({ classData: arr })
                     }
                 }
             },
@@ -498,7 +542,7 @@ export default class addCurriculumSchedule extends React.Component {
         var param = {
             "method": 'viewClassRoomPage',
             "uid": ident,
-            "pn":-1
+            "pn": -1
         };
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
             onResponse: function (result) {
@@ -510,7 +554,7 @@ export default class addCurriculumSchedule extends React.Component {
                                 value: v.id, label: v.name
                             })
                         })
-                        _this.setState({classData: arr})
+                        _this.setState({ classData: arr })
                     }
                 }
             },
@@ -521,7 +565,7 @@ export default class addCurriculumSchedule extends React.Component {
     }
 
     classOnOk(v) {
-        this.setState({classAsyncValue: v});
+        this.setState({ classAsyncValue: v });
     }
 
     render() {
@@ -529,7 +573,7 @@ export default class addCurriculumSchedule extends React.Component {
             arrow="horizontal"
             onClick={this.getClazzesByUserId.bind(this, JSON.parse(localStorage.getItem('loginUserSchedule')).colUid)}
         >选择班级</List.Item>;
-        if(this.state.curriculumType==2){
+        if (this.state.curriculumType == 2) {
             clazzOrRoom = <List.Item
                 arrow="horizontal"
                 onClick={this.getClazzRoomsByUserId.bind(this, JSON.parse(localStorage.getItem('loginUserSchedule')).colUid)}
@@ -537,9 +581,9 @@ export default class addCurriculumSchedule extends React.Component {
         }
 
         return (
-            <div id="addCurriculumSchedule" style={{height: document.body.clientHeight}}>
+            <div id="addCurriculumSchedule" style={{ height: document.body.clientHeight }}>
                 <div className="addCurriculum_cont">
-                    <WhiteSpace size="lg"/>
+                    <WhiteSpace size="lg" />
                     {/*选择班级*/}
                     <Picker
                         data={this.state.classData}
@@ -550,7 +594,7 @@ export default class addCurriculumSchedule extends React.Component {
                     >
                         {clazzOrRoom}
                     </Picker>
-                    <WhiteSpace size="lg"/>
+                    <WhiteSpace size="lg" />
                     {/*选择学期*/}
                     <Picker
                         data={this.state.termData}
@@ -561,7 +605,7 @@ export default class addCurriculumSchedule extends React.Component {
                     >
                         <List.Item arrow="horizontal" onClick={this.chooseWeeks}>选择学期</List.Item>
                     </Picker>
-                    <WhiteSpace size="lg"/>
+                    <WhiteSpace size="lg" />
                     {/*选择星期*/}
                     <Picker
                         data={this.state.data}
@@ -572,7 +616,7 @@ export default class addCurriculumSchedule extends React.Component {
                     >
                         <List.Item arrow="horizontal">选择星期</List.Item>
                     </Picker>
-                    <WhiteSpace size="lg"/>
+                    <WhiteSpace size="lg" />
                     <div className='CourseTableArea'>
                         {
                             this.state.ClassTableArr.map((v) => {
@@ -580,12 +624,12 @@ export default class addCurriculumSchedule extends React.Component {
                             })
                         }
                         <img onClick={this.addClassTable} className='addClassTable'
-                             src={require('../imgs/addClassTable.png')} alt=""/>
+                            src={require('../imgs/addClassTable.png')} alt="" />
                     </div>
 
                 </div>
                 <div className='addCourseButton'>
-                    <WhiteSpace size="lg"/>
+                    <WhiteSpace size="lg" />
                     <WingBlank>
                         <Button type="warning" onClick={this.addCourseTableItem}>提交</Button>
                     </WingBlank>
