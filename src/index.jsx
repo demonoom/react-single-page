@@ -328,6 +328,18 @@ const fileAnalysis = (location, cb) => {
     )
 }
 
+/**
+ * 公共教室班牌学生选课
+ * @param location
+ * @param cb
+ */
+const studentSelectCourse = (location, cb) => {
+    require.ensure([], require => {
+            cb(null, require("./components/classCardSystemBackstage/js/studentSelectCourse").default)
+        }
+    )
+}
+
 import './index.less';
 
 class Index extends React.Component {
@@ -427,6 +439,9 @@ class Index extends React.Component {
                     <li><Link
                         to="/fileAnalysis?aid=3"
                         style={{fontSize: '24px'}}>文件表情分析</Link></li>
+                    <li><Link
+                        to="/studentSelectCourse?access_user=23852"
+                        style={{fontSize: '24px'}}>学生选课系统</Link></li>
                 </ul>
             </div>
         );
@@ -497,6 +512,7 @@ ReactDOM.render(
             <Route path="comments" getComponent={comments}/>
             <Route path="classCardHomePageDoor" getComponent={classCardHomePageDoor}/>
             <Route path="fileAnalysis" getComponent={fileAnalysis}/>
+            <Route path="studentSelectCourse" getComponent={studentSelectCourse}/>
         </Route>
     </Router>
     , document.getElementById('example'));
