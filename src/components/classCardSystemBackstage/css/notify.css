@@ -1,8 +1,7 @@
-(node) util.print is deprecated. Use console.log instead.
 #notify .headPic {
   position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
+  top: 34%;
+  transform: translateY(-34%);
   left: 15px;
   width: 44px;
   height: 44px;
@@ -26,15 +25,13 @@
   background: none;
 }
 #notify .am-input-control {
-  text-align: right;
-  width: calc(100% - 130px);
+  margin-left: 20px;
+  margin-right: 10px;
 }
 #notify .am-input-control input {
-  text-align: right;
   font-size: 16px;
 }
 #notify .am-textarea-control textarea {
-  text-align: right;
   font-size: 16px;
 }
 #notify .listCont {
@@ -96,4 +93,19 @@
 #notify .am-icon-md {
   width: 18px;
   height: 18px;
+}
+#notify .am-textarea-count {
+  right: 15px;
+}
+#notify .import_title {
+  padding-left: 15px;
+  background: #fff;
+  font-size: 17px;
+  padding: 15px 0 0 15px;
+}
+#notify .classroom_label {
+  color: #73B6F5;
+  font-size: 14px;
+  margin-top: 8px;
+  line-height: 1;
 }

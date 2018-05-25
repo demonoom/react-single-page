@@ -38,13 +38,19 @@ export default class classDemeanor extends React.Component {
             onResponse: function (result) {
                 if (result.msg == '调用成功' || result.success == true) {
                     if (WebServiceUtil.isEmpty(result.response) == false) {
-                        var arr = []
+                        var arr = [];
+                        var defaultClazzId = "";
                         result.response.forEach(function (v, i) {
+                            if(i==0){
+                                defaultClazzId = v.id;
+                                _this.getClassDemeanorInfo(v.id);
+                            }
                             arr.push({
                                 value: v.id, label: v.grade.name + v.name
                             })
                         })
-                        _this.setState({data: arr})
+                        var asyncValue = [defaultClazzId];
+                        _this.setState({data: arr,asyncValue})
                     }
                 }
             },
