@@ -54,9 +54,9 @@ export default class publicClassCardHomePage extends React.Component {
     msListener() {
         ms.msgWsListener = {
             onError: function (errorMsg) {
-                Toast.fail(errorMsg)
+                // Toast.fail(errorMsg)
             }, onWarn: function (warnMsg) {
-                Toast.fail(warnMsg)
+                // Toast.fail(warnMsg)
             }, onMessage: function (info) {
                 demeanor.setState({messageInfo: info});
             }
