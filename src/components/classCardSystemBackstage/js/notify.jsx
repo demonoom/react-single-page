@@ -238,7 +238,9 @@ export default class notifyBack extends React.Component {
                     <Item onClick={this.toNotifyDetail.bind(this, item.id)} align="top"
                           multipleLine>
                         <span className="title text_hidden">{item.noticeTitle}</span><span
-                        className="time">{item.createTime}</span><Brief>{item.noticeContent}</Brief>
+                        className="time">{item.createTime}</span>
+                        <span>{WebServiceUtil.isEmpty(item.classRoom)==true?'':item.classRoom.name}</span>
+                        <Brief>{item.noticeContent}</Brief>
                     </Item>
                     <Icon onClick={this.deleteNotify.bind(this, item.id)} type='cross-circle-o'
                           className="deleteNoifty"></Icon>
