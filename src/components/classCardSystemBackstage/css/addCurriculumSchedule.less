@@ -90,13 +90,47 @@
   .teacher_list div:nth-child(3) {
     width: 40%;
   }
+  .search_list{
+    margin: 15px 15px 0 15px;
+    padding-top: 0;
+    height: 44px;
+    line-height: 44px;
+    border-radius: 0;
+    background: #f6f6f6;
+    input{
+      width: calc(~"100% - 30px");
+      background: #f6f6f6;
+      border: none;
+      text-indent: 8px;
+      font-size: 17px;
+
+    }
+    input::-webkit-input-placeholder{
+      color:#bbbbbe;
+    }
+    input::-moz-placeholder{   /* Mozilla Firefox 19+ */
+      color:#bbbbbe;
+    }
+    input:-moz-placeholder{    /* Mozilla Firefox 4 to 18 */
+      color:#bbbbbe;
+    }
+    input:-ms-input-placeholder{  /* Internet Explorer 10-11 */
+      color:#bbbbbe;
+    }
+    img {
+      width: 15px;
+      height: 19px;
+      margin-top: 12px;
+    }
+  }
   .searchTerRes {
     z-index: 99999;
-    background-color: #cccccc;
+    background-color:#fff;
     width: 100%;
     height: 280px;
     position: absolute;
     bottom: -280px;
+    z-index: 1000;
   }
   .ding_enter {
     animation-name: moveLeave;
@@ -133,5 +167,61 @@
     to {
       transform: translate(0, -280px);
     }
+  }
+  .search_btn{
+    width: 100%;
+    height: 41px;
+    text-align: right;
+     background: #fff;
+    :after{
+      content: "";
+      pointer-events: none;
+      box-sizing: border-box;
+      border: none;
+      border-bottom: 1px solid #ddd;
+      height: 1px;
+      transform: scaleY(0.5);
+      transform-origin: 0 0;
+      -webkit-transform: scaleY(0.5);
+      -webkit-transform-origin: 0 0;
+      position: absolute;
+      width: 100%;
+      top: 0;
+    }
+    span{
+      color: #108ee9;
+      font-size: 17px;
+      padding: 11px 15px;
+      display: inline-block;
+    }
+  }
+  .search_wraplist{
+    height: 238px;
+    overflow-y: auto;
+    .am-list-item:after{
+      content: "";
+      pointer-events: none;
+      box-sizing: border-box;
+      border: none;
+      border-bottom: 1px solid #ddd;
+      height: 1px;
+      transform: scaleY(0.5);
+      transform-origin: 0 0;
+      -webkit-transform: scaleY(0.5);
+      -webkit-transform-origin: 0 0;
+      position: absolute;
+      width: 100%;
+      top: 0;
+    }
+  }
+  .teacher_list_p{
+    padding-top: 0;
+  }
+  .search_bg{
+    background: rgba(0, 0, 0, 0.3);
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    z-index: 1;
   }
 }
