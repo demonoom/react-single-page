@@ -7,6 +7,11 @@
 }
 #comments .am-list-body {
   background: none;
+  border-top: 0;
+  border-bottom: 0;
+}
+#comments .am-list-line {
+  border-bottom: 0;
 }
 #comments .list-view-section-body {
   background-color: #fff;
@@ -17,7 +22,7 @@
   margin: 10px 15px;
 }
 #comments .am-tabs-default-bar-tab-active {
-  color: #f35454;
+  color: #73B6F5;
 }
 #comments .am-tabs-default-bar-tab::after,
 #comments .am-list-line::after,
@@ -25,7 +30,7 @@
   background: none!important;
 }
 #comments .am-tabs-default-bar-underline {
-  border-color: #f35454;
+  border-color: #73B6F5;
 }
 #comments .am-list-item .am-input-control input {
   font-size: 15px;
@@ -35,6 +40,7 @@
 }
 #comments .good .am-list-content {
   font-size: 16px;
+  color: #333;
 }
 #comments .views .list-view-section-body {
   padding-left: 15px;
@@ -55,7 +61,7 @@
   white-space: nowrap;
 }
 #comments .views .am-list-view-scrollview-content .am-list-content .am-list-brief {
-  color: #000;
+  color: #333;
   overflow: visible;
   white-space: normal;
   font-size: 16px;
