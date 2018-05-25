@@ -408,7 +408,6 @@ export default class studentFaceStatistics extends React.Component {
         if (!number) {
             return 0.00;
         }
-        console.log(number)
         return number.toFixed(i);
     }
     initChartOption = () => {

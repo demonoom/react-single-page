@@ -95,11 +95,11 @@ export default class course extends React.Component {
                         <div className='timeNode'>当前时段</div>
                         <div className='time'>{classData.openTime + '-' + classData.closeTime}</div>
                         <div><span className='name'>{classData.courseName}</span></div>
-                        {/*<img className='terPic' src={classData.teacher.avatar} alt=""/>*/}
-                        <img
-                            className='terPic'
-                            src="http://60.205.86.217/upload6/2018-02-09/19/805eee4a-b707-49a2-9c75-d5b14ed9227b.jpg?size=100x100"
-                            alt=""/>
+                        <img className='terPic' src={classData.teacher.avatar} alt=""/>
+                        {/*<img*/}
+                        {/*className='terPic'*/}
+                        {/*src="http://60.205.86.217/upload6/2018-02-09/19/805eee4a-b707-49a2-9c75-d5b14ed9227b.jpg?size=100x100"*/}
+                        {/*alt=""/>*/}
                     </div>}
             </div>
         );

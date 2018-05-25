@@ -106,7 +106,6 @@ export default class Demo extends React.Component {
     }
 
     onRefresh = () => {
-        console.log('onRefresh');
         var _this = this;
         _this.initData.splice(0);
         pageIndex = 0;
@@ -118,11 +117,8 @@ export default class Demo extends React.Component {
     }
 
     render() {
-        console.log(this.state.dataSource);
         var _this = this;
         const row = (rowData, sectionID, rowID) => {
-            console.log(22);
-            console.log(rowData);
             var fromUser = rowData.fromUser;
             return (
                 <div key={rowID} style={{padding: '0 15px'}}>

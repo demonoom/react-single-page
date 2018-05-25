@@ -29,13 +29,13 @@ export default class studentDutyList extends React.Component {
             studentList: [],
             clazzId: '',
             week: '1',
-            editButtonDisabled:true
+            editButtonDisabled: true
         };
         this.getClassBrandStudentDuty = this.getClassBrandStudentDuty.bind(this);
         this.getClazzesByUserId = this.getClazzesByUserId.bind(this);
     }
 
-    componentDidMount(){
+    componentDidMount() {
         document.title = '值日表';
         var locationHref = window.location.href;
         var locationSearch = locationHref.substr(locationHref.indexOf("?") + 1);
@@ -78,7 +78,7 @@ export default class studentDutyList extends React.Component {
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
             onResponse: function (result) {
                 var studentList = [];
-                var studentIdList=[];
+                var studentIdList = [];
                 var dutyId = -1;
                 var editButtonDisabled = true;
                 if (result.success == true && result.msg == "调用成功") {
@@ -104,7 +104,7 @@ export default class studentDutyList extends React.Component {
                         }
                     }
                 }
-                _this.setState({studentList,studentIdList,dutyId,editButtonDisabled});
+                _this.setState({studentList, studentIdList, dutyId, editButtonDisabled});
             },
             onError: function (error) {
             }
@@ -115,7 +115,7 @@ export default class studentDutyList extends React.Component {
      * 进入学生值日页面时，根据用户id获取当前用户的班级
      * @param userId
      */
-    getClazzesByUserId(userId){
+    getClazzesByUserId(userId) {
         var _this = this;
         var param = {
             "method": 'getClazzesByUserId',
@@ -124,7 +124,7 @@ export default class studentDutyList extends React.Component {
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
             onResponse: function (result) {
                 var studentList = [];
-                var studentIdList=[];
+                var studentIdList = [];
                 var dutyId = -1;
                 if (result.success == true && result.msg == "调用成功") {
                     var response = result.response;
@@ -137,17 +137,17 @@ export default class studentDutyList extends React.Component {
                             var grade = clazz.grade;
                             var gradeName = grade.name;
                             var clazzJson = {
-                                label: gradeName+clazzName,
-                                value: clazzId+"",
+                                label: gradeName + clazzName,
+                                value: clazzId + "",
                             };
-                            if(seasons[0]!=null && seasons[0]!=undefined){
+                            if (seasons[0] != null && seasons[0] != undefined) {
                                 seasons[0].push(clazzJson);
                             }
                         })
 
                     }
                 }
-                _this.setState({studentList,studentIdList,dutyId});
+                _this.setState({studentList, studentIdList, dutyId});
             },
             onError: function (error) {
             }
@@ -169,10 +169,10 @@ export default class studentDutyList extends React.Component {
      * 修改班级的值日信息
      * 需要将当前页面的查询数据传递到下个页面，然后构建修改页面的数据
      */
-    editStudentDuty=()=>{
+    editStudentDuty = () => {
         var studentIdStr = this.state.studentIdList.join(",");
         var editStudentDutyUrl = WebServiceUtil.mobileServiceURL + "editStudentDuty";
-        editStudentDutyUrl+="?clazzId="+this.state.clazzId+"&week="+this.state.week+"&studentIds="+studentIdStr+"&dutyId="+this.state.dutyId+"&access_user="+this.state.userId;
+        editStudentDutyUrl += "?clazzId=" + this.state.clazzId + "&week=" + this.state.week + "&studentIds=" + studentIdStr + "&dutyId=" + this.state.dutyId + "&access_user=" + this.state.userId;
         location.href = editStudentDutyUrl;
 
         var data = {
@@ -189,16 +189,15 @@ export default class studentDutyList extends React.Component {
      * 跳转到添加值日生的页面
      */
     turnToAddDutyPage = () => {
-        var addStudentDutyUrl = WebServiceUtil.mobileServiceURL + "addStudentDuty?access_user="+this.state.userId;
-        location.href = addStudentDutyUrl;
-        /*var data = {
+        var addStudentDutyUrl = WebServiceUtil.mobileServiceURL + "addStudentDuty?access_user=" + this.state.userId;
+        var data = {
             method: 'openNewPage',
             url: addStudentDutyUrl
         };
 
         Bridge.callHandler(data, null, function (error) {
-            window.location.href = url;
-        });*/
+            window.location.href = addStudentDutyUrl;
+        });
     }
 
     render() {
@@ -228,7 +227,8 @@ export default class studentDutyList extends React.Component {
                 <div className="dutyList">
                     <div className="planTitle">
                         <span>值日安排</span>
-                        <Button type="primary" inline size="small" className="am-button-borderfix modifyBtn" disabled={this.state.editButtonDisabled} onClick={this.editStudentDuty}>修改</Button>
+                        <Button type="primary" inline size="small" className="am-button-borderfix modifyBtn"
+                                disabled={this.state.editButtonDisabled} onClick={this.editStudentDuty}>修改</Button>
                     </div>
                     <Grid data={_this.state.studentList} columnNum={3} activeStyle={false}/>
                     <div className="addBunton"><Icon type="plus" onClick={this.turnToAddDutyPage}/></div>

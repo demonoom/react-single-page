@@ -24,7 +24,6 @@ export default class moralEducationScore extends React.Component {
     componentWillReceiveProps(nextProps) {
         // jsonObject.put("command", "moralEducation");
         // jsonObject.put("cid", cid);
-        console.log('moralEducationScore', nextProps.classCommand);
         var clazzId = localStorage.getItem("clazzId");
         if (nextProps.classCommand.command == "moralEducation" && nextProps.classCommand.data.cid == clazzId) {
             this.getMEScore();
@@ -56,7 +55,7 @@ export default class moralEducationScore extends React.Component {
             <div id="moralEducationScore" className="home_card moralEducationScore_height">
                 <h3 className="home_title">班级德育评分</h3>
                 {
-                    MEScore.state.scoreData.totalScore ?
+                    MEScore.state.scoreData!=null && MEScore.state.scoreData.totalScore ?
                         <div className="mEScoreInfo home_cardCont">
                             <div className="mEScoreInfoT">
                                 <span className="font_title2">全级排名：<span
