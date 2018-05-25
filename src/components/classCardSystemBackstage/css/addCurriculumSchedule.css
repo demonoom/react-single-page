@@ -95,3 +95,7 @@
 #addCurriculumSchedule .teacher_list div:nth-child(3) {
   width: 40%;
 }
+#addCurriculumSchedule .searchTerRes {
+  z-index: 99999;
+  background-color: #cccccc;
+}
