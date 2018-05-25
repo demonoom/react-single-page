@@ -271,3 +271,10 @@
   background: url("../imgs/empty_course.png") no-repeat;
   background-size: 100%;
 }
+#classCardHomePage .publicempty_icon {
+  width: 6rem;
+  height: 6rem;
+  margin-bottom: 0.36rem ;
+  display: inline-block;
+  margin-top: -1rem;
+}
