@@ -1,3 +1,4 @@
+(node) util.print is deprecated. Use console.log instead.
 html,
 body {
   height: 100%;
@@ -334,6 +335,22 @@ hr {
   -webkit-transform: translate(-50%, -50%);
   /* Safari 和 Chrome */
   -o-transform: translate(-50%, -50%);
+}
+.am-list-footer {
+  color: #999 !important;
+}
+.submitBtn .am-button-primary,
+.am-button-warning {
+  background-color: #F56A55 !important;
+}
+.am-button-primary {
+  border-radius: 2px !important;
+}
+.textOver {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  display: block;
 }
 /*班牌屏幕适配*/
 @media only screen and (min-width: 768px) and (max-width: 799px) {

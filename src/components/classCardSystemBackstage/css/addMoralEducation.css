@@ -1,3 +1,4 @@
+(node) util.print is deprecated. Use console.log instead.
 #addMoralEducation {
   overflow-y: auto;
 }
@@ -68,6 +69,7 @@
   float: right;
   width: 88px;
   font-size: 16px;
+  text-align: right;
 }
 #addMoralEducation .am-list-item .am-input-label.am-input-label-5 {
   width: auto !important;

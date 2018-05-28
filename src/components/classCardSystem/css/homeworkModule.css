@@ -1,6 +1,9 @@
-(node) util.print is deprecated. Use console.log instead.
+
 #homeworkModule {
   color: green;
+}
+#homeworkModule .am-list-view-scrollview-content {
+  width: 100%;
 }
 #homeworkModule .textOver {
   overflow: hidden;
@@ -67,6 +70,7 @@
   color: #565c72;
   font-size: .72rem;
   line-height: 1.1rem;
+  word-wrap: break-word;
 }
 #homeworkModule .homeworkR {
   margin-top: .8rem;

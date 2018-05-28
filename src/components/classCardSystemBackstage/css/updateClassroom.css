@@ -1,3 +1,4 @@
+(node) util.print is deprecated. Use console.log instead.
 #updateClassroom {
   font-size: 17px;
 }
@@ -9,6 +10,12 @@
 }
 #updateClassroom .whiteBack {
   background-color: #fff;
+}
+#updateClassroom .am-list-body {
+  border: 0;
+}
+#updateClassroom .am-list-line {
+  border-bottom: 0;
 }
 #updateClassroom .am-pull-to-refresh-content-wrapper {
   height: 100%;
