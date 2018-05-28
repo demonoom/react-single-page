@@ -402,7 +402,7 @@ export default class HomeWorkUnderstandAnalysisByClassSubject extends React.Comp
             legend: {
                 data: ['做题时长', '班级平均时长'],
                 textStyle: {
-                    color: '#ccc'
+                    color: '#5793F0'
                 }
             },
             dataZoom: [
@@ -418,7 +418,7 @@ export default class HomeWorkUnderstandAnalysisByClassSubject extends React.Comp
                 data: category,
                 axisLine: {
                     lineStyle: {
-                        color: '#ccc'
+                        color: '#5793F0'
                     }
                 }
             },
@@ -426,7 +426,7 @@ export default class HomeWorkUnderstandAnalysisByClassSubject extends React.Comp
                 splitLine: {show: false},
                 axisLine: {
                     lineStyle: {
-                        color: '#ccc'
+                        color: '#5793F0'
                     }
                 }
             },
