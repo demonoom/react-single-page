@@ -71,6 +71,7 @@ export default class moralEducation extends React.Component {
             // "termId": mEducation.state.sValue[1],
             "createTime": newTime
         }
+        console.log(param);
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
             onResponse: function (result) {
                 console.log(result);
@@ -178,12 +179,14 @@ export default class moralEducation extends React.Component {
     render() {
         var _this = this;
         const CustomChildren = ({ extra, onClick, children }) => (
-            <div
+
+            <div className="am-list-item am-list-item-middle"
               onClick={onClick}
-              style={{ backgroundColor: '#fff', height: '45px', lineHeight: '45px', padding: '0 15px' }}
             >
-              {children}
-              <span style={{ float: 'right', color: '#888' }}>{extra}</span>
+                <div className="am-list-line">
+                  <div className="am-list-content">{children}</div>
+                  <span className="choiceData am-list-extra" style={{ float: 'right', color: '#888' }}>{extra}</span><div className="am-list-arrow am-list-arrow-horizontal"></div>
+                </div>
             </div>
           );
           

@@ -1,11 +1,11 @@
 import React from 'react';
 
-var isDebug = true;
+var isDebug = false;
 var isDebugLocal = false;
 
 export function MsgConnection() {
     this.msgWsListener = null;
-    this.REMOTE_URL = "wss://www.maaee.com:7889/Excoord_MessageServer/message";
+    this.REMOTE_URL = "ws://www.maaee.com:8887/Excoord_MessageServer/message";
     this.LOCAL_URL = "ws://192.168.50.230:8887/Excoord_MessageServer/message";
     this.LOCAL_URL_LIVE = "ws://172.16.2.109:8889/Excoord_MessageServer/message";
     this.WS_URL = isDebug ? (isDebugLocal ? this.LOCAL_URL_LIVE : this.LOCAL_URL) : this.REMOTE_URL;

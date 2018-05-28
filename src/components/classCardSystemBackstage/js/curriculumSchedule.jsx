@@ -1,5 +1,5 @@
 import React from 'react';
-import { Picker, List, WhiteSpace, Toast } from 'antd-mobile';
+import {Picker, List, WhiteSpace, Toast} from 'antd-mobile';
 import '../css/curriculumSchedule.less'
 
 var cSchedule;
@@ -9,13 +9,13 @@ export default class curriculumSchedule extends React.Component {
         super(props);
         cSchedule = this;
         this.state = {
-            data: [{ value: '1', label: '星期一' },
-            { value: '2', label: '星期二' },
-            { value: '3', label: '星期三' },
-            { value: '4', label: '星期四' },
-            { value: '5', label: '星期五' },
-            { value: '6', label: '星期六' },
-            { value: '7', label: '星期日' }],
+            data: [{value: '1', label: '星期一'},
+                {value: '2', label: '星期二'},
+                {value: '3', label: '星期三'},
+                {value: '4', label: '星期四'},
+                {value: '5', label: '星期五'},
+                {value: '6', label: '星期六'},
+                {value: '7', label: '星期日'}],
             cols: 1,
             asyncValue: [],
             sValue: ['0', '0'],
@@ -27,12 +27,12 @@ export default class curriculumSchedule extends React.Component {
                     value: '0',
                 }
             ],
-            [
-                {
-                    label: '请选择',
-                    value: '0',
-                }
-            ],]
+                [
+                    {
+                        label: '请选择',
+                        value: '0',
+                    }
+                ],]
         };
         this.addSchedule = this.addSchedule.bind(this);
         this.turnToUpdatePage = this.turnToUpdatePage.bind(this);
@@ -47,8 +47,7 @@ export default class curriculumSchedule extends React.Component {
             "colUid": ident,
         };
         localStorage.setItem("loginUserSchedule", JSON.stringify(loginUser));
-        this.setState({ curriculumType });
-        // this.getSemesterList(JSON.parse(localStorage.getItem('loginUserSchedule')).colUid)
+        this.setState({curriculumType});
     }
 
     componentDidMount() {
@@ -58,6 +57,22 @@ export default class curriculumSchedule extends React.Component {
             document.title = '公共课程表';
         }
         this.getSemesterList(JSON.parse(localStorage.getItem('loginUserSchedule')).colUid)
+    }
+
+    setWeek() {
+        var that = this;
+        var d = new Date();
+        var week = d.getDay();
+        var noomValue;
+        this.state.data.forEach((v, i) => {
+            if (week == v.value) {
+                noomValue = [v.value]
+                that.setState({
+                    asyncValue: [v.value],
+                })
+                that.viewCourseTableItemPage(noomValue)
+            }
+        })
     }
 
     /**
@@ -138,6 +153,8 @@ export default class curriculumSchedule extends React.Component {
     }
 
     buildSeasons(cList, sList) {
+        var cListArr = [];
+        var sListArr = [];
         // var cListArr = [{
         //     label: '请选择',
         //     value: '0',
@@ -146,8 +163,6 @@ export default class curriculumSchedule extends React.Component {
         //     label: '请选择',
         //     value: '0',
         // }];
-        var cListArr = []
-        var sListArr = []
         if (WebServiceUtil.isEmpty(cList) == false) {
             cList.forEach(function (v, i) {
                 cListArr.push({
@@ -164,10 +179,10 @@ export default class curriculumSchedule extends React.Component {
                 })
             })
         }
+        var array = [cListArr[0].value, sListArr[0].value];
         var arr = [cListArr, sListArr];
-        var array = ['1429','1']
-        console.log(arr)
-        this.setState({ seasons: arr,sValue:array });    
+        this.setState({seasons: arr, sValue: array})
+        cSchedule.setWeek();
     }
 
     /**
@@ -177,6 +192,8 @@ export default class curriculumSchedule extends React.Component {
     onPickerChange = (val) => {
         const d = [...this.state.data];
         const asyncValue = [...val];
+        console.log(d);
+        console.log(asyncValue);
         this.setState({
             data: d,
             asyncValue,
@@ -204,7 +221,7 @@ export default class curriculumSchedule extends React.Component {
      */
     viewCourseTableItemPage(v) {
         var _this = this;
-        this.setState({ asyncValue: v })
+        this.setState({asyncValue: v})
         if (this.state.sValue[0] == 0) {
             if (this.state.curriculumType == 1) {
                 Toast.fail('请选择班级')
@@ -241,7 +258,7 @@ export default class curriculumSchedule extends React.Component {
             onResponse: function (result) {
                 if (result.msg == '调用成功' || result.success == true) {
                     var arr = result.response[0].courseList
-                    _this.setState({ classTableArray: arr });
+                    _this.setState({classTableArray: arr});
                 }
             },
             onError: function (error) {
@@ -268,6 +285,7 @@ export default class curriculumSchedule extends React.Component {
             window.location.href = url;
         });
     }
+
     /**
      * 根据ID删除课表
      */
@@ -279,43 +297,47 @@ export default class curriculumSchedule extends React.Component {
         };
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
             onResponse: (result) => {
-                Toast.success('删除成功', 1);
-                var arr = cSchedule.state.classTableArray
-                arr.forEach((v, i) => {
-                    if (v.id == sId) {
-                        arr.splice(i, 1);
-                    }
-                })
-                cSchedule.setState({classTableArray: arr})
-               
+                if (result.msg == '调用成功' || result.success == true) {
+                    Toast.success('删除成功', 1);
+                    var arr = cSchedule.state.classTableArray
+                    arr.forEach((v, i) => {
+                        if (v.id == sId) {
+                            arr.splice(i, 1);
+                        }
+                    })
+                    cSchedule.setState({classTableArray: arr})
+                } else {
+                    Toast.fail(result.msg)
+                }
             },
             onError: function (error) {
                 Toast.info('删除失败');
             }
         });
     }
+
     render() {
         var pickerTip = "班级";
         if (this.state.curriculumType == 2) {
             pickerTip = "教室";
         }
         return (
-            <div id="curriculumSchedule" style={{ height: document.body.clientHeight }}>
-                <WhiteSpace size="lg" />
+            <div id="curriculumSchedule" style={{height: document.body.clientHeight}}>
+                <WhiteSpace size="lg"/>
                 {/*班级,学期*/}
                 <Picker
                     data={this.state.seasons}
                     cascade={false}
                     value={this.state.sValue}
-                    onChange={v => this.setState({ sValue: v })}
-                    onOk={v => this.setState({ sValue: v })}
+                    onChange={v => this.setState({sValue: v})}
+                    onOk={v => this.setState({sValue: v})}
                 >
                     <List.Item
                         arrow="horizontal"
                         // onClick={this.getSemesterList.bind(this, JSON.parse(localStorage.getItem('loginUserSchedule')).colUid)}
                     >{pickerTip},学期</List.Item>
                 </Picker>
-                <WhiteSpace size="lg" />
+                <WhiteSpace size="lg"/>
                 {/*日期*/}
                 <Picker
                     data={this.state.data}
@@ -326,29 +348,29 @@ export default class curriculumSchedule extends React.Component {
                 >
                     <List.Item arrow="horizontal">日期</List.Item>
                 </Picker>
-                <WhiteSpace size="lg" />
+                <WhiteSpace size="lg"/>
                 <div className="curriculum_cont cont_communal">
                     {this.state.classTableArray.map((v, i) => {
                         return <li>
                             <div className="add_title">
                                 <span className="font_gray">第{i + 1}节</span>
                                 <span
-                                    className="amend_btn" onClick={this.turnToUpdatePage.bind(this, v)} >修改</span>
-                                <span onClick={this.delSchedule.bind(this, v.id)}>删除</span>
+                                    className="amend_btn" onClick={this.turnToUpdatePage.bind(this, v)}>修改</span>
+                                <span className="delete" onClick={this.delSchedule.bind(this, v.id)}>删除</span>
                             </div>
 
-                            <div className="list_high list">
+                            <div className="list_high list textOver">
                                 <span className="text_hidden text_cont1">{v.openTime + '-' + v.closeTime}</span>
                                 <span className="text_hidden text_cont2">{v.courseName}</span>
                             </div>
-                            <div className="list_high list lineList">
+                            <div className="list_high list lineList textOver">
                                 <span className="text_hidden text_cont3">{v.classRoom.name}</span>
                             </div>
                         </li>
                     })}
                 </div>
                 <div className='addBunton' onClick={this.addSchedule}>
-                    <img src={require("../../ringBindInformation/imgs/addBtn.png")} />
+                    <img src={require("../../ringBindInformation/imgs/addBtn.png")}/>
                 </div>
             </div>
         );
