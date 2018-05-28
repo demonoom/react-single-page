@@ -45,7 +45,7 @@ export default class comments extends React.Component {
         var locationSearch = locationHref.substr(locationHref.indexOf("?") + 1);
         var searchArray = locationSearch.split("&");
         this.setState({
-            userId: searchArray[0].split('=')[1],
+            userId: searchArray[searchArray.length - 1].split('=')[1],
             sid: searchArray[1].split('=')[1],
             stype: searchArray[2].split('=')[1],
             clientHeight: document.body.clientHeight,
@@ -92,7 +92,6 @@ export default class comments extends React.Component {
         };
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
             onResponse: result => {
-                console.log(result);
                 if (result.msg == '调用成功' || result.success) {
                     classBinding.state.selectData = result.response
                     var arr = result.response;
@@ -101,8 +100,6 @@ export default class comments extends React.Component {
                         var topic = arr[i];
                         dataBlob[`${i}`] = topic;
                         if (arr[i].user.colUid == this.state.userId && cmType == 1) {
-                            console.log(arr[i].user.colUid,'获取到');
-                            console.log(this.state.userId);
                             this.setState({
                                 likeStatus: true,
                                 likeStatusAnimate: true
@@ -166,7 +163,6 @@ export default class comments extends React.Component {
         };
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
             onResponse: result => {
-                console.log(result);
                 if (result.msg == '调用成功' || result.success) {
                     if (callback) {
                         callback();
@@ -241,7 +237,7 @@ export default class comments extends React.Component {
                     likeStatusAnimate: true
                 })
             }, 2000)
-            this.AddCommentOrPraise(classBinding.state.stype, function() {
+            this.AddCommentOrPraise(classBinding.state.stype, function () {
                 Toast.success("点赞成功", 1);
                 this.initData = [];
                 const dataSource = new ListView.DataSource({
@@ -273,7 +269,6 @@ export default class comments extends React.Component {
         if (this.state.content == '' || !this.state.content) {
             Toast.fail('评论内容不能为空')
         } else {
-            console.log(this.state.content);
             this.AddCommentOrPraise(classBinding.state.stype, function () {
                 Toast.success('评论成功', 1);
                 document.getElementsByTagName('input')[0].blur();
@@ -287,7 +282,7 @@ export default class comments extends React.Component {
                     content: '',
                 })
                 this.getListCommentOrPraise(0);
-            }.bind(this),function(){
+            }.bind(this), function () {
                 Toast.info('评论失败')
             })
 

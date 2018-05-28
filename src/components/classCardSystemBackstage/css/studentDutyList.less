@@ -41,9 +41,6 @@
     }
   }
   .am-grid .am-flexbox .am-flexbox-item .am-grid-item-content .am-grid-item-inner-content{
-    -webkit-flex-direction: row !important;
-    -ms-flex-direction: row !important;
-    flex-direction: row !important;
     height: auto;
     justify-content: left;
   }
@@ -67,12 +64,14 @@
         width: 38px!important;
         height: 38px!important;
       }
-      .am-grid-text{
-        padding-left: 6px;
-
-      }
     }
 
+  }
+  .am-grid-text{
+    width: 100%;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
   }
   .am-grid.am-grid-line .am-flexbox,.am-grid .am-flexbox .am-flexbox-item.am-grid-item,.am-grid.am-grid-square .am-grid-item .am-grid-item-content{
     position: static;
@@ -83,9 +82,6 @@
       .am-grid-icon{
         width: 65px !important;
         height: 65px !important;
-      }
-      .am-grid-text{
-        padding-left: 10px;
       }
     }
 
