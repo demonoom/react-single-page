@@ -256,7 +256,7 @@ export default class brotherXu extends React.Component {
     buildChartOption = (category,barData,lineData) => {
         var _this = this;
         return {
-            backgroundColor: '#0f375f',
+            backgroundColor: '#fff',
             tooltip: {
                 trigger: 'axis',
                 axisPointer: {
@@ -266,7 +266,7 @@ export default class brotherXu extends React.Component {
             legend: {
                 data: ['班级平均理解度', '理解度'],
                 textStyle: {
-                    color: '#ccc'
+                    color: '#5793F0'
                 }
             },
             dataZoom: [
@@ -282,7 +282,7 @@ export default class brotherXu extends React.Component {
                 data: category,
                 axisLine: {
                     lineStyle: {
-                        color: '#ccc'
+                        color: '#5793F0'
                     }
                 }
             },
@@ -290,7 +290,7 @@ export default class brotherXu extends React.Component {
                 splitLine: {show: false},
                 axisLine: {
                     lineStyle: {
-                        color: '#ccc'
+                        color: '#5793F0'
                     }
                 }
             },
@@ -358,7 +358,7 @@ export default class brotherXu extends React.Component {
                 symbol: 'rect',
                 itemStyle: {
                     normal: {
-                        color: '#0f375f'
+                        color: '#5793F0'
                     }
                 },
                 symbolRepeat: true,
@@ -372,7 +372,7 @@ export default class brotherXu extends React.Component {
     buildChartOption2 = (category,barData,lineData) => {
         var _this = this;
         return {
-            backgroundColor: '#0f375f',
+            backgroundColor: '#fff',
             tooltip: {
                 trigger: 'axis',
                 axisPointer: {
@@ -382,7 +382,7 @@ export default class brotherXu extends React.Component {
             legend: {
                 data: ['做题时长', '班级平均时长'],
                 textStyle: {
-                    color: '#ccc'
+                    color: '#5793F0'
                 }
             },
             dataZoom: [
@@ -398,7 +398,7 @@ export default class brotherXu extends React.Component {
                 data: category,
                 axisLine: {
                     lineStyle: {
-                        color: '#ccc'
+                        color: '#5793F0'
                     }
                 }
             },
@@ -406,7 +406,7 @@ export default class brotherXu extends React.Component {
                 splitLine: {show: false},
                 axisLine: {
                     lineStyle: {
-                        color: '#ccc'
+                        color: '#5793F0'
                     }
                 }
             },
@@ -472,7 +472,7 @@ export default class brotherXu extends React.Component {
                 symbol: 'rect',
                 itemStyle: {
                     normal: {
-                        color: '#0f375f'
+                        color: '#5793F0'
                     }
                 },
                 symbolRepeat: true,
