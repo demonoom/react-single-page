@@ -76,7 +76,7 @@ export default class header extends React.Component {
 
     componentWillMount() {
         this.makeTime();
-        this.viewClassRoom()
+        this.viewClassRoom();
         var data = {
             method: 'getAbCode',
         };
