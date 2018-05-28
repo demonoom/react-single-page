@@ -261,15 +261,14 @@ export default class HomeWorkUnderstandAnalysisByClassSubject extends React.Comp
     averageUnderrstanding = () => {
         var analysisUrl = WebServiceUtil.mobileServiceURL + "homeWorkUnderstandAnalysisByClassSubject?clazzId=" + this.state.clazzId + "&pushTime=" + this.state.pushTime + "&ident=" + this.state.ident + "&censusType=1" + "&queId=" + 1;
 
-        /*var data = {
+        var data = {
             method: 'openNewPage',
             url: analysisUrl,
         };
 
         Bridge.callHandler(data, null, function (error) {
             window.location.href = analysisUrl;
-        });*/
-        window.location.href = analysisUrl;
+        });
     };
 
     buildChartOption = (category,barData,lineData) => {
