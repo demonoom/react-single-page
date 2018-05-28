@@ -48,6 +48,7 @@ export default class curriculumSchedule extends React.Component {
         };
         localStorage.setItem("loginUserSchedule", JSON.stringify(loginUser));
         this.setState({ curriculumType });
+        // this.getSemesterList(JSON.parse(localStorage.getItem('loginUserSchedule')).colUid)
     }
 
     componentDidMount() {
@@ -56,6 +57,7 @@ export default class curriculumSchedule extends React.Component {
         if (curriculumType == 2) {
             document.title = '公共课程表';
         }
+        this.getSemesterList(JSON.parse(localStorage.getItem('loginUserSchedule')).colUid)
     }
 
     /**
@@ -63,6 +65,7 @@ export default class curriculumSchedule extends React.Component {
      * @param ident
      */
     getSemesterList(ident) {
+        debugger
         var _this = this;
         var param = {
             "method": 'getSemesterList',
@@ -70,6 +73,7 @@ export default class curriculumSchedule extends React.Component {
         };
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
             onResponse: function (result) {
+                console.log(result);
                 if (result.msg == '调用成功' || result.success == true) {
                     if (_this.state.curriculumType == 1) {
                         _this.getClazzesByUserId(ident, result.response)
@@ -97,6 +101,8 @@ export default class curriculumSchedule extends React.Component {
         };
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
             onResponse: function (result) {
+                console.log(result);
+                
                 if (result.msg == '调用成功' || result.success == true) {
                     _this.buildSeasons(result.response, semesterList)
                 }
@@ -132,14 +138,16 @@ export default class curriculumSchedule extends React.Component {
     }
 
     buildSeasons(cList, sList) {
-        var cListArr = [{
-            label: '请选择',
-            value: '0',
-        }]
-        var sListArr = [{
-            label: '请选择',
-            value: '0',
-        }];
+        // var cListArr = [{
+        //     label: '请选择',
+        //     value: '0',
+        // }]
+        // var sListArr = [{
+        //     label: '请选择',
+        //     value: '0',
+        // }];
+        var cListArr = []
+        var sListArr = []
         if (WebServiceUtil.isEmpty(cList) == false) {
             cList.forEach(function (v, i) {
                 cListArr.push({
@@ -157,7 +165,9 @@ export default class curriculumSchedule extends React.Component {
             })
         }
         var arr = [cListArr, sListArr];
-        this.setState({ seasons: arr })
+        var array = ['1429','1']
+        console.log(arr)
+        this.setState({ seasons: arr,sValue:array });    
     }
 
     /**
@@ -302,7 +312,7 @@ export default class curriculumSchedule extends React.Component {
                 >
                     <List.Item
                         arrow="horizontal"
-                        onClick={this.getSemesterList.bind(this, JSON.parse(localStorage.getItem('loginUserSchedule')).colUid)}
+                        // onClick={this.getSemesterList.bind(this, JSON.parse(localStorage.getItem('loginUserSchedule')).colUid)}
                     >{pickerTip},学期</List.Item>
                 </Picker>
                 <WhiteSpace size="lg" />
