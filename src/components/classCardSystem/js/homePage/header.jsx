@@ -76,23 +76,25 @@ export default class header extends React.Component {
 
     componentWillMount() {
         this.makeTime();
-        this.viewClassRoom();
-        var data = {
-            method: 'getAbCode',
-        };
-
-        /**
-         * 从客户端获取abcode用于请求天气
-         * 客户端没有传abcode将按照西安天气展示
-         */
-        Bridge.callHandler(data, function (res) {
-            demeanor.weatherInfo(res)
-            demeanor.setState({abcode: res})
-        }, function (error) {
-            Toast.fail('地点获取失败', 5);
-            demeanor.weatherInfo(610113);
-            demeanor.setState({abcode: 610113})
-        });
+        this.viewClassRoom()
+        // var data = {
+        //     method: 'getAbCode',
+        // };
+        //
+        // /**
+        //  * 从客户端获取abcode用于请求天气
+        //  * 客户端没有传abcode将按照西安天气展示
+        //  */
+        // Bridge.callHandler(data, function (res) {
+        //     demeanor.weatherInfo(res)
+        //     demeanor.setState({abcode: res})
+        // }, function (error) {
+        //     Toast.fail('地点获取失败', 5);
+        //     demeanor.weatherInfo(610113);
+        //     demeanor.setState({abcode: 610113})
+        // });
+        demeanor.weatherInfo(610113);
+        demeanor.setState({abcode: 610113})
     }
 
     componentDidUpdate() {
