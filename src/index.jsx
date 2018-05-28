@@ -410,7 +410,7 @@ class Index extends React.Component {
                     {/*to="/moralEducation?ident=23836"*/}
                     {/*style={{fontSize: '24px'}}>德育评价</Link></li>*/}
                     <li><Link
-                        to="/classCardHomePage?clazzId=819&roomId=1&mac=02:00:00:00:00:00"
+                        to="/classCardHomePage?clazzId=580&roomId=2&mac=02:00:00:00:00:00"
                         style={{fontSize: '24px'}}>班牌首页</Link></li>
                     <li><Link
                         to="/publicClassCardHomePage?roomId=2&mac=02:00:00:00:00:00"

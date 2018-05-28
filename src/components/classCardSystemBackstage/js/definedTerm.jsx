@@ -60,6 +60,11 @@ export default class definedTerm extends React.Component {
             Toast.fail('日期设置错误,请检查');
             return
         }
+        var time = new Date().getFullYear() + '';
+        if (time - startDateTime.substr(0, 4) > 0 || time - endDateTime.substr(0, 4) > 0) {
+            Toast.fail('无法选择今年之前的日期', 5);
+            return
+        }
         var param = {
             "method": 'addSemester',
             "term":
