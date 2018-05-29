@@ -80,7 +80,6 @@ export default class curriculumSchedule extends React.Component {
      * @param ident
      */
     getSemesterList(ident) {
-        debugger
         var _this = this;
         var param = {
             "method": 'getSemesterList',
