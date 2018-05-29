@@ -156,11 +156,9 @@ export default class brotherXu extends React.Component {
         var divContentArray = [];
         this.setState({subjectDivContentArray});
         var columnarChartOption = null;
-        if (censusType == 0) {
-            columnarChartOption = _this.buildChartOption();
-        } else {
-            columnarChartOption = _this.buildChartOption2();
-        }
+        var category = [];
+        var lineData = [];
+        var barData = [];
 
         for(var index=0;index<subjectDivContentArray.length-1;index++){
             var subjectAndStudentJson=subjectDivContentArray[index];
@@ -179,21 +177,39 @@ export default class brotherXu extends React.Component {
             };
             stuJsonArray.forEach(function (stuJson) {
                 console.log(subjectJson.subjectContent.split('>')[2]);
-                (columnarChartOption.xAxis)[0].data.push("题目"+(index+1));
+                // (columnarChartOption.xAxis)[0].data.push("题目"+(index+1));
+                category.push("题目"+(index+1));
                 avgOfUnderstandTotal += Math.abs(parseInt(stuJson.avgOfUnderstand));
                 avgOfTimeLengthTotal += Math.abs(parseInt(stuJson.avgOfTimeLength));
                 numTotal++;
-                if (censusType == 0) {
+                /*if (censusType == 0) {
                     (columnarChartOption.series)[0].data.push(Math.abs(parseInt(stuJson.avgOfUnderstand)));
                     (columnarChartOption.series)[1].data.push(avgUnder);
                 } else {
                     (columnarChartOption.series)[0].data.push(Math.abs(parseInt(stuJson.avgOfTimeLength)));
                     (columnarChartOption.series)[1].data.push(avgUnder);
+                }*/
+                if (censusType == 0) {
+                    /*(columnarChartOption.series)[0].data.push(Math.abs(parseInt(stuJson.avgOfUnderstand)));
+                    (columnarChartOption.series)[1].data.push(avgUnder);*/
+                    barData.push(parseInt(stuJson.avgOfUnderstand));
+                    lineData.push(avgUnder);
+                } else {
+                    /*(columnarChartOption.series)[0].data.push(Math.abs(parseInt(stuJson.avgOfTimeLength)));
+                    (columnarChartOption.series)[1].data.push(avgUnder);*/
+                    barData.push(parseInt(stuJson.avgOfUnderstand));
+                    lineData.push(avgUnder);
                 }
 
                 // (columnarChartOption.series)[1].data.push(Math.abs(parseInt(stuJson.avgOfTimeLength)));
                 // (columnarChartOption.series)[1].data.push(stuJson.avgOfTimeLength.toFixed(2));
             });
+
+            if (censusType == 0) {
+                columnarChartOption = _this.buildChartOption(category,barData,lineData);
+            } else {
+                columnarChartOption = _this.buildChartOption2(category,barData,lineData);
+            }
 
             var subjectJsonDiv = <div>
                 {/*<div className="subject_title">{subjectShowNo}:</div>*/}
@@ -237,31 +253,22 @@ export default class brotherXu extends React.Component {
         });
     }
 
-    buildChartOption = () => {
+    buildChartOption = (category,barData,lineData) => {
         var _this = this;
         return {
-            color: colors,
-
+            backgroundColor: '#fff',
             tooltip: {
                 trigger: 'axis',
                 axisPointer: {
-                    type: 'cross'
+                    type: 'shadow'
                 }
             },
-            grid: {
-                left: '15%'
+            legend: {
+                data: ['班级平均理解度', '理解度'],
+                textStyle: {
+                    color: '#5793F0'
+                }
             },
-            /*      toolbox: {
-             feature: {
-             dataView: {show: true, readOnly: false},
-             restore: {show: true},
-             saveAsImage: {show: true}
-             }
-             },*/
-            // legend: {
-            //     // data:['理解度','时长']
-            //     data:['理解度']
-            // },
             dataZoom: [
                 {
                     show: true,
@@ -271,103 +278,113 @@ export default class brotherXu extends React.Component {
                     end: 100
                 }
             ],
-            xAxis: [
-                {
-                    type: 'category',
-                    axisTick: {
-                        alignWithLabel: true
-                    },
-                    // data: ['学生A','学生B','学生C','学生D','学生E','学生F','学生G','学生H','学生I','学生J','学生K','学生L'],
-                    data: [],
-                    triggerEvent: true
-                }
-            ],
-            yAxis: [
-                {
-                    type: 'value',
-                    name: '理解度',
-                    min: 0,
-                    max: 100,
-                    position: 'left',
-                    axisLine: {
-                        lineStyle: {
-                            color: colors[0]
-                        }
-                    },
-                    axisLabel: {
-                        formatter: '{value} %'
-                    }
-                },
-
-                {
-                    type: 'value',
-                    name: '班级平均理解度',
-                    min: 0,
-                    //max: 20,
-                    position: 'right',
-                    axisLine: {
-                        lineStyle: {
-                            color: colors[1]
-                        }
-                    },
-                    axisTick: {
-                        show: true
-                    },
-                    axisLabel: {
-                        show: true,
-                        formatter: '{value}  %'
+            xAxis: {
+                data: category,
+                axisLine: {
+                    lineStyle: {
+                        color: '#5793F0'
                     }
                 }
-            ],
-            series: [
-                {
-                    name: '理解度',
-                    type: 'bar',
-                    showLabel: true,
-                    // data:[-2.0, -40.9, 7.0, 23.2, -25.6, 76.7, -13.6, 62.2, 32.6, 20.0, 6.4, 3.3],
-                    data: [],
-                    itemStyle: {normal: {label: {show: true}}}
-                },
-                {
-                    name: '班级平均理解度',
-                    type: 'line',
-                    yAxisIndex: 1,
-                    // data:[2.0, 2, 3, 4, 6, 10, 19, 10, 15.0, 16, 12.0, 6],
-                    data: [],
-                    itemStyle: {
-                        normal: {
-                            color: 'red'
-                        }
-                    },
+            },
+            yAxis: {
+                splitLine: {show: false},
+                axisLine: {
+                    lineStyle: {
+                        color: '#5793F0'
+                    }
                 }
-            ]
+            },
+            series: [{
+                name: '班级平均理解度',
+                type: 'line',
+                smooth: true,
+                showAllSymbol: true,
+                symbol: 'emptyCircle',
+                symbolSize: 15,
+                data: lineData,
+                label:{
+                    normal:{
+                        show:true,            //显示数字
+                        position: 'top'        //这里可以自己选择位置
+                    }
+                }
+            }, {
+                name: '理解度',
+                type: 'bar',
+                barWidth: 10,
+                itemStyle: {
+                    normal: {
+                        show:true,
+                        position:'top',
+                        barBorderRadius: 5,
+                        color: (
+                            0, 0, 0, 1,
+                                [
+                                    {offset: 0, color: '#14c8d4'},
+                                    {offset: 1, color: '#43eec6'}
+                                ]
+                        )
+                    }
+                },
+                data: barData,
+                label:{
+                    normal:{
+                        show:true,            //显示数字
+                        position: 'top'        //这里可以自己选择位置
+                    }
+                }
+            }, {
+                name: '班级平均理解度',
+                type: 'bar',
+                barGap: '-100%',
+                barWidth: 10,
+                itemStyle: {
+                    normal: {
+                        color: (
+                            0, 0, 0, 1,
+                                [
+                                    {offset: 0, color: 'rgba(20,200,212,0.5)'},
+                                    {offset: 0.2, color: 'rgba(20,200,212,0.2)'},
+                                    {offset: 1, color: 'rgba(20,200,212,0)'}
+                                ]
+                        )
+                    }
+                },
+                z: -12,
+                data: lineData
+            }, {
+                name: '班级平均理解度',
+                type: 'pictorialBar',
+                symbol: 'rect',
+                itemStyle: {
+                    normal: {
+                        color: '#5793F0'
+                    }
+                },
+                symbolRepeat: true,
+                symbolSize: [12, 4],
+                symbolMargin: 1,
+                z: -10,
+                data: lineData
+            }]
         };
     };
-    buildChartOption2 = () => {
+    buildChartOption2 = (category,barData,lineData) => {
         var _this = this;
         return {
-            color: colors,
-
+            backgroundColor: '#fff',
             tooltip: {
                 trigger: 'axis',
                 axisPointer: {
-                    type: 'cross'
+                    type: 'shadow'
                 }
             },
-            grid: {
-                left: '15%'
+            legend: {
+                data: ['做题时长', '班级平均时长'],
+                textStyle: {
+                    color: '#5793F0'
+                }
             },
-            /*      toolbox: {
-             feature: {
-             dataView: {show: true, readOnly: false},
-             restore: {show: true},
-             saveAsImage: {show: true}
-             }
-             },*/
-            // legend: {
-            //     // data:['理解度','时长']
-            //     data:['理解度']
-            // },
             dataZoom: [
                 {
                     show: true,
@@ -377,76 +394,93 @@ export default class brotherXu extends React.Component {
                     end: 100
                 }
             ],
-            xAxis: [
-                {
-                    type: 'category',
-                    axisTick: {
-                        alignWithLabel: true
-                    },
-                    // data: ['学生A','学生B','学生C','学生D','学生E','学生F','学生G','学生H','学生I','学生J','学生K','学生L'],
-                    data: [],
-                    triggerEvent: true
-                }
-            ],
-            yAxis: [
-                {
-                    type: 'value',
-                    name: '做题时长',
-                    min: 0,
-                    max: 100,
-                    position: 'left',
-                    axisLine: {
-                        lineStyle: {
-                            color: colors[0]
-                        }
-                    },
-                    axisLabel: {
-                        formatter: '{value} 秒'
-                    }
-                },
-
-                {
-                    type: 'value',
-                    name: '班级平均时长',
-                    min: 0,
-                    //max: 20,
-                    position: 'right',
-                    axisLine: {
-                        lineStyle: {
-                            color: colors[1]
-                        }
-                    },
-                    axisTick: {
-                        show: true
-                    },
-                    axisLabel: {
-                        show: true,
-                        formatter: '{value} 秒'
+            xAxis: {
+                data: category,
+                axisLine: {
+                    lineStyle: {
+                        color: '#5793F0'
                     }
                 }
-            ],
-            series: [
-                {
-                    name: '做题时长',
-                    type: 'bar',
-                    showLabel: true,
-                    // data:[-2.0, -40.9, 7.0, 23.2, -25.6, 76.7, -13.6, 62.2, 32.6, 20.0, 6.4, 3.3],
-                    data: [],
-                    itemStyle: {normal: {label: {show: true}}}
-                },
-                {
-                    name: '班级平均时长',
-                    type: 'line',
-                    yAxisIndex: 1,
-                    // data:[2.0, 2, 3, 4, 6, 10, 19, 10, 15.0, 16, 12.0, 6],
-                    data: [],
-                    itemStyle: {
-                        normal: {
-                            color: 'red'
-                        }
-                    },
+            },
+            yAxis: {
+                splitLine: {show: false},
+                axisLine: {
+                    lineStyle: {
+                        color: '#5793F0'
+                    }
                 }
-            ]
+            },
+            series: [{
+                name: '班级平均时长',
+                type: 'line',
+                smooth: true,
+                showAllSymbol: true,
+                symbol: 'emptyCircle',
+                symbolSize: 15,
+                data: lineData,
+                label:{
+                    normal:{
+                        show:true,            //显示数字
+                        position: 'top'        //这里可以自己选择位置
+                    }
+                }
+            }, {
+                name: '做题时长',
+                type: 'bar',
+                barWidth: 10,
+                itemStyle: {
+                    normal: {
+                        barBorderRadius: 5,
+                        color: (
+                            0, 0, 0, 1,
+                                [
+                                    {offset: 0, color: '#14c8d4'},
+                                    {offset: 1, color: '#43eec6'}
+                                ]
+                        )
+                    }
+                },
+                data: barData,
+                label:{
+                    normal:{
+                        show:true,            //显示数字
+                        position: 'top'        //这里可以自己选择位置
+                    }
+                }
+            }, {
+                name: '班级平均时长',
+                type: 'bar',
+                barGap: '-100%',
+                barWidth: 10,
+                itemStyle: {
+                    normal: {
+                        color: (
+                            0, 0, 0, 1,
+                                [
+                                    {offset: 0, color: 'rgba(20,200,212,0.5)'},
+                                    {offset: 0.2, color: 'rgba(20,200,212,0.2)'},
+                                    {offset: 1, color: 'rgba(20,200,212,0)'}
+                                ]
+                        )
+                    }
+                },
+                z: -12,
+                data: lineData
+            }, {
+                name: '班级平均时长',
+                type: 'pictorialBar',
+                symbol: 'rect',
+                itemStyle: {
+                    normal: {
+                        color: '#5793F0'
+                    }
+                },
+                symbolRepeat: true,
+                symbolSize: [12, 4],
+                symbolMargin: 1,
+                z: -10,
+                data: lineData
+            }]
         };
     };
     getLoadingOption = () => {

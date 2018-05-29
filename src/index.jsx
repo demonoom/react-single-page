@@ -379,9 +379,9 @@ class Index extends React.Component {
                     {/*<li><Link*/}
                     {/*to="/m3u8Player?path=http://bpic.588ku.com/video_listen/588ku_video/18/04/17/17/03/11/video5ad5b84f167d6.mp4"*/}
                     {/*style={{fontSize: '24px'}}>m3u8Player</Link></li>*/}
-                    {/*<li><Link*/}
-                    {/*to="/HomeWorkUnderstandAnalysisGuideByNoom?ident=23836"*/}
-                    {/*style={{fontSize: '24px'}}>作业表情分析NOOM</Link></li>*/}
+                    <li><Link
+                    to="/HomeWorkUnderstandAnalysisGuideByNoom?ident=23836"
+                    style={{fontSize: '24px'}}>作业表情分析NOOM</Link></li>
                     {/*<li><Link*/}
                     {/*to="/homeworkModule?classId=819"*/}
                     {/*style={{fontSize: '24px'}}>作业模块</Link></li>*/}
@@ -437,7 +437,7 @@ class Index extends React.Component {
                         to="/classCardHomePageDoor?access_user=23836"
                         style={{fontSize: '24px'}}>后台总入口</Link></li>
                     <li><Link
-                        to="/fileAnalysis?aid=3"
+                        to="/fileAnalysis?aid=590961"
                         style={{fontSize: '24px'}}>文件表情分析</Link></li>
                     {/*<li><Link*/}
                     {/*to="/studentSelectCourse?access_user=23852"*/}
