@@ -4,6 +4,9 @@
 #homeworkModule .am-list-view-scrollview-content {
   width: 100%;
 }
+#homeworkModule .am-list-body::before {
+  background: none;
+}
 #homeworkModule .textOver {
   overflow: hidden;
   white-space: nowrap;
