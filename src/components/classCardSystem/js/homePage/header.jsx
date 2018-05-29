@@ -76,7 +76,11 @@ export default class header extends React.Component {
 
     componentWillMount() {
         this.makeTime();
-        this.viewClassRoom()
+        this.viewClassRoom();
+        $.get('http://ipinfo.io/json', function (data) {
+            demeanor.getAbCode(data.ip)
+        });
+
         // var data = {
         //     method: 'getAbCode',
         // };
@@ -93,8 +97,6 @@ export default class header extends React.Component {
         //     demeanor.weatherInfo(610113);
         //     demeanor.setState({abcode: 610113})
         // });
-        demeanor.weatherInfo(610113);
-        demeanor.setState({abcode: 610113})
     }
 
     componentDidUpdate() {
@@ -110,6 +112,13 @@ export default class header extends React.Component {
 
     componentWillUnmount() {
         clearInterval(timer)
+    }
+
+    getAbCode(ip) {
+        $.get('http://restapi.amap.com/v3/ip?key=fce57f3f5ed99a1b7925992439e5a224&ip=' + ip, function (res) {
+            demeanor.weatherInfo(res.adcode)
+            demeanor.setState({abcode: res.adcode})
+        })
     }
 
     viewClassRoom() {
