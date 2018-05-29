@@ -279,5 +279,6 @@
   margin-top: -1rem;
 }
 #classCardHomePage .home_content_index {
-  margin-top: 0.28rem;
+  padding-top: 0.28rem;
+  height: calc(100% - 1.11rem) !important;
 }
