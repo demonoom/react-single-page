@@ -21,6 +21,7 @@ export default class curriculumSchedule extends React.Component {
             sValue: ['0', '0'],
             visible: false,
             classTableArray: [],
+            clientHeight: document.body.clientHeight,
             seasons: [[
                 {
                     label: '请选择',
@@ -255,8 +256,14 @@ export default class curriculumSchedule extends React.Component {
         };
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
             onResponse: function (result) {
+                console.log(result);
                 if (result.msg == '调用成功' || result.success == true) {
-                    var arr = result.response[0].courseList
+                    var arr;
+                    if(result.response.length === 0){
+                        arr = result.response;
+                    }else {
+                        arr = result.response[0].courseList
+                    }
                     _this.setState({classTableArray: arr});
                 }
             },
