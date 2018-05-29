@@ -11,8 +11,8 @@
   line-height: 24px;
   height: 24px;
   position: absolute;
-  right: 5px;
-  top: 0;
+  right: 20px;
+  top: 10px;
 }
 #studentDutyList .am-button-small:before {
   border: 0;
@@ -38,14 +38,20 @@
 }
 #studentDutyList .dutyList {
   background-color: #fff;
-  padding: 10px 15px;
-  max-height: calc(100% - 153px);
-  overflow-y: auto;
+  height: calc(100% - 148px);
 }
 #studentDutyList .dutyList .planTitle {
   position: relative;
   font-size: 17px;
   line-height: 24px;
+  padding: 10px 15px;
+}
+#studentDutyList .am-grid {
+  height: calc(100% - 44px) !important;
+  overflow-y: auto;
+}
+#studentDutyList .am-grid .am-flexbox {
+  padding: 0 15px;
 }
 #studentDutyList .am-grid .am-flexbox .am-flexbox-item .am-grid-item-content .am-grid-item-inner-content {
   height: auto;
@@ -61,7 +67,7 @@
 }
 #studentDutyList .am-grid.am-grid-square .am-grid-item .am-grid-item-inner-content {
   height: auto;
-  padding: 20px 0;
+  padding-bottom: 20px;
 }
 #studentDutyList .am-grid.am-grid-square .am-grid-item .am-grid-item-inner-content .am-grid-icon {
   -webkit-border-radius: 50%;
