@@ -1,4 +1,3 @@
-(node) util.print is deprecated. Use console.log instead.
 #classCardHomePage .home_right {
   width: 13.33rem;
   float: right;
@@ -278,4 +277,8 @@
   margin-bottom: 0.36rem ;
   display: inline-block;
   margin-top: -1rem;
+}
+#classCardHomePage .home_content_index {
+  padding-top: 0.28rem;
+  height: calc(100% - 1.11rem) !important;
 }
