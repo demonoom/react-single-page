@@ -225,7 +225,7 @@ export default class addMoralEducation extends React.Component {
                  onClick={onClick}
             >
                 <div className="am-list-line">
-                    <div className="am-list-content">{children}</div>
+                    <div className="am-list-content">{children}<i className="redStar">*</i></div>
                     <span className="choiceData am-list-extra" style={{ float: 'right', color: '#888' }}>{extra}</span><div className="am-list-arrow am-list-arrow-horizontal"></div>
                 </div>
             </div>
