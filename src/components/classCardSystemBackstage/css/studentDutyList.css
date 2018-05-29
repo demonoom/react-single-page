@@ -38,7 +38,7 @@
 }
 #studentDutyList .dutyList {
   background-color: #fff;
-  height: calc(100% - 153px);
+  height: calc(100% - 148px);
 }
 #studentDutyList .dutyList .planTitle {
   position: relative;
