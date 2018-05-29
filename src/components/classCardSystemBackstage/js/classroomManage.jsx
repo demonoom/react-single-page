@@ -321,7 +321,7 @@ export default class classroomManage extends React.Component {
             return (<div>
                 {
                     <div className="classInfo">
-                        <span className="delClassroom" onClick={this.delClassroom.bind(this,rowData.id)}>X</span>
+                        <span className="delClassroom" onClick={this.delClassroom.bind(this,rowData.id)}>删除</span>
                         <div className="textOver">
                         <span className="classroom">{rowData.name}</span>
                         {

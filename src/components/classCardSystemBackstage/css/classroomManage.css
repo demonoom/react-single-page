@@ -74,6 +74,26 @@
 #classroomManage .tableDiv .liName {
   font-size: 30px;
 }
+#classroomManage .tableDiv .delClassroom {
+  font-size: 14px;
+  color: #F56A55;
+  margin-left: 20px;
+  border: 1px #F56A55 solid;
+  border-radius: 2px;
+  position: absolute;
+  right: 15px;
+  top: 46px;
+  line-height: 22px;
+  padding: 0 14px;
+  box-sizing: border-box;
+}
+#classroomManage .tableDiv .creatTime {
+  margin-right: 20px;
+  font-size: 15px;
+  color: #a9a9a9;
+  padding-top: 7px;
+  display: block;
+}
 #classroomManage .addModel {
   box-sizing: border-box;
   padding: 20px 0px;
