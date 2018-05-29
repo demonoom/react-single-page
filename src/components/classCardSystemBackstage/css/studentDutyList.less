@@ -12,8 +12,8 @@
     line-height: 24px;
     height: 24px;
     position: absolute;
-    right: 5px;
-    top: 0;
+    right: 20px;
+    top: 10px;
     &:before{
       border: 0;
     }
@@ -33,13 +33,19 @@
   }
   .dutyList{
     background-color: #fff;
-    padding: 10px 15px;
-    max-height: calc(~"100% - 153px");
-    overflow-y: auto;
+    height: calc(~"100% - 148px");
     .planTitle{
       position: relative;
       font-size: 17px;
       line-height: 24px;
+      padding: 10px 15px;
+    }
+  }
+  .am-grid{
+    height: calc(~"100% - 44px") !important;
+    overflow-y: auto;
+    .am-flexbox{
+      padding: 0 15px;
     }
   }
   .am-grid .am-flexbox .am-flexbox-item .am-grid-item-content .am-grid-item-inner-content{
@@ -57,7 +63,7 @@
     }
     .am-grid-item-inner-content{
       height: auto;
-      padding: 20px 0;
+      padding-bottom: 20px;
 
       .am-grid-icon{
         -webkit-border-radius: 50%;

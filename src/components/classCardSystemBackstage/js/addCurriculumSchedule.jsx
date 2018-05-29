@@ -180,7 +180,7 @@ export default class addCurriculumSchedule extends React.Component {
             classArray.push({
                 "courseName": v.clazzName,
                 "index": i + 1,
-                "teacherId": v.teacherName,
+                "teacherId": v.tercherName,
                 "classRoomId": classRoomId,
                 "isPublic": isPublic,
                 "openTime": v.startTimeData,

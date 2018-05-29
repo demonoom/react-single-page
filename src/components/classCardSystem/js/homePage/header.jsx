@@ -121,7 +121,9 @@ export default class header extends React.Component {
             onResponse: function (result) {
                 if (result.msg == '调用成功' || result.success == true) {
                     if (WebServiceUtil.isEmpty(result.response) == false) {
-                        demeanor.setState({classroomName: result.response.defaultBindedClazz.name})
+                        if(WebServiceUtil.isEmpty(result.response)==false && WebServiceUtil.isEmpty(result.response.defaultBindedClazz)==false){
+                            demeanor.setState({classroomName: result.response.defaultBindedClazz.name})
+                        }
                     }
                 }
             },
