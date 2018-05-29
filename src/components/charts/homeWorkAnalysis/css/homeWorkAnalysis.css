@@ -1,3 +1,4 @@
+(node) util.print is deprecated. Use console.log instead.
 #homeWorkAnalysis {
   height: 100%;
   overflow-x: hidden;
@@ -95,12 +96,15 @@
 #homeWorkAnalysis .text_chart span i {
   color: #5793f3;
 }
+#homeWorkAnalysis .timeNum_cont {
+  text-align: right;
+}
 #homeWorkAnalysis .timeNum {
-  border: 1px solid #6a6ef6;
-  line-height: 2rem;
-  border-radius: 0.3rem;
-  margin: 30px 0 0 8px;
+  line-height: 1.5rem;
+  border-radius: 3px;
+  margin: 15px 0 5px 8px;
   padding: 2px 6px;
-  float: right;
   z-index: 999;
+  display: inline-block;
+  color: #0084ff;
 }

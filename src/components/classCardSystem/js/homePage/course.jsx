@@ -19,14 +19,12 @@ export default class course extends React.Component {
     }
 
     componentWillReceiveProps(nextProps) {
-        console.log(nextProps.messageUtilObj);
         var roomId = localStorage.getItem('roomId');
         if (nextProps.messageUtilObj.command == 'brand_class_open') {
             //查看某个课表项(一接收到开课命令就获取当前开课)
             if (roomId == nextProps.messageUtilObj.data.classroomId) {
                 this.viewCourseTableItem(nextProps.messageUtilObj.data)
             }
-
         } else if (nextProps.messageUtilObj.command == 'brand_class_close') {
             if (roomId == nextProps.messageUtilObj.data.classroomId) {
                 this.setState({data: null})

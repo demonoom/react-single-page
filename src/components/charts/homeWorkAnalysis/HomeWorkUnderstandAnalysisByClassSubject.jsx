@@ -228,12 +228,14 @@ export default class HomeWorkUnderstandAnalysisByClassSubject extends React.Comp
                 <div className="subject_title">{subjectShowNo}:</div>
                 <div className="subject_content">
                     <article dangerouslySetInnerHTML={{__html: subjectJson.subjectContent}}></article>
-                    <span
-                        onClick={_this.averageUnderrstanding}
-                        className="timeNum"
-                    >
-                        {_this.state.divDisplay ? '本题耗时排名:' : '本题难度排名:' }{order}
-                        </span>
+                    <div className="timeNum_cont">
+                        <span
+                            onClick={_this.averageUnderrstanding}
+                            className="timeNum"
+                        >
+                            {_this.state.divDisplay ? '本题耗时排名:' : '本题难度排名:' }{order}
+                            </span>
+                    </div>
                 </div>
                 <div style={{height: '300px'}} className="echarts_wrap">
                     <ReactEcharts
@@ -261,21 +263,20 @@ export default class HomeWorkUnderstandAnalysisByClassSubject extends React.Comp
     averageUnderrstanding = () => {
         var analysisUrl = WebServiceUtil.mobileServiceURL + "homeWorkUnderstandAnalysisByClassSubject?clazzId=" + this.state.clazzId + "&pushTime=" + this.state.pushTime + "&ident=" + this.state.ident + "&censusType=1" + "&queId=" + 1;
 
-        /*var data = {
+        var data = {
             method: 'openNewPage',
             url: analysisUrl,
         };
 
         Bridge.callHandler(data, null, function (error) {
             window.location.href = analysisUrl;
-        });*/
-        window.location.href = analysisUrl;
+        });
     };
 
     buildChartOption = (category,barData,lineData) => {
         var _this = this;
         return {
-            backgroundColor: '#0f375f',
+            backgroundColor: '#fff',
             tooltip: {
                 trigger: 'axis',
                 axisPointer: {
@@ -285,7 +286,7 @@ export default class HomeWorkUnderstandAnalysisByClassSubject extends React.Comp
             legend: {
                 data: ['平均理解度', '理解度'],
                 textStyle: {
-                    color: '#ccc'
+                    color: '#5793f3'
                 }
             },
             dataZoom: [
@@ -301,7 +302,7 @@ export default class HomeWorkUnderstandAnalysisByClassSubject extends React.Comp
                 data: category,
                 axisLine: {
                     lineStyle: {
-                        color: '#ccc'
+                        color: '#5793f3'
                     }
                 }
             },
@@ -309,7 +310,7 @@ export default class HomeWorkUnderstandAnalysisByClassSubject extends React.Comp
                 splitLine: {show: false},
                 axisLine: {
                     lineStyle: {
-                        color: '#ccc'
+                        color: '#5793F0'
                     }
                 }
             },
@@ -377,7 +378,7 @@ export default class HomeWorkUnderstandAnalysisByClassSubject extends React.Comp
                 symbol: 'rect',
                 itemStyle: {
                     normal: {
-                        color: '#0f375f'
+                        color: '#5793F0'
                     }
                 },
                 symbolRepeat: true,
@@ -391,7 +392,7 @@ export default class HomeWorkUnderstandAnalysisByClassSubject extends React.Comp
     buildChartOption2 = (category,barData,lineData) => {
         var _this = this;
         return {
-            backgroundColor: '#0f375f',
+            backgroundColor: '#fff',
             tooltip: {
                 trigger: 'axis',
                 axisPointer: {
@@ -401,7 +402,7 @@ export default class HomeWorkUnderstandAnalysisByClassSubject extends React.Comp
             legend: {
                 data: ['做题时长', '班级平均时长'],
                 textStyle: {
-                    color: '#ccc'
+                    color: '#5793F0'
                 }
             },
             dataZoom: [
@@ -417,7 +418,7 @@ export default class HomeWorkUnderstandAnalysisByClassSubject extends React.Comp
                 data: category,
                 axisLine: {
                     lineStyle: {
-                        color: '#ccc'
+                        color: '#5793F0'
                     }
                 }
             },
@@ -425,7 +426,7 @@ export default class HomeWorkUnderstandAnalysisByClassSubject extends React.Comp
                 splitLine: {show: false},
                 axisLine: {
                     lineStyle: {
-                        color: '#ccc'
+                        color: '#5793F0'
                     }
                 }
             },
@@ -491,7 +492,7 @@ export default class HomeWorkUnderstandAnalysisByClassSubject extends React.Comp
                 symbol: 'rect',
                 itemStyle: {
                     normal: {
-                        color: '#0f375f'
+                        color: '#5793F0'
                     }
                 },
                 symbolRepeat: true,

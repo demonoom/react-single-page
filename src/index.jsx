@@ -437,7 +437,7 @@ class Index extends React.Component {
                         to="/classCardHomePageDoor?access_user=23836"
                         style={{fontSize: '24px'}}>后台总入口</Link></li>
                     <li><Link
-                        to="/fileAnalysis?aid=3"
+                        to="/fileAnalysis?aid=590961"
                         style={{fontSize: '24px'}}>文件表情分析</Link></li>
                     {/*<li><Link*/}
                     {/*to="/studentSelectCourse?access_user=23852"*/}
