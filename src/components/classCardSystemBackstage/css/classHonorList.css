@@ -1,0 +1,10 @@
+#classHonorList {
+  padding: 5px;
+}
+#classHonorList li {
+  border-bottom: 1px solid #ccc;
+  padding: 5px;
+}
+#classHonorList .classDetail {
+  float: right;
+}
