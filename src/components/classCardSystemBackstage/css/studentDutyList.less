@@ -1,19 +1,10 @@
 #studentDutyList{
+  overflow-y: auto;
   .am-button-small{
-    background: #f55d45;
-    color: #fff !important;
-    padding: 0 15px;
-    text-align: center;
-    -webkit-border-radius: 2px;
-    -moz-border-radius: 2px;
-    border-radius: 2px;
-    border: 0 !important;
-    font-size: 14px;
-    line-height: 24px;
-    height: 24px;
-    position: absolute;
-    right: 20px;
-    top: 10px;
+    background-color: #fff;
+    height: 44px;
+    line-height: 44px;
+    border: none !important;
     &:before{
       border: 0;
     }
@@ -44,9 +35,7 @@
   .am-grid{
     height: calc(~"100% - 44px") !important;
     overflow-y: auto;
-    .am-flexbox{
-      padding: 0 15px;
-    }
+
   }
   .am-grid .am-flexbox .am-flexbox-item .am-grid-item-content .am-grid-item-inner-content{
     height: auto;
@@ -81,6 +70,8 @@
     white-space: nowrap;
     text-overflow: ellipsis;
     line-height: 14px;
+    font-size: 13px;
+    color: #464646;
   }
   .am-grid.am-grid-line .am-flexbox,.am-grid .am-flexbox .am-flexbox-item.am-grid-item,.am-grid.am-grid-square .am-grid-item .am-grid-item-content{
     position: static;
@@ -100,9 +91,13 @@
     position: relative;
     font-size: 17px;
     line-height: 24px;
-    padding: 10px 15px;
+    padding: 12px 15px 5px;
+    background-color: #fff;
+    border-bottom: 1px #f4f4f4 solid;
+    .top{
+      line-height: 44px;
+
+    }
   }
-  .btn_del{
-    top:50px;
-  }
+
 }

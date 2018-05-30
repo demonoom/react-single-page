@@ -88,13 +88,14 @@ export default class studentDutyList extends React.Component {
 
                         var dutyTag = <div>
                             <div className="planTitle">
-                                <span>星期：{week}</span>
+                                <div className="top">
+                                    <span>星期：{week}</span>
+                                    <Button className="modifyBtn_common" type="primary" size="small" onClick={_this.editStudentDuty.bind(_this,week,studentIdStr,dutyId)}></Button>
+                                    {/*<Button type="primary" size="small" onClick={_this.editStudentDuty}>修改</Button>*/}
+                                    <Button type="primary" size="small" className="btn_del deleteBtn_common" onClick={_this.delStudentDuty.bind(_this,dutyId)}></Button>
+                                </div>
                                 <Grid data={studentList} columnNum={4} activeStyle={false}/>
-                                <Button type="primary" size="small" onClick={_this.editStudentDuty.bind(_this,week,studentIdStr,dutyId)}>修改</Button>
-                                {/*<Button type="primary" size="small" onClick={_this.editStudentDuty}>修改</Button>*/}
-                                <Button type="primary" size="small" className="btn_del" onClick={_this.delStudentDuty.bind(_this,dutyId)}>删除</Button>
                             </div>
-                            <WhiteSpace size="lg"/>
                         </div>;
                         dutyTagList.push(dutyTag);
                     })
