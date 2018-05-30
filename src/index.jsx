@@ -340,6 +340,20 @@ const studentSelectCourse = (location, cb) => {
     )
 }
 
+const classDemeanorList = (location, cb) => {
+    require.ensure([], require => {
+            cb(null, require("./components/classCardSystemBackstage/js/classDemeanorList").default)
+        }
+    )
+}
+
+const classHonorList = (location, cb) => {
+    require.ensure([], require => {
+            cb(null, require("./components/classCardSystemBackstage/js/classHonorList").default)
+        }
+    )
+}
+
 import './index.less';
 
 class Index extends React.Component {
@@ -513,6 +527,8 @@ ReactDOM.render(
             <Route path="classCardHomePageDoor" getComponent={classCardHomePageDoor}/>
             <Route path="fileAnalysis" getComponent={fileAnalysis}/>
             <Route path="studentSelectCourse" getComponent={studentSelectCourse}/>
+            <Route path="classDemeanorList" getComponent={classDemeanorList}/>
+            <Route path="classHonorList" getComponent={classHonorList}/>
         </Route>
     </Router>
     , document.getElementById('example'));
