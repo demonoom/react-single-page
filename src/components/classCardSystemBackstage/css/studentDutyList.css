@@ -81,6 +81,7 @@
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
+  line-height: 14px;
 }
 #studentDutyList .am-grid.am-grid-line .am-flexbox,
 #studentDutyList .am-grid .am-flexbox .am-flexbox-item.am-grid-item,
