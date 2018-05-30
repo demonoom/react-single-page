@@ -1,3 +1,4 @@
+(node) util.print is deprecated. Use console.log instead.
 #header {
   background: url("../../imgs/bg_web_top.jpg") no-repeat;
   background-size: 100% 100%;
@@ -11,13 +12,13 @@
   background: transparent;
   display: inline-block;
   margin-right: 0.83rem;
-  margin-top: 0.83rem;
+  margin-top: 0.53rem;
 }
 #header span {
   display: inline-block;
 }
 #header .header_weather {
-  padding-top: 0.83rem;
+  padding-top: 0.53rem;
   text-align: right;
 }
 #header .header_weather .header_date3 {

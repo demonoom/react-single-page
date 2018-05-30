@@ -94,6 +94,7 @@ export default class classroomManage extends React.Component {
         };
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
             onResponse: function (result) {
+                console.log(result.response);
                 if (result.msg == '调用成功' && result.success == true) {
                     classBinding.state.selectData = result.response
                     var arr = result.response;
@@ -267,6 +268,11 @@ export default class classroomManage extends React.Component {
         this.setState({ defaultPageNo: 1, refreshing: true, isLoadingLeft: true });
         this.viewClassRoomPage(this.state.uid);
     }
+
+    /**
+     * 根据ID修改教室
+     * @param {*} id 
+     */
     toUpdatePage(id){
         var url = WebServiceUtil.mobileServiceURL + "updateClassroom"+"?classId="+id.id+"&access_user=23836";
         var data = {
@@ -278,18 +284,53 @@ export default class classroomManage extends React.Component {
             window.location.href = url;
         });
     }
+
+    /**
+     * 根据ID删除教室
+     * @param {*} classRoomId 
+     */
+    delClassroom(classRoomId) {
+        var param = {
+            "method": '',
+            "id": classRoomId,
+        };
+        WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
+            onResponse: (result) => {
+                if (result.msg == '调用成功' || result.success == true) {
+                    Toast.success('删除成功', 1);
+                    var arr = classBinding.state.selectData
+                    arr.forEach((v, i) => {
+                        if (v.id == classRoomId) {
+                            arr.splice(i, 1);
+                        }
+                    })
+                    classBinding.setState({selectData: arr})
+                } else {
+                    Toast.fail(result.msg)
+                }
+            },
+            onError: function (error) {
+                Toast.info('删除失败');
+            }
+        });
+    }
+
     render() {
         var _this = this;
         const row = (rowData, sectionID, rowID) => {
             return (<div>
                 {
                     <div className="classInfo">
+                        <span className="delClassroom" onClick={this.delClassroom.bind(this,rowData.id)}>X</span>
                         <div className="textOver">
                         <span className="classroom">{rowData.name}</span>
                         {
                             rowData.defaultBindedClazz ? <span className="grade">{rowData.defaultBindedClazz.name}</span> : <span className="grade"></span>
                         }
                         </div>
+                        <span className="creatTime">
+                            2018-8-8
+                        </span>
                         <span className='calmCardUnbind' onClick={this.toUpdatePage.bind(this,rowData)}
                         >修改</span>
                     </div>

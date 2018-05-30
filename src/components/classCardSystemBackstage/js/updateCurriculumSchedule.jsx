@@ -49,6 +49,8 @@ export default class updateCurriculumSchedule extends React.Component {
         this.getTeacherByCreator();
         this.viewCourseTableItem(currentScheduleId);
         this.setState({curriculumType,asyncValue,currentScheduleId,termAsyncValue});
+        
+        
     }
 
     /**

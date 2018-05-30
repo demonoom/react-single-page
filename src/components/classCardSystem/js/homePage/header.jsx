@@ -77,7 +77,11 @@ export default class header extends React.Component {
     componentWillMount() {
         this.makeTime();
         this.viewClassRoom();
-        $.get('http://ipinfo.io/json', function (data) {
+        // $.get('http://ipinfo.io/json', function (data) {
+        //     demeanor.getAbCode(data.ip)
+        // });
+
+        $.getJSON('//freegeoip.net/json/', function (data) {
             demeanor.getAbCode(data.ip)
         });
 
@@ -130,7 +134,9 @@ export default class header extends React.Component {
             onResponse: function (result) {
                 if (result.msg == '调用成功' || result.success == true) {
                     if (WebServiceUtil.isEmpty(result.response) == false) {
-                        demeanor.setState({classroomName: result.response.defaultBindedClazz.name})
+                        if (WebServiceUtil.isEmpty(result.response) == false && WebServiceUtil.isEmpty(result.response.defaultBindedClazz) == false) {
+                            demeanor.setState({classroomName: result.response.defaultBindedClazz.name})
+                        }
                     }
                 }
             },

@@ -26,7 +26,8 @@ export default class homeworkModule extends React.Component {
     componentDidMount() {
         var locationHref = window.location.href;
         var locationSearch = locationHref.substr(locationHref.indexOf("?") + 1);
-        var classId = locationSearch.split("=")[1];
+        var searchArray = locationSearch.split("&");
+        var classId = searchArray[0].split("=")[1];
         this.setState({"classId": classId})
         this.getHomeworkData(classId);
     }

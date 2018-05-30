@@ -85,7 +85,7 @@ export default class classCardHomePage extends React.Component {
         return (
             <div id="classCardHomePage" style={{height: document.body.clientHeight}}>
                 <Header/>
-                <div className="home_content">
+                <div className="home_content home_content_index">
                     <div className="">
                         {/*班牌首页*/}
                         <div className="home_right">
