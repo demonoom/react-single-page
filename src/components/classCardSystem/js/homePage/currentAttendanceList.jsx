@@ -116,7 +116,7 @@ export default class currentAttendanceList extends React.Component {
                 }
                 var studentHeaderTag = <div className="photoItem">
                     <div className={classFlag}><img src={studentAvatar}/></div>
-                    <img hidden={!isExist} src={require('../../img/green_right_image.png')} alt="" className="signIcon_green"/>
+                    <img className="signIcon_green" hidden={!isExist} src={require('../../img/green_right_image.png')} alt="" />
                     <div className="signIcon" hidden={isExist}>{checkedTip}</div>
                     <div className="studentName">
                         {studentOfAll.userName}
