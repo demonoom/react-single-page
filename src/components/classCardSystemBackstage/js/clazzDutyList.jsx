@@ -10,7 +10,7 @@ import {
     Checkbox, 
     Flex
 } from 'antd-mobile';
-import '../css/classroomManage.less'
+import '../css/classDutyList.less'
 import { ucs2 } from 'punycode';
 
 const CheckboxItem = Checkbox.CheckboxItem;
@@ -178,7 +178,7 @@ export default class clazzDutyList extends React.Component {
                     var userName = user.userName;
                     console.log("userName:"+userName)
                     // var userAvatar = user.avatar;
-                    var userTag = <span>{userName}</span>;
+                    var userTag = <span className="text_hidden">{userName}</span>;
                     clazzDutyUserList.push(userTag);
                 });
             }
@@ -186,15 +186,17 @@ export default class clazzDutyList extends React.Component {
                 {
                     <div className="classInfo">
                         {/* <span className="delClassroom" onClick={this.delClassroom.bind(this,rowData.id)}>X</span> */}
-                        <div className="textOver">
-                            <span className="classroom">{rowData.clazz.name}</span>
-                            <span>今日值日</span>
-                            <span>{clazzDutyUserList}</span>
+                        <div className="am-list-item am-list-item-middle">
+                            <div className="am-list-line">
+                                <div className="am-list-content">{rowData.clazz.name}</div>
+                                <span className="choiceData am-list-extra"  onClick={_this.turnToClazzDetail.bind(_this,rowData.clazz)} style={{ float: 'right', color: '#888' }}>查看所有</span><div className="am-list-arrow am-list-arrow-horizontal"></div>
+                            </div>
                         </div>
                         {/* <span className="creatTime">
                             2018-8-8
                         </span> */}
-                        <span className='calmCardUnbind' onClick={_this.turnToClazzDetail.bind(_this,rowData.clazz)}>详情</span>
+                        <div className="today_duty">今日值日</div>
+                        <div className="today_dutylist">{clazzDutyUserList}</div>
                     </div>
                 }
             </div>
@@ -202,7 +204,7 @@ export default class clazzDutyList extends React.Component {
             )
         };
         return (
-            <div id="classroomManage" style={{ height: clazzDutyListBinding.state.clientHeight }}>
+            <div id="classDutyList" style={{ height: clazzDutyListBinding.state.clientHeight }}>
                 <div className='tableDiv' style={{ height: clazzDutyListBinding.state.clientHeight }}>
                     {/*这是列表数据,包括添加按钮*/}
                     <ListView
