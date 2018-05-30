@@ -125,6 +125,7 @@ export default class addCurriculumSchedule extends React.Component {
      * 新增课表项
      */
     addCourseTableItem = () => {
+
         var _this = this;
         if (this.state.classAsyncValue.length == 0) {
             var tipMessage = "请选择班级";
@@ -148,7 +149,7 @@ export default class addCurriculumSchedule extends React.Component {
         }
         for (var i = 0; i < this.state.ClassTableDataArr.length; i++) {
             var v = this.state.ClassTableDataArr[i];
-            if (v.startTimeData == '开始时间' || v.endTimeData == '结束时间' || v.clazzName == '' || v.teacherName == '') {
+            if (v.startTimeData == '开始时间' || v.endTimeData == '结束时间' || v.clazzName == '' || v.teacherName == '' ) {
                 Toast.fail('课表存在空值');
                 return false
             }
@@ -562,6 +563,7 @@ export default class addCurriculumSchedule extends React.Component {
             value: i.value,
             teacherName: i.label
         });
+        
     }
 
     /**
@@ -570,6 +572,10 @@ export default class addCurriculumSchedule extends React.Component {
      * 设置名字,id
      */
     searchTerResLeave() {
+        if(teacherV.state.teacherName == undefined){
+            Toast.fail('请选择教师');
+            return
+        }
         document.getElementById('searchTerRes').className = 'searchTerRes ding_leave'
         var index = teacherV.state.modelNum
         teacherV.state.ClassTableDataArr[index].teacherId = teacherV.state.teacherName;

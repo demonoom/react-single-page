@@ -8,6 +8,14 @@
 #homeworkModule .am-list-body::before {
   background: none;
 }
+#homeworkModule .am-list-view-scrollview {
+  -webkit-overflow-scrolling: touch;
+  overflow-y: scroll;
+}
+#homeworkModule .am-list-view-scrollview::-webkit-scrollbar {
+  width: 0px;
+  display: none;
+}
 #homeworkModule .textOver {
   overflow: hidden;
   white-space: nowrap;
@@ -62,6 +70,7 @@
 #homeworkModule .homeworkM {
   width: calc(100% - 15rem);
   padding: 0 2.5rem;
+  word-wrap: break-word;
 }
 #homeworkModule .homeworkM h3 {
   color: #2a3350;

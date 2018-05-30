@@ -33,9 +33,9 @@ export default class getClassRoomList extends React.Component {
         var uid = locationSearch.split("&")[0].split("=")[1];
         this.setState({"uid": uid});
         var uidKey = {
-            "uidKey": uid
+            "colUid": uid
         }
-        localStorage.setItem("uIdKey", JSON.stringify(uidKey));
+        localStorage.setItem("classTableIdent", JSON.stringify(uidKey));
         this.viewClassRoomPage(uid);
         //添加对视窗大小的监听,在屏幕转换以及键盘弹起时重设各项高度
         window.addEventListener('resize', classBinding.onWindowResize)
@@ -130,8 +130,7 @@ export default class getClassRoomList extends React.Component {
     }
 
     turnToClassTable(rowData) {
-        // var currentAttendanceListUrl = WebServiceUtil.mobileServiceURL + "getClassTableList?clazzroomId=" + rowData.id;
-        var currentAttendanceListUrl = WebServiceUtil.mobileServiceURL + "getClassTableList?clazzroomId=" + this.state.uid;
+        var currentAttendanceListUrl = WebServiceUtil.mobileServiceURL + "getClassTableList?clazzroomId=" + rowData.id;
 
         var data = {
             method: 'openNewPage',

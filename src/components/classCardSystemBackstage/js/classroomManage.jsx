@@ -39,8 +39,11 @@ export default class classroomManage extends React.Component {
     }
    
     onDataChange = (value) => {
+        
         classBinding.setState({
-            gradeNameValue:value
+            gradeNameValue:value,
+            gradeNameChangeValue:value
+
         });
         
     };
@@ -165,10 +168,14 @@ export default class classroomManage extends React.Component {
      * 点击提交时，确认绑定教室和班级
      */
     binding = () => {
-
+        
         var _this = this;
         if (_this.state.gradeNameValue == '' || _this.state.classroomValue == '') {
             Toast.fail('请填写教室名称和班级名称', )
+            return
+        }
+        if(classBinding.state.gradeNameChangeValue == undefined){
+            Toast.fail('请选择班级', )
             return
         }
         var param = {
@@ -321,16 +328,16 @@ export default class classroomManage extends React.Component {
             return (<div>
                 {
                     <div className="classInfo">
-                        <span className="delClassroom" onClick={this.delClassroom.bind(this,rowData.id)}>X</span>
+                        {/* <span className="delClassroom" onClick={this.delClassroom.bind(this,rowData.id)}>X</span> */}
                         <div className="textOver">
                         <span className="classroom">{rowData.name}</span>
                         {
                             rowData.defaultBindedClazz ? <span className="grade">{rowData.defaultBindedClazz.name}</span> : <span className="grade"></span>
                         }
                         </div>
-                        <span className="creatTime">
+                        {/* <span className="creatTime">
                             2018-8-8
-                        </span>
+                        </span> */}
                         <span className='calmCardUnbind' onClick={this.toUpdatePage.bind(this,rowData)}
                         >修改</span>
                     </div>

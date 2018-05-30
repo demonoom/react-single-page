@@ -11,12 +11,12 @@ import {
     TextareaItem,
     Radio
 } from 'antd-mobile';
-import '../../css/newCurriculumSche/addCurriculumSchedule.less'
+import '../../css/newCurriculumSche/updateCurriculumSchedule.less'
 
 var teacherV;
 
 const RadioItem = Radio.RadioItem;
-export default class addCurriculumSchedule extends React.Component {
+export default class updateCurriculumSchedule extends React.Component {
     constructor(props) {
         super(props);
         teacherV = this;
@@ -29,9 +29,22 @@ export default class addCurriculumSchedule extends React.Component {
                 {value: '5', label: '星期五'},
                 {value: '6', label: '星期六'},
                 {value: '7', label: '星期日'}],
+            indexData: [{value: '1', label: '第一节'},
+                {value: '2', label: '第二节'},
+                {value: '3', label: '第三节'},
+                {value: '4', label: '第四节'},
+                {value: '5', label: '第五节'},
+                {value: '6', label: '第六节'},
+                {value: '7', label: '第七节'},
+                {value: '8', label: '第八节'},
+                {value: '9', label: '第九节'},
+                {value: '10', label: '第十节'},
+                {value: '11', label: '第十一节'},
+                {value: '12', label: '第十二节'}],
             terData: [],   //教师数组
             classData: [],   //班级数组
             asyncValue: [],   //星期数组
+            indexAsyncValue: [],   //课时数组
             ClassTableArr: [],  //课表结构
             ClassTableDataArr: [],  //课表数据
             search_bg: false,   //遮罩显隐
@@ -40,13 +53,15 @@ export default class addCurriculumSchedule extends React.Component {
     }
 
     componentWillMount() {
-        document.title = '添加课程表';
+        document.title = '更改课程表';
         var locationHref = window.location.href;
         var locationSearch = locationHref.substr(locationHref.indexOf("?") + 1);
         window.addEventListener('resize', this.onWindwoResize);
         var clazzroomId = locationSearch.split("&")[0].split('=')[1];
         var classTableId = locationSearch.split("&")[1].split('=')[1];
-        this.setState({clazzroomId, classTableId})
+        var classTableDetilId = locationSearch.split("&")[2].split('=')[1];
+        this.setState({clazzroomId, classTableId, classTableDetilId})
+        this.viewCourseTableItem(classTableDetilId);
     }
 
     componentWillUnmount() {
@@ -75,6 +90,50 @@ export default class addCurriculumSchedule extends React.Component {
         });
     };
 
+    onIndexPickerChange = (val) => {
+        const d = [...this.state.indexData];
+        const indexAsyncValue = [...val];
+        this.setState({
+            indexData: d,
+            indexAsyncValue,
+        });
+    }
+
+    viewCourseTableItem(id) {
+        var param = {
+            "method": 'viewCourseTableItem',
+            "id": id,
+        };
+        WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
+            onResponse: (result) => {
+                if (result.msg == '调用成功' || result.success == true) {
+                    const d = [...this.state.data];
+                    var array = []
+                    array.push(result.response.week + '')
+                    var arra = []
+                    arra.push(result.response.index + '')
+                    var arr = [
+                        {
+                            startTimeData: result.response.openTime,
+                            endTimeData: result.response.closeTime,
+                            teacherId: result.response.teacher.colUid,
+                            tercherName: result.response.teacher.userName,
+                            classId: result.response.clazz.id,
+                            className: result.response.clazz.name,
+                            clazzName: result.response.courseName,
+                            nodeDetal: result.response.comment,
+                        }
+                    ]
+                    teacherV.setState({ClassTableDataArr: arr, data: d, asyncValue: array, indexAsyncValue: arra});
+                    teacherV.buildClassTable();
+                }
+            },
+            onError: function (error) {
+                Toast.fail(error)
+            }
+        });
+    }
+
     /**
      * 新增课表项
      */
@@ -82,6 +141,10 @@ export default class addCurriculumSchedule extends React.Component {
         var _this = this;
         if (this.state.asyncValue.length == 0) {
             Toast.fail('请选择星期');
+            return
+        }
+        if (this.state.indexAsyncValue.length == 0) {
+            Toast.fail('请选择课时');
             return
         }
         if (this.state.ClassTableDataArr.length == 0) {
@@ -96,29 +159,27 @@ export default class addCurriculumSchedule extends React.Component {
             }
         }
         var param = {
-            "method": 'addCourseTableItem',
+            "method": 'updateCourseTableItem',
             "cti": {
-                "week": this.state.asyncValue[0],
+                "id": this.state.classTableDetilId,
                 "tableId": this.state.classTableId,
-                "roomId": this.state.clazzroomId
+                "week": this.state.asyncValue[0],
+                "roomId": this.state.clazzroomId,
+                "index": this.state.indexAsyncValue[0],
+                "openTime": this.state.ClassTableDataArr[0].startTimeData,
+                "closeTime": this.state.ClassTableDataArr[0].endTimeData,
+                "classId": this.state.ClassTableDataArr[0].classId,
+                "courseName": this.state.ClassTableDataArr[0].clazzName,
+                "teacherId": this.state.ClassTableDataArr[0].teacherId,
             }
         };
-        var classArray = [];
-        this.state.ClassTableDataArr.forEach(function (v, i) {
-            classArray.push({
-                "courseName": v.clazzName,
-                "index": i + 1,
-                "teacherId": v.teacherId,
-                "openTime": v.startTimeData,
-                "closeTime": v.endTimeData,
-                "comment": v.nodeDetal,
-                "classId": v.classId,
-            })
-        })
-        param.cti.scheduleList = classArray;
-
+        if (this.state.ClassTableDataArr[0].nodeDetal.trim().length != 0) {
+            param.cti.comment = this.state.ClassTableDataArr[0].nodeDetal
+        }
+        console.log(param);
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
             onResponse: function (result) {
+                console.log(result);
                 if (result.msg == '调用成功' || result.success == true) {
                     Toast.success('成功');
                     //关闭当前窗口，并刷新上一个页面
@@ -302,7 +363,6 @@ export default class addCurriculumSchedule extends React.Component {
         var ClassTableArr = [];
         this.state.ClassTableDataArr.forEach(function (v, i) {
             ClassTableArr.push(<div>
-                <div className="cont_communal add_title font_gray">第{i + 1}节</div>
                 {/*日期*/}
                 <div className="flex_container my_flex teacher_list teacher_list_p">
                     <DatePicker
@@ -368,30 +428,6 @@ export default class addCurriculumSchedule extends React.Component {
     };
 
     /**
-     * 新增课表表单
-     * 新增只是增加数据,然后到构建的方法中根据数据构建
-     */
-    addClassTable = () => {
-        /**
-         * startTimeData开课时间
-         * endTimeData结束时间
-         * classAd开课地点
-         * clazzName课程名称
-         */
-        this.state.ClassTableDataArr.push({
-            startTimeData: '开始时间',
-            endTimeData: '结束时间',
-            teacherId: '',
-            tercherName: '',
-            classId: '',
-            className: '',
-            clazzName: '',
-            nodeDetal: ''
-        });
-        this.buildClassTable();
-    };
-
-    /**
      * 老师弹出层切换的回调
      * @param i
      */
@@ -443,7 +479,7 @@ export default class addCurriculumSchedule extends React.Component {
 
     render() {
         return (
-            <div id="addCurriculumSchedule" style={{height: this.state.clientHeight}}>
+            <div id="updateCurriculumSchedule" style={{height: this.state.clientHeight}}>
                 <div className="search_bg" style={{display: this.state.search_bg ? 'block' : 'none'}}></div>
                 {/*灰色遮罩*/}
                 <div className="addCurriculum_cont">
@@ -458,6 +494,16 @@ export default class addCurriculumSchedule extends React.Component {
                         <List.Item arrow="horizontal">选择星期</List.Item>
                     </Picker>
                     <WhiteSpace size="lg"/>
+                    {/*选择课时*/}
+                    <Picker
+                        data={this.state.indexData}
+                        cols={1}
+                        value={this.state.indexAsyncValue}
+                        onPickerChange={this.onIndexPickerChange}
+                        onOk={this.onIndexPickerChange}
+                    >
+                        <List.Item arrow="horizontal">选择课时</List.Item>
+                    </Picker>
                     {/*累加部分*/}
                     <div className='CourseTableArea'>
                         {
@@ -465,8 +511,6 @@ export default class addCurriculumSchedule extends React.Component {
                                 return <div>{v}</div>
                             })
                         }
-                        <img onClick={this.addClassTable} className='addClassTable'
-                             src={require('../../imgs/addClassTable.png')} alt=""/>
                     </div>
 
                 </div>

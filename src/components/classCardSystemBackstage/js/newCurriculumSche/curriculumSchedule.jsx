@@ -1,9 +1,10 @@
 import React from 'react';
-import {List, WhiteSpace, Toast} from 'antd-mobile';
+import {List, WhiteSpace, Toast, Modal} from 'antd-mobile';
 import '../../css/newCurriculumSche/curriculumSchedule.less'
 
 var cSchedule;
 const Item = List.Item;
+const alert = Modal.alert;
 export default class curriculumSchedule extends React.Component {
 
     constructor(props) {
@@ -11,28 +12,53 @@ export default class curriculumSchedule extends React.Component {
         cSchedule = this;
         this.state = {
             classTableArray: [],
+            weekData: [{value: '1', label: '星期一'},
+                {value: '2', label: '星期二'},
+                {value: '3', label: '星期三'},
+                {value: '4', label: '星期四'},
+                {value: '5', label: '星期五'},
+                {value: '6', label: '星期六'},
+                {value: '7', label: '星期日'}],
         };
     }
 
     componentWillMount() {
-        var locationHref = window.location.href;
+        var locationHref = decodeURI(window.location.href);
         var locationSearch = locationHref.substr(locationHref.indexOf("?") + 1);
-        var ident = locationSearch.split("&")[0].split('=')[1];
-        var loginUser = {
-            "colUid": ident,
-        };
-        localStorage.setItem("loginUserSchedule", JSON.stringify(loginUser));
+        var clazzroomId = locationSearch.split("&")[0].split('=')[1];
+        var classTableId = locationSearch.split("&")[1].split('=')[1];
+        var classTableName = locationSearch.split("&")[2].split('=')[1];
+        this.setState({clazzroomId, classTableId, classTableName})
+        this.viewCourseTableItemPage(classTableId)
     }
 
     componentDidMount() {
         document.title = '班级课程表';
     }
 
+    viewCourseTableItemPage(id) {
+        var param = {
+            "method": 'viewCourseTableItemPage',
+            "tid": id,
+            "w": -1
+        };
+        WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
+            onResponse: (result) => {
+                if (result.msg == '调用成功' || result.success == true) {
+                    cSchedule.setState({classTableArray: result.response})
+                }
+            },
+            onError: function (error) {
+                Toast.fail(error)
+            }
+        });
+    }
+
     /**
      * 增加课程表的回调
      */
     addSchedule() {
-        var url = WebServiceUtil.mobileServiceURL + "newAddCurriculumSchedule";
+        var url = WebServiceUtil.mobileServiceURL + "newAddCurriculumSchedule?clazzroomId=" + cSchedule.state.clazzroomId + "&classTableId=" + cSchedule.state.classTableId;
         var data = {
             method: 'openNewPage',
             url: url
@@ -47,11 +73,7 @@ export default class curriculumSchedule extends React.Component {
      * 跳转到课程表更新页面
      */
     turnToUpdatePage(currentSchedule) {
-        var currentScheduleId = currentSchedule.id;
-        var clazzOrRoomId = this.state.sValue[0];
-        var termId = this.state.sValue[1];
-        var week = this.state.asyncValue[0];
-        var url = WebServiceUtil.mobileServiceURL + "updateCurriculumSchedule?currentScheduleId=" + currentScheduleId + "&clazzOrRoomId=" + clazzOrRoomId + "&termId=" + termId + "&week=" + week + "&curriculumType=" + this.state.curriculumType;
+        var url = WebServiceUtil.mobileServiceURL + "newUpdateCurriculumSchedule?clazzroomId=" + this.state.clazzroomId + "&classTableId=" + this.state.classTableId + "&classTableDetilId=" + currentSchedule.id;
         var data = {
             method: 'openNewPage',
             url: url
@@ -61,6 +83,24 @@ export default class curriculumSchedule extends React.Component {
             window.location.href = url;
         });
     }
+
+    /**
+     * 删除弹出框
+     */
+    showAlert = (sId) => {
+        var phoneType = navigator.userAgent;
+        var phone;
+        if (phoneType.indexOf('iPhone') > -1 || phoneType.indexOf('iPad') > -1) {
+            phone = 'ios'
+        } else {
+            phone = 'android'
+        }
+        var _this = this;
+        const alertInstance = alert('删除', '您确定要删除该课表项吗?', [
+            {text: '取消', onPress: () => console.log('cancel'), style: 'default'},
+            {text: '确定', onPress: () => _this.delSchedule(sId)},
+        ], phone);
+    };
 
     /**
      * 根据ID删除课表
@@ -94,13 +134,10 @@ export default class curriculumSchedule extends React.Component {
 
     render() {
         var pickerTip = "班级";
-        if (this.state.curriculumType == 2) {
-            pickerTip = "教室";
-        }
         return (
             <div id="curriculumSchedule" style={{height: document.body.clientHeight}}>
                 <List className="my-list">
-                    <Item>Title</Item>
+                    <Item>{this.state.classTableName}</Item>
                 </List>
                 <WhiteSpace size="lg"/>
                 <div className="curriculum_cont cont_communal">
@@ -110,7 +147,7 @@ export default class curriculumSchedule extends React.Component {
                                 <span className="font_gray">第{i + 1}节</span>
                                 <span
                                     className="amend_btn" onClick={this.turnToUpdatePage.bind(this, v)}>修改</span>
-                                <span className="delete" onClick={this.delSchedule.bind(this, v.id)}>删除</span>
+                                <span className="delete" onClick={this.showAlert.bind(this, v.id)}>删除</span>
                             </div>
 
                             <div className="list_high list textOver">
@@ -118,7 +155,13 @@ export default class curriculumSchedule extends React.Component {
                                 <span className="text_hidden text_cont2">{v.courseName}</span>
                             </div>
                             <div className="list_high list lineList textOver">
-                                <span className="text_hidden text_cont3">{v.classRoom.name}</span>
+                                <span className="text_hidden text_cont3">{this.state.weekData[v.week - 1].label}</span>
+                            </div>
+                            <div className="list_high list lineList textOver">
+                                <span className="text_hidden text_cont3">{v.teacher.userName}</span>
+                            </div>
+                            <div className="list_high list lineList textOver">
+                                <span className="text_hidden text_cont3">{v.clazz.name}</span>
                             </div>
                         </li>
                     })}

@@ -88,7 +88,6 @@ export default class curriculumSchedule extends React.Component {
         };
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
             onResponse: function (result) {
-                console.log(result);
                 if (result.msg == '调用成功' || result.success == true) {
                     if (_this.state.curriculumType == 1) {
                         _this.getClazzesByUserId(ident, result.response)
@@ -116,7 +115,6 @@ export default class curriculumSchedule extends React.Component {
         };
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
             onResponse: function (result) {
-                console.log(result);
                 
                 if (result.msg == '调用成功' || result.success == true) {
                     _this.buildSeasons(result.response, semesterList)
@@ -220,6 +218,7 @@ export default class curriculumSchedule extends React.Component {
      * @param v
      */
     viewCourseTableItemPage(v) {
+        // console.log("v",v);
         var _this = this;
         this.setState({asyncValue: v})
         if (this.state.sValue[0] == 0) {

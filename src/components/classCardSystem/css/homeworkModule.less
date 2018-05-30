@@ -6,6 +6,14 @@
     .am-list-body::before{
         background: none;
     }
+    .am-list-view-scrollview{
+        -webkit-overflow-scrolling: touch;
+        overflow-y: scroll;
+        &::-webkit-scrollbar{
+            width: 0px;
+            display: none;
+        }
+    }
     .textOver{
         overflow: hidden;
         white-space: nowrap;
@@ -62,6 +70,7 @@
     .homeworkM{
         width: calc(~"100% - 15rem");
         padding:0 2.5rem;
+        word-wrap: break-word;
         h3{
             color: #2a3350;
             font-size: .78rem;

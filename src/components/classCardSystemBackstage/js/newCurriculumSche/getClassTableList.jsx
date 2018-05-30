@@ -1,14 +1,19 @@
 import React from 'react';
 import {
     ListView,
-    PullToRefresh,
     Modal,
+    Toast,
+    Switch,
+    List
 } from 'antd-mobile';
+import {createForm} from 'rc-form';
+
 
 import '../../css/newCurriculumSche/getClassTableList.less'
 
 var classBinding;
 const prompt = Modal.prompt;
+const alert = Modal.alert;
 
 export default class getClassTableList extends React.Component {
 
@@ -21,7 +26,6 @@ export default class getClassTableList extends React.Component {
         this.initData = [];
         this.state = {
             dataSource: dataSource.cloneWithRows(this.initData),
-            defaultPageNo: 1,
             clientHeight: document.body.clientHeight,
         };
     }
@@ -33,11 +37,7 @@ export default class getClassTableList extends React.Component {
         var locationSearch = locationHref.substr(locationHref.indexOf("?") + 1);
         var uid = locationSearch.split("&")[0].split("=")[1];
         this.setState({"uid": uid});
-        var uidKey = {
-            "uidKey": uid
-        }
-        localStorage.setItem("uIdKey", JSON.stringify(uidKey));
-        this.viewClassRoomPage(uid);
+        this.viewCourseTablePage(uid);
         //添加对视窗大小的监听,在屏幕转换以及键盘弹起时重设各项高度
         window.addEventListener('resize', classBinding.onWindowResize)
     }
@@ -57,9 +57,9 @@ export default class getClassTableList extends React.Component {
     }
 
     /**
-     * 查看教室信息
+     * 查看教室的所有课表
      */
-    viewClassRoomPage(uid) {
+    viewCourseTablePage(uid) {
         var _this = this;
         _this.initData.splice(0);
         _this.state.dataSource = [];
@@ -67,35 +67,22 @@ export default class getClassTableList extends React.Component {
             rowHasChanged: (row1, row2) => row1 !== row2,
         });
         const dataBlob = {};
-        var PageNo = this.state.defaultPageNo;
         var param = {
-            "method": 'viewClassRoomPage',
-            "uid": uid,
-            "pn": PageNo,
+            "method": 'viewCourseTablePage',
+            "rid": uid,
         };
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
             onResponse: function (result) {
                 if (result.msg == '调用成功' && result.success == true) {
                     var arr = result.response;
-                    var pager = result.pager;
                     for (let i = 0; i < arr.length; i++) {
                         var topic = arr[i];
                         dataBlob[`${i}`] = topic;
                     }
-                    var isLoading = false;
-                    if (arr.length > 0) {
-                        if (pager.pageCount == 1 && pager.rsCount < 30) {
-                            isLoading = false;
-                        } else {
-                            isLoading = true;
-                        }
-                    } else {
-                        isLoading = false;
-                    }
                     _this.initData = _this.initData.concat(arr);
                     _this.setState({
                         dataSource: _this.state.dataSource.cloneWithRows(_this.initData),
-                        isLoadingLeft: isLoading,
+                        isLoadingLeft: false,
                         refreshing: false
                     })
                 }
@@ -106,36 +93,10 @@ export default class getClassTableList extends React.Component {
     }
 
     /**
-     *  ListView数据全部渲染完毕的回调
-     */
-    onEndReached = (event) => {
-        var _this = this;
-        var currentPageNo = this.state.defaultPageNo;
-        if (!this.state.isLoadingLeft && !this.state.hasMore) {
-            return;
-        }
-        currentPageNo += 1;
-        this.setState({isLoadingLeft: true, defaultPageNo: currentPageNo});
-        _this.viewClassRoomPage(_this.state.uid);
-        this.setState({
-            dataSource: this.state.dataSource.cloneWithRows(this.initData),
-            isLoadingLeft: true,
-        });
-    };
-
-    onRefresh = () => {
-        var divPull = document.getElementsByClassName('am-pull-to-refresh-content');
-        divPull[0].style.transform = "translate3d(0px, 30px, 0px)";   //设置拉动后回到的位置
-        this.setState({defaultPageNo: 1, refreshing: true, isLoadingLeft: true});
-        this.viewClassRoomPage(this.state.uid);
-    }
-
-    /**
      * 去课表列表
      **/
     turnToClassTableDetil(rowData) {
-        // var currentAttendanceListUrl = WebServiceUtil.mobileServiceURL + "getClassTableList?clazzroomId=" + rowData.id;
-        var currentAttendanceListUrl = WebServiceUtil.mobileServiceURL + "newCurriculumSchedule?clazzroomId=" + this.state.uid;
+        var currentAttendanceListUrl = encodeURI(WebServiceUtil.mobileServiceURL + "newCurriculumSchedule?clazzroomId=" + this.state.uid + "&classTableId=" + rowData.id + "&classTableName=" + rowData.name);
 
         var data = {
             method: 'openNewPage',
@@ -169,7 +130,8 @@ export default class getClassTableList extends React.Component {
      * 修改名称
      * @param name
      */
-    changeTableName(name) {
+    changeTableName(data, event) {
+        event.stopPropagation();
         var phoneType = navigator.userAgent;
         var phone;
         if (phoneType.indexOf('iPhone') > -1 || phoneType.indexOf('iPad') > -1) {
@@ -180,47 +142,280 @@ export default class getClassTableList extends React.Component {
 
         prompt('请输入课表名称', '', [
             {text: '取消'},
-            {text: '确定', onPress: value => classBinding.changeTName(value)},
-        ], 'default', name, [], phone)
+            {text: '确定', onPress: value => classBinding.changeTName(value, data)},
+        ], 'default', data.name, [], phone)
         if (phone == 'ios') {
             document.getElementsByClassName('am-modal-input')[0].getElementsByTagName('input')[0].focus();
         }
     }
 
     /**
+     *　更新教室某个课表状态
+     * @param ctId   课表id
+     * @param condition 课表状态 0 = 删除, 1 =　启用, 3 = 停用
+     * @throws Exception
+     */
+    delTable(data) {
+        var _this = this;
+        var param = {
+            "method": 'changeCourseTableStatus',
+            "condition": 0,
+            "ctId": data.id,
+        };
+        WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
+            onResponse: (result) => {
+                if (result.msg == '调用成功' || result.success == true) {
+                    Toast.success('删除成功', 1)
+                    _this.state.dataSource = [];
+                    _this.state.dataSource = new ListView.DataSource({
+                        rowHasChanged: (row1, row2) => row1 !== row2,
+                    });
+                    _this.initData.forEach(function (v, i) {
+                        if (data.id == v.id) {
+                            _this.initData.splice(i, 1);
+                        }
+                    });
+                    _this.setState({
+                        dataSource: _this.state.dataSource.cloneWithRows(_this.initData)
+                    });
+                }
+            },
+            onError: function (error) {
+                Toast.fail('删除失败');
+            }
+        });
+    }
+
+    /**
+     * 删除弹出框
+     */
+    showAlert = (data, event) => {
+        event.stopPropagation();
+        var phoneType = navigator.userAgent;
+        var phone;
+        if (phoneType.indexOf('iPhone') > -1 || phoneType.indexOf('iPad') > -1) {
+            phone = 'ios'
+        } else {
+            phone = 'android'
+        }
+        var _this = this;
+        const alertInstance = alert('删除', '您确定要删除该课表吗?', [
+            {text: '取消', onPress: () => console.log('cancel'), style: 'default'},
+            {text: '确定', onPress: () => _this.delTable(data)},
+        ], phone);
+    };
+
+    /**
+     * 删除弹出框
+     */
+    showAlertOpen = (data, event) => {
+        event.stopPropagation();
+        var phoneType = navigator.userAgent;
+        var phone;
+        if (phoneType.indexOf('iPhone') > -1 || phoneType.indexOf('iPad') > -1) {
+            phone = 'ios'
+        } else {
+            phone = 'android'
+        }
+        var _this = this;
+        const alertInstance = alert('删除', '您确定要启用该课表吗?', [
+            {text: '取消', onPress: () => console.log('cancel'), style: 'default'},
+            {text: '确定', onPress: () => _this.openTable(data)},
+        ], phone);
+    };
+
+    /**
+     * 启用课表的回调
+     * @param data
+     */
+    openTable(data) {
+        var _this = this;
+        var param = {
+            "method": 'changeCourseTableStatus',
+            "condition": 0,
+            "ctId": data.id,
+        };
+        WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
+            onResponse: (result) => {
+                if (result.msg == '调用成功' || result.success == true) {
+                    Toast.success('删除成功', 1)
+                    _this.state.dataSource = [];
+                    _this.state.dataSource = new ListView.DataSource({
+                        rowHasChanged: (row1, row2) => row1 !== row2,
+                    });
+                    _this.initData.forEach(function (v, i) {
+                        if (data.id == v.id) {
+                            _this.initData.splice(i, 1);
+                        }
+                    });
+                    _this.setState({
+                        dataSource: _this.state.dataSource.cloneWithRows(_this.initData)
+                    });
+                }
+            },
+            onError: function (error) {
+                Toast.fail('删除失败');
+            }
+        });
+    }
+
+    /**
      * 创建新课表
      **/
     creatNewT(value) {
-        console.log(value);
+        var _this = this;
+        var param = {
+            "method": 'addCourseTable',
+            "courseTable": {
+                "name": value,
+                "roomId": this.state.uid,
+                "creatorId": JSON.parse(localStorage.getItem('classTableIdent')).colUid
+            },
+        };
+        WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
+            onResponse: (result) => {
+                if (result.msg == '调用成功' || result.success == true) {
+                    Toast.success('新建成功', 1)
+                    _this.viewCourseTablePage(_this.state.uid)
+                }
+            },
+            onError: function (error) {
+                Toast.warn('保存失败');
+            }
+        });
     }
 
     /**
      * 修改课表名
      **/
-    changeTName(value) {
-        console.log(value);
+    changeTName(value, data) {
+        var _this = this;
+        var param = {
+            "method": 'updateCourseTable',
+            "courseTable": {
+                "roomId": this.state.uid,
+                "creatorId": JSON.parse(localStorage.getItem('classTableIdent')).colUid,
+                "name": value,
+                "id": data.id,
+                "status": data.status
+            },
+        };
+        WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
+            onResponse: (result) => {
+                if (result.msg == '调用成功' || result.success == true) {
+                    Toast.success('修改成功')
+                    _this.state.dataSource = [];
+                    _this.state.dataSource = new ListView.DataSource({
+                        rowHasChanged: (row1, row2) => row1 !== row2,
+                    });
+                    _this.initData.forEach(function (v, i) {
+                        if (data.id == v.id) {
+                            v.name = value;
+                        }
+                    });
+                    _this.setState({
+                        dataSource: _this.state.dataSource.cloneWithRows(_this.initData)
+                    });
+                }
+            },
+            onError: function (error) {
+                Toast.warn('修改失败');
+            }
+        });
+    }
+
+    changeStatus(checked, rowData) {
+        var _this = this;
+        var param = {
+            "method": 'changeCourseTableStatus',
+            "ctId": rowData.id,
+        };
+        var status,
+            str;
+        if (checked) {
+            param.condition = 1
+            status = 1
+            str = '启用成功'
+        } else {
+            param.condition = 3
+            status = 3
+            str = '停用成功'
+        }
+        WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
+            onResponse: (result) => {
+                if (result.msg == '调用成功' || result.success == true) {
+                    Toast.success(str, 1)
+                    _this.state.dataSource = [];
+                    _this.state.dataSource = new ListView.DataSource({
+                        rowHasChanged: (row1, row2) => row1 !== row2,
+                    });
+                    _this.initData.forEach(function (v, i) {
+                        if (rowData.id == v.id) {
+                            v.status = status;
+                        }
+                    });
+                    _this.setState({
+                        dataSource: _this.state.dataSource.cloneWithRows(_this.initData)
+                    });
+                } else {
+                    Toast.fail(result.msg, 1)
+                    _this.state.dataSource = [];
+                    _this.state.dataSource = new ListView.DataSource({
+                        rowHasChanged: (row1, row2) => row1 !== row2,
+                    });
+                    _this.initData.forEach(function (v, i) {
+                        if (rowData.id == v.id) {
+                            v.status = 3;
+                        }
+                    });
+                    _this.setState({
+                        dataSource: _this.state.dataSource.cloneWithRows(_this.initData)
+                    });
+                }
+            },
+            onError: function (error) {
+                Toast.warn('修改失败');
+            }
+        });
     }
 
     render() {
         var _this = this;
+
         const row = (rowData, sectionID, rowID) => {
+
+            let SwitchExample = (props) => {
+                const {getFieldProps} = props.form;
+                return (
+                    <List>
+                        <List.Item
+                            extra={<Switch
+                                {...getFieldProps('Switch8', {
+                                    initialValue: rowData.status == 3 ? false : true,
+                                    valuePropName: 'checked',
+                                })}
+                                platform="ios"
+                                color="#f55045"
+                                onClick={(checked) => {
+                                    _this.changeStatus(checked, rowData)
+                                }}
+                            />}
+                        >开启状态</List.Item>
+                    </List>
+                );
+            };
+            SwitchExample = createForm()(SwitchExample);
+
             return (
-                <div onClick={this.turnToClassTableDetil.bind(this, rowData)}>
-                    {
-                        <div className="classInfo">
-                            <div className="textOver">
-                                <span className="classroom">{rowData.name}</span>
-                                {
-                                    rowData.defaultBindedClazz ?
-                                        <span className="grade">{rowData.defaultBindedClazz.name}</span> :
-                                        <span className="grade"></span>
-                                }
-                            </div>
-                            <span onClick={this.changeTableName.bind(this, '名字')}>修改</span>
-                            <span>删除</span>
-                            <span>启用</span>
-                        </div>
-                    }
+                <div>
+                    <div className="classInfo" onClick={this.turnToClassTableDetil.bind(this, rowData)}>
+                        <span className="classroom">{rowData.name}</span>
+                        <span className="classroom">创建时间:{rowData.createTime}</span>
+                        <span onClick={this.changeTableName.bind(this, rowData)}>修改</span>
+                        <span onClick={this.showAlert.bind(this, rowData)}>删除</span>
+                        <span onClick={this.showAlertOpen.bind(this, rowData)}>启用</span>
+                    </div>
+                    <SwitchExample/>
                 </div>
             )
         };
@@ -243,17 +438,13 @@ export default class getClassTableList extends React.Component {
                         pageSize={30}    //每次事件循环（每帧）渲染的行数
                         //useBodyScroll  //使用 html 的 body 作为滚动容器   bool类型   不应这么写  否则无法下拉刷新
                         scrollRenderAheadDistance={200}   //当一个行接近屏幕范围多少像素之内的时候，就开始渲染这一行
-                        onEndReached={this.onEndReached}  //当所有的数据都已经渲染过，并且列表被滚动到距离最底部不足onEndReachedThreshold个像素的距离时调用
+                        //onEndReached={this.onEndReached}  //当所有的数据都已经渲染过，并且列表被滚动到距离最底部不足onEndReachedThreshold个像素的距离时调用
                         onEndReachedThreshold={10}  //调用onEndReached之前的临界值，单位是像素  number类型
                         initialListSize={30}   //指定在组件刚挂载的时候渲染多少行数据，用这个属性来确保首屏显示合适数量的数据
                         scrollEventThrottle={20}     //控制在滚动过程中，scroll事件被调用的频率
                         style={{
                             height: classBinding.state.clientHeight,
                         }}
-                        pullToRefresh={<PullToRefresh
-                            onRefresh={this.onRefresh}
-                            distanceToRefresh={80}
-                        />}
                     />
                 </div>
             </div>

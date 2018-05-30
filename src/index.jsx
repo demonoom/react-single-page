@@ -368,6 +368,13 @@ const newAddCurriculumSchedule = (location, cb) => {
     )
 }
 
+const newUpdateCurriculumSchedule = (location, cb) => {
+    require.ensure([], require => {
+            cb(null, require("./components/classCardSystemBackstage/js/newCurriculumSche/updateCurriculumSchedule").default)
+        }
+    )
+}
+
 import './index.less';
 
 class Index extends React.Component {
@@ -548,6 +555,7 @@ ReactDOM.render(
             <Route path="getClassTableList" getComponent={getClassTableList}/>
             <Route path="newCurriculumSchedule" getComponent={newCurriculumSchedule}/>
             <Route path="newAddCurriculumSchedule" getComponent={newAddCurriculumSchedule}/>
+            <Route path="newUpdateCurriculumSchedule" getComponent={newUpdateCurriculumSchedule}/>
         </Route>
     </Router>
     , document.getElementById('example'));
