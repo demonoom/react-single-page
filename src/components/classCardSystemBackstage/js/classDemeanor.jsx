@@ -18,13 +18,13 @@ export default class classDemeanor extends React.Component {
     }
 
     componentDidMount() {
-        document.title = '班级风采';
         var locationHref = decodeURI(window.location.href);
         var locationSearch = locationHref.substr(locationHref.indexOf("?") + 1);
         var ident = locationSearch.split("&")[0].split('=')[1];
         var className = locationSearch.split("&")[1].split('=')[1];
         // this.getClazzesByUserId(ident)
-        this.setState({className})
+        // this.setState({})
+        document.title = className;
         this.getClassDemeanorInfo(ident);
     }
 
