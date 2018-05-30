@@ -1,6 +1,9 @@
 #moralEducation {
   position: relative;
 }
+#moralEducation .tableDiv {
+  overflow: auto;
+}
 #moralEducation .addBunton img {
   width: 100%;
 }

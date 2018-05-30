@@ -230,7 +230,17 @@ const addMoralEducation = (location, cb) => {
         cb(null, require("./components/classCardSystemBackstage/js/addMoralEducation").default)
     })
 }
+const updateMoralEducation = (location, cb) => {
+    require.ensure([], require => {
+        cb(null, require("./components/classCardSystemBackstage/js/updateMoralEducation").default)
+    })
+}
 
+const assessMoralEducation = (location, cb) => {
+    require.ensure([], require => {
+        cb(null, require("./components/classCardSystemBackstage/js/assessMoralEducation").default)
+    })
+}
 const classCardHomePage = (location, cb) => {
     require.ensure([], require => {
         cb(null, require("./components/classCardSystem/js/homePage/classCardHomePage").default)
@@ -520,6 +530,8 @@ ReactDOM.render(
             <Route path="publicClassCardHomePage" getComponent={publicClassCardHomePage}/>
             <Route path="moralEducation" getComponent={moralEducation}/>
             <Route path="addMoralEducation" getComponent={addMoralEducation}/>
+            <Route path="updateMoralEducation" getComponent={updateMoralEducation} />
+            <Route path="assessMoralEducation" getComponent={assessMoralEducation} />
             <Route path="updateClassroom" getComponent={updateClassroom}/>
             <Route path="notifyBack" getComponent={notifyBack}/>
             <Route path="addNotify" getComponent={addNotify}/>

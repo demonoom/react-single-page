@@ -13,7 +13,7 @@ import {
     Toast
 } from 'antd-mobile';
 import enUs from 'antd-mobile/lib/date-picker/locale/en_US';
-import '../css/addMoralEducation.less';
+import '../css/updateMoralEducation.less';
 
 var moralEdu;
 const prompt = Modal.prompt;
@@ -21,7 +21,7 @@ const nowTimeStamp = Date.now();
 const now = new Date(nowTimeStamp);
 
 
-export default class addMoralEducation extends React.Component {
+export default class updateMoralEducation extends React.Component {
     constructor(props) {
         super(props);
         moralEdu = this;
@@ -39,15 +39,19 @@ export default class addMoralEducation extends React.Component {
             customChildValue: null,
             visible: false,
             timeValue: null,
+            showData:{}
         };
     }
 
     componentDidMount() {
-        document.title = '添加德育评价';
-         var locationHref = window.location.href;
+        document.title = '修改德育评价';
+        var locationHref = window.location.href;
         var locationSearch = locationHref.substr(locationHref.indexOf("?") + 1);
         var id = locationSearch.split("&")[0].split("=")[1];
-        this.setState({ "id": id });
+        moralEdu.setState({
+            "id": id
+        })
+        this.findMoralEducationById(id)
     }
 
     /**
@@ -100,23 +104,43 @@ export default class addMoralEducation extends React.Component {
             timeValue: newTime
         })
     }
-
+      /**
+     * 查看对应教室ID的德育信息
+     */
+    findMoralEducationById(id) {
+        var _this = this;
+       
+        var param = {
+            "method": 'findMoralEducationById',
+            "id": id,
+        };
+        console.log("param", param)
+        WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
+            onResponse: function (result) {
+                console.log("result",result);
+                if (result.msg == '调用成功' && result.success == true) {
+                    _this.setState({
+                        "showData": result.response,
+                        "health":result.response.health,
+                        "politeness":result.response.politeness
+                        // isLoadingLeft: isLoading,
+                    })
+                    console.log(moralEdu.state.health)
+                    console.log(moralEdu.state.politeness)
+                } else {
+                    Toast.fail(result.msg, 1);
+                }
+            },
+            onError: function (error) {
+                Toast.info(error);
+            }
+        });
+    }
     /**
      * 提交新增的德育项
      */
     addMoralEducationTableItem = () => {
-        if (moralEdu.state.classAsyncValue[0] == 0) {
-            Toast.fail('请选择班级')
-            return
-        }
-        if (moralEdu.state.termAsyncValue[0] == 0) {
-            Toast.fail('请选择学期')
-            return
-        }
-        // if (moralEdu.state.timeValue == null) {
-        //     Toast.fail('请选择日期')
-        //     return
-        // }
+       
         if ($(".healthValue input").val().trim() == '' || $(".healthValue input").val().trim().length == 0) {
             Toast.fail('请填写礼貌评分')
             return
@@ -126,33 +150,31 @@ export default class addMoralEducation extends React.Component {
             return
         }
         const param = {
-            "method": "saveMoralEducation",
+            "method": "updateMoralEducation",
             "moralEducationJson": {
-                "cid": moralEdu.state.id,
-                "health": $(".healthValue input").val(),
-                "politeness": $(".politeValue input").val(),
-                // "termid": moralEdu.state.termAsyncValue[0],
-                // "createTime": moralEdu.state.timeValue
+                "id": moralEdu.state.id,
+                "health": moralEdu.state.health,
+                "politeness": moralEdu.state.politeness
             }
         }
-        console.log("param",param)
+        console.log("修改",param);
+        console.log(moralEdu.state.health)
+        console.log(moralEdu.state.politeness)
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
             onResponse: function (result) {
-                console.log("add",result)
+                console.log(result);
                 if (result.msg == '调用成功' || result.success == true) {
-                    Toast.success('添加成功');
+                    Toast.success('修改成功');
                     setTimeout(function () {
                         var data = {
                             method: 'finishForRefresh',
                         };
-
                         Bridge.callHandler(data, null, function (error) {
                         });
                     }, 1000)
                 }
             },
             onError: function (error) {
-                message.error(error);
             }
         });
     }
@@ -162,31 +184,31 @@ export default class addMoralEducation extends React.Component {
 
     /**
      *获取班级的ID
-     */
-    getClazzesByUserId(id) {
-        var _this = this;
-        var param = {
-            "method": 'getClazzesByUserId',
-            "userId": id
-        };
-        WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
-            onResponse: function (result) {
-                if (result.msg == '调用成功' || result.success == true) {
-                    if (WebServiceUtil.isEmpty(result.response) == false) {
-                        var arr = [];
-                        result.response.forEach(function (v, i) {
-                            arr.push({
-                                value: v.id, label: v.name
-                            })
-                        })
-                        _this.setState({classData: arr})
-                    }
-                }
-            },
-            onError: function (error) {
-            }
-        });
-    }
+    //  */
+    // getClazzesByUserId(id) {
+    //     var _this = this;
+    //     var param = {
+    //         "method": 'getClazzesByUserId',
+    //         "userId": id
+    //     };
+    //     WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
+    //         onResponse: function (result) {
+    //             if (result.msg == '调用成功' || result.success == true) {
+    //                 if (WebServiceUtil.isEmpty(result.response) == false) {
+    //                     var arr = [];
+    //                     result.response.forEach(function (v, i) {
+    //                         arr.push({
+    //                             value: v.id, label: v.name
+    //                         })
+    //                     })
+    //                     _this.setState({classData: arr})
+    //                 }
+    //             }
+    //         },
+    //         onError: function (error) {
+    //         }
+    //     });
+    // }
 
     getClassKey = (v) => {
         this.setState({classAsyncValue: v});
@@ -211,9 +233,9 @@ export default class addMoralEducation extends React.Component {
           );
         return (
             <div id="addMoralEducation" style={{height: document.body.clientHeight}}>
-                {/* <WhiteSpace size="lg"/>
-                {/*选择班级*
-                <Picker
+                <WhiteSpace size="lg"/>
+                {/*选择班级*/}
+                {/* <Picker
                     data={this.state.classData}
                     cols={1}
                     value={this.state.classAsyncValue}
@@ -224,10 +246,10 @@ export default class addMoralEducation extends React.Component {
                                onClick={this.getClazzesByUserId.bind(this, JSON.parse(localStorage.getItem("userIdKey")).userId)}>选择班级<i
                         className="redStar">*</i></List.Item>
                 </Picker>
-                <WhiteSpace size="lg"/> */}
-               
-                {/* 选择日期
-                <DatePicker
+                <WhiteSpace size="lg"/>
+                */}
+                {/*选择日期*/}
+                {/* <DatePicker
                     mode="date"
                     title="选择日期"
                     extra="Optional"
@@ -238,8 +260,8 @@ export default class addMoralEducation extends React.Component {
                 >
                  <CustomChildren>选择日期</CustomChildren>
                     {/* <List.Item arrow="horizontal">选择日期<i className="redStar">*</i></List.Item> 
-                </DatePicker> */}
-                {/* <WhiteSpace size="lg"/> */}
+                </DatePicker>
+                <WhiteSpace size="lg"/> */}
                 <div className='CourseTableArea'>
                     <div className="classSearchResultInfo">
                         <List>
@@ -247,12 +269,16 @@ export default class addMoralEducation extends React.Component {
                                 className="politeValue"
                                 clear
                                 placeholder="请输入分数"
+                                value={moralEdu.state.politeness}
+                                onChange = {v => {moralEdu.setState({"politeness":v})}}
                                 ref={el => this.autoFocusInst = el}
                             >班级礼貌评分</InputItem>
                             <InputItem
                                 className="healthValue"
                                 clear
                                 placeholder="请输入分数"
+                                value={moralEdu.state.health}
+                                onChange = {v => {moralEdu.setState({"health":v})}}
                                 ref={el => this.autoFocusInst = el}
                             >班级健康评分</InputItem>
                         </List>

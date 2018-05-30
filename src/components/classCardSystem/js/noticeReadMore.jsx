@@ -26,7 +26,7 @@ export default class noticeReadMore extends React.Component {
     }
 
     /**
-     * getNoticeReadMore获取出勤的方法x
+     * getNoticeReadMore获取出勤的方法
      */
     getNoticeReadMore() {
         var _this = this;
@@ -117,13 +117,13 @@ export default class noticeReadMore extends React.Component {
         });
         // history.back()
     }
-
+    /** 
+     * li元素的点击事件
+    */
     onClick = (e) => {
         $('.ulBox li').find('.noticeContent').css({
             display: 'none'
         })
-
-
         $(e.target).next().css({
             display: 'block'
         })
