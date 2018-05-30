@@ -39,12 +39,16 @@ export default class addStudentDuty extends React.Component {
     }
 
     componentDidMount() {
-        document.title = '添加值日生';
         var locationHref = window.location.href;
         var locationSearch = locationHref.substr(locationHref.indexOf("?") + 1);
         var locationSearchArray = locationSearch.split("&");
-        var userId = locationSearchArray[0].split("=")[1];
-        this.getClazzesByUserId(userId);
+        var clazzId = locationSearchArray[0].split("=")[1];
+        var clazzName = locationSearchArray[1].split("=")[1];
+        var userId = locationSearchArray[2].split("=")[1];
+        // this.getClazzesByUserId(userId);
+        this.getStudentListByClazz(clazzId);
+        this.setState({clazzId,userId,clazzName});
+        document.title = "添加"+clazzName+"值日生";
     }
 
     onPickerChange = (val) => {
@@ -125,6 +129,7 @@ export default class addStudentDuty extends React.Component {
                     var response = result.response;
                     if (response != null && response != undefined) {
                         Toast.success('保存成功！', 1);
+                        studentCheckedArray.splice(0);
                         //关闭当前窗口，并刷新上一个页面
                         var data = {
                             method: 'finishForRefresh',
@@ -264,7 +269,7 @@ export default class addStudentDuty extends React.Component {
         var _this = this;
         return (
             <div id="addStudentDuty" style={{height: document.body.clientHeight}}>
-                <WhiteSpace size="lg"/>
+                {/*<WhiteSpace size="lg"/>
                 <Picker
                     data={seasons}
                     title="请选择"
@@ -273,8 +278,7 @@ export default class addStudentDuty extends React.Component {
                     onOk={v => this.onClassChange(v)}
                 >
                     <List.Item arrow="horizontal">选择班级<i className="redStar">*</i></List.Item>
-                </Picker>
-
+                </Picker>*/}
                 <WhiteSpace size="lg"/>
                 <Picker
                     data={this.state.data}

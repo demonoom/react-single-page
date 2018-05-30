@@ -282,6 +282,13 @@ const studentDutyList = (location, cb) => {
     )
 }
 
+const clazzDutyList = (location, cb) => {
+    require.ensure([], require => {
+            cb(null, require("./components/classCardSystemBackstage/js/clazzDutyList?access_user=23836").default)
+        }
+    )
+}
+
 const addStudentDuty = (location, cb) => {
     require.ensure([], require => {
             cb(null, require("./components/classCardSystemBackstage/js/addStudentDuty").default)
@@ -350,6 +357,20 @@ const studentSelectCourse = (location, cb) => {
     )
 }
 
+const classDemeanorList = (location, cb) => {
+    require.ensure([], require => {
+            cb(null, require("./components/classCardSystemBackstage/js/classDemeanorList").default)
+        }
+    )
+}
+
+const classHonorList = (location, cb) => {
+    require.ensure([], require => {
+            cb(null, require("./components/classCardSystemBackstage/js/classHonorList").default)
+        }
+    )
+}
+
 import './index.less';
 
 class Index extends React.Component {
@@ -390,8 +411,8 @@ class Index extends React.Component {
                     {/*to="/m3u8Player?path=http://bpic.588ku.com/video_listen/588ku_video/18/04/17/17/03/11/video5ad5b84f167d6.mp4"*/}
                     {/*style={{fontSize: '24px'}}>m3u8Player</Link></li>*/}
                     <li><Link
-                    to="/HomeWorkUnderstandAnalysisGuideByNoom?ident=23836"
-                    style={{fontSize: '24px'}}>作业表情分析NOOM</Link></li>
+                        to="/HomeWorkUnderstandAnalysisGuideByNoom?ident=23836"
+                        style={{fontSize: '24px'}}>作业表情分析NOOM</Link></li>
                     {/*<li><Link*/}
                     {/*to="/homeworkModule?classId=819"*/}
                     {/*style={{fontSize: '24px'}}>作业模块</Link></li>*/}
@@ -525,6 +546,12 @@ ReactDOM.render(
             <Route path="classCardHomePageDoor" getComponent={classCardHomePageDoor}/>
             <Route path="fileAnalysis" getComponent={fileAnalysis}/>
             <Route path="studentSelectCourse" getComponent={studentSelectCourse}/>
+            <Route path="classDemeanorList" getComponent={classDemeanorList}/>
+            <Route path="classHonorList" getComponent={classHonorList}/>
+            <Route path="clazzDutyList" getComponent={clazzDutyList}/>
+
         </Route>
     </Router>
-    , document.getElementById('example'));
+    ,
+    document.getElementById('example'))
+    ;
