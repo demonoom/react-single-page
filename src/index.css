@@ -351,6 +351,23 @@ hr {
   text-overflow: ellipsis;
   display: block;
 }
+.deleteBtn_common {
+  float: right;
+  display: block;
+  width: 28px;
+  height: 28px;
+  background: url("components/classCardSystemBackstage/imgs/icon_delete.png") no-repeat center center;
+  background-size: 18px;
+  margin-right: 15px;
+}
+.modifyBtn_common {
+  float: right;
+  display: block;
+  width: 28px;
+  height: 28px;
+  background: url("components/classCardSystemBackstage/imgs/icon_modify.png") no-repeat center center;
+  background-size: 18px;
+}
 /*班牌屏幕适配*/
 @media only screen and (min-width: 768px) and (max-width: 799px) {
   html {

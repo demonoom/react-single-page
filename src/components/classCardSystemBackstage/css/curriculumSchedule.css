@@ -32,22 +32,16 @@
 #curriculumSchedule .curriculum_cont li .text_cont3 {
   max-width: 100%;
 }
+#curriculumSchedule .curriculum_cont li .add_title {
+  overflow: hidden;
+}
 #curriculumSchedule .amend_btn {
-  float: right;
-  background: #f55d45;
-  line-height: 24px;
-  padding: 0 15px;
-  font-size: 1rem !important;
-  margin-top: 10px;
-  color: #fff;
-  border-radius: 2px;
+  height: 44px;
 }
 #curriculumSchedule .lineList {
   line-height: 23px;
   height: 26px;
 }
 #curriculumSchedule .delete {
-  color: #F56A55;
-  font-size: 1rem;
-  margin-left: 20px;
+  height: 44px;
 }

@@ -57,6 +57,15 @@
   position: relative;
   float: left;
 }
+#currentAttendanceList .photoItem .signIcon_green {
+  position: absolute;
+  right: 13%;
+  bottom: 23%;
+  width: 30px;
+  height: 30px;
+  z-index: 2;
+  border-radius: 50%;
+}
 #currentAttendanceList .photoItem .imgDiv {
   width: 3.33rem;
   height: 3.33rem;
