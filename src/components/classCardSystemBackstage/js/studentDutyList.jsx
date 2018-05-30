@@ -33,153 +33,79 @@ export default class studentDutyList extends React.Component {
             week: weekOfTody+'',
             editButtonDisabled: true
         };
-        this.getClassBrandStudentDuty = this.getClassBrandStudentDuty.bind(this);
-        this.getClazzesByUserId = this.getClazzesByUserId.bind(this);
+        this.getClassBrandStudentDutyList = this.getClassBrandStudentDutyList.bind(this);
     }
 
     componentWillMount() {
-        document.title = '值日表';
+        document.title = '班级值日详情页';
         var locationHref = window.location.href;
         var locationSearch = locationHref.substr(locationHref.indexOf("?") + 1);
         var locationSearchArray = locationSearch.split("&");
-        var userId = locationSearchArray[0].split("=")[1];
-        this.getClazzesByUserId(userId);
-        this.setState({userId});
-    }
-
-    componentDidMount() {
-        document.title = '值日表';
+        var clazzId = locationSearchArray[0].split("=")[1];
+        this.getClassBrandStudentDutyList(clazzId);
+        this.setState({clazzId});
     }
 
     /**
-     * 星期改变时查询当前星期对应的值日生列表
-     * @param val
+     * 查看指定班级的值日列表
      */
-    onWeekPickerChange = (val) => {
-        const d = [...this.state.data];
-        const asyncValue = [...val];
-        var week = val[0];
-
-        this.setState({
-            data: d,
-            cols: 1,
-            asyncValue,
-            week
-        });
-        this.getClassBrandStudentDuty(this.state.clazzId, week);
-    };
-
-    /**
-     * 获取班级值日生的列表
-     * @param clazzId 班级id
-     * @param week 星期
-     */
-    getClassBrandStudentDuty(clazzId, week) {
+    getClassBrandStudentDutyList(clazzId,week,pageNo) {
         var _this = this;
         var param = {
-            "method": 'getClassBrandStudentDuty',
+            "method": 'getClassBrandStudentDutyList',
             "clazzId": clazzId,
-            "week": week
+            "week": week,
+            "pageNo": pageNo,
         };
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
             onResponse: function (result) {
-                var studentList = [];
-                var studentIdList = [];
-                var dutyId = -1;
-                var editButtonDisabled = true;
-                if (result.success == true && result.msg == "调用成功") {
-                    var response = result.response;
-                    if (response != null && response != undefined) {
-                        if (response.length === 0) {
-                            _this.setState({"isLoadingLeft": false})
-                        } else {
-                            var clazzObj = result.response;
-                            dutyId = clazzObj.id;
-                            var users = clazzObj.users;
-                            editButtonDisabled = false;
-                            users.forEach(function (student) {
-                                if (student != null && student != undefined) {
-                                    var stuId = student.colUid;
-                                    var stuName = student.userName;
-                                    var icon = student.avatar;
-                                    var stuJson = {text: stuName, icon};
-                                    studentList.push(stuJson)
-                                    studentIdList.push(stuId);
-                                }
+                console.log(result.response);
+                var dutyTagList = [];
+                if (result.msg == '调用成功' && result.success == true) {
+                    var studentDutyList = result.response;
+                    console.log(studentDutyList);
+                    studentDutyList.forEach(function (studentDuty) {
+                        var dutyId = studentDuty.id;
+                        var week = studentDuty.week;
+                        var users = studentDuty.users;
+                        var studentIdStr = "";
+                        var studentList = [];
+                        if(WebServiceUtil.isEmpty(users)==false){
+                            users.forEach(function (user) {
+                                var userId = user.colUid;
+                                studentIdStr+=userId+",";
+                                var userName = user.userName;
+                                var avatar = user.avatar;
+                                var stuJson = {text: userName, icon:avatar};
+                                studentList.push(stuJson)
                             })
                         }
-                    }
+
+                        var dutyTag = <div>
+                            <div className="planTitle">
+                                <span>星期：{week}</span>
+                                <Grid data={studentList} columnNum={4} activeStyle={false}/>
+                                <Button type="primary" size="small" onClick={_this.editStudentDuty.bind(_this,week,studentIdStr,dutyId)}>修改</Button>
+                                {/*<Button type="primary" size="small" onClick={_this.editStudentDuty}>修改</Button>*/}
+                                <Button type="primary" size="small" className="btn_del" onClick={_this.delStudentDuty.bind(_this,dutyId)}>删除</Button>
+                            </div>
+                            <WhiteSpace size="lg"/>
+                        </div>;
+                        dutyTagList.push(dutyTag);
+                    })
                 }
-                var sValue = [clazzId+''];
-                _this.setState({studentList, studentIdList, dutyId, editButtonDisabled,clazzId,sValue});
+                _this.setState({dutyTagList});
             },
             onError: function (error) {
             }
         });
     }
-
-    /**
-     * 进入学生值日页面时，根据用户id获取当前用户的班级
-     * @param userId
-     */
-    getClazzesByUserId(userId) {
-        var _this = this;
-        var param = {
-            "method": 'getClazzesByUserId',
-            "userId": userId
-        };
-        WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
-            onResponse: function (result) {
-                var studentList = [];
-                var studentIdList = [];
-                var dutyId = -1;
-                if (result.success == true && result.msg == "调用成功") {
-                    var response = result.response;
-                    if (response != null && response != undefined) {
-                        response.forEach(function (clazz,index) {
-                            var clazzId = clazz.id;
-                            //班级
-                            var clazzName = clazz.name;
-                            //年级
-                            var grade = clazz.grade;
-                            var gradeName = grade.name;
-                            var clazzJson = {
-                                label: gradeName + clazzName,
-                                value: clazzId + "",
-                            };
-                            if(index==0){
-                                _this.getClassBrandStudentDuty(clazzId,_this.state.week);
-                            }
-                            if (seasons[0] != null && seasons[0] != undefined) {
-                                seasons[0].push(clazzJson);
-                            }
-                        })
-
-                    }
-                }
-                _this.setState({studentList, studentIdList, dutyId});
-            },
-            onError: function (error) {
-            }
-        });
-    }
-
-    /**
-     * 班级选项改变的响应函数
-     * 切换班级时，查询当前班级对应条件下的值日生
-     * @param val
-     */
-    onClassChange = (val) => {
-        var clazzId = val[0];
-        this.setState({sValue: val, clazzId});
-        this.getClassBrandStudentDuty(clazzId, this.state.week);
-    };
 
     /**
      * 修改班级的值日信息
      * 需要将当前页面的查询数据传递到下个页面，然后构建修改页面的数据
      */
-    editStudentDuty = () => {
+    editStudentDuty = (week,studentIdStr,dutyId) => {
         var studentIdStr = this.state.studentIdList.join(",");
         var editStudentDutyUrl = WebServiceUtil.mobileServiceURL + "editStudentDuty";
         editStudentDutyUrl += "?clazzId=" + this.state.clazzId + "&week=" + this.state.week + "&studentIds=" + studentIdStr + "&dutyId=" + this.state.dutyId + "&access_user=" + this.state.userId;
@@ -195,6 +121,27 @@ export default class studentDutyList extends React.Component {
         });
     };
 
+    delStudentDuty=(delId)=>{
+        var _this = this;
+        var param = {
+            "method": 'deleteStudentDuty',
+            "id": delId
+        };
+        WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
+            onResponse: function (result) {
+                console.log(result.response);
+                if (result.msg == '调用成功' && result.success == true) {
+                    var result = result.response;
+                    console.log(result);
+                    if(result.msg == '调用成功' && result.success == true){
+                        _this.getClassBrandStudentDutyList(_this.state.clazzId,'',-1);
+                    }
+                }
+            },
+            onError: function (error) {
+            }
+        });
+    }
     /**
      * 跳转到添加值日生的页面
      */
@@ -214,35 +161,7 @@ export default class studentDutyList extends React.Component {
         var _this = this;
         return (
             <div id="studentDutyList" style={{height: document.body.clientHeight}}>
-                <WhiteSpace size="lg"/>
-                <Picker
-                    data={seasons}
-                    title="请选择"
-                    cascade={false}
-                    value={this.state.sValue}
-                    onOk={v => this.onClassChange(v)}
-                >
-                    <List.Item arrow="horizontal">班级名称 学期</List.Item>
-                </Picker>
-                <WhiteSpace size="lg"/>
-                <Picker
-                    data={this.state.data}
-                    cols={1}
-                    value={this.state.asyncValue}
-                    onOk={v => this.onWeekPickerChange(v)}
-                >
-                    <List.Item arrow="horizontal" onClick={this.onClick}>选择星期</List.Item>
-                </Picker>
-                <WhiteSpace size="lg"/>
-                <div className="dutyList">
-                    <div className="planTitle">
-                        <span>值日安排</span>
-                        <Button type="primary" inline size="small" className="am-button-borderfix modifyBtn"
-                                disabled={this.state.editButtonDisabled} onClick={this.editStudentDuty}>修改</Button>
-                    </div>
-                    <Grid data={_this.state.studentList} columnNum={4} activeStyle={false}/>
-                    <div className="addBunton"><Icon type="plus" onClick={this.turnToAddDutyPage}/></div>
-                </div>
+                {_this.state.dutyTagList}
             </div>
         );
     }

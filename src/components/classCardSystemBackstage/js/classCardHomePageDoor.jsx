@@ -117,7 +117,7 @@ export default class classCardHomePageDoor extends React.Component {
      * 班级值日表
      */
     turnToStudentDutyList = () => {
-        var url = WebServiceUtil.mobileServiceURL + "studentDutyList?access_user=" + this.state.ident;
+        var url = WebServiceUtil.mobileServiceURL + "clazzDutyList?access_user=" + this.state.ident;
         var data = {
             method: 'openNewPage',
             url: url
