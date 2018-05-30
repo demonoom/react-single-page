@@ -134,7 +134,10 @@ export default class clazzDutyList extends React.Component {
         }
         currentPageNo += 1;
         this.setState({ isLoadingLeft: true, defaultPageNo: currentPageNo });
-        _this.getClassBrandStudentDutyList(_this.state.uid);
+        var weekOfTody = new Date().getDay();
+        weekOfTody=(weekOfTody==0?7:weekOfTody);
+        this.getClassBrandStudentDutyList(this.state.uid,'',weekOfTody,this.state.defaultPageNo);
+        // _this.getClassBrandStudentDutyList(_this.state.uid);
         this.setState({
             dataSource: this.state.dataSource.cloneWithRows(this.initData),
             isLoadingLeft: true,
@@ -148,7 +151,7 @@ export default class clazzDutyList extends React.Component {
         // this.getClassBrandStudentDutyList(this.state.uid);
         var weekOfTody = new Date().getDay();
         weekOfTody=(weekOfTody==0?7:weekOfTody);
-        this.getClassBrandStudentDutyList('',weekOfTody,this.state.defaultPageNo);
+        this.getClassBrandStudentDutyList(this.state.uid,'',weekOfTody,this.state.defaultPageNo);
     }
 
     /**

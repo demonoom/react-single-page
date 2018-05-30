@@ -110,6 +110,8 @@ export default class editStudentDuty extends React.Component {
                         })
 
                     }
+                }else{
+                    Toast.fail(result.msg, 2);
                 }
                 _this.setState({seasons});
             },
@@ -178,6 +180,8 @@ export default class editStudentDuty extends React.Component {
                             console.log(error);
                         });
                     }
+                }else{
+                    Toast.fail(result.msg, 2);
                 }
             },
             onError: function (error) {
@@ -215,6 +219,8 @@ export default class editStudentDuty extends React.Component {
                             studentCheckboxItemList.push(checkBoxItem);
                         })
                     }
+                }else{
+                    Toast.fail(result.msg, 2);
                 }
                 _this.setState({seasons});
             },
