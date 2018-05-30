@@ -94,3 +94,12 @@
     height: 70px !important;
   }
 }
+#studentDutyList .planTitle {
+  position: relative;
+  font-size: 17px;
+  line-height: 24px;
+  padding: 10px 15px;
+}
+#studentDutyList .btn_del {
+  top: 50px;
+}
