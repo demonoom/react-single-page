@@ -272,6 +272,13 @@ const studentDutyList = (location, cb) => {
     )
 }
 
+const clazzDutyList = (location, cb) => {
+    require.ensure([], require => {
+            cb(null, require("./components/classCardSystemBackstage/js/clazzDutyList?access_user=23836").default)
+        }
+    )
+}
+
 const addStudentDuty = (location, cb) => {
     require.ensure([], require => {
             cb(null, require("./components/classCardSystemBackstage/js/addStudentDuty").default)
@@ -529,6 +536,7 @@ ReactDOM.render(
             <Route path="studentSelectCourse" getComponent={studentSelectCourse}/>
             <Route path="classDemeanorList" getComponent={classDemeanorList}/>
             <Route path="classHonorList" getComponent={classHonorList}/>
+            <Route path="clazzDutyList" getComponent={clazzDutyList}/>
+
         </Route>
     </Router>
-    , document.getElementById('example'));

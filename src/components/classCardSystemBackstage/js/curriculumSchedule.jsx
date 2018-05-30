@@ -359,9 +359,8 @@ export default class curriculumSchedule extends React.Component {
                         return <li>
                             <div className="add_title">
                                 <span className="font_gray">第{i + 1}节</span>
-                                <span
-                                    className="amend_btn" onClick={this.turnToUpdatePage.bind(this, v)}>修改</span>
-                                <span className="delete" onClick={this.delSchedule.bind(this, v.id)}>删除</span>
+                                <span className="amend_btn modifyBtn_common" onClick={this.turnToUpdatePage.bind(this, v)}></span>
+                                <span className="delete deleteBtn_common" onClick={this.delSchedule.bind(this, v.id)}></span>
                             </div>
 
                             <div className="list_high list textOver">
