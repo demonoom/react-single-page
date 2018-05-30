@@ -144,14 +144,19 @@ export default class clazzDutyList extends React.Component {
         var divPull = document.getElementsByClassName('am-pull-to-refresh-content');
         divPull[0].style.transform = "translate3d(0px, 30px, 0px)";   //设置拉动后回到的位置
         this.setState({ defaultPageNo: 1, refreshing: true, isLoadingLeft: true });
-        this.getClassBrandStudentDutyList(this.state.uid);
+        // this.getClassBrandStudentDutyList(this.state.uid);
+        var weekOfTody = new Date().getDay();
+        weekOfTody=(weekOfTody==0?7:weekOfTody);
+        this.getClassBrandStudentDutyList('',weekOfTody,this.state.defaultPageNo);
     }
 
     /**
      * 跳转到班级值日详情页
      */
-    turnToClazzDetail(clazzId){
-        var studentDutyListUrl = WebServiceUtil.mobileServiceURL + "studentDutyList?clazzId=" + clazzId;
+    turnToClazzDetail(clazzObj){
+        var clazzId = clazzObj.id;
+        var clazzName = clazzObj.name;
+        var studentDutyListUrl = WebServiceUtil.mobileServiceURL + "studentDutyList?clazzId=" + clazzId+"&clazzName="+clazzName+"&access_user="+this.state.uid;
         var data = {
             method: 'openNewPage',
             url: studentDutyListUrl
@@ -184,7 +189,7 @@ export default class clazzDutyList extends React.Component {
                         <div className="am-list-item am-list-item-middle">
                             <div className="am-list-line">
                                 <div className="am-list-content">{rowData.clazz.name}</div>
-                                <span className="choiceData am-list-extra" onClick={_this.turnToClazzDetail.bind(_this,rowData.clazz.id)} style={{ float: 'right', color: '#888' }}>查看所有</span><div className="am-list-arrow am-list-arrow-horizontal"></div>
+                                <span className="choiceData am-list-extra"  onClick={_this.turnToClazzDetail.bind(_this,rowData.clazz)} style={{ float: 'right', color: '#888' }}>查看所有</span><div className="am-list-arrow am-list-arrow-horizontal"></div>
                             </div>
                         </div>
                         {/* <span className="creatTime">
@@ -226,9 +231,6 @@ export default class clazzDutyList extends React.Component {
                             distanceToRefresh={80}
                         />}
                     />
-                    <div className='addBunton' onClick={this.addClassroomM}>
-                        <img src={require("../imgs/addBtn.png")} />
-                    </div>
                 </div>
             </div>
         );

@@ -167,6 +167,7 @@ export default class editStudentDuty extends React.Component {
                     var response = result.response;
                     if (response != null && response != undefined) {
                         Toast.success('修改成功！', 1);
+                        studentCheckedArray.splice(0);
                         //关闭当前窗口，并刷新上一个页面
                         var data = {
                             method: 'finishForRefresh',
@@ -212,7 +213,6 @@ export default class editStudentDuty extends React.Component {
                             </CheckboxItem>;
                             studentCheckboxItemList.push(checkBoxItem);
                         })
-
                     }
                 }
                 _this.setState({seasons});
@@ -228,30 +228,6 @@ export default class editStudentDuty extends React.Component {
 
         return (
             <div id="addStudentDuty" style={{height: document.body.clientHeight}}>
-                <WhiteSpace size="lg"/>
-                <Picker
-                    data={seasons}
-                    title="请选择"
-                    cascade={false}
-                    value={this.state.sValue}
-                    onOk={v => this.onClassChange(v)}
-                    disabled
-                >
-                    <List.Item arrow="horizontal">选择班级<i className="redStar">*</i></List.Item>
-                </Picker>
-
-                <WhiteSpace size="lg"/>
-                <Picker
-                    data={this.state.data}
-                    cols={1}
-                    value={this.state.asyncValue}
-                    onOk={v => this.onPickerChange(v)}
-                    disabled
-                >
-                    <List.Item arrow="horizontal" onClick={this.onClick}>选择星期<i className="redStar">*</i></List.Item>
-                </Picker>
-
-                <WhiteSpace size="lg"/>
                 <div className="bg_white">
                     <List renderHeader={() => '学生列表'}>
                         {_this.state.studentCheckboxItemList}

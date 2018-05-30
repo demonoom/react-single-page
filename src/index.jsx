@@ -274,7 +274,7 @@ const studentDutyList = (location, cb) => {
 
 const clazzDutyList = (location, cb) => {
     require.ensure([], require => {
-            cb(null, require("./components/classCardSystemBackstage/js/clazzDutyList").default)
+            cb(null, require("./components/classCardSystemBackstage/js/clazzDutyList?access_user=23836").default)
         }
     )
 }
@@ -343,6 +343,20 @@ const fileAnalysis = (location, cb) => {
 const studentSelectCourse = (location, cb) => {
     require.ensure([], require => {
             cb(null, require("./components/classCardSystemBackstage/js/studentSelectCourse").default)
+        }
+    )
+}
+
+const classDemeanorList = (location, cb) => {
+    require.ensure([], require => {
+            cb(null, require("./components/classCardSystemBackstage/js/classDemeanorList").default)
+        }
+    )
+}
+
+const classHonorList = (location, cb) => {
+    require.ensure([], require => {
+            cb(null, require("./components/classCardSystemBackstage/js/classHonorList").default)
         }
     )
 }
@@ -456,7 +470,7 @@ class Index extends React.Component {
 }
 
 ReactDOM.render(
-    <Router history={hashHistory}>
+    <Route history={hashHistory}>
         <Route path="/" component={App}>
             <IndexRoute component={Index}/>
             {/*<Route path="s1" component={Stage1}/>*/}
@@ -520,7 +534,9 @@ ReactDOM.render(
             <Route path="classCardHomePageDoor" getComponent={classCardHomePageDoor}/>
             <Route path="fileAnalysis" getComponent={fileAnalysis}/>
             <Route path="studentSelectCourse" getComponent={studentSelectCourse}/>
+            <Route path="classDemeanorList" getComponent={classDemeanorList}/>
+            <Route path="classHonorList" getComponent={classHonorList}/>
             <Route path="clazzDutyList" getComponent={clazzDutyList}/>
+
         </Route>
-    </Router>
-    , document.getElementById('example'));
+    </Route>
