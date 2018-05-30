@@ -142,6 +142,7 @@ export default class addStudentDuty extends React.Component {
                 }
             },
             onError: function (error) {
+                message.error(error)
             }
         });
     }
@@ -185,6 +186,7 @@ export default class addStudentDuty extends React.Component {
                 _this.setState({seasons});
             },
             onError: function (error) {
+                message.error(error)
             }
         });
     }
@@ -223,6 +225,7 @@ export default class addStudentDuty extends React.Component {
                 _this.setState({seasons,sValue,'week':weekOfTody,asyncValue,clazzId});
             },
             onError: function (error) {
+                message.error(error)
             }
         });
 

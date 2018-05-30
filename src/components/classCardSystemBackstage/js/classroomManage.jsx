@@ -154,6 +154,9 @@ export default class classroomManage extends React.Component {
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
             onResponse: function (result) {
                 if (result.msg == '调用成功' && result.success == true) {
+                    if(result.response.length === 0){
+                        Toast.info('没有查找到该班级');
+                    }
                     classBinding.setState({
                         searchData: result.response,
                         chooseResultDiv: "block",
@@ -191,6 +194,7 @@ export default class classroomManage extends React.Component {
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
             onResponse: function (result) {
                 if (result.msg == '调用成功' && result.success == true) {
+                    
                     $('.tableDiv').show("fast");
                     _this.state.gradeNameValue = '';
                     _this.state.classroomValue = '';

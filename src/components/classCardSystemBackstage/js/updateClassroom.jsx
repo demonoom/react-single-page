@@ -107,6 +107,9 @@ export default class updateClassroom extends React.Component {
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
             onResponse: function (result) {
                 if (result.msg == '调用成功' && result.success == true) {
+                    if(result.response.length === 0){
+                        Toast.info('没有查找到该班级');
+                    }
                     updateCM.setState({
                         chooseResultDiv: "block",
                         searchData: result.response,
@@ -128,6 +131,10 @@ export default class updateClassroom extends React.Component {
         var _this = this;
         if (_this.state.gradeNameValue == '' || _this.state.classroomValue == '') {
             Toast.fail('请填写教室名称和班级名称', )
+            return
+        }
+        if (updateCM.state.gradeNameChangeValue == undefined) {
+            Toast.fail('请选择班级', )
             return
         }
         var param = {

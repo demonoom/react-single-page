@@ -184,6 +184,7 @@ export default class addMoralEducation extends React.Component {
                 }
             },
             onError: function (error) {
+                message.error(error)
             }
         });
     }
