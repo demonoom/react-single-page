@@ -280,7 +280,7 @@ export default class moralEducation extends React.Component {
         //     )
         // };
         return (
-            <div id="classroomManage" style={{ height: moralEd.state.clientHeight }}>
+            <div id="moralEducation" style={{ height: moralEd.state.clientHeight }}>
                 <div className='tableDiv' style={{ height: moralEd.state.clientHeight }}>
                     {/*这是列表数据,包括添加按钮*/}
                     {
