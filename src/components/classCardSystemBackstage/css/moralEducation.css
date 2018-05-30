@@ -1,6 +1,8 @@
-(node) util.print is deprecated. Use console.log instead.
 #moralEducation {
   position: relative;
+}
+#moralEducation .tableDiv {
+  overflow: auto;
 }
 #moralEducation .addBunton img {
   width: 100%;
