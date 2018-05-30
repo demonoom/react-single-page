@@ -51,7 +51,7 @@ export default class clazzDutyList extends React.Component {
         localStorage.setItem("uIdKey",JSON.stringify(uidKey));
         var weekOfTody = new Date().getDay();
         weekOfTody=(weekOfTody==0?7:weekOfTody);
-        this.getClassBrandStudentDutyList('',weekOfTody,this.state.defaultPageNo);
+        this.getClassBrandStudentDutyList(uid,'',weekOfTody,this.state.defaultPageNo);
         //添加对视窗大小的监听,在屏幕转换以及键盘弹起时重设各项高度
         window.addEventListener('resize', clazzDutyListBinding.onWindowResize)
     }
@@ -73,7 +73,7 @@ export default class clazzDutyList extends React.Component {
     /**
      * 查看所有班级的值日信息
      */
-    getClassBrandStudentDutyList(clazzId,week,pageNo) {
+    getClassBrandStudentDutyList(userId,clazzId,week,pageNo) {
         var _this = this;
         _this.initData.splice(0);
         _this.state.dataSource = [];
@@ -84,6 +84,7 @@ export default class clazzDutyList extends React.Component {
         var PageNo = this.state.defaultPageNo;
         var param = {
             "method": 'getClassBrandStudentDutyList',
+            "userId":userId,
             "clazzId": clazzId,
             "week": week,
             "pageNo": pageNo,
@@ -155,7 +156,11 @@ export default class clazzDutyList extends React.Component {
      */
     turnToClazzDetail(clazzObj){
         var clazzId = clazzObj.id;
-        var clazzName = clazzObj.name;
+        var clazzName = "";
+        if(WebServiceUtil.isEmpty(clazzObj.grade)===false){
+            clazzName+=clazzObj.grade.name;
+        }
+        clazzName+=clazzObj.name;
         var studentDutyListUrl = WebServiceUtil.mobileServiceURL + "studentDutyList?clazzId=" + clazzId+"&clazzName="+clazzName+"&access_user="+this.state.uid;
         var data = {
             method: 'openNewPage',
@@ -188,7 +193,7 @@ export default class clazzDutyList extends React.Component {
                         {/* <span className="delClassroom" onClick={this.delClassroom.bind(this,rowData.id)}>X</span> */}
                         <div className="am-list-item am-list-item-middle">
                             <div className="am-list-line">
-                                <div className="am-list-content">{rowData.clazz.name}</div>
+                                <div className="am-list-content">{(rowData.clazz.grade==undefined?'':rowData.clazz.grade.name)+""+rowData.clazz.name}</div>
                                 <span className="choiceData am-list-extra"  onClick={_this.turnToClazzDetail.bind(_this,rowData.clazz)} style={{ float: 'right', color: '#888' }}>查看所有</span><div className="am-list-arrow am-list-arrow-horizontal"></div>
                             </div>
                         </div>
