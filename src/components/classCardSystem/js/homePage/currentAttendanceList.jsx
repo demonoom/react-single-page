@@ -52,6 +52,7 @@ export default class currentAttendanceList extends React.Component {
         };
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
             onResponse: function (result) {
+                console.log(result,'1');
                 if (result.msg == '调用成功' || result.success == true) {
                     allStudents = result.response;
                     _this.setState({peopleNum: result.response.length});
@@ -77,6 +78,7 @@ export default class currentAttendanceList extends React.Component {
         };
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
             onResponse: function (result) {
+                console.log(result,'2');
                 var response = result.response;
                 if (result.msg == '调用成功' || result.success == true) {
                     _this.setState({"currentPeopleNum": result.response.length});
@@ -114,7 +116,8 @@ export default class currentAttendanceList extends React.Component {
                 }
                 var studentHeaderTag = <div className="photoItem">
                     <div className={classFlag}><img src={studentAvatar}/></div>
-                    <div className="signIcon">{checkedTip}</div>
+                    <img className="signIcon_green" hidden={!isExist} src={require('../../img/green_right_image.png')} alt="" />
+                    <div className="signIcon" hidden={isExist}>{checkedTip}</div>
                     <div className="studentName">
                         {studentOfAll.userName}
                     </div>
