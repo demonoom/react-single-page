@@ -42,8 +42,10 @@ export default class studentDutyList extends React.Component {
         var locationSearch = locationHref.substr(locationHref.indexOf("?") + 1);
         var locationSearchArray = locationSearch.split("&");
         var clazzId = locationSearchArray[0].split("=")[1];
+        var clazzName = locationSearchArray[1].split("=")[1];
+        var userId = locationSearchArray[2].split("=")[1];
         this.getClassBrandStudentDutyList(clazzId);
-        this.setState({clazzId});
+        this.setState({clazzId,userId,clazzName});
     }
 
     /**
@@ -71,9 +73,12 @@ export default class studentDutyList extends React.Component {
                         var studentIdStr = "";
                         var studentList = [];
                         if(WebServiceUtil.isEmpty(users)==false){
-                            users.forEach(function (user) {
+                            users.forEach(function (user,index) {
                                 var userId = user.colUid;
-                                studentIdStr+=userId+",";
+                                studentIdStr+=userId;
+                                if(index!=users.length-1){
+                                    studentIdStr+=",";
+                                }
                                 var userName = user.userName;
                                 var avatar = user.avatar;
                                 var stuJson = {text: userName, icon:avatar};
@@ -106,9 +111,9 @@ export default class studentDutyList extends React.Component {
      * 需要将当前页面的查询数据传递到下个页面，然后构建修改页面的数据
      */
     editStudentDuty = (week,studentIdStr,dutyId) => {
-        var studentIdStr = this.state.studentIdList.join(",");
+        // var studentIdStr = this.state.studentIdList.join(",");
         var editStudentDutyUrl = WebServiceUtil.mobileServiceURL + "editStudentDuty";
-        editStudentDutyUrl += "?clazzId=" + this.state.clazzId + "&week=" + this.state.week + "&studentIds=" + studentIdStr + "&dutyId=" + this.state.dutyId + "&access_user=" + this.state.userId;
+        editStudentDutyUrl += "?clazzId=" + this.state.clazzId + "&week=" + week + "&studentIds=" + studentIdStr + "&dutyId=" + dutyId + "&access_user=" + this.state.userId;
         location.href = editStudentDutyUrl;
 
         var data = {
@@ -117,7 +122,7 @@ export default class studentDutyList extends React.Component {
         };
 
         Bridge.callHandler(data, null, function (error) {
-            window.location.href = url;
+            window.location.href = editStudentDutyUrl;
         });
     };
 
@@ -131,11 +136,7 @@ export default class studentDutyList extends React.Component {
             onResponse: function (result) {
                 console.log(result.response);
                 if (result.msg == '调用成功' && result.success == true) {
-                    var result = result.response;
-                    console.log(result);
-                    if(result.msg == '调用成功' && result.success == true){
-                        _this.getClassBrandStudentDutyList(_this.state.clazzId,'',-1);
-                    }
+                    _this.getClassBrandStudentDutyList(_this.state.clazzId);
                 }
             },
             onError: function (error) {
@@ -146,7 +147,7 @@ export default class studentDutyList extends React.Component {
      * 跳转到添加值日生的页面
      */
     turnToAddDutyPage = () => {
-        var addStudentDutyUrl = WebServiceUtil.mobileServiceURL + "addStudentDuty?access_user=" + this.state.userId;
+        var addStudentDutyUrl = WebServiceUtil.mobileServiceURL + "addStudentDuty?clazzId="+this.state.clazzId+"&clazzName="+this.state.clazzName+"&access_user=" + this.state.userId;
         var data = {
             method: 'openNewPage',
             url: addStudentDutyUrl
@@ -161,7 +162,11 @@ export default class studentDutyList extends React.Component {
         var _this = this;
         return (
             <div id="studentDutyList" style={{height: document.body.clientHeight}}>
+                值日班级:{_this.state.clazzName}
                 {_this.state.dutyTagList}
+                <div className='addBunton' onClick={this.turnToAddDutyPage}>
+                    <img src={require("../imgs/addBtn.png")} />
+                </div>
             </div>
         );
     }

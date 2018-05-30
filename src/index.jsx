@@ -274,7 +274,7 @@ const studentDutyList = (location, cb) => {
 
 const clazzDutyList = (location, cb) => {
     require.ensure([], require => {
-            cb(null, require("./components/classCardSystemBackstage/js/clazzDutyList").default)
+            cb(null, require("./components/classCardSystemBackstage/js/clazzDutyList?access_user=23836").default)
         }
     )
 }

@@ -144,14 +144,19 @@ export default class clazzDutyList extends React.Component {
         var divPull = document.getElementsByClassName('am-pull-to-refresh-content');
         divPull[0].style.transform = "translate3d(0px, 30px, 0px)";   //设置拉动后回到的位置
         this.setState({ defaultPageNo: 1, refreshing: true, isLoadingLeft: true });
-        this.getClassBrandStudentDutyList(this.state.uid);
+        // this.getClassBrandStudentDutyList(this.state.uid);
+        var weekOfTody = new Date().getDay();
+        weekOfTody=(weekOfTody==0?7:weekOfTody);
+        this.getClassBrandStudentDutyList('',weekOfTody,this.state.defaultPageNo);
     }
 
     /**
      * 跳转到班级值日详情页
      */
-    turnToClazzDetail(clazzId){
-        var studentDutyListUrl = WebServiceUtil.mobileServiceURL + "studentDutyList?clazzId=" + clazzId;
+    turnToClazzDetail(clazzObj){
+        var clazzId = clazzObj.id;
+        var clazzName = clazzObj.name;
+        var studentDutyListUrl = WebServiceUtil.mobileServiceURL + "studentDutyList?clazzId=" + clazzId+"&clazzName="+clazzName+"&access_user="+this.state.uid;
         var data = {
             method: 'openNewPage',
             url: studentDutyListUrl
@@ -189,7 +194,7 @@ export default class clazzDutyList extends React.Component {
                         {/* <span className="creatTime">
                             2018-8-8
                         </span> */}
-                        <span className='calmCardUnbind' onClick={_this.turnToClazzDetail.bind(_this,rowData.clazz.id)}>详情</span>
+                        <span className='calmCardUnbind' onClick={_this.turnToClazzDetail.bind(_this,rowData.clazz)}>详情</span>
                     </div>
                 }
             </div>
@@ -224,9 +229,6 @@ export default class clazzDutyList extends React.Component {
                             distanceToRefresh={80}
                         />}
                     />
-                    <div className='addBunton' onClick={this.addClassroomM}>
-                        <img src={require("../imgs/addBtn.png")} />
-                    </div>
                 </div>
             </div>
         );
