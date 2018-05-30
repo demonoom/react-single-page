@@ -38,7 +38,6 @@ export default class editStudentDuty extends React.Component {
     }
 
     componentDidMount(){
-        document.title = '修改值日生';
         var locationHref = window.location.href;
         var locationSearch = locationHref.substr(locationHref.indexOf("?") + 1);
         var locationSearchArray = locationSearch.split("&");
@@ -46,12 +45,14 @@ export default class editStudentDuty extends React.Component {
         var week = locationSearchArray[1].split("=")[1];
         var studentIds = locationSearchArray[2].split("=")[1];
         var dutyId = locationSearchArray[3].split("=")[1];
-        var userId = locationSearchArray[4].split("=")[1];
+        var clazzName = locationSearchArray[4].split("=")[1];
+        var userId = locationSearchArray[5].split("=")[1];
         this.getStudentListByClazz(clazzId,studentIds);
         this.getClazzesByUserId(userId);
         var sValue = [clazzId];
         var asyncValue = [week];
         this.setState({clazzId,week,studentIds,dutyId,sValue,asyncValue});
+        document.title = "修改"+clazzName+"值日生";
     }
 
     onPickerChange = (val) => {

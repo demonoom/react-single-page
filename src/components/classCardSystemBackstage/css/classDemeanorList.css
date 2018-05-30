@@ -1,0 +1,10 @@
+#classDemeanorList {
+  padding: 5px;
+}
+#classDemeanorList li {
+  border-bottom: 1px solid #ccc;
+  padding: 5px;
+}
+#classDemeanorList .classDetail {
+  float: right;
+}

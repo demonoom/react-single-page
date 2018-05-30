@@ -540,4 +540,6 @@ ReactDOM.render(
 
         </Route>
     </Router>
-    , document.getElementById('example'));
+    ,
+    document.getElementById('example'))
+    ;

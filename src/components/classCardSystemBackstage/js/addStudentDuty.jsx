@@ -39,7 +39,6 @@ export default class addStudentDuty extends React.Component {
     }
 
     componentDidMount() {
-        document.title = '添加值日生';
         var locationHref = window.location.href;
         var locationSearch = locationHref.substr(locationHref.indexOf("?") + 1);
         var locationSearchArray = locationSearch.split("&");
@@ -49,6 +48,7 @@ export default class addStudentDuty extends React.Component {
         // this.getClazzesByUserId(userId);
         this.getStudentListByClazz(clazzId);
         this.setState({clazzId,userId,clazzName});
+        document.title = "添加"+clazzName+"值日生";
     }
 
     onPickerChange = (val) => {
@@ -279,8 +279,6 @@ export default class addStudentDuty extends React.Component {
                 >
                     <List.Item arrow="horizontal">选择班级<i className="redStar">*</i></List.Item>
                 </Picker>*/}
-                <WhiteSpace size="lg"/>
-                <span>值日班级:{_this.state.clazzName}</span>
                 <WhiteSpace size="lg"/>
                 <Picker
                     data={this.state.data}

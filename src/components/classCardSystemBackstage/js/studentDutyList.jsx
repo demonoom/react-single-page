@@ -37,7 +37,6 @@ export default class studentDutyList extends React.Component {
     }
 
     componentWillMount() {
-        document.title = '班级值日详情页';
         var locationHref = window.location.href;
         var locationSearch = locationHref.substr(locationHref.indexOf("?") + 1);
         var locationSearchArray = locationSearch.split("&");
@@ -46,6 +45,7 @@ export default class studentDutyList extends React.Component {
         var userId = locationSearchArray[2].split("=")[1];
         this.getClassBrandStudentDutyList(clazzId);
         this.setState({clazzId,userId,clazzName});
+        document.title = clazzName+'班级值日表';
     }
 
     /**
@@ -114,7 +114,7 @@ export default class studentDutyList extends React.Component {
     editStudentDuty = (week,studentIdStr,dutyId) => {
         // var studentIdStr = this.state.studentIdList.join(",");
         var editStudentDutyUrl = WebServiceUtil.mobileServiceURL + "editStudentDuty";
-        editStudentDutyUrl += "?clazzId=" + this.state.clazzId + "&week=" + week + "&studentIds=" + studentIdStr + "&dutyId=" + dutyId + "&access_user=" + this.state.userId;
+        editStudentDutyUrl += "?clazzId=" + this.state.clazzId + "&week=" + week + "&studentIds=" + studentIdStr + "&dutyId=" + dutyId + "&clazzName="+this.state.clazzName+"&access_user=" + this.state.userId;
         location.href = editStudentDutyUrl;
 
         var data = {
@@ -163,7 +163,6 @@ export default class studentDutyList extends React.Component {
         var _this = this;
         return (
             <div id="studentDutyList" style={{height: document.body.clientHeight}}>
-                值日班级:{_this.state.clazzName}
                 {_this.state.dutyTagList}
                 <div className='addBunton' onClick={this.turnToAddDutyPage}>
                     <img src={require("../imgs/addBtn.png")} />
