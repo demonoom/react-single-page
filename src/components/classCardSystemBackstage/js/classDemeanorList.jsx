@@ -72,11 +72,21 @@ export default class classDemeanorList extends React.Component {
         let items = [];
         let item = this.state.listData;
         for (var k in item) {
-            items.push(<li onClick={this.toClassDetail.bind(this, item[k].id,item[k].name)}>{item[k].name}<span
-                className='classDetail'>详情 ></span></li>);
+            items.push(<li className="am-list-item am-list-item-middle" onClick={this.toClassDetail.bind(this, item[k].id,item[k].name)}>
+                <div className="am-list-line">
+                    <div className="am-list-content">
+                        {item[k].name}
+                    </div>
+                    <div className="am-list-extra">
+                        <span className='classDetail'>详情</span>
+                    </div>
+                    <div className="am-list-arrow am-list-arrow-horizontal"></div>
+
+                </div></li>);
         }
         return (
             <div id="classDemeanorList" style={{height: document.body.clientHeight}}>
+
                 <ul>
                     {items}
                 </ul>

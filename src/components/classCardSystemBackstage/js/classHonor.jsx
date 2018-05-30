@@ -203,7 +203,7 @@ export default class classHonor extends React.Component {
                         {/*<List.Item arrow="horizontal">班级</List.Item>*/}
                     {/*</Picker>*/}
                     {/*<WhiteSpace size="lg"/>*/}
-                    <div style={{textAlign:"center"}} >{this.state.className}</div>
+
                     <div className="classDemeanor_title">荣誉展示</div>
                     <div className='showImg my_flex my_flex_wrap'>
                         {this.state.imgArr.map((v) => {
