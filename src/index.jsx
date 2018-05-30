@@ -401,8 +401,8 @@ class Index extends React.Component {
                     {/*to="/m3u8Player?path=http://bpic.588ku.com/video_listen/588ku_video/18/04/17/17/03/11/video5ad5b84f167d6.mp4"*/}
                     {/*style={{fontSize: '24px'}}>m3u8Player</Link></li>*/}
                     <li><Link
-                    to="/HomeWorkUnderstandAnalysisGuideByNoom?ident=23836"
-                    style={{fontSize: '24px'}}>作业表情分析NOOM</Link></li>
+                        to="/HomeWorkUnderstandAnalysisGuideByNoom?ident=23836"
+                        style={{fontSize: '24px'}}>作业表情分析NOOM</Link></li>
                     {/*<li><Link*/}
                     {/*to="/homeworkModule?classId=819"*/}
                     {/*style={{fontSize: '24px'}}>作业模块</Link></li>*/}
@@ -470,7 +470,7 @@ class Index extends React.Component {
 }
 
 ReactDOM.render(
-    <Route history={hashHistory}>
+    <Router history={hashHistory}>
         <Route path="/" component={App}>
             <IndexRoute component={Index}/>
             {/*<Route path="s1" component={Stage1}/>*/}
@@ -539,4 +539,7 @@ ReactDOM.render(
             <Route path="clazzDutyList" getComponent={clazzDutyList}/>
 
         </Route>
-    </Route>
+    </Router>
+    ,
+    document.getElementById('example'))
+    ;
