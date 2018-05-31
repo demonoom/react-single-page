@@ -35,7 +35,6 @@ export default class addStudentDuty extends React.Component {
         this.getStudentListByClazz = this.getStudentListByClazz.bind(this);
         this.studentCheckboxOnChange = this.studentCheckboxOnChange.bind(this);
         this.isHaveSameStudentId = this.isHaveSameStudentId.bind(this);
-        this.getClazzesByUserId = this.getClazzesByUserId.bind(this);
     }
 
     componentDidMount() {
@@ -45,7 +44,6 @@ export default class addStudentDuty extends React.Component {
         var clazzId = locationSearchArray[0].split("=")[1];
         var clazzName = locationSearchArray[1].split("=")[1];
         var userId = locationSearchArray[2].split("=")[1];
-        // this.getClazzesByUserId(userId);
         this.getStudentListByClazz(clazzId);
         this.setState({clazzId,userId,clazzName});
         document.title = "添加"+clazzName+"值日生";
@@ -139,55 +137,16 @@ export default class addStudentDuty extends React.Component {
                             console.log(error);
                         });
                     }
+                }else{
+                    Toast.fail(result.msg, 2);
                 }
             },
             onError: function (error) {
+                message.error(error)
             }
         });
     }
 
-    /**
-     * 进入学生值日页面时，根据用户id获取当前用户的班级
-     * @param userId
-     */
-    getClazzesByUserId(userId){
-        var _this = this;
-        var param = {
-            "method": 'getClazzesByUserId',
-            "userId": userId
-        };
-        WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
-            onResponse: function (result) {
-                if (result.success == true && result.msg == "调用成功") {
-                    var response = result.response;
-                    if (response != null && response != undefined) {
-                        response.forEach(function (clazz,index) {
-                            var clazzId = clazz.id;
-                            //班级
-                            var clazzName = clazz.name;
-                            //年级
-                            var grade = clazz.grade;
-                            var gradeName = grade.name;
-                            var clazzJson = {
-                                label: gradeName+clazzName,
-                                value: clazzId+"",
-                            };
-                            if(index == 0){
-                                _this.getStudentListByClazz(clazzId);
-                            }
-                            if(seasons[0]!=null && seasons[0]!=undefined){
-                                seasons[0].push(clazzJson);
-                            }
-                        })
-
-                    }
-                }
-                _this.setState({seasons});
-            },
-            onError: function (error) {
-            }
-        });
-    }
 
     /**
      * 获取班级的学生列表
@@ -215,6 +174,8 @@ export default class addStudentDuty extends React.Component {
                         })
 
                     }
+                }else{
+                    Toast.fail(result.msg, 2);
                 }
                 var weekOfTody = new Date().getDay();
                 weekOfTody=(weekOfTody==0?7:weekOfTody);
@@ -223,6 +184,7 @@ export default class addStudentDuty extends React.Component {
                 _this.setState({seasons,sValue,'week':weekOfTody,asyncValue,clazzId});
             },
             onError: function (error) {
+                message.error(error)
             }
         });
 

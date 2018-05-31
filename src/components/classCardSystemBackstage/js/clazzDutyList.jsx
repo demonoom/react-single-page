@@ -134,7 +134,10 @@ export default class clazzDutyList extends React.Component {
         }
         currentPageNo += 1;
         this.setState({ isLoadingLeft: true, defaultPageNo: currentPageNo });
-        _this.getClassBrandStudentDutyList(_this.state.uid);
+        var weekOfTody = new Date().getDay();
+        weekOfTody=(weekOfTody==0?7:weekOfTody);
+        this.getClassBrandStudentDutyList(this.state.uid,'',weekOfTody,this.state.defaultPageNo);
+        // _this.getClassBrandStudentDutyList(_this.state.uid);
         this.setState({
             dataSource: this.state.dataSource.cloneWithRows(this.initData),
             isLoadingLeft: true,
@@ -148,7 +151,7 @@ export default class clazzDutyList extends React.Component {
         // this.getClassBrandStudentDutyList(this.state.uid);
         var weekOfTody = new Date().getDay();
         weekOfTody=(weekOfTody==0?7:weekOfTody);
-        this.getClassBrandStudentDutyList('',weekOfTody,this.state.defaultPageNo);
+        this.getClassBrandStudentDutyList(this.state.uid,'',weekOfTody,this.state.defaultPageNo);
     }
 
     /**
@@ -201,7 +204,7 @@ export default class clazzDutyList extends React.Component {
                             2018-8-8
                         </span> */}
                         <div className="today_duty">今日值日</div>
-                        <div className="today_dutylist">{clazzDutyUserList}</div>
+                        <div className="today_dutylist">{clazzDutyUserList.length==0?"暂无今日值日表":clazzDutyUserList}</div>
                     </div>
                 }
             </div>

@@ -43,7 +43,7 @@ export default class studentDutyList extends React.Component {
         var clazzId = locationSearchArray[0].split("=")[1];
         var clazzName = locationSearchArray[1].split("=")[1];
         var userId = locationSearchArray[2].split("=")[1];
-        this.getClassBrandStudentDutyList(clazzId);
+        this.getClassBrandStudentDutyList(userId,clazzId,'',-1);
         this.setState({clazzId,userId,clazzName});
         document.title = clazzName+'班级值日表';
     }
@@ -51,10 +51,11 @@ export default class studentDutyList extends React.Component {
     /**
      * 查看指定班级的值日列表
      */
-    getClassBrandStudentDutyList(clazzId,week,pageNo) {
+    getClassBrandStudentDutyList(userId,clazzId,week,pageNo) {
         var _this = this;
         var param = {
             "method": 'getClassBrandStudentDutyList',
+            "userId":userId,
             "clazzId": clazzId,
             "week": week,
             "pageNo": pageNo,
@@ -137,7 +138,7 @@ export default class studentDutyList extends React.Component {
             onResponse: function (result) {
                 console.log(result.response);
                 if (result.msg == '调用成功' && result.success == true) {
-                    _this.getClassBrandStudentDutyList(_this.state.clazzId);
+                    _this.getClassBrandStudentDutyList(_this.state.userId,_this.state.clazzId,'',-1);
                 }
             },
             onError: function (error) {
