@@ -215,6 +215,24 @@ export default class assessMoralEducation extends React.Component {
             window.location.href = url;
         });
     }
+
+      /**
+     * 删除弹出框
+     */
+    showAlert = (sId) => {
+        var phoneType = navigator.userAgent;
+        var phone;
+        if (phoneType.indexOf('iPhone') > -1 || phoneType.indexOf('iPad') > -1) {
+            phone = 'ios'
+        } else {
+            phone = 'android'
+        }
+        var _this = this;
+        const alertInstance = alert('删除', '您确定要删除吗?', [
+            {text: '取消', onPress: () => console.log('cancel'), style: 'default'},
+            {text: '确定', onPress: () => _this.delMoralEducation(sId)},
+        ], phone);
+    };
     render() {
         var _this = this;
         const row = (rowData, sectionID, rowID) => {
@@ -234,7 +252,9 @@ export default class assessMoralEducation extends React.Component {
                         <div className="btnDiv">
                             <span className="createTime">{WebServiceUtil.formatYMD(rowData.createTime)}</span>
                             <span className='modifyBtn_common' onClick={this.toUpdateMoralEducation.bind(this, rowData)}></span>
-                            <span className='deleteBtn_common' onClick={this.delMoralEducation.bind(this, rowData.id)}></span>
+                            <span className='deleteBtn_common' 
+                                onClick={this.showAlert.bind(this,rowData.id)}
+                            ></span>
                         </div>
                     </div>
                 }

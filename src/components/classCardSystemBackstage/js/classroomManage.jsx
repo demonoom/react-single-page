@@ -100,7 +100,6 @@ export default class classroomManage extends React.Component {
         };
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
             onResponse: function (result) {
-                console.log(result);
                 if (result.msg == '调用成功' && result.success == true) {
                     classBinding.state.selectData = result.response
                     var arr = result.response;
@@ -299,7 +298,23 @@ export default class classroomManage extends React.Component {
             }
         });
     }
-
+     /**
+     * 删除弹出框
+     */
+    showAlert = (sId) => {
+        var phoneType = navigator.userAgent;
+        var phone;
+        if (phoneType.indexOf('iPhone') > -1 || phoneType.indexOf('iPad') > -1) {
+            phone = 'ios'
+        } else {
+            phone = 'android'
+        }
+        var _this = this;
+        const alertInstance = alert('删除', '您确定要删除吗?', [
+            {text: '取消', onPress: () => console.log('cancel'), style: 'default'},
+            {text: '确定', onPress: () => _this.delClassroom(sId)},
+        ], phone);
+    };
     render() {
         var _this = this;
         const row = (rowData, sectionID, rowID) => {
@@ -321,7 +336,9 @@ export default class classroomManage extends React.Component {
                             }
                             </span>
                             <Button className="modifyBtn_common" type="primary" size="small" onClick={this.toUpdatePage.bind(this, rowData)}></Button>
-                            <Button type="primary" size="small" className="btn_del deleteBtn_common" onClick={this.delClassroom.bind(this, rowData.id)}></Button>
+                            <Button type="primary" size="small" className="btn_del deleteBtn_common" 
+                               onClick={this.showAlert.bind(this,rowData.id)}
+                           ></Button>
                         </div>
                     </div>
                 }
