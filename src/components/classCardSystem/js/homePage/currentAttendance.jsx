@@ -34,6 +34,13 @@ export default class currentAttendance extends React.Component {
                 this.setState({openClass: false});
                 clearInterval(timer)
             }
+        } else if (nextProps.messageUtilObj.command == 'braceletBoxConnect' && WebServiceUtil.isEmpty(nextProps.messageUtilObj.data) == false) {
+            //重连开课
+            if (roomId == nextProps.messageUtilObj.data.classroomId) {
+                this.getStudentByCourseTableItem(nextProps.messageUtilObj.data);
+                this.openTimeInterVal(nextProps.messageUtilObj.data);
+                this.setState({openClass: true, clazzId: nextProps.messageUtilObj.data.classTableId})
+            }
         }
 
     }

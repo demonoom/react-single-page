@@ -48,3 +48,11 @@
 #addStudentDuty .am-list-body div:not(:last-child) .am-list-line {
   border-bottom: 0;
 }
+#addStudentDuty .dutyTime {
+  height: 44px;
+  line-height: 44px;
+  padding: 0 15px;
+  background-color: #fff;
+  font-size: 17px;
+  color: #000;
+}

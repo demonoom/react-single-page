@@ -1,6 +1,8 @@
 import React from 'react';
-import {Picker, List, WhiteSpace, Grid, Button, Icon} from 'antd-mobile';
+import {Picker, List, WhiteSpace, Grid, Button, Icon,Modal} from 'antd-mobile';
 import '../css/studentDutyList.less'
+
+const alert = Modal.alert;
 
 const seasons = [
     []
@@ -86,19 +88,22 @@ export default class studentDutyList extends React.Component {
                                 studentList.push(stuJson)
                             })
                         }
-
-                        var dutyTag = <div>
-                            <div className="planTitle">
-                                <div className="top">
-                                    <span>星期：{week}</span>
-                                    <Button className="modifyBtn_common" type="primary" size="small" onClick={_this.editStudentDuty.bind(_this,week,studentIdStr,dutyId)}></Button>
-                                    {/*<Button type="primary" size="small" onClick={_this.editStudentDuty}>修改</Button>*/}
-                                    <Button type="primary" size="small" className="btn_del deleteBtn_common" onClick={_this.delStudentDuty.bind(_this,dutyId)}></Button>
+                        var weekChart = _this.weekNumToChart(week);
+                        if(WebServiceUtil.isEmpty(week)==false){
+                            var dutyTag = <div>
+                                <div className="planTitle">
+                                    <div className="top">
+                                        <span>星期{weekChart}</span>
+                                        <Button className="modifyBtn_common" type="primary" size="small" onClick={_this.editStudentDuty.bind(_this,week,studentIdStr,dutyId)}></Button>
+                                        {/*<Button type="primary" size="small" onClick={_this.editStudentDuty}>修改</Button>*/}
+                                        {/*<Button type="primary" size="small" className="btn_del deleteBtn_common" onClick={_this.delStudentDuty.bind(_this,dutyId)}></Button>*/}
+                                        <Button type="primary" size="small" className="btn_del deleteBtn_common" onClick={_this.delConfirm.bind(_this,dutyId)}></Button>
+                                    </div>
+                                    <Grid data={studentList} columnNum={4} activeStyle={false}/>
                                 </div>
-                                <Grid data={studentList} columnNum={4} activeStyle={false}/>
-                            </div>
-                        </div>;
-                        dutyTagList.push(dutyTag);
+                            </div>;
+                            dutyTagList.push(dutyTag);
+                        }
                     })
                 }
                 _this.setState({dutyTagList});
@@ -106,6 +111,49 @@ export default class studentDutyList extends React.Component {
             onError: function (error) {
             }
         });
+    }
+
+    /**
+     * 删除确认操作
+     * @param dutyId 待删除的值日id
+     */
+    delConfirm=(dutyId)=>{
+        var _this = this;
+        alert('确定要删除值日表吗?', '', [
+            { text: '取消', onPress: () => console.log('cancel') },
+            { text: '确定', onPress: () => _this.delStudentDuty(dutyId) },
+        ])
+    }
+
+    weekNumToChart=(weekNum)=>{
+        var weekChart = "";
+        switch (weekNum){
+            case "0":
+                weekChart = "日";
+                break;
+            case "1":
+                weekChart = "一";
+                break;
+            case "2":
+                weekChart = "二";
+                break;
+            case "3":
+                weekChart = "三";
+                break;
+            case "4":
+                weekChart = "四";
+                break;
+            case "5":
+                weekChart = "五";
+                break;
+            case "6":
+                weekChart = "六";
+                break;
+            case "7":
+                weekChart = "日";
+                break;
+        }
+        return weekChart;
     }
 
     /**
@@ -164,7 +212,7 @@ export default class studentDutyList extends React.Component {
         var _this = this;
         return (
             <div id="studentDutyList" style={{height: document.body.clientHeight}}>
-                {_this.state.dutyTagList}
+                <div className="content">{_this.state.dutyTagList}</div>
                 <div className='addBunton' onClick={this.turnToAddDutyPage}>
                     <img src={require("../imgs/addBtn.png")} />
                 </div>
