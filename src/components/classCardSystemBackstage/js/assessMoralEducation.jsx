@@ -245,15 +245,22 @@ export default class assessMoralEducation extends React.Component {
             return (<div>
                 {
                     <div className="classInfo">
-                        <div className="textOver">
-                            <span className="classroom">{rowData.clazz.name}</span>
-                            <span className="healthScore">{rowData.health}</span>
-                            <span className="politenessScore">{rowData.politeness}</span>
-                            <span className="createTime">{WebServiceUtil.formatYMD(rowData.createTime)}</span>
+                        <div className="topDiv">
+                            {/*<span className="classroom">{rowData.clazz.name}</span>*/}
+                            <div className="fl">
+                                <span>班级卫生评分</span>
+                                <span className="healthScore">{rowData.health}</span>分
+                            </div>
+                            <div className="fr">
+                                <span>班级礼貌评分</span>
+                                <span className="politenessScore">{rowData.politeness}</span>分
+                            </div>
                         </div>
-
-                        <span className='calmCardUnbind' onClick={this.toUpdateMoralEducation.bind(this, rowData)}>修改</span>
-                        <span className='' onClick={this.delMoralEducation.bind(this, rowData.id)}>删除</span>
+                        <div className="btnDiv">
+                            <span className="createTime">{WebServiceUtil.formatYMD(rowData.createTime)}</span>
+                            <span className='modifyBtn_common' onClick={this.toUpdateMoralEducation.bind(this, rowData)}></span>
+                            <span className='deleteBtn_common' onClick={this.delMoralEducation.bind(this, rowData.id)}></span>
+                        </div>
                     </div>
                 }
             </div>
@@ -261,7 +268,7 @@ export default class assessMoralEducation extends React.Component {
             )
         };
         return (
-            <div id="classroomManage" style={{ height: assessME.state.clientHeight }}>
+            <div id="assessMoralEducation" style={{ height: assessME.state.clientHeight }}>
                 <div className='tableDiv' style={{ height: assessME.state.clientHeight }}>
                     {/*这是列表数据,包括添加按钮*/}
                     <ListView
