@@ -40,7 +40,7 @@ export default class addMoralEducation extends React.Component {
     }
     componentWillUnmount() {
         //解除监听
-        window.removeEventListener('resize', moraaddMoralEdulEd.onWindowResize)
+        window.removeEventListener('resize', addMoralEdu.onWindowResize)
     }
      /**
      * 视窗改变时改变高度
