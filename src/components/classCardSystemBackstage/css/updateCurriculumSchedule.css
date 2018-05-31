@@ -2,7 +2,7 @@
   overflow-y: auto;
 }
 #updateCurriculumSchedule .CourseTableArea {
-  min-height: 280px;
+  min-height: calc(100% - 77px);
   background-color: #fff;
 }
 #updateCurriculumSchedule .CourseTableArea .addClassTable {

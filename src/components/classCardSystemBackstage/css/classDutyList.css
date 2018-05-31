@@ -28,6 +28,10 @@
 #classDutyList .am-list-body {
   border: 0;
 }
+#classDutyList .am-list-body::before,
+#classDutyList .am-list-body::after {
+  background: none;
+}
 #classDutyList .tableDiv {
   position: relative;
 }

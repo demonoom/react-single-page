@@ -150,21 +150,13 @@ export default class getClassRoomList extends React.Component {
                 <div onClick={this.turnToClassTable.bind(this, rowData)}>
                     {
                         <div className="classInfo">
-                            {/*<div className="textOver">
-                                <div className="classroom">{rowData.name}</div>
-                                {
-                                    rowData.defaultBindedClazz ?
-                                <span className="grade">{rowData.defaultBindedClazz.name}</span> :
-                                <span className="grade"></span>
-                                }
-                            </div>*/}
                             <div className="am-list-item am-list-item-middle">
                                 <div className="am-list-line">
                                     <div className="am-list-content">{rowData.name}</div>
                                     <div className="am-list-arrow am-list-arrow-horizontal"></div>
                                 </div>
                             </div>
-                            <div>
+                            <div className="classroom_subject">
                                 {
                                 rowData.defaultBindedClazz ?
                                     <span className="grade">{rowData.defaultBindedClazz.name}</span> :

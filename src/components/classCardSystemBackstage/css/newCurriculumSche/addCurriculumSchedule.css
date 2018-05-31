@@ -3,7 +3,7 @@
   /*创建动画*/
 }
 #addCurriculumSchedule .CourseTableArea {
-  min-height: 280px;
+  min-height: calc(100% - 60px);
   background-color: #fff;
 }
 #addCurriculumSchedule .CourseTableArea .addClassTable {
@@ -90,7 +90,7 @@
 }
 #addCurriculumSchedule .teacher_list div:first-child,
 #addCurriculumSchedule .teacher_list div:nth-child(2) {
-  width: 30%;
+  width: 50%;
 }
 #addCurriculumSchedule .teacher_list div:nth-child(3) {
   width: 40%;
