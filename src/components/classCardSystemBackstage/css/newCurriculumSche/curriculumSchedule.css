@@ -8,6 +8,9 @@
 #curriculumSchedule .addBunton img {
   width: 100%;
 }
+#curriculumSchedule .am-list-body {
+  border: none;
+}
 #curriculumSchedule .curriculum_cont {
   overflow: auto;
   height: calc(100% - 59px);

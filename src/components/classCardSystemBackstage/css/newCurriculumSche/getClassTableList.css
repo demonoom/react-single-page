@@ -1,12 +1,6 @@
 #getClassTableList {
   font-size: 17px;
 }
-#getClassTableList .textOver {
-  overflow: hidden;
-  white-space: nowrap;
-  text-overflow: ellipsis;
-  display: block;
-}
 #getClassTableList .whiteBack {
   background-color: #fff;
 }
@@ -56,8 +50,6 @@
   line-height: 24px;
 }
 #getClassTableList .tableDiv .classInfo .textOver {
-  width: 100%;
-  color: #a9a9a9;
   font-size: 16px;
 }
 #getClassTableList .tableDiv .classroom {
@@ -238,6 +230,7 @@
   color: #464646;
   padding-left: 15px;
   width: 100%;
+  box-sizing: border-box;
 }
 #getClassTableList .tableListDate span {
   margin-top: 8px;
