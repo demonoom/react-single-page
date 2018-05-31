@@ -46,6 +46,11 @@
 }
 #notify .am-list-body {
   background: #f4f4f4;
+  border: none;
+}
+#notify .am-list-body::before,
+#notify .am-list-body::after {
+  background: none;
 }
 #notify .notifyList .am-list-footer {
   height: 75px;

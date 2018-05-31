@@ -1,6 +1,7 @@
 import React from 'react';
 import {
     Toast,
+    WhiteSpace,
     InputItem,
     List,
     Radio,
@@ -362,8 +363,8 @@ export default class classroomManage extends React.Component {
                     </div>
                 </div>
                 <div className='addModel' style={{ height: classBinding.state.clientHeight }}>
+                    <WhiteSpace size="lg" />
                     <List>
-
                         <div className='classroomName'>
                             <InputItem
                                 placeholder="请输入教室名称"
@@ -376,6 +377,7 @@ export default class classroomManage extends React.Component {
                                 value={this.state.classroomValue}
                             >教室名称<i className='redStar'>*</i></InputItem>
                         </div>
+                        <WhiteSpace size="lg" />
                         <div className='gradeName'>
                             <InputItem
                                 placeholder="请输入班级名称"

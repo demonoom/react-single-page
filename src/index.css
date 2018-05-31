@@ -253,14 +253,14 @@ hr {
   z-index: 99;
 }
 .submitBtn .am-button-primary {
-  background-color: #e94f4f;
-  border: 1PX solid #e94f4f;
+  background-color: #F56A55;
+  border: 1PX solid #F56A55;
 }
 .submitBtn .am-button-primary::before {
-  border: 1PX solid #e94f4f !important;
+  border: 1PX solid #F56A55 !important;
 }
 .submitBtn .am-button-primary.am-button-active {
-  background-color: #e94f4f;
+  background-color: #F56A55;
   opcity: 0.3;
 }
 /*班牌内页返回首页*/
@@ -339,12 +339,15 @@ hr {
 .am-list-footer {
   color: #999 !important;
 }
-.submitBtn .am-button-primary,
 .am-button-warning {
   background-color: #F56A55 !important;
 }
-.am-button-primary {
+.am-button-primary,
+.am-button {
   border-radius: 2px !important;
+}
+.am-button::before {
+  border-color: #F56A55!important;
 }
 .textOver {
   overflow: hidden;

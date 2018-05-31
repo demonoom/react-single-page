@@ -1,3 +1,4 @@
+(node) util.print is deprecated. Use console.log instead.
 #classroomManage {
   font-size: 17px;
 }
@@ -34,6 +35,9 @@
 }
 #classroomManage .am-list-body {
   border: 0;
+}
+#classroomManage .am-list-body::before {
+  background: none;
 }
 #classroomManage .tableDiv {
   position: relative;
@@ -106,7 +110,6 @@
 }
 #classroomManage .addModel {
   box-sizing: border-box;
-  padding: 20px 0px;
   position: relative;
 }
 #classroomManage .addModel .bindGrade {
@@ -186,7 +189,7 @@
 #classroomManage .addModel .close {
   font-size: 1.5em;
   background: #fff;
-  color: #e94f4f;
+  color: #F56A55;
 }
 #classroomManage .addModel > h1 {
   margin-bottom: 50px;
@@ -242,12 +245,12 @@
   display: inline-block;
 }
 #classroomManage .addModel .bottomBox .bind {
-  background: #e94f4f;
+  background: #F56A55;
   color: #fff;
 }
 #classroomManage .addModel .bottomBox .bind:active {
   color: rgba(255, 255, 255, 0.3);
-  background-color: #d24747;
+  background-color: #F56A55;
 }
 #classroomManage .div_creatTime {
   height: 44px;

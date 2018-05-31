@@ -406,6 +406,14 @@ const classHonorList = (location, cb) => {
     )
 }
 
+const particlePath = (location, cb) => {
+    require.ensure([], require => {
+            cb(null, require("./components/particlePath/js/particlePath").default)
+
+        }
+    )
+}
+
 import './index.less';
 
 class Index extends React.Component {
@@ -508,6 +516,9 @@ class Index extends React.Component {
                     {/*<li><Link*/}
                     {/*to="/studentSelectCourse?access_user=23852"*/}
                     {/*style={{fontSize: '24px'}}>学生选课系统</Link></li>*/}
+                    <li><Link
+                        to="/particlePath"
+                        style={{fontSize: '24px'}}>运动轨迹</Link></li>
                 </ul>
             </div>
         );
@@ -589,6 +600,7 @@ ReactDOM.render(
             <Route path="classDemeanorList" getComponent={classDemeanorList}/>
             <Route path="classHonorList" getComponent={classHonorList}/>
             <Route path="clazzDutyList" getComponent={clazzDutyList}/>
+            <Route path="particlePath" getComponent={particlePath}/>
         </Route>
     </Router>
     ,
