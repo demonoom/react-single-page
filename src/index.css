@@ -374,6 +374,27 @@ hr {
   background-size: 14px;
   padding: 0 8px;
 }
+/*删除弹窗*/
+.am-modal-content {
+  padding-top: 16px!important;
+}
+.am-modal-content .am-modal-title {
+  color: #333;
+  line-height: 22px;
+}
+.am-modal-content .am-modal-button {
+  font-size: 17px !important;
+  height: 45px !important;
+  line-height: 45px !important;
+  color: #108ee9 !important;
+}
+.am-modal-content .am-modal-body {
+  padding: 0 15px 7px !important;
+}
+.am-modal-content .am-modal-button-group-h .am-modal-button:last-child::before,
+.am-modal-content .am-modal-button-group-h::before {
+  background-color: #dfdfdf !important;
+}
 /*班牌屏幕适配*/
 @media only screen and (min-width: 768px) and (max-width: 799px) {
   html {

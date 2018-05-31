@@ -122,11 +122,31 @@ export default class classDemeanor extends React.Component {
         });
     }
 
-    showAlert = (success,cancel) => {
+    showAlert = (success, cancel) => {
+        var phoneType = navigator.userAgent;
+        var phone;
+        if (phoneType.indexOf('iPhone') > -1 || phoneType.indexOf('iPad') > -1) {
+            phone = 'ios'
+        } else {
+            phone = 'android'
+        }
+
         const alertInstance = alert('删除图片', '确定删除此照片吗?', [
-            {text: '取消', onPress: () => {if(cancel){cancel();}}, style: 'default'},
-            {text: '确定', onPress: () => {if(success){success()}}},
-        ]);
+            {
+                text: '取消', onPress: () => {
+                if (cancel) {
+                    cancel();
+                }
+            }, style: 'default'
+            },
+            {
+                text: '确定', onPress: () => {
+                if (success) {
+                    success()
+                }
+            }
+            },
+        ], phone);
     }
 
     deleteimgFromAndArr(index) {
@@ -144,19 +164,6 @@ export default class classDemeanor extends React.Component {
         return (
             <div id="classDemeanor" style={{height: document.body.clientHeight}}>
                 <div className="Img_cont">
-                    {/*<WhiteSpace size="lg"/>*/}
-                    {/*日期*/}
-                    {/*<Picker*/}
-                        {/*data={this.state.data}*/}
-                        {/*cols={1}*/}
-                        {/*value={this.state.asyncValue}*/}
-                        {/*onPickerChange={this.onPickerChange}*/}
-                        {/*onOk={v => this.chooseClassOnOk(v)}*/}
-                    {/*>*/}
-                        {/*<List.Item arrow="horizontal">班级</List.Item>*/}
-                    {/*</Picker>*/}
-                    {/*<WhiteSpace size="lg"/>*/}
-
                     <div className="classDemeanor_title">风采展示</div>
                     <div className='showImg my_flex my_flex_wrap'>
                         {this.state.imgArr.map((v) => {
