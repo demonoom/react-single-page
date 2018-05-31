@@ -1,5 +1,5 @@
 import React from 'react';
-import {Picker, List, WhiteSpace, WingBlank, Button, Toast,Modal} from 'antd-mobile';
+import {Picker, List, WhiteSpace, WingBlank, Button, Toast, Modal} from 'antd-mobile';
 import '../css/classDemeanor.less'
 
 var demeanor;
@@ -28,7 +28,7 @@ export default class classHonor extends React.Component {
         // console.log(className);
         // this.setState({className});
         document.title = className;
-        this.setState({classId:ident});
+        this.setState({classId: ident});
         this.getClassDemeanorInfo(ident);
     }
 
@@ -104,15 +104,35 @@ export default class classHonor extends React.Component {
     }
 
 
-    showAlert = (success,cancel) => {
+    showAlert = (success, cancel) => {
+        var phoneType = navigator.userAgent;
+        var phone;
+        if (phoneType.indexOf('iPhone') > -1 || phoneType.indexOf('iPad') > -1) {
+            phone = 'ios'
+        } else {
+            phone = 'android'
+        }
+
         const alertInstance = alert('删除图片', '确定删除此照片吗?', [
-            {text: '取消', onPress: () => {if(cancel){cancel();}}, style: 'default'},
-            {text: '确定', onPress: () => {if(success){success()}}},
-        ]);
+            {
+                text: '取消', onPress: () => {
+                if (cancel) {
+                    cancel();
+                }
+            }, style: 'default'
+            },
+            {
+                text: '确定', onPress: () => {
+                if (success) {
+                    success()
+                }
+            }
+            },
+        ], phone);
     }
 
     deleteClassDemeanorInfo(id) {
-        this.showAlert(function(){    //成功回调
+        this.showAlert(function () {    //成功回调
             var param = {
                 "method": 'deleteClassDemeanorInfo',
                 "id": id,
@@ -134,7 +154,7 @@ export default class classHonor extends React.Component {
                 }
             });
 
-        },function(){                 //取消回调
+        }, function () {                 //取消回调
             // console.log('已取消');
         });
 
@@ -154,19 +174,6 @@ export default class classHonor extends React.Component {
         return (
             <div id="classDemeanor" style={{height: document.body.clientHeight}}>
                 <div className="Img_cont">
-                    {/*<WhiteSpace size="lg"/>*/}
-                    {/*日期*/}
-                    {/*<Picker*/}
-                        {/*data={this.state.data}*/}
-                        {/*cols={1}*/}
-                        {/*value={this.state.asyncValue}*/}
-                        {/*onPickerChange={this.onPickerChange}*/}
-                        {/*onOk={v => this.chooseClassOnOk(v)}*/}
-                    {/*>*/}
-                        {/*<List.Item arrow="horizontal">班级</List.Item>*/}
-                    {/*</Picker>*/}
-                    {/*<WhiteSpace size="lg"/>*/}
-
                     <div className="classDemeanor_title">荣誉展示</div>
                     <div className='showImg my_flex my_flex_wrap'>
                         {this.state.imgArr.map((v) => {
