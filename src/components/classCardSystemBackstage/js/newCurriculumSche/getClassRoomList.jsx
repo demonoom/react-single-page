@@ -2,6 +2,7 @@ import React from 'react';
 import {
     ListView,
     PullToRefresh,
+    Toast
 } from 'antd-mobile';
 
 import '../../css/newCurriculumSche/getClassRoomList.less'
@@ -156,6 +157,12 @@ export default class getClassRoomList extends React.Component {
                                         <span className="grade">{rowData.defaultBindedClazz.name}</span> :
                                         <span className="grade"></span>
                                 }
+                            </div>
+                            <div className="am-list-item am-list-item-middle" onClick={_this.turnToClazzDetail.bind(_this,rowData.clazz)}>
+                                <div className="am-list-line">
+                                    <div className="am-list-content">{(rowData.clazz.grade==undefined?'':rowData.clazz.grade.name)+""+rowData.clazz.name}</div>
+                                    <span className="choiceData am-list-extra" style={{ float: 'right', color: '#888' }}>查看所有</span><div className="am-list-arrow am-list-arrow-horizontal"></div>
+                                </div>
                             </div>
                         </div>
                     }

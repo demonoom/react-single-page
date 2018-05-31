@@ -77,9 +77,6 @@ export default class header extends React.Component {
     componentWillMount() {
         this.makeTime();
         this.viewClassRoom();
-        // $.get('http://ipinfo.io/json', function (data) {
-        //     demeanor.getAbCode(data.ip)
-        // });
 
         $.getJSON('//freegeoip.net/json/', function (data) {
             demeanor.getAbCode(data.ip)
