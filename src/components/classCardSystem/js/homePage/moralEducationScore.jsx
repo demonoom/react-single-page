@@ -35,10 +35,10 @@ export default class moralEducationScore extends React.Component {
         const param = {
             "method": "getMoralEducationInfo",
             "clazzId": localStorage.getItem("clazzId"),
-            "createTime": ""
         }
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
             onResponse: function (result) {
+                console.log(result);
                 if (result.msg == '调用成功' || result.success == true) {
                     _this.setState({
                         scoreData: result.response
@@ -46,6 +46,7 @@ export default class moralEducationScore extends React.Component {
                 }
             },
             onError: function (error) {
+                message.error(error);
             }
         });
     }
@@ -55,7 +56,7 @@ export default class moralEducationScore extends React.Component {
             <div id="moralEducationScore" className="home_card moralEducationScore_height">
                 <h3 className="home_title">班级德育评分</h3>
                 {
-                    MEScore.state.scoreData!=null && MEScore.state.scoreData.totalScore ?
+                    MEScore.state.scoreData!=null ?
                         <div className="mEScoreInfo home_cardCont">
                             <div className="mEScoreInfoT">
                                 <span className="font_title2">全校排名：<span

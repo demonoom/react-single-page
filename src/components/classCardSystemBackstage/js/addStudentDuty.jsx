@@ -1,15 +1,14 @@
 import React from 'react';
-import {Picker, List, WhiteSpace,Button,Toast, Checkbox} from 'antd-mobile';
+import {Picker, List, WhiteSpace, Button, Toast, Checkbox} from 'antd-mobile';
 import '../css/addStudentDuty.less'
+
 const CheckboxItem = Checkbox.CheckboxItem;
 
 const seasons = [
-    [
-
-    ]
+    []
 ];
 
-var studentCheckedArray=[];
+var studentCheckedArray = [];
 
 export default class addStudentDuty extends React.Component {
 
@@ -28,7 +27,7 @@ export default class addStudentDuty extends React.Component {
             asyncValue: ['1'],
             sValue: [],
             visible: false,
-            studentList:[],
+            studentList: [],
             clazzId: '',
             week: '1',
         };
@@ -38,15 +37,15 @@ export default class addStudentDuty extends React.Component {
     }
 
     componentDidMount() {
-        var locationHref = window.location.href;
+        var locationHref = decodeURI(window.location.href);
         var locationSearch = locationHref.substr(locationHref.indexOf("?") + 1);
         var locationSearchArray = locationSearch.split("&");
         var clazzId = locationSearchArray[0].split("=")[1];
         var clazzName = locationSearchArray[1].split("=")[1];
         var userId = locationSearchArray[2].split("=")[1];
         this.getStudentListByClazz(clazzId);
-        this.setState({clazzId,userId,clazzName});
-        document.title = "添加"+clazzName+"值日生";
+        this.setState({clazzId, userId, clazzName});
+        document.title = "添加" + clazzName + "值日生";
     }
 
     onPickerChange = (val) => {
@@ -68,7 +67,7 @@ export default class addStudentDuty extends React.Component {
         this.setState({sValue: val, clazzId});
     };
 
-    studentCheckboxOnChange(val){
+    studentCheckboxOnChange(val) {
         this.buildStudentCheckedArray(val);
     }
 
@@ -76,11 +75,11 @@ export default class addStudentDuty extends React.Component {
      * 构建已选学生id的数组
      * @param checkedValue
      */
-    buildStudentCheckedArray(checkedValue){
+    buildStudentCheckedArray(checkedValue) {
         var studentIdIndex = this.isHaveSameStudentId(checkedValue);
-        if(studentIdIndex!=-1){
-            studentCheckedArray.splice(studentIdIndex,1);
-        }else{
+        if (studentIdIndex != -1) {
+            studentCheckedArray.splice(studentIdIndex, 1);
+        } else {
             studentCheckedArray.push(checkedValue);
         }
     }
@@ -92,11 +91,11 @@ export default class addStudentDuty extends React.Component {
      * @param checkedValue
      * @returns {number}
      */
-    isHaveSameStudentId(checkedValue){
+    isHaveSameStudentId(checkedValue) {
         var studentIdIndex = -1;
-        for(var i=0;i<studentCheckedArray.length;i++){
+        for (var i = 0; i < studentCheckedArray.length; i++) {
             var stuId = studentCheckedArray[i];
-            if(stuId == checkedValue){
+            if (stuId == checkedValue) {
                 studentIdIndex = i;
                 break;
             }
@@ -107,11 +106,11 @@ export default class addStudentDuty extends React.Component {
     /**
      * 构建考勤数据json，保存学生的考勤数据
      */
-    saveStudentDuty=()=>{
+    saveStudentDuty = () => {
         var stuJson = {};
         var users = [];
         studentCheckedArray.forEach(function (studentId) {
-            var userObjJson = {colUid:studentId};
+            var userObjJson = {colUid: studentId};
             users.push(userObjJson);
         })
         stuJson.cid = this.state.clazzId;
@@ -137,7 +136,7 @@ export default class addStudentDuty extends React.Component {
                             console.log(error);
                         });
                     }
-                }else{
+                } else {
                     Toast.fail(result.msg, 2);
                 }
             },
@@ -152,7 +151,7 @@ export default class addStudentDuty extends React.Component {
      * 获取班级的学生列表
      * @param clazzId
      */
-    getStudentListByClazz=(clazzId)=>{
+    getStudentListByClazz = (clazzId) => {
         var _this = this;
         var studentCheckboxItemList = [];
 
@@ -166,22 +165,23 @@ export default class addStudentDuty extends React.Component {
                     var response = result.response;
                     if (response != null && response != undefined) {
                         response.forEach(function (student) {
-                            var studentId = student.colUid+'';
-                            var checkBoxItem = <CheckboxItem key={studentId} onChange={() => _this.studentCheckboxOnChange(studentId)}>
+                            var studentId = student.colUid + '';
+                            var checkBoxItem = <CheckboxItem key={studentId}
+                                                             onChange={() => _this.studentCheckboxOnChange(studentId)}>
                                 {student.userName}
                             </CheckboxItem>;
                             studentCheckboxItemList.push(checkBoxItem);
                         })
 
                     }
-                }else{
+                } else {
                     Toast.fail(result.msg, 2);
                 }
                 var weekOfTody = new Date().getDay();
-                weekOfTody=(weekOfTody==0?7:weekOfTody);
-                var sValue = [clazzId+''];
-                var asyncValue = [weekOfTody+''];
-                _this.setState({seasons,sValue,'week':weekOfTody,asyncValue,clazzId});
+                weekOfTody = (weekOfTody == 0 ? 7 : weekOfTody);
+                var sValue = [clazzId + ''];
+                var asyncValue = [weekOfTody + ''];
+                _this.setState({seasons, sValue, 'week': weekOfTody, asyncValue, clazzId});
             },
             onError: function (error) {
                 message.error(error)
@@ -191,7 +191,7 @@ export default class addStudentDuty extends React.Component {
         this.setState({studentCheckboxItemList});
     }
 
-    studentCheckboxOnChange(val){
+    studentCheckboxOnChange(val) {
         this.buildStudentCheckedArray(val);
     }
 
@@ -199,11 +199,11 @@ export default class addStudentDuty extends React.Component {
      * 构建已选学生id的数组
      * @param checkedValue
      */
-    buildStudentCheckedArray(checkedValue){
+    buildStudentCheckedArray(checkedValue) {
         var studentIdIndex = this.isHaveSameStudentId(checkedValue);
-        if(studentIdIndex!=-1){
-            studentCheckedArray.splice(studentIdIndex,1);
-        }else{
+        if (studentIdIndex != -1) {
+            studentCheckedArray.splice(studentIdIndex, 1);
+        } else {
             studentCheckedArray.push(checkedValue);
         }
     }
@@ -215,11 +215,11 @@ export default class addStudentDuty extends React.Component {
      * @param checkedValue
      * @returns {number}
      */
-    isHaveSameStudentId(checkedValue){
+    isHaveSameStudentId(checkedValue) {
         var studentIdIndex = -1;
-        for(var i=0;i<studentCheckedArray.length;i++){
+        for (var i = 0; i < studentCheckedArray.length; i++) {
             var stuId = studentCheckedArray[i];
-            if(stuId == checkedValue){
+            if (stuId == checkedValue) {
                 studentIdIndex = i;
                 break;
             }
@@ -258,7 +258,7 @@ export default class addStudentDuty extends React.Component {
                     </List>
                 </div>
                 <div className="submitBtn">
-                     <Button type="primary"  onClick={this.saveStudentDuty}>提交</Button>
+                    <Button type="primary" onClick={this.saveStudentDuty}>提交</Button>
                 </div>
             </div>
         );
