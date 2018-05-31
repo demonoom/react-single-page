@@ -1,4 +1,3 @@
-(node) util.print is deprecated. Use console.log instead.
 #classroomManage {
   font-size: 17px;
 }
@@ -181,6 +180,7 @@
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
+  font-size: 16px;
 }
 #classroomManage .addModel .chooseResult {
   height: 300px;
