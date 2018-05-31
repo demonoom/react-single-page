@@ -41,12 +41,20 @@ export default class addMoralEducation extends React.Component {
      * 提交新增的德育项
      */
     addMoralEducationTableItem = () => {
-        if (addMoralEdu.state.politeness.trim() == '' || addMoralEdu.state.politeness.trim().length == 0) {
+        if (addMoralEdu.state.politeness.trim() == '') {
             Toast.fail('请填写礼貌评分')
             return
         }
-        if (addMoralEdu.state.health.trim() == '' || addMoralEdu.state.health.length == 0) {
+        if(addMoralEdu.state.politeness.trim() > 100 || addMoralEdu.state.politeness.trim() < 0){
+            Toast.fail('请填写有效的礼貌评分')
+            return
+        }
+        if (addMoralEdu.state.health.trim() == '') {
             Toast.fail('请填写健康评分')
+            return
+        }
+        if(addMoralEdu.state.health.trim() > 100 || addMoralEdu.state.health.trim() < 0){
+            Toast.fail('请填写有效的健康评分')
             return
         }
         const param = {
