@@ -34,13 +34,26 @@ export default class updateMoralEducation extends React.Component {
             "id": id,
             "cName": name
         })
+        window.addEventListener('resize', updateMoralEdu.onWindowResize)
     }
     componentDidMount() {
         document.title = `${decodeURI(updateMoralEdu.state.cName)}`;
         this.findMoralEducationById(updateMoralEdu.state.id)
     }
-
-
+    componentWillUnmount() {
+        //解除监听
+        window.removeEventListener('resize', updateMoralEdu.onWindowResize)
+    }
+    /**
+        * 视窗改变时改变高度
+        */
+    onWindowResize() {
+        setTimeout(function () {
+            updateMoralEdu.setState({
+                clientHeight: updateMoralEdu.state.clientHeight
+            });
+        }, 100)
+    }
     /**
    * 查看对应教室ID的德育信息
    */
@@ -76,7 +89,7 @@ export default class updateMoralEducation extends React.Component {
             Toast.fail('请填写礼貌评分')
             return
         }
-        if(updateMoralEdu.state.politeness.trim() > 100 || updateMoralEdu.state.politeness.trim() < 0){
+        if (updateMoralEdu.state.politeness.trim() > 100 || updateMoralEdu.state.politeness.trim() < 0) {
             Toast.fail('请填写有效的礼貌评分')
             return
         }
@@ -84,7 +97,7 @@ export default class updateMoralEducation extends React.Component {
             Toast.fail('请填写健康评分')
             return
         }
-        if(updateMoralEdu.state.health.trim() > 100 || updateMoralEdu.state.health.trim() < 0){
+        if (updateMoralEdu.state.health.trim() > 100 || updateMoralEdu.state.health.trim() < 0) {
             Toast.fail('请填写有效的健康评分')
             return
         }
@@ -131,9 +144,35 @@ export default class updateMoralEducation extends React.Component {
 
         );
         return (
-            <div id="updateMoralEducation" style={{ height: document.body.clientHeight }}>
-                <WhiteSpace size="lg" />
-
+            <div id="addMoralEducation" style={{ height:updateMoralEdu.state.clientHeight }}>
+                {/*选择班级*/}
+                {/* <Picker
+                    data={this.state.classData}
+                    cols={1}
+                    value={this.state.classAsyncValue}
+                    onPickerChange={this.onClassPickerChange}
+                    onOk={this.getClassKey}
+                >
+                    <List.Item arrow="horizontal"
+                               onClick={this.getClazzesByUserId.bind(this, JSON.parse(localStorage.getItem("userIdKey")).userId)}>选择班级<i
+                        className="redStar">*</i></List.Item>
+                </Picker>
+                <WhiteSpace size="lg"/>
+                */}
+                {/*选择日期*/}
+                {/* <DatePicker
+                    mode="date"
+                    title="选择日期"
+                    extra="Optional"
+                    value={this.state.customChildValue}
+                    onOk={this.onDatePickerChange}
+                    onChange={v => this.setState({customChildValue:v})}
+                    extra="请选择"
+                >
+                 <CustomChildren>选择日期</CustomChildren>
+                    {/* <List.Item arrow="horizontal">选择日期<i className="redStar">*</i></List.Item> 
+                </DatePicker>
+                <WhiteSpace size="lg"/> */}
                 <div className='CourseTableArea'>
                     <div className="classSearchResultInfo">
                         <List>

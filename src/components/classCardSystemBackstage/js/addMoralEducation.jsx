@@ -21,6 +21,7 @@ export default class addMoralEducation extends React.Component {
         this.state = {
             data: [],
             classData: [],
+            clientHeight:document.body.clientHeight
         };
     }
     componentWillMount() {
@@ -32,11 +33,25 @@ export default class addMoralEducation extends React.Component {
             "id": id,
             "name": name
         });
+        window.addEventListener('resize', addMoralEdu.onWindowResize)
     }
     componentDidMount() {
         document.title = `${decodeURI(addMoralEdu.state.name)}`;
     }
-
+    componentWillUnmount() {
+        //解除监听
+        window.removeEventListener('resize', moraaddMoralEdulEd.onWindowResize)
+    }
+     /**
+     * 视窗改变时改变高度
+     */
+    onWindowResize() {
+        setTimeout(function () {
+            addMoralEdu.setState({
+                clientHeight: addMoralEdu.state.clientHeight
+            });
+        }, 100)
+    }
     /**
      * 提交新增的德育项
      */
@@ -127,7 +142,7 @@ export default class addMoralEducation extends React.Component {
 
         );
         return (
-            <div id="addMoralEducation" style={{ height: document.body.clientHeight }}>
+            <div id="addMoralEducation" style={{ height: addMoralEdu.state.clientHeight }}>
                 <div className='CourseTableArea'>
                     <div className="classSearchResultInfo">
                         <List>

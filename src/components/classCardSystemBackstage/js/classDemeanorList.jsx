@@ -50,11 +50,11 @@ export default class classDemeanorList extends React.Component {
     }
 
 
-    toClassDetail(id,name) {
+    toClassDetail(id,name,gradeName) {
         // console.log(event);
         let url;
         if (id) {
-            url = encodeURI(WebServiceUtil.mobileServiceURL + "classDemeanor?ident=" + id +"&className="+name);
+            url = encodeURI(WebServiceUtil.mobileServiceURL + "classDemeanor?ident=" + id +"&className="+gradeName+''+name);
         } else {
 
         }
@@ -72,10 +72,10 @@ export default class classDemeanorList extends React.Component {
         let items = [];
         let item = this.state.listData;
         for (var k in item) {
-            items.push(<li className="am-list-item am-list-item-middle" onClick={this.toClassDetail.bind(this, item[k].id,item[k].name)}>
+            items.push(<li className="am-list-item am-list-item-middle" onClick={this.toClassDetail.bind(this, item[k].id,item[k].name,item[k].grade.name)}>
                 <div className="am-list-line">
                     <div className="am-list-content">
-                        {item[k].name}
+                        {item[k].grade.name}{item[k].name}
                     </div>
                     <div className="am-list-extra">
                         <span className='classDetail'></span>
@@ -86,7 +86,6 @@ export default class classDemeanorList extends React.Component {
         }
         return (
             <div id="classDemeanorList" style={{height: document.body.clientHeight}}>
-
                 <ul>
                     {items}
                 </ul>
