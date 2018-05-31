@@ -6,6 +6,15 @@
     display: block;
 
   }
+  .am-button-small{
+    background-color: #fff;
+    height: 44px;
+    line-height: 44px;
+    border: none !important;
+    &:before{
+      border: 0;
+    }
+  }
   .whiteBack{
     background-color: #fff;
   }
@@ -17,6 +26,7 @@
     /*height: calc(~"100% - 70px");*/
     height: 100%;
     overflow-y: auto;
+    width: 100%;
   }
   .am-pull-to-refresh-indicator {
     font-size: 1rem !important;
@@ -51,11 +61,11 @@
     }
     .classInfo{
       position: relative;
-      padding: 15px 15px;
+      padding: 15px 15px 2px 15px;
       border-bottom: 1px #f4f4f4 solid;
       line-height: 24px;
       .textOver{
-        width: calc(~"100% - 70px");
+        width: 100%;
         color: #a9a9a9;
         font-size: 16px;
       }
@@ -65,8 +75,9 @@
     }
     .grade{
       color: #a9a9a9;
-      padding-left: 10px;
       font-size: 15px;
+      display: inline-block;
+      margin-top: 8px;
     }
     .noomCardUnbind {
       color: #ff144e;
@@ -100,8 +111,7 @@
       margin-right: 20px;
       font-size: 15px;
       color: #a9a9a9;
-      padding-top: 7px;
-      display: block;
+      display: inline-block;
     }
   }
   .addModel {
@@ -270,5 +280,9 @@
 
     }
 
+  }
+  .div_creatTime{
+    height: 44px;
+    line-height: 44px;
   }
 }
