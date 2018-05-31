@@ -217,14 +217,14 @@
   font-size: 18px;
   line-height: 47px;
   display: block;
-  -webkit-border-radius: 5px;
-  -moz-border-radius: 5px;
-  border-radius: 5px;
-  background-color: #e94f4f;
+  -webkit-border-radius: 2px;
+  -moz-border-radius: 2px;
+  border-radius: 2px;
+  background-color: #F56A55;
 }
 #updateClassroom .addModel .bottomBox span:active {
   color: rgba(255, 255, 255, 0.3);
-  background-color: #d24747;
+  background-color: #F56A55;
 }
 #updateClassroom .addModel .bottomBox .bind {
   color: #fff;
