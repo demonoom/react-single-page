@@ -77,10 +77,11 @@ export default class header extends React.Component {
     componentWillMount() {
         this.makeTime();
         this.viewClassRoom();
+        demeanor.getAbCode(returnCitySN["cip"])
 
-        $.getJSON('//freegeoip.net/json/', function (data) {
-            demeanor.getAbCode(data.ip)
-        });
+        // $.getJSON('//freegeoip.net/json/', function (data) {
+        //     demeanor.getAbCode(data.ip)
+        // });
 
         // var data = {
         //     method: 'getAbCode',
