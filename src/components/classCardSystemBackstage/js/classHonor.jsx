@@ -174,19 +174,6 @@ export default class classHonor extends React.Component {
         return (
             <div id="classDemeanor" style={{height: document.body.clientHeight}}>
                 <div className="Img_cont">
-                    {/*<WhiteSpace size="lg"/>*/}
-                    {/*日期*/}
-                    {/*<Picker*/}
-                    {/*data={this.state.data}*/}
-                    {/*cols={1}*/}
-                    {/*value={this.state.asyncValue}*/}
-                    {/*onPickerChange={this.onPickerChange}*/}
-                    {/*onOk={v => this.chooseClassOnOk(v)}*/}
-                    {/*>*/}
-                    {/*<List.Item arrow="horizontal">班级</List.Item>*/}
-                    {/*</Picker>*/}
-                    {/*<WhiteSpace size="lg"/>*/}
-
                     <div className="classDemeanor_title">荣誉展示</div>
                     <div className='showImg my_flex my_flex_wrap'>
                         {this.state.imgArr.map((v) => {
