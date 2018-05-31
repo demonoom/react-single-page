@@ -516,9 +516,9 @@ class Index extends React.Component {
                     {/*<li><Link*/}
                     {/*to="/studentSelectCourse?access_user=23852"*/}
                     {/*style={{fontSize: '24px'}}>学生选课系统</Link></li>*/}
-                    <li><Link
-                        to="/particlePath"
-                        style={{fontSize: '24px'}}>运动轨迹</Link></li>
+                    {/*<li><Link*/}
+                    {/*to="/particlePath"*/}
+                    {/*style={{fontSize: '24px'}}>运动轨迹</Link></li>*/}
                 </ul>
             </div>
         );
