@@ -156,7 +156,7 @@ export default class getClassRoomList extends React.Component {
                                     <div className="am-list-arrow am-list-arrow-horizontal"></div>
                                 </div>
                             </div>
-                            <div className="classroom_subject">
+                            <div className="classroom_subject textOver" style={{width:'100%'}} >
                                 {
                                 rowData.defaultBindedClazz ?
                                     <span className="grade">{rowData.defaultBindedClazz.name}</span> :
