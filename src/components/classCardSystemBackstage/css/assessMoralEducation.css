@@ -49,3 +49,9 @@
 #assessMoralEducation .bold {
   font-weight: bold;
 }
+#assessMoralEducation .nodata {
+  color: #999;
+  background-color: #fff;
+  text-align: center;
+  line-height: 98px;
+}
