@@ -87,7 +87,7 @@ export default class moralEducation extends React.Component {
 
     /**
      * 跳转获取ClassId页面
-     * @param {*} item 
+     * @param {*} item
      */
 
     toAssessMoralE(v) {
