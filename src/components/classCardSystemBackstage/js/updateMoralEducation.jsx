@@ -233,7 +233,7 @@ export default class updateMoralEducation extends React.Component {
           );
         return (
             <div id="addMoralEducation" style={{height: document.body.clientHeight}}>
-                <WhiteSpace size="lg"/>
+
                 {/*选择班级*/}
                 {/* <Picker
                     data={this.state.classData}

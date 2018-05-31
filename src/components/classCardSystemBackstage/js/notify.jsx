@@ -237,13 +237,17 @@ export default class notifyBack extends React.Component {
                 <div className="listCont">
                     <Item onClick={this.toNotifyDetail.bind(this, item.id)} align="top"
                           multipleLine>
-                        <span className="title text_hidden">{item.noticeTitle}</span>
-                        <span className="time">{item.createTime}</span>
+                        <div className="clear">
+                            <span className="title text_hidden">{item.noticeTitle}</span>
+                            <span className="time">{item.createTime}</span>
+                        </div>
                         <Brief>{item.noticeContent}</Brief>
-                        <div className="classroom_label">{WebServiceUtil.isEmpty(item.classRoom)==true?'':item.classRoom.name}</div>
+                        <div className="classroom_label textOver">{WebServiceUtil.isEmpty(item.classRoom)==true?'':item.classRoom.name}</div>
                     </Item>
-                    <Icon onClick={this.deleteNotify.bind(this, item.id)} type='cross-circle-o'
-                          className="deleteNoifty"></Icon>
+                   {/* <Icon onClick={this.deleteNotify.bind(this, item.id)} type='cross-circle-o'
+                          className="deleteNoifty"></Icon>*/}
+                    <div onClick={this.deleteNotify.bind(this, item.id)} type='cross-circle-o'
+                         className="deleteNoifty deleteBtn_common"></div>
                     <img src={require("../imgs/icon_notifyList.png")} alt="头像" className="headPic"/>
                 </div>
             )
