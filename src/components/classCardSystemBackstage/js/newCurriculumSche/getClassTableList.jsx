@@ -223,6 +223,8 @@ export default class getClassTableList extends React.Component {
                 if (result.msg == '调用成功' || result.success == true) {
                     Toast.success('新建成功', 1)
                     _this.viewCourseTablePage(_this.state.uid)
+                } else {
+                    Toast.fail(result.msg, 2)
                 }
             },
             onError: function (error) {
@@ -262,6 +264,8 @@ export default class getClassTableList extends React.Component {
                     _this.setState({
                         dataSource: _this.state.dataSource.cloneWithRows(_this.initData)
                     });
+                } else {
+                    Toast.fail(result.msg, 2)
                 }
             },
             onError: function (error) {
