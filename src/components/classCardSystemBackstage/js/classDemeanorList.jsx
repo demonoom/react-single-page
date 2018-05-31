@@ -78,7 +78,7 @@ export default class classDemeanorList extends React.Component {
                         {item[k].name}
                     </div>
                     <div className="am-list-extra">
-                        <span className='classDetail'>详情</span>
+                        <span className='classDetail'></span>
                     </div>
                     <div className="am-list-arrow am-list-arrow-horizontal"></div>
 

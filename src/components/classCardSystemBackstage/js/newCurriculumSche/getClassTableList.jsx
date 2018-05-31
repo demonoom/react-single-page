@@ -206,60 +206,6 @@ export default class getClassTableList extends React.Component {
     };
 
     /**
-     * 删除弹出框
-     */
-    showAlertOpen = (data, event) => {
-        event.stopPropagation();
-        var phoneType = navigator.userAgent;
-        var phone;
-        if (phoneType.indexOf('iPhone') > -1 || phoneType.indexOf('iPad') > -1) {
-            phone = 'ios'
-        } else {
-            phone = 'android'
-        }
-        var _this = this;
-        const alertInstance = alert('删除', '您确定要启用该课表吗?', [
-            {text: '取消', onPress: () => console.log('cancel'), style: 'default'},
-            {text: '确定', onPress: () => _this.openTable(data)},
-        ], phone);
-    };
-
-    /**
-     * 启用课表的回调
-     * @param data
-     */
-    openTable(data) {
-        var _this = this;
-        var param = {
-            "method": 'changeCourseTableStatus',
-            "condition": 0,
-            "ctId": data.id,
-        };
-        WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
-            onResponse: (result) => {
-                if (result.msg == '调用成功' || result.success == true) {
-                    Toast.success('删除成功', 1)
-                    _this.state.dataSource = [];
-                    _this.state.dataSource = new ListView.DataSource({
-                        rowHasChanged: (row1, row2) => row1 !== row2,
-                    });
-                    _this.initData.forEach(function (v, i) {
-                        if (data.id == v.id) {
-                            _this.initData.splice(i, 1);
-                        }
-                    });
-                    _this.setState({
-                        dataSource: _this.state.dataSource.cloneWithRows(_this.initData)
-                    });
-                }
-            },
-            onError: function (error) {
-                Toast.fail('删除失败');
-            }
-        });
-    }
-
-    /**
      * 创建新课表
      **/
     creatNewT(value) {
@@ -413,7 +359,6 @@ export default class getClassTableList extends React.Component {
                         <span className="classroom">创建时间:{rowData.createTime}</span>
                         <span onClick={this.changeTableName.bind(this, rowData)}>修改</span>
                         <span onClick={this.showAlert.bind(this, rowData)}>删除</span>
-                        <span onClick={this.showAlertOpen.bind(this, rowData)}>启用</span>
                     </div>
                     <SwitchExample/>
                 </div>
