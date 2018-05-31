@@ -230,11 +230,44 @@ export default class editStudentDuty extends React.Component {
         this.setState({studentCheckboxItemList});
     }
 
+    weekNumToChart=(weekNum)=>{
+        var weekChart = "";
+        switch (weekNum){
+            case "0":
+                weekChart = "日";
+                break;
+            case "1":
+                weekChart = "一";
+                break;
+            case "2":
+                weekChart = "二";
+                break;
+            case "3":
+                weekChart = "三";
+                break;
+            case "4":
+                weekChart = "四";
+                break;
+            case "5":
+                weekChart = "五";
+                break;
+            case "6":
+                weekChart = "六";
+                break;
+            case "7":
+                weekChart = "日";
+                break;
+        }
+        return weekChart;
+    }
+
     render() {
         var _this = this;
-
+        var weekChart = _this.weekNumToChart(_this.state.week);
         return (
             <div id="addStudentDuty" style={{height: document.body.clientHeight}}>
+                <div>值日时间：星期{weekChart}</div>
+                <WhiteSpace size="lg"/>
                 <div className="bg_white">
                     <List renderHeader={() => '学生列表'}>
                         {_this.state.studentCheckboxItemList}
