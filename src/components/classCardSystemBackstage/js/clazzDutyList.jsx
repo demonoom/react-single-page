@@ -194,7 +194,7 @@ export default class clazzDutyList extends React.Component {
                 {
                     <div className="classInfo">
                         {/* <span className="delClassroom" onClick={this.delClassroom.bind(this,rowData.id)}>X</span> */}
-                        <div className="am-list-item am-list-item-middle" onClick={_this.turnToClazzDetail.bind(_this,rowData.clazz)}>
+                        <div className="am-list-item am-list-item-middle" onClick={_this.turnToClazzDetail.bind(this,rowData.clazz)}>
                             <div className="am-list-line">
                                 <div className="am-list-content">{(rowData.clazz.grade==undefined?'':rowData.clazz.grade.name)+""+rowData.clazz.name}</div>
                                 <span className="choiceData am-list-extra" style={{ float: 'right', color: '#888' }}>查看所有</span><div className="am-list-arrow am-list-arrow-horizontal"></div>
