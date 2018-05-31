@@ -122,11 +122,31 @@ export default class classDemeanor extends React.Component {
         });
     }
 
-    showAlert = (success,cancel) => {
+    showAlert = (success, cancel) => {
+        var phoneType = navigator.userAgent;
+        var phone;
+        if (phoneType.indexOf('iPhone') > -1 || phoneType.indexOf('iPad') > -1) {
+            phone = 'ios'
+        } else {
+            phone = 'android'
+        }
+
         const alertInstance = alert('删除图片', '确定删除此照片吗?', [
-            {text: '取消', onPress: () => {if(cancel){cancel();}}, style: 'default'},
-            {text: '确定', onPress: () => {if(success){success()}}},
-        ]);
+            {
+                text: '取消', onPress: () => {
+                if (cancel) {
+                    cancel();
+                }
+            }, style: 'default'
+            },
+            {
+                text: '确定', onPress: () => {
+                if (success) {
+                    success()
+                }
+            }
+            },
+        ], phone);
     }
 
     deleteimgFromAndArr(index) {
