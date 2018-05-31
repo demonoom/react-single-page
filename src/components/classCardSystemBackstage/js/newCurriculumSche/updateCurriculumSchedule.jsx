@@ -389,6 +389,7 @@ export default class updateCurriculumSchedule extends React.Component {
                 {/*搜索老师*/}
                 <div className="search_list my_flex">
                     <input type="text"
+                           style={{'margin-left':'-8px'}}
                            onChange={teacherV.teacgerChange.bind(this, i)}
                            placeholder="请输入老师姓名"
                            value={teacherV.state.ClassTableDataArr[i].tercherName}
@@ -398,6 +399,7 @@ export default class updateCurriculumSchedule extends React.Component {
                 {/*搜索班级*/}
                 <div className="search_list my_flex">
                     <input type="text"
+                           style={{'margin-left':'-8px'}}
                            onChange={teacherV.classChange.bind(this, i)}
                            placeholder="请输入上课班级"
                            value={teacherV.state.ClassTableDataArr[i].className}
@@ -416,7 +418,8 @@ export default class updateCurriculumSchedule extends React.Component {
                 {/*输入备注*/}
                 <div className="flex_container my_flex flex_addElement">
                     <TextareaItem
-                        rows={2}
+                        rows={1}
+                        style={{'margin-left':'-8px'}}
                         className="add_element"
                         placeholder="添加备注"
                         labelNumber={2}
