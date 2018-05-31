@@ -209,7 +209,6 @@ export default class clazzDutyList extends React.Component {
                         </div>
                     }
                 </div>
-
             )
         };
         return (

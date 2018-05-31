@@ -1,5 +1,5 @@
 import React from 'react';
-import {List, WhiteSpace, Toast, Modal} from 'antd-mobile';
+import {List, WhiteSpace, Toast, Modal,Button} from 'antd-mobile';
 import '../../css/newCurriculumSche/curriculumSchedule.less'
 
 var cSchedule;
@@ -145,23 +145,18 @@ export default class curriculumSchedule extends React.Component {
                         return <li>
                             <div className="add_title">
                                 <span className="font_gray">第{v.index}节</span>
-                                <span
-                                    className="amend_btn" onClick={this.turnToUpdatePage.bind(this, v)}>修改</span>
-                                <span className="delete" onClick={this.showAlert.bind(this, v.id)}>删除</span>
+                                <Button className="modifyBtn_common" type="primary" size="small" onClick={this.turnToUpdatePage.bind(this, v)}></Button>
+                                <Button type="primary" size="small" className="btn_del deleteBtn_common" onClick={this.showAlert.bind(this, v.id)}></Button>
+                            </div>
+                            <div className="list_high list lineList textOver">
+                                <span className="text_hidden" style={{width:'50%'}}>{this.state.weekData[v.week - 1].label}</span><span className="text_hidden" style={{width:'calc(50% - 20px)'}}>{v.openTime + '-' + v.closeTime}</span>
+                            </div>
+                            <div className="list_high list textOver">
+                                <span className="text_hidden" style={{width:'50%'}}>课程：{v.courseName}</span><span className="text_hidden" style={{width:'calc(50% - 20px)'}}>老师：{v.teacher.userName}</span>
                             </div>
 
-                            <div className="list_high list textOver">
-                                <span className="text_hidden text_cont1">{v.openTime + '-' + v.closeTime}</span>
-                                <span className="text_hidden text_cont2">{v.courseName}</span>
-                            </div>
                             <div className="list_high list lineList textOver">
-                                <span className="text_hidden text_cont3">{this.state.weekData[v.week - 1].label}</span>
-                            </div>
-                            <div className="list_high list lineList textOver">
-                                <span className="text_hidden text_cont3">{v.teacher.userName}</span>
-                            </div>
-                            <div className="list_high list lineList textOver">
-                                <span className="text_hidden text_cont3">{v.clazz.name}</span>
+                                <span className="text_hidden text_cont3">年级：{v.clazz.name}</span>
                             </div>
                         </li>
                     })}

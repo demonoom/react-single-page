@@ -1,11 +1,4 @@
 #getClassTableList {
-  .textOver {
-    overflow: hidden;
-    white-space: nowrap;
-    text-overflow: ellipsis;
-    display: block;
-
-  }
   .whiteBack {
     background-color: #fff;
   }
@@ -51,17 +44,15 @@
     }
     .classInfo {
       position: relative;
-      padding: 15px 15px;
+      padding: 10px 0;
       border-bottom: 1px #f4f4f4 solid;
       line-height: 24px;
       .textOver {
-        width: calc(~"100% - 70px");
-        color: #a9a9a9;
         font-size: 16px;
       }
     }
     .classroom {
-      color: #000;
+      color: #464646;
     }
     .grade {
       color: #a9a9a9;
@@ -241,5 +232,56 @@
 
     }
 
+  }
+  .amList_cont{
+    height: 44px;
+    line-height: 44px;
+    padding-right: 15px;
+  }
+  .amList{
+      width: 170px;
+      display: inline-block;
+  }
+  .amList .am-list-item .am-list-line .am-list-content{
+    color: #464646;
+  }
+  .am-list-line::after{
+    background: transparent;
+  }
+  .tableListDate{
+    color: #464646;
+    padding-left: 15px;
+    width: 100%;
+    box-sizing: border-box;
+    span{
+      margin-top: 8px;
+    }
+  }
+  .am-button-small{
+    background-color: #fff;
+    height: 44px;
+    line-height: 44px;
+    border: none !important;
+    &:before{
+      border: 0;
+    }
+  }
+  .am-list-body::before, .am-list-body::after{
+    background: transparent;
+  }
+  .am-switch .checkbox{
+    height: 23px;
+    width:46px;
+  }
+  .am-switch .checkbox:after{
+    width:21px ;
+    height: 21px;
+    top: 1px;
+  }
+  .am-switch .checkbox:before{
+    background: #e5e5e5;
+    height: 23px;
+    width:44px;
+    top: 0;
   }
 }

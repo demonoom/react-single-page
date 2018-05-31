@@ -1,9 +1,10 @@
+(node) util.print is deprecated. Use console.log instead.
 #updateCurriculumSchedule {
   overflow-y: auto;
   /*创建动画*/
 }
 #updateCurriculumSchedule .CourseTableArea {
-  min-height: 280px;
+  min-height: calc(100% - 104px);
   background-color: #fff;
 }
 #updateCurriculumSchedule .CourseTableArea .addClassTable {
@@ -90,7 +91,7 @@
 }
 #updateCurriculumSchedule .teacher_list div:first-child,
 #updateCurriculumSchedule .teacher_list div:nth-child(2) {
-  width: 30%;
+  width: 50%;
 }
 #updateCurriculumSchedule .teacher_list div:nth-child(3) {
   width: 40%;

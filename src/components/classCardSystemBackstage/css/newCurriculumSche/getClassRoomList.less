@@ -20,6 +20,7 @@
     /*height: calc(~"100% - 70px");*/
     height: 100%;
     overflow-y: auto;
+    width: 100%;
   }
   .am-pull-to-refresh-indicator {
     font-size: 1rem !important;
@@ -54,7 +55,7 @@
     }
     .classInfo {
       position: relative;
-      padding: 15px 15px;
+      padding: 0;
       border-bottom: 1px #f4f4f4 solid;
       line-height: 24px;
       .textOver {
@@ -64,12 +65,12 @@
       }
     }
     .classroom {
-      color: #000;
+      color: #464646;
     }
     .grade {
       color: #a9a9a9;
-      padding-left: 10px;
       font-size: 15px;
+      padding-left: 15px;
     }
     .noomCardUnbind {
       color: #ff144e;
@@ -244,5 +245,11 @@
 
     }
 
+  }
+  .am-list-line::after{
+    background: transparent;
+  }
+  .classroom_subject{
+    padding-bottom: 10px;
   }
 }
