@@ -324,7 +324,7 @@ export default class classroomManage extends React.Component {
                                 rowData.defaultBindedClazz ? <span className="grade">{rowData.defaultBindedClazz.name}</span> : <span className="grade"></span>
                             }
                         </div>
-                        <div>
+                        <div className="div_creatTime">
                             <span className="creatTime">
                             {
                                 WebServiceUtil.formatYMD(rowData.createTime)
