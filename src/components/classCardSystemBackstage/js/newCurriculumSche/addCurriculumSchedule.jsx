@@ -188,6 +188,7 @@ export default class addCurriculumSchedule extends React.Component {
     teacgerChange(i, e) {
         var tValue = e.target.value;
         teacherV.state.ClassTableDataArr[i].tercherName = tValue
+        teacherV.state.ClassTableDataArr[i].teacherId = ''
         teacherV.buildClassTable()
     }
 
@@ -199,6 +200,7 @@ export default class addCurriculumSchedule extends React.Component {
     classChange(i, e) {
         var tValue = e.target.value;
         teacherV.state.ClassTableDataArr[i].className = tValue
+        teacherV.state.ClassTableDataArr[i].classId = ''
         teacherV.buildClassTable()
     }
 
