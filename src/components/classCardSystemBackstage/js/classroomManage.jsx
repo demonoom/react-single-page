@@ -150,7 +150,7 @@ export default class classroomManage extends React.Component {
         var param = {
             "method": 'searchClazz',
             "aid": classBinding.state.uid,
-            "keyWord": $('.gradeName .am-input-control input').val(),
+            "keyWord": classBinding.state.gradeNameValue,
         };
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
             onResponse: function (result) {
@@ -195,7 +195,6 @@ export default class classroomManage extends React.Component {
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
             onResponse: function (result) {
                 if (result.msg == '调用成功' && result.success == true) {
-                    
                     $('.tableDiv').show("fast");
                     _this.state.gradeNameValue = '';
                     _this.state.classroomValue = '';
@@ -222,15 +221,6 @@ export default class classroomManage extends React.Component {
         this.setState({ chooseResultDiv: 'none' });
     };
 
-    /**
-     * 输入框改变的回调
-     */
-    inputOnChange(e) {
-        this.setState({ classroomValue: e });
-    }
-    inputChange(e) {
-        this.setState({ gradeNameValue: e })
-    }
 
     /**
      *  ListView数据全部渲染完毕的回调
@@ -376,7 +366,11 @@ export default class classroomManage extends React.Component {
                             <InputItem
                                 placeholder="请输入教室名称"
                                 data-seed="logId"
-                                onChange={this.inputOnChange.bind(this)}
+                                onChange={v => {
+                                    classBinding.setState({
+                                        "classroomValue":v
+                                    })
+                                }}
                                 value={this.state.classroomValue}
                             >教室名称<i className='redStar'>*</i></InputItem>
                         </div>
@@ -384,7 +378,12 @@ export default class classroomManage extends React.Component {
                             <InputItem
                                 placeholder="请输入班级名称"
                                 data-seed="logId"
-                                onChange={this.inputChange.bind(this)}
+                                onChange={v=>{
+                                    classBinding.setState({
+                                        "gradeNameValue":v,
+                                        "classId":""
+                                    })
+                                }}
                                 value={this.state.gradeNameValue}
                             >班级名称<i className='redStar'>*</i></InputItem>
                             <div id='stIcon' className='stIcon' onClick={this.searchClassroomName}>

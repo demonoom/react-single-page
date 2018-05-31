@@ -133,10 +133,6 @@ export default class updateClassroom extends React.Component {
             Toast.fail('请填写教室名称和班级名称', )
             return
         }
-        if (updateCM.state.gradeNameChangeValue == undefined) {
-            Toast.fail('请选择班级', )
-            return
-        }
         var param = {
             "method": 'updateClassRoom',
             "cr": {
@@ -153,7 +149,7 @@ export default class updateClassroom extends React.Component {
                     _this.state.gradeNameValue = '';
                     _this.state.classroomValue = '';
                     _this.setState({ chooseResultDiv: 'none' });
-                    Toast.success('添加成功');
+                    Toast.success('修改成功');
                     setTimeout(function () {
                         var data = {
                             method: 'finishForRefresh',
@@ -172,16 +168,6 @@ export default class updateClassroom extends React.Component {
 
     }
 
-    /**
-     * 输入框改变的回调
-     */
-    inputOnChange(e) {
-        this.setState({ classroomValue: e });
-    }
-    inputChange(e) {
-        this.setState({ gradeNameValue: e })
-    }
-
     render() {
         var _this = this;
         return (
@@ -192,7 +178,9 @@ export default class updateClassroom extends React.Component {
                             <InputItem
                                 placeholder="请输入教室名称"
                                 data-seed="logId"
-                                onChange={this.inputOnChange.bind(this)}
+                                onChange={v => {updateCM.setState({
+                                    "classroomValue":v
+                                })}}
                                 value={this.state.classroomValue}
                             >教室名称<i className='redStar'>*</i></InputItem>
                         </div>
@@ -200,7 +188,12 @@ export default class updateClassroom extends React.Component {
                             <InputItem
                                 placeholder="请输入班级名称"
                                 data-seed="logId"
-                                onChange={this.inputChange.bind(this)}
+                                onChange={v => {
+                                    updateCM.setState({
+                                        "gradeNameValue":v,
+                                        "classId":""
+                                    })
+                                }}
                                 value={this.state.gradeNameValue}
                             >班级名称<i className='redStar'>*</i></InputItem>
                             <div id='stIcon' className='stIcon' onClick={this.searchClassroomName}>
