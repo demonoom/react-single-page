@@ -9,7 +9,7 @@ import {
     PullToRefresh,
     Checkbox,
     Button,
-    Flex
+    Flex,
 } from 'antd-mobile';
 import '../css/classroomManage.less'
 import { ucs2 } from 'punycode';

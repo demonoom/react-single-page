@@ -1,29 +1,18 @@
 import React from 'react';
 import {
-    Toast,
-    InputItem,
-    List,
-    Radio,
     ListView,
-    Modal,
     PullToRefresh,
-    Checkbox, 
-    Flex
 } from 'antd-mobile';
-import '../css/classDutyList.less'
-import { ucs2 } from 'punycode';
 
-const CheckboxItem = Checkbox.CheckboxItem;
-const AgreeItem = Checkbox.AgreeItem;
-const alert = Modal.alert;
-const RadioItem = Radio.RadioItem;
-var clazzDutyListBinding;
+import '../../css/newCurriculumSche/getClassRoomList.less'
 
-export default class clazzDutyList extends React.Component {
+var classBinding;
+
+export default class getClassRoomList extends React.Component {
 
     constructor(props) {
         super(props);
-        clazzDutyListBinding = this;
+        classBinding = this;
         const dataSource = new ListView.DataSource({
             rowHasChanged: (row1, row2) => row1 !== row2,
         });
@@ -33,32 +22,28 @@ export default class clazzDutyList extends React.Component {
             defaultPageNo: 1,
             clientHeight: document.body.clientHeight,
             chooseResultDiv: 'none',
-            searchData: [],
-            selectData: []
         };
     }
-   
+
     componentDidMount() {
         Bridge.setShareAble("false");
-        document.title = '班级值日表';
+        document.title = '教室列表';
         var locationHref = window.location.href;
         var locationSearch = locationHref.substr(locationHref.indexOf("?") + 1);
         var uid = locationSearch.split("&")[0].split("=")[1];
-        this.setState({ "uid": uid });
+        this.setState({"uid": uid});
         var uidKey = {
-            "uidKey":uid
+            "colUid": uid
         }
-        localStorage.setItem("uIdKey",JSON.stringify(uidKey));
-        var weekOfTody = new Date().getDay();
-        weekOfTody=(weekOfTody==0?7:weekOfTody);
-        this.getClassBrandStudentDutyList(uid,'',weekOfTody,this.state.defaultPageNo);
+        localStorage.setItem("classTableIdent", JSON.stringify(uidKey));
+        this.viewClassRoomPage(uid);
         //添加对视窗大小的监听,在屏幕转换以及键盘弹起时重设各项高度
-        window.addEventListener('resize', clazzDutyListBinding.onWindowResize)
+        window.addEventListener('resize', classBinding.onWindowResize)
     }
 
     componentWillUnmount() {
         //解除监听
-        window.removeEventListener('resize', clazzDutyListBinding.onWindowResize)
+        window.removeEventListener('resize', classBinding.onWindowResize)
     }
 
     /**
@@ -66,14 +51,14 @@ export default class clazzDutyList extends React.Component {
      */
     onWindowResize() {
         setTimeout(function () {
-            clazzDutyListBinding.setState({ clientHeight: document.body.clientHeight });
+            classBinding.setState({clientHeight: document.body.clientHeight});
         }, 100)
     }
 
     /**
-     * 查看所有班级的值日信息
+     * 查看教室信息
      */
-    getClassBrandStudentDutyList(userId,clazzId,week,pageNo) {
+    viewClassRoomPage(uid) {
         var _this = this;
         _this.initData.splice(0);
         _this.state.dataSource = [];
@@ -83,17 +68,13 @@ export default class clazzDutyList extends React.Component {
         const dataBlob = {};
         var PageNo = this.state.defaultPageNo;
         var param = {
-            "method": 'getClassBrandStudentDutyList',
-            "userId":userId,
-            "clazzId": clazzId,
-            "week": week,
-            "pageNo": pageNo,
+            "method": 'viewClassRoomPage',
+            "uid": uid,
+            "pn": PageNo,
         };
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
             onResponse: function (result) {
-                console.log(result.response);
                 if (result.msg == '调用成功' && result.success == true) {
-                    clazzDutyListBinding.state.selectData = result.response
                     var arr = result.response;
                     var pager = result.pager;
                     for (let i = 0; i < arr.length; i++) {
@@ -133,11 +114,8 @@ export default class clazzDutyList extends React.Component {
             return;
         }
         currentPageNo += 1;
-        this.setState({ isLoadingLeft: true, defaultPageNo: currentPageNo });
-        var weekOfTody = new Date().getDay();
-        weekOfTody=(weekOfTody==0?7:weekOfTody);
-        this.getClassBrandStudentDutyList(this.state.uid,'',weekOfTody,this.state.defaultPageNo);
-        // _this.getClassBrandStudentDutyList(_this.state.uid);
+        this.setState({isLoadingLeft: true, defaultPageNo: currentPageNo});
+        _this.viewClassRoomPage(_this.state.uid);
         this.setState({
             dataSource: this.state.dataSource.cloneWithRows(this.initData),
             isLoadingLeft: true,
@@ -147,79 +125,58 @@ export default class clazzDutyList extends React.Component {
     onRefresh = () => {
         var divPull = document.getElementsByClassName('am-pull-to-refresh-content');
         divPull[0].style.transform = "translate3d(0px, 30px, 0px)";   //设置拉动后回到的位置
-        this.setState({ defaultPageNo: 1, refreshing: true, isLoadingLeft: true });
-        // this.getClassBrandStudentDutyList(this.state.uid);
-        var weekOfTody = new Date().getDay();
-        weekOfTody=(weekOfTody==0?7:weekOfTody);
-        this.getClassBrandStudentDutyList(this.state.uid,'',weekOfTody,this.state.defaultPageNo);
+        this.setState({defaultPageNo: 1, refreshing: true, isLoadingLeft: true});
+        this.viewClassRoomPage(this.state.uid);
     }
 
-    /**
-     * 跳转到班级值日详情页
-     */
-    turnToClazzDetail(clazzObj){
-        var clazzId = clazzObj.id;
-        var clazzName = "";
-        if(WebServiceUtil.isEmpty(clazzObj.grade)===false){
-            clazzName+=clazzObj.grade.name;
-        }
-        clazzName+=clazzObj.name;
-        var studentDutyListUrl = WebServiceUtil.mobileServiceURL + "studentDutyList?clazzId=" + clazzId+"&clazzName="+clazzName+"&access_user="+this.state.uid;
+    turnToClassTable(rowData) {
+        var currentAttendanceListUrl = WebServiceUtil.mobileServiceURL + "getClassTableList?clazzroomId=" + rowData.id;
+
         var data = {
             method: 'openNewPage',
-            url: studentDutyListUrl
+            url: currentAttendanceListUrl
         };
 
         Bridge.callHandler(data, null, function (error) {
-            window.location.href = studentDutyListUrl;
+            window.location.href = currentAttendanceListUrl;
         });
     }
 
     render() {
         var _this = this;
         const row = (rowData, sectionID, rowID) => {
-            console.log("rowData:"+rowData);
-            var users = rowData.users;
-            var clazzDutyUserList=[];
-            if(WebServiceUtil.isEmpty(users)==false){
-                users.forEach(function (user) {
-                    var userName = user.userName;
-                    console.log("userName:"+userName)
-                    // var userAvatar = user.avatar;
-                    var userTag = <span className="text_hidden">{userName}</span>;
-                    clazzDutyUserList.push(userTag);
-                });
-            }
-            return (<div>
-                {
-                    <div className="classInfo">
-                        {/* <span className="delClassroom" onClick={this.delClassroom.bind(this,rowData.id)}>X</span> */}
-                        <div className="am-list-item am-list-item-middle" onClick={_this.turnToClazzDetail.bind(_this,rowData.clazz)}>
-                            <div className="am-list-line">
-                                <div className="am-list-content">{(rowData.clazz.grade==undefined?'':rowData.clazz.grade.name)+""+rowData.clazz.name}</div>
-                                <span className="choiceData am-list-extra" style={{ float: 'right', color: '#888' }}>查看所有</span><div className="am-list-arrow am-list-arrow-horizontal"></div>
+            return (
+                <div onClick={this.turnToClassTable.bind(this, rowData)}>
+                    {
+                        <div className="classInfo">
+                            <div className="textOver">
+                                <span className="classroom">{rowData.name}</span>
+                                {
+                                    rowData.defaultBindedClazz ?
+                                        <span className="grade">{rowData.defaultBindedClazz.name}</span> :
+                                        <span className="grade"></span>
+                                }
+                            </div>
+                            <div className="am-list-item am-list-item-middle" onClick={_this.turnToClazzDetail.bind(_this,rowData.clazz)}>
+                                <div className="am-list-line">
+                                    <div className="am-list-content">{(rowData.clazz.grade==undefined?'':rowData.clazz.grade.name)+""+rowData.clazz.name}</div>
+                                    <span className="choiceData am-list-extra" style={{ float: 'right', color: '#888' }}>查看所有</span><div className="am-list-arrow am-list-arrow-horizontal"></div>
+                                </div>
                             </div>
                         </div>
-                        {/* <span className="creatTime">
-                            2018-8-8
-                        </span> */}
-                        <div className="today_duty">今日值日</div>
-                        <div className="today_dutylist">{clazzDutyUserList.length==0?<div className="no_data">暂无今日值日表</div>:clazzDutyUserList}</div>
-                    </div>
-                }
-            </div>
-
+                    }
+                </div>
             )
         };
         return (
-            <div id="classDutyList" style={{ height: clazzDutyListBinding.state.clientHeight }}>
-                <div className='tableDiv' style={{ height: clazzDutyListBinding.state.clientHeight }}>
+            <div id="getClassRoomList" style={{height: classBinding.state.clientHeight}}>
+                <div className='tableDiv' style={{height: classBinding.state.clientHeight}}>
                     {/*这是列表数据,包括添加按钮*/}
                     <ListView
                         ref={el => this.lv = el}
                         dataSource={this.state.dataSource}    //数据类型是 ListViewDataSource
                         renderFooter={() => (
-                            <div style={{ paddingTop: 5, paddingBottom: 40, textAlign: 'center' }}>
+                            <div style={{paddingTop: 5, paddingBottom: 40, textAlign: 'center'}}>
                                 {this.state.isLoadingLeft ? '正在加载' : '已经全部加载完毕'}
                             </div>)}
                         renderRow={row}   //需要的参数包括一行数据等,会返回一个可渲染的组件为这行数据渲染  返回renderable
@@ -232,7 +189,7 @@ export default class clazzDutyList extends React.Component {
                         initialListSize={30}   //指定在组件刚挂载的时候渲染多少行数据，用这个属性来确保首屏显示合适数量的数据
                         scrollEventThrottle={20}     //控制在滚动过程中，scroll事件被调用的频率
                         style={{
-                            height: clazzDutyListBinding.state.clientHeight,
+                            height: classBinding.state.clientHeight,
                         }}
                         pullToRefresh={<PullToRefresh
                             onRefresh={this.onRefresh}
