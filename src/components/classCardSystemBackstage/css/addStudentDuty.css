@@ -6,7 +6,7 @@
   top: 7px;
 }
 #addStudentDuty .bg_white {
-  height: calc(100% - 77px);
+  height: calc(100% - 151px);
   box-sizing: border-box;
   position: relative;
 }
@@ -15,7 +15,7 @@
 }
 #addStudentDuty .am-list-body {
   overflow-y: auto;
-  height: calc(100% - 50px);
+  height: calc(100% - 55px);
 }
 #addStudentDuty .am-list-content {
   position: relative;
@@ -46,4 +46,12 @@
 }
 #addStudentDuty .am-list-body div:not(:last-child) .am-list-line {
   border-bottom: 0;
+}
+#addStudentDuty .dutyTime {
+  height: 44px;
+  line-height: 44px;
+  padding: 0 15px;
+  background-color: #fff;
+  font-size: 17px;
+  color: #000;
 }
