@@ -204,7 +204,7 @@ export default class clazzDutyList extends React.Component {
                             2018-8-8
                         </span> */}
                         <div className="today_duty">今日值日</div>
-                        <div className="today_dutylist">{clazzDutyUserList}</div>
+                        <div className="today_dutylist">{clazzDutyUserList.length==0?"暂无今日值日表":clazzDutyUserList}</div>
                     </div>
                 }
             </div>
