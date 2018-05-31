@@ -285,7 +285,12 @@ export default class moralEducation extends React.Component {
                     {/*这是列表数据,包括添加按钮*/}
                     {
                         moralEd.state.searchData.map((v,i) => {
-                            return <div>{v.name}<span onClick={this.toAssessMoralE.bind(this,v.id)}>详情</span></div>
+                            return  <div className="am-list-item am-list-item-middle" onClick={this.toAssessMoralE.bind(this,v.id)}>
+                            <div className="am-list-line">
+                                <div className="am-list-content">{v.name}</div>
+                            <span className="choiceData am-list-extra" style={{ float: 'right', color: '#888' }}></span><div className="am-list-arrow am-list-arrow-horizontal"></div>
+                            </div>
+                            </div>
                         })
                     }
                     {/* <ListView
