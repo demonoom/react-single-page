@@ -50,10 +50,10 @@ export default class classHonorList extends React.Component {
     }
 
 
-    toClassDetail(id,name) {
+    toClassDetail(id,name,gradeName) {
         let url;
         if (id) {
-            url = encodeURI(WebServiceUtil.mobileServiceURL + "classHonor?ident=" + id+"&className="+name);
+            url = encodeURI(WebServiceUtil.mobileServiceURL + "classHonor?ident=" + id+"&className="+gradeName+''+name);
         } else {
 
         }
@@ -72,13 +72,13 @@ export default class classHonorList extends React.Component {
         let item = this.state.listData;
         console.log(item);
         for (var k in item) {
-            items.push(<li className="am-list-item am-list-item-middle" onClick={this.toClassDetail.bind(this, item[k].id,item[k].name)}>
+            items.push(<li className="am-list-item am-list-item-middle" onClick={this.toClassDetail.bind(this, item[k].id,item[k].name,item[k].grade.name)}>
                 <div className="am-list-line">
                     <div className="am-list-content">
-                        {item[k].name}
+                        {item[k].grade.name}{item[k].name}
                     </div>
                     <div className="am-list-extra">
-                        <span className='classDetail'>详情</span>
+                        <span className='classDetail'></span>
                     </div>
                     <div className="am-list-arrow am-list-arrow-horizontal"></div>
 

@@ -8,7 +8,8 @@ import {
     Modal,
     PullToRefresh,
     Checkbox,
-    Flex
+    Button,
+    Flex,
 } from 'antd-mobile';
 import '../css/classroomManage.less'
 import { ucs2 } from 'punycode';
@@ -315,21 +316,23 @@ export default class classroomManage extends React.Component {
             return (<div>
                 {
                     <div className="classInfo">
-                        <span className="delClassroom" onClick={this.delClassroom.bind(this, rowData.id)}>X</span>
                         <div className="textOver">
                             <span className="classroom">{rowData.name}</span>
+                        </div>
+                        <div className="textOver">
                             {
                                 rowData.defaultBindedClazz ? <span className="grade">{rowData.defaultBindedClazz.name}</span> : <span className="grade"></span>
                             }
                         </div>
-
-                        <span className="creatTime">
+                        <div className="div_creatTime">
+                            <span className="creatTime">
                             {
                                 WebServiceUtil.formatYMD(rowData.createTime)
                             }
-                        </span>
-                        <span className='calmCardUnbind' onClick={this.toUpdatePage.bind(this, rowData)}
-                        >修改</span>
+                            </span>
+                            <Button className="modifyBtn_common" type="primary" size="small" onClick={this.toUpdatePage.bind(this, rowData)}></Button>
+                            <Button type="primary" size="small" className="btn_del deleteBtn_common" onClick={this.delClassroom.bind(this, rowData.id)}></Button>
+                        </div>
                     </div>
                 }
             </div>

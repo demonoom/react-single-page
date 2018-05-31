@@ -1,5 +1,6 @@
 #addMoralEducation {
   overflow-y: auto;
+  height: 100%;
 }
 #addMoralEducation .redStar {
   color: red;
@@ -9,7 +10,7 @@
   top: 7px;
 }
 #addMoralEducation .CourseTableArea {
-  height: calc(100% - 269px);
+  height: calc(100% - 77px);
   background-color: #fff;
   overflow-y: auto;
 }
@@ -55,10 +56,18 @@
   padding-left: 0;
 }
 #addMoralEducation .am-list-body,
-#addMoralEducation .am-list-body::before {
+#addMoralEducation .am-list-body::before,
+#addMoralEducation .am-list-body::after {
   border: none;
   background: #fff;
-  padding-top: 5px;
+}
+#addMoralEducation .am-list-line::after {
+  background: none;
+}
+#addMoralEducation .am-list-line {
+  border-bottom: 1px #f4f4f4 solid;
+  padding-right: 0;
+  margin-right: 15px;
 }
 #addMoralEducation .am-list-content {
   width: 20px !important;

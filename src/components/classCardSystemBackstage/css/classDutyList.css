@@ -1,3 +1,4 @@
+(node) util.print is deprecated. Use console.log instead.
 #classDutyList {
   overflow-x: hidden;
   overflow-y: auto;
@@ -85,4 +86,10 @@
 }
 #classDutyList .am-list-line:after {
   background: #fff;
+}
+#classDutyList .no_data {
+  color: #999;
+  font-size: 14px;
+  text-align: center;
+  margin-top: 15px;
 }
