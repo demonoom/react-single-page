@@ -212,7 +212,7 @@ export default class studentDutyList extends React.Component {
         var _this = this;
         return (
             <div id="studentDutyList" style={{height: document.body.clientHeight}}>
-                {_this.state.dutyTagList}
+                <div className="content">{_this.state.dutyTagList}</div>
                 <div className='addBunton' onClick={this.turnToAddDutyPage}>
                     <img src={require("../imgs/addBtn.png")} />
                 </div>

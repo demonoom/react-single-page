@@ -266,7 +266,8 @@ export default class editStudentDuty extends React.Component {
         var weekChart = _this.weekNumToChart(_this.state.week);
         return (
             <div id="addStudentDuty" style={{height: document.body.clientHeight}}>
-                <div>值日时间：星期{weekChart}</div>
+                <WhiteSpace size="lg"/>
+                <div className="dutyTime">值日时间：星期{weekChart}</div>
                 <WhiteSpace size="lg"/>
                 <div className="bg_white">
                     <List renderHeader={() => '学生列表'}>

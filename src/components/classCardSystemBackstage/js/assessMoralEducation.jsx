@@ -248,7 +248,7 @@ export default class assessMoralEducation extends React.Component {
                 <div className='tableDiv' style={{ height: assessME.state.clientHeight }}>
                     {
                         assessME.state.selectData.length === 0 ?
-                            <div>暂无德育评价信息</div>
+                            <div className="nodata">暂无德育评价信息</div>
                             : <ListView
                                 ref={el => this.lv = el}
                                 dataSource={this.state.dataSource}    //数据类型是 ListViewDataSource
