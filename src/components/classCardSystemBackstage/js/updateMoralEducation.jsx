@@ -48,8 +48,10 @@ export default class updateMoralEducation extends React.Component {
         var locationHref = window.location.href;
         var locationSearch = locationHref.substr(locationHref.indexOf("?") + 1);
         var id = locationSearch.split("&")[0].split("=")[1];
+        var name = decodeURI(locationSearch.split("&")[1].split("=")[1]);
         moralEdu.setState({
-            "id": id
+            "id": id,
+            "cName":name
         })
         this.findMoralEducationById(id)
     }
@@ -175,6 +177,7 @@ export default class updateMoralEducation extends React.Component {
                 }
             },
             onError: function (error) {
+                message.error(error)
             }
         });
     }
@@ -232,7 +235,8 @@ export default class updateMoralEducation extends React.Component {
 
           );
         return (
-            <div id="addMoralEducation" style={{height: document.body.clientHeight}}>
+            <div id="updateMoralEducation" style={{height: document.body.clientHeight}}>
+                <header>{moralEdu.state.cName}</header>
                 <WhiteSpace size="lg"/>
                 {/*选择班级*/}
                 {/* <Picker

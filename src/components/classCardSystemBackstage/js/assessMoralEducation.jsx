@@ -118,7 +118,8 @@ export default class assessMoralEducation extends React.Component {
                     _this.setState({
                         dataSource: _this.state.dataSource.cloneWithRows(_this.initData),
                         isLoadingLeft: isLoading,
-                        refreshing: false
+                        refreshing: false,
+                        "cName":result.response[0].clazz.name
                     })
                 } else {
                     Toast.fail(result.msg, 1);
@@ -129,9 +130,6 @@ export default class assessMoralEducation extends React.Component {
             }
         });
     }
-
-
-   
 
     /**
      *  ListView数据全部渲染完毕的回调
@@ -158,27 +156,12 @@ export default class assessMoralEducation extends React.Component {
         this.getMoralEducationInfoList(this.state.classId);
     }
 
-    /**
-     * 跳转获取ClassId页面
-     * @param {*} item 
-     */
-
-    // toAssessMoralE(item){
-    //     var url = WebServiceUtil.mobileServiceURL + "assessMoralEducation?classId="+item.defaultBindedClazz.id;
-    //     var data = {
-    //         method: 'openNewPage',
-    //         url: url
-    //     };
-    //     Bridge.callHandler(data, null, function (error) {
-    //         window.location.href = url;
-    //     });
-    // }
+   
     /**
      * toUpdateMoralEducatio跳转修改页面
      */
     toUpdateMoralEducation(item) {
-
-        var url = WebServiceUtil.mobileServiceURL + "updateMoralEducation?id=" + item.id;
+        var url = WebServiceUtil.mobileServiceURL + "updateMoralEducation?id=" + item.id +"&name="+encodeURI(item.clazz.name);
         var data = {
             method: 'openNewPage',
             url: url
@@ -186,8 +169,6 @@ export default class assessMoralEducation extends React.Component {
         Bridge.callHandler(data, null, function (error) {
             window.location.href = url;
         });
-
-
 
     }
     /**
@@ -243,10 +224,10 @@ export default class assessMoralEducation extends React.Component {
         var _this = this;
         const row = (rowData, sectionID, rowID) => {
             return (<div>
+                 
                 {
                     <div className="classInfo">
                         <div className="textOver">
-                            <span className="classroom">{rowData.clazz.name}</span>
                             <span className="healthScore">{rowData.health}</span>
                             <span className="politenessScore">{rowData.politeness}</span>
                             <span className="createTime">{WebServiceUtil.formatYMD(rowData.createTime)}</span>
@@ -262,6 +243,7 @@ export default class assessMoralEducation extends React.Component {
         };
         return (
             <div id="classroomManage" style={{ height: assessME.state.clientHeight }}>
+                <div>{assessME.state.cName}</div>
                 <div className='tableDiv' style={{ height: assessME.state.clientHeight }}>
                     {/*这是列表数据,包括添加按钮*/}
                     <ListView
