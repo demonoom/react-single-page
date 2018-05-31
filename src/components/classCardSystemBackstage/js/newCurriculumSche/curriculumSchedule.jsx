@@ -155,7 +155,7 @@ export default class curriculumSchedule extends React.Component {
                                 <span className="text_hidden" style={{width:'50%'}}>课程：{v.courseName}</span><span className="text_hidden" style={{width:'calc(50% - 20px)'}}>老师：{v.teacher.userName}</span>
                             </div>
 
-                            <div className="list_high list lineList textOver">
+                            <div className="list_high list lineList textOver" style={{'padding-bottom':'5px'}}>
                                 <span className="text_hidden text_cont3">年级：{v.clazz.name}</span>
                             </div>
                         </li>

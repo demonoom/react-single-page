@@ -263,3 +263,6 @@
   width: 44px;
   top: 0;
 }
+#getClassTableList .am-list-body div:not(:last-child) .am-list-line {
+  border-bottom: 1px solid transparent;
+}
