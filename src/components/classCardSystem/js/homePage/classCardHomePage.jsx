@@ -50,33 +50,11 @@ export default class classCardHomePage extends React.Component {
         localStorage.setItem("roomId", roomId);
         simpleMS = new SimpleWebsocketConnection();
         simpleMS.connect();
-        this.getTodayClassRoomCourseTable(roomId)
     }
 
     componentDidMount() {
         this.msListener()
         this.simpleListener()
-    }
-
-    /**
-     * 查看该教室今天的课表
-     */
-    getTodayClassRoomCourseTable(roomId) {
-        var param = {
-            "method": 'getTodayClassRoomCourseTable',
-            "rid": roomId,
-        };
-        console.log(param);
-        WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
-            onResponse: function (result) {
-                console.log(result);
-                if (result.success == true && result.msg == "调用成功") {
-
-                }
-            },
-            onError: function (error) {
-            }
-        });
     }
 
     msListener() {
