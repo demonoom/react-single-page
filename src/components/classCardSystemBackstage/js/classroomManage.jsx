@@ -318,6 +318,8 @@ export default class classroomManage extends React.Component {
                     <div className="classInfo">
                         <div className="textOver">
                             <span className="classroom">{rowData.name}</span>
+                        </div>
+                        <div className="textOver">
                             {
                                 rowData.defaultBindedClazz ? <span className="grade">{rowData.defaultBindedClazz.name}</span> : <span className="grade"></span>
                             }
