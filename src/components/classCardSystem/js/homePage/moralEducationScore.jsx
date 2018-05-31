@@ -58,7 +58,7 @@ export default class moralEducationScore extends React.Component {
                     MEScore.state.scoreData!=null && MEScore.state.scoreData.totalScore ?
                         <div className="mEScoreInfo home_cardCont">
                             <div className="mEScoreInfoT">
-                                <span className="font_title2">全级排名：<span
+                                <span className="font_title2">全校排名：<span
                                     className="blue_text">{MEScore.state.scoreData.schoolRank}</span></span>
                                 <span className="font_title2 float_ri">年级排名：<span
                                     className="blue_text">{MEScore.state.scoreData.clazzRank}</span></span>

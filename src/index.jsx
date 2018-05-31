@@ -230,7 +230,17 @@ const addMoralEducation = (location, cb) => {
         cb(null, require("./components/classCardSystemBackstage/js/addMoralEducation").default)
     })
 }
+const updateMoralEducation = (location, cb) => {
+    require.ensure([], require => {
+        cb(null, require("./components/classCardSystemBackstage/js/updateMoralEducation").default)
+    })
+}
 
+const assessMoralEducation = (location, cb) => {
+    require.ensure([], require => {
+        cb(null, require("./components/classCardSystemBackstage/js/assessMoralEducation").default)
+    })
+}
 const classCardHomePage = (location, cb) => {
     require.ensure([], require => {
         cb(null, require("./components/classCardSystem/js/homePage/classCardHomePage").default)
@@ -268,6 +278,13 @@ const updateClassroom = (location, cb) => {
 const studentDutyList = (location, cb) => {
     require.ensure([], require => {
             cb(null, require("./components/classCardSystemBackstage/js/studentDutyList").default)
+        }
+    )
+}
+
+const clazzDutyList = (location, cb) => {
+    require.ensure([], require => {
+            cb(null, require("./components/classCardSystemBackstage/js/clazzDutyList?access_user=23836").default)
         }
     )
 }
@@ -340,9 +357,16 @@ const studentSelectCourse = (location, cb) => {
     )
 }
 
+
 const getClassRoomList = (location, cb) => {
     require.ensure([], require => {
-            cb(null, require("./components/classCardSystemBackstage/js/newCurriculumSche/getClassRoomList").default)
+        cb(null, require("./components/classCardSystemBackstage/js/newCurriculumSche/getClassRoomList").default)
+    })
+}
+
+const classDemeanorList = (location, cb) => {
+    require.ensure([], require => {
+            cb(null, require("./components/classCardSystemBackstage/js/classDemeanorList").default)
         }
     )
 }
@@ -370,7 +394,14 @@ const newAddCurriculumSchedule = (location, cb) => {
 
 const newUpdateCurriculumSchedule = (location, cb) => {
     require.ensure([], require => {
-            cb(null, require("./components/classCardSystemBackstage/js/newCurriculumSche/updateCurriculumSchedule").default)
+        cb(null, require("./components/classCardSystemBackstage/js/newCurriculumSche/updateCurriculumSchedule").default)
+    })
+}
+
+const classHonorList = (location, cb) => {
+    require.ensure([], require => {
+            cb(null, require("./components/classCardSystemBackstage/js/classHonorList").default)
+
         }
     )
 }
@@ -537,6 +568,8 @@ ReactDOM.render(
             <Route path="publicClassCardHomePage" getComponent={publicClassCardHomePage}/>
             <Route path="moralEducation" getComponent={moralEducation}/>
             <Route path="addMoralEducation" getComponent={addMoralEducation}/>
+            <Route path="updateMoralEducation" getComponent={updateMoralEducation}/>
+            <Route path="assessMoralEducation" getComponent={assessMoralEducation}/>
             <Route path="updateClassroom" getComponent={updateClassroom}/>
             <Route path="notifyBack" getComponent={notifyBack}/>
             <Route path="addNotify" getComponent={addNotify}/>
@@ -556,6 +589,10 @@ ReactDOM.render(
             <Route path="newCurriculumSchedule" getComponent={newCurriculumSchedule}/>
             <Route path="newAddCurriculumSchedule" getComponent={newAddCurriculumSchedule}/>
             <Route path="newUpdateCurriculumSchedule" getComponent={newUpdateCurriculumSchedule}/>
+            <Route path="classDemeanorList" getComponent={classDemeanorList}/>
+            <Route path="classHonorList" getComponent={classHonorList}/>
+            <Route path="clazzDutyList" getComponent={clazzDutyList}/>
         </Route>
     </Router>
-    , document.getElementById('example'));
+    ,
+    document.getElementById('example'));

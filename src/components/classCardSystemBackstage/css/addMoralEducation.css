@@ -10,7 +10,7 @@
   top: 7px;
 }
 #addMoralEducation .CourseTableArea {
-  height: calc(100% - 280px);
+  height: calc(100% - 269px);
   background-color: #fff;
   overflow-y: auto;
 }

@@ -18,65 +18,68 @@ export default class classDemeanor extends React.Component {
     }
 
     componentDidMount() {
-        document.title = '班级风采';
-        var locationHref = window.location.href;
+        var locationHref = decodeURI(window.location.href);
         var locationSearch = locationHref.substr(locationHref.indexOf("?") + 1);
         var ident = locationSearch.split("&")[0].split('=')[1];
-        this.getClazzesByUserId(ident)
+        var className = locationSearch.split("&")[1].split('=')[1];
+        // this.getClazzesByUserId(ident)
+        // this.setState({})
+        document.title = className;
+        this.getClassDemeanorInfo(ident);
     }
 
-    /**
-     * 获取此用户所在班级
-     */
-    getClazzesByUserId(ident) {
-        var _this = this;
-        var param = {
-            "method": 'getClazzesByUserId',
-            "userId": ident
-        };
-        WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
-            onResponse: function (result) {
-                if (result.msg == '调用成功' || result.success == true) {
-                    if (WebServiceUtil.isEmpty(result.response) == false) {
-                        var arr = [];
-                        var defaultClazzId = "";
-                        result.response.forEach(function (v, i) {
-                            if(i==0){
-                                defaultClazzId = v.id;
-                                _this.getClassDemeanorInfo(v.id);
-                            }
-                            arr.push({
-                                value: v.id, label: v.grade.name + v.name
-                            })
-                        })
-                        var asyncValue = [defaultClazzId];
-                        _this.setState({data: arr,asyncValue})
-                    }
-                }
-            },
-            onError: function (error) {
-                // message.error(error);
-            }
-        });
-    }
+    // /**
+    //  * 获取此用户所在班级
+    //  */
+    // getClazzesByUserId(ident) {
+    //     var _this = this;
+    //     var param = {
+    //         "method": 'getClazzesByUserId',
+    //         "userId": ident
+    //     };
+    //     WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
+    //         onResponse: function (result) {
+    //             if (result.msg == '调用成功' || result.success == true) {
+    //                 if (WebServiceUtil.isEmpty(result.response) == false) {
+    //                     var arr = [];
+    //                     var defaultClazzId = "";
+    //                     result.response.forEach(function (v, i) {
+    //                         if(i==0){
+    //                             defaultClazzId = v.id;
+    //                             _this.getClassDemeanorInfo(v.id);
+    //                         }
+    //                         arr.push({
+    //                             value: v.id, label: v.grade.name + v.name
+    //                         })
+    //                     })
+    //                     var asyncValue = [defaultClazzId];
+    //                     _this.setState({data: arr,asyncValue})
+    //                 }
+    //             }
+    //         },
+    //         onError: function (error) {
+    //             // message.error(error);
+    //         }
+    //     });
+    // }
 
-    /**
-     * 班级切换的回调
-     * @param val
-     */
-    onPickerChange = (val) => {
-        const d = [...this.state.data];
-        const asyncValue = [...val];
-        this.setState({
-            data: d,
-            asyncValue,
-        });
-    };
+    // /**
+    //  * 班级切换的回调
+    //  * @param val
+    //  */
+    // onPickerChange = (val) => {
+    //     const d = [...this.state.data];
+    //     const asyncValue = [...val];
+    //     this.setState({
+    //         data: d,
+    //         asyncValue,
+    //     });
+    // };
 
-    chooseClassOnOk(v) {
-        this.setState({asyncValue: v})
-        this.getClassDemeanorInfo(v[0])
-    }
+    // chooseClassOnOk(v) {
+    //     this.setState({asyncValue: v})
+    //     this.getClassDemeanorInfo(v[0])
+    // }
 
     getClassDemeanorInfo(id) {
         var param = {
@@ -187,18 +190,19 @@ export default class classDemeanor extends React.Component {
         return (
             <div id="classDemeanor" style={{height: document.body.clientHeight}}>
                 <div className="Img_cont">
-                    <WhiteSpace size="lg"/>
+                    {/*<WhiteSpace size="lg"/>*/}
                     {/*日期*/}
-                    <Picker
-                        data={this.state.data}
-                        cols={1}
-                        value={this.state.asyncValue}
-                        onPickerChange={this.onPickerChange}
-                        onOk={v => this.chooseClassOnOk(v)}
-                    >
-                        <List.Item arrow="horizontal">班级</List.Item>
-                    </Picker>
-                    <WhiteSpace size="lg"/>
+                    {/*<Picker*/}
+                        {/*data={this.state.data}*/}
+                        {/*cols={1}*/}
+                        {/*value={this.state.asyncValue}*/}
+                        {/*onPickerChange={this.onPickerChange}*/}
+                        {/*onOk={v => this.chooseClassOnOk(v)}*/}
+                    {/*>*/}
+                        {/*<List.Item arrow="horizontal">班级</List.Item>*/}
+                    {/*</Picker>*/}
+                    {/*<WhiteSpace size="lg"/>*/}
+
                     <div className="classDemeanor_title">风采展示</div>
                     <div className='showImg my_flex my_flex_wrap'>
                         {this.state.imgArr.map((v) => {

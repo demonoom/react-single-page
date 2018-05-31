@@ -71,9 +71,9 @@ export default class classCardHomePageDoor extends React.Component {
 
         var url;
         if (type == 1) {
-            url = WebServiceUtil.mobileServiceURL + "classDemeanor?ident=" + this.state.ident;
+            url = WebServiceUtil.mobileServiceURL + "classDemeanorList?ident=" + this.state.ident;
         } else {
-            url = WebServiceUtil.mobileServiceURL + "classHonor?ident=" + this.state.ident;
+            url = WebServiceUtil.mobileServiceURL + "classHonorList?ident=" + this.state.ident;
         }
 
         var data = {
@@ -117,7 +117,7 @@ export default class classCardHomePageDoor extends React.Component {
      * 班级值日表
      */
     turnToStudentDutyList = () => {
-        var url = WebServiceUtil.mobileServiceURL + "studentDutyList?access_user=" + this.state.ident;
+        var url = WebServiceUtil.mobileServiceURL + "clazzDutyList?access_user=" + this.state.ident;
         var data = {
             method: 'openNewPage',
             url: url

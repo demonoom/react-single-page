@@ -2,11 +2,14 @@
 #moralEducation {
   position: relative;
 }
+#moralEducation .tableDiv {
+  overflow: auto;
+}
 #moralEducation .addBunton img {
   width: 100%;
 }
 #moralEducation .classSearchResult {
-  height: 100%;
+  height: calc(100% - 148px);
   background-color: #fff;
   overflow-y: auto;
 }

@@ -42,7 +42,10 @@
   }
   .content{
     padding:.83rem .2rem .83rem 0.5rem;
-    overflow: hidden;
+    overflow-x: hidden;
+    overflow-y: auto;
+    box-sizing: border-box;
+    height: calc(~"100% - 2.22rem");
   }
   .photoItem{
     width: 4.61rem;
@@ -52,6 +55,15 @@
     padding: .67rem 0 .28rem;
     position: relative;
     float: left;
+    .signIcon_green{    //已签到图标样式
+      position: absolute;
+      right: 13%;
+      bottom: 23%;
+      width: 30px;
+      height: 30px;
+      z-index:2;
+      border-radius: 50%;
+    }
     .imgDiv{
       width: 3.33rem;
       height: 3.33rem;

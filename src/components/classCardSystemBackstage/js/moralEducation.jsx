@@ -1,240 +1,320 @@
 import React from 'react';
-import {Toast, Picker, List, WhiteSpace, DatePicker} from 'antd-mobile';
+import {
+    Toast,
+    InputItem,
+    List,
+    Radio,
+    ListView,
+    Modal,
+    PullToRefresh,
+    Checkbox,
+    Flex
+} from 'antd-mobile';
 import '../css/moralEducation.less'
+import { ucs2 } from 'punycode';
 
-
-const nowTimeStamp = Date.now();
-const now = new Date(nowTimeStamp);
-var mEducation;
+const CheckboxItem = Checkbox.CheckboxItem;
+const AgreeItem = Checkbox.AgreeItem;
+const alert = Modal.alert;
+const RadioItem = Radio.RadioItem;
+var moralEd;
 
 export default class moralEducation extends React.Component {
+
     constructor(props) {
         super(props);
-        mEducation = this;
+        moralEd = this;
+        const dataSource = new ListView.DataSource({
+            rowHasChanged: (row1, row2) => row1 !== row2,
+        });
+        this.initData = [];
         this.state = {
-            data: [],
-            cols: 1,
-            sValue: ['0', '0'],
-            visible: false,
-            date: now,
-            time: now,
-            visible: false,
-            moralEducationSelectData: {},
-            customChildValue:null,
-            seasons: [[
-                {
-                    label: '请选择',
-                    value: '0',
-                }
-            ],
-                [
-                    {
-                        label: '请选择',
-                        value: '0',
-                    }
-                ],]
+            dataSource: dataSource.cloneWithRows(this.initData),
+            defaultPageNo: 1,
+            clientHeight: document.body.clientHeight,
+            chooseResultDiv: 'none',
+            searchData: [],
+            selectData: [],
+            calmHeight: document.body.clientHeight - 150
         };
     }
 
-    componentWillMount() {
-        var locationHref = window.location.href;
-        var locationSearch = locationHref.substr(locationHref.indexOf("?") + 1);
-        var ident = locationSearch.split("&")[0].split("=")[1];
-        var loginUser = {
-            "userId": ident,
-        };
-        localStorage.setItem("userIdKey", JSON.stringify(loginUser));
-    }
+
 
     componentDidMount() {
-        document.title = '德育评价';
+        Bridge.setShareAble("false");
+        document.title = '德育教室信息列表';
+        var locationHref = window.location.href;
+        var locationSearch = locationHref.substr(locationHref.indexOf("?") + 1);
+        var uid = locationSearch.split("&")[0].split("=")[1];
+        this.setState({ "uid": uid });
+        var uidKey = {
+            "uidKey": uid
+        }
+        localStorage.setItem("uIdKey", JSON.stringify(uidKey));
+        // this.viewClassRoomPage(uid);
+        //添加对视窗大小的监听,在屏幕转换以及键盘弹起时重设各项高度
+        window.addEventListener('resize', moralEd.onWindowResize)
+        this.searchClassroomName(uid);
     }
 
+    componentWillUnmount() {
+        //解除监听
+        window.removeEventListener('resize', moralEd.onWindowResize)
+    }
 
     /**
-     * 获取班级，学期和日期
+     * 视窗改变时改变高度
      */
-    getSelectData = (v) => {
-        if (mEducation.state.sValue[0] === '0') {
-            Toast.fail('请先选择班级')
+    onWindowResize() {
+        setTimeout(function () {
+            moralEd.setState({
+                clientHeight: document.body.clientHeight,
+                calmHeight: document.body.clientHeight - 150  });
+        }, 100)
+    }
+
+    /**
+     * 查看教室信息
+     */
+    // viewClassRoomPage(uid) {
+    //     var _this = this;
+    //     _this.initData.splice(0);
+    //     _this.state.dataSource = [];
+    //     _this.state.dataSource = new ListView.DataSource({
+    //         rowHasChanged: (row1, row2) => row1 !== row2,
+    //     });
+    //     const dataBlob = {};
+    //     var PageNo = this.state.defaultPageNo;
+    //     var param = {
+    //         "method": 'viewClassRoomPage',
+    //         "uid": uid,
+    //         "pn": PageNo,
+    //     };
+    //     WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
+    //         onResponse: function (result) {
+    //             console.log(result);
+    //             if (result.msg == '调用成功' && result.success == true) {
+    //                 moralEd.state.selectData = result.response
+    //                 var arr = result.response;
+    //                 var pager = result.pager;
+    //                 for (let i = 0; i < arr.length; i++) {
+    //                     var topic = arr[i];
+    //                     dataBlob[`${i}`] = topic;
+    //                 }
+    //                 var isLoading = false;
+    //                 if (arr.length > 0) {
+    //                     if (pager.pageCount == 1 && pager.rsCount < 30) {
+    //                         isLoading = false;
+    //                     } else {
+    //                         isLoading = true;
+    //                     }
+    //                 } else {
+    //                     isLoading = false;
+    //                 }
+    //                 _this.initData = _this.initData.concat(arr);
+    //                 _this.setState({
+    //                     dataSource: _this.state.dataSource.cloneWithRows(_this.initData),
+    //                     isLoadingLeft: isLoading,
+    //                     refreshing: false
+    //                 })
+    //             } else {
+    //                 Toast.fail(result.msg, 1);
+    //             }
+    //         },
+    //         onError: function (error) {
+    //             Toast.info(error);
+    //         }
+    //     });
+    // }
+
+    /**
+     * 开启添加教室管理的界面
+     */
+    addClassroomM = () => {
+
+    };
+    /**
+     * searchClassroomName搜索班级的名称
+     */
+    searchClassroomName(uid) {
+        var _this = this;
+        var param = {
+            "method": 'searchClazz',
+            "aid": uid,
+            "keyWord": "",
+        };
+        console.log(param);
+        WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
+            onResponse: function (result) {
+                console.log(result);
+                if (result.msg == '调用成功' && result.success == true) {
+                    moralEd.setState({
+                        searchData:result.response
+                    })
+                } else {
+                    Toast.fail(result.msg, 1);
+                }
+            },
+            onError: function (error) {
+                Toast.info(error);
+            }
+        });
+    }
+
+    /**
+     * 点击提交时，确认绑定教室和班级
+     */
+    binding = () => {
+        var _this = this;
+        if (moralEd.state.gradeNameValue == '' || moralEd.state.classroomValue == '') {
+            Toast.fail('请填写教室名称和班级名称', )
             return
         }
-        if (mEducation.state.sValue[1] === '0') {
-            Toast.fail("请先选择学期")
+        if (moralEd.state.gradeNameChangeValue == undefined) {
+            Toast.fail('请选择班级', )
+            return
         }
-        var _this = this;
-        var d = new Date(v);
-        var newTime = d.getFullYear() + '-' + (d.getMonth() + 1) + '-' + d.getDate();
         var param = {
-            "method": 'getMoralEducationInfo',
-            "clazzId": mEducation.state.sValue[0],
-            // "termId": mEducation.state.sValue[1],
-            "createTime": newTime
-        }
-        WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
-            onResponse: function (result) {
-                if (result.msg == '调用成功' || result.success == true) {
-                    if (WebServiceUtil.isEmpty(result.response) == false) {
-                        _this.setState({moralEducationSelectData: result.response})
-                    }
-                }
-            },
-            onError: function (error) {
+            "method": 'addClassRoom',
+            "cr": {
+                "creatorId": moralEd.state.uid,
+                "name": moralEd.state.classroomValue,
+                "classId": moralEd.state.classId
             }
-        });
-    }
-
-    getClassAndTerm = (v) => {
-
-        this.setState({sValue: v})
-    }
-
-    /**
-     * 获取学期的ID
-     */
-    getSemesterList(ident) {
-        var _this = this;
-        var param = {
-            "method": 'getSemesterList',
-            "uid": ident
         };
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
             onResponse: function (result) {
-                if (result.msg == '调用成功' || result.success == true) {
-                    _this.getClazzesByUserId(ident, result.response)
+                if (result.msg == '调用成功' && result.success == true) {
+                    $('.tableDiv').show("fast");
+                    _this.state.gradeNameValue = '';
+                    _this.state.classroomValue = '';
+                    _this.setState({ chooseResultDiv: 'none' });
+                    _this.viewClassRoomPage(_this.state.uid);
+                } else {
+                    Toast.fail(result.msg, 1);
                 }
             },
             onError: function (error) {
+                message.error(error);
             }
         });
+
     }
 
     /**
-     * 获取班级ID
+     * 关闭添加的界面
      */
-    getClazzesByUserId(ident, semesterList) {
+    cancelAddModel = () => {
+        $('.tableDiv').show("fast");
+        this.state.gradeNameValue = '';
+        this.state.classroomValue = '';
+        this.setState({ chooseResultDiv: 'none' });
+    };
+
+    /**
+     * 输入框改变的回调
+     */
+    inputOnChange(e) {
+        this.setState({ classroomValue: e });
+    }
+    inputChange(e) {
+        this.setState({ gradeNameValue: e })
+    }
+
+    /**
+     *  ListView数据全部渲染完毕的回调
+     */
+    onEndReached = (event) => {
         var _this = this;
-        var param = {
-            "method": 'getClazzesByUserId',
-            "userId": ident
-        };
-        WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
-            onResponse: function (result) {
-                if (result.msg == '调用成功' || result.success == true) {
-                    _this.buildSeasons(result.response, semesterList)
-                }
-            },
-            onError: function (error) {
-            }
+        var currentPageNo = this.state.defaultPageNo;
+        if (!this.state.isLoadingLeft && !this.state.hasMore) {
+            return;
+        }
+        currentPageNo += 1;
+        this.setState({ isLoadingLeft: true, defaultPageNo: currentPageNo });
+        _this.viewClassRoomPage(_this.state.uid);
+        this.setState({
+            dataSource: this.state.dataSource.cloneWithRows(this.initData),
+            isLoadingLeft: true,
         });
-    }
+    };
 
-    buildSeasons(cList, sList) {
-        var cListArr = [{
-            label: '请选择',
-            value: '0',
-        }]
-        var sListArr = [{
-            label: '请选择',
-            value: '0',
-        }];
-        if (WebServiceUtil.isEmpty(cList) == false) {
-            cList.forEach(function (v, i) {
-                cListArr.push({
-                    label: v.name,
-                    value: v.id,
-                })
-            })
-        }
-        if (WebServiceUtil.isEmpty(sList) == false) {
-            sList.forEach(function (item, index) {
-                sListArr.push({
-                    label: item.name,
-                    value: item.id,
-                })
-            })
-        }
-        var arr = [cListArr, sListArr];
-        this.setState({seasons: arr})
+    onRefresh = () => {
+        var divPull = document.getElementsByClassName('am-pull-to-refresh-content');
+        divPull[0].style.transform = "translate3d(0px, 30px, 0px)";   //设置拉动后回到的位置
+        this.setState({ defaultPageNo: 1, refreshing: true, isLoadingLeft: true });
+        this.viewClassRoomPage(this.state.uid);
     }
 
     /**
-     * 增加课程表的回调
+     * 跳转获取ClassId页面
+     * @param {*} item
      */
-    addSchedule() {
-        var url = WebServiceUtil.mobileServiceURL + "addMoralEducation";
+
+    toAssessMoralE(id){
+        var url = WebServiceUtil.mobileServiceURL + "assessMoralEducation?id="+id;
         var data = {
             method: 'openNewPage',
             url: url
         };
-
         Bridge.callHandler(data, null, function (error) {
             window.location.href = url;
         });
     }
 
-
     render() {
         var _this = this;
-        const CustomChildren = ({ extra, onClick, children }) => (
+        // const row = (rowData, sectionID, rowID) => {
+        //     console.log(rowData);
+        //     return (<div>
+        //         {
+        //             <div className="classInfo">
+        //                <span>{rowData.name}</span>
+        //                 <span className='calmCardUnbind' onClick={this.toAssessMoralE.bind(this, rowData)}
+        //                 >详情</span>
+        //             </div>
+        //         }
+        //     </div>
 
-            <div className="am-list-item am-list-item-middle"
-              onClick={onClick}
-            >
-                <div className="am-list-line">
-                  <div className="am-list-content">{children}</div>
-                  <span className="choiceData am-list-extra" style={{ float: 'right', color: '#888' }}>{extra}</span><div className="am-list-arrow am-list-arrow-horizontal"></div>
-                </div>
-            </div>
-          );
-          
+        //     )
+        // };
         return (
-            <div id="moralEducation" style={{height: document.body.clientHeight}}>
-                <WhiteSpace size="lg"/>
-                {/*班级,学期*/}
-                <Picker
-                    data={this.state.seasons}
-                    cascade={false}
-                    value={this.state.sValue}
-                    className="gradeAndTerm"
-                    onChange={v => this.setState({sValue: v})}
-                    onOk={this.getClassAndTerm}
-                >
-                    <List.Item arrow="horizontal"
-                               onClick={this.getSemesterList.bind(this, JSON.parse(localStorage.getItem("userIdKey")).userId)}
-                    >班级,学期</List.Item>
-                </Picker>
-                <WhiteSpace size="lg"/>
-                {/*日期*/}
-                <DatePicker
-                    mode="date"
-                    title="选择日期"
-                    extra="Optional"
-                    value={this.state.customChildValue}
-                    onOk={this.getSelectData}
-                    onChange={v => this.setState({ customChildValue: v })}
-                    extra="请选择"
-                >   
-                    <CustomChildren>选择日期</CustomChildren>
-                    {/* <List.Item arrow="horizontal">日期</List.Item> */}
-                </DatePicker>
-                <WhiteSpace size="lg"/>
-                <div className='classSearchResult'>
-                    <div className="classSearchResultInfo">
-                        <div className="classHealth">
-                            <span className="resultName">班级健康评分</span>
-                            <span className="resultGrade">{_this.state.moralEducationSelectData.health}分</span>
-                        </div>
-                        <div className="classPoliteness">
-                            <span className="resultName">班级礼貌评分</span>
-                            <span className="resultGrade">{_this.state.moralEducationSelectData.politeness}分</span>
-                        </div>
-                    </div>
+            <div id="moralEducation" style={{ height: moralEd.state.clientHeight }}>
+                <div className='tableDiv' style={{ height: moralEd.state.clientHeight }}>
+                    {/*这是列表数据,包括添加按钮*/}
+                    {
+                        moralEd.state.searchData.map((v,i) => {
+                            return <div>{v.name}<span onClick={this.toAssessMoralE.bind(this,v.id)}>详情</span></div>
+                        })
+                    }
+                    {/* <ListView
+                        ref={el => this.lv = el}
+                        dataSource={this.state.dataSource}    //数据类型是 ListViewDataSource
+                        renderFooter={() => (
+                            <div style={{ paddingTop: 5, paddingBottom: 40, textAlign: 'center' }}>
+                                {this.state.isLoadingLeft ? '正在加载' : '已经全部加载完毕'}
+                            </div>)}
+                        renderRow={row}   //需要的参数包括一行数据等,会返回一个可渲染的组件为这行数据渲染  返回renderable
+                        className="am-list"
+                        pageSize={30}    //每次事件循环（每帧）渲染的行数
+                        //useBodyScroll  //使用 html 的 body 作为滚动容器   bool类型   不应这么写  否则无法下拉刷新
+                        scrollRenderAheadDistance={200}   //当一个行接近屏幕范围多少像素之内的时候，就开始渲染这一行
+                        onEndReached={this.onEndReached}  //当所有的数据都已经渲染过，并且列表被滚动到距离最底部不足onEndReachedThreshold个像素的距离时调用
+                        onEndReachedThreshold={10}  //调用onEndReached之前的临界值，单位是像素  number类型
+                        initialListSize={30}   //指定在组件刚挂载的时候渲染多少行数据，用这个属性来确保首屏显示合适数量的数据
+                        scrollEventThrottle={20}     //控制在滚动过程中，scroll事件被调用的频率
+                        style={{
+                            height: moralEd.state.clientHeight,
+                        }}
+                        pullToRefresh={<PullToRefresh
+                            onRefresh={this.onRefresh}
+                            distanceToRefresh={80}
+                        />}
+                    /> */}
 
                 </div>
-                <div className='addBunton' onClick={this.addSchedule}>
-                    <img src={require("../../ringBindInformation/imgs/addBtn.png")}/>
-                </div>
+
             </div>
         );
     }

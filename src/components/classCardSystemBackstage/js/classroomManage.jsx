@@ -7,7 +7,7 @@ import {
     ListView,
     Modal,
     PullToRefresh,
-    Checkbox, 
+    Checkbox,
     Flex
 } from 'antd-mobile';
 import '../css/classroomManage.less'
@@ -34,18 +34,17 @@ export default class classroomManage extends React.Component {
             clientHeight: document.body.clientHeight,
             chooseResultDiv: 'none',
             searchData: [],
-            selectData: []
+            selectData: [],
+            calmHeight: document.body.clientHeight - 150 
         };
     }
-   
-    onDataChange = (value) => {
-        
+  
+    onDataChange = (value, id) => {
         classBinding.setState({
-            gradeNameValue:value,
-            gradeNameChangeValue:value
-
-        });
-        
+            gradeNameValue: value,
+            gradeNameChangeValue: value,
+            "classId": id
+        }); 
     };
 
     componentDidMount() {
@@ -56,12 +55,13 @@ export default class classroomManage extends React.Component {
         var uid = locationSearch.split("&")[0].split("=")[1];
         this.setState({ "uid": uid });
         var uidKey = {
-            "uidKey":uid
+            "uidKey": uid
         }
-        localStorage.setItem("uIdKey",JSON.stringify(uidKey));
+        localStorage.setItem("uIdKey", JSON.stringify(uidKey));
         this.viewClassRoomPage(uid);
         //添加对视窗大小的监听,在屏幕转换以及键盘弹起时重设各项高度
         window.addEventListener('resize', classBinding.onWindowResize)
+
     }
 
     componentWillUnmount() {
@@ -74,7 +74,9 @@ export default class classroomManage extends React.Component {
      */
     onWindowResize() {
         setTimeout(function () {
-            classBinding.setState({ clientHeight: document.body.clientHeight });
+            classBinding.setState({ 
+                clientHeight: document.body.clientHeight,
+                calmHeight: document.body.clientHeight - 150  });
         }, 100)
     }
 
@@ -97,7 +99,7 @@ export default class classroomManage extends React.Component {
         };
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
             onResponse: function (result) {
-                console.log(result.response);
+                console.log(result);
                 if (result.msg == '调用成功' && result.success == true) {
                     classBinding.state.selectData = result.response
                     var arr = result.response;
@@ -122,14 +124,15 @@ export default class classroomManage extends React.Component {
                         isLoadingLeft: isLoading,
                         refreshing: false
                     })
+                } else {
+                    Toast.fail(result.msg, 1);
                 }
             },
             onError: function (error) {
+                Toast.info(error);
             }
         });
     }
-
-
 
     /**
      * 开启添加教室管理的界面
@@ -154,13 +157,13 @@ export default class classroomManage extends React.Component {
                     classBinding.setState({
                         searchData: result.response,
                         chooseResultDiv: "block",
-                        classId: result.response[0].id
                     })
                 } else {
                     Toast.fail(result.msg, 1);
                 }
             },
             onError: function (error) {
+                Toast.info(error);
             }
         });
     }
@@ -168,13 +171,12 @@ export default class classroomManage extends React.Component {
      * 点击提交时，确认绑定教室和班级
      */
     binding = () => {
-        
         var _this = this;
-        if (_this.state.gradeNameValue == '' || _this.state.classroomValue == '') {
+        if (classBinding.state.gradeNameValue == '' || classBinding.state.classroomValue == '') {
             Toast.fail('请填写教室名称和班级名称', )
             return
         }
-        if(classBinding.state.gradeNameChangeValue == undefined){
+        if (classBinding.state.gradeNameChangeValue == undefined) {
             Toast.fail('请选择班级', )
             return
         }
@@ -185,9 +187,7 @@ export default class classroomManage extends React.Component {
                 "name": classBinding.state.classroomValue,
                 "classId": classBinding.state.classId
             }
-
         };
-
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
             onResponse: function (result) {
                 if (result.msg == '调用成功' && result.success == true) {
@@ -196,10 +196,6 @@ export default class classroomManage extends React.Component {
                     _this.state.classroomValue = '';
                     _this.setState({ chooseResultDiv: 'none' });
                     _this.viewClassRoomPage(_this.state.uid);
-                    $('.bindGrade span').removeClass("am-checkbox-checked");
-                    $('.gradeName').css({
-                        display: 'none'
-                    })
                 } else {
                     Toast.fail(result.msg, 1);
                 }
@@ -218,29 +214,9 @@ export default class classroomManage extends React.Component {
         $('.tableDiv').show("fast");
         this.state.gradeNameValue = '';
         this.state.classroomValue = '';
-        this.setState({chooseResultDiv: 'none'});
+        this.setState({ chooseResultDiv: 'none' });
     };
 
-    /**
-     * 获取绑定班级的状态，是否显示
-     */
-    getbindGradeState(e) {
-        if (e.target.checked) {
-            classBinding.setState({
-                gradeNameValue:''
-            })
-            $('.gradeName').css({
-                display: 'block'
-            })
-        } else {
-            classBinding.setState({
-                chooseResultDiv:'none'
-            })
-            $('.gradeName').css({
-                display: 'none'
-            })
-        }
-    }
     /**
      * 输入框改变的回调
      */
@@ -250,7 +226,7 @@ export default class classroomManage extends React.Component {
     inputChange(e) {
         this.setState({ gradeNameValue: e })
     }
-   
+
     /**
      *  ListView数据全部渲染完毕的回调
      */
@@ -280,8 +256,8 @@ export default class classroomManage extends React.Component {
      * 根据ID修改教室
      * @param {*} id 
      */
-    toUpdatePage(id){
-        var url = WebServiceUtil.mobileServiceURL + "updateClassroom"+"?classId="+id.id+"&access_user=23836";
+    toUpdatePage(id) {
+        var url = WebServiceUtil.mobileServiceURL + "updateClassroom" + "?classId=" + id.id + "&access_user=23836";
         var data = {
             method: 'openNewPage',
             url: url
@@ -297,24 +273,31 @@ export default class classroomManage extends React.Component {
      * @param {*} classRoomId 
      */
     delClassroom(classRoomId) {
+        var _this = this;
         var param = {
-            "method": '',
+            "method": 'deleteClassRoom',
             "id": classRoomId,
         };
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
             onResponse: (result) => {
                 if (result.msg == '调用成功' || result.success == true) {
                     Toast.success('删除成功', 1);
-                    var arr = classBinding.state.selectData
-                    arr.forEach((v, i) => {
-                        if (v.id == classRoomId) {
-                            arr.splice(i, 1);
+                    _this.state.dataSource = [];
+                    _this.state.dataSource = new ListView.DataSource({
+                        rowHasChanged: (row1, row2) => row1 !== row2,
+                    });
+                    _this.initData.forEach(function (v, i) {
+                        if (classRoomId == v.id) {
+                            _this.initData.splice(i, 1);
                         }
-                    })
-                    classBinding.setState({selectData: arr})
+                    });
+                    _this.setState({
+                        dataSource: _this.state.dataSource.cloneWithRows(_this.initData)
+                    });
                 } else {
                     Toast.fail(result.msg)
                 }
+
             },
             onError: function (error) {
                 Toast.info('删除失败');
@@ -328,17 +311,20 @@ export default class classroomManage extends React.Component {
             return (<div>
                 {
                     <div className="classInfo">
-                        {/* <span className="delClassroom" onClick={this.delClassroom.bind(this,rowData.id)}>X</span> */}
+                        <span className="delClassroom" onClick={this.delClassroom.bind(this, rowData.id)}>X</span>
                         <div className="textOver">
-                        <span className="classroom">{rowData.name}</span>
-                        {
-                            rowData.defaultBindedClazz ? <span className="grade">{rowData.defaultBindedClazz.name}</span> : <span className="grade"></span>
-                        }
+                            <span className="classroom">{rowData.name}</span>
+                            {
+                                rowData.defaultBindedClazz ? <span className="grade">{rowData.defaultBindedClazz.name}</span> : <span className="grade"></span>
+                            }
                         </div>
-                        {/* <span className="creatTime">
-                            2018-8-8
-                        </span> */}
-                        <span className='calmCardUnbind' onClick={this.toUpdatePage.bind(this,rowData)}
+
+                        <span className="creatTime">
+                            {
+                                WebServiceUtil.formatYMD(rowData.createTime)
+                            }
+                        </span>
+                        <span className='calmCardUnbind' onClick={this.toUpdatePage.bind(this, rowData)}
                         >修改</span>
                     </div>
                 }
@@ -389,12 +375,7 @@ export default class classroomManage extends React.Component {
                                 value={this.state.classroomValue}
                             >教室名称<i className='redStar'>*</i></InputItem>
                         </div>
-                        <div className="bindGrade">
-                            <AgreeItem data-seed="logId" onChange={e => this.getbindGradeState(e)}>
-                                绑定班级
-                            </AgreeItem>
-                        </div>
-                        <div className='gradeName' style={{ display: "none" }}>
+                        <div className='gradeName'>
                             <InputItem
                                 placeholder="请输入班级名称"
                                 data-seed="logId"
@@ -402,23 +383,19 @@ export default class classroomManage extends React.Component {
                                 value={this.state.gradeNameValue}
                             >班级名称<i className='redStar'>*</i></InputItem>
                             <div id='stIcon' className='stIcon' onClick={this.searchClassroomName}>
-                                <img  src={require('../imgs/icon_search.png')}/>
+                                <img src={require('../imgs/icon_search.png')} />
                             </div>
-
-
                         </div>
+
                         <div className='chooseResult'
-                            style={{ display: this.state.chooseResultDiv }}>
+                            style={{ display: this.state.chooseResultDiv,height: this.state.calmHeight }}>
                             <List>
                                 {classBinding.state.searchData.map(i => (
-                                    <RadioItem key={i.id} checked={ classBinding.state.gradeNameValue === i.name}  onChange={() => this.onDataChange(i.name)}>
+                                    <RadioItem key={i.id} checked={classBinding.state.gradeNameValue === i.name} onChange={() => this.onDataChange(i.name, i.id)}>
                                         {i.name}
                                     </RadioItem>
                                 ))}
                             </List>
-
-
-
                         </div>
                     </List>
                     <div className="bottomBox">
