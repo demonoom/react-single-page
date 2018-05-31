@@ -135,7 +135,7 @@ export default class clazzDutyList extends React.Component {
         this.setState({isLoadingLeft: true, defaultPageNo: currentPageNo});
         var weekOfTody = new Date().getDay();
         weekOfTody = (weekOfTody == 0 ? 7 : weekOfTody);
-        this.getClassBrandStudentDutyList(this.state.uid, '', weekOfTody, this.state.defaultPageNo);
+        this.getClassBrandStudentDutyList(this.state.uid, '', weekOfTody, currentPageNo);
         // _this.getClassBrandStudentDutyList(_this.state.uid);
         this.setState({
             dataSource: this.state.dataSource.cloneWithRows(this.initData),
@@ -234,10 +234,10 @@ export default class clazzDutyList extends React.Component {
                         style={{
                             height: clazzDutyListBinding.state.clientHeight,
                         }}
-                        pullToRefresh={<PullToRefresh
+                        /*pullToRefresh={<PullToRefresh
                             onRefresh={this.onRefresh}
                             distanceToRefresh={80}
-                        />}
+                        />}*/
                     />
                 </div>
             </div>
