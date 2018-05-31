@@ -131,22 +131,22 @@ export default class classCardHomePageDoor extends React.Component {
         return (
             <div id="classCardHomePageDoor" style={{height: document.body.clientHeight}}>
                 <ul className="classCardHomePageDoor">
-                    <li onClick={this.turnToClassroomManage}><i className="icon icon_ClassroomManagement"></i>教室管理页面<i
+                    <li onClick={this.turnToClassroomManage}><i className="icon icon_ClassroomManagement"></i>教室管理<i
                         className="arrow_right"></i></li>
-                    <li onClick={this.turnToRingBinding}><i className="icon icon_bracelet"></i>手环绑定<i
+                    <li onClick={this.turnToRingBinding}><i className="icon icon_bracelet"></i>手环/班牌绑定管理<i
                         className="arrow_right"></i></li>
                     <li onClick={this.turnToCurriculumSchedule.bind(this, 1)}><i
-                        className="icon icon_course"></i>课程表列表<i className="arrow_right"></i></li>
+                        className="icon icon_course"></i>课程表管理<i className="arrow_right"></i></li>
+                    <li onClick={this.turnToNotifyBack}><i className="icon icon_notify"></i>通知管理<i
+                            className="arrow_right"></i></li>
                     {/*<li onClick={this.turnToCurriculumSchedule.bind(this, 2)}><i className="icon icon_publiCourse"></i>公共教室课程表<i className="arrow_right"></i></li>*/}
-                    <li onClick={this.turnToClassDemeanor.bind(this, 1)}><i className="icon icon_classDemeanor"></i>班级风采<i
+                    <li onClick={this.turnToClassDemeanor.bind(this, 1)}><i className="icon icon_classDemeanor"></i>班级风采管理<i
                         className="arrow_right"></i></li>
-                    <li onClick={this.turnToClassDemeanor.bind(this, 2)}><i className="icon icon_honor"></i>班级荣誉<i
+                    <li onClick={this.turnToClassDemeanor.bind(this, 2)}><i className="icon icon_honor"></i>班级荣誉管理<i
                         className="arrow_right"></i></li>
-                    <li onClick={this.turnToNotifyBack}><i className="icon icon_notify"></i>通知后台<i
+                    <li onClick={this.turnToStudentDutyList}><i className="icon icon_studentOnDuty"></i>班级值日表管理<i
                         className="arrow_right"></i></li>
-                    <li onClick={this.turnToStudentDutyList}><i className="icon icon_studentOnDuty"></i>班级值日表<i
-                        className="arrow_right"></i></li>
-                    <li onClick={this.turnToMoralEducation}><i className="icon icon_moralEducationScore"></i>德育评价<i
+                    <li onClick={this.turnToMoralEducation}><i className="icon icon_moralEducationScore"></i>德育评价管理<i
                         className="arrow_right"></i></li>
                 </ul>
             </div>
