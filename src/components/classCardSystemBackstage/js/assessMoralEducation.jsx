@@ -1,7 +1,6 @@
 import React from 'react';
 import {
     Toast,
-    InputItem,
     List,
     Radio,
     ListView,
@@ -23,7 +22,6 @@ const RadioItem = Radio.RadioItem;
 var assessME;
 
 export default class assessMoralEducation extends React.Component {
-
     constructor(props) {
         super(props);
         assessME = this;
@@ -35,25 +33,27 @@ export default class assessMoralEducation extends React.Component {
             dataSource: dataSource.cloneWithRows(this.initData),
             defaultPageNo: 1,
             clientHeight: document.body.clientHeight,
-            chooseResultDiv: 'none',
-            searchData: [],
             selectData: [],
             calmHeight: document.body.clientHeight - 150
         };
     }
 
 
-
-    componentDidMount() {
-        Bridge.setShareAble("false");
-        document.title = '德育教室信息列表';
+    componentWillMount() {
         var locationHref = window.location.href;
         var locationSearch = locationHref.substr(locationHref.indexOf("?") + 1);
         var clazzId = locationSearch.split("&")[0].split("=")[1];
+        var cName = locationSearch.split("&")[1].split("=")[1];
         assessME.setState({
-            "classId": clazzId
+            "classId": clazzId,
+            "cName": cName
         })
-        this.getMoralEducationInfoList(clazzId)
+
+    }
+    componentDidMount() {
+        Bridge.setShareAble("false");
+        document.title = `${decodeURI(assessME.state.cName)}`;
+        this.getMoralEducationInfoList(assessME.state.classId)
         //添加对视窗大小的监听,在屏幕转换以及键盘弹起时重设各项高度
         window.addEventListener('resize', assessME.onWindowResize)
     }
@@ -92,10 +92,8 @@ export default class assessMoralEducation extends React.Component {
             "clazzId": classId,
             "pageNo": PageNo,
         };
-        console.log("param", param)
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
             onResponse: function (result) {
-                console.log("assasa",result);
                 if (result.msg == '调用成功' && result.success == true) {
                     assessME.state.selectData = result.response
                     var arr = result.response;
@@ -119,7 +117,6 @@ export default class assessMoralEducation extends React.Component {
                         dataSource: _this.state.dataSource.cloneWithRows(_this.initData),
                         isLoadingLeft: isLoading,
                         refreshing: false,
-                        "cName":result.response[0].clazz.name
                     })
                 } else {
                     Toast.fail(result.msg, 1);
@@ -156,12 +153,11 @@ export default class assessMoralEducation extends React.Component {
         this.getMoralEducationInfoList(this.state.classId);
     }
 
-   
     /**
      * toUpdateMoralEducatio跳转修改页面
      */
     toUpdateMoralEducation(item) {
-        var url = WebServiceUtil.mobileServiceURL + "updateMoralEducation?id=" + item.id +"&name="+encodeURI(item.clazz.name);
+        var url = WebServiceUtil.mobileServiceURL + "updateMoralEducation?id=" + item.id + "&name=" + assessME.state.cName;
         var data = {
             method: 'openNewPage',
             url: url
@@ -175,42 +171,41 @@ export default class assessMoralEducation extends React.Component {
      * 根据ID删除德育信息
      */
     delMoralEducation(id) {
-            var _this = this;
-            var param = {
-                "method": 'deleteMoralEducation',
-                "id": id,
-            };
-            WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
-                onResponse: (result) => {
-                    if (result.msg == '调用成功' || result.success == true) {
-                        Toast.success('删除成功', 1);
-                        _this.state.dataSource = [];
-                        _this.state.dataSource = new ListView.DataSource({
-                            rowHasChanged: (row1, row2) => row1 !== row2,
-                        });
-                        _this.initData.forEach(function (v, i) {
-                            if (id == v.id) {
-                                _this.initData.splice(i, 1);
-                            }
-                        });
-                        _this.setState({
-                            dataSource: _this.state.dataSource.cloneWithRows(_this.initData)
-                        });
-                    } else {
-                        Toast.fail(result.msg)
-                    }
-    
-                },
-                onError: function (error) {
-                    Toast.info('删除失败');
+        var _this = this;
+        var param = {
+            "method": 'deleteMoralEducation',
+            "id": id,
+        };
+        WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
+            onResponse: (result) => {
+                if (result.msg == '调用成功' || result.success == true) {
+                    Toast.success('删除成功', 1);
+                    _this.state.dataSource = [];
+                    _this.state.dataSource = new ListView.DataSource({
+                        rowHasChanged: (row1, row2) => row1 !== row2,
+                    });
+                    _this.initData.forEach(function (v, i) {
+                        if (id == v.id) {
+                            _this.initData.splice(i, 1);
+                        }
+                    });
+                    _this.setState({
+                        dataSource: _this.state.dataSource.cloneWithRows(_this.initData)
+                    });
+                } else {
+                    Toast.fail(result.msg)
                 }
-            });
+            },
+            onError: function (error) {
+                Toast.info('删除失败');
+            }
+        });
     }
     /**
      * searchClassroomName搜索班级的名称
      */
     toaddMoralEducation() {
-        var url = WebServiceUtil.mobileServiceURL + "addMoralEducation?classId="+assessME.state.classId;
+        var url = WebServiceUtil.mobileServiceURL + "addMoralEducation?classId=" + assessME.state.classId+ "&name=" + assessME.state.cName;
         var data = {
             method: 'openNewPage',
             url: url
@@ -224,17 +219,23 @@ export default class assessMoralEducation extends React.Component {
         var _this = this;
         const row = (rowData, sectionID, rowID) => {
             return (<div>
-                 
                 {
                     <div className="classInfo">
-                        <div className="textOver">
-                            <span className="healthScore">{rowData.health}</span>
-                            <span className="politenessScore">{rowData.politeness}</span>
-                            <span className="createTime">{WebServiceUtil.formatYMD(rowData.createTime)}</span>
+                        <div className="topDiv">
+                            <div className="fl">
+                                <span>班级卫生评分</span>
+                                <span className="healthScore">{rowData.health}</span>分
+                            </div>
+                            <div className="fr">
+                                <span>班级礼貌评分</span>
+                                <span className="politenessScore">{rowData.politeness}</span>分
+                            </div>
                         </div>
-
-                        <span className='calmCardUnbind' onClick={this.toUpdateMoralEducation.bind(this, rowData)}>修改</span>
-                        <span className='' onClick={this.delMoralEducation.bind(this, rowData.id)}>删除</span>
+                        <div className="btnDiv">
+                            <span className="createTime">{WebServiceUtil.formatYMD(rowData.createTime)}</span>
+                            <span className='modifyBtn_common' onClick={this.toUpdateMoralEducation.bind(this, rowData)}></span>
+                            <span className='deleteBtn_common' onClick={this.delMoralEducation.bind(this, rowData.id)}></span>
+                        </div>
                     </div>
                 }
             </div>
@@ -242,8 +243,7 @@ export default class assessMoralEducation extends React.Component {
             )
         };
         return (
-            <div id="classroomManage" style={{ height: assessME.state.clientHeight }}>
-                <div>{assessME.state.cName}</div>
+            <div id="assessMoralEducation" style={{ height: assessME.state.clientHeight }}>
                 <div className='tableDiv' style={{ height: assessME.state.clientHeight }}>
                     {/*这是列表数据,包括添加按钮*/}
                     <ListView
@@ -270,16 +270,7 @@ export default class assessMoralEducation extends React.Component {
                             distanceToRefresh={80}
                         />}
                     />
-                    <div className='addCourseButton'>
-                        <WhiteSpace size="lg" />
-                        <WingBlank>
-                            <Button type="warning" onClick={this.binding}>提交</Button>
-                        </WingBlank>
-                    </div>
-                    {/* <div className='addBunton' onClick={this.toaddMoralEducation}>
-                        <img src={require("../imgs/addBtn.png")} />
-                    </div> */}
-                     <div className='addBunton' onClick={this.toaddMoralEducation}>
+                    <div className='addBunton' onClick={this.toaddMoralEducation}>
                         <img src={require("../imgs/addBtn.png")} />
                     </div>
                 </div>
