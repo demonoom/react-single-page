@@ -119,7 +119,6 @@ export default class studentDutyList extends React.Component {
      */
     delConfirm = (dutyId) => {
         var _this = this;
-        Modal.className = 'sss',
             alert('确定要删除值日表吗?', '', [
                 {text: '取消', onPress: () => console.log('cancel')},
                 {text: '确定', onPress: () => _this.delStudentDuty(dutyId)},
