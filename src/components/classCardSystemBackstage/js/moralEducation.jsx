@@ -69,7 +69,6 @@ export default class moralEducation extends React.Component {
         };
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
             onResponse: function (result) {
-                console.log("result", result);
                 if (result.msg == '调用成功' && result.success == true) {
                     moralEd.setState({
                         searchData: result.response

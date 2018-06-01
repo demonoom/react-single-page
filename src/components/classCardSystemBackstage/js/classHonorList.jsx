@@ -34,7 +34,6 @@ export default class classHonorList extends React.Component {
         };
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
             onResponse: function (result) {
-                console.log(result.response);
                 if (result.msg == '调用成功' || result.success == true) {
                     if (WebServiceUtil.isEmpty(result.response) == false) {
                         _this.setState({
@@ -70,7 +69,6 @@ export default class classHonorList extends React.Component {
     render() {
         let items = [];
         let item = this.state.listData;
-        console.log(item);
         for (var k in item) {
             items.push(<li className="am-list-item am-list-item-middle" onClick={this.toClassDetail.bind(this, item[k].id,item[k].name,item[k].grade.name)}>
                 <div className="am-list-line">

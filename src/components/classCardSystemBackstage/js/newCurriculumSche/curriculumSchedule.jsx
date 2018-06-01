@@ -30,10 +30,11 @@ export default class curriculumSchedule extends React.Component {
         var classTableName = locationSearch.split("&")[2].split('=')[1];
         this.setState({clazzroomId, classTableId, classTableName})
         this.viewCourseTableItemPage(classTableId)
+        document.title = classTableName;
     }
 
     componentDidMount() {
-        document.title = '班级课程表';
+
     }
 
     viewCourseTableItemPage(id) {
@@ -138,9 +139,9 @@ export default class curriculumSchedule extends React.Component {
         var _this = this;
         return (
             <div id="curriculumSchedule" style={{height: document.body.clientHeight}}>
-                <List className="my-list">
-                    <Item>{this.state.classTableName}</Item>
-                </List>
+                {/*<List className="my-list">*/}
+                    {/*<Item>{this.state.classTableName}</Item>*/}
+                {/*</List>*/}
                 <WhiteSpace size="lg"/>
                 <div className="curriculum_cont cont_communal">
                     {this.state.classTableArray.map((v, i) => {
@@ -149,7 +150,7 @@ export default class curriculumSchedule extends React.Component {
                         var courseList = v.courseList
                         if (courseList.length == 0) {
                             return <li>
-                                <div  className="color_6">{weekStr}</div>
+                                <div className="color_6">{weekStr}</div>
                                 <div className="no_curriculum">无课</div>
                             </li>
                         } else {
@@ -175,7 +176,8 @@ export default class curriculumSchedule extends React.Component {
                                                     style={{width: 'calc(50% - 20px)'}}>老师：{v.teacher.userName}</span>
                                                 </div>
                                                 <div className="list_high list lineList textOver">
-                                                    <span className="text_hidden text_cont3 color_8">年级：{v.clazz.name}</span>
+                                                    <span
+                                                        className="text_hidden text_cont3 color_8">年级：{v.clazz.name}</span>
                                                 </div>
                                             </div>
                                         })

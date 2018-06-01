@@ -34,7 +34,6 @@ export default class classDemeanorList extends React.Component {
         };
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
             onResponse: function (result) {
-                console.log(result.response);
                 if (result.msg == '调用成功' || result.success == true) {
                     if (WebServiceUtil.isEmpty(result.response) == false) {
                         _this.setState({
@@ -51,7 +50,6 @@ export default class classDemeanorList extends React.Component {
 
 
     toClassDetail(id,name,gradeName) {
-        // console.log(event);
         let url;
         if (id) {
             url = encodeURI(WebServiceUtil.mobileServiceURL + "classDemeanor?ident=" + id +"&className="+gradeName+''+name);
