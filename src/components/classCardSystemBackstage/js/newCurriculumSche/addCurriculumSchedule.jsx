@@ -107,7 +107,7 @@ export default class addCurriculumSchedule extends React.Component {
         this.state.ClassTableDataArr.forEach(function (v, i) {
             classArray.push({
                 "courseName": v.clazzName,
-                "index": i + 1,
+                // "index": i + 1,
                 "teacherId": v.teacherId,
                 "openTime": v.startTimeData,
                 "closeTime": v.endTimeData,
@@ -117,8 +117,11 @@ export default class addCurriculumSchedule extends React.Component {
         })
         param.cti.scheduleList = classArray;
 
+        console.log(param);
+
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
             onResponse: function (result) {
+                console.log(result);
                 if (result.msg == '调用成功' || result.success == true) {
                     Toast.success('成功');
                     //关闭当前窗口，并刷新上一个页面
@@ -304,7 +307,8 @@ export default class addCurriculumSchedule extends React.Component {
         var ClassTableArr = [];
         this.state.ClassTableDataArr.forEach(function (v, i) {
             ClassTableArr.push(<div>
-                <div className="cont_communal add_title font_gray">第{i + 1}节</div>
+                {/*<div className="cont_communal add_title font_gray">第{i + 1}节</div>*/}
+                <WhiteSpace size="lg"/>
                 {/*日期*/}
                 <div className="flex_container my_flex teacher_list teacher_list_p">
                     <DatePicker

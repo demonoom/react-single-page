@@ -1,5 +1,5 @@
 import React from 'react';
-import {List, WhiteSpace, Toast, Modal,Button} from 'antd-mobile';
+import {List, WhiteSpace, Toast, Modal, Button} from 'antd-mobile';
 import '../../css/newCurriculumSche/curriculumSchedule.less'
 
 var cSchedule;
@@ -87,7 +87,7 @@ export default class curriculumSchedule extends React.Component {
     /**
      * 删除弹出框
      */
-    showAlert = (sId) => {
+    showAlert = (sId, week) => {
         var phoneType = navigator.userAgent;
         var phone;
         if (phoneType.indexOf('iPhone') > -1 || phoneType.indexOf('iPad') > -1) {
@@ -98,14 +98,14 @@ export default class curriculumSchedule extends React.Component {
         var _this = this;
         const alertInstance = alert('删除', '您确定要删除该课表项吗?', [
             {text: '取消', onPress: () => console.log('cancel'), style: 'default'},
-            {text: '确定', onPress: () => _this.delSchedule(sId)},
+            {text: '确定', onPress: () => _this.delSchedule(sId, week)},
         ], phone);
     };
 
     /**
      * 根据ID删除课表
      */
-    delSchedule(sId) {
+    delSchedule(sId, week) {
         var _this = this;
         var param = {
             "method": 'deleteCourseTableItem',
@@ -116,11 +116,13 @@ export default class curriculumSchedule extends React.Component {
                 if (result.msg == '调用成功' || result.success == true) {
                     Toast.success('删除成功', 1);
                     var arr = cSchedule.state.classTableArray
-                    arr.forEach((v, i) => {
-                        if (v.id == sId) {
-                            arr.splice(i, 1);
+                    for (var k in arr) {
+                        for (var i = 0; i < arr[k].courseList.length; i++) {
+                            if (arr[k].courseList[i].id == sId) {
+                                arr[k].courseList.splice(i, 1)
+                            }
                         }
-                    })
+                    }
                     cSchedule.setState({classTableArray: arr})
                 } else {
                     Toast.fail(result.msg)
@@ -133,7 +135,7 @@ export default class curriculumSchedule extends React.Component {
     }
 
     render() {
-        var pickerTip = "班级";
+        var _this = this;
         return (
             <div id="curriculumSchedule" style={{height: document.body.clientHeight}}>
                 <List className="my-list">
@@ -142,23 +144,46 @@ export default class curriculumSchedule extends React.Component {
                 <WhiteSpace size="lg"/>
                 <div className="curriculum_cont cont_communal">
                     {this.state.classTableArray.map((v, i) => {
-                        return <li>
-                            <div className="add_title">
-                                <span className="font_gray">第{v.index}节</span>
-                                <Button className="modifyBtn_common" type="primary" size="small" onClick={this.turnToUpdatePage.bind(this, v)}></Button>
-                                <Button type="primary" size="small" className="btn_del deleteBtn_common" onClick={this.showAlert.bind(this, v.id)}></Button>
-                            </div>
-                            <div className="list_high list lineList textOver">
-                                <span className="text_hidden" style={{width:'50%'}}>{this.state.weekData[v.week - 1].label}</span><span className="text_hidden" style={{width:'calc(50% - 20px)'}}>{v.openTime + '-' + v.closeTime}</span>
-                            </div>
-                            <div className="list_high list textOver">
-                                <span className="text_hidden" style={{width:'50%'}}>课程：{v.courseName}</span><span className="text_hidden" style={{width:'calc(50% - 20px)'}}>老师：{v.teacher.userName}</span>
-                            </div>
-
-                            <div className="list_high list lineList textOver" style={{'padding-bottom':'5px'}}>
-                                <span className="text_hidden text_cont3">年级：{v.clazz.name}</span>
-                            </div>
-                        </li>
+                        var week = v.week;
+                        var weekStr = v.weekStr;
+                        var courseList = v.courseList
+                        if (courseList.length == 0) {
+                            return <li>
+                                <div>{weekStr}</div>
+                                <div>无课</div>
+                            </li>
+                        } else {
+                            return <li>
+                                <div>{weekStr}</div>
+                                <div>
+                                    {
+                                        courseList.map(function (v, i) {
+                                            return <div>
+                                                <div className="add_title">
+                                                    <span className="text_hidden"
+                                                          style={{width: 'calc(50% - 20px)'}}>{v.openTime + '-' + v.closeTime}</span>
+                                                    <Button className="modifyBtn_common" type="primary" size="small"
+                                                            onClick={_this.turnToUpdatePage.bind(_this, v)}></Button>
+                                                    <Button type="primary" size="small"
+                                                            className="btn_del deleteBtn_common"
+                                                            onClick={_this.showAlert.bind(_this, v.id, week)}></Button>
+                                                </div>
+                                                <div className="list_high list textOver">
+                                                    <span className="text_hidden"
+                                                          style={{width: '50%'}}>课程：{v.courseName}</span><span
+                                                    className="text_hidden"
+                                                    style={{width: 'calc(50% - 20px)'}}>老师：{v.teacher.userName}</span>
+                                                </div>
+                                                <div className="list_high list lineList textOver"
+                                                     style={{'padding-bottom': '5px'}}>
+                                                    <span className="text_hidden text_cont3">年级：{v.clazz.name}</span>
+                                                </div>
+                                            </div>
+                                        })
+                                    }
+                                </div>
+                            </li>
+                        }
                     })}
                 </div>
                 <div className='addBunton' onClick={this.addSchedule}>
