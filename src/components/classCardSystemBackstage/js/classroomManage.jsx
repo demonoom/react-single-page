@@ -91,7 +91,6 @@ export default class classroomManage extends React.Component {
         };
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
             onResponse: function (result) {
-                console.log("viewClassRoomPage",result)
                 if (result.msg == '调用成功' && result.success == true) {
                     classBinding.state.selectData = result.response
                     var arr = result.response;
@@ -198,7 +197,6 @@ export default class classroomManage extends React.Component {
         }
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
             onResponse: function (result) {
-                console.log("addClassRoom",result)
                 if (result.msg == '调用成功' && result.success == true) {
                     $('.tableDiv').show("fast");
                     _this.state.gradeNameValue = '';
@@ -257,7 +255,7 @@ export default class classroomManage extends React.Component {
      * @param {*} id 
      */
     toUpdatePage(id) {
-        var url = WebServiceUtil.mobileServiceURL + "updateClassroom" + "?classId=" + id.id + "&access_user=23836";
+        var url = WebServiceUtil.mobileServiceURL + "updateClassroom" + "?classId=" + id.id + "&uid="+classBinding.state.uid;
         var data = {
             method: 'openNewPage',
             url: url
@@ -371,6 +369,9 @@ export default class classroomManage extends React.Component {
                     <div className="classInfo">
                         <div className="textOver">
                             <span className="classroom">{rowData.name}</span>
+                        </div>
+                        <div className="">
+                            <span>{rowData.building.name}</span>
                         </div>
                         <div className="textOver">
                             {
