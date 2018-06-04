@@ -1,3 +1,4 @@
+(node) util.print is deprecated. Use console.log instead.
 #addCurriculumSchedule {
   overflow-y: auto;
   /*创建动画*/
@@ -90,7 +91,7 @@
 }
 #addCurriculumSchedule .teacher_list div:first-child,
 #addCurriculumSchedule .teacher_list div:nth-child(2) {
-  width: 30%;
+  width: 50%;
 }
 #addCurriculumSchedule .teacher_list div:nth-child(3) {
   width: 40%;

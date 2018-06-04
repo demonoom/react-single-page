@@ -290,7 +290,7 @@ const studentDutyList = (location, cb) => {
 
 const clazzDutyList = (location, cb) => {
     require.ensure([], require => {
-            cb(null, require("./components/classCardSystemBackstage/js/clazzDutyList?access_user=23836").default)
+            cb(null, require("./components/classCardSystemBackstage/js/clazzDutyList").default)
         }
     )
 }
@@ -412,6 +412,14 @@ const classHonorList = (location, cb) => {
     )
 }
 
+const particlePath = (location, cb) => {
+    require.ensure([], require => {
+            cb(null, require("./components/particlePath/js/particlePath").default)
+
+        }
+    )
+}
+
 import './index.less';
 
 class Index extends React.Component {
@@ -482,11 +490,11 @@ class Index extends React.Component {
                     {/*to="/moralEducation?ident=23836"*/}
                     {/*style={{fontSize: '24px'}}>德育评价</Link></li>*/}
                     <li><Link
-                        to="/classCardHomePage?clazzId=580&roomId=2&mac=02:00:00:00:00:00"
+                        to="/classCardHomePage?clazzId=819&roomId=1&mac=14:1f:78:73:1e:c3"
                         style={{fontSize: '24px'}}>班牌首页</Link></li>
-                    <li><Link
-                        to="/publicClassCardHomePage?roomId=2&mac=02:00:00:00:00:00"
-                        style={{fontSize: '24px'}}>公共教室班牌首页</Link></li>
+                    {/*<li><Link*/}
+                        {/*to="/publicClassCardHomePage?roomId=2&mac=02:00:00:00:00:00"*/}
+                        {/*style={{fontSize: '24px'}}>公共教室班牌首页</Link></li>*/}
                     {/*<li><Link*/}
                     {/*to="/notifyBack?access_user=23836"*/}
                     {/*style={{fontSize: '24px'}}>通知后台</Link></li>*/}
@@ -514,6 +522,9 @@ class Index extends React.Component {
                     {/*<li><Link*/}
                     {/*to="/studentSelectCourse?access_user=23852"*/}
                     {/*style={{fontSize: '24px'}}>学生选课系统</Link></li>*/}
+                    {/*<li><Link*/}
+                    {/*to="/particlePath"*/}
+                    {/*style={{fontSize: '24px'}}>运动轨迹</Link></li>*/}
                 </ul>
             </div>
         );
@@ -596,6 +607,7 @@ ReactDOM.render(
             <Route path="classDemeanorList" getComponent={classDemeanorList}/>
             <Route path="classHonorList" getComponent={classHonorList}/>
             <Route path="clazzDutyList" getComponent={clazzDutyList}/>
+            <Route path="particlePath" getComponent={particlePath}/>
         </Route>
     </Router>
     ,

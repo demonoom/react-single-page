@@ -111,7 +111,7 @@ export default class updateCurriculumSchedule extends React.Component {
                     var array = []
                     array.push(result.response.week + '')
                     var arra = []
-                    arra.push(result.response.index + '')
+                    // arra.push(result.response.index + '')
                     var arr = [
                         {
                             startTimeData: result.response.openTime,
@@ -143,10 +143,10 @@ export default class updateCurriculumSchedule extends React.Component {
             Toast.fail('请选择星期');
             return
         }
-        if (this.state.indexAsyncValue.length == 0) {
-            Toast.fail('请选择课时');
-            return
-        }
+        // if (this.state.indexAsyncValue.length == 0) {
+        //     Toast.fail('请选择课时');
+        //     return
+        // }
         if (this.state.ClassTableDataArr.length == 0) {
             Toast.fail('课表不能为空');
             return
@@ -165,7 +165,7 @@ export default class updateCurriculumSchedule extends React.Component {
                 "tableId": this.state.classTableId,
                 "week": this.state.asyncValue[0],
                 "roomId": this.state.clazzroomId,
-                "index": this.state.indexAsyncValue[0],
+                // "index": this.state.indexAsyncValue[0],
                 "openTime": this.state.ClassTableDataArr[0].startTimeData,
                 "closeTime": this.state.ClassTableDataArr[0].endTimeData,
                 "classId": this.state.ClassTableDataArr[0].classId,
@@ -389,6 +389,7 @@ export default class updateCurriculumSchedule extends React.Component {
                 {/*搜索老师*/}
                 <div className="search_list my_flex">
                     <input type="text"
+                           style={{'margin-left':'-8px'}}
                            onChange={teacherV.teacgerChange.bind(this, i)}
                            placeholder="请输入老师姓名"
                            value={teacherV.state.ClassTableDataArr[i].tercherName}
@@ -398,6 +399,7 @@ export default class updateCurriculumSchedule extends React.Component {
                 {/*搜索班级*/}
                 <div className="search_list my_flex">
                     <input type="text"
+                           style={{'margin-left':'-8px'}}
                            onChange={teacherV.classChange.bind(this, i)}
                            placeholder="请输入上课班级"
                            value={teacherV.state.ClassTableDataArr[i].className}
@@ -416,7 +418,8 @@ export default class updateCurriculumSchedule extends React.Component {
                 {/*输入备注*/}
                 <div className="flex_container my_flex flex_addElement">
                     <TextareaItem
-                        rows={2}
+                        rows={1}
+                        style={{'margin-left':'-8px'}}
                         className="add_element"
                         placeholder="添加备注"
                         labelNumber={2}
@@ -495,17 +498,17 @@ export default class updateCurriculumSchedule extends React.Component {
                     >
                         <List.Item arrow="horizontal">选择星期</List.Item>
                     </Picker>
-                    <WhiteSpace size="lg"/>
-                    {/*选择课时*/}
-                    <Picker
-                        data={this.state.indexData}
-                        cols={1}
-                        value={this.state.indexAsyncValue}
-                        onPickerChange={this.onIndexPickerChange}
-                        onOk={this.onIndexPickerChange}
-                    >
-                        <List.Item arrow="horizontal">选择课时</List.Item>
-                    </Picker>
+                    {/*<WhiteSpace size="lg"/>*/}
+                    {/*/!*选择课时*!/*/}
+                    {/*<Picker*/}
+                        {/*data={this.state.indexData}*/}
+                        {/*cols={1}*/}
+                        {/*value={this.state.indexAsyncValue}*/}
+                        {/*onPickerChange={this.onIndexPickerChange}*/}
+                        {/*onOk={this.onIndexPickerChange}*/}
+                    {/*>*/}
+                        {/*<List.Item arrow="horizontal">选择课时</List.Item>*/}
+                    {/*</Picker>*/}
                     {/*累加部分*/}
                     <div className='CourseTableArea'>
                         {

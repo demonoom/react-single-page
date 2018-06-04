@@ -4,7 +4,8 @@ import {
     Modal,
     Toast,
     Switch,
-    List
+    List,
+    Button
 } from 'antd-mobile';
 import {createForm} from 'rc-form';
 
@@ -337,32 +338,44 @@ export default class getClassTableList extends React.Component {
             let SwitchExample = (props) => {
                 const {getFieldProps} = props.form;
                 return (
-                    <List>
-                        <List.Item
-                            extra={<Switch
-                                {...getFieldProps('Switch8', {
-                                    initialValue: rowData.status == 3 ? false : true,
-                                    valuePropName: 'checked',
-                                })}
-                                platform="ios"
-                                color="#f55045"
-                                onClick={(checked) => {
-                                    _this.changeStatus(checked, rowData)
-                                }}
-                            />}
-                        >开启状态</List.Item>
-                    </List>
+                    <div className="amList_cont">
+                        <List className="amList">
+                            <List.Item
+                                extra={<Switch
+                                    {...getFieldProps('Switch8', {
+                                        initialValue: rowData.status == 3 ? false : true,
+                                        valuePropName: 'checked',
+                                    })}
+                                    platform="ios"
+                                    color="#4dd865"
+                                    onClick={(checked) => {
+                                        _this.changeStatus(checked, rowData)
+                                    }}
+                                />}
+                            >开启状态：</List.Item>
+                        </List>
+                        <Button className="modifyBtn_common" type="primary" size="small" onClick={this.changeTableName.bind(this, rowData)}></Button>
+                        <Button type="primary" size="small" className="btn_del deleteBtn_common"  onClick={this.showAlert.bind(this, rowData)}></Button>
+                    </div>
                 );
             };
             SwitchExample = createForm()(SwitchExample);
 
             return (
-                <div>
-                    <div className="classInfo" onClick={this.turnToClassTableDetil.bind(this, rowData)}>
-                        <span className="classroom">{rowData.name}</span>
-                        <span className="classroom">创建时间:{rowData.createTime}</span>
-                        <span onClick={this.changeTableName.bind(this, rowData)}>修改</span>
-                        <span onClick={this.showAlert.bind(this, rowData)}>删除</span>
+                <div className="classInfo">
+                    <div onClick={this.turnToClassTableDetil.bind(this, rowData)}>
+                        <div className="am-list-item am-list-item-middle">
+                            <div className="am-list-line">
+                                <div className="am-list-content">{rowData.name}</div>
+                                <div className="am-list-arrow am-list-arrow-horizontal"></div>
+                            </div>
+                        </div>
+                        <div className="tableListDate textOver">
+                            <span className="classroom">创建时间：{rowData.createTime}</span>
+                        </div>
+
+                        {/*/!*Button<Button className="modifyBtn_common" type="primary" size="small" onClick={this.changeTableName.bind(this, rowData)}></Button>
+                        <Button type="primary" size="small" className="btn_del deleteBtn_common" onClick={this.showAlert.bind(this, rowData)}></Button>*!/*/}
                     </div>
                     <SwitchExample/>
                 </div>
@@ -371,8 +384,8 @@ export default class getClassTableList extends React.Component {
         return (
             <div id="getClassTableList" style={{height: classBinding.state.clientHeight}}>
                 <div className='tableDiv' style={{height: classBinding.state.clientHeight}}>
-                    <div>
-                        <span onClick={this.creatNewTable}>新建</span>
+                    <div className='addBunton' onClick={this.creatNewTable}>
+                        <img src={require("../../imgs/addBtn.png")} />
                     </div>
                     {/*这是列表数据,包括添加按钮*/}
                     <ListView

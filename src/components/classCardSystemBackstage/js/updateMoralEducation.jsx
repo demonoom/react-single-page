@@ -36,17 +36,20 @@ export default class updateMoralEducation extends React.Component {
         })
         window.addEventListener('resize', updateMoralEdu.onWindowResize)
     }
+
     componentDidMount() {
         document.title = `${decodeURI(updateMoralEdu.state.cName)}`;
         this.findMoralEducationById(updateMoralEdu.state.id)
     }
+
     componentWillUnmount() {
         //解除监听
         window.removeEventListener('resize', updateMoralEdu.onWindowResize)
     }
+
     /**
-        * 视窗改变时改变高度
-        */
+     * 视窗改变时改变高度
+     */
     onWindowResize() {
         setTimeout(function () {
             updateMoralEdu.setState({
@@ -54,9 +57,10 @@ export default class updateMoralEducation extends React.Component {
             });
         }, 100)
     }
+
     /**
-   * 查看对应教室ID的德育信息
-   */
+     * 查看对应教室ID的德育信息
+     */
     findMoralEducationById(id) {
         var _this = this;
 
@@ -81,23 +85,28 @@ export default class updateMoralEducation extends React.Component {
             }
         });
     }
+
     /**
      * 提交新增的德育项
      */
     addMoralEducationTableItem = () => {
-        if (updateMoralEdu.state.politeness.trim() == '') {
+
+        var politeness = updateMoralEdu.state.politeness + ''
+        var health = updateMoralEdu.state.health + ''
+
+        if (politeness.trim().length == 0) {
             Toast.fail('请填写礼貌评分')
             return
         }
-        if (updateMoralEdu.state.politeness.trim() > 100 || updateMoralEdu.state.politeness.trim() < 0) {
+        if (politeness.trim() > 100 || politeness.trim() < 0) {
             Toast.fail('请填写有效的礼貌评分')
             return
         }
-        if (updateMoralEdu.state.health.trim() == '') {
+        if (health.trim().length == 0) {
             Toast.fail('请填写健康评分')
             return
         }
-        if (updateMoralEdu.state.health.trim() > 100 || updateMoralEdu.state.health.trim() < 0) {
+        if (health.trim() > 100 || health.trim() < 0) {
             Toast.fail('请填写有效的健康评分')
             return
         }
@@ -105,8 +114,8 @@ export default class updateMoralEducation extends React.Component {
             "method": "updateMoralEducation",
             "moralEducationJson": {
                 "id": updateMoralEdu.state.id,
-                "health": updateMoralEdu.state.health,
-                "politeness": updateMoralEdu.state.politeness
+                "health": health,
+                "politeness": politeness
             }
         }
 
@@ -130,21 +139,21 @@ export default class updateMoralEducation extends React.Component {
     }
 
 
-
     render() {
-        const CustomChildren = ({ extra, onClick, children }) => (
+        const CustomChildren = ({extra, onClick, children}) => (
             <div className="am-list-item am-list-item-middle"
-                onClick={onClick}
+                 onClick={onClick}
             >
                 <div className="am-list-line">
                     <div className="am-list-content">{children}<i className="redStar">*</i></div>
-                    <span className="choiceData am-list-extra" style={{ float: 'right', color: '#888' }}>{extra}</span><div className="am-list-arrow am-list-arrow-horizontal"></div>
+                    <span className="choiceData am-list-extra" style={{float: 'right', color: '#888'}}>{extra}</span>
+                    <div className="am-list-arrow am-list-arrow-horizontal"></div>
                 </div>
             </div>
 
         );
         return (
-            <div id="addMoralEducation" style={{ height:updateMoralEdu.state.clientHeight }}>
+            <div id="addMoralEducation" style={{height: updateMoralEdu.state.clientHeight}}>
                 {/*选择班级*/}
                 {/* <Picker
                     data={this.state.classData}
@@ -173,35 +182,39 @@ export default class updateMoralEducation extends React.Component {
                     {/* <List.Item arrow="horizontal">选择日期<i className="redStar">*</i></List.Item> 
                 </DatePicker>
                 <WhiteSpace size="lg"/> */}
-                <div className='CourseTableArea'>
+                    <div className='CourseTableArea'>
                     <div className="classSearchResultInfo">
-                        <List>
-                            <InputItem
-                                className="politeValue"
-                                clear
-                                placeholder="请输入分数"
-                                value={updateMoralEdu.state.politeness}
-                                onChange={v => { updateMoralEdu.setState({ "politeness": v }) }}
-                                ref={el => this.autoFocusInst = el}
-                            >班级礼貌评分</InputItem>
-                            <InputItem
-                                className="healthValue"
-                                clear
-                                placeholder="请输入分数"
-                                value={updateMoralEdu.state.health}
-                                onChange={v => { updateMoralEdu.setState({ "health": v }) }}
-                                ref={el => this.autoFocusInst = el}
-                            >班级健康评分</InputItem>
-                        </List>
+                    <List>
+                    <InputItem
+                    className="politeValue"
+                    clear
+                    placeholder="请输入分数"
+                    value={updateMoralEdu.state.politeness}
+                    onChange={v => {
+                    updateMoralEdu.setState({"politeness": v})
+                }}
+                    ref={el => this.autoFocusInst = el}
+                    >班级礼貌评分</InputItem>
+                    <InputItem
+                    className="healthValue"
+                    clear
+                    placeholder="请输入分数"
+                    value={updateMoralEdu.state.health}
+                    onChange={v => {
+                    updateMoralEdu.setState({"health": v})
+                }}
+                    ref={el => this.autoFocusInst = el}
+                    >班级健康评分</InputItem>
+                    </List>
                     </div>
-                </div>
-                <div className='addCourseButton'>
+                    </div>
+                    <div className='addCourseButton'>
                     <WhiteSpace size="lg" />
                     <WingBlank>
-                        <Button type="warning" onClick={this.addMoralEducationTableItem}>提交</Button>
+                    <Button type="warning" onClick={this.addMoralEducationTableItem}>提交</Button>
                     </WingBlank>
-                </div>
-            </div>
-        );
-    }
-}
+                    </div>
+                    </div>
+                    );
+                    }
+                }

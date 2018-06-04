@@ -110,7 +110,7 @@ export default class moralEducation extends React.Component {
                             return <div className="am-list-item am-list-item-middle" onClick={this.toAssessMoralE.bind(this, v)}>
                                 <div className="am-list-line">
                                     <div className="am-list-content">{v.name}</div>
-                                    <span className="choiceData am-list-extra" style={{ float: 'right', color: '#888' }}></span><div className="am-list-arrow am-list-arrow-horizontal"></div>
+                                    <div className="am-list-arrow am-list-arrow-horizontal"></div>
                                 </div>
                             </div>
                         })
