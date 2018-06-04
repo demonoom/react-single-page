@@ -194,6 +194,12 @@ const classroomManage = (location, cb) => {
     })
 }
 
+const addTeachBuild = (location, cb) => {
+    require.ensure([], require => {
+        cb(null, require("./components/classCardSystemBackstage/js/addTeachBuild").default)
+    })
+}
+
 const addCurriculumSchedule = (location, cb) => {
     require.ensure([], require => {
         cb(null, require("./components/classCardSystemBackstage/js/addCurriculumSchedule").default)
@@ -577,6 +583,7 @@ ReactDOM.render(
             <Route path="workAttendance" getComponent={workAttendance}/>
             <Route path="noticeReadMore" getComponent={noticeReadMore}/>
             <Route path="classroomManage" getComponent={classroomManage}/>
+            <Route path="addTeachBuild" getComponent={addTeachBuild} />
             <Route path="workAttendance" getComponent={workAttendance}/>
             <Route path="noticeReadMore" getComponent={noticeReadMore}/>
             <Route path="addCurriculumSchedule" getComponent={addCurriculumSchedule}/>

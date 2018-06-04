@@ -184,7 +184,7 @@
   font-size: 16px;
 }
 #classroomManage .addModel .chooseResult {
-  height: 300px;
+  max-height: 200px;
   overflow: auto;
 }
 #classroomManage .addModel .close {

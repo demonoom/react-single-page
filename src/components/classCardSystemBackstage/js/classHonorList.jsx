@@ -29,8 +29,9 @@ export default class classHonorList extends React.Component {
     getClazzesByUserId(ident) {
         var _this = this;
         var param = {
-            "method": 'getClazzesByUserId',
-            "userId": ident
+            "method": 'searchClazz',
+            "aid": ident,
+            "keyWord": "",
         };
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
             onResponse: function (result) {
@@ -43,16 +44,16 @@ export default class classHonorList extends React.Component {
                 }
             },
             onError: function (error) {
-                // message.error(error);
+                message.error(error);
             }
         });
     }
 
 
-    toClassDetail(id,name,gradeName) {
+    toClassDetail(id,name) {
         let url;
         if (id) {
-            url = encodeURI(WebServiceUtil.mobileServiceURL + "classHonor?ident=" + id+"&className="+gradeName+''+name);
+            url = encodeURI(WebServiceUtil.mobileServiceURL + "classHonor?ident=" + id+"&className="+name);
         } else {
 
         }
@@ -65,15 +66,14 @@ export default class classHonorList extends React.Component {
         });
     }
 
-
     render() {
         let items = [];
         let item = this.state.listData;
         for (var k in item) {
-            items.push(<li className="am-list-item am-list-item-middle" onClick={this.toClassDetail.bind(this, item[k].id,item[k].name,item[k].grade.name)}>
+            items.push(<li className="am-list-item am-list-item-middle" onClick={this.toClassDetail.bind(this, item[k].id,item[k].name)}>
                 <div className="am-list-line">
                     <div className="am-list-content">
-                        {item[k].grade.name}{item[k].name}
+                        {item[k].name}
                     </div>
                     <div className="am-list-extra">
                         <span className='classDetail'></span>
