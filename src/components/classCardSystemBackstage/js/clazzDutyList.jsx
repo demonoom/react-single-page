@@ -91,7 +91,6 @@ export default class clazzDutyList extends React.Component {
         };
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
             onResponse: function (result) {
-                console.log(result.response);
                 if (result.msg == '调用成功' && result.success == true) {
                     clazzDutyListBinding.state.selectData = result.response
                     var arr = result.response;
@@ -178,14 +177,11 @@ export default class clazzDutyList extends React.Component {
     render() {
         var _this = this;
         const row = (rowData, sectionID, rowID) => {
-            console.log("rowData:"+rowData);
             var users = rowData.users;
             var clazzDutyUserList=[];
             if(WebServiceUtil.isEmpty(users)==false){
                 users.forEach(function (user) {
                     var userName = user.userName;
-                    console.log("userName:"+userName)
-                    // var userAvatar = user.avatar;
                     var userTag = <span className="text_hidden">{userName}</span>;
                     clazzDutyUserList.push(userTag);
                 });
@@ -193,16 +189,12 @@ export default class clazzDutyList extends React.Component {
             return (<div>
                 {
                     <div className="classInfo">
-                        {/* <span className="delClassroom" onClick={this.delClassroom.bind(this,rowData.id)}>X</span> */}
                         <div className="am-list-item am-list-item-middle" onClick={_this.turnToClazzDetail.bind(_this,rowData.clazz)}>
                             <div className="am-list-line">
                                 <div className="am-list-content">{(rowData.clazz.grade==undefined?'':rowData.clazz.grade.name)+""+rowData.clazz.name}</div>
                                 <span className="choiceData am-list-extra" style={{ float: 'right', color: '#888' }}>查看所有</span><div className="am-list-arrow am-list-arrow-horizontal"></div>
                             </div>
                         </div>
-                        {/* <span className="creatTime">
-                            2018-8-8
-                        </span> */}
                         <div className="today_duty">今日值日</div>
                         <div className="today_dutylist">{clazzDutyUserList.length==0?<div className="no_data">暂无今日值日表</div>:clazzDutyUserList}</div>
                     </div>
