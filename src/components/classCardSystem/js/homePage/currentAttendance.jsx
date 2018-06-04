@@ -91,7 +91,6 @@ export default class currentAttendance extends React.Component {
         var param = {
             "method": 'getBraceletAttend',
             "cid": data.classTableId
-            // "cid": 3
         };
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
             onResponse: function (result) {
