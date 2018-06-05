@@ -12,11 +12,11 @@
   border: none;
 }
 #curriculumSchedule .curriculum_cont {
-  overflow: auto;
-  height: calc(100% - 59px);
+  overflow-y: auto;
+  overflow-x: hidden;
+  height: 100%;
 }
 #curriculumSchedule .curriculum_cont li {
-  border-bottom: 1px solid #eee;
   padding: 10px 0;
 }
 #curriculumSchedule .curriculum_cont li div.list span {
