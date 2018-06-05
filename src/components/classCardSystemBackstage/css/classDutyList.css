@@ -1,3 +1,4 @@
+(node) util.print is deprecated. Use console.log instead.
 #classDutyList {
   overflow-x: hidden;
   overflow-y: auto;
@@ -58,7 +59,6 @@
 #classDutyList .tableDiv .classInfo {
   position: relative;
   padding-top: 10px;
-  border-bottom: 1px #eee solid;
   line-height: 24px;
 }
 #classDutyList .tableDiv .classInfo .textOver {
