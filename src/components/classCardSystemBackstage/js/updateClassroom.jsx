@@ -8,7 +8,7 @@ import {
     PullToRefresh,
     Checkbox, Flex
 } from 'antd-mobile';
-import '../css/updateClassroom.less'
+
 import { ucs2 } from 'punycode';
 
 const RadioItem = Radio.RadioItem;
@@ -222,9 +222,9 @@ export default class updateClassroom extends React.Component {
     render() {
         var _this = this;
         return (
-            <div id="updateClassroom" style={{ height: updateCM.state.clientHeight }}>
+            <div id="classroomManage" style={{ height: updateCM.state.clientHeight }}>
                 <div className='addModel' style={{ height: updateCM.state.clientHeight }}>
-                    <div className="mainCont">
+                    <div className="mainCont updateRoom">
                         <WhiteSpace size="lg" />
                         <List>
                             <div className='classroomName'>
@@ -303,7 +303,7 @@ export default class updateClassroom extends React.Component {
 
                         </List>
                     </div>
-                    <div className="bottomBox submitBtn">
+                    <div className="bottomBox submitBtn updateSubmit">
                         <span className="bind" onClick={this.binding}>提 交</span>
                     </div>
                 </div>

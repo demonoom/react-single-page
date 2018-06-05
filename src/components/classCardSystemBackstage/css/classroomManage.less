@@ -284,6 +284,9 @@
     .mainCont{
       height: calc(~"100% - 62px");
       overflow-y: auto;
+      &.updateRoom{
+        height: calc(~"100% - 77px");
+      }
     }
     .bottomBox {
       display: flex;
@@ -291,6 +294,15 @@
       left:0;
       bottom: 0;
       width: 100%;
+      &.updateSubmit{
+        bottom: 15px;
+        span{
+          font-size: 18px;
+          padding: 0;
+          line-height: 47px;
+          height: 47px;
+        }
+      }
       span {
         flex: 1;
         text-align: center;

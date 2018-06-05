@@ -257,12 +257,24 @@
   height: calc(100% - 62px);
   overflow-y: auto;
 }
+#classroomManage .addModel .mainCont.updateRoom {
+  height: calc(100% - 77px);
+}
 #classroomManage .addModel .bottomBox {
   display: flex;
   position: absolute;
   left: 0;
   bottom: 0;
   width: 100%;
+}
+#classroomManage .addModel .bottomBox.updateSubmit {
+  bottom: 15px;
+}
+#classroomManage .addModel .bottomBox.updateSubmit span {
+  font-size: 18px;
+  padding: 0;
+  line-height: 47px;
+  height: 47px;
 }
 #classroomManage .addModel .bottomBox span {
   flex: 1;
