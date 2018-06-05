@@ -6,6 +6,13 @@
     display: block;
 
   }
+  .redStar{
+    color: red;
+    font-size: 22px;
+    position: absolute;
+    right: 2px;
+    top: 2px;
+  }
   .am-button-small{
     background-color: #fff;
     height: 44px;
@@ -235,14 +242,6 @@
     .classroomName,
     .gradeName {
       position: relative;
-      .redStar{
-        color: red;
-        font-size: 22px;
-        position: absolute;
-        right: 2px;
-        top: 2px;
-
-      }
       .stIcon {
         width: 18px;
         height: 28px;
@@ -255,7 +254,33 @@
         }
       }
     }
+    .chooseResult{
+      background: #e4e4e4;
+      .cont{
+        overflow: hidden;
+        border-bottom: 1px #d5d5d5 solid;
+        padding: 1.5rem 15px;
+        color: #666;
+        line-height: 22px;
+        button{
+          -webkit-appearance: none;
+          background: #F56A55;
+          border: 0;
+          color: #fff;
+          padding: 3px 12px;
+          font-size: 14px;
+          -webkit-border-radius: 3px;
+          -moz-border-radius: 3px;
+          border-radius: 3px;
+          float: right;
+        }
+      }
 
+    }
+    .mainCont{
+      height: calc(~"100% - 62px");
+      overflow-y: hidden;
+    }
     .bottomBox {
       display: flex;
       position: absolute;

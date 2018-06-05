@@ -1,4 +1,3 @@
-(node) util.print is deprecated. Use console.log instead.
 #classroomManage {
   font-size: 17px;
 }
@@ -7,6 +6,13 @@
   white-space: nowrap;
   text-overflow: ellipsis;
   display: block;
+}
+#classroomManage .redStar {
+  color: red;
+  font-size: 22px;
+  position: absolute;
+  right: 2px;
+  top: 2px;
 }
 #classroomManage .am-button-small {
   background-color: #fff;
@@ -210,14 +216,6 @@
 #classroomManage .addModel .gradeName {
   position: relative;
 }
-#classroomManage .addModel .classroomName .redStar,
-#classroomManage .addModel .gradeName .redStar {
-  color: red;
-  font-size: 22px;
-  position: absolute;
-  right: 2px;
-  top: 2px;
-}
 #classroomManage .addModel .classroomName .stIcon,
 #classroomManage .addModel .gradeName .stIcon {
   width: 18px;
@@ -230,6 +228,32 @@
 #classroomManage .addModel .classroomName .stIcon img,
 #classroomManage .addModel .gradeName .stIcon img {
   width: 100%;
+}
+#classroomManage .addModel .chooseResult {
+  background: #e4e4e4;
+}
+#classroomManage .addModel .chooseResult .cont {
+  overflow: hidden;
+  border-bottom: 1px #d5d5d5 solid;
+  padding: 1.5rem 15px;
+  color: #666;
+  line-height: 22px;
+}
+#classroomManage .addModel .chooseResult .cont button {
+  -webkit-appearance: none;
+  background: #F56A55;
+  border: 0;
+  color: #fff;
+  padding: 3px 12px;
+  font-size: 14px;
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  border-radius: 3px;
+  float: right;
+}
+#classroomManage .addModel .mainCont {
+  height: calc(100% - 62px);
+  overflow-y: hidden;
 }
 #classroomManage .addModel .bottomBox {
   display: flex;
