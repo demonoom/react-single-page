@@ -465,9 +465,6 @@ class Index extends React.Component {
                     {/*to="/m3u8Player?path=http://p6ckz6030.bkt.clouddn.com/recordings/z1.maaee.24827/1524474964_1524476205.m3u8&_k=vdcr12"*/}
                     {/*style={{fontSize: '24px'}}>m3u8Player</Link></li>*/}
                     {/*<li><Link*/}
-                    {/*to="/m3u8Player?path=http://bpic.588ku.com/video_listen/588ku_video/18/04/17/17/03/11/video5ad5b84f167d6.mp4"*/}
-                    {/*style={{fontSize: '24px'}}>m3u8Player</Link></li>*/}
-                    {/*<li><Link*/}
                     {/*to="/HomeWorkUnderstandAnalysisGuideByNoom?ident=23836"*/}
                     {/*style={{fontSize: '24px'}}>作业表情分析NOOM</Link></li>*/}
                     {/*<li><Link*/}
@@ -501,8 +498,8 @@ class Index extends React.Component {
                         to="/classCardHomePage?clazzId=819&roomId=1&mac=14:1f:78:73:1e:c3"
                         style={{fontSize: '24px'}}>班牌首页</Link></li>
                     {/*<li><Link*/}
-                        {/*to="/publicClassCardHomePage?roomId=2&mac=02:00:00:00:00:00"*/}
-                        {/*style={{fontSize: '24px'}}>公共教室班牌首页</Link></li>*/}
+                    {/*to="/publicClassCardHomePage?roomId=2&mac=02:00:00:00:00:00"*/}
+                    {/*style={{fontSize: '24px'}}>公共教室班牌首页</Link></li>*/}
                     {/*<li><Link*/}
                     {/*to="/notifyBack?access_user=23836"*/}
                     {/*style={{fontSize: '24px'}}>通知后台</Link></li>*/}
@@ -525,8 +522,8 @@ class Index extends React.Component {
                         to="/classCardHomePageDoor?access_user=23836"
                         style={{fontSize: '24px'}}>后台总入口</Link></li>
                     {/*<li><Link*/}
-                        {/*to="/fileAnalysis?aid=590961"*/}
-                        {/*style={{fontSize: '24px'}}>文件表情分析</Link></li>*/}
+                    {/*to="/fileAnalysis?aid=590961"*/}
+                    {/*style={{fontSize: '24px'}}>文件表情分析</Link></li>*/}
                     {/*<li><Link*/}
                     {/*to="/studentSelectCourse?access_user=23852"*/}
                     {/*style={{fontSize: '24px'}}>学生选课系统</Link></li>*/}
@@ -534,7 +531,7 @@ class Index extends React.Component {
                     {/*to="/particlePath"*/}
                     {/*style={{fontSize: '24px'}}>运动轨迹</Link></li>*/}
                     <li><Link
-                        to="/studentMovement"
+                        to="/studentMovement?access_user=23836"
                         style={{fontSize: '24px'}}>学生轨迹热力</Link></li>
                 </ul>
             </div>
@@ -583,7 +580,7 @@ ReactDOM.render(
             <Route path="workAttendance" getComponent={workAttendance}/>
             <Route path="noticeReadMore" getComponent={noticeReadMore}/>
             <Route path="classroomManage" getComponent={classroomManage}/>
-            <Route path="addTeachBuild" getComponent={addTeachBuild} />
+            <Route path="addTeachBuild" getComponent={addTeachBuild}/>
             <Route path="workAttendance" getComponent={workAttendance}/>
             <Route path="noticeReadMore" getComponent={noticeReadMore}/>
             <Route path="addCurriculumSchedule" getComponent={addCurriculumSchedule}/>

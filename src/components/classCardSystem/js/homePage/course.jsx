@@ -29,7 +29,7 @@ export default class course extends React.Component {
             if (roomId == nextProps.messageUtilObj.data.classroomId) {
                 this.setState({data: null})
             }
-        } else if (nextProps.messageUtilObj.command == 'braceletBoxConnect' && WebServiceUtil.isEmpty(nextProps.messageUtilObj.data) == false) {
+        } else if (nextProps.messageUtilObj.command == 'braceletBoxConnect' && WebServiceUtil.isEmpty(nextProps.messageUtilObj.data.classTableId) == false) {
             //重连开课
             if (roomId == nextProps.messageUtilObj.data.classroomId) {
                 this.viewCourseTableItem(nextProps.messageUtilObj.data)
