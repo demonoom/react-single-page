@@ -370,13 +370,12 @@ export default class classroomManage extends React.Component {
                         <div className="textOver">
                             <span className="classroom">{rowData.name}</span>
                         </div>
-                        <div className="">
-                            <span>{rowData.building.name}</span>
-                        </div>
+
                         <div className="textOver">
                             {
                                 rowData.defaultBindedClazz ? <span className="grade">{rowData.defaultBindedClazz.name}</span> : <span className="grade"></span>
                             }
+                            <span className="floor">{rowData.building.name}</span>
                         </div>
                         <div className="div_creatTime">
                             <span className="creatTime">
@@ -486,10 +485,9 @@ export default class classroomManage extends React.Component {
                                 >教学楼名称<i className='redStar'>*</i></InputItem>
                             </div>
                             <div className='chooseResult'
-                                style={{ display: "block", height: 220 }}>
+                                style={{ display: "block"}}>
                                 <div className="cont">
-                                    <span>教学楼名称列表</span>
-                                    <button onClick={this.toAddTeachBuild}>新增</button>
+                                    <div onClick={this.toAddTeachBuild}>新增教学楼名称</div>
                                 </div>
                                 <List>
                                     {classBinding.state.teachBuildData.map(i => (
