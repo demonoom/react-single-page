@@ -1,4 +1,3 @@
-(node) util.print is deprecated. Use console.log instead.
 #addCurriculumSchedule {
   overflow-y: auto;
   /*创建动画*/
@@ -13,6 +12,10 @@
   margin-top: 1.07rem;
   margin-left: 1.07rem;
   margin-bottom: 1.07rem;
+}
+#addCurriculumSchedule .CourseTableArea .am-list-item .am-input-control input,
+#addCurriculumSchedule .CourseTableArea .am-textarea-control textarea {
+  color: #333;
 }
 #addCurriculumSchedule .addCourseButton {
   position: absolute;
@@ -110,6 +113,7 @@
   border: none;
   text-indent: 8px;
   font-size: 17px;
+  color: #333;
 }
 #addCurriculumSchedule .search_list input::-webkit-input-placeholder {
   color: #bbbbbe;

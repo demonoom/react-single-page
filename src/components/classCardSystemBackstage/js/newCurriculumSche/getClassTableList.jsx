@@ -362,7 +362,7 @@ export default class getClassTableList extends React.Component {
             SwitchExample = createForm()(SwitchExample);
 
             return (
-                <div className="classInfo">
+                <div className="classInfo line_public">
                     <div onClick={this.turnToClassTableDetil.bind(this, rowData)}>
                         <div className="am-list-item am-list-item-middle">
                             <div className="am-list-line">

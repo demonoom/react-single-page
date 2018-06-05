@@ -72,7 +72,6 @@
     .classInfo{
       position: relative;
       padding: 15px 15px 2px 15px;
-      border-bottom: 1px #f4f4f4 solid;
       line-height: 24px;
       .textOver{
         width: 100%;
@@ -81,7 +80,7 @@
       }
     }
     .classroom{
-      color:#000;
+      color:#333;
     }
     .grade{
       color: #a9a9a9;
@@ -284,6 +283,9 @@
     .mainCont{
       height: calc(~"100% - 62px");
       overflow-y: auto;
+      &.updateRoom{
+        height: calc(~"100% - 77px");
+      }
     }
     .bottomBox {
       display: flex;
@@ -291,6 +293,18 @@
       left:0;
       bottom: 0;
       width: 100%;
+      &.updateSubmit{
+        bottom: 15px;
+        span{
+          font-size: 18px;
+          padding: 0;
+          line-height: 47px;
+          height: 47px;
+          -webkit-border-radius: 2px;
+          -moz-border-radius: 2px;
+          border-radius: 2px;
+        }
+      }
       span {
         flex: 1;
         text-align: center;
