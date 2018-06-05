@@ -179,6 +179,7 @@ export default class clazzDutyList extends React.Component {
     render() {
         var _this = this;
         const row = (rowData, sectionID, rowID) => {
+            console.log(rowData)
             var users = rowData.users;
             var clazzDutyUserList = [];
             if (WebServiceUtil.isEmpty(users) == false) {
@@ -193,7 +194,7 @@ export default class clazzDutyList extends React.Component {
                     <div className="classInfo line_public">
                         <div className="am-list-item am-list-item-middle" onClick={_this.turnToClazzDetail.bind(_this,rowData.clazz)}>
                             <div className="am-list-line">
-                                <div className="am-list-content">{(rowData.clazz.grade==undefined?'':rowData.clazz.grade.name)+""+rowData.clazz.name}</div>
+                                <div className="am-list-content">{(rowData.clazz.name)}</div>
                                 <span className="choiceData am-list-extra" style={{ float: 'right', color: '#888', 'font-size':'14px' }}>查看所有</span><div className="am-list-arrow am-list-arrow-horizontal"></div>
                             </div>
                         </div>

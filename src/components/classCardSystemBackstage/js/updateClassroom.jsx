@@ -285,7 +285,6 @@ export default class updateClassroom extends React.Component {
                             value: v.id, label: v.name
                         })
                     })
-                    
                     if(flag) {
                         updateCM.viewClassRoom(updateCM.state.classIdBynoom,arr)
                     } else {
