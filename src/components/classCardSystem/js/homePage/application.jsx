@@ -31,6 +31,16 @@ export default class application extends React.Component {
         });
     }
 
+    intoNFC() {
+        var data = {
+            method: 'gotoNFCbyKK',
+        };
+
+        Bridge.callHandler(data, null, function (error) {
+
+        });
+    }
+
     render() {
         return (
             <div id="application" className="application_height home_card">
@@ -39,6 +49,10 @@ export default class application extends React.Component {
                     <li className="app_list" onClick={this.intoApplication}>
                         <div className="app_list_img"><span className="task"></span></div>
                         <div className="app_list_text text_hidden">蚁巢作业</div>
+                    </li>
+                    <li className="app_list" onClick={this.intoNFC}>
+                        <div className="app_list_img"><span className="task"></span></div>
+                        <div className="app_list_text text_hidden">NFC</div>
                     </li>
                 </div>
             </div>
