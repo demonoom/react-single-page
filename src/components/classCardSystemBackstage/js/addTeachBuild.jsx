@@ -10,6 +10,7 @@ export default class addTeachBuild extends React.Component {
         }
     }
     componentDidMount() {
+        document.title = '添加教学楼页面';
         var locationHref = window.location.href;
         var locationSearch = locationHref.substr(locationHref.indexOf("?") + 1);
         var uid = locationSearch.split("&")[0].split("=")[1];
