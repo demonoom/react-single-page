@@ -420,6 +420,14 @@ const particlePath = (location, cb) => {
     )
 }
 
+const studentMovement = (location, cb) => {
+    require.ensure([], require => {
+            cb(null, require("./components/charts/heatmap/js/studentMovement").default)
+
+        }
+    )
+}
+
 import './index.less';
 
 class Index extends React.Component {
@@ -517,14 +525,17 @@ class Index extends React.Component {
                         to="/classCardHomePageDoor?access_user=23836"
                         style={{fontSize: '24px'}}>后台总入口</Link></li>
                     {/*<li><Link*/}
-                    {/*to="/fileAnalysis?aid=590961"*/}
-                    {/*style={{fontSize: '24px'}}>文件表情分析</Link></li>*/}
+                        {/*to="/fileAnalysis?aid=590961"*/}
+                        {/*style={{fontSize: '24px'}}>文件表情分析</Link></li>*/}
                     {/*<li><Link*/}
                     {/*to="/studentSelectCourse?access_user=23852"*/}
                     {/*style={{fontSize: '24px'}}>学生选课系统</Link></li>*/}
                     {/*<li><Link*/}
                     {/*to="/particlePath"*/}
                     {/*style={{fontSize: '24px'}}>运动轨迹</Link></li>*/}
+                    <li><Link
+                        to="/studentMovement"
+                        style={{fontSize: '24px'}}>学生轨迹热力</Link></li>
                 </ul>
             </div>
         );
@@ -608,6 +619,7 @@ ReactDOM.render(
             <Route path="classHonorList" getComponent={classHonorList}/>
             <Route path="clazzDutyList" getComponent={clazzDutyList}/>
             <Route path="particlePath" getComponent={particlePath}/>
+            <Route path="studentMovement" getComponent={studentMovement}/>
         </Route>
     </Router>
     ,

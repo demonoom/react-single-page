@@ -24,7 +24,8 @@ export default class updateClassroom extends React.Component {
             chooseResultDiv: 'none',
             searchData: [],
             selectData: [],
-            calmHeight: document.body.clientHeight - 190 
+            calmHeight: document.body.clientHeight - 190,
+            teachBuildData: []
         };
     }
 
@@ -39,8 +40,10 @@ export default class updateClassroom extends React.Component {
         var locationHref = window.location.href;
         var locationSearch = locationHref.substr(locationHref.indexOf("?") + 1);
         var classIdBynoom = locationSearch.split("&")[0].split("=")[1];
+        var uid = locationSearch.split("&")[1].split("=")[1];
         this.viewClassRoom(classIdBynoom);
         this.setState({ classIdBynoom });
+        this.viewSchoolBuildingPage(uid);
     }
 
     componentDidMount() {
@@ -73,10 +76,14 @@ export default class updateClassroom extends React.Component {
                     var roomName = clazzRoom.name;
                     var gradeName = clazzRoom.defaultBindedClazz.name;
                     var defaultId = clazzRoom.defaultBindedClazz.id;
+                    var teachBuildValue = clazzRoom.building.name;
+                    var buildingId = clazzRoom.building.id;
                     _this.setState({
                         'classroomValue': roomName,
                         "gradeNameValue": gradeName,
-                        "classId":defaultId
+                        "classId": defaultId,
+                        "teachBuildValue": teachBuildValue,
+                        "buildingId": buildingId
                     });
                 } else {
                     Toast.fail(result.msg, 1);
@@ -92,7 +99,7 @@ export default class updateClassroom extends React.Component {
      */
     onWindowResize() {
         setTimeout(function () {
-            updateCM.setState({ clientHeight: document.body.clientHeight,calmHeight: document.body.clientHeight - 190  });
+            updateCM.setState({ clientHeight: document.body.clientHeight, calmHeight: document.body.clientHeight - 190 });
         }, 100)
     }
     /**
@@ -103,12 +110,12 @@ export default class updateClassroom extends React.Component {
         var param = {
             "method": 'searchClazz',
             "aid": updateCM.state.uid,
-            "keyWord":updateCM.state.gradeNameValue,
+            "keyWord": updateCM.state.gradeNameValue,
         };
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
             onResponse: function (result) {
                 if (result.msg == '调用成功' && result.success == true) {
-                    if(result.response.length === 0){
+                    if (result.response.length === 0) {
                         Toast.info('没有查找到该班级');
                     }
                     updateCM.setState({
@@ -134,15 +141,29 @@ export default class updateClassroom extends React.Component {
             Toast.fail('请填写教室名称和班级名称', )
             return
         }
-        var param = {
-            "method": 'updateClassRoom',
-            "cr": {
-                "creatorId": updateCM.state.uid,
-                "name": updateCM.state.classroomValue,
-                "classId": updateCM.state.classId,
-                "id": updateCM.state.classIdBynoom
-            }
-        };
+        var param;
+        if (updateCM.state.buildingId) {
+            param = {
+                "method": 'updateClassRoom',
+                "cr": {
+                    "creatorId": updateCM.state.uid,
+                    "name": updateCM.state.classroomValue,
+                    "classId": updateCM.state.classId,
+                    "id": updateCM.state.classIdBynoom,
+                    "buildingId": updateCM.state.buildingId
+                }
+            };
+        } else {
+            param = {
+                "method": 'updateClassRoom',
+                "cr": {
+                    "creatorId": updateCM.state.uid,
+                    "name": updateCM.state.classroomValue,
+                    "classId": updateCM.state.classId,
+                    "id": updateCM.state.classIdBynoom
+                }
+            };
+        }
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
             onResponse: function (result) {
                 if (result.msg == '调用成功' && result.success == true) {
@@ -168,21 +189,52 @@ export default class updateClassroom extends React.Component {
         });
 
     }
-
+    teachBuildDataChange = (value, id) => {
+        updateCM.setState({
+            teachBuildValue: value,
+            "buildingId": id
+        })
+    }
+     /**
+        * 查看教学楼列表
+        */
+       viewSchoolBuildingPage = (uid) => {
+        var param = {
+            "method": 'viewSchoolBuildingPage',
+            "uid": uid,
+            "pn": -1,
+        };
+        WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
+            onResponse: function (result) {
+                if (result.msg == '调用成功' && result.success == true) {
+                    updateCM.setState({
+                        "teachBuildData":result.response,
+                    })
+                } else {
+                    Toast.fail(result.msg, 1);
+                }
+            },
+            onError: function (error) {
+                Toast.info(error);
+            }
+        });
+    }
     render() {
         var _this = this;
         return (
             <div id="updateClassroom" style={{ height: updateCM.state.clientHeight }}>
                 <div className='addModel' style={{ height: updateCM.state.clientHeight }}>
-                <WhiteSpace size="lg" />
+                    <WhiteSpace size="lg" />
                     <List>
                         <div className='classroomName'>
                             <InputItem
                                 placeholder="请输入教室名称"
                                 data-seed="logId"
-                                onChange={v => {updateCM.setState({
-                                    "classroomValue":v
-                                })}}
+                                onChange={v => {
+                                    updateCM.setState({
+                                        "classroomValue": v
+                                    })
+                                }}
                                 value={this.state.classroomValue}
                             >教室名称<i className='redStar'>*</i></InputItem>
                         </div>
@@ -193,8 +245,8 @@ export default class updateClassroom extends React.Component {
                                 data-seed="logId"
                                 onChange={v => {
                                     updateCM.setState({
-                                        "gradeNameValue":v,
-                                        "classId":""
+                                        "gradeNameValue": v,
+                                        "classId": ""
                                     })
                                 }}
                                 value={this.state.gradeNameValue}
@@ -204,7 +256,7 @@ export default class updateClassroom extends React.Component {
                             </div>
                         </div>
                         <div className='chooseResult'
-                            style={{ display: this.state.chooseResultDiv,height: this.state.calmHeight  }}>
+                            style={{ display: this.state.chooseResultDiv }}>
                             <List>
                                 {updateCM.state.searchData.map(i => (
                                     <RadioItem key={i.id} checked={updateCM.state.gradeNameValue === i.name} onChange={() => this.onDataChange(i.name, i.id)}>
@@ -213,6 +265,41 @@ export default class updateClassroom extends React.Component {
                                 ))}
                             </List>
                         </div>
+                        {
+                            updateCM.state.buildingId ?
+                                <div>
+                                    <div className='teachBuild'>
+                                        <InputItem
+                                            placeholder="请选择对应教学楼"
+                                            data-seed="logId"
+                                            disabled="false"
+                                            onChange={v => {
+                                                updateCM.setState({
+                                                    "teachBuildValue": v
+                                                })
+                                            }}
+                                            value={this.state.teachBuildValue}
+                                        >教学楼名称<i className='redStar'>*</i></InputItem>
+                                    </div>
+                                    <div className='chooseResult'
+                                        style={{ display: "block", height: 220 }}>
+                                        <div>
+                                            <span>教学楼名称列表</span>
+                                            <button onClick={this.toAddTeachBuild}>新增</button>
+                                        </div>
+                                        <List>
+                                            {updateCM.state.teachBuildData.map(i => (
+                                                <RadioItem key={i.id} checked={updateCM.state.teachBuildValue === i.name} onChange={() => this.teachBuildDataChange(i.name, i.id)}>
+                                                    {i.name}
+                                                </RadioItem>
+                                            ))}
+                                        </List>
+                                    </div>
+                                </div>
+                                :
+                                <div></div>
+                        }
+
                     </List>
                     <div className="bottomBox submitBtn">
                         <span className="bind" onClick={this.binding}>提 交</span>
