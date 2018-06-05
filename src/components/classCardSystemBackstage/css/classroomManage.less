@@ -6,6 +6,22 @@
     display: block;
 
   }
+  .redStar{
+    color: red;
+    font-size: 22px;
+    position: absolute;
+    right: 2px;
+    top: 2px;
+  }
+  .am-button-small{
+    background-color: #fff;
+    height: 44px;
+    line-height: 44px;
+    border: none !important;
+    &:before{
+      border: 0;
+    }
+  }
   .whiteBack{
     background-color: #fff;
   }
@@ -17,12 +33,16 @@
     /*height: calc(~"100% - 70px");*/
     height: 100%;
     overflow-y: auto;
+    width: 100%;
   }
   .am-pull-to-refresh-indicator {
     font-size: 1rem !important;
   }
   .am-list-body{
     border: 0;
+    &::before{
+      background: none;
+    }
   }
   font-size: 17px;
 
@@ -51,11 +71,11 @@
     }
     .classInfo{
       position: relative;
-      padding: 15px 15px;
+      padding: 15px 15px 2px 15px;
       border-bottom: 1px #f4f4f4 solid;
       line-height: 24px;
       .textOver{
-        width: calc(~"100% - 70px");
+        width: 100%;
         color: #a9a9a9;
         font-size: 16px;
       }
@@ -65,8 +85,14 @@
     }
     .grade{
       color: #a9a9a9;
-      padding-left: 10px;
       font-size: 15px;
+      display: inline-block;
+      margin-top: 8px;
+    }
+    .floor{
+      color: #73B6F5;
+      font-size: 14px;
+      padding-left: 10px;
     }
     .noomCardUnbind {
       color: #ff144e;
@@ -74,13 +100,37 @@
     .liName {
       font-size: 30px;
     }
+    .delClassroom{
+      font-size: 14px;
+      color: #F56A55;
+      margin-left: 20px;
+      //background: url("../imgs/delPic.png") no-repeat;
+      //width: 18px;
+      //height: 18px;
+      //position: absolute;
+      //right: 15px;
+      //top:50px;
+      //background-size: 100%;
+      border: 1px #F56A55 solid;
+      border-radius: 2px;
+      position: absolute;
+      //right: 15px;
+      //top: 45px;
+      right: 15px;
+      top: 46px;
+      line-height: 22px;
+      padding: 0 14px;
+      box-sizing: border-box;
+    }
+    .creatTime{
+      margin-right: 20px;
+      font-size: 15px;
+      color: #a9a9a9;
+      display: inline-block;
+    }
   }
   .addModel {
     box-sizing: border-box;
-    padding: 20px 0px;
-    // display: flex;
-    // flex-direction: column;
-    // background-color: #fff;
     position: relative;
     .bindGrade{
       padding: 4px 0;
@@ -115,15 +165,17 @@
             .am-list-line {
               padding: 0 20px;
               .am-list-content {
-                font-size: 17px;
-                padding: 1.5rem 1.5rem;
-                border-bottom: 1px solid #d5d5d5;
+                font-size: 15px;
+                padding: 1rem 1rem;
+                border-top: 1px solid #d5d5d5;
                 color: #676767;
+
                 .am-list-brief {
                   font-size: 1.4rem;
                   color: #a2a2a2;
                 }
               }
+
               .am-list-extra {
                 .am-radio.am-radio-checked {
                   height: 100%;
@@ -134,6 +186,9 @@
 
                 }
               }
+            }
+            &:first-child .am-list-content{
+              border-top: none;
             }
           }
         }
@@ -165,19 +220,20 @@
               overflow: hidden;
               white-space: nowrap;
               text-overflow: ellipsis;
+              font-size: 16px;
             }
           }
         }
       }
     }
     .chooseResult {
-      height: 300px;
+      max-height: 200px;
       overflow: auto;
     }
     .close {
       font-size: 1.5em;
       background: #fff;
-      color: #e94f4f;
+      color: #F56A55;
     }
     > h1 {
       margin-bottom: 50px;
@@ -196,27 +252,39 @@
     .classroomName,
     .gradeName {
       position: relative;
-      .redStar{
-        color: red;
-        font-size: 22px;
-        position: absolute;
-        right: 2px;
-        top: 2px;
-
-      }
       .stIcon {
-        width: 18px;
-        height: 28px;
+        width: 15px;
+        height: 19px;
         position: absolute;
         right: 15px;
         top: 50%;
-        margin-top: -12px;
+        -webkit-transform: translateY(-50%);
+        -moz-transform: translateY(-50%);
+        -ms-transform: translateY(-50%);
+        -o-transform: translateY(-50%);
+        transform: translateY(-50%);
         img{
           width:100%
         }
       }
     }
+    .chooseResult{
+      background: #e4e4e4;
+      .cont{
+        overflow: hidden;
+        border-bottom: 1px #d5d5d5 solid;
+        margin: 0 1rem;
+        color: #666;
+        line-height: 22px;
+        padding: 1rem;
+        font-size: 15px;
+      }
 
+    }
+    .mainCont{
+      height: calc(~"100% - 62px");
+      overflow-y: auto;
+    }
     .bottomBox {
       display: flex;
       position: absolute;
@@ -231,15 +299,19 @@
         display: inline-block;
       }
       .bind {
-        background: #e94f4f;
+        background: #F56A55;
         color: #fff;
         &:active{
           color: rgba(255, 255, 255, 0.3);
-          background-color: #d24747;
+          background-color: #F56A55;
         }
       }
 
     }
 
+  }
+  .div_creatTime{
+    height: 44px;
+    line-height: 44px;
   }
 }

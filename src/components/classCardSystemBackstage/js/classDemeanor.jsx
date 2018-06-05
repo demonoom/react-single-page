@@ -1,8 +1,9 @@
 import React from 'react';
-import {Picker, List, WhiteSpace, WingBlank, Button, Toast} from 'antd-mobile';
+import {Picker, List, WhiteSpace, WingBlank, Button, Toast,Modal} from 'antd-mobile';
 import '../css/classDemeanor.less'
 
 var demeanor;
+const alert = Modal.alert;
 
 export default class classDemeanor extends React.Component {
 
@@ -11,71 +12,19 @@ export default class classDemeanor extends React.Component {
         demeanor = this;
         this.state = {
             data: [],
-            asyncValue: [],
             imgFromAndArr: [],
             imgArr: [],
         };
     }
 
     componentDidMount() {
-        document.title = '班级风采';
-        var locationHref = window.location.href;
+        var locationHref = decodeURI(window.location.href);
         var locationSearch = locationHref.substr(locationHref.indexOf("?") + 1);
         var ident = locationSearch.split("&")[0].split('=')[1];
-        this.getClazzesByUserId(ident)
-    }
-
-    /**
-     * 获取此用户所在班级
-     */
-    getClazzesByUserId(ident) {
-        var _this = this;
-        var param = {
-            "method": 'getClazzesByUserId',
-            "userId": ident
-        };
-        WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
-            onResponse: function (result) {
-                if (result.msg == '调用成功' || result.success == true) {
-                    if (WebServiceUtil.isEmpty(result.response) == false) {
-                        var arr = [];
-                        var defaultClazzId = "";
-                        result.response.forEach(function (v, i) {
-                            if(i==0){
-                                defaultClazzId = v.id;
-                                _this.getClassDemeanorInfo(v.id);
-                            }
-                            arr.push({
-                                value: v.id, label: v.grade.name + v.name
-                            })
-                        })
-                        var asyncValue = [defaultClazzId];
-                        _this.setState({data: arr,asyncValue})
-                    }
-                }
-            },
-            onError: function (error) {
-                // message.error(error);
-            }
-        });
-    }
-
-    /**
-     * 班级切换的回调
-     * @param val
-     */
-    onPickerChange = (val) => {
-        const d = [...this.state.data];
-        const asyncValue = [...val];
-        this.setState({
-            data: d,
-            asyncValue,
-        });
-    };
-
-    chooseClassOnOk(v) {
-        this.setState({asyncValue: v})
-        this.getClassDemeanorInfo(v[0])
+        var className = locationSearch.split("&")[1].split('=')[1];
+        document.title = className;
+        this.setState({classId:ident});
+        this.getClassDemeanorInfo(ident);
     }
 
     getClassDemeanorInfo(id) {
@@ -121,14 +70,10 @@ export default class classDemeanor extends React.Component {
             Toast.fail('请先选择照片')
             return
         }
-        if (WebServiceUtil.isEmpty(demeanor.state.asyncValue)) {
-            Toast.fail('请先选择班级')
-            return
-        }
         demeanor.state.imgFromAndArr.forEach(function (v, i) {
             var param = {
                 "method": 'saveClassDemeanorInfo',
-                "clazzId": demeanor.state.asyncValue[0],
+                "clazzId": demeanor.state.classId,
                 "imagePath": v,
                 "type": 1
             };
@@ -138,7 +83,7 @@ export default class classDemeanor extends React.Component {
                         if (i == demeanor.state.imgFromAndArr.length - 1) {
                             Toast.success('上传成功');
                             //刷新上半部
-                            demeanor.getClassDemeanorInfo(demeanor.state.asyncValue[0])
+                            demeanor.getClassDemeanorInfo(demeanor.state.classId)
                             demeanor.state.imgFromAndArr.splice(0)
                         }
                     }
@@ -151,29 +96,61 @@ export default class classDemeanor extends React.Component {
     }
 
     deleteClassDemeanorInfo(id) {
-        var param = {
-            "method": 'deleteClassDemeanorInfo',
-            "id": id,
-        };
-        WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
-            onResponse: function (result) {
-                if (result.msg == '调用成功' || result.success == true) {
-                    var arr = demeanor.state.imgArr
-                    demeanor.state.imgArr.forEach((v, i) => {
-                        if (v.id == id) {
-                            arr.splice(i, 1);
-                        }
-                    })
-                    demeanor.setState({imgArr: arr})
+        this.showAlert(function(){
+            var param = {
+                "method": 'deleteClassDemeanorInfo',
+                "id": id,
+            };
+            WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
+                onResponse: function (result) {
+                    if (result.msg == '调用成功' || result.success == true) {
+                        var arr = demeanor.state.imgArr
+                        demeanor.state.imgArr.forEach((v, i) => {
+                            if (v.id == id) {
+                                arr.splice(i, 1);
+                            }
+                        })
+                        demeanor.setState({imgArr: arr})
+                    }
+                },
+                onError: function (error) {
+                    // message.error(error);
                 }
-            },
-            onError: function (error) {
-                // message.error(error);
-            }
+            });
+        },function(){
+            // console.log('已取消');
         });
     }
 
+    showAlert = (success, cancel) => {
+        var phoneType = navigator.userAgent;
+        var phone;
+        if (phoneType.indexOf('iPhone') > -1 || phoneType.indexOf('iPad') > -1) {
+            phone = 'ios'
+        } else {
+            phone = 'android'
+        }
+
+        const alertInstance = alert('删除图片', '确定删除此照片吗?', [
+            {
+                text: '取消', onPress: () => {
+                if (cancel) {
+                    cancel();
+                }
+            }, style: 'default'
+            },
+            {
+                text: '确定', onPress: () => {
+                if (success) {
+                    success()
+                }
+            }
+            },
+        ], phone);
+    }
+
     deleteimgFromAndArr(index) {
+
         var arr = demeanor.state.imgFromAndArr;
         demeanor.state.imgFromAndArr.forEach((v, i) => {
             if (i == index) {
@@ -187,18 +164,6 @@ export default class classDemeanor extends React.Component {
         return (
             <div id="classDemeanor" style={{height: document.body.clientHeight}}>
                 <div className="Img_cont">
-                    <WhiteSpace size="lg"/>
-                    {/*日期*/}
-                    <Picker
-                        data={this.state.data}
-                        cols={1}
-                        value={this.state.asyncValue}
-                        onPickerChange={this.onPickerChange}
-                        onOk={v => this.chooseClassOnOk(v)}
-                    >
-                        <List.Item arrow="horizontal">班级</List.Item>
-                    </Picker>
-                    <WhiteSpace size="lg"/>
                     <div className="classDemeanor_title">风采展示</div>
                     <div className='showImg my_flex my_flex_wrap'>
                         {this.state.imgArr.map((v) => {

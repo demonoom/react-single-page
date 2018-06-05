@@ -1,6 +1,8 @@
 import React from 'react';
-import {Picker, List, WhiteSpace, Grid, Button, Icon} from 'antd-mobile';
+import {Picker, List, WhiteSpace, Grid, Button, Icon, Modal} from 'antd-mobile';
 import '../css/studentDutyList.less'
+
+const alert = Modal.alert;
 
 const seasons = [
     []
@@ -14,7 +16,7 @@ export default class studentDutyList extends React.Component {
     constructor(props) {
         super(props);
         var weekOfTody = new Date().getDay();
-        weekOfTody=(weekOfTody==0?7:weekOfTody);
+        weekOfTody = (weekOfTody == 0 ? 7 : weekOfTody);
         this.state = {
             data: [{value: '1', label: '星期一'},
                 {value: '2', label: '星期二'},
@@ -25,93 +27,86 @@ export default class studentDutyList extends React.Component {
                 {value: '7', label: '星期日'}],
             cols: 1,
             pickerValue: [],
-            asyncValue: [weekOfTody+''],
+            asyncValue: [weekOfTody + ''],
             sValue: [],
             visible: false,
             studentList: [],
             clazzId: '',
-            week: weekOfTody+'',
+            week: weekOfTody + '',
             editButtonDisabled: true
         };
-        this.getClassBrandStudentDuty = this.getClassBrandStudentDuty.bind(this);
-        this.getClazzesByUserId = this.getClazzesByUserId.bind(this);
+        this.getClassBrandStudentDutyList = this.getClassBrandStudentDutyList.bind(this);
     }
 
     componentWillMount() {
-        document.title = '值日表';
-        var locationHref = window.location.href;
+        var locationHref = decodeURI(window.location.href);
         var locationSearch = locationHref.substr(locationHref.indexOf("?") + 1);
         var locationSearchArray = locationSearch.split("&");
-        var userId = locationSearchArray[0].split("=")[1];
-        this.getClazzesByUserId(userId);
-        this.setState({userId});
-    }
-
-    componentDidMount() {
-        document.title = '值日表';
+        var clazzId = locationSearchArray[0].split("=")[1];
+        var clazzName = locationSearchArray[1].split("=")[1];
+        var userId = locationSearchArray[2].split("=")[1];
+        this.getClassBrandStudentDutyList(userId, clazzId, '', -1);
+        this.setState({clazzId, userId, clazzName});
+        document.title = clazzName + '班级值日表';
     }
 
     /**
-     * 星期改变时查询当前星期对应的值日生列表
-     * @param val
+     * 查看指定班级的值日列表
      */
-    onWeekPickerChange = (val) => {
-        const d = [...this.state.data];
-        const asyncValue = [...val];
-        var week = val[0];
-
-        this.setState({
-            data: d,
-            cols: 1,
-            asyncValue,
-            week
-        });
-        this.getClassBrandStudentDuty(this.state.clazzId, week);
-    };
-
-    /**
-     * 获取班级值日生的列表
-     * @param clazzId 班级id
-     * @param week 星期
-     */
-    getClassBrandStudentDuty(clazzId, week) {
+    getClassBrandStudentDutyList(userId, clazzId, week, pageNo) {
         var _this = this;
         var param = {
-            "method": 'getClassBrandStudentDuty',
+            "method": 'getClassBrandStudentDutyList',
+            "userId": userId,
             "clazzId": clazzId,
-            "week": week
+            "week": week,
+            "pageNo": pageNo,
         };
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
             onResponse: function (result) {
-                var studentList = [];
-                var studentIdList = [];
-                var dutyId = -1;
-                var editButtonDisabled = true;
-                if (result.success == true && result.msg == "调用成功") {
-                    var response = result.response;
-                    if (response != null && response != undefined) {
-                        if (response.length === 0) {
-                            _this.setState({"isLoadingLeft": false})
-                        } else {
-                            var clazzObj = result.response;
-                            dutyId = clazzObj.id;
-                            var users = clazzObj.users;
-                            editButtonDisabled = false;
-                            users.forEach(function (student) {
-                                if (student != null && student != undefined) {
-                                    var stuId = student.colUid;
-                                    var stuName = student.userName;
-                                    var icon = student.avatar;
-                                    var stuJson = {text: stuName, icon};
-                                    studentList.push(stuJson)
-                                    studentIdList.push(stuId);
+                var dutyTagList = [];
+                if (result.msg == '调用成功' && result.success == true) {
+                    var studentDutyList = result.response;
+                    studentDutyList.forEach(function (studentDuty) {
+                        var dutyId = studentDuty.id;
+                        var week = studentDuty.week;
+                        var users = studentDuty.users;
+                        var studentIdStr = "";
+                        var studentList = [];
+                        if (WebServiceUtil.isEmpty(users) == false) {
+                            users.forEach(function (user, index) {
+                                var userId = user.colUid;
+                                studentIdStr += userId;
+                                if (index != users.length - 1) {
+                                    studentIdStr += ",";
                                 }
+                                var userName = user.userName;
+                                var avatar = user.avatar;
+                                var stuJson = {text: userName, icon: avatar};
+                                studentList.push(stuJson)
                             })
                         }
-                    }
+                        var weekChart = _this.weekNumToChart(week);
+                        if (WebServiceUtil.isEmpty(week) == false) {
+                            var dutyTag = <div>
+                                <div className="planTitle">
+                                    <div className="top">
+                                        <span>星期{weekChart}</span>
+                                        <Button className="modifyBtn_common" type="primary" size="small"
+                                                onClick={_this.editStudentDuty.bind(_this, week, studentIdStr, dutyId)}></Button>
+                                        {/*<Button type="primary" size="small" onClick={_this.editStudentDuty}>修改</Button>*/}
+                                        {/*<Button type="primary" size="small" className="btn_del deleteBtn_common" onClick={_this.delStudentDuty.bind(_this,dutyId)}></Button>*/}
+                                        <Button type="primary" size="small" className="btn_del deleteBtn_common"
+                                                onClick={_this.delConfirm.bind(_this, dutyId)}></Button>
+                                    </div>
+                                    <Grid data={studentList} columnNum={4} activeStyle={false}/>
+                                </div>
+                            </div>;
+                            dutyTagList.push(dutyTag);
+                        }
+                    })
                 }
-                var sValue = [clazzId+''];
-                _this.setState({studentList, studentIdList, dutyId, editButtonDisabled,clazzId,sValue});
+                _this.setState({dutyTagList});
             },
             onError: function (error) {
             }
@@ -119,71 +114,58 @@ export default class studentDutyList extends React.Component {
     }
 
     /**
-     * 进入学生值日页面时，根据用户id获取当前用户的班级
-     * @param userId
+     * 删除确认操作
+     * @param dutyId 待删除的值日id
      */
-    getClazzesByUserId(userId) {
+    delConfirm = (dutyId) => {
         var _this = this;
-        var param = {
-            "method": 'getClazzesByUserId',
-            "userId": userId
-        };
-        WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
-            onResponse: function (result) {
-                var studentList = [];
-                var studentIdList = [];
-                var dutyId = -1;
-                if (result.success == true && result.msg == "调用成功") {
-                    var response = result.response;
-                    if (response != null && response != undefined) {
-                        response.forEach(function (clazz,index) {
-                            var clazzId = clazz.id;
-                            //班级
-                            var clazzName = clazz.name;
-                            //年级
-                            var grade = clazz.grade;
-                            var gradeName = grade.name;
-                            var clazzJson = {
-                                label: gradeName + clazzName,
-                                value: clazzId + "",
-                            };
-                            if(index==0){
-                                _this.getClassBrandStudentDuty(clazzId,_this.state.week);
-                            }
-                            if (seasons[0] != null && seasons[0] != undefined) {
-                                seasons[0].push(clazzJson);
-                            }
-                        })
-
-                    }
-                }
-                _this.setState({studentList, studentIdList, dutyId});
-            },
-            onError: function (error) {
-            }
-        });
+            alert('确定要删除值日表吗?', '', [
+                {text: '取消', onPress: () => console.log('cancel')},
+                {text: '确定', onPress: () => _this.delStudentDuty(dutyId)},
+            ])
     }
 
-    /**
-     * 班级选项改变的响应函数
-     * 切换班级时，查询当前班级对应条件下的值日生
-     * @param val
-     */
-    onClassChange = (val) => {
-        var clazzId = val[0];
-        this.setState({sValue: val, clazzId});
-        this.getClassBrandStudentDuty(clazzId, this.state.week);
-    };
+    weekNumToChart = (weekNum) => {
+        var weekChart = "";
+        switch (weekNum) {
+            case "0":
+                weekChart = "日";
+                break;
+            case "1":
+                weekChart = "一";
+                break;
+            case "2":
+                weekChart = "二";
+                break;
+            case "3":
+                weekChart = "三";
+                break;
+            case "4":
+                weekChart = "四";
+                break;
+            case "5":
+                weekChart = "五";
+                break;
+            case "6":
+                weekChart = "六";
+                break;
+            case "7":
+                weekChart = "日";
+                break;
+        }
+        return weekChart;
+    }
 
     /**
      * 修改班级的值日信息
      * 需要将当前页面的查询数据传递到下个页面，然后构建修改页面的数据
      */
-    editStudentDuty = () => {
-        var studentIdStr = this.state.studentIdList.join(",");
+    editStudentDuty = (week, studentIdStr, dutyId) => {
+        // var studentIdStr = this.state.studentIdList.join(",");
         var editStudentDutyUrl = WebServiceUtil.mobileServiceURL + "editStudentDuty";
-        editStudentDutyUrl += "?clazzId=" + this.state.clazzId + "&week=" + this.state.week + "&studentIds=" + studentIdStr + "&dutyId=" + this.state.dutyId + "&access_user=" + this.state.userId;
-        location.href = editStudentDutyUrl;
+        editStudentDutyUrl += "?clazzId=" + this.state.clazzId + "&week=" + week + "&studentIds=" + studentIdStr + "&dutyId=" + dutyId + "&clazzName=" + this.state.clazzName + "&access_user=" + this.state.userId;
+        editStudentDutyUrl = encodeURI(editStudentDutyUrl);
+        // location.href = editStudentDutyUrl;
 
         var data = {
             method: 'openNewPage',
@@ -191,15 +173,31 @@ export default class studentDutyList extends React.Component {
         };
 
         Bridge.callHandler(data, null, function (error) {
-            window.location.href = url;
+            window.location.href = editStudentDutyUrl;
         });
     };
 
+    delStudentDuty = (delId) => {
+        var _this = this;
+        var param = {
+            "method": 'deleteStudentDuty',
+            "id": delId,
+        };
+        WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
+            onResponse: function (result) {
+                if (result.msg == '调用成功' && result.success == true) {
+                    _this.getClassBrandStudentDutyList(_this.state.userId, _this.state.clazzId, '', -1);
+                }
+            },
+            onError: function (error) {
+            }
+        });
+    }
     /**
      * 跳转到添加值日生的页面
      */
     turnToAddDutyPage = () => {
-        var addStudentDutyUrl = WebServiceUtil.mobileServiceURL + "addStudentDuty?access_user=" + this.state.userId;
+        var addStudentDutyUrl = WebServiceUtil.mobileServiceURL + "addStudentDuty?clazzId=" + this.state.clazzId + "&clazzName=" + this.state.clazzName + "&access_user=" + this.state.userId;
         var data = {
             method: 'openNewPage',
             url: addStudentDutyUrl
@@ -214,34 +212,9 @@ export default class studentDutyList extends React.Component {
         var _this = this;
         return (
             <div id="studentDutyList" style={{height: document.body.clientHeight}}>
-                <WhiteSpace size="lg"/>
-                <Picker
-                    data={seasons}
-                    title="请选择"
-                    cascade={false}
-                    value={this.state.sValue}
-                    onOk={v => this.onClassChange(v)}
-                >
-                    <List.Item arrow="horizontal">班级名称 学期</List.Item>
-                </Picker>
-                <WhiteSpace size="lg"/>
-                <Picker
-                    data={this.state.data}
-                    cols={1}
-                    value={this.state.asyncValue}
-                    onOk={v => this.onWeekPickerChange(v)}
-                >
-                    <List.Item arrow="horizontal" onClick={this.onClick}>选择星期</List.Item>
-                </Picker>
-                <WhiteSpace size="lg"/>
-                <div className="dutyList">
-                    <div className="planTitle">
-                        <span>值日安排</span>
-                        <Button type="primary" inline size="small" className="am-button-borderfix modifyBtn"
-                                disabled={this.state.editButtonDisabled} onClick={this.editStudentDuty}>修改</Button>
-                    </div>
-                    <Grid data={_this.state.studentList} columnNum={4} activeStyle={false}/>
-                    <div className="addBunton"><Icon type="plus" onClick={this.turnToAddDutyPage}/></div>
+                <div className="content">{_this.state.dutyTagList}</div>
+                <div className='addBunton' onClick={this.turnToAddDutyPage}>
+                    <img src={require("../imgs/addBtn.png")}/>
                 </div>
             </div>
         );

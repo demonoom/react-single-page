@@ -1,4 +1,3 @@
-(node) util.print is deprecated. Use console.log instead.
 html,
 body {
   height: 100%;
@@ -77,7 +76,7 @@ hr {
   font-size: 14px;
 }
 .color_red {
-  color: #f46a55;
+  color: #F46A55;
 }
 .line_item {
   height: 8px;
@@ -253,14 +252,14 @@ hr {
   z-index: 99;
 }
 .submitBtn .am-button-primary {
-  background-color: #e94f4f;
-  border: 1PX solid #e94f4f;
+  background-color: #F56A55;
+  border: 1PX solid #F56A55;
 }
 .submitBtn .am-button-primary::before {
-  border: 1PX solid #e94f4f !important;
+  border: 1PX solid #F56A55 !important;
 }
 .submitBtn .am-button-primary.am-button-active {
-  background-color: #e94f4f;
+  background-color: #F56A55;
   opcity: 0.3;
 }
 /*班牌内页返回首页*/
@@ -339,18 +338,61 @@ hr {
 .am-list-footer {
   color: #999 !important;
 }
-.submitBtn .am-button-primary,
 .am-button-warning {
   background-color: #F56A55 !important;
 }
-.am-button-primary {
+.am-button-primary,
+.am-button {
   border-radius: 2px !important;
+}
+.am-button::before {
+  border-color: #F56A55!important;
 }
 .textOver {
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
   display: block;
+}
+.deleteBtn_common {
+  float: right;
+  display: block;
+  width: 14px;
+  height: 14px;
+  background: url("components/classCardSystemBackstage/imgs/icon_delete.png") no-repeat center center;
+  background-size: 14px;
+  padding: 0 8px;
+  margin-right: 4px;
+}
+.modifyBtn_common {
+  float: right;
+  display: block;
+  width: 14px;
+  height: 14px;
+  background: url("components/classCardSystemBackstage/imgs/icon_modify.png") no-repeat center center;
+  background-size: 14px;
+  padding: 0 8px;
+}
+/*删除弹窗*/
+.am-modal-content .am-modal-title {
+  color: #333;
+  line-height: 22px;
+}
+.am-modal-content .am-modal-input input {
+  padding-left: 6px;
+}
+.am-modal-content .am-modal-button {
+  font-size: 17px !important;
+  height: 45px !important;
+  line-height: 45px !important;
+  color: #108ee9 !important;
+}
+.am-modal-content .am-modal-header {
+  padding: 6px 15px 7px !important;
+}
+.am-modal-content .am-modal-button-group-h .am-modal-button:last-child::before,
+.am-modal-content .am-modal-button-group-h::before {
+  background-color: #dfdfdf !important;
 }
 /*班牌屏幕适配*/
 @media only screen and (min-width: 768px) and (max-width: 799px) {

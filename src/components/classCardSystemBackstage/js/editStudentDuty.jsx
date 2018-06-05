@@ -38,7 +38,6 @@ export default class editStudentDuty extends React.Component {
     }
 
     componentDidMount(){
-        document.title = '修改值日生';
         var locationHref = window.location.href;
         var locationSearch = locationHref.substr(locationHref.indexOf("?") + 1);
         var locationSearchArray = locationSearch.split("&");
@@ -46,12 +45,14 @@ export default class editStudentDuty extends React.Component {
         var week = locationSearchArray[1].split("=")[1];
         var studentIds = locationSearchArray[2].split("=")[1];
         var dutyId = locationSearchArray[3].split("=")[1];
-        var userId = locationSearchArray[4].split("=")[1];
+        var clazzName = locationSearchArray[4].split("=")[1];
+        var userId = locationSearchArray[5].split("=")[1];
         this.getStudentListByClazz(clazzId,studentIds);
         this.getClazzesByUserId(userId);
         var sValue = [clazzId];
         var asyncValue = [week];
         this.setState({clazzId,week,studentIds,dutyId,sValue,asyncValue});
+        document.title = "修改"+clazzName+"值日生";
     }
 
     onPickerChange = (val) => {
@@ -109,6 +110,8 @@ export default class editStudentDuty extends React.Component {
                         })
 
                     }
+                }else{
+                    Toast.fail(result.msg, 2);
                 }
                 _this.setState({seasons});
             },
@@ -167,6 +170,7 @@ export default class editStudentDuty extends React.Component {
                     var response = result.response;
                     if (response != null && response != undefined) {
                         Toast.success('修改成功！', 1);
+                        studentCheckedArray.splice(0);
                         //关闭当前窗口，并刷新上一个页面
                         var data = {
                             method: 'finishForRefresh',
@@ -176,6 +180,8 @@ export default class editStudentDuty extends React.Component {
                             console.log(error);
                         });
                     }
+                }else{
+                    Toast.fail(result.msg, 2);
                 }
             },
             onError: function (error) {
@@ -212,8 +218,9 @@ export default class editStudentDuty extends React.Component {
                             </CheckboxItem>;
                             studentCheckboxItemList.push(checkBoxItem);
                         })
-
                     }
+                }else{
+                    Toast.fail(result.msg, 2);
                 }
                 _this.setState({seasons});
             },
@@ -223,34 +230,44 @@ export default class editStudentDuty extends React.Component {
         this.setState({studentCheckboxItemList});
     }
 
+    weekNumToChart=(weekNum)=>{
+        var weekChart = "";
+        switch (weekNum){
+            case "0":
+                weekChart = "日";
+                break;
+            case "1":
+                weekChart = "一";
+                break;
+            case "2":
+                weekChart = "二";
+                break;
+            case "3":
+                weekChart = "三";
+                break;
+            case "4":
+                weekChart = "四";
+                break;
+            case "5":
+                weekChart = "五";
+                break;
+            case "6":
+                weekChart = "六";
+                break;
+            case "7":
+                weekChart = "日";
+                break;
+        }
+        return weekChart;
+    }
+
     render() {
         var _this = this;
-
+        var weekChart = _this.weekNumToChart(_this.state.week);
         return (
             <div id="addStudentDuty" style={{height: document.body.clientHeight}}>
                 <WhiteSpace size="lg"/>
-                <Picker
-                    data={seasons}
-                    title="请选择"
-                    cascade={false}
-                    value={this.state.sValue}
-                    onOk={v => this.onClassChange(v)}
-                    disabled
-                >
-                    <List.Item arrow="horizontal">选择班级<i className="redStar">*</i></List.Item>
-                </Picker>
-
-                <WhiteSpace size="lg"/>
-                <Picker
-                    data={this.state.data}
-                    cols={1}
-                    value={this.state.asyncValue}
-                    onOk={v => this.onPickerChange(v)}
-                    disabled
-                >
-                    <List.Item arrow="horizontal" onClick={this.onClick}>选择星期<i className="redStar">*</i></List.Item>
-                </Picker>
-
+                <div className="dutyTime">值日时间：星期{weekChart}</div>
                 <WhiteSpace size="lg"/>
                 <div className="bg_white">
                     <List renderHeader={() => '学生列表'}>

@@ -91,7 +91,7 @@
 }
 #addCurriculumSchedule .teacher_list div:first-child,
 #addCurriculumSchedule .teacher_list div:nth-child(2) {
-  width: 30%;
+  width: 50%;
 }
 #addCurriculumSchedule .teacher_list div:nth-child(3) {
   width: 40%;
@@ -130,6 +130,7 @@
   width: 15px;
   height: 19px;
   margin-top: 12px;
+  margin-right: 15px;
 }
 #addCurriculumSchedule .searchTerRes {
   z-index: 99999;

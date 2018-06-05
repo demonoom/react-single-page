@@ -49,6 +49,7 @@
   position: relative;
   border: 1px solid #e5e5e5;
   margin-left: 10px;
+  margin-bottom: 10px;
   display: flex;
 }
 #classDemeanor .listImg img {

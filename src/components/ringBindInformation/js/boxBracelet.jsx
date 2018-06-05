@@ -201,7 +201,7 @@ export default class boxBracelet extends React.Component {
     binding = () => {
         var _this = this;
         if (this.state.searchCheckValue == '' || bindDing.state.macId == '') {
-            Toast.fail('未选择教室或手环',)
+            Toast.fail('未选择教室或班牌',)
             return
         }
         var param = {

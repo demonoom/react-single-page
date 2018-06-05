@@ -1,5 +1,5 @@
 import React from 'react';
-import {ListView} from 'antd-mobile';
+import {Toast,ListView} from 'antd-mobile';
 import '../css/homeworkModule.less';
 
 
@@ -26,12 +26,16 @@ export default class homeworkModule extends React.Component {
     componentDidMount() {
         var locationHref = window.location.href;
         var locationSearch = locationHref.substr(locationHref.indexOf("?") + 1);
-        var classId = locationSearch.split("=")[1];
+        var searchArray = locationSearch.split("&");
+        var classId = searchArray[0].split("=")[1];
         this.setState({"classId": classId})
         this.getHomeworkData(classId);
     }
 
-
+    /**
+     * 根据班级ID获取作业列表
+     * @param {} classId 
+     */
     getHomeworkData(classId) {
         var _this = this;
         _this.state.listViewDisplay = true;
@@ -74,9 +78,12 @@ export default class homeworkModule extends React.Component {
                             refreshing: false
                         })
                     }
+                }else {
+                    Toast.fail(result.msg, 1);
                 }
             },
             onError: function (error) {
+                message.error(error);
             }
         });
     }
@@ -106,7 +113,6 @@ export default class homeworkModule extends React.Component {
         Bridge.callHandler(data, null, function (error) {
             console.log(error);
         });
-        // history.back()
     }
 
     render() {
@@ -118,7 +124,6 @@ export default class homeworkModule extends React.Component {
                 <div>
                     <div className="homeworkInfo">
                         <div className="homeworkL">
-                            {/* <h3 className="subject textOver">{rowData.title}</h3> */}
                             <div className="imgInfo">
                                 <img src={rowData.fromUser.avatar}/>
                                 <span className="textOver">{rowData.fromUser.userName}</span>
@@ -133,9 +138,7 @@ export default class homeworkModule extends React.Component {
                             {rowData.attachMents.length == 0 ? '' : <img src={rowData.attachMents[0].address}/>}
                             <img/>
                         </div>
-
                     </div>
-
                 </div>
             )
         };

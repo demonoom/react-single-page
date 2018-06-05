@@ -21,7 +21,6 @@ export default class currentAttendance extends React.Component {
     }
 
     componentWillReceiveProps(nextProps) {
-        console.log(nextProps.messageUtilObj);
         var roomId = localStorage.getItem('roomId');
         if (nextProps.messageUtilObj.command == 'brand_class_open') {
             //获取应到人数
@@ -34,6 +33,13 @@ export default class currentAttendance extends React.Component {
             if (roomId == nextProps.messageUtilObj.data.classroomId) {
                 this.setState({openClass: false});
                 clearInterval(timer)
+            }
+        } else if (nextProps.messageUtilObj.command == 'braceletBoxConnect' && WebServiceUtil.isEmpty(nextProps.messageUtilObj.data) == false) {
+            //重连开课
+            if (roomId == nextProps.messageUtilObj.data.classroomId) {
+                this.getStudentByCourseTableItem(nextProps.messageUtilObj.data);
+                this.openTimeInterVal(nextProps.messageUtilObj.data);
+                this.setState({openClass: true, clazzId: nextProps.messageUtilObj.data.classTableId})
             }
         }
 
@@ -85,7 +91,6 @@ export default class currentAttendance extends React.Component {
         var param = {
             "method": 'getBraceletAttend',
             "cid": data.classTableId
-            // "cid": 3
         };
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
             onResponse: function (result) {
@@ -107,8 +112,8 @@ export default class currentAttendance extends React.Component {
             Toast.fail('暂未开课')
             return
         }
-
         var currentAttendanceListUrl = WebServiceUtil.mobileServiceURL + "currentAttendanceList?clazzId=" + this.state.clazzId;
+        // var currentAttendanceListUrl = WebServiceUtil.mobileServiceURL + "currentAttendanceList?clazzId=" + localStorage.getItem('clazzId');
         // window.location.href = currentAttendanceListUrl;
 
         var data = {

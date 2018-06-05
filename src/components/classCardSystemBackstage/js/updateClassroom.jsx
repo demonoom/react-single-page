@@ -1,20 +1,16 @@
 import React from 'react';
 import {
     Toast,
+    WhiteSpace,
     InputItem,
     List,
     Radio,
-    ListView,
-    Modal,
     PullToRefresh,
     Checkbox, Flex
 } from 'antd-mobile';
 import '../css/updateClassroom.less'
 import { ucs2 } from 'punycode';
 
-const CheckboxItem = Checkbox.CheckboxItem;
-const AgreeItem = Checkbox.AgreeItem;
-const alert = Modal.alert;
 const RadioItem = Radio.RadioItem;
 var updateCM;
 
@@ -23,24 +19,20 @@ export default class updateClassroom extends React.Component {
     constructor(props) {
         super(props);
         updateCM = this;
-        const dataSource = new ListView.DataSource({
-            rowHasChanged: (row1, row2) => row1 !== row2,
-        });
-        this.initData = [];
         this.state = {
-            dataSource: dataSource.cloneWithRows(this.initData),
-            defaultPageNo: 1,
             clientHeight: document.body.clientHeight,
             chooseResultDiv: 'none',
             searchData: [],
             selectData: [],
-            calmFlag:false
+            calmHeight: document.body.clientHeight - 190,
+            teachBuildData: []
         };
     }
-   
-    onDataChange = (value) => {
+
+    onDataChange = (value, id) => {
         updateCM.setState({
-            gradeNameValue:value
+            gradeNameValue: value,
+            "classId": id
         });
     };
 
@@ -48,17 +40,17 @@ export default class updateClassroom extends React.Component {
         var locationHref = window.location.href;
         var locationSearch = locationHref.substr(locationHref.indexOf("?") + 1);
         var classIdBynoom = locationSearch.split("&")[0].split("=")[1];
+        var uid = locationSearch.split("&")[1].split("=")[1];
         this.viewClassRoom(classIdBynoom);
-        this.setState({classIdBynoom});
+        this.setState({ classIdBynoom });
+        this.viewSchoolBuildingPage(uid);
     }
-   
 
     componentDidMount() {
         Bridge.setShareAble("false");
         document.title = '绑定教室信息';
         var uid = JSON.parse(localStorage.getItem("uIdKey")).uidKey;
         this.setState({ "uid": uid })
-        this.viewClassRoomPage(uid);
         //添加对视窗大小的监听,在屏幕转换以及键盘弹起时重设各项高度
         window.addEventListener('resize', updateCM.onWindowResize)
     }
@@ -67,8 +59,11 @@ export default class updateClassroom extends React.Component {
         //解除监听
         window.removeEventListener('resize', updateCM.onWindowResize)
     }
-
-    viewClassRoom(roomId){
+    /**
+     * 根据教室ID显示对应的信息
+     * @param {*} roomId 
+     */
+    viewClassRoom(roomId) {
         var _this = this;
         var param = {
             "method": 'viewClassRoom',
@@ -79,77 +74,34 @@ export default class updateClassroom extends React.Component {
                 if (result.msg == '调用成功' && result.success == true) {
                     var clazzRoom = result.response
                     var roomName = clazzRoom.name;
-                    _this.setState({'classroomValue':roomName});
+                    var gradeName = clazzRoom.defaultBindedClazz.name;
+                    var defaultId = clazzRoom.defaultBindedClazz.id;
+                    var teachBuildValue = clazzRoom.building.name;
+                    var buildingId = clazzRoom.building.id;
+                    _this.setState({
+                        'classroomValue': roomName,
+                        "gradeNameValue": gradeName,
+                        "classId": defaultId,
+                        "teachBuildValue": teachBuildValue,
+                        "buildingId": buildingId
+                    });
+                } else {
+                    Toast.fail(result.msg, 1);
                 }
             },
             onError: function (error) {
-                // message.error(error);
+                message.error(error);
             }
         });
     }
-
     /**
      * 视窗改变时改变高度
      */
     onWindowResize() {
         setTimeout(function () {
-            updateCM.setState({ clientHeight: document.body.clientHeight });
+            updateCM.setState({ clientHeight: document.body.clientHeight, calmHeight: document.body.clientHeight - 190 });
         }, 100)
     }
-
-    /**
-     * 展示班级页面信息
-     */
-    viewClassRoomPage(uid) {
-        var _this = this;
-        _this.initData.splice(0);
-        _this.state.dataSource = [];
-        _this.state.dataSource = new ListView.DataSource({
-            rowHasChanged: (row1, row2) => row1 !== row2,
-        });
-        const dataBlob = {};
-        var PageNo = this.state.defaultPageNo;
-        var param = {
-            "method": 'viewClassRoomPage',
-            "uid": uid,
-            "pn": PageNo,
-        };
-        WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
-            onResponse: function (result) {
-                if (result.msg == '调用成功' && result.success == true) {
-                    updateCM.state.selectData = result.response
-                    var arr = result.response;
-                    var pager = result.pager;
-                    for (let i = 0; i < arr.length; i++) {
-                        var topic = arr[i];
-                        dataBlob[`${i}`] = topic;
-                    }
-                    var isLoading = false;
-                    if (arr.length > 0) {
-                        if (pager.pageCount == 1 && pager.rsCount < 30) {
-                            isLoading = false;
-                        } else {
-                            isLoading = true;
-                        }
-                    } else {
-                        isLoading = false;
-                    }
-                    _this.initData = _this.initData.concat(arr);
-                    _this.setState({
-                        dataSource: _this.state.dataSource.cloneWithRows(_this.initData),
-                        isLoadingLeft: isLoading,
-                        refreshing: false
-                    })
-                }
-            },
-            onError: function (error) {
-                // message.error(error);
-            }
-        });
-    }
-
-
-
     /**
      * searchClassroomName搜索班级的名称
      */
@@ -158,22 +110,25 @@ export default class updateClassroom extends React.Component {
         var param = {
             "method": 'searchClazz',
             "aid": updateCM.state.uid,
-            "keyWord": $('.gradeName .am-input-control input').val(),
+            "keyWord": updateCM.state.gradeNameValue,
         };
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
             onResponse: function (result) {
                 if (result.msg == '调用成功' && result.success == true) {
-
+                    if (result.response.length === 0) {
+                        Toast.info('没有查找到该班级');
+                    }
                     updateCM.setState({
-                        searchData: result.response,
                         chooseResultDiv: "block",
-                        classId: result.response[0].id
+                        searchData: result.response,
+                        classId: updateCM.state.classId
                     })
                 } else {
                     Toast.fail(result.msg, 1);
                 }
             },
             onError: function (error) {
+                message.error(error);
             }
         });
     }
@@ -187,30 +142,28 @@ export default class updateClassroom extends React.Component {
             return
         }
         var param;
-
-        if(this.state.calmFlag) {
+        if (updateCM.state.buildingId) {
             param = {
                 "method": 'updateClassRoom',
                 "cr": {
                     "creatorId": updateCM.state.uid,
                     "name": updateCM.state.classroomValue,
                     "classId": updateCM.state.classId,
-                    "id":updateCM.state.classIdBynoom
+                    "id": updateCM.state.classIdBynoom,
+                    "buildingId": updateCM.state.buildingId
                 }
-    
             };
-        } else{
+        } else {
             param = {
                 "method": 'updateClassRoom',
                 "cr": {
                     "creatorId": updateCM.state.uid,
                     "name": updateCM.state.classroomValue,
-                    "id":updateCM.state.classIdBynoom
+                    "classId": updateCM.state.classId,
+                    "id": updateCM.state.classIdBynoom
                 }
-    
             };
         }
-    
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
             onResponse: function (result) {
                 if (result.msg == '调用成功' && result.success == true) {
@@ -218,17 +171,11 @@ export default class updateClassroom extends React.Component {
                     _this.state.gradeNameValue = '';
                     _this.state.classroomValue = '';
                     _this.setState({ chooseResultDiv: 'none' });
-                    _this.viewClassRoomPage(_this.state.uid);
-                    $('.bindGrade span').removeClass("am-checkbox-checked");
-                    $('.gradeName').css({
-                        display: 'none'
-                    })
-                    Toast.success('添加成功');
+                    Toast.success('修改成功');
                     setTimeout(function () {
                         var data = {
                             method: 'finishForRefresh',
                         };
-
                         Bridge.callHandler(data, null, function (error) {
                         });
                     }, 1000)
@@ -242,113 +189,123 @@ export default class updateClassroom extends React.Component {
         });
 
     }
-
-
-    /**
-     * 获取绑定班级的状态，是否显示
-     */
-    getbindGradeState(e) {
-        if (e.target.checked) {
-            this.setState({calmFlag:true,
-            gradeNameValue:''})
-            $('.gradeName').css({
-                display: 'block'
-            })
-        } else {
-            this.setState({calmFlag:false,
-                chooseResultDiv:'none'
-            })
-            $('.gradeName').css({
-                display: 'none'
-            })
-            
-        }
+    teachBuildDataChange = (value, id) => {
+        updateCM.setState({
+            teachBuildValue: value,
+            "buildingId": id
+        })
     }
-    /**
-     * 输入框改变的回调
-     */
-    inputOnChange(e) {
-        this.setState({ classroomValue: e });
-    }
-    inputChange(e) {
-        this.setState({ gradeNameValue: e })
-    }
-    
-    /**
-     *  ListView数据全部渲染完毕的回调
-     */
-    onEndReached = (event) => {
-        var _this = this;
-        var currentPageNo = this.state.defaultPageNo;
-        if (!this.state.isLoadingLeft && !this.state.hasMore) {
-            return;
-        }
-        currentPageNo += 1;
-        this.setState({ isLoadingLeft: true, defaultPageNo: currentPageNo });
-        _this.viewClassRoomPage(_this.state.uid);
-        this.setState({
-            dataSource: this.state.dataSource.cloneWithRows(this.initData),
-            isLoadingLeft: true,
+     /**
+        * 查看教学楼列表
+        */
+       viewSchoolBuildingPage = (uid) => {
+        var param = {
+            "method": 'viewSchoolBuildingPage',
+            "uid": uid,
+            "pn": -1,
+        };
+        WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
+            onResponse: function (result) {
+                if (result.msg == '调用成功' && result.success == true) {
+                    updateCM.setState({
+                        "teachBuildData":result.response,
+                    })
+                } else {
+                    Toast.fail(result.msg, 1);
+                }
+            },
+            onError: function (error) {
+                Toast.info(error);
+            }
         });
-    };
-
-    onRefresh = () => {
-        var divPull = document.getElementsByClassName('am-pull-to-refresh-content');
-        divPull[0].style.transform = "translate3d(0px, 30px, 0px)";   //设置拉动后回到的位置
-        this.setState({ defaultPageNo: 1, refreshing: true, isLoadingLeft: true });
-        this.viewClassRoomPage(this.state.uid);
     }
-   
     render() {
-       
         var _this = this;
-       
         return (
             <div id="updateClassroom" style={{ height: updateCM.state.clientHeight }}>
                 <div className='addModel' style={{ height: updateCM.state.clientHeight }}>
-                    <List>
-
-                        <div className='classroomName'>
-                            <InputItem
-                                placeholder="请输入教室名称"
-                                data-seed="logId"
-                                onChange={this.inputOnChange.bind(this)}
-                                value={this.state.classroomValue}
-                            >教室名称<i className='redStar'>*</i></InputItem>
-                        </div>
-                        <div className="bindGrade">
-                            <AgreeItem data-seed="logId" onChange={e => this.getbindGradeState(e)}>
-                                绑定班级
-                            </AgreeItem>
-                        </div>
-                        <div className='gradeName' style={{ display: "none" }}>
-                            <InputItem
-                                placeholder="请输入班级名称"
-                                data-seed="logId"
-                                onChange={this.inputChange.bind(this)}
-                                value={this.state.gradeNameValue}
-                            >班级名称<i className='redStar'>*</i></InputItem>
-                            <div id='stIcon' className='stIcon' onClick={this.searchClassroomName}>
-                                <img  src={require('../imgs/icon_search.png')}/>
+                    <div className="mainCont">
+                        <WhiteSpace size="lg" />
+                        <List>
+                            <div className='classroomName'>
+                                <InputItem
+                                    placeholder="请输入教室名称"
+                                    data-seed="logId"
+                                    onChange={v => {
+                                        updateCM.setState({
+                                            "classroomValue": v
+                                        })
+                                    }}
+                                    value={this.state.classroomValue}
+                                >教室名称<i className='redStar'>*</i></InputItem>
                             </div>
+                            <WhiteSpace size="lg" />
+                            <div className='gradeName'>
+                                <InputItem
+                                    placeholder="请输入班级名称"
+                                    data-seed="logId"
+                                    onChange={v => {
+                                        updateCM.setState({
+                                            "gradeNameValue": v,
+                                            "classId": ""
+                                        })
+                                    }}
+                                    value={this.state.gradeNameValue}
+                                >班级名称<i className='redStar'>*</i></InputItem>
+                                <div id='stIcon' className='stIcon' onClick={this.searchClassroomName}>
+                                    <img src={require('../imgs/icon_search.png')} />
+                                </div>
+                            </div>
+                            <WhiteSpace size="lg" />
+                            <div className='chooseResult'
+                                style={{ display: this.state.chooseResultDiv }}>
+                                <List>
+                                    {updateCM.state.searchData.map(i => (
+                                        <RadioItem key={i.id} checked={updateCM.state.gradeNameValue === i.name} onChange={() => this.onDataChange(i.name, i.id)}>
+                                            {i.name}
+                                        </RadioItem>
+                                    ))}
+                                </List>
+                            </div>
+                            {
+                                updateCM.state.buildingId ?
+                                    <div>
+                                        <div className='teachBuild'>
+                                            <InputItem
+                                                placeholder="请选择对应教学楼"
+                                                data-seed="logId"
+                                                disabled="false"
+                                                onChange={v => {
+                                                    updateCM.setState({
+                                                        "teachBuildValue": v
+                                                    })
+                                                }}
+                                                value={this.state.teachBuildValue}
+                                            >教学楼名称<i className='redStar'>*</i></InputItem>
+                                        </div>
+                                        <div className='chooseResult'
+                                            style={{ display: "block" }}>
+                                            <div className="cont">
+                                                <div onClick={this.toAddTeachBuild}>新增教学楼名称</div>
+                                            </div>
+                                            <List>
+                                                {updateCM.state.teachBuildData.map(i => (
+                                                    <RadioItem key={i.id} checked={updateCM.state.teachBuildValue === i.name} onChange={() => this.teachBuildDataChange(i.name, i.id)}>
+                                                        {i.name}
+                                                    </RadioItem>
+                                                ))}
+                                            </List>
+                                        </div>
+                                    </div>
+                                    :
+                                    <div></div>
+                            }
 
-
-                        </div>
-                        <div className='chooseResult'
-                            style={{ display: this.state.chooseResultDiv }}>
-                            <List>
-                                {updateCM.state.searchData.map(i => (
-                                    <RadioItem key={i.id} checked={ updateCM.state.gradeNameValue === i.name}  onChange={() => this.onDataChange(i.name)}>
-                                        {i.name}
-                                    </RadioItem>
-                                ))}
-                            </List>
-                        </div>
-                    </List>
+                        </List>
+                    </div>
                     <div className="bottomBox submitBtn">
                         <span className="bind" onClick={this.binding}>提 交</span>
                     </div>
-
                 </div>
             </div>
         );

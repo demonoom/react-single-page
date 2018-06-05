@@ -1,4 +1,3 @@
-(node) util.print is deprecated. Use console.log instead.
 #addStudentDuty .redStar {
   color: red;
   font-size: 22px;
@@ -7,7 +6,7 @@
   top: 7px;
 }
 #addStudentDuty .bg_white {
-  height: calc(100% - 133px);
+  height: calc(100% - 151px);
   box-sizing: border-box;
   position: relative;
 }
@@ -16,7 +15,7 @@
 }
 #addStudentDuty .am-list-body {
   overflow-y: auto;
-  height: calc(100% - 120px);
+  height: calc(100% - 55px);
 }
 #addStudentDuty .am-list-content {
   position: relative;
@@ -47,4 +46,12 @@
 }
 #addStudentDuty .am-list-body div:not(:last-child) .am-list-line {
   border-bottom: 0;
+}
+#addStudentDuty .dutyTime {
+  height: 44px;
+  line-height: 44px;
+  padding: 0 15px;
+  background-color: #fff;
+  font-size: 17px;
+  color: #000;
 }

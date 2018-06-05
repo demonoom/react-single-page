@@ -12,11 +12,9 @@
 
   .deleteNoifty {
     position: absolute;
-    top: 50%;
+    top: 13px;
     right: 15px;
-    transform:translateY(-50%);
-    border-radius: 50%;
-    color: #9b9b9b;
+    height: 25px;
   }
   .am-list-line{
     border-bottom: 0;
@@ -38,6 +36,7 @@
   }
   .listCont{
     position: relative;
+    overflow: hidden;
     .am-list-item{
       padding-left: 75px;
       padding-right: 0;
@@ -48,12 +47,16 @@
   }
   .am-list-body{
     background: #f4f4f4;
+    border: none;
+    &::before,&::after{
+      background: none;
+    }
   }
   .notifyList .am-list-footer{
     height: 75px;
   }
   .am-list-brief{
-    line-height: 1;
+    line-height: 24px;
     margin-top: 0;
   }
   .am-list-item .am-list-line-multiple{
@@ -87,10 +90,11 @@
     font-size: 14px;
   }
   .title{
-    width: calc(~"100%" - 120px);
+    width: calc(~"100%" - 90px);
+    line-height: 25px;
   }
   .am-list-content{
-    padding-right: 45px;
+    margin-right: 45px;
   }
   .am-icon-md{
     width: 18px;
@@ -108,8 +112,11 @@
   .classroom_label{
     color: #73B6F5;
     font-size: 14px;
-    margin-top: 8px;
-    line-height: 1;
+    line-height: 22px
+  }
+  .clear{
+    overflow: hidden;
+    height: 25px;
   }
 
 }

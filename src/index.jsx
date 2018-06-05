@@ -194,6 +194,12 @@ const classroomManage = (location, cb) => {
     })
 }
 
+const addTeachBuild = (location, cb) => {
+    require.ensure([], require => {
+        cb(null, require("./components/classCardSystemBackstage/js/addTeachBuild").default)
+    })
+}
+
 const addCurriculumSchedule = (location, cb) => {
     require.ensure([], require => {
         cb(null, require("./components/classCardSystemBackstage/js/addCurriculumSchedule").default)
@@ -230,7 +236,17 @@ const addMoralEducation = (location, cb) => {
         cb(null, require("./components/classCardSystemBackstage/js/addMoralEducation").default)
     })
 }
+const updateMoralEducation = (location, cb) => {
+    require.ensure([], require => {
+        cb(null, require("./components/classCardSystemBackstage/js/updateMoralEducation").default)
+    })
+}
 
+const assessMoralEducation = (location, cb) => {
+    require.ensure([], require => {
+        cb(null, require("./components/classCardSystemBackstage/js/assessMoralEducation").default)
+    })
+}
 const classCardHomePage = (location, cb) => {
     require.ensure([], require => {
         cb(null, require("./components/classCardSystem/js/homePage/classCardHomePage").default)
@@ -268,6 +284,13 @@ const updateClassroom = (location, cb) => {
 const studentDutyList = (location, cb) => {
     require.ensure([], require => {
             cb(null, require("./components/classCardSystemBackstage/js/studentDutyList").default)
+        }
+    )
+}
+
+const clazzDutyList = (location, cb) => {
+    require.ensure([], require => {
+            cb(null, require("./components/classCardSystemBackstage/js/clazzDutyList").default)
         }
     )
 }
@@ -336,6 +359,71 @@ const fileAnalysis = (location, cb) => {
 const studentSelectCourse = (location, cb) => {
     require.ensure([], require => {
             cb(null, require("./components/classCardSystemBackstage/js/studentSelectCourse").default)
+        }
+    )
+}
+
+
+const getClassRoomList = (location, cb) => {
+    require.ensure([], require => {
+        cb(null, require("./components/classCardSystemBackstage/js/newCurriculumSche/getClassRoomList").default)
+    })
+}
+
+const classDemeanorList = (location, cb) => {
+    require.ensure([], require => {
+            cb(null, require("./components/classCardSystemBackstage/js/classDemeanorList").default)
+        }
+    )
+}
+
+const getClassTableList = (location, cb) => {
+    require.ensure([], require => {
+            cb(null, require("./components/classCardSystemBackstage/js/newCurriculumSche/getClassTableList").default)
+        }
+    )
+}
+
+const newCurriculumSchedule = (location, cb) => {
+    require.ensure([], require => {
+            cb(null, require("./components/classCardSystemBackstage/js/newCurriculumSche/curriculumSchedule").default)
+        }
+    )
+}
+
+const newAddCurriculumSchedule = (location, cb) => {
+    require.ensure([], require => {
+            cb(null, require("./components/classCardSystemBackstage/js/newCurriculumSche/addCurriculumSchedule").default)
+        }
+    )
+}
+
+const newUpdateCurriculumSchedule = (location, cb) => {
+    require.ensure([], require => {
+        cb(null, require("./components/classCardSystemBackstage/js/newCurriculumSche/updateCurriculumSchedule").default)
+    })
+}
+
+const classHonorList = (location, cb) => {
+    require.ensure([], require => {
+            cb(null, require("./components/classCardSystemBackstage/js/classHonorList").default)
+
+        }
+    )
+}
+
+const particlePath = (location, cb) => {
+    require.ensure([], require => {
+            cb(null, require("./components/particlePath/js/particlePath").default)
+
+        }
+    )
+}
+
+const studentMovement = (location, cb) => {
+    require.ensure([], require => {
+            cb(null, require("./components/charts/heatmap/js/studentMovement").default)
+
         }
     )
 }
@@ -410,11 +498,11 @@ class Index extends React.Component {
                     {/*to="/moralEducation?ident=23836"*/}
                     {/*style={{fontSize: '24px'}}>德育评价</Link></li>*/}
                     <li><Link
-                        to="/classCardHomePage?clazzId=580&roomId=2&mac=02:00:00:00:00:00"
+                        to="/classCardHomePage?clazzId=819&roomId=1&mac=14:1f:78:73:1e:c3"
                         style={{fontSize: '24px'}}>班牌首页</Link></li>
-                    <li><Link
-                        to="/publicClassCardHomePage?roomId=2&mac=02:00:00:00:00:00"
-                        style={{fontSize: '24px'}}>公共教室班牌首页</Link></li>
+                    {/*<li><Link*/}
+                        {/*to="/publicClassCardHomePage?roomId=2&mac=02:00:00:00:00:00"*/}
+                        {/*style={{fontSize: '24px'}}>公共教室班牌首页</Link></li>*/}
                     {/*<li><Link*/}
                     {/*to="/notifyBack?access_user=23836"*/}
                     {/*style={{fontSize: '24px'}}>通知后台</Link></li>*/}
@@ -430,18 +518,24 @@ class Index extends React.Component {
                     {/*<li><Link*/}
                     {/*to="/tableItemDetil"*/}
                     {/*style={{fontSize: '24px'}}>课程表内页</Link></li>*/}
-                    <li><Link
-                        to="/comments?access_user=23836&sid=1021&stype=1&access_user=6075"
-                        style={{fontSize: '24px'}}>评论列表</Link></li>
+                    {/*<li><Link*/}
+                    {/*to="/comments?access_user=23836&sid=1021&stype=1&access_user=6075"*/}
+                    {/*style={{fontSize: '24px'}}>评论列表</Link></li>*/}
                     <li><Link
                         to="/classCardHomePageDoor?access_user=23836"
                         style={{fontSize: '24px'}}>后台总入口</Link></li>
-                    <li><Link
-                        to="/fileAnalysis?aid=3"
-                        style={{fontSize: '24px'}}>文件表情分析</Link></li>
+                    {/*<li><Link*/}
+                        {/*to="/fileAnalysis?aid=590961"*/}
+                        {/*style={{fontSize: '24px'}}>文件表情分析</Link></li>*/}
                     {/*<li><Link*/}
                     {/*to="/studentSelectCourse?access_user=23852"*/}
                     {/*style={{fontSize: '24px'}}>学生选课系统</Link></li>*/}
+                    {/*<li><Link*/}
+                    {/*to="/particlePath"*/}
+                    {/*style={{fontSize: '24px'}}>运动轨迹</Link></li>*/}
+                    <li><Link
+                        to="/studentMovement"
+                        style={{fontSize: '24px'}}>学生轨迹热力</Link></li>
                 </ul>
             </div>
         );
@@ -489,6 +583,7 @@ ReactDOM.render(
             <Route path="workAttendance" getComponent={workAttendance}/>
             <Route path="noticeReadMore" getComponent={noticeReadMore}/>
             <Route path="classroomManage" getComponent={classroomManage}/>
+            <Route path="addTeachBuild" getComponent={addTeachBuild} />
             <Route path="workAttendance" getComponent={workAttendance}/>
             <Route path="noticeReadMore" getComponent={noticeReadMore}/>
             <Route path="addCurriculumSchedule" getComponent={addCurriculumSchedule}/>
@@ -499,6 +594,8 @@ ReactDOM.render(
             <Route path="publicClassCardHomePage" getComponent={publicClassCardHomePage}/>
             <Route path="moralEducation" getComponent={moralEducation}/>
             <Route path="addMoralEducation" getComponent={addMoralEducation}/>
+            <Route path="updateMoralEducation" getComponent={updateMoralEducation}/>
+            <Route path="assessMoralEducation" getComponent={assessMoralEducation}/>
             <Route path="updateClassroom" getComponent={updateClassroom}/>
             <Route path="notifyBack" getComponent={notifyBack}/>
             <Route path="addNotify" getComponent={addNotify}/>
@@ -513,6 +610,17 @@ ReactDOM.render(
             <Route path="classCardHomePageDoor" getComponent={classCardHomePageDoor}/>
             <Route path="fileAnalysis" getComponent={fileAnalysis}/>
             <Route path="studentSelectCourse" getComponent={studentSelectCourse}/>
+            <Route path="getClassRoomList" getComponent={getClassRoomList}/>
+            <Route path="getClassTableList" getComponent={getClassTableList}/>
+            <Route path="newCurriculumSchedule" getComponent={newCurriculumSchedule}/>
+            <Route path="newAddCurriculumSchedule" getComponent={newAddCurriculumSchedule}/>
+            <Route path="newUpdateCurriculumSchedule" getComponent={newUpdateCurriculumSchedule}/>
+            <Route path="classDemeanorList" getComponent={classDemeanorList}/>
+            <Route path="classHonorList" getComponent={classHonorList}/>
+            <Route path="clazzDutyList" getComponent={clazzDutyList}/>
+            <Route path="particlePath" getComponent={particlePath}/>
+            <Route path="studentMovement" getComponent={studentMovement}/>
         </Route>
     </Router>
-    , document.getElementById('example'));
+    ,
+    document.getElementById('example'));

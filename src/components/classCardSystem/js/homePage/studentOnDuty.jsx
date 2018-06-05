@@ -44,7 +44,6 @@ export default class studentOnDuty extends React.Component {
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
             onResponse: function (result) {
                 var weekOfTody = new Date().getDay();
-                console.log("week:" + weekOfTody);
                 var todyDuty = [];
                 var nextDuty = [];
                 if (result.success == true && result.msg == "调用成功") {

@@ -1,19 +1,12 @@
-(node) util.print is deprecated. Use console.log instead.
+#studentDutyList .content {
+  height: 100%;
+  overflow-y: auto;
+}
 #studentDutyList .am-button-small {
-  background: #f55d45;
-  color: #fff !important;
-  padding: 0 15px;
-  text-align: center;
-  -webkit-border-radius: 2px;
-  -moz-border-radius: 2px;
-  border-radius: 2px;
-  border: 0 !important;
-  font-size: 14px;
-  line-height: 24px;
-  height: 24px;
-  position: absolute;
-  right: 5px;
-  top: 0;
+  background-color: #fff;
+  height: 44px;
+  line-height: 44px;
+  border: none !important;
 }
 #studentDutyList .am-button-small:before {
   border: 0;
@@ -39,12 +32,17 @@
 }
 #studentDutyList .dutyList {
   background-color: #fff;
-  padding: 10px 15px;
+  height: calc(100% - 148px);
 }
 #studentDutyList .dutyList .planTitle {
   position: relative;
   font-size: 17px;
   line-height: 24px;
+  padding: 10px 15px;
+}
+#studentDutyList .am-grid {
+  height: calc(100% - 44px) !important;
+  overflow-y: auto;
 }
 #studentDutyList .am-grid .am-flexbox .am-flexbox-item .am-grid-item-content .am-grid-item-inner-content {
   height: auto;
@@ -60,20 +58,23 @@
 }
 #studentDutyList .am-grid.am-grid-square .am-grid-item .am-grid-item-inner-content {
   height: auto;
-  padding: 20px 0;
+  padding-bottom: 20px;
 }
 #studentDutyList .am-grid.am-grid-square .am-grid-item .am-grid-item-inner-content .am-grid-icon {
   -webkit-border-radius: 50%;
   -moz-border-radius: 50%;
   border-radius: 50%;
-  width: 38px!important;
-  height: 38px!important;
+  width: 50px!important;
+  height: 50px!important;
 }
 #studentDutyList .am-grid-text {
   width: 100%;
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
+  line-height: 14px;
+  font-size: 13px;
+  color: #464646;
 }
 #studentDutyList .am-grid.am-grid-line .am-flexbox,
 #studentDutyList .am-grid .am-flexbox .am-flexbox-item.am-grid-item,
@@ -82,7 +83,18 @@
 }
 @media only screen and (min-width: 600px) {
   #studentDutyList .am-grid.am-grid-square .am-grid-item .am-grid-item-inner-content .am-grid-icon {
-    width: 65px !important;
-    height: 65px !important;
+    width: 70px !important;
+    height: 70px !important;
   }
+}
+#studentDutyList .planTitle {
+  position: relative;
+  font-size: 17px;
+  line-height: 24px;
+  padding: 12px 15px 5px;
+  background-color: #fff;
+  border-bottom: 1px #f4f4f4 solid;
+}
+#studentDutyList .planTitle .top {
+  line-height: 44px;
 }

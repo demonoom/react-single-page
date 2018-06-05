@@ -105,6 +105,7 @@ export default class addNotify extends React.Component {
             };
             WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
                 onResponse: (result) => {
+                    // console.log(result);
                     if (result.msg == '调用成功' || result.success == true) {
                         Toast.success('调用成功', 1);
                         var data = {
@@ -150,7 +151,7 @@ export default class addNotify extends React.Component {
                     clear
                     moneyKeyboardAlign="left"
                     value={this.state.title}
-                    maxLength={30}
+                    maxLength={100}
                     onChange={this.titleHandleChange}
                 >输入标题</InputItem>
                 <WhiteSpace size="lg"/>
@@ -160,7 +161,7 @@ export default class addNotify extends React.Component {
                         title={""}
                         placeholder={"请输入添加内容"}
                         rows={5}
-                        count={100}
+                        count={2000}
                         value={this.state.content}
                         onChange={this.contentHandleChange}
                     />

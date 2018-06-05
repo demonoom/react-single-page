@@ -21,6 +21,7 @@ export default class curriculumSchedule extends React.Component {
             sValue: ['0', '0'],
             visible: false,
             classTableArray: [],
+            clientHeight: document.body.clientHeight,
             seasons: [[
                 {
                     label: '请选择',
@@ -114,6 +115,7 @@ export default class curriculumSchedule extends React.Component {
         };
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
             onResponse: function (result) {
+                
                 if (result.msg == '调用成功' || result.success == true) {
                     _this.buildSeasons(result.response, semesterList)
                 }
@@ -216,6 +218,7 @@ export default class curriculumSchedule extends React.Component {
      * @param v
      */
     viewCourseTableItemPage(v) {
+        // console.log("v",v);
         var _this = this;
         this.setState({asyncValue: v})
         if (this.state.sValue[0] == 0) {
@@ -252,8 +255,14 @@ export default class curriculumSchedule extends React.Component {
         };
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
             onResponse: function (result) {
+                console.log(result);
                 if (result.msg == '调用成功' || result.success == true) {
-                    var arr = result.response[0].courseList
+                    var arr;
+                    if(result.response.length === 0){
+                        arr = result.response;
+                    }else {
+                        arr = result.response[0].courseList
+                    }
                     _this.setState({classTableArray: arr});
                 }
             },
@@ -350,9 +359,8 @@ export default class curriculumSchedule extends React.Component {
                         return <li>
                             <div className="add_title">
                                 <span className="font_gray">第{i + 1}节</span>
-                                <span
-                                    className="amend_btn" onClick={this.turnToUpdatePage.bind(this, v)}>修改</span>
-                                <span className="delete" onClick={this.delSchedule.bind(this, v.id)}>删除</span>
+                                <span className="amend_btn modifyBtn_common" onClick={this.turnToUpdatePage.bind(this, v)}></span>
+                                <span className="delete deleteBtn_common" onClick={this.delSchedule.bind(this, v.id)}></span>
                             </div>
 
                             <div className="list_high list textOver">

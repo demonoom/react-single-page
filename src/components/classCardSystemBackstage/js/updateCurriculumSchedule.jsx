@@ -25,6 +25,7 @@ export default class updateCurriculumSchedule extends React.Component {
             terAsyncValue: [],
             ClassTableArr: [],  //课表结构
             ClassTableDataArr: [],  //课表数据
+            clientHeight: document.body.clientHeight,
         };
     }
 
@@ -49,8 +50,21 @@ export default class updateCurriculumSchedule extends React.Component {
         this.getTeacherByCreator();
         this.viewCourseTableItem(currentScheduleId);
         this.setState({curriculumType,asyncValue,currentScheduleId,termAsyncValue});
+        window.addEventListener('resize', this.onWindwoResize);
+        
     }
-
+    componentWillUnmount() {
+        window.removeEventListener('resize', this.onWindwoResize);
+    }
+    //监听窗口改变时间
+    onWindwoResize() {
+        // this
+        setTimeout(() => {
+            teacherV.setState({
+                clientHeight: document.body.clientHeight,
+            })
+        }, 100)
+    }
     /**
      * 星期切换的回调
      * @param val

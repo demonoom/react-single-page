@@ -76,23 +76,29 @@ export default class header extends React.Component {
 
     componentWillMount() {
         this.makeTime();
-        this.viewClassRoom()
-        var data = {
-            method: 'getAbCode',
-        };
+        this.viewClassRoom();
+        demeanor.getAbCode(returnCitySN["cip"])
 
-        /**
-         * 从客户端获取abcode用于请求天气
-         * 客户端没有传abcode将按照西安天气展示
-         */
-        Bridge.callHandler(data, function (res) {
-            demeanor.weatherInfo(res)
-            demeanor.setState({abcode: res})
-        }, function (error) {
-            Toast.fail('地点获取失败', 5);
-            demeanor.weatherInfo(610113);
-            demeanor.setState({abcode: 610113})
-        });
+        // $.getJSON('//freegeoip.net/json/', function (data) {
+        //     demeanor.getAbCode(data.ip)
+        // });
+
+        // var data = {
+        //     method: 'getAbCode',
+        // };
+        //
+        // /**
+        //  * 从客户端获取abcode用于请求天气
+        //  * 客户端没有传abcode将按照西安天气展示
+        //  */
+        // Bridge.callHandler(data, function (res) {
+        //     demeanor.weatherInfo(res)
+        //     demeanor.setState({abcode: res})
+        // }, function (error) {
+        //     Toast.fail('地点获取失败', 5);
+        //     demeanor.weatherInfo(610113);
+        //     demeanor.setState({abcode: 610113})
+        // });
     }
 
     componentDidUpdate() {
@@ -110,6 +116,13 @@ export default class header extends React.Component {
         clearInterval(timer)
     }
 
+    getAbCode(ip) {
+        $.get('http://restapi.amap.com/v3/ip?key=fce57f3f5ed99a1b7925992439e5a224&ip=' + ip, function (res) {
+            demeanor.weatherInfo(res.adcode)
+            demeanor.setState({abcode: res.adcode})
+        })
+    }
+
     viewClassRoom() {
         var param = {
             "method": 'viewClassRoom',
@@ -119,7 +132,9 @@ export default class header extends React.Component {
             onResponse: function (result) {
                 if (result.msg == '调用成功' || result.success == true) {
                     if (WebServiceUtil.isEmpty(result.response) == false) {
-                        demeanor.setState({classroomName: result.response.defaultBindedClazz.name})
+                        if (WebServiceUtil.isEmpty(result.response) == false && WebServiceUtil.isEmpty(result.response.defaultBindedClazz) == false) {
+                            demeanor.setState({classroomName: result.response.defaultBindedClazz.name})
+                        }
                     }
                 }
             },
