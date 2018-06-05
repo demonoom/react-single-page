@@ -414,6 +414,38 @@ const particlePath = (location, cb) => {
     )
 }
 
+const warning = (location, cb) => {
+    require.ensure([], require => {
+            cb(null, require("./components/warnAndHealthModule/js/warning").default)
+
+        }
+    )
+}
+
+const healthList = (location, cb) => {
+    require.ensure([], require => {
+            cb(null, require("./components/warnAndHealthModule/js/healthList").default)
+
+        }
+    )
+}
+
+const health = (location, cb) => {
+    require.ensure([], require => {
+            cb(null, require("./components/warnAndHealthModule/js/health").default)
+
+        }
+    )
+}
+
+const warnList = (location, cb) => {
+    require.ensure([], require => {
+            cb(null, require("./components/warnAndHealthModule/js/warnList").default)
+
+        }
+    )
+}
+
 import './index.less';
 
 class Index extends React.Component {
@@ -519,6 +551,12 @@ class Index extends React.Component {
                     {/*<li><Link*/}
                     {/*to="/particlePath"*/}
                     {/*style={{fontSize: '24px'}}>运动轨迹</Link></li>*/}
+                    <li><Link
+                    to="/warnList?userId=23836"
+                    style={{fontSize: '24px'}}>预警数据列表</Link></li>
+                    <li><Link
+                    to="/healthList?classId=819"
+                    style={{fontSize: '24px'}}>健康数据列表</Link></li>
                 </ul>
             </div>
         );
@@ -601,6 +639,10 @@ ReactDOM.render(
             <Route path="classHonorList" getComponent={classHonorList}/>
             <Route path="clazzDutyList" getComponent={clazzDutyList}/>
             <Route path="particlePath" getComponent={particlePath}/>
+            <Route path="healthList" getComponent={healthList}/>
+            <Route path="warning" getComponent={warning}/>
+            <Route path="health" getComponent={health}/>
+            <Route path="warnList" getComponent={warnList}/>
         </Route>
     </Router>
     ,
