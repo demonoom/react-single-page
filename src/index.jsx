@@ -193,7 +193,11 @@ const classroomManage = (location, cb) => {
         cb(null, require("./components/classCardSystemBackstage/js/classroomManage").default)
     })
 }
-
+const addClassroomManage = (location, cb) => {
+    require.ensure([], require => {
+        cb(null, require("./components/classCardSystemBackstage/js/addClassroomManage").default)
+    })
+}
 const addTeachBuild = (location, cb) => {
     require.ensure([], require => {
         cb(null, require("./components/classCardSystemBackstage/js/addTeachBuild").default)
@@ -225,6 +229,7 @@ const classDemeanor = (location, cb) => {
     })
 }
 
+//德育
 const moralEducation = (location, cb) => {
     require.ensure([], require => {
         cb(null, require("./components/classCardSystemBackstage/js/moralEducation").default)
@@ -580,7 +585,8 @@ ReactDOM.render(
             <Route path="workAttendance" getComponent={workAttendance}/>
             <Route path="noticeReadMore" getComponent={noticeReadMore}/>
             <Route path="classroomManage" getComponent={classroomManage}/>
-            <Route path="addTeachBuild" getComponent={addTeachBuild}/>
+            <Route path="addClassroomManage" getComponent={addClassroomManage} />
+            <Route path="addTeachBuild" getComponent={addTeachBuild} />
             <Route path="workAttendance" getComponent={workAttendance}/>
             <Route path="noticeReadMore" getComponent={noticeReadMore}/>
             <Route path="addCurriculumSchedule" getComponent={addCurriculumSchedule}/>
