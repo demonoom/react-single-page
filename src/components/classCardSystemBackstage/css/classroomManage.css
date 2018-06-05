@@ -72,7 +72,7 @@
 #classroomManage .tableDiv .classInfo {
   position: relative;
   padding: 15px 15px 2px 15px;
-  border-bottom: 1px #f4f4f4 solid;
+  border-bottom: 1px #eeeeee solid;
   line-height: 24px;
 }
 #classroomManage .tableDiv .classInfo .textOver {
