@@ -172,7 +172,6 @@ export default class studentMovement extends React.Component {
     }
 
     buildLine(data) {
-        debugger
         if (WebServiceUtil.isEmpty(data.content)) {
             Toast.fail('未查到相关数据')
             return
