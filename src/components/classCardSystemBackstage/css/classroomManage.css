@@ -90,7 +90,6 @@
   margin-top: 8px;
 }
 #classroomManage .tableDiv .floor {
-  color: #73B6F5;
   font-size: 14px;
   padding-left: 10px;
 }
@@ -122,6 +121,7 @@
 #classroomManage .addModel {
   box-sizing: border-box;
   position: relative;
+  height: 100%;
 }
 #classroomManage .addModel .bindGrade {
   padding: 4px 0;
@@ -174,13 +174,13 @@
   border-top: none;
 }
 #classroomManage .addModel .am-list .am-list-body .am-list-item .am-input-label {
-  color: #3c3c3c;
+  color: #333;
 }
 #classroomManage .addModel .am-list .am-list-body .am-list-item .am-input-control {
   line-height: 25px;
 }
 #classroomManage .addModel .am-list .am-list-body .am-list-item .am-input-control input {
-  color: #3c3c3c;
+  color: #333;
 }
 #classroomManage .addModel .am-list .am-list-body .am-list-line::after {
   height: 0px;
@@ -254,37 +254,27 @@
   font-size: 15px;
 }
 #classroomManage .addModel .mainCont {
-  height: calc(100% - 62px);
-  overflow-y: auto;
-}
-#classroomManage .addModel .mainCont.updateRoom {
   height: calc(100% - 77px);
+  overflow-y: auto;
 }
 #classroomManage .addModel .bottomBox {
   display: flex;
   position: absolute;
   left: 0;
-  bottom: 0;
-  width: 100%;
-}
-#classroomManage .addModel .bottomBox.updateSubmit {
   bottom: 15px;
-}
-#classroomManage .addModel .bottomBox.updateSubmit span {
-  font-size: 18px;
-  padding: 0;
-  line-height: 47px;
-  height: 47px;
-  -webkit-border-radius: 2px;
-  -moz-border-radius: 2px;
-  border-radius: 2px;
+  width: 100%;
 }
 #classroomManage .addModel .bottomBox span {
   flex: 1;
   text-align: center;
   font-size: 17px;
-  padding: 1rem;
+  padding: 0;
+  line-height: 47px;
+  height: 47px;
   display: inline-block;
+  -webkit-border-radius: 2px;
+  -moz-border-radius: 2px;
+  border-radius: 2px;
 }
 #classroomManage .addModel .bottomBox .bind {
   background: #F56A55;

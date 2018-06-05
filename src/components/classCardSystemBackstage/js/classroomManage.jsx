@@ -240,7 +240,7 @@ export default class classroomManage extends React.Component {
                             {
                                 rowData.defaultBindedClazz ? <span className="grade">{rowData.defaultBindedClazz.name}</span> : <span className="grade"></span>
                             }
-                            <span className="floor">{rowData.building.name}</span>
+                            <span className="floor">{rowData.building.name ? `(${rowData.building.name})` : ""}</span>
                         </div>
                         <div className="div_creatTime">
                             <span className="creatTime">

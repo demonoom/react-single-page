@@ -1,0 +1,23 @@
+(node) util.print is deprecated. Use console.log instead.
+#health .am-list-thumb img {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+}
+#health .noomImg {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+}
+#health .firstClass {
+  color: red;
+}
+#health .secondClass {
+  color: blue;
+}
+#health .thirdClass {
+  color: green;
+}
+#health .otherClass {
+  color: black;
+}

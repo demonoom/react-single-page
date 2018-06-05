@@ -89,7 +89,6 @@
       margin-top: 8px;
     }
     .floor{
-      color: #73B6F5;
       font-size: 14px;
       padding-left: 10px;
     }
@@ -131,6 +130,7 @@
   .addModel {
     box-sizing: border-box;
     position: relative;
+    height: 100%;
     .bindGrade{
       padding: 4px 0;
     }
@@ -194,13 +194,13 @@
         .am-list-item {
           // padding: 2rem 2rem;
           .am-input-label{
-            color: #3c3c3c;
+            color: #333;
           }
           .am-input-control{
             line-height: 25px;
           }
           .am-input-control input {
-            color: #3c3c3c;
+            color: #333;
           }
         }
 
@@ -281,36 +281,26 @@
 
     }
     .mainCont{
-      height: calc(~"100% - 62px");
+      height: calc(~"100% - 77px");
       overflow-y: auto;
-      &.updateRoom{
-        height: calc(~"100% - 77px");
-      }
     }
     .bottomBox {
       display: flex;
       position: absolute;
       left:0;
-      bottom: 0;
+      bottom: 15px;
       width: 100%;
-      &.updateSubmit{
-        bottom: 15px;
-        span{
-          font-size: 18px;
-          padding: 0;
-          line-height: 47px;
-          height: 47px;
-          -webkit-border-radius: 2px;
-          -moz-border-radius: 2px;
-          border-radius: 2px;
-        }
-      }
       span {
         flex: 1;
         text-align: center;
         font-size: 17px;
-        padding: 1rem;
+        padding: 0;
+        line-height: 47px;
+        height: 47px;
         display: inline-block;
+        -webkit-border-radius: 2px;
+        -moz-border-radius: 2px;
+        border-radius: 2px;
       }
       .bind {
         background: #F56A55;

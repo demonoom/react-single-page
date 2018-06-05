@@ -82,7 +82,6 @@ export default class updateClassroom extends React.Component {
         };
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
             onResponse: function (result) {
-            
                 if (result.msg == '调用成功' && result.success == true) {
                     var clazzRoom = result.response
                     var roomName = clazzRoom.name;
@@ -321,74 +320,76 @@ export default class updateClassroom extends React.Component {
 }
     render() {
         return (
-            <div>
+            <div id="classroomManage" style={{ height: updateCM.state.clientHeight }}>
                 <div className='addModel'>
-                    <WhiteSpace size="lg" />
-                    <List>
-                        <div className='classroomName'>
-                            <InputItem
-                                placeholder="请输入教室名称"
-                                data-seed="logId"
-                                onChange={v => {
-                                    updateCM.setState({
-                                        "classroomValue": v
-                                    })
-                                }}
-                                value={this.state.classroomValue}
-                            >教室名称<i className='redStar'>*</i></InputItem>
-                        </div>
+                    <div className="mainCont">
                         <WhiteSpace size="lg" />
-                        <div className='gradeName'>
-                            <InputItem
-                                placeholder="请输入班级名称"
-                                data-seed="logId"
-                                onChange={v => {
-                                    updateCM.setState({
-                                        "gradeValue": v,
-                                        "classId": "",
-                                        showPicker:false
-                                    })
-                                }}
-                                value={this.state.gradeValue}
-                            >班级名称<i className='redStar'>*</i></InputItem>
-                            <Picker
-                                disabled={updateCM.state.showPicker}
-                                data={this.state.searchData}
-                                cols={1}
-                                className="forss calmForss"
-                                value={this.state.gradeValueByNoom}
-                                onPickerChange={this.onGradeChange}
-                                onOk={v => { this.gradeOk(v) }}
-                            >
-                                <div id='stIcon' className='stIcon' onClick={this.searchClassroomName}>
-                                    <img src={require('../imgs/icon_search.png')} />
-                                </div>
-                            </Picker>
-                        </div>
-                        <WhiteSpace size="lg" />
-                        {
-                            updateCM.state.buildingId != 0 ?
-                                <div className='teachBuild'>
-                                    <Picker
-                                        data={this.state.teachBuildData}
-                                        cols={1}
-                                        className="forss"
-                                        value={this.state.buildingId}
-                                        onPickerChange={this.onPickerChange}
-                                        onDismiss={this.onCancle}
-                                        onOk={v => this.viewCourseTableItemPage(v)}
-                                    >
-                                        <Item arrow="horizontal" onClick={this.viewSchoolBuildingPage.bind(this,
-                                            updateCM.state.uid,false)
-                                        }
-                                        >选择教学楼</Item>
-                                    </Picker>
-                                </div>
-                                :
-                                <div></div>
-                        }
-                    </List>
-                    <div className="bottomBox">
+                        <List>
+                            <div className='classroomName'>
+                                <InputItem
+                                    placeholder="请输入教室名称"
+                                    data-seed="logId"
+                                    onChange={v => {
+                                        updateCM.setState({
+                                            "classroomValue": v
+                                        })
+                                    }}
+                                    value={this.state.classroomValue}
+                                >教室名称<i className='redStar'>*</i></InputItem>
+                            </div>
+                            <WhiteSpace size="lg" />
+                            <div className='gradeName'>
+                                <InputItem
+                                    placeholder="请输入班级名称"
+                                    data-seed="logId"
+                                    onChange={v => {
+                                        updateCM.setState({
+                                            "gradeValue": v,
+                                            "classId": "",
+                                            showPicker:false
+                                        })
+                                    }}
+                                    value={this.state.gradeValue}
+                                >班级名称<i className='redStar'>*</i></InputItem>
+                                <Picker
+                                    disabled={updateCM.state.showPicker}
+                                    data={this.state.searchData}
+                                    cols={1}
+                                    className="forss calmForss"
+                                    value={this.state.gradeValueByNoom}
+                                    onPickerChange={this.onGradeChange}
+                                    onOk={v => { this.gradeOk(v) }}
+                                >
+                                    <div id='stIcon' className='stIcon' onClick={this.searchClassroomName}>
+                                        <img src={require('../imgs/icon_search.png')} />
+                                    </div>
+                                </Picker>
+                            </div>
+                            <WhiteSpace size="lg" />
+                            {
+                                updateCM.state.buildingId != 0 ?
+                                    <div className='teachBuild'>
+                                        <Picker
+                                            data={this.state.teachBuildData}
+                                            cols={1}
+                                            className="forss"
+                                            value={this.state.buildingId}
+                                            onPickerChange={this.onPickerChange}
+                                            onDismiss={this.onCancle}
+                                            onOk={v => this.viewCourseTableItemPage(v)}
+                                        >
+                                            <Item arrow="horizontal" onClick={this.viewSchoolBuildingPage.bind(this,
+                                                updateCM.state.uid,false)
+                                            }
+                                            >选择教学楼</Item>
+                                        </Picker>
+                                    </div>
+                                    :
+                                    <div></div>
+                            }
+                        </List>
+                    </div>
+                    <div className="bottomBox submitBtn">
                         <span className="bind" onClick={this.binding}>提 交</span>
                     </div>
 
