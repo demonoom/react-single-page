@@ -1,4 +1,3 @@
-(node) util.print is deprecated. Use console.log instead.
 #noticeReadMore .am-list {
   height: calc(100% - 2.22rem) !important;
 }
@@ -11,7 +10,7 @@
 }
 #noticeReadMore .ulBox li {
   padding: 1.11rem 0 .83rem;
-  border-bottom: 1px #f4f4f4 solid;
+  border-bottom: 1px #e5ebf7 solid;
 }
 #noticeReadMore .ulBox li .title {
   font-size: .78rem;
