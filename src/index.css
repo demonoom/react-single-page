@@ -394,6 +394,17 @@ hr {
 .am-modal-content .am-modal-button-group-h::before {
   background-color: #dfdfdf !important;
 }
+html:not([data-scale]) .am-list-item:not(:last-child) .am-list-line::after {
+  background-color: #eee !important;
+}
+.am-grid.am-grid-line .am-flexbox::after,
+.am-grid.am-grid-line:not(.am-grid-carousel)::after {
+  background-color: #eee !important;
+}
+.am-list-item .am-list-line .am-list-content,
+.am-list-item .am-input-label {
+  color: #333 !important;
+}
 /*班牌屏幕适配*/
 @media only screen and (min-width: 768px) and (max-width: 799px) {
   html {

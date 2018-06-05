@@ -1,4 +1,6 @@
-(node) util.print is deprecated. Use console.log instead.
 #classHonorList {
   overflow-y: auto;
+}
+#classHonorList .am-list-item .am-list-line .am-list-content {
+  padding: 15px 0;
 }

@@ -9,7 +9,7 @@
 }
 #assessMoralEducation .classInfo {
   padding: 23px 15px 13px;
-  border-bottom: 1px #f4f4f4 solid;
+  border-bottom: 1px #eee solid;
   position: relative;
   font-size: 14px;
   color: #464646;
@@ -54,4 +54,7 @@
   background-color: #fff;
   text-align: center;
   line-height: 98px;
+}
+#assessMoralEducation .am-list-body::after {
+  background-color: #eee;
 }
