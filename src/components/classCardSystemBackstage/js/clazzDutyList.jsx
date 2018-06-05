@@ -189,20 +189,28 @@ export default class clazzDutyList extends React.Component {
                     clazzDutyUserList.push(userTag);
                 });
             }
+            var clazzName = ''
+            if (WebServiceUtil.isEmpty(rowData.clazz) == false) {
+                clazzName = rowData.clazz.name
+            }
             return (<div>
-                {
-                    <div className="classInfo line_public">
-                        <div className="am-list-item am-list-item-middle" onClick={_this.turnToClazzDetail.bind(_this,rowData.clazz)}>
-                            <div className="am-list-line">
-                                <div className="am-list-content">{(rowData.clazz.name)}</div>
-                                <span className="choiceData am-list-extra" style={{ float: 'right', color: '#888', 'font-size':'14px' }}>查看所有</span><div className="am-list-arrow am-list-arrow-horizontal"></div>
+                    {
+                        <div className="classInfo line_public">
+                            <div className="am-list-item am-list-item-middle"
+                                 onClick={_this.turnToClazzDetail.bind(_this, rowData.clazz)}>
+                                <div className="am-list-line">
+                                    <div className="am-list-content">{clazzName}</div>
+                                    <span className="choiceData am-list-extra"
+                                          style={{float: 'right', color: '#888', 'font-size': '14px'}}>查看所有</span>
+                                    <div className="am-list-arrow am-list-arrow-horizontal"></div>
+                                </div>
                             </div>
+                            <div className="today_duty">今日值日</div>
+                            <div className="today_dutylist">{clazzDutyUserList.length == 0 ?
+                                <div className="no_data">暂无今日值日表</div> : clazzDutyUserList}</div>
                         </div>
-                        <div className="today_duty">今日值日</div>
-                        <div className="today_dutylist">{clazzDutyUserList.length==0?<div className="no_data">暂无今日值日表</div>:clazzDutyUserList}</div>
-                    </div>
-                }
-            </div>
+                    }
+                </div>
 
             )
         };
