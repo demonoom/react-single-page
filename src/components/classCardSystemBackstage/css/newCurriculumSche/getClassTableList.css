@@ -1,4 +1,3 @@
-(node) util.print is deprecated. Use console.log instead.
 #getClassTableList {
   font-size: 17px;
 }
@@ -48,14 +47,13 @@
 #getClassTableList .tableDiv .classInfo {
   position: relative;
   padding: 10px 0;
-  border-bottom: 1px #eeeeee solid;
   line-height: 24px;
 }
 #getClassTableList .tableDiv .classInfo .textOver {
   font-size: 16px;
 }
 #getClassTableList .tableDiv .classroom {
-  color: #464646;
+  color: #666;
 }
 #getClassTableList .tableDiv .grade {
   color: #a9a9a9;
@@ -223,13 +221,13 @@
   display: inline-block;
 }
 #getClassTableList .amList .am-list-item .am-list-line .am-list-content {
-  color: #464646;
+  color: #666 !important;
 }
 #getClassTableList .am-list-line::after {
   background: transparent;
 }
 #getClassTableList .tableListDate {
-  color: #464646;
+  color: #666;
   padding-left: 15px;
   width: 100%;
   box-sizing: border-box;
