@@ -425,10 +425,39 @@ const particlePath = (location, cb) => {
     )
 }
 
+const warning = (location, cb) => {
+    require.ensure([], require => {
+            cb(null, require("./components/warnAndHealthModule/js/warning").default)
+
+        }
+    )
+}
+
+const healthList = (location, cb) => {
+    require.ensure([], require => {
+            cb(null, require("./components/warnAndHealthModule/js/healthList").default)
+
+        }
+    )
+}
+
+const health = (location, cb) => {
+    require.ensure([], require => {
+            cb(null, require("./components/warnAndHealthModule/js/health").default)
+
+        }
+    )
+}
+
+const warnList = (location, cb) => {
+    require.ensure([], require => {
+        cb(null, require("./components/warnAndHealthModule/js/warnList").default)
+    })
+}
+
 const studentMovement = (location, cb) => {
     require.ensure([], require => {
             cb(null, require("./components/charts/heatmap/js/studentMovement").default)
-
         }
     )
 }
@@ -536,6 +565,12 @@ class Index extends React.Component {
                     {/*to="/particlePath"*/}
                     {/*style={{fontSize: '24px'}}>运动轨迹</Link></li>*/}
                     <li><Link
+                        to="/warnList?userId=23836"
+                        style={{fontSize: '24px'}}>预警数据列表</Link></li>
+                    <li><Link
+                        to="/healthList?classId=819"
+                        style={{fontSize: '24px'}}>健康数据列表</Link></li>
+                    <li><Link
                         to="/studentMovement?access_user=23836"
                         style={{fontSize: '24px'}}>学生轨迹热力</Link></li>
                 </ul>
@@ -585,8 +620,8 @@ ReactDOM.render(
             <Route path="workAttendance" getComponent={workAttendance}/>
             <Route path="noticeReadMore" getComponent={noticeReadMore}/>
             <Route path="classroomManage" getComponent={classroomManage}/>
-            <Route path="addClassroomManage" getComponent={addClassroomManage} />
-            <Route path="addTeachBuild" getComponent={addTeachBuild} />
+            <Route path="addClassroomManage" getComponent={addClassroomManage}/>
+            <Route path="addTeachBuild" getComponent={addTeachBuild}/>
             <Route path="workAttendance" getComponent={workAttendance}/>
             <Route path="noticeReadMore" getComponent={noticeReadMore}/>
             <Route path="addCurriculumSchedule" getComponent={addCurriculumSchedule}/>
@@ -622,6 +657,10 @@ ReactDOM.render(
             <Route path="classHonorList" getComponent={classHonorList}/>
             <Route path="clazzDutyList" getComponent={clazzDutyList}/>
             <Route path="particlePath" getComponent={particlePath}/>
+            <Route path="healthList" getComponent={healthList}/>
+            <Route path="warning" getComponent={warning}/>
+            <Route path="health" getComponent={health}/>
+            <Route path="warnList" getComponent={warnList}/>
             <Route path="studentMovement" getComponent={studentMovement}/>
         </Route>
     </Router>

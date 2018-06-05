@@ -132,6 +132,7 @@ export default class studentMovement extends React.Component {
         var locationSearchArray = locationSearch.split("&");
         var ident = locationSearchArray[0].split("=")[1];
         this.setState({ident});
+        document.title = '学生运动轨迹统计图'
     }
 
     startTimeOnOk(time) {
@@ -220,7 +221,8 @@ export default class studentMovement extends React.Component {
                         <span className="add_element">{this.state.endTimeValue}<i
                             className="icon_triangle"></i></span>
                     </DatePicker>
-                    <Button type="primary" className="blue_btn" inline size="small" onClick={this.viewBuildingStatistics}>确定</Button>
+                    <Button type="primary" className="blue_btn" inline size="small"
+                            onClick={this.viewBuildingStatistics}>确定</Button>
                 </div>
                 <WhiteSpace size="lg"/>
                 <div style={{height: '350px'}} className="echarts_wrap">
