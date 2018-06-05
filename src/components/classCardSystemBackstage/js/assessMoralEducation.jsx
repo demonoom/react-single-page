@@ -238,7 +238,7 @@ export default class assessMoralEducation extends React.Component {
         const row = (rowData, sectionID, rowID) => {
             return (<div>
                 {
-                    <div className="classInfo">
+                    <div className="classInfo line_public">
                         <div className="topDiv">
                             <div className="fl">
                                 <span>班级卫生评分</span>

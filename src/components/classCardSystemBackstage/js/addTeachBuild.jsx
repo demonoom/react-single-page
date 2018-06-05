@@ -1,5 +1,6 @@
 import React from "react";
 import { InputItem, Toast } from 'antd-mobile';
+import "../css/addTeachBuild.less"
 var addTeachB;
 export default class addTeachBuild extends React.Component {
     constructor(props) {
@@ -66,7 +67,7 @@ export default class addTeachBuild extends React.Component {
                         value={this.state.teachBuildValue}
                     >教学楼名称<i className='redStar'>*</i></InputItem>
                 </div>
-                <div className="bottomBox">
+                <div className="bottomBox submitBtn">
                     <span className="submit" onClick={this.submitNewTeactBuild}>提 交</span>
                 </div>
             </div>

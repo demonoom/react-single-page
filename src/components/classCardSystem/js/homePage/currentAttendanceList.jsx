@@ -33,6 +33,10 @@ export default class currentAttendanceList extends React.Component {
         this.openTimeInterVal(classTableId);
     }
 
+    componentWillUnmount() {
+        clearInterval(timer)
+    }
+
     openTimeInterVal(classTableId) {
         //开启定时器获取实到人数
         timer = setInterval(function () {
@@ -114,7 +118,8 @@ export default class currentAttendanceList extends React.Component {
                 }
                 var studentHeaderTag = <div className="photoItem">
                     <div className={classFlag}><img src={studentAvatar}/></div>
-                    <img className="signIcon_green" hidden={!isExist} src={require('../../img/green_right_image.png')} alt="" />
+                    <img className="signIcon_green" hidden={!isExist} src={require('../../img/green_right_image.png')}
+                         alt=""/>
                     <div className="signIcon" hidden={isExist}>{checkedTip}</div>
                     <div className="studentName">
                         {studentOfAll.userName}

@@ -2,3 +2,9 @@
 #classDemeanorList {
   overflow-y: auto;
 }
+#classDemeanorList .am-list-item .am-list-line .am-list-content {
+  padding: 15px 0;
+}
+#classDemeanorList .am-list-item:not(:last-child) .am-list-line::after {
+  background-color: #eee;
+}

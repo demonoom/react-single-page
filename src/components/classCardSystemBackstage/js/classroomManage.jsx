@@ -128,7 +128,6 @@ export default class classroomManage extends React.Component {
         Bridge.callHandler(data, null, function (error) {
             window.location.href = url;
         });
-        // $('.tableDiv').hide("fast");
     };
 
 
@@ -232,17 +231,16 @@ export default class classroomManage extends React.Component {
         const row = (rowData, sectionID, rowID) => {
             return (<div>
                 {
-                    <div className="classInfo">
+                    <div className="classInfo line_public">
                         <div className="textOver">
                             <span className="classroom">{rowData.name}</span>
                         </div>
-                        <div className="">
-                            <span>{rowData.building.name}</span>
-                        </div>
+
                         <div className="textOver">
                             {
                                 rowData.defaultBindedClazz ? <span className="grade">{rowData.defaultBindedClazz.name}</span> : <span className="grade"></span>
                             }
+                            <span className="floor">{rowData.building.name}</span>
                         </div>
                         <div className="div_creatTime">
                             <span className="creatTime">

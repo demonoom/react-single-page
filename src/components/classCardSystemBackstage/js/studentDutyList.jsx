@@ -89,7 +89,7 @@ export default class studentDutyList extends React.Component {
                         var weekChart = _this.weekNumToChart(week);
                         if (WebServiceUtil.isEmpty(week) == false) {
                             var dutyTag = <div>
-                                <div className="planTitle">
+                                <div className="planTitle line_public">
                                     <div className="top">
                                         <span>星期{weekChart}</span>
                                         <Button className="modifyBtn_common" type="primary" size="small"
