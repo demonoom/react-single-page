@@ -1,4 +1,3 @@
-(node) util.print is deprecated. Use console.log instead.
 #curriculumSchedule .addBunton {
   width: 3rem;
   height: 3rem;
@@ -46,7 +45,8 @@
   color: #fff;
   border-radius: 2px;
 }
-#curriculumSchedule .lineList {
+#curriculumSchedule .lineList,
+#curriculumSchedule .list_high {
   line-height: 36px;
   height: 36px;
 }
