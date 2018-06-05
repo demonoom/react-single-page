@@ -1,0 +1,58 @@
+(node) util.print is deprecated. Use console.log instead.
+#studentMovement {
+  background: #fff;
+}
+#studentMovement .add_element {
+  background-color: #f6f6f6;
+  color: #333;
+  text-align: left;
+  height: 44px;
+  line-height: 44px;
+  width: 100%;
+  display: inline-block;
+  text-indent: 8px;
+  font-size: 17px;
+  position: relative;
+  overflow: hidden;
+}
+#studentMovement .teacher_list {
+  padding-top: 15px;
+}
+#studentMovement .teacher_list div {
+  margin-left: 8px;
+  min-width: 10px;
+}
+#studentMovement .teacher_list div:first-child {
+  margin-left: 0;
+}
+#studentMovement .teacher_list div:first-child,
+#studentMovement .teacher_list div:nth-child(2) {
+  width: 40%;
+}
+#studentMovement .icon_triangle {
+  width: 0;
+  height: 0;
+  border-width: 7px 5px;
+  border-style: solid;
+  border-color: #a9a9a9 transparent transparent transparent;
+  position: absolute;
+  right: 10px;
+  top: 19px;
+}
+#studentMovement .blue_btn {
+  border: none;
+  height: 44px;
+  line-height: 44px;
+  width: 20%;
+  margin-left: 8px;
+  font-size: 16px;
+  background: #F56A55 ;
+}
+#studentMovement .blue_btn:before,
+#studentMovement .blue_btn:after {
+  border: none;
+}
+#studentMovement .am-whitespace.am-whitespace-lg {
+  background: #f4f4f4;
+  margin: 15px 0;
+}

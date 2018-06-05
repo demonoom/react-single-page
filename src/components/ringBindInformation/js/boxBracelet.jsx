@@ -189,7 +189,8 @@ export default class boxBracelet extends React.Component {
         };
         Bridge.callHandler(data, function (mes) {
             //获取二维码MAC地址
-            bindDing.setState({macId: mes});
+            var string = mes.replace(/:/g, '');
+            bindDing.setState({macId: string});
         }, function (error) {
             console.log(error);
         });
