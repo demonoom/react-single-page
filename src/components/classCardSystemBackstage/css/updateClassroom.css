@@ -214,12 +214,16 @@
 }
 #updateClassroom .addModel .classroomName .stIcon,
 #updateClassroom .addModel .gradeName .stIcon {
-  width: 18px;
-  height: 28px;
+  width: 15px;
+  height: 19px;
   position: absolute;
   right: 15px;
   top: 50%;
-  margin-top: -12px;
+  -webkit-transform: translateY(-50%);
+  -moz-transform: translateY(-50%);
+  -ms-transform: translateY(-50%);
+  -o-transform: translateY(-50%);
+  transform: translateY(-50%);
 }
 #updateClassroom .addModel .classroomName .stIcon img,
 #updateClassroom .addModel .gradeName .stIcon img {
