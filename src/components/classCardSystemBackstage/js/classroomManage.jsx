@@ -119,7 +119,7 @@ export default class classroomManage extends React.Component {
      * 开启添加教室管理的界面
      */
     addClassroomM = () => {
-        var url = WebServiceUtil.mobileServiceURL + "addClassroomManage?uid="+classBinding.state.ui;
+        var url = WebServiceUtil.mobileServiceURL + "addClassroomManage?uid="+classBinding.state.uid;
         var data = {
             method: 'openNewPage',
             url: url
