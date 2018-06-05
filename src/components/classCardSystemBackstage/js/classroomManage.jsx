@@ -366,7 +366,7 @@ export default class classroomManage extends React.Component {
         const row = (rowData, sectionID, rowID) => {
             return (<div>
                 {
-                    <div className="classInfo">
+                    <div className="classInfo line_public">
                         <div className="textOver">
                             <span className="classroom">{rowData.name}</span>
                         </div>

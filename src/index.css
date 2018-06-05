@@ -394,16 +394,31 @@ hr {
 .am-modal-content .am-modal-button-group-h::before {
   background-color: #dfdfdf !important;
 }
-html:not([data-scale]) .am-list-item:not(:last-child) .am-list-line::after {
-  background-color: #eee !important;
-}
-.am-grid.am-grid-line .am-flexbox::after,
-.am-grid.am-grid-line:not(.am-grid-carousel)::after {
-  background-color: #eee !important;
-}
 .am-list-item .am-list-line .am-list-content,
 .am-list-item .am-input-label {
   color: #333 !important;
+}
+.line_public {
+  position: relative;
+}
+.line_public:after {
+  content: '';
+  position: absolute;
+  background-color: #eeeeee;
+  display: block;
+  z-index: 1;
+  top: auto;
+  right: 15px;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 1PX;
+  -webkit-transform-origin: 50% 100%;
+  -ms-transform-origin: 50% 100%;
+  transform-origin: 50% 100%;
+  -webkit-transform: scaleY(0.5);
+  -ms-transform: scaleY(0.5);
+  transform: scaleY(0.5);
 }
 /*班牌屏幕适配*/
 @media only screen and (min-width: 768px) and (max-width: 799px) {
