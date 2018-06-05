@@ -228,9 +228,7 @@ export default class addClassroomManage extends React.Component {
             gradeValueByNoom,
         });
     }
-    onCancle = () => {
-        console.log("123");
-    }
+    
     render() {
         return (
             <div className='addModel'>
