@@ -8,7 +8,7 @@ import {
     PullToRefresh,
     Checkbox, Flex
 } from 'antd-mobile';
-import '../css/updateClassroom.less'
+
 import { ucs2 } from 'punycode';
 
 const RadioItem = Radio.RadioItem;
@@ -222,86 +222,88 @@ export default class updateClassroom extends React.Component {
     render() {
         var _this = this;
         return (
-            <div id="updateClassroom" style={{ height: updateCM.state.clientHeight }}>
+            <div id="classroomManage" style={{ height: updateCM.state.clientHeight }}>
                 <div className='addModel' style={{ height: updateCM.state.clientHeight }}>
-                    <WhiteSpace size="lg" />
-                    <List>
-                        <div className='classroomName'>
-                            <InputItem
-                                placeholder="请输入教室名称"
-                                data-seed="logId"
-                                onChange={v => {
-                                    updateCM.setState({
-                                        "classroomValue": v
-                                    })
-                                }}
-                                value={this.state.classroomValue}
-                            >教室名称<i className='redStar'>*</i></InputItem>
-                        </div>
+                    <div className="mainCont updateRoom">
                         <WhiteSpace size="lg" />
-                        <div className='gradeName'>
-                            <InputItem
-                                placeholder="请输入班级名称"
-                                data-seed="logId"
-                                onChange={v => {
-                                    updateCM.setState({
-                                        "gradeNameValue": v,
-                                        "classId": ""
-                                    })
-                                }}
-                                value={this.state.gradeNameValue}
-                            >班级名称<i className='redStar'>*</i></InputItem>
-                            <div id='stIcon' className='stIcon' onClick={this.searchClassroomName}>
-                                <img src={require('../imgs/icon_search.png')} />
+                        <List>
+                            <div className='classroomName'>
+                                <InputItem
+                                    placeholder="请输入教室名称"
+                                    data-seed="logId"
+                                    onChange={v => {
+                                        updateCM.setState({
+                                            "classroomValue": v
+                                        })
+                                    }}
+                                    value={this.state.classroomValue}
+                                >教室名称<i className='redStar'>*</i></InputItem>
                             </div>
-                        </div>
-                        <div className='chooseResult'
-                            style={{ display: this.state.chooseResultDiv }}>
-                            <List>
-                                {updateCM.state.searchData.map(i => (
-                                    <RadioItem key={i.id} checked={updateCM.state.gradeNameValue === i.name} onChange={() => this.onDataChange(i.name, i.id)}>
-                                        {i.name}
-                                    </RadioItem>
-                                ))}
-                            </List>
-                        </div>
-                        {
-                            updateCM.state.buildingId ?
-                                <div>
-                                    <div className='teachBuild'>
-                                        <InputItem
-                                            placeholder="请选择对应教学楼"
-                                            data-seed="logId"
-                                            disabled="false"
-                                            onChange={v => {
-                                                updateCM.setState({
-                                                    "teachBuildValue": v
-                                                })
-                                            }}
-                                            value={this.state.teachBuildValue}
-                                        >教学楼名称<i className='redStar'>*</i></InputItem>
-                                    </div>
-                                    <div className='chooseResult'
-                                        style={{ display: "block", height: 220 }}>
-                                        <div>
-                                            <span>教学楼名称列表</span>
-                                            <button onClick={this.toAddTeachBuild}>新增</button>
-                                        </div>
-                                        <List>
-                                            {updateCM.state.teachBuildData.map(i => (
-                                                <RadioItem key={i.id} checked={updateCM.state.teachBuildValue === i.name} onChange={() => this.teachBuildDataChange(i.name, i.id)}>
-                                                    {i.name}
-                                                </RadioItem>
-                                            ))}
-                                        </List>
-                                    </div>
+                            <WhiteSpace size="lg" />
+                            <div className='gradeName'>
+                                <InputItem
+                                    placeholder="请输入班级名称"
+                                    data-seed="logId"
+                                    onChange={v => {
+                                        updateCM.setState({
+                                            "gradeNameValue": v,
+                                            "classId": ""
+                                        })
+                                    }}
+                                    value={this.state.gradeNameValue}
+                                >班级名称<i className='redStar'>*</i></InputItem>
+                                <div id='stIcon' className='stIcon' onClick={this.searchClassroomName}>
+                                    <img src={require('../imgs/icon_search.png')} />
                                 </div>
-                                :
-                                <div></div>
-                        }
+                            </div>
+                            <WhiteSpace size="lg" />
+                            <div className='chooseResult'
+                                style={{ display: this.state.chooseResultDiv }}>
+                                <List>
+                                    {updateCM.state.searchData.map(i => (
+                                        <RadioItem key={i.id} checked={updateCM.state.gradeNameValue === i.name} onChange={() => this.onDataChange(i.name, i.id)}>
+                                            {i.name}
+                                        </RadioItem>
+                                    ))}
+                                </List>
+                            </div>
+                            {
+                                updateCM.state.buildingId ?
+                                    <div>
+                                        <div className='teachBuild'>
+                                            <InputItem
+                                                placeholder="请选择对应教学楼"
+                                                data-seed="logId"
+                                                disabled="false"
+                                                onChange={v => {
+                                                    updateCM.setState({
+                                                        "teachBuildValue": v
+                                                    })
+                                                }}
+                                                value={this.state.teachBuildValue}
+                                            >教学楼名称<i className='redStar'>*</i></InputItem>
+                                        </div>
+                                        <div className='chooseResult'
+                                            style={{ display: "block" }}>
+                                            <div className="cont">
+                                                <div onClick={this.toAddTeachBuild}>新增教学楼名称</div>
+                                            </div>
+                                            <List>
+                                                {updateCM.state.teachBuildData.map(i => (
+                                                    <RadioItem key={i.id} checked={updateCM.state.teachBuildValue === i.name} onChange={() => this.teachBuildDataChange(i.name, i.id)}>
+                                                        {i.name}
+                                                    </RadioItem>
+                                                ))}
+                                            </List>
+                                        </div>
+                                    </div>
+                                    :
+                                    <div></div>
+                            }
 
-                    </List>
-                    <div className="bottomBox submitBtn">
+                        </List>
+                    </div>
+                    <div className="bottomBox submitBtn updateSubmit">
                         <span className="bind" onClick={this.binding}>提 交</span>
                     </div>
                 </div>

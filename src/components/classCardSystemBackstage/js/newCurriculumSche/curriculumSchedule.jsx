@@ -159,7 +159,7 @@ export default class curriculumSchedule extends React.Component {
                                 <div>
                                     {
                                         courseList.map(function (v, i) {
-                                            return <div>
+                                            return <div className="bottom_15">
                                                 <div className="add_title">
                                                     <span className="text_hidden color_7"
                                                           style={{width: 'calc(50% - 20px)'}}>{v.openTime + '-' + v.closeTime}</span>

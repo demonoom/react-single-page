@@ -17,7 +17,7 @@
   height: calc(100% - 59px);
 }
 #curriculumSchedule .curriculum_cont li {
-  border-bottom: 1px solid #f4f4f4;
+  border-bottom: 1px solid #eee;
   padding: 10px 0;
 }
 #curriculumSchedule .curriculum_cont li div.list span {
@@ -46,7 +46,9 @@
   color: #fff;
   border-radius: 2px;
 }
-#curriculumSchedule .lineList {
+#curriculumSchedule .lineList,
+#curriculumSchedule .list_high,
+#curriculumSchedule .add_title {
   line-height: 36px;
   height: 36px;
 }
@@ -80,4 +82,10 @@
   font-size: 14px;
   text-align: center;
   line-height: 30px;
+}
+#curriculumSchedule .bottom_15 {
+  margin-bottom: 15px;
+}
+#curriculumSchedule li div .bottom_15:last-child {
+  margin-bottom: 0;
 }

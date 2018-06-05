@@ -75,9 +75,6 @@ export default class classHonorList extends React.Component {
                     <div className="am-list-content">
                         {item[k].name}
                     </div>
-                    <div className="am-list-extra">
-                        <span className='classDetail'></span>
-                    </div>
                     <div className="am-list-arrow am-list-arrow-horizontal"></div>
 
                 </div></li>);

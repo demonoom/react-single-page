@@ -13,6 +13,7 @@
   /*height: calc(~"100% - 70px");*/
   height: 100%;
   overflow-y: auto;
+  width: 100%;
 }
 #getClassTableList .am-pull-to-refresh-indicator {
   font-size: 1rem !important;
@@ -47,7 +48,7 @@
 #getClassTableList .tableDiv .classInfo {
   position: relative;
   padding: 10px 0;
-  border-bottom: 1px #f4f4f4 solid;
+  border-bottom: 1px #eeeeee solid;
   line-height: 24px;
 }
 #getClassTableList .tableDiv .classInfo .textOver {

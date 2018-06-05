@@ -366,17 +366,16 @@ export default class classroomManage extends React.Component {
         const row = (rowData, sectionID, rowID) => {
             return (<div>
                 {
-                    <div className="classInfo">
+                    <div className="classInfo line_public">
                         <div className="textOver">
                             <span className="classroom">{rowData.name}</span>
                         </div>
-                        <div className="">
-                            <span>{rowData.building.name}</span>
-                        </div>
+
                         <div className="textOver">
                             {
                                 rowData.defaultBindedClazz ? <span className="grade">{rowData.defaultBindedClazz.name}</span> : <span className="grade"></span>
                             }
+                            <span className="floor">{rowData.building.name}</span>
                         </div>
                         <div className="div_creatTime">
                             <span className="creatTime">
@@ -429,76 +428,77 @@ export default class classroomManage extends React.Component {
                     </div>
                 </div>
                 <div className='addModel' style={{ height: classBinding.state.clientHeight }}>
-                    <WhiteSpace size="lg" />
-                    <List>
-                        <div className='classroomName'>
-                            <InputItem
-                                placeholder="请输入教室名称"
-                                data-seed="logId"
-                                onChange={v => {
-                                    classBinding.setState({
-                                        "classroomValue": v
-                                    })
-                                }}
-                                value={this.state.classroomValue}
-                            >教室名称<i className='redStar'>*</i></InputItem>
-                        </div>
+                    <div className="mainCont">
                         <WhiteSpace size="lg" />
-                        <div className='gradeName'>
-                            <InputItem
-                                placeholder="请输入班级名称"
-                                data-seed="logId"
-                                onChange={v => {
-                                    classBinding.setState({
-                                        "gradeNameValue": v,
-                                        "classId": ""
-                                    })
-                                }}
-                                value={this.state.gradeNameValue}
-                            >班级名称<i className='redStar'>*</i></InputItem>
-                            <div id='stIcon' className='stIcon' onClick={this.searchClassroomName}>
-                                <img src={require('../imgs/icon_search.png')} />
+                        <List>
+                            <div className='classroomName'>
+                                <InputItem
+                                    placeholder="请输入教室名称"
+                                    data-seed="logId"
+                                    onChange={v => {
+                                        classBinding.setState({
+                                            "classroomValue": v
+                                        })
+                                    }}
+                                    value={this.state.classroomValue}
+                                >教室名称<i className='redStar'>*</i></InputItem>
                             </div>
-                        </div>
-                        <div className='chooseResult'
-                            style={{ display: this.state.chooseResultDiv}}>
-                            <List>
-                                {classBinding.state.searchData.map(i => (
-                                    <RadioItem key={i.id} checked={classBinding.state.gradeNameValue === i.name} onChange={() => this.onDataChange(i.name, i.id)}>
-                                        {i.name}
-                                    </RadioItem>
-                                ))}
-                            </List>
-                        </div>
-                        <WhiteSpace size="lg" />
-                        <div className='teachBuild'>
-                            <InputItem
-                                placeholder="请选择对应教学楼"
-                                data-seed="logId"
-                                disabled="false"
-                                onChange={v => {
-                                    classBinding.setState({
-                                        "teachBuildValue": v
-                                    })
-                                }}
-                                value={this.state.teachBuildValue}
-                            >教学楼名称<i className='redStar'>*</i></InputItem>
-                        </div>
-                        <div className='chooseResult'
-                            style={{ display: "block", height: 220 }}>
-                            <div>
-                                <span>教学楼名称列表</span>
-                                <button onClick={this.toAddTeachBuild}>新增</button>
+                            <WhiteSpace size="lg" />
+                            <div className='gradeName'>
+                                <InputItem
+                                    placeholder="请输入班级名称"
+                                    data-seed="logId"
+                                    onChange={v => {
+                                        classBinding.setState({
+                                            "gradeNameValue": v,
+                                            "classId": ""
+                                        })
+                                    }}
+                                    value={this.state.gradeNameValue}
+                                >班级名称<i className='redStar'>*</i></InputItem>
+                                <div id='stIcon' className='stIcon' onClick={this.searchClassroomName}>
+                                    <img src={require('../imgs/icon_search.png')} />
+                                </div>
                             </div>
-                            <List>
-                                {classBinding.state.teachBuildData.map(i => (
-                                    <RadioItem key={i.id} checked={classBinding.state.teachBuildValue === i.name} onChange={() => this.teachBuildDataChange(i.name, i.id)}>
-                                        {i.name}
-                                    </RadioItem>
-                                ))}
-                            </List>
-                        </div>
-                    </List>
+                            <div className='chooseResult'
+                                style={{ display: this.state.chooseResultDiv}}>
+                                <List>
+                                    {classBinding.state.searchData.map(i => (
+                                        <RadioItem key={i.id} checked={classBinding.state.gradeNameValue === i.name} onChange={() => this.onDataChange(i.name, i.id)}>
+                                            {i.name}
+                                        </RadioItem>
+                                    ))}
+                                </List>
+                            </div>
+                            <WhiteSpace size="lg" />
+                            <div className='teachBuild'>
+                                <InputItem
+                                    placeholder="请选择对应教学楼"
+                                    data-seed="logId"
+                                    disabled="false"
+                                    onChange={v => {
+                                        classBinding.setState({
+                                            "teachBuildValue": v
+                                        })
+                                    }}
+                                    value={this.state.teachBuildValue}
+                                >教学楼名称<i className='redStar'>*</i></InputItem>
+                            </div>
+                            <div className='chooseResult'
+                                style={{ display: "block"}}>
+                                <div className="cont">
+                                    <div onClick={this.toAddTeachBuild}>新增教学楼名称</div>
+                                </div>
+                                <List>
+                                    {classBinding.state.teachBuildData.map(i => (
+                                        <RadioItem key={i.id} checked={classBinding.state.teachBuildValue === i.name} onChange={() => this.teachBuildDataChange(i.name, i.id)}>
+                                            {i.name}
+                                        </RadioItem>
+                                    ))}
+                                </List>
+                            </div>
+                        </List>
+                    </div>
                     <div className="bottomBox">
                         <span onClick={this.cancelAddModel} className="close">关 闭</span>
                         <span className="bind" onClick={this.binding}>提 交</span>
