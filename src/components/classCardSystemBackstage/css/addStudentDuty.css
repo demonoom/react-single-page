@@ -10,6 +10,9 @@
   box-sizing: border-box;
   position: relative;
 }
+#addStudentDuty .bg_white .am-list-content {
+  color: #666!important;
+}
 #addStudentDuty .am-list {
   height: 100%;
 }
@@ -27,7 +30,7 @@
 }
 #addStudentDuty .am-list-header {
   font-size: 17px;
-  color: #000;
+  color: #333;
   padding-bottom: 5px;
 }
 #addStudentDuty .am-list-body {
@@ -39,7 +42,7 @@
   background: none !important;
 }
 #addStudentDuty .am-list-body .am-list-item {
-  border-bottom: 1px #f4f4f4 solid;
+  border-bottom: .5px #eee solid;
 }
 #addStudentDuty .am-list-body .am-list-line::after {
   background-color: #fff;
@@ -53,5 +56,5 @@
   padding: 0 15px;
   background-color: #fff;
   font-size: 17px;
-  color: #000;
+  color: #333;
 }

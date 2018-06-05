@@ -1,3 +1,4 @@
+(node) util.print is deprecated. Use console.log instead.
 #classCardHomePageDoor {
   background: #fff;
 }
@@ -15,7 +16,7 @@
 #classCardHomePageDoor .classCardHomePageDoor li:after {
   content: '';
   position: absolute;
-  background-color: #e5e5e5;
+  background-color: #eeeeee;
   display: block;
   z-index: 1;
   top: auto;

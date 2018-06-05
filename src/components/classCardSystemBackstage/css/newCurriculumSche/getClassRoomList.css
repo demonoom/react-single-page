@@ -58,7 +58,6 @@
 #getClassRoomList .tableDiv .classInfo {
   position: relative;
   padding: 0;
-  border-bottom: 1px #f4f4f4 solid;
   line-height: 24px;
 }
 #getClassRoomList .tableDiv .classInfo .textOver {

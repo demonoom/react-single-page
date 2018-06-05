@@ -1,4 +1,3 @@
-(node) util.print is deprecated. Use console.log instead.
 #addMoralEducation {
   overflow-y: auto;
   height: 100%;
@@ -60,13 +59,13 @@
 #addMoralEducation .am-list-body::before,
 #addMoralEducation .am-list-body::after {
   border: none;
-  background: #fff;
-}
-#addMoralEducation .am-list-line::after {
   background: none;
 }
+#addMoralEducation .am-list-line::after {
+  display: none !important;
+}
 #addMoralEducation .am-list-line {
-  border-bottom: 1px #f4f4f4 solid;
+  border-bottom: .5px #eee solid;
   padding-right: 0;
   margin-right: 15px;
 }

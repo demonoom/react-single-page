@@ -149,7 +149,7 @@ export default class getClassRoomList extends React.Component {
             return (
                 <div onClick={this.turnToClassTable.bind(this, rowData)}>
                     {
-                        <div className="classInfo">
+                        <div className="classInfo line_public">
                             <div className="am-list-item am-list-item-middle">
                                 <div className="am-list-line">
                                     <div className="am-list-content">{rowData.name}</div>
@@ -191,10 +191,10 @@ export default class getClassRoomList extends React.Component {
                         style={{
                             height: classBinding.state.clientHeight,
                         }}
-                        pullToRefresh={<PullToRefresh
-                            onRefresh={this.onRefresh}
-                            distanceToRefresh={80}
-                        />}
+                        // pullToRefresh={<PullToRefresh
+                        //     onRefresh={this.onRefresh}
+                        //     distanceToRefresh={80}
+                        // />}
                     />
                 </div>
             </div>
