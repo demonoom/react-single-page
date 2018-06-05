@@ -233,69 +233,72 @@ export default class addClassroomManage extends React.Component {
     }
     render() {
         return (
-            <div className='addModel'>
-                <WhiteSpace size="lg" />
-                <List>
-                    <div className='classroomName'>
-                        <InputItem
-                            placeholder="请输入教室名称"
-                            data-seed="logId"
-                            onChange={v => {
-                                classBinding.setState({
-                                    "classroomValue": v
-                                })
-                            }}
-                            value={this.state.classroomValue}
-                        >教室名称<i className='redStar'>*</i></InputItem>
-                    </div>
-                    <WhiteSpace size="lg" />
-                    <div className='gradeName'>
-                        <InputItem
-                            placeholder="请输入班级名称"
-                            data-seed="logId"
-                            onChange={v => {
-                                classBinding.setState({
-                                    "gradeValue": v,
-                                    "classId": ""
-                                })
-                            }}
-                            value={this.state.gradeValue}
-                        >班级名称<i className='redStar'>*</i></InputItem>
-                        <Picker
-                            data={this.state.searchData}
-                            cols={1}
-                            className="forss"
-                            value={this.state.gradeValueByNoom}
-                            onPickerChange={this.onGradeChange}
-                            onOk={v => { this.gradeOk(v) }}
-                        >
-                            <div id='stIcon' className='stIcon' onClick={this.searchClassroomName}>
-                                <img src={require('../imgs/icon_search.png')} />
+            <div id="classroomManage" style={{ height: classBinding.state.clientHeight }}>
+                <div className='addModel'>
+                    <div className="mainCont">
+                        <WhiteSpace size="lg" />
+                        <List>
+                            <div className='classroomName'>
+                                <InputItem
+                                    placeholder="请输入教室名称"
+                                    data-seed="logId"
+                                    onChange={v => {
+                                        classBinding.setState({
+                                            "classroomValue": v
+                                        })
+                                    }}
+                                    value={this.state.classroomValue}
+                                >教室名称<i className='redStar'>*</i></InputItem>
                             </div>
-                        </Picker>
+                            <WhiteSpace size="lg" />
+                            <div className='gradeName'>
+                                <InputItem
+                                    placeholder="请输入班级名称"
+                                    data-seed="logId"
+                                    onChange={v => {
+                                        classBinding.setState({
+                                            "gradeValue": v,
+                                            "classId": ""
+                                        })
+                                    }}
+                                    value={this.state.gradeValue}
+                                >班级名称<i className='redStar'>*</i></InputItem>
+                                <Picker
+                                    data={this.state.searchData}
+                                    cols={1}
+                                    className="forss"
+                                    value={this.state.gradeValueByNoom}
+                                    onPickerChange={this.onGradeChange}
+                                    onOk={v => { this.gradeOk(v) }}
+                                >
+                                    <div id='stIcon' className='stIcon' onClick={this.searchClassroomName}>
+                                        <img src={require('../imgs/icon_search.png')} />
+                                    </div>
+                                </Picker>
+                            </div>
+                            <WhiteSpace size="lg" />
+                            <div className='teachBuild'>
+                                <Picker
+                                    data={this.state.teachBuildData}
+                                    cols={1}
+                                    className="forss"
+                                    value={this.state.buildingId}
+                                    onPickerChange={this.onPickerChange}
+                                    onDismiss={this.onCancle}
+                                    onOk={v => this.viewCourseTableItemPage(v)}
+                                >
+                                    <Item arrow="horizontal" onClick={this.viewSchoolBuildingPage.bind(this,
+                                        classBinding.state.uid)
+                                    }
+                                    >选择教学楼</Item>
+                                </Picker>
+                            </div>
+                        </List>
                     </div>
-                    <WhiteSpace size="lg" />
-                    <div className='teachBuild'>
-                        <Picker
-                            data={this.state.teachBuildData}
-                            cols={1}
-                            className="forss"
-                            value={this.state.buildingId}
-                            onPickerChange={this.onPickerChange}
-                            onDismiss={this.onCancle}
-                            onOk={v => this.viewCourseTableItemPage(v)}
-                        >
-                            <Item arrow="horizontal" onClick={this.viewSchoolBuildingPage.bind(this,
-                                classBinding.state.uid)
-                            }
-                            >选择教学楼</Item>
-                        </Picker>
+                    <div className="bottomBox submitBtn">
+                        <span className="bind" onClick={this.binding}>提 交</span>
                     </div>
-                </List>
-                <div className="bottomBox">
-                    <span className="bind" onClick={this.binding}>提 交</span>
                 </div>
-
             </div>
         )
     }
