@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactEcharts from 'echarts-for-react';
-import {DatePicker, Button, Toast} from 'antd-mobile'
+import {DatePicker, WhiteSpace, Button, Toast} from 'antd-mobile'
 import '../css/studentMovement.less'
 
 // var columnarChartOption = {
@@ -104,7 +104,7 @@ export default class studentMovement extends React.Component {
                     }
                 },
                 grid: {
-                    left: '3%',
+                    left: '2%',
                     right: '4%',
                     bottom: '3%',
                     containLabel: true
@@ -202,8 +202,7 @@ export default class studentMovement extends React.Component {
         var _this = this;
         return (
             <div id="studentMovement" style={{height: document.body.clientHeight}}>
-
-                <div>
+                <div className="flex_container my_flex teacher_list teacher_list_p">
                     <DatePicker
                         mode="date"
                         use24Hours
@@ -222,10 +221,10 @@ export default class studentMovement extends React.Component {
                         <span className="add_element">{this.state.endTimeValue}<i
                             className="icon_triangle"></i></span>
                     </DatePicker>
-                    <Button type="primary" inline size="small" onClick={this.viewBuildingStatistics}>确定</Button>
+                    <Button type="primary" className="blue_btn" inline size="small" onClick={this.viewBuildingStatistics}>确定</Button>
                 </div>
-
-                <div style={{height: '300px'}} className="echarts_wrap">
+                <WhiteSpace size="lg"/>
+                <div style={{height: '350px'}} className="echarts_wrap">
                     <ReactEcharts
                         option={this.state.columnarChartOption}
                         style={{height: '100%', width: '100%'}}
