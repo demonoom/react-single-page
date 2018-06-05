@@ -10,7 +10,6 @@ export default class classHonorList extends React.Component {
     }
 
     componentWillMount() {
-        // debugger
         var locationHref = decodeURI(window.location.href);
         var locationSearch = locationHref.substr(locationHref.indexOf("?") + 1);
         var searchArray = locationSearch.split("&");

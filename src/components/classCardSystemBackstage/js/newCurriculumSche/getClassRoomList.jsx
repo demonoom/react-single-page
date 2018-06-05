@@ -191,10 +191,10 @@ export default class getClassRoomList extends React.Component {
                         style={{
                             height: classBinding.state.clientHeight,
                         }}
-                        pullToRefresh={<PullToRefresh
-                            onRefresh={this.onRefresh}
-                            distanceToRefresh={80}
-                        />}
+                        // pullToRefresh={<PullToRefresh
+                        //     onRefresh={this.onRefresh}
+                        //     distanceToRefresh={80}
+                        // />}
                     />
                 </div>
             </div>
