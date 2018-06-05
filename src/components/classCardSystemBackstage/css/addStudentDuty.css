@@ -10,6 +10,9 @@
   box-sizing: border-box;
   position: relative;
 }
+#addStudentDuty .bg_white .am-list-content {
+  color: #666!important;
+}
 #addStudentDuty .am-list {
   height: 100%;
 }
@@ -46,9 +49,6 @@
 }
 #addStudentDuty .am-list-body div:not(:last-child) .am-list-line {
   border-bottom: 0;
-}
-#addStudentDuty .am-checkbox-input {
-  color: #666;
 }
 #addStudentDuty .dutyTime {
   height: 44px;

@@ -188,7 +188,7 @@ export default class clazzDutyList extends React.Component {
             }
             return (<div>
                 {
-                    <div className="classInfo">
+                    <div className="classInfo line_public">
                         <div className="am-list-item am-list-item-middle" onClick={_this.turnToClazzDetail.bind(_this,rowData.clazz)}>
                             <div className="am-list-line">
                                 <div className="am-list-content">{(rowData.clazz.grade==undefined?'':rowData.clazz.grade.name)+""+rowData.clazz.name}</div>

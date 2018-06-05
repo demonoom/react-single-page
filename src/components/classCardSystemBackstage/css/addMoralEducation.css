@@ -59,10 +59,10 @@
 #addMoralEducation .am-list-body::before,
 #addMoralEducation .am-list-body::after {
   border: none;
-  background: #fff;
+  background: none;
 }
 #addMoralEducation .am-list-line::after {
-  background: none !important;
+  display: none !important;
 }
 #addMoralEducation .am-list-line {
   border-bottom: .5px #eee solid;
