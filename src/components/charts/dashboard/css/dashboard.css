@@ -44,23 +44,17 @@
   flex-wrap: wrap;
 }
 #dashboard .cont .list_wrap_padding {
-  width: 33.3%;
+  width: 25%;
   height: auto;
   box-sizing: border-box;
+  padding-right: 3%;
 }
 #dashboard .cont .list_wrap_padding.table_class {
-  width: 30%;
   height: 230px;
   overflow: hidden;
 }
-#dashboard .cont .list_wrap_padding.classAfter {
-  width: 20%;
-}
 #dashboard .cont .list_wrap_padding.startClassNum {
   height: 300px;
-}
-#dashboard .cont .list_wrap_padding.resource {
-  width: 50%;
 }
 #dashboard .cont .tableTitle {
   margin-bottom: 10px;
@@ -109,5 +103,5 @@
 }
 #dashboard .list_wrap_padding {
   padding: 0;
-  margin-bottom: 80px;
+  margin-bottom: 30px;
 }

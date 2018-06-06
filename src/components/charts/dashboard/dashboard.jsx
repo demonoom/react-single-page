@@ -383,14 +383,14 @@ export default class dashboard extends React.Component {
                 formatter: "{a} <br/>{b} : {c} ({d}%)"
             },
             legend: {
-                bottom: 0,
+                bottom: 15,
                 left: 'left',
                 data: xClazzNameArray
             },
             series : [
                 {
                     type: 'pie',
-                    radius : '40%',
+                    radius : '50%',
                     center: ['50%', '50%'],
                     selectedMode: 'single',
                     data:seriesDataArray,
@@ -558,11 +558,11 @@ export default class dashboard extends React.Component {
             grid: [{
                 top: 50,
                 width: '45%',
-                bottom: '45%',
+                bottom: '15',
                 left: 0,
                 containLabel: true
             }, {
-                top: 50,
+                top: 100,
                 width: '45%',
                 bottom: '0',
                 left: 0,
@@ -907,13 +907,16 @@ export default class dashboard extends React.Component {
                             {/*{this.state.divContentArray}*/}
                         </div>
                     </div>
-                    <div className="list_wrap_padding resource">
-                        {this.state.cloudFileDiv}
+
+                    <div className="list_wrap_padding pB20 ">
+                        {this.state.topicDiv}
                     </div>
 
                     <div className="list_wrap_padding pB20 classAfter">
                         {this.state.homeWorkDiv}
                     </div>
+
+
 
                     <div className="list_wrap_padding startClassNum">
                         {this.state.openClazzDiv}
@@ -925,15 +928,17 @@ export default class dashboard extends React.Component {
                         {this.state.hotPlaceScatterChartDiv}
                     </div>*/}
 
-                    <div className="list_wrap_padding pB20 ">
-                        {this.state.topicDiv}
+
+
+
+                    <div className="list_wrap_padding resource">
+                        {this.state.cloudFileDiv}
                     </div>
-
-
 
                     <div className="list_wrap_padding">
                         {this.state.stepChartDiv}
                     </div>
+
 
 
                 </div>
