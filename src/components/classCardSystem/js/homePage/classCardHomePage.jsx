@@ -95,6 +95,7 @@ export default class classCardHomePage extends React.Component {
                             <CurrentAttendance
                                 messageUtilObj={this.state.messageInfo}
                             />
+                            <Application/>
                         </div>
                         <div className="home_left">
                             <StudentOnDuty
@@ -105,11 +106,12 @@ export default class classCardHomePage extends React.Component {
                             />
                         </div>
                         <div className="home_center">
-                            <ClassDemeanor
-                                classCommand={this.state.classCommand}
-                            />
                             <div>
-                                <Application/>
+                                <ClassDemeanor
+                                    classCommand={this.state.classCommand}
+                                />
+                            </div>
+                            <div>
                                 <Notify
                                     classCommand={this.state.classCommand}
                                 />
