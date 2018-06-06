@@ -32,6 +32,23 @@ export default class addClassroomManage extends React.Component {
         var locationSearch = locationHref.substr(locationHref.indexOf("?") + 1);
         var uid = locationSearch.split("&")[0].split("=")[1];
         this.setState({ "uid": uid });
+        window.addEventListener('resize', classBinding.onWindowResize)
+    }
+
+    componentWillUnmount() {
+        //解除监听
+        window.removeEventListener('resize', classBinding.onWindowResize)
+    }
+
+    /**
+     * 视窗改变时改变高度
+     */
+    onWindowResize() {
+        setTimeout(function () {
+            classBinding.setState({
+                clientHeight: document.body.clientHeight,
+            });
+        }, 100)
     }
     /**
     * searchClassroomName搜索班级的名称

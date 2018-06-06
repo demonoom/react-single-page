@@ -27,8 +27,22 @@ export default class addNotify extends React.Component {
 
     componentDidMount() {
         Bridge.setShareAble("false");
-        document.title = "通知列表";
-        // this.getClazzesByUserId();
+        document.title = "添加通知页面";
+        window.addEventListener('resize', calm.onWindowResize)
+    }
+    componentWillUnmount() {
+        //解除监听
+        window.removeEventListener('resize', calm.onWindowResize)
+    }
+      /**
+     * 视窗改变时改变高度
+     */
+    onWindowResize() {
+        setTimeout(function () {
+            calm.setState({
+                clientHeight: document.body.clientHeight,
+            });
+        }, 100)
     }
     getClassRoomId(){
         var _this = this;
@@ -49,11 +63,13 @@ export default class addNotify extends React.Component {
                             })
                         })
                         calm.setState({pickerData: arr});
+                    }else {
+                        Toast.fail(result.msg, 1);
                     }
                 }
             },
             onError: function (error) {
-                // message.error(error);
+                message.error(error);
             }
         });
     }
@@ -75,8 +91,6 @@ export default class addNotify extends React.Component {
             asyncValue,
             classroomId: asyncValue[0],
         });
-
-        
     };
 
     //提交
@@ -106,7 +120,6 @@ export default class addNotify extends React.Component {
             };
             WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
                 onResponse: (result) => {
-                    // console.log(result);
                     if (result.msg == '调用成功' || result.success == true) {
                         Toast.success('调用成功', 1);
                         var data = {
@@ -115,6 +128,8 @@ export default class addNotify extends React.Component {
                         Bridge.callHandler(data, null, function (error) {
                             console.log(error);
                         });
+                    }else {
+                        Toast.fail(result.msg, 1);
                     }
                 },
                 onError: function (error) {
