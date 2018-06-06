@@ -127,6 +127,34 @@ export default class classCardHomePageDoor extends React.Component {
         });
     }
 
+    /**
+     * 课堂预警
+     */
+    turnToWarnList = () => {
+        var url = WebServiceUtil.mobileServiceURL + "warnList?userId=" + this.state.ident;
+        var data = {
+            method: 'openNewPage',
+            url: url
+        };
+        Bridge.callHandler(data, null, function (error) {
+            window.location.href = url;
+        });
+    }
+
+    /**
+     * 学生运动轨迹
+     */
+    turnToStudentMovement = () => {
+        var url = WebServiceUtil.mobileServiceURL + "studentMovement?userId=" + this.state.ident;
+        var data = {
+            method: 'openNewPage',
+            url: url
+        };
+        Bridge.callHandler(data, null, function (error) {
+            window.location.href = url;
+        });
+    }
+
     render() {
         return (
             <div id="classCardHomePageDoor" style={{height: document.body.clientHeight}}>
@@ -138,7 +166,7 @@ export default class classCardHomePageDoor extends React.Component {
                     <li onClick={this.turnToCurriculumSchedule.bind(this, 1)}><i
                         className="icon icon_course"></i>课程表管理<i className="arrow_right"></i></li>
                     <li onClick={this.turnToNotifyBack}><i className="icon icon_notify"></i>通知管理<i
-                            className="arrow_right"></i></li>
+                        className="arrow_right"></i></li>
                     {/*<li onClick={this.turnToCurriculumSchedule.bind(this, 2)}><i className="icon icon_publiCourse"></i>公共教室课程表<i className="arrow_right"></i></li>*/}
                     <li onClick={this.turnToClassDemeanor.bind(this, 1)}><i className="icon icon_classDemeanor"></i>班级风采管理<i
                         className="arrow_right"></i></li>
@@ -147,6 +175,10 @@ export default class classCardHomePageDoor extends React.Component {
                     <li onClick={this.turnToStudentDutyList}><i className="icon icon_studentOnDuty"></i>班级值日表管理<i
                         className="arrow_right"></i></li>
                     <li onClick={this.turnToMoralEducation}><i className="icon icon_moralEducationScore"></i>德育评价管理<i
+                        className="arrow_right"></i></li>
+                    <li onClick={this.turnToWarnList}><i className="icon icon_moralEducationScore"></i>课堂预警<i
+                        className="arrow_right"></i></li>
+                    <li onClick={this.turnToStudentMovement}><i className="icon icon_moralEducationScore"></i>学生运动轨迹<i
                         className="arrow_right"></i></li>
                 </ul>
             </div>

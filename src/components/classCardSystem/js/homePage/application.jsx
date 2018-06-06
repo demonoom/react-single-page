@@ -31,6 +31,28 @@ export default class application extends React.Component {
         });
     }
 
+    intoNFC() {
+        var data = {
+            method: 'gotoNFCbyKK',
+        };
+
+        Bridge.callHandler(data, null, function (error) {
+
+        });
+    }
+
+    intoHealthList() {
+        var url = WebServiceUtil.mobileServiceURL + "healthList?classId=" + localStorage.getItem('clazzId');
+        var data = {
+            method: 'openNewPage',
+            url: url
+        };
+
+        Bridge.callHandler(data, null, function (error) {
+            window.location.href = url;
+        });
+    }
+
     render() {
         return (
             <div id="application" className="application_height home_card">
@@ -39,6 +61,14 @@ export default class application extends React.Component {
                     <li className="app_list" onClick={this.intoApplication}>
                         <div className="app_list_img"><span className="task"></span></div>
                         <div className="app_list_text text_hidden">蚁巢作业</div>
+                    </li>
+                    <li className="app_list" onClick={this.intoNFC}>
+                        <div className="app_list_img"><span className="task"></span></div>
+                        <div className="app_list_text text_hidden">NFC</div>
+                    </li>
+                    <li className="app_list" onClick={this.intoHealthList}>
+                        <div className="app_list_img"><span className="task"></span></div>
+                        <div className="app_list_text text_hidden">健康数据</div>
                     </li>
                 </div>
             </div>
