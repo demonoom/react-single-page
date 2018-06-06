@@ -169,7 +169,12 @@ export default class dashboard extends React.Component {
             title: {
                 text: '蚁巢活跃度统计',
                 subtext: '',
-                left: 'center'
+                left: 'left',
+                textStyle:{
+                    color:'#a6abb9',
+                    fontSize: 16,
+                    fontWeight: 'normal'
+                }
             },
             xAxis: {
                 type: 'category',
@@ -180,7 +185,23 @@ export default class dashboard extends React.Component {
             },
             series: [{
                 data: seriesData,
-                type: 'bar'
+                type: 'bar',
+
+                itemStyle: {
+                    //通常情况下：
+                    normal: {
+                        //每个柱子的颜色即为colorList数组里的每一项，如果柱子数目多于colorList的长度，则柱子颜色循环使用该数组
+                        color: function (params) {
+                            var colorList = ['#f00', '#ff0'];
+                            if((params.dataIndex+1)%2 == 0){//为偶数的数据使用第一个颜色，其他使用第二个颜色
+                                return colorList[0];//1,3,5,7
+                            }else{
+                                return colorList[1];//2,4,6,8
+                            }
+
+                        }
+                    },
+                }
             }]
         };
     }
@@ -238,7 +259,12 @@ export default class dashboard extends React.Component {
             title : {
                 text: '蚁盘资源上传情况分布',
                 subtext: '',
-                x:'center'
+                x:'center',
+                textStyle:{
+                    color:'#a6abb9',
+                    fontSize: 16,
+                    fontWeight: 'normal'
+                }
             },
             tooltip : {
                 trigger: 'item',
@@ -310,7 +336,12 @@ export default class dashboard extends React.Component {
             title: {
                 text: '班级作业布置情况分析',
                 subtext: '',
-                left: 'center'
+                left: 'left',
+                textStyle:{
+                    color:'#a6abb9',
+                    fontSize: 16,
+                    fontWeight: 'normal'
+                }
             },
             tooltip : {
                 trigger: 'item',
@@ -457,12 +488,22 @@ export default class dashboard extends React.Component {
                 text: '今日开课次数统计',
                 subtext: '',
                 x: '25%',
-                textAlign: 'center'
+                textAlign: 'center',
+                textStyle:{
+                    color:'#a6abb9',
+                    fontSize: 16,
+                    fontWeight: 'normal'
+                }
             }, {
                 text: '本月开课次数统计',
                 subtext: '',
                 x: '75%',
-                textAlign: 'center'
+                textAlign: 'center',
+                textStyle:{
+                    color:'#a6abb9',
+                    fontSize: 16,
+                    fontWeight: 'normal'
+                }
             }],
             grid: [{
                 top: 50,
@@ -481,7 +522,8 @@ export default class dashboard extends React.Component {
                 type: 'value',
                 splitLine: {
                     show: false
-                }
+                },
+
             }],
             yAxis: [{
                 type: 'category',
@@ -503,7 +545,7 @@ export default class dashboard extends React.Component {
                 label: {
                     normal: {
                         position: 'right',
-                        show: true
+                        show: true,
                     }
                 },
                 data: Object.keys(todayOpenClazzJson.components).map(function (key) {
@@ -722,55 +764,56 @@ export default class dashboard extends React.Component {
         var _this = this;
         return (
             <div id="dashboard">
-                <div>
-                    <div>学校名称：{_this.state.schoolName}</div>
-                    <div>总人数：{_this.state.userCount}人</div>
-                    <div>24小时消息收发数量：{_this.state.messageCount}条</div>
+                <div className="cont">
+                    <div className="topTitle">
+                        <div>学校名称：{_this.state.schoolName}</div>
+                        <div>总人数：{_this.state.userCount}人</div>
+                        <div>24小时消息收发数量：{_this.state.messageCount}条</div>
+                    </div>
+                    <div className="list_wrap_padding topList">
+                        <div>当前开课列表</div>
+                        <div className="tableDiv">
+                            <table>
+                                <thead>
+                                <tr>
+                                    <td>课程名</td>
+                                    <td>班级</td>
+                                    <td>授课老师</td>
+                                    <td>开课时间</td>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                {_this.state.openClazzTrArray}
+                                </tbody>
+                            </table>
+                        </div>
+                        {/*{this.state.divContentArray}*/}
+                    </div>
+
+                    <div className="list_wrap_padding">
+                        {this.state.openClazzDiv}
+                    </div>
+
+                    <div className="list_wrap_padding">
+                        {this.state.homeWorkDiv}
+                    </div>
+
+                    {/*<div className="list_wrap_padding">
+                        {this.state.hotPlaceScatterChartDiv}
+                    </div>*/}
+
+                    <div className="list_wrap_padding">
+                        {this.state.topicDiv}
+                    </div>
+
+                    <div className="list_wrap_padding resource">
+                        {this.state.cloudFileDiv}
+                    </div>
+
+                    <div className="list_wrap_padding">
+                        {this.state.stepChartDiv}
+                    </div>
                 </div>
-                <div className="list_wrap_padding">
-                    <div>当前开课列表</div>
-                    <table>
-                        <thead>
-                        <tr>
-                            <td>课程名</td>
-                            <td>班级</td>
-                            <td>授课老师</td>
-                            <td>开课时间</td>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        {_this.state.openClazzTrArray}
-                        </tbody>
-                    </table>
-                    {/*{this.state.divContentArray}*/}
-                </div>
-
-                <div className="list_wrap_padding">
-                    {this.state.openClazzDiv}
-                </div>
-
-                <div className="list_wrap_padding">
-                    {this.state.homeWorkDiv}
-                </div>
-
-                {/*<div className="list_wrap_padding">
-                    {this.state.hotPlaceScatterChartDiv}
-                </div>*/}
-
-                <div className="list_wrap_padding">
-                    {this.state.topicDiv}
-                </div>
-
-                <div className="list_wrap_padding">
-                    {this.state.cloudFileDiv}
-                </div>
-
-                <div className="list_wrap_padding">
-                    {this.state.stepChartDiv}
-                </div>
-
-
-
             </div>
         );
     }
