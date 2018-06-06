@@ -1,0 +1,23 @@
+#warnList{
+  color: #333;
+.list_head{
+  background-color: #E7F1FC;
+  line-height: 50px;
+  height: 50px;
+  font-size: 15px;
+}
+  .list_item{
+    background-color: #fff;
+    padding:15px 0;
+    font-size: 14px;
+    line-height: 20px;
+    display: flex;
+    &:nth-child(2n){
+      background-color: #FAFBFE;
+    }
+  }
+  .listCont{
+    height: calc(~ "100% - 65px");
+    overflow-y: auto;
+  }
+}

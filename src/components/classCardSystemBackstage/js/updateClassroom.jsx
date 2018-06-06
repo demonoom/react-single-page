@@ -49,7 +49,7 @@ export default class updateClassroom extends React.Component {
 
     componentDidMount() {
         Bridge.setShareAble("false");
-        document.title = '绑定教室信息';
+        document.title = '编辑教室信息';
         //添加对视窗大小的监听,在屏幕转换以及键盘弹起时重设各项高度
         window.addEventListener('resize', updateCM.onWindowResize)
     }
@@ -70,7 +70,6 @@ export default class updateClassroom extends React.Component {
         };
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
             onResponse: function (result) {
-                console.log(result)
                 if (result.msg == '调用成功' && result.success == true) {
                     var clazzRoom = result.response
                     var roomName = clazzRoom.name;
@@ -99,7 +98,7 @@ export default class updateClassroom extends React.Component {
      */
     onWindowResize() {
         setTimeout(function () {
-            updateCM.setState({ clientHeight: document.body.clientHeight, calmHeight: document.body.clientHeight - 190 });
+            updateCM.setState({ clientHeight: document.body.clientHeight});
         }, 100)
     }
     /**

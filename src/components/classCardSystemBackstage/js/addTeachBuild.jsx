@@ -11,6 +11,7 @@ export default class addTeachBuild extends React.Component {
         }
     }
     componentDidMount() {
+        Bridge.setShareAble("false");
         document.title = '添加教学楼页面';
         var locationHref = window.location.href;
         var locationSearch = locationHref.substr(locationHref.indexOf("?") + 1);

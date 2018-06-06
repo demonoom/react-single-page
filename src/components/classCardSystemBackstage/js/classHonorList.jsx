@@ -18,6 +18,7 @@ export default class classHonorList extends React.Component {
     }
 
     componentDidMount() {
+        Bridge.setShareAble("false");
         document.title = '班级荣誉列表';
         this.getClazzesByUserId(this.state.ident);
     }

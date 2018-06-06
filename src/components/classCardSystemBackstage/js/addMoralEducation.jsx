@@ -36,6 +36,7 @@ export default class addMoralEducation extends React.Component {
         window.addEventListener('resize', addMoralEdu.onWindowResize)
     }
     componentDidMount() {
+        Bridge.setShareAble("false");
         document.title = `${decodeURI(addMoralEdu.state.name)}`;
     }
     componentWillUnmount() {

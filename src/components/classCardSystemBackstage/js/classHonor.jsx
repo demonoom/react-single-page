@@ -19,6 +19,7 @@ export default class classHonor extends React.Component {
     }
 
     componentDidMount() {
+        Bridge.setShareAble("false");
         var locationHref = decodeURI(window.location.href);
         var locationSearch = locationHref.substr(locationHref.indexOf("?") + 1);
         var ident = locationSearch.split("&")[0].split('=')[1];
