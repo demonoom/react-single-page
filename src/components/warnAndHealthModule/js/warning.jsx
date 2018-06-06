@@ -6,7 +6,8 @@ import {List, Toast, ListView, Tabs, InputItem} from 'antd-mobile';
 const Item = List.Item;
 const Brief = Item.Brief;
 var _this = this;
-var timeTicket;
+var timeTicket;   //
+var timer;   //获取列表计时器对象
 
 export default class warning extends React.Component {
 
@@ -59,6 +60,7 @@ export default class warning extends React.Component {
                 }, () => { //确保图表生成后根据条件打开计时器
                     if (result.isOpening) {
                         this.timeOpen(20);
+                        this.getListDataOpen(300);    //打开获取学生列表计时器
                     }
                 })
             })
@@ -75,6 +77,18 @@ export default class warning extends React.Component {
         //组件卸载清除定时器
         this.timeClose();
     };
+
+    //打开获取列表计时器
+    getListDataOpen(second){
+        this.timer = setInterval(function(){
+            this.setState({
+                defaultPageNo:1,
+                hasMore: true,     //加载更多flag
+                isLoadingLeft: true,  //加载提示文字
+            })
+            this.getBraceletHeartRateByCourseItemId();
+        }.bind(this),second * 1000)
+    }
 
     //打开定时器   秒单位
     timeOpen(second) {
@@ -113,6 +127,7 @@ export default class warning extends React.Component {
     //清除定时器
     timeClose() {
         clearInterval(this.timeTicket);
+        clearInterval(this.timer);
     }
 
 
@@ -204,7 +219,6 @@ export default class warning extends React.Component {
                     var res = [];    //心率数据源
                     var lastData = ''; // 最后一条数据
                     var array = this.state.tableData;
-                    console.log(array, 'res');
                     for (var k in array) {
                         if(array[k].num == 0){
                             array[k].num = 1;
