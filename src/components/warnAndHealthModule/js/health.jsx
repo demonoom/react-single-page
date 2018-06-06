@@ -109,6 +109,15 @@ export default class health extends React.Component {
     //     //     isLoadingLeft: true,
     //     // });
     // };
+    historyGoBack() {
+        var data = {
+            method: 'finish',
+        };
+
+        Bridge.callHandler(data, null, function (error) {
+            console.log(error);
+        });
+    }
 
 
     render() {
@@ -133,6 +142,7 @@ export default class health extends React.Component {
         //     )
         // };
         return (
+<<<<<<< HEAD
             <div id="health" className="home_content" style={{height: this.state.clientHeight}}>
                 <div className="inner_bg">
                     <div className="navBar">
@@ -140,6 +150,14 @@ export default class health extends React.Component {
                         <span className="icon">></span>
                         <span>步数排行榜</span>
                     </div>
+=======
+            <div id="health" style={{height: this.state.clientHeight}}>
+                <div className="navBar">
+                    <span onClick={this.historyGoBack}>首页</span>
+                    <span className="icon">></span>
+                    <span>{this.state.type == 'step'?'步数排行':'卡路里排行'}</span>
+                </div>
+>>>>>>> ce7bd2089ced7df0e12c80796f60bfa89f7c264e
 
                     <div className="health_cont">{array}</div>
 
