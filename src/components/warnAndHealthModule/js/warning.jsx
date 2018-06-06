@@ -223,7 +223,7 @@ export default class warning extends React.Component {
                 // symbol: 'star',//节点形状
             }
         ],
-        animation: false,
+        animation: true,
     });
 
 

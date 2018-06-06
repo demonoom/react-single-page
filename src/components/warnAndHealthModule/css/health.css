@@ -4,19 +4,96 @@
   border-radius: 50%;
 }
 #health .noomImg {
-  width: 50px;
-  height: 50px;
+  width: 100%;
+  height: 100%;
   border-radius: 50%;
 }
 #health .firstClass {
-  color: red;
+  background: url("../img/crown_first.png");
+  background-size: 100% 100%;
+  display: inline-block;
+  width: 3.97rem;
+  height: 3.97rem;
+  position: absolute;
+  top: -0.46rem;
+  left: -0.3rem;
+  z-index: 100;
 }
 #health .secondClass {
-  color: blue;
+  background: url("../img/crown_second.png");
+  background-size: 100% 100%;
+  display: inline-block;
+  width: 3.97rem;
+  height: 3.97rem;
+  position: absolute;
+  top: -0.46rem;
+  left: -0.3rem;
+  z-index: 100;
 }
 #health .thirdClass {
-  color: green;
+  background: url("../img/crown_third.png");
+  background-size: 100% 100%;
+  display: inline-block;
+  width: 3.97rem;
+  height: 3.97rem;
+  position: absolute;
+  top: -0.46rem;
+  left: -0.3rem;
+  z-index: 100;
 }
 #health .otherClass {
-  color: black;
+  background: #6bd0b2;
+  border-radius: 50%;
+  width: 0.83rem;
+  height: 0.83rem;
+  border: 0.06rem solid #fff ;
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  color: #fff;
+  line-height: 0.83rem;
+  text-align: center;
+  font-size: 0.56rem;
+}
+#health .health_cont {
+  height: calc(100% - 3.33rem) !important;
+  padding: 1.11rem 1.67rem 0 1.67rem;
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+#health .photoItem {
+  width: 4.61rem;
+  margin-right: 1.36rem;
+  margin-bottom: 1.11rem;
+  text-align: center;
+  padding: 0;
+  position: relative;
+  float: left;
+}
+#health .photoItem .imgDiv {
+  width: 3.33rem;
+  height: 3.33rem;
+  -webkit-border-radius: 50%;
+  -moz-border-radius: 50%;
+  border-radius: 50%;
+  margin: .67rem auto .56rem;
+  border: .14rem #f2f2f2 solid;
+  position: relative;
+}
+#health .photoItem img {
+  width: 100%;
+  height: 100%;
+}
+#health .photoItem .studentName {
+  font-size: .72rem;
+  color: #565c72;
+}
+#health .photoItem .step_number {
+  color: #5594fd;
+  font-size: 0.83rem;
+  margin-top: 0.44rem;
+}
+#health .photoItem .step_number .step_number_s {
+  font-size: 0.56rem;
+  padding-left: 5px;
 }

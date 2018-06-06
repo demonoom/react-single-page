@@ -115,21 +115,13 @@ export default class health extends React.Component {
         let data = this.state.listData;
         let array = [];
         for(var k in data){
-            let item = <div className={k == 0?'firstClass':k == 1?'secondClass':k == 2?'thirdClass':'otherClass'} style={{
-                display:'inline-block',
-                width:'15%'
-            }}>
-                <div style={{
-                    textAlign:'center'
-                }}>
+            let item = <div className="photoItem">
+                <div className="imgDiv">
                     <img className="noomImg" src={data[k].users.avatar} alt=""/>
+                    <div className={k == 0?'firstClass':k == 1?'secondClass':k == 2?'thirdClass':'otherClass'}></div>
                 </div>
-                <div style={{
-                    textAlign:'center'
-                }}>{data[k].users.userName}</div>
-                <div style={{
-                    textAlign:'center'
-                }}>{this.state.type == 'step'?data[k].sportStep:data[k].calorie} {this.state.type == 'step'?'步':'卡路里'}</div>
+                <div className="studentName">{data[k].users.userName}</div>
+                <div className="step_number">{this.state.type == 'step'?data[k].sportStep:data[k].calorie}<span className="step_number_s">{this.state.type == 'step'?'步':'卡路里'}</span></div>
             </div>;
             array.push(item);
         }
@@ -141,9 +133,15 @@ export default class health extends React.Component {
         //     )
         // };
         return (
-            <div id="health" style={{height: this.state.clientHeight}}>
+            <div id="health" className="home_content" style={{height: this.state.clientHeight}}>
+                <div className="inner_bg">
+                    <div className="navBar">
+                        <span onClick={this.historyGoBack}>首页</span>
+                        <span className="icon">></span>
+                        <span>步数排行榜</span>
+                    </div>
 
-                {array}
+                    <div className="health_cont">{array}</div>
 
                 {/*<List className="my-list">*/}
                     {/*<ListView*/}
@@ -168,6 +166,7 @@ export default class health extends React.Component {
                     {/*>*/}
                     {/*</ListView>*/}
                 {/*</List>*/}
+            </div>
             </div>
         );
     }
