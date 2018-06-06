@@ -32,7 +32,7 @@ export default class warning extends React.Component {
             clientHeight: document.body.clientHeight,
             dataSource: dataSource.cloneWithRows(this.initData),
             isLoadingLeft: true,  //加载提示文字
-            defaultPageNo: 1,  //页码
+            defaultPageNo: -1,  //页码
             hasMore: true,     //加载更多flag
             classId: classId,
             tableData: [], // 表格初始值
@@ -59,8 +59,8 @@ export default class warning extends React.Component {
                     isShowCharts: true  //取得数值后开启图表显示
                 }, () => { //确保图表生成后根据条件打开计时器
                     if (result.isOpening) {
-                        this.timeOpen(20);
-                        this.getListDataOpen(300);    //打开获取学生列表计时器
+                        this.timeOpen(10);
+                        this.getListDataOpen(10);    //打开获取学生列表计时器
                     }
                 })
             })
@@ -81,8 +81,15 @@ export default class warning extends React.Component {
     //打开获取列表计时器
     getListDataOpen(second){
         this.timer = setInterval(function(){
+            this.initData = [];
+            const dataSource = new ListView.DataSource({
+                rowHasChanged: (row1, row2) => row1 !== row2,
+            });
             this.setState({
-                defaultPageNo:1,
+                dataSource: dataSource.cloneWithRows(this.initData),
+            })
+            this.setState({
+                defaultPageNo:-1,
                 hasMore: true,     //加载更多flag
                 isLoadingLeft: true,  //加载提示文字
             })
@@ -210,7 +217,7 @@ export default class warning extends React.Component {
                 type: 'value',
                 scale: true,
                 name: '心率',
-                max: 100,
+                max: 200,
                 min: 50,
                 boundaryGap: [0, 0]  //边距
             },
@@ -247,6 +254,7 @@ export default class warning extends React.Component {
 
     //根据班级获取学生心率信息     //列表数据
     getBraceletHeartRateByCourseItemId(classId) {
+
         var param = {
             "method": 'getBraceletHeartRateByCourseItemId',
             "courseItemId": this.state.classId,
@@ -254,7 +262,7 @@ export default class warning extends React.Component {
         };
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
             onResponse: result => {
-                console.log(result);
+                console.log(result,'list');
                 if (result.msg == '调用成功' || result.success) {
                     let arr = result.response;
                     if (arr.length > 0) {
@@ -348,7 +356,7 @@ export default class warning extends React.Component {
                     <div className="head">{this.state.openTime}~{this.state.closeTime} 平均心率折线图</div>
                     <ReactEcharts ref='echarts_react'
                                   option={this.state.option}
-                                  style={{height: this.state.clientHeight * 0.5}}/>
+                                  style={{height: this.state.clientHeight * 0.45}}/>
                     {/*<div style={{*/}
                         {/*textAlign: 'center'*/}
                     {/*}}>平均心率折线图*/}
@@ -362,7 +370,7 @@ export default class warning extends React.Component {
         }
         const row = (item) => {
             return (
-                <Item extra={WebServiceUtil.formatYMD(item.heartTime)} align="top" thumb={item.user.avatar}
+                <Item extra={WebServiceUtil.formatHM(item.heartTime)} align="top" thumb={item.user.avatar}
                       multipleLine>
                     {item.user.userName} <Brief>{item.heartRate}(心率)</Brief>
                 </Item>
@@ -396,11 +404,11 @@ export default class warning extends React.Component {
                                 dataSource={this.state.dataSource}    //数据类型是 ListViewDataSource
                                 renderFooter={() => (
                                     <div style={{paddingTop: 5, paddingBottom: 5, textAlign: 'center'}}>
-                                        {this.state.isLoadingLeft ? '正在加载...' : '已经全部加载完毕'}
+                                       {this.state.isLoadingLeft ? '' : ''}
                                     </div>)}
                                 renderRow={row}   //需要的参数包括一行数据等,会返回一个可渲染的组件为这行数据渲染  返回renderable
                                 className="am-list"
-                                pageSize={30}    //每次事件循环（每帧）渲染的行数
+                                pageSize={100}    //每次事件循环（每帧）渲染的行数
                                 //useBodyScroll  //使用 html 的 body 作为滚动容器   bool类型   不应这么写  否则无法下拉刷新
                                 scrollRenderAheadDistance={200}   //当一个行接近屏幕范围多少像素之内的时候，就开始渲染这一行
                                 onEndReached={this.onEndReached}  //当所有的数据都已经渲染过，并且列表被滚动到距离最底部不足onEndReachedThreshold个像素的距离时调用
@@ -408,7 +416,7 @@ export default class warning extends React.Component {
                                 initialListSize={30}   //指定在组件刚挂载的时候渲染多少行数据，用这个属性来确保首屏显示合适数量的数据
                                 scrollEventThrottle={20}     //控制在滚动过程中，scroll事件被调用的频率
                                 style={{
-                                    height: this.state.clientHeight * 0.5,
+                                    height: this.state.clientHeight * 0.45 - 35,
                                 }}
                             >
                             </ListView>
