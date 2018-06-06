@@ -1,7 +1,7 @@
 #course .classTableA {
   padding: 0.56rem 0.83rem;
   text-align: center;
-  height: 9.9rem;
+  height: 8.09rem;
   position: relative;
 }
 #course .classTableB {
@@ -17,6 +17,7 @@
   font-size: 0.5rem;
   color: #3672ed;
   margin-bottom: 0.56rem;
+  margin-top: 0.58rem;
 }
 #course .classTableB .time {
   margin-bottom: 1.11rem;

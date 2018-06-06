@@ -66,27 +66,36 @@
   .studentOnDuty_name{
     width: 100%;
   }
-  .studentOnDuty_height, .course_height{
+  .studentOnDuty_height{
     height: 12.78rem;
+  }
+  .course_height{
+    height: 10.97rem;
   }
   .currentAttendance_height, .moralEducationScore_height{
     height: 11.67rem;
     margin-top: 0.83rem;
   }
+  .currentAttendance_height{
+    height:6.81rem;
+  .classTableA{
+    height:3.94rem;
+  }
+  }
   .classDemeanor_height, .health_height{
     padding-bottom:0.83rem;
-    width: calc(~"50%" - 0.42rem);
+    width:100%;
     float: left;
   }
   .notify_height{
     height: 8.33rem;
     margin-top: 0.83rem;
     float: left;
-    width: calc(~"50%" - 0.42rem);
+    width: 100%;
 
   }
   .application_height{
-    height: 8.33rem;
+    height: 5.83rem;
     margin-top: 0.83rem;
 
   }
@@ -256,7 +265,7 @@
     height: 3rem;
     margin-bottom:0.36rem ;
     display: inline-block;
-    margin-top: -1rem;
+    margin-top: -.5rem;
   }
   .empty_text{
     font-size:0.56rem ;
@@ -297,5 +306,56 @@
   .home_content_index{
     padding-top: 0.28rem;
     height: calc(~"100% - 1.11rem") !important;
+  }
+  .index_health #health.home_content{
+    width: 100%;
+    background: none;
+    padding: 0;
+    display: inline-block;
+    height: 12.22rem !important;
+    float: left;
+  }
+  .index_center_l{
+    width: calc(~"50% - 0.42rem");
+    float: left;
+  }
+  .index_center_r{
+    width: calc(~"50% - 0.42rem");
+  }
+  .index_health #health.home_content:nth-child(2){
+    margin-top: 0.83rem;
+  }
+  .index_health #health.home_content .inner_bg{
+    padding: 0;
+    .navBar{
+      font-size: 0.72rem;
+      padding:0.56rem 0 0.33rem 0.83rem;
+      height: 0.8rem;
+      line-height: 1;
+    }
+  }
+  .index_health #health .health_cont{
+    margin: 0.2rem 0 0.3rem 0.2rem;
+    padding: 0;
+    height:calc(~"100% - 2.2rem") !important;
+    .photoItem{
+      width: 3.39rem;
+      margin-right: 0.2rem;
+      margin-bottom: 0.2rem;
+      margin-top: 0.4rem;
+      .imgDiv{
+        width: 2.11rem;
+        height: 2.11rem;
+        margin-top: 0;
+      }
+      .step_number{
+        width: 100%;
+      }
+    }
+  }
+  .index_health #health .firstClass, .index_health #health .secondClass, .index_health #health .thirdClass{
+    width: 2.75rem;
+    height:2.75rem;
+    top: -0.34rem;
   }
 }

@@ -86,7 +86,7 @@ export default class classCardHomePage extends React.Component {
         return (
             <div id="classCardHomePage" style={{height: document.body.clientHeight}}>
                 <Header/>
-                <div className="home_content home_content_index">
+                <div className="home_content home_content_index index_health" >
                     <div className="">
                         {/*班牌首页*/}
                         <div className="home_right">
@@ -107,24 +107,20 @@ export default class classCardHomePage extends React.Component {
                             />
                         </div>
                         <div className="home_center">
-                            <div>
+                            <div className="index_center_l">
                                 <ClassDemeanor
                                     classCommand={this.state.classCommand}
                                 />
-                            </div>
-                            <div>
                                 <Notify
                                     classCommand={this.state.classCommand}
                                 />
                             </div>
-                        </div>
-                        <div>
-                            <Health
-                                typeFromNoom='step'
-                            />
-                            <Health
-                                typeFromNoom='calories'
-                            />
+                            <div className="index_center_l health_left">
+                                <Health typeFromNoom='step'
+                                />
+                                <Health typeFromNoom='calories'
+                                />
+                            </div>
                         </div>
                     </div>
                 </div>

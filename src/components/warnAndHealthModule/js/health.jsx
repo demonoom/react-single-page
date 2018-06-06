@@ -29,9 +29,9 @@ export default class health extends React.Component {
 
     componentWillMount() {
         var type = this.props.typeFromNoom;
-        var clazzId = localStorage.getItem("clazzId");
+        var classId = localStorage.getItem("clazzId");
         this.setState({
-            classId: clazzId,
+            classId: classId,
             type: type,
         }, () => {
             this.getBraceletSportStepByClazzId(classId);
@@ -116,7 +116,7 @@ export default class health extends React.Component {
                         className={k == 0 ? 'firstClass' : k == 1 ? 'secondClass' : k == 2 ? 'thirdClass' : 'otherClass'}></div>
                 </div>
                 <div className="studentName">{data[k].users.userName}</div>
-                <div className="step_number">{this.state.type == 'step' ? data[k].sportStep : data[k].calorie}<span
+                <div className="step_number text_hidden">{this.state.type == 'step' ? data[k].sportStep : data[k].calorie}<span
                     className="step_number_s">{this.state.type == 'step' ? '步' : '卡路里'}</span></div>
             </div>;
             array.push(item);
