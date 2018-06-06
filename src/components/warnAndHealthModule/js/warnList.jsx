@@ -1,6 +1,6 @@
 import React from 'react';
 import '../css/warnList.less';
-import {List, Toast, ListView, Tabs, InputItem} from 'antd-mobile';
+import {List, Toast, ListView, Tabs, InputItem, WhiteSpace} from 'antd-mobile';
 
 var _this;
 
@@ -107,6 +107,7 @@ export default class warnList extends React.Component {
         }
         return (
             <div id="warnList" style={{height: this.state.clientHeight}}>
+                <WhiteSpace size="lg"/>
                 <div className="list_head">
                     <div className="" style={{
                         display:'inline-block',
@@ -124,7 +125,7 @@ export default class warnList extends React.Component {
                         textAlign:'center'
                     }}>班级</div>
                 </div>
-                {arr}
+                <div className="listCont">{arr}</div>
             </div>
         );
     }

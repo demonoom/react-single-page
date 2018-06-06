@@ -34,7 +34,7 @@ export default class curriculumSchedule extends React.Component {
     }
 
     componentDidMount() {
-
+        Bridge.setShareAble("false");
     }
 
     viewCourseTableItemPage(id) {

@@ -1,4 +1,3 @@
-(node) util.print is deprecated. Use console.log instead.
 #classCardHomePage .home_right {
   width: 13.33rem;
   float: right;
@@ -74,17 +73,23 @@
   height: 11.67rem;
   margin-top: 0.83rem;
 }
-#classCardHomePage .classDemeanor_height {
+#classCardHomePage .classDemeanor_height,
+#classCardHomePage .health_height {
   padding-bottom: 0.83rem;
+  width: calc(50% - 0.42rem);
+  float: left;
 }
-#classCardHomePage .notify_height,
-#classCardHomePage .application_height {
+#classCardHomePage .notify_height {
   height: 8.33rem;
   margin-top: 0.83rem;
   float: left;
   width: calc(50% - 0.42rem);
 }
-#classCardHomePage .notify_height {
+#classCardHomePage .application_height {
+  height: 8.33rem;
+  margin-top: 0.83rem;
+}
+#classCardHomePage .health_left {
   margin-left: 0.83rem;
 }
 #classCardHomePage .font_title2 {

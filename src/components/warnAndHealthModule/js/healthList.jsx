@@ -54,11 +54,26 @@ export default class healthList extends React.Component {
         }
     }
 
+    historyGoBack() {
+        var data = {
+            method: 'finish',
+        };
+
+        Bridge.callHandler(data, null, function (error) {
+            console.log(error);
+        });
+    }
+
 
 
     render() {
         return (
             <div id="healthList" style={{height: this.state.clientHeight}}>
+                <div className="navBar">
+                    <span onClick={this.historyGoBack}>首页</span>
+                    <span className="icon">></span>
+                    <span>健康数据列表</span>
+                </div>
                 <div style={{
                     textAlign:'center',
                     padding:'10px 0px',
