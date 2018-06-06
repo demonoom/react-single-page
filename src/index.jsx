@@ -414,6 +414,14 @@ const particlePath = (location, cb) => {
     )
 }
 
+const dashboard = (location, cb) => {
+    require.ensure([], require => {
+            cb(null, require("./components/charts/dashboard/dashboard").default)
+
+        }
+    )
+}
+
 import './index.less';
 
 class Index extends React.Component {
@@ -510,6 +518,9 @@ class Index extends React.Component {
                     <li><Link
                         to="/classCardHomePageDoor?access_user=23836"
                         style={{fontSize: '24px'}}>后台总入口</Link></li>
+                    <li><Link
+                        to="/dashboard?destId=9&areaType=0"
+                        style={{fontSize: '24px'}}>管理驾驶舱</Link></li>
                     {/*<li><Link*/}
                     {/*to="/fileAnalysis?aid=590961"*/}
                     {/*style={{fontSize: '24px'}}>文件表情分析</Link></li>*/}
@@ -601,6 +612,7 @@ ReactDOM.render(
             <Route path="classHonorList" getComponent={classHonorList}/>
             <Route path="clazzDutyList" getComponent={clazzDutyList}/>
             <Route path="particlePath" getComponent={particlePath}/>
+            <Route path="dashboard" getComponent={dashboard}/>
         </Route>
     </Router>
     ,
