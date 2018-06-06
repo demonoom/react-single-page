@@ -70,34 +70,35 @@
     height: 12.78rem;
   }
   .course_height{
-    height: 10.97rem;
+    height: 12.78rem;
   }
   .currentAttendance_height, .moralEducationScore_height{
     height: 11.67rem;
     margin-top: 0.83rem;
   }
   .currentAttendance_height{
-    height:6.81rem;
+    height:11.78rem;
   .classTableA{
-    height:3.94rem;
+    height:8.94rem;
   }
   }
   .classDemeanor_height, .health_height{
     padding-bottom:0.83rem;
     width:100%;
-    float: left;
   }
   .notify_height{
     height: 8.33rem;
     margin-top: 0.83rem;
     float: left;
-    width: 100%;
+    width: calc(~"50% - 0.42rem");
 
   }
   .application_height{
-    height: 5.83rem;
+    height: 8.33rem;
     margin-top: 0.83rem;
-
+    width: calc(~"50% - 0.42rem");
+    float: left;
+    margin-left: 0.83rem;
   }
   .health_left{
     margin-left: 0.83rem;
@@ -315,9 +316,20 @@
     height: 12.22rem !important;
     float: left;
   }
-  .index_center_l{
+  .index_health .index_center_l{
     width: calc(~"50% - 0.42rem");
     float: left;
+    position: relative;
+  }
+  .health_home_titleMore1{
+    position: absolute;
+    right: 0;
+    top: 0.54rem;
+  }
+  .health_home_titleMore2{
+    position: absolute;
+    right: 0;
+    top: 13.64rem;
   }
   .index_center_r{
     width: calc(~"50% - 0.42rem");
@@ -341,12 +353,13 @@
     .photoItem{
       width: 3.39rem;
       margin-right: 0.2rem;
-      margin-bottom: 0.2rem;
-      margin-top: 0.4rem;
+      margin-bottom: 0rem;
+      margin-top: 0.28rem;
       .imgDiv{
         width: 2.11rem;
         height: 2.11rem;
         margin-top: 0;
+        border: .08rem #f2f2f2 solid;
       }
       .step_number{
         width: 100%;
@@ -357,5 +370,19 @@
     width: 2.75rem;
     height:2.75rem;
     top: -0.34rem;
+  }
+  .index_health {
+    #health .photoItem .studentName {
+      font-size: 0.56rem;
+      color: #444e6f;
+    }
+    #health .photoItem .step_number{
+      font-size: 0.72rem;
+      margin-top: 0.28rem;
+    }
+    #health .photoItem .step_number .step_number_s{
+      font-size: 0.44rem;
+      padding-left: 0;
+    }
   }
 }

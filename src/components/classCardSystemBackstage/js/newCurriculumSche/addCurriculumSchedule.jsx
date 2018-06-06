@@ -39,6 +39,9 @@ export default class addCurriculumSchedule extends React.Component {
         };
     }
 
+    componentDidMount(){
+        Bridge.setShareAble("false");
+    }
     componentWillMount() {
         document.title = '添加课程表';
         var locationHref = window.location.href;

@@ -45,6 +45,9 @@ export default class studentDutyList extends React.Component {
         this.setState({clazzId, userId, clazzName});
         document.title = clazzName + '班级值日表';
     }
+    componentDidMount(){
+        Bridge.setShareAble("false");
+    }
 
     /**
      * 查看指定班级的值日列表

@@ -18,6 +18,7 @@ export default class classCardHomePageDoor extends React.Component {
     }
 
     componentDidMount() {
+        Bridge.setShareAble("false");
         document.title = '班牌系统'
     }
 

@@ -96,6 +96,7 @@ export default class classCardHomePage extends React.Component {
                             <CurrentAttendance
                                 messageUtilObj={this.state.messageInfo}
                             />
+                            <Application/>
                         </div>
                         <div className="home_left">
                             <StudentOnDuty
@@ -106,24 +107,23 @@ export default class classCardHomePage extends React.Component {
                             />
                         </div>
                         <div className="home_center">
+                            <div className="index_center_l">
                                 <ClassDemeanor
                                     classCommand={this.state.classCommand}
                                 />
-                            <div>
                                 <Notify
                                     classCommand={this.state.classCommand}
                                 />
-                                <Application/>
                             </div>
-                            </div>
-                            {/*<div className="index_center_l health_left">
+                            <div className="index_center_l health_left">
                                 <Health typeFromNoom='step'
                                 />
                                 <Health typeFromNoom='calories'
                                 />
                                 <span className="home_titleMore health_home_titleMore1">更多<i className="titleMore"></i></span>
                                 <span className="home_titleMore health_home_titleMore2">更多<i className="titleMore"></i></span>
-                            </div>*/}
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>

@@ -68,7 +68,7 @@
   height: 12.78rem;
 }
 #classCardHomePage .course_height {
-  height: 10.97rem;
+  height: 12.78rem;
 }
 #classCardHomePage .currentAttendance_height,
 #classCardHomePage .moralEducationScore_height {
@@ -76,26 +76,28 @@
   margin-top: 0.83rem;
 }
 #classCardHomePage .currentAttendance_height {
-  height: 6.81rem;
+  height: 11.78rem;
 }
 #classCardHomePage .currentAttendance_height .classTableA {
-  height: 3.94rem;
+  height: 8.94rem;
 }
 #classCardHomePage .classDemeanor_height,
 #classCardHomePage .health_height {
   padding-bottom: 0.83rem;
   width: 100%;
-  float: left;
 }
 #classCardHomePage .notify_height {
   height: 8.33rem;
   margin-top: 0.83rem;
   float: left;
-  width: 100%;
+  width: calc(50% - 0.42rem);
 }
 #classCardHomePage .application_height {
-  height: 5.83rem;
+  height: 8.33rem;
   margin-top: 0.83rem;
+  width: calc(50% - 0.42rem);
+  float: left;
+  margin-left: 0.83rem;
 }
 #classCardHomePage .health_left {
   margin-left: 0.83rem;
@@ -304,9 +306,20 @@
   height: 12.22rem !important;
   float: left;
 }
-#classCardHomePage .index_center_l {
+#classCardHomePage .index_health .index_center_l {
   width: calc(50% - 0.42rem);
   float: left;
+  position: relative;
+}
+#classCardHomePage .health_home_titleMore1 {
+  position: absolute;
+  right: 0;
+  top: 0.54rem;
+}
+#classCardHomePage .health_home_titleMore2 {
+  position: absolute;
+  right: 0;
+  top: 13.64rem;
 }
 #classCardHomePage .index_center_r {
   width: calc(50% - 0.42rem);
@@ -331,13 +344,14 @@
 #classCardHomePage .index_health #health .health_cont .photoItem {
   width: 3.39rem;
   margin-right: 0.2rem;
-  margin-bottom: 0.2rem;
-  margin-top: 0.4rem;
+  margin-bottom: 0rem;
+  margin-top: 0.28rem;
 }
 #classCardHomePage .index_health #health .health_cont .photoItem .imgDiv {
   width: 2.11rem;
   height: 2.11rem;
   margin-top: 0;
+  border: .08rem #f2f2f2 solid;
 }
 #classCardHomePage .index_health #health .health_cont .photoItem .step_number {
   width: 100%;
@@ -348,4 +362,16 @@
   width: 2.75rem;
   height: 2.75rem;
   top: -0.34rem;
+}
+#classCardHomePage .index_health #health .photoItem .studentName {
+  font-size: 0.56rem;
+  color: #444e6f;
+}
+#classCardHomePage .index_health #health .photoItem .step_number {
+  font-size: 0.72rem;
+  margin-top: 0.28rem;
+}
+#classCardHomePage .index_health #health .photoItem .step_number .step_number_s {
+  font-size: 0.44rem;
+  padding-left: 0;
 }

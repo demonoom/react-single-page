@@ -53,6 +53,9 @@ export default class updateCurriculumSchedule extends React.Component {
         window.addEventListener('resize', this.onWindwoResize);
         
     }
+    componentDidMount(){
+        Bridge.setShareAble("false");
+    }
     componentWillUnmount() {
         window.removeEventListener('resize', this.onWindwoResize);
     }
