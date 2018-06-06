@@ -28,8 +28,11 @@ export default class health extends React.Component {
     }
 
     componentWillMount() {
-        var type = this.props.typeFromNoom;
-        var classId = localStorage.getItem("clazzId");
+        var locationHref = window.location.href;
+        var locationSearch = locationHref.substr(locationHref.indexOf("?") + 1);
+        var classId = locationSearch.split("&")[0].split('=')[1];
+        var type = locationSearch.split("&")[1].split('=')[1];
+        console.log(type);
         this.setState({
             classId: classId,
             type: type,
@@ -104,6 +107,16 @@ export default class health extends React.Component {
     //     //     isLoadingLeft: true,
     //     // });
     // };
+    historyGoBack() {
+        var data = {
+            method: 'finish',
+        };
+
+        Bridge.callHandler(data, null, function (error) {
+            console.log(error);
+        });
+    }
+
 
     render() {
         let data = this.state.listData;
@@ -116,7 +129,8 @@ export default class health extends React.Component {
                         className={k == 0 ? 'firstClass' : k == 1 ? 'secondClass' : k == 2 ? 'thirdClass' : 'otherClass'}></div>
                 </div>
                 <div className="studentName">{data[k].users.userName}</div>
-                <div className="step_number">{this.state.type == 'step' ? data[k].sportStep : data[k].calorie}<span
+                <div
+                    className="step_number text_hidden">{this.state.type == 'step' ? data[k].sportStep : data[k].calorie}<span
                     className="step_number_s">{this.state.type == 'step' ? '步' : '卡路里'}</span></div>
             </div>;
             array.push(item);
@@ -132,6 +146,8 @@ export default class health extends React.Component {
             <div id="health" className="home_content" style={{height: this.state.clientHeight}}>
                 <div className="inner_bg">
                     <div className="navBar">
+                        <span onClick={this.historyGoBack}>首页</span>
+                        <span className="icon">></span>
                         <span>步数排行榜</span>
                     </div>
 

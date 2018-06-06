@@ -1,3 +1,4 @@
+(node) util.print is deprecated. Use console.log instead.
 #course .classTableA {
   padding: 0.56rem 0.83rem;
   text-align: center;
@@ -17,6 +18,7 @@
   font-size: 0.5rem;
   color: #3672ed;
   margin-bottom: 0.56rem;
+  margin-top: 0.58rem;
 }
 #course .classTableB .time {
   margin-bottom: 1.11rem;

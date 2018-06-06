@@ -81,13 +81,13 @@ export default class warning extends React.Component {
     //打开获取列表计时器
     getListDataOpen(second){
         this.timer = setInterval(function(){
-            this.initData = [];
-            const dataSource = new ListView.DataSource({
-                rowHasChanged: (row1, row2) => row1 !== row2,
-            });
-            this.setState({
-                dataSource: dataSource.cloneWithRows(this.initData),
-            })
+            // this.initData = [];
+            // const dataSource = new ListView.DataSource({
+            //     rowHasChanged: (row1, row2) => row1 !== row2,
+            // });
+            // this.setState({
+            //     dataSource: dataSource.cloneWithRows(this.initData),
+            // })
             this.setState({
                 defaultPageNo:-1,
                 hasMore: true,     //加载更多flag
@@ -264,6 +264,15 @@ export default class warning extends React.Component {
             onResponse: result => {
                 console.log(result,'list');
                 if (result.msg == '调用成功' || result.success) {
+
+                    this.initData = [];
+                    const dataSource = new ListView.DataSource({
+                        rowHasChanged: (row1, row2) => row1 !== row2,
+                    });
+                    this.setState({
+                        dataSource: dataSource.cloneWithRows(this.initData),
+                    })
+
                     let arr = result.response;
                     if (arr.length > 0) {
                         this.initData = this.initData.concat(arr);
@@ -411,7 +420,7 @@ export default class warning extends React.Component {
                                 pageSize={100}    //每次事件循环（每帧）渲染的行数
                                 //useBodyScroll  //使用 html 的 body 作为滚动容器   bool类型   不应这么写  否则无法下拉刷新
                                 scrollRenderAheadDistance={200}   //当一个行接近屏幕范围多少像素之内的时候，就开始渲染这一行
-                                onEndReached={this.onEndReached}  //当所有的数据都已经渲染过，并且列表被滚动到距离最底部不足onEndReachedThreshold个像素的距离时调用
+                                // onEndReached={this.onEndReached}  //当所有的数据都已经渲染过，并且列表被滚动到距离最底部不足onEndReachedThreshold个像素的距离时调用
                                 onEndReachedThreshold={10}  //调用onEndReached之前的临界值，单位是像素  number类型
                                 initialListSize={30}   //指定在组件刚挂载的时候渲染多少行数据，用这个属性来确保首屏显示合适数量的数据
                                 scrollEventThrottle={20}     //控制在滚动过程中，scroll事件被调用的频率
