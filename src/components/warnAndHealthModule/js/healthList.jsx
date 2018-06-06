@@ -40,7 +40,7 @@ export default class healthList extends React.Component {
         if(type){
             let url;
             if (this.state.classId) {
-                url = encodeURI(WebServiceUtil.mobileServiceURL + "health?classId=" + this.state.classId+'&type='+type);
+                url = encodeURI(WebServiceUtil.mobileServiceURL + "health?classId=" + this.state.classId+'&healthType='+type);
             } else { }
             var data = {
                 method: 'openNewPage',
