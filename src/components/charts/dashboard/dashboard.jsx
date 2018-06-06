@@ -502,7 +502,6 @@ export default class dashboard extends React.Component {
                 textStyle:{
                     color:'#a6abb9',
                     fontSize: 16,
-                    fontWeight: 'normal'
                 }
             }, {
                 text: '本月开课次数统计',
@@ -512,7 +511,6 @@ export default class dashboard extends React.Component {
                 textStyle:{
                     color:'#a6abb9',
                     fontSize: 16,
-                    fontWeight: 'normal'
                 }
             }],
             grid: [{
@@ -533,6 +531,11 @@ export default class dashboard extends React.Component {
                 splitLine: {
                     show: false
                 },
+                axisLine:{
+                    lineStyle:{
+                        color:'#a6abb9',
+                    }
+                }
 
             }],
             yAxis: [{
@@ -544,6 +547,11 @@ export default class dashboard extends React.Component {
                 },
                 splitLine: {
                     show: false
+                },
+                axisLine:{
+                    lineStyle:{
+                        color:'#a6abb9',
+                    }
                 }
             }],
             series: [ {
@@ -636,7 +644,7 @@ export default class dashboard extends React.Component {
             ],
             yAxis : [
                 {
-                    type : 'value'
+                    type : 'value',
                 }
             ],
             series : [
@@ -781,28 +789,36 @@ export default class dashboard extends React.Component {
             <div id="dashboard">
                 <div className="cont">
                     <div className="topTitle">
-                        <div>学校名称：{_this.state.schoolName}</div>
-                        <div>总人数：{_this.state.userCount}人</div>
-                        <div>全校教研活动量：{_this.state.messageCount}条</div>
-                    </div>
-                    <div className="list_wrap_padding topList">
-                        <div>当前开课列表</div>
-                        <div className="tableDiv">
-                            <table>
-                                <thead>
-                                <tr>
-                                    <td>课程名</td>
-                                    <td>班级</td>
-                                    <td>授课老师</td>
-                                    <td>开课时间</td>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                {_this.state.openClazzTrArray}
-                                </tbody>
-                            </table>
+                        <div className="schoolName">学校名称：{_this.state.schoolName}</div>
+                        <div className="clear numDiv">
+                            <div className="fl allNUm">
+                                <p className="gradeTitle">总人数</p>
+                                <p className="num">{_this.state.userCount}</p></div>
+                            <div className="fl msgNum">
+                                <p className="gradeTitle">24h内消息数量</p>
+                                <p className="num">{_this.state.messageCount}</p></div>
                         </div>
-                        {/*{this.state.divContentArray}*/}
+                    </div>
+                    <div className="list_wrap_padding">
+                        <div className="gradeTitle tableTitle">当前开课列表</div>
+                        <div className="topList">
+                            <div className="tableDiv">
+                                <table>
+                                    <thead>
+                                    <tr>
+                                        <td>课程名</td>
+                                        <td>班级</td>
+                                        <td>授课老师</td>
+                                        <td>开课时间</td>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    {_this.state.openClazzTrArray}
+                                    </tbody>
+                                </table>
+                            </div>
+                            {/*{this.state.divContentArray}*/}
+                        </div>
                     </div>
 
                     <div className="list_wrap_padding">
