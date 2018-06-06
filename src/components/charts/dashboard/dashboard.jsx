@@ -4,6 +4,8 @@ import {
     Toast
 } from 'antd-mobile';
 import './css/dashboard.less';
+import "./css/chalk";
+import "./css/walden";
 
 var dataGZ = [
     [1,26],
@@ -167,7 +169,7 @@ export default class dashboard extends React.Component {
     buildTopicBarOption = (xClazzName, seriesData) => {
         return {
             title: {
-                text: '蚁巢活跃度统计',
+                text: '课前探究性学习统计',
                 subtext: '',
                 left: 'left',
                 textStyle:{
@@ -207,7 +209,7 @@ export default class dashboard extends React.Component {
     }
 
     /**
-     * 创建蚁巢柱状图
+     * 课前探究性学习
      */
     buildTopicBarChart=(topicResults)=>{
         var _this = this;
@@ -226,6 +228,7 @@ export default class dashboard extends React.Component {
                 <ReactEcharts
                     option={topicOption}
                     style={{height: '100%', width: '100%'}}
+                    theme='walden'
                     className=''/>
             </div>
         </div>;
@@ -257,7 +260,7 @@ export default class dashboard extends React.Component {
     buildCloudFilePieOption = (xClazzName, seriesData) => {
         return {
             title : {
-                text: '蚁盘资源上传情况分布',
+                text: '学习资源分布情况统计',
                 subtext: '',
                 x:'center',
                 textStyle:{
@@ -275,7 +278,7 @@ export default class dashboard extends React.Component {
                 y : 'bottom',
                 data:xClazzName
             },
-            toolbox: {
+            /*toolbox: {
                 show : true,
                 feature : {
                     mark : {show: true},
@@ -287,14 +290,13 @@ export default class dashboard extends React.Component {
                     restore : {show: true},
                     saveAsImage : {show: true}
                 }
-            },
+            },*/
             calculable : true,
             series : [
                 {
                     name:'面积模式',
                     type:'pie',
                     radius : [30, 110],
-                    center : ['75%', '50%'],
                     roseType : 'area',
                     data:seriesData
                 }
@@ -303,7 +305,7 @@ export default class dashboard extends React.Component {
     }
 
     /**
-     * 创建蚁盘资源上传情况统计柱状图
+     * 创建学习资源分布情况统计
      */
     buildCloudFileBarChart=(cloudFileResults)=>{
         var _this = this;
@@ -325,6 +327,7 @@ export default class dashboard extends React.Component {
                 <ReactEcharts
                     option={cloudFileOption}
                     style={{height: '100%', width: '100%'}}
+                    theme='walden'
                     className=''/>
             </div>
         </div>;
@@ -334,7 +337,7 @@ export default class dashboard extends React.Component {
     buildHomeWorkOption=(xClazzNameArray, seriesDataArray)=>{
         return {
             title: {
-                text: '班级作业布置情况分析',
+                text: '课后作业布置情况分析',
                 subtext: '',
                 left: 'left',
                 textStyle:{
@@ -386,13 +389,14 @@ export default class dashboard extends React.Component {
             xClazzNameArray.push(clazzName);
             seriesDataArray.push(homeWorkJson);
         })
-        var homeWorkOption = _this.buildHomeWorkOption(xClazzNameArray,seriesDataArray)
+        var homeWorkOption = _this.buildHomeWorkOption(xClazzNameArray,seriesDataArray);
         var homeWorkDiv = <div>
             <div style={{height: '300px'}} className="echarts_wrap">
                 <ReactEcharts
                     option={homeWorkOption}
                     style={{height: '100%', width: '100%'}}
-                    className=''/>
+                    theme='chalk'
+                />
             </div>
         </div>;
         _this.setState({homeWorkDiv});
@@ -467,6 +471,11 @@ export default class dashboard extends React.Component {
         this.buildOpenClazzBarAndPie(todayOpenClazzJson,monthOpenClazzJson);
     }
 
+    /**
+     * 开课次数统计的柱形图和饼图
+     * @param todayOpenClazzJson
+     * @param monthOpenClazzJson
+     */
     buildOpenClazzBarAndPie=(todayOpenClazzJson,monthOpenClazzJson)=>{
         var _this = this;
         var openClazzOption = _this.buildClazzOpenCountOption(todayOpenClazzJson,monthOpenClazzJson)
@@ -475,6 +484,7 @@ export default class dashboard extends React.Component {
                 <ReactEcharts
                     option={openClazzOption}
                     style={{height: '100%', width: '100%'}}
+                    theme='walden'
                     className=''/>
             </div>
         </div>;
@@ -573,6 +583,10 @@ export default class dashboard extends React.Component {
         };
     }
 
+    /**
+     * 健康情况统计
+     * @param braceletSportSteps
+     */
     buildStepBarChart=(braceletSportSteps)=>{
         var _this = this;
 
@@ -590,6 +604,7 @@ export default class dashboard extends React.Component {
                 <ReactEcharts
                     option={stepOption}
                     style={{height: '100%', width: '100%'}}
+                    theme='walden'
                     className=''/>
             </div>
         </div>;
@@ -602,7 +617,7 @@ export default class dashboard extends React.Component {
     buildStepOption=(xClazzNameArray, seriesDataArray)=>{
         return {
             title : {
-                text: '班级步数统计',
+                text: '健康情况统计',
                 subtext: ''
             },
             tooltip : {
@@ -785,7 +800,7 @@ export default class dashboard extends React.Component {
                         </div>
                     </div>
                     <div className="list_wrap_padding">
-                        <div className="gradeTitle">当前开课列表</div>
+                        <div className="gradeTitle tableTitle">当前开课列表</div>
                         <div className="topList">
                             <div className="tableDiv">
                                 <table>
