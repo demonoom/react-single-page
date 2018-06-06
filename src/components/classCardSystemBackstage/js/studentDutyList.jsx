@@ -4,10 +4,6 @@ import '../css/studentDutyList.less'
 
 const alert = Modal.alert;
 
-const seasons = [
-    []
-];
-
 /**
  * 值日生查询页
  */

@@ -5,11 +5,7 @@ import {
     InputItem,
     List,
     Radio,
-    ListView,
     Modal,
-    PullToRefresh,
-    Checkbox,
-    Button,
     Flex,
     Picker
 } from 'antd-mobile';
@@ -30,38 +26,30 @@ export default class updateClassroom extends React.Component {
         updateCM = this;
         this.state = {
             clientHeight: document.body.clientHeight,
-            chooseResultDiv: 'none',
             searchData: [],
-            selectData: [],
             teachBuildData: [],
             buildingId: [],
             gradeValue: [],
-            showPicker:true
+            showPicker: true
         };
     }
-
-    onDataChange = (value, id) => {
-        updateCM.setState({
-            gradeValue: value,
-            "classId": id
-        });
-    };
 
     componentWillMount() {
         var locationHref = window.location.href;
         var locationSearch = locationHref.substr(locationHref.indexOf("?") + 1);
         var classIdBynoom = locationSearch.split("&")[0].split("=")[1];
         var uid = locationSearch.split("&")[1].split("=")[1];
-        // this.viewClassRoom(classIdBynoom);
-        this.setState({ classIdBynoom });
-        this.viewSchoolBuildingPage(uid,true);
+        this.setState({
+            "uid": uid,
+            classIdBynoom
+        })
+        this.setState({});
+        this.viewSchoolBuildingPage(uid, true);
     }
 
     componentDidMount() {
         Bridge.setShareAble("false");
         document.title = '绑定教室信息';
-        var uid = JSON.parse(localStorage.getItem("uIdKey")).uidKey;
-        this.setState({ "uid": uid })
         //添加对视窗大小的监听,在屏幕转换以及键盘弹起时重设各项高度
         window.addEventListener('resize', updateCM.onWindowResize)
     }
@@ -74,7 +62,7 @@ export default class updateClassroom extends React.Component {
      * 根据教室ID显示对应的信息
      * @param {*} roomId 
      */
-    viewClassRoom(roomId,arr) {
+    viewClassRoom(roomId, arr) {
         var _this = this;
         var param = {
             "method": 'viewClassRoom',
@@ -82,6 +70,7 @@ export default class updateClassroom extends React.Component {
         };
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
             onResponse: function (result) {
+                console.log(result)
                 if (result.msg == '调用成功' && result.success == true) {
                     var clazzRoom = result.response
                     var roomName = clazzRoom.name;
@@ -94,7 +83,7 @@ export default class updateClassroom extends React.Component {
                         "gradeValue": gradeName,
                         "classId": defaultId,
                         buildingId,
-                        teachBuildData:arr
+                        teachBuildData: arr
                     });
                 } else {
                     Toast.fail(result.msg, 1);
@@ -113,41 +102,41 @@ export default class updateClassroom extends React.Component {
             updateCM.setState({ clientHeight: document.body.clientHeight, calmHeight: document.body.clientHeight - 190 });
         }, 100)
     }
-   /**
-    * searchClassroomName搜索班级的名称
-    */
-   searchClassroomName() {
-    if(updateCM.state.showPicker) {
-        Toast.fail("请输入班级关键字")
-    }
-    var _this = this;
-    var param = {
-        "method": 'searchClazz',
-        "aid": updateCM.state.uid,
-        "keyWord": updateCM.state.gradeValue,
-    };
-    WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
-        onResponse: function (result) {
-            if(result.response.length === 0)[
-                Toast.fail("没有找到该班级")
-            ]
-            if (result.msg == '调用成功' && result.success == true) {
-                var arr = [];
-                result.response.forEach(function (v, i) {
-                    arr.push({
-                        value: v.id, label: v.name
-                    })
-                })
-                updateCM.setState({ searchData: arr });
-            } else {
-                Toast.fail(result.msg, 1);
-            }
-        },
-        onError: function (error) {
-            Toast.info(error);
+    /**
+     * searchClassroomName搜索班级的名称
+     */
+    searchClassroomName() {
+        if (updateCM.state.showPicker) {
+            Toast.fail("请输入班级关键字")
         }
-    });
-}
+        var _this = this;
+        var param = {
+            "method": 'searchClazz',
+            "aid": updateCM.state.uid,
+            "keyWord": updateCM.state.gradeValue,
+        };
+        WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
+            onResponse: function (result) {
+                if (result.response.length === 0) [
+                    Toast.fail("没有找到该班级")
+                ]
+                if (result.msg == '调用成功' && result.success == true) {
+                    var arr = [];
+                    result.response.forEach(function (v, i) {
+                        arr.push({
+                            value: v.id, label: v.name
+                        })
+                    })
+                    updateCM.setState({ searchData: arr });
+                } else {
+                    Toast.fail(result.msg, 1);
+                }
+            },
+            onError: function (error) {
+                Toast.info(error);
+            }
+        });
+    }
     /**
    * 班级点击确定按钮事件
    */
@@ -157,7 +146,7 @@ export default class updateClassroom extends React.Component {
         this.setState({
             data: d,
             gradeValueByNoom,
-            classId:gradeValueByNoom[0]
+            classId: gradeValueByNoom[0]
         });
         var newName;
         updateCM.state.data.forEach((v) => {
@@ -201,7 +190,7 @@ export default class updateClassroom extends React.Component {
         this.setState({
             data: d,
             gradeValueByNoom,
-            classId:gradeValueByNoom[0]
+            classId: gradeValueByNoom[0]
         });
     }
     /**
@@ -239,10 +228,8 @@ export default class updateClassroom extends React.Component {
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
             onResponse: function (result) {
                 if (result.msg == '调用成功' && result.success == true) {
-                    // $('.tableDiv').show("fast");
                     _this.state.gradeValue = '';
                     _this.state.classroomValue = '';
-                    _this.setState({ chooseResultDiv: 'none' });
                     Toast.success('修改成功');
                     setTimeout(function () {
                         var data = {
@@ -261,11 +248,11 @@ export default class updateClassroom extends React.Component {
         });
 
     }
-   
-     /**
-       * 查看教学楼列表
-       */
-      viewSchoolBuildingPage = (uid,flag) => {
+
+    /**
+      * 查看教学楼列表
+      */
+    viewSchoolBuildingPage = (uid, flag) => {
         var param = {
             "method": 'viewSchoolBuildingPage',
             "uid": uid,
@@ -276,8 +263,8 @@ export default class updateClassroom extends React.Component {
                 if (result.msg == '调用成功' && result.success == true) {
                     var arr = [
                         {
-                            value:-1,
-                            label:"新增教学楼"
+                            value: -1,
+                            label: "新增教学楼"
                         }
                     ];
                     result.response.forEach(function (v, i) {
@@ -285,8 +272,8 @@ export default class updateClassroom extends React.Component {
                             value: v.id, label: v.name
                         })
                     })
-                    if(flag) {
-                        updateCM.viewClassRoom(updateCM.state.classIdBynoom,arr)
+                    if (flag) {
+                        updateCM.viewClassRoom(updateCM.state.classIdBynoom, arr)
                     } else {
                         updateCM.setState({ teachBuildData: arr });
                     }
@@ -299,24 +286,24 @@ export default class updateClassroom extends React.Component {
             }
         });
     }
-     /**
-    * 增加教学楼
-    */
-   toAddTeachBuild = () => {
-    updateCM.setState({
-        "teachBuildValue": "",
-        "buildingId": ""
-    })
-    var url = WebServiceUtil.mobileServiceURL + "addTeachBuild?uid=" + updateCM.state.uid;
-    var data = {
-        method: 'openNewPage',
-        url: url
-    };
+    /**
+   * 增加教学楼
+   */
+    toAddTeachBuild = () => {
+        updateCM.setState({
+            "teachBuildValue": "",
+            "buildingId": ""
+        })
+        var url = WebServiceUtil.mobileServiceURL + "addTeachBuild?uid=" + updateCM.state.uid;
+        var data = {
+            method: 'openNewPage',
+            url: url
+        };
 
-    Bridge.callHandler(data, null, function (error) {
-        window.location.href = url;
-    });
-}
+        Bridge.callHandler(data, null, function (error) {
+            window.location.href = url;
+        });
+    }
     render() {
         return (
             <div id="classroomManage" style={{ height: updateCM.state.clientHeight }}>
@@ -345,7 +332,7 @@ export default class updateClassroom extends React.Component {
                                         updateCM.setState({
                                             "gradeValue": v,
                                             "classId": "",
-                                            showPicker:false
+                                            showPicker: false
                                         })
                                     }}
                                     value={this.state.gradeValue}
@@ -378,7 +365,7 @@ export default class updateClassroom extends React.Component {
                                             onOk={v => this.viewCourseTableItemPage(v)}
                                         >
                                             <Item arrow="horizontal" onClick={this.viewSchoolBuildingPage.bind(this,
-                                                updateCM.state.uid,false)
+                                                updateCM.state.uid, false)
                                             }
                                             >选择教学楼</Item>
                                         </Picker>
