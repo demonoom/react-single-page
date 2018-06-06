@@ -69,6 +69,7 @@ export default class dashboard extends React.Component {
     }
 
     componentDidMount() {
+        var _this = this;
         document.title = '大数据管理驾驶舱';
         Bridge.setShareAble("false");
         Bridge.setRefreshAble("false");
@@ -80,6 +81,11 @@ export default class dashboard extends React.Component {
         this.setState({destId, areaType});
         //调取驾驶舱数据
         this.getDashBoardDataByArea(destId, areaType);
+        setInterval(function () {
+            console.log("destId====>"+destId);
+            //调取驾驶舱数据
+            _this.getDashBoardDataByArea(destId, areaType);
+        },1000*2)
     }
 
     /**
@@ -103,7 +109,7 @@ export default class dashboard extends React.Component {
                 console.log(jsonObj);
                 //学校总人数
                 var userCountOfSchool = jsonObj.userCountOfSchool;
-                //学校24小时消息总数
+                //全校教研活动量
                 var messageCount = jsonObj.messageCount;
                 //蚁巢活跃量
                 var topicResults = jsonObj.topicResult;
@@ -795,7 +801,7 @@ export default class dashboard extends React.Component {
                                 <p className="gradeTitle">总人数</p>
                                 <p className="num">{_this.state.userCount}</p></div>
                             <div className="fl msgNum">
-                                <p className="gradeTitle">24h内消息数量</p>
+                                <p className="gradeTitle">全校教研活动量</p>
                                 <p className="num">{_this.state.messageCount}</p></div>
                         </div>
                     </div>
