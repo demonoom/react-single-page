@@ -209,6 +209,12 @@ export default class dashboard extends React.Component {
 
                         }
                     },
+                },
+                label: {
+                    normal: {
+                        show: true,
+                        position: 'top',
+                    }
                 }
             }]
         };
@@ -304,7 +310,16 @@ export default class dashboard extends React.Component {
                     type:'pie',
                     radius : [30, 110],
                     roseType : 'area',
-                    data:seriesData
+                    data:seriesData,
+                    label : {
+                        normal : {
+                            formatter: '{b}:{c}: ({d}%)',
+                            textStyle : {
+                                fontWeight : 'normal',
+                                fontSize : 15
+                            }
+                        }
+                    }
                 }
             ]
         };
@@ -369,10 +384,20 @@ export default class dashboard extends React.Component {
                     selectedMode: 'single',
                     data:seriesDataArray,
                     itemStyle: {
+
                         emphasis: {
                             shadowBlur: 10,
                             shadowOffsetX: 0,
                             shadowColor: 'rgba(0, 0, 0, 0.5)'
+                        }
+                    },
+                    label : {
+                        normal : {
+                            formatter: '{b}:{c}次: ({d}%)',
+                            textStyle : {
+                                fontWeight : 'normal',
+                                fontSize : 15
+                            }
                         }
                     }
                 }
@@ -582,7 +607,16 @@ export default class dashboard extends React.Component {
                 data: Object.keys(monthOpenClazzJson).map(function (key) {
                     return {
                         name: key.replace('.js', ''),
-                        value: monthOpenClazzJson[key]
+                        value: monthOpenClazzJson[key],
+                        label : {
+                            normal : {
+                                formatter: '{b}:{c}: ({d}%)',
+                                textStyle : {
+                                    fontWeight : 'normal',
+                                    fontSize : 15
+                                }
+                            }
+                        }
                     }
                 })
             }]
@@ -662,6 +696,12 @@ export default class dashboard extends React.Component {
                         data : [
                             {type : 'average', name : '平均值'}
                         ]
+                    },
+                    label: {
+                        normal: {
+                            show: true,
+                            position: 'top',
+                        }
                     }
                 }
             ]
