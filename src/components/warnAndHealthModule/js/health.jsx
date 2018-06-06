@@ -29,9 +29,9 @@ export default class health extends React.Component {
 
     componentWillMount() {
         var type = this.props.typeFromNoom;
-        var clazzId = localStorage.getItem("clazzId");
+        var classId = localStorage.getItem("clazzId");
         this.setState({
-            classId: clazzId,
+            classId: classId,
             type: type,
         }, () => {
             this.getBraceletSportStepByClazzId(classId);
