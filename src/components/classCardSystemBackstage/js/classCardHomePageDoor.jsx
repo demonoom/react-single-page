@@ -157,7 +157,7 @@ export default class classCardHomePageDoor extends React.Component {
 
     render() {
         return (
-            <div id="classCardHomePageDoor" style={{height: document.body.clientHeight}}>
+            <div id="classCardHomePageDoor" style={{height: document.body.clientHeight, overflow: 'auto'}}>
                 <ul className="classCardHomePageDoor">
                     <li onClick={this.turnToClassroomManage}><i className="icon icon_ClassroomManagement"></i>教室管理<i
                         className="arrow_right"></i></li>

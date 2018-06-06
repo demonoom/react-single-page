@@ -4,12 +4,7 @@ import {
     WhiteSpace,
     InputItem,
     List,
-    Radio,
-    ListView,
     Modal,
-    PullToRefresh,
-    Checkbox,
-    Button,
     Flex,
     Picker
 } from 'antd-mobile';
@@ -17,7 +12,6 @@ import {
 const Item = List.Item;
 const Brief = Item.Brief;
 const alert = Modal.alert;
-const RadioItem = Radio.RadioItem;
 var classBinding;
 export default class addClassroomManage extends React.Component {
     constructor(props) {
@@ -25,12 +19,10 @@ export default class addClassroomManage extends React.Component {
         classBinding = this;
         this.state = {
             clientHeight: document.body.clientHeight,
-            chooseResultDiv: 'none',
             searchData: [],
-            selectData: [],
             teachBuildData: [],
             buildingId: [],
-            gradeValue: []
+            gradeValue: [],
         };
     }
     componentDidMount() {
@@ -46,11 +38,21 @@ export default class addClassroomManage extends React.Component {
     */
     searchClassroomName() {
         var _this = this;
-        var param = {
-            "method": 'searchClazz',
-            "aid": classBinding.state.uid,
-            "keyWord": classBinding.state.gradeValue,
-        };
+        var param
+        if (classBinding.state.gradeValue.length == 0) {
+            param = {
+                "method": 'searchClazz',
+                "aid": classBinding.state.uid,
+                "keyWord": "",
+            };
+        } else {
+            param = {
+                "method": 'searchClazz',
+                "aid": classBinding.state.uid,
+                "keyWord": classBinding.state.gradeValue,
+            };
+        }
+
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
             onResponse: function (result) {
                 if (result.msg == '调用成功' && result.success == true) {
@@ -228,7 +230,7 @@ export default class addClassroomManage extends React.Component {
             gradeValueByNoom,
         });
     }
-    
+
     render() {
         return (
             <div id="classroomManage" style={{ height: classBinding.state.clientHeight }}>
