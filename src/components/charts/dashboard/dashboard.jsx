@@ -618,7 +618,7 @@ export default class dashboard extends React.Component {
             legend: {
                 data:['步数']
             },
-            toolbox: {
+            /*toolbox: {
                 show : true,
                 feature : {
                     dataView : {show: true, readOnly: false},
@@ -626,7 +626,7 @@ export default class dashboard extends React.Component {
                     restore : {show: true},
                     saveAsImage : {show: true}
                 }
-            },
+            },*/
             calculable : true,
             xAxis : [
                 {
