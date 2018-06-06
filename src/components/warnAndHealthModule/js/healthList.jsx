@@ -37,7 +37,6 @@ export default class healthList extends React.Component {
 
 
     toRanking(type){
-        debugger
         if(type){
             let url;
             if (this.state.classId) {

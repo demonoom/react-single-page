@@ -11,7 +11,6 @@ import {
     Checkbox,
     Button,
     Flex,
-    Picker
 } from 'antd-mobile';
 import '../css/classroomManage.less'
 import { ucs2 } from 'punycode';
@@ -37,15 +36,9 @@ export default class classroomManage extends React.Component {
             dataSource: dataSource.cloneWithRows(this.initData),
             defaultPageNo: 1,
             clientHeight: document.body.clientHeight,
-            chooseResultDiv: 'none',
-            searchData: [],
             selectData: [],
-            teachBuildData: [],
-            buildingId: [],
-            gradeValue: []
         };
     }
-
 
     componentDidMount() {
         Bridge.setShareAble("false");
@@ -54,14 +47,21 @@ export default class classroomManage extends React.Component {
         var locationSearch = locationHref.substr(locationHref.indexOf("?") + 1);
         var uid = locationSearch.split("&")[0].split("=")[1];
         this.setState({ "uid": uid });
-        var uidKey = {
-            "uidKey": uid
-        }
-        localStorage.setItem("uIdKey", JSON.stringify(uidKey));
         this.viewClassRoomPage(uid);
+        window.addEventListener('resize', classBinding.onWindowResize)
     }
-
-
+    componentWillUnmount() {
+        //解除监听
+        window.removeEventListener('resize', classBinding.onWindowResize)
+    }
+    /**
+    * 视窗改变时改变高度
+    */
+    onWindowResize() {
+        setTimeout(function () {
+            classBinding.setState({ clientHeight: document.body.clientHeight });
+        }, 100)
+    }
     /**
      * 查看教室信息
      */
@@ -119,7 +119,7 @@ export default class classroomManage extends React.Component {
      * 开启添加教室管理的界面
      */
     addClassroomM = () => {
-        var url = WebServiceUtil.mobileServiceURL + "addClassroomManage?uid="+classBinding.state.uid;
+        var url = WebServiceUtil.mobileServiceURL + "addClassroomManage?uid=" + classBinding.state.uid;
         var data = {
             method: 'openNewPage',
             url: url
@@ -225,7 +225,7 @@ export default class classroomManage extends React.Component {
             { text: '确定', onPress: () => _this.delClassroom(sId) },
         ], phone);
     };
-   
+
     render() {
         var _this = this;
         const row = (rowData, sectionID, rowID) => {
@@ -283,16 +283,16 @@ export default class classroomManage extends React.Component {
                         style={{
                             height: classBinding.state.clientHeight,
                         }}
-                        // pullToRefresh={<PullToRefresh
-                        //     onRefresh={this.onRefresh}
-                        //     distanceToRefresh={80}
-                        />}
-                    />
+                    // pullToRefresh={<PullToRefresh
+                    //     onRefresh={this.onRefresh}
+                    //     distanceToRefresh={80}
+                    />}
+                />
                     <div className='addBunton' onClick={this.addClassroomM}>
                         <img src={require("../imgs/addBtn.png")} />
                     </div>
                 </div>
-               
+
             </div>
         );
     }
