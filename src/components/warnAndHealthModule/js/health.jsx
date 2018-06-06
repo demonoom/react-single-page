@@ -33,8 +33,6 @@ export default class health extends React.Component {
         var locationSearch = locationHref.substr(locationHref.indexOf("?") + 1);
         var classId = locationSearch.split("&")[0].split('=')[1];
         var type = locationSearch.split("&")[1].split('=')[1];
-        console.log(classId, '班级id');
-        console.log(type, '类型');
         this.setState({
             classId:classId,
             type: type,
@@ -142,22 +140,13 @@ export default class health extends React.Component {
         //     )
         // };
         return (
-<<<<<<< HEAD
             <div id="health" className="home_content" style={{height: this.state.clientHeight}}>
                 <div className="inner_bg">
                     <div className="navBar">
                         <span onClick={this.historyGoBack}>首页</span>
                         <span className="icon">></span>
-                        <span>步数排行榜</span>
+                        <span>{this.state.type == 'step'?'步数排行':'卡路里排行'}</span>
                     </div>
-=======
-            <div id="health" style={{height: this.state.clientHeight}}>
-                <div className="navBar">
-                    <span onClick={this.historyGoBack}>首页</span>
-                    <span className="icon">></span>
-                    <span>{this.state.type == 'step'?'步数排行':'卡路里排行'}</span>
-                </div>
->>>>>>> ce7bd2089ced7df0e12c80796f60bfa89f7c264e
 
                     <div className="health_cont">{array}</div>
 
