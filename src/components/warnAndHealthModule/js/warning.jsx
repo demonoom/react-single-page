@@ -348,7 +348,7 @@ export default class warning extends React.Component {
                     <div className="head">{this.state.openTime}~{this.state.closeTime} 平均心率折线图</div>
                     <ReactEcharts ref='echarts_react'
                                   option={this.state.option}
-                                  style={{height: this.state.clientHeight * 0.5}}/>
+                                  style={{height: this.state.clientHeight * 0.45}}/>
                     {/*<div style={{*/}
                         {/*textAlign: 'center'*/}
                     {/*}}>平均心率折线图*/}
@@ -408,7 +408,7 @@ export default class warning extends React.Component {
                                 initialListSize={30}   //指定在组件刚挂载的时候渲染多少行数据，用这个属性来确保首屏显示合适数量的数据
                                 scrollEventThrottle={20}     //控制在滚动过程中，scroll事件被调用的频率
                                 style={{
-                                    height: this.state.clientHeight * 0.5,
+                                    height: this.state.clientHeight * 0.45 - 35,
                                 }}
                             >
                             </ListView>

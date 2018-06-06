@@ -86,7 +86,7 @@ export default class warnList extends React.Component {
          //     {item[k].courseName}
          //     <div>开课时间: {item[k].openTimeString} - {item[k].closeTimeString}</div>
          // </div>;
-         listItem = <div className="listCont"><div className="list_item" onClick={this.toWarning.bind(this,item[k].id,item[k].openTimeString,item[k].closeTimeString)}>
+         listItem = <div className="list_item" onClick={this.toWarning.bind(this,item[k].id,item[k].openTimeString,item[k].closeTimeString)}>
              <div className="" style={{
                  display:'inline-block',
                  width:'33.333333%',
@@ -102,7 +102,7 @@ export default class warnList extends React.Component {
                  width:'33.333333%',
                  textAlign:'center'
              }}>{item[k].clazz.name}</div>
-         </div></div>
+         </div>
          arr.push(listItem);
         }
         return (
@@ -125,7 +125,7 @@ export default class warnList extends React.Component {
                         textAlign:'center'
                     }}>班级</div>
                 </div>
-                {arr}
+                <div className="listCont">{arr}</div>
             </div>
         );
     }
