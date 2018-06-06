@@ -189,12 +189,12 @@ export default class boxBracelet extends React.Component {
         };
         Bridge.callHandler(data, function (mes) {
             //获取二维码MAC地址
-            var string = mes.replace(/:/g, '');
-            if (string.length > 16) {
-                Toast.fail('mac地址超过最大字节数', 2)
-                return
-            }
-            bindDing.setState({macId: string});
+            // var string = mes.replace(/:/g, '');
+            // if (string.length > 16) {
+            //     Toast.fail('mac地址超过最大字节数', 2)
+            //     return
+            // }
+            bindDing.setState({macId: mes});
         }, function (error) {
             console.log(error);
         });
