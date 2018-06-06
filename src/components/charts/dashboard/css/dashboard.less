@@ -1,6 +1,7 @@
 #dashboard {
   overflow:hidden;
   height: 100%;
+  width: 100%;
   color: #fff;
   background: -webkit-linear-gradient(#454a60, #35384b); /* Safari 5.1 - 6.0 */
   background: -o-linear-gradient(#454a60, #35384b); /* Opera 11.1 - 12.0 */
@@ -30,6 +31,7 @@
      .num{
        font-size: 26px;
        margin:0;
+       padding-top: 12px;
      }
     }
   }
@@ -47,8 +49,17 @@
       height: auto;
       box-sizing: border-box;
       padding: 0;
+      &.table_class{
+        width: 40%;
+        margin-right: 10%;
+        height: 230px;
+        overflow: hidden;
+      }
+      &.startClassNum{
+        width: 50%;
+      }
       &.resource{
-        width: 100%;
+        width: 50%;
         height: 530px;
       }
     }
@@ -74,26 +85,41 @@
       height: 200px;
       overflow: hidden;
       box-sizing: border-box;
-      padding: 10px;
+      padding: 40px 10px 10px;
       -webkit-box-shadow: 6px 16px 4px 0 rgba(34,39,58,0.06);
       -moz-box-shadow: 6px 16px 4px 0 rgba(34,39,58,0.06);
       box-shadow: 6px 16px 4px 0 rgba(34,39,58,0.06);
+      position: relative;
       .tableDiv{
-        height: 160px;
+        height: 200px;
         overflow-y: auto;
       }
       table{
         width: 100%;
         text-align: center;
+        thead{
+          position: absolute;
+          top:0;
+          left: 0;
+          td{
+            width: 25%;
+            text-align: center;
+
+          }
+        }
         td{
           padding:10px 0;
+        }
+        tbody{
+          height: 160px;
+          overflow-y: auto;
         }
       }
     }
 
   }
   .echarts_wrap {
-    padding: 15px 0;
+    padding-top: 30px;
   }
 
 }

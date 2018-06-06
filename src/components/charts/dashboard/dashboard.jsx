@@ -4,7 +4,7 @@ import {
     Toast
 } from 'antd-mobile';
 import './css/dashboard.less';
-import "./css/chalk";
+import "./css/chalk2";
 import "./css/walden";
 
 var dataGZ = [
@@ -175,7 +175,6 @@ export default class dashboard extends React.Component {
                 textStyle:{
                     color:'#a6abb9',
                     fontSize: 16,
-                    fontWeight: 'normal'
                 }
             },
             xAxis: {
@@ -188,13 +187,12 @@ export default class dashboard extends React.Component {
             series: [{
                 data: seriesData,
                 type: 'bar',
-
                 itemStyle: {
                     //通常情况下：
                     normal: {
                         //每个柱子的颜色即为colorList数组里的每一项，如果柱子数目多于colorList的长度，则柱子颜色循环使用该数组
                         color: function (params) {
-                            var colorList = ['#f00', '#ff0'];
+                            var colorList = ['#ef8a76', '#5b96f0'];
                             if((params.dataIndex+1)%2 == 0){//为偶数的数据使用第一个颜色，其他使用第二个颜色
                                 return colorList[0];//1,3,5,7
                             }else{
@@ -228,7 +226,7 @@ export default class dashboard extends React.Component {
                 <ReactEcharts
                     option={topicOption}
                     style={{height: '100%', width: '100%'}}
-                    theme='walden'
+                    theme='chalk2'
                     className=''/>
             </div>
         </div>;
@@ -249,7 +247,22 @@ export default class dashboard extends React.Component {
             },
             series: [{
                 data: seriesData,
-                type: 'bar'
+                type: 'bar',
+                itemStyle: {
+                    //通常情况下：
+                    normal: {
+                        //每个柱子的颜色即为colorList数组里的每一项，如果柱子数目多于colorList的长度，则柱子颜色循环使用该数组
+                        color: function (params) {
+                            var colorList = ['#ef8a76', '#5b96f0'];
+                            if((params.dataIndex+1)%2 == 0){//为偶数的数据使用第一个颜色，其他使用第二个颜色
+                                return colorList[0];//1,3,5,7
+                            }else{
+                                return colorList[1];//2,4,6,8
+                            }
+
+                        }
+                    },
+                }
             }]
         };
     }
@@ -262,11 +275,10 @@ export default class dashboard extends React.Component {
             title : {
                 text: '学习资源分布情况统计',
                 subtext: '',
-                x:'center',
+                x:'left',
                 textStyle:{
                     color:'#a6abb9',
                     fontSize: 16,
-                    fontWeight: 'normal'
                 }
             },
             tooltip : {
@@ -274,7 +286,7 @@ export default class dashboard extends React.Component {
                 formatter: "{a} <br/>{b} : {c} ({d}%)"
             },
             legend: {
-                x : 'center',
+                x : 'left',
                 y : 'bottom',
                 data:xClazzName
             },
@@ -327,7 +339,7 @@ export default class dashboard extends React.Component {
                 <ReactEcharts
                     option={cloudFileOption}
                     style={{height: '100%', width: '100%'}}
-                    theme='walden'
+                    theme='chalk2'
                     className=''/>
             </div>
         </div>;
@@ -343,7 +355,6 @@ export default class dashboard extends React.Component {
                 textStyle:{
                     color:'#a6abb9',
                     fontSize: 16,
-                    fontWeight: 'normal'
                 }
             },
             tooltip : {
@@ -352,7 +363,7 @@ export default class dashboard extends React.Component {
             },
             legend: {
                 bottom: 10,
-                left: 'center',
+                left: 'left',
                 data: xClazzNameArray
             },
             series : [
@@ -395,7 +406,7 @@ export default class dashboard extends React.Component {
                 <ReactEcharts
                     option={homeWorkOption}
                     style={{height: '100%', width: '100%'}}
-                    theme='chalk'
+                    theme='chalk2'
                 />
             </div>
         </div>;
@@ -484,7 +495,7 @@ export default class dashboard extends React.Component {
                 <ReactEcharts
                     option={openClazzOption}
                     style={{height: '100%', width: '100%'}}
-                    theme='walden'
+                    theme='chalk2'
                     className=''/>
             </div>
         </div>;
@@ -497,8 +508,8 @@ export default class dashboard extends React.Component {
             title: [{
                 text: '今日开课次数统计',
                 subtext: '',
-                x: '25%',
-                textAlign: 'center',
+                x: 'left',
+                textAlign: 'left',
                 textStyle:{
                     color:'#a6abb9',
                     fontSize: 16,
@@ -506,8 +517,8 @@ export default class dashboard extends React.Component {
             }, {
                 text: '本月开课次数统计',
                 subtext: '',
-                x: '75%',
-                textAlign: 'center',
+                x: '52%',
+                textAlign: 'left',
                 textStyle:{
                     color:'#a6abb9',
                     fontSize: 16,
@@ -517,13 +528,13 @@ export default class dashboard extends React.Component {
                 top: 50,
                 width: '50%',
                 bottom: '45%',
-                left: 10,
+                left: 0,
                 containLabel: true
             }, {
                 top: 50,
                 width: '50%',
                 bottom: '45%',
-                left: 10,
+                left: 0,
                 containLabel: true
             }],
             xAxis: [{
@@ -560,6 +571,21 @@ export default class dashboard extends React.Component {
                 xAxisIndex: 0,
                 yAxisIndex: 0,
                 z: 3,
+                itemStyle: {
+                    //通常情况下：
+                    normal: {
+                        //每个柱子的颜色即为colorList数组里的每一项，如果柱子数目多于colorList的长度，则柱子颜色循环使用该数组
+                        color: function (params) {
+                            var colorList = ['#ef8a76', '#5b96f0'];
+                            if((params.dataIndex+1)%2 == 0){//为偶数的数据使用第一个颜色，其他使用第二个颜色
+                                return colorList[0];//1,3,5,7
+                            }else{
+                                return colorList[1];//2,4,6,8
+                            }
+
+                        }
+                    },
+                },
                 label: {
                     normal: {
                         position: 'right',
@@ -604,7 +630,7 @@ export default class dashboard extends React.Component {
                 <ReactEcharts
                     option={stepOption}
                     style={{height: '100%', width: '100%'}}
-                    theme='walden'
+                    theme='chalk2'
                     className=''/>
             </div>
         </div>;
@@ -656,6 +682,21 @@ export default class dashboard extends React.Component {
                         data : [
                             {type : 'average', name : '平均值'}
                         ]
+                    },
+                    itemStyle: {
+                        //通常情况下：
+                        normal: {
+                            //每个柱子的颜色即为colorList数组里的每一项，如果柱子数目多于colorList的长度，则柱子颜色循环使用该数组
+                            color: function (params) {
+                                var colorList = ['#ef8a76', '#5b96f0'];
+                                if((params.dataIndex+1)%2 == 0){//为偶数的数据使用第一个颜色，其他使用第二个颜色
+                                    return colorList[0];//1,3,5,7
+                                }else{
+                                    return colorList[1];//2,4,6,8
+                                }
+
+                            }
+                        },
                     }
                 }
             ]
@@ -693,7 +734,7 @@ export default class dashboard extends React.Component {
                 <ReactEcharts
                     option={hotPlaceScatterOption}
                     style={{height: '100%', width: '100%'}}
-                    className=''/>
+                    theme='chalk2'/>
             </div>
         </div>;
         _this.setState({hotPlaceScatterChartDiv});
@@ -799,14 +840,14 @@ export default class dashboard extends React.Component {
                                 <p className="num">{_this.state.messageCount}</p></div>
                         </div>
                     </div>
-                    <div className="list_wrap_padding">
+                    <div className="list_wrap_padding table_class">
                         <div className="gradeTitle tableTitle">当前开课列表</div>
                         <div className="topList">
                             <div className="tableDiv">
                                 <table>
                                     <thead>
                                     <tr>
-                                        <td>课程名</td>
+                                        <td>课程</td>
                                         <td>班级</td>
                                         <td>授课老师</td>
                                         <td>开课时间</td>
@@ -821,7 +862,7 @@ export default class dashboard extends React.Component {
                         </div>
                     </div>
 
-                    <div className="list_wrap_padding">
+                    <div className="list_wrap_padding startClassNum">
                         {this.state.openClazzDiv}
                     </div>
 
