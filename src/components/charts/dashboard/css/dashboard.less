@@ -3,10 +3,14 @@
   height: 100%;
   width: 100%;
   color: #fff;
-  background: -webkit-linear-gradient(#454a60, #35384b); /* Safari 5.1 - 6.0 */
-  background: -o-linear-gradient(#454a60, #35384b); /* Opera 11.1 - 12.0 */
-  background: -moz-linear-gradient(#454a60, #35384b); /* Firefox 3.6 - 15 */
-  background: linear-gradient(#454a60, #35384b); /* 标准的语法 */
+  background-color: rgba(22,33,72,1);
+  //background: -webkit-linear-gradient(#454a60, #35384b); /* Safari 5.1 - 6.0 */
+  //background: -o-linear-gradient(#454a60, #35384b); /* Opera 11.1 - 12.0 */
+  //background: -moz-linear-gradient(#454a60, #35384b); /* Firefox 3.6 - 15 */
+  //background: linear-gradient(#454a60, #35384b); /* 标准的语法 */
+  ::-webkit-scrollbar{
+    display: none;
+  }
   .clear{
     overflow: hidden;
   }
@@ -45,22 +49,22 @@
     flex-wrap: wrap;
 
     .list_wrap_padding{
-      width: 50%;
+      width: 33.3%;
       height: auto;
       box-sizing: border-box;
-      padding: 0;
       &.table_class{
-        width: 40%;
-        margin-right: 10%;
+        width: 30%;
         height: 230px;
         overflow: hidden;
       }
+      &.classAfter{
+        width: 20%;
+      }
       &.startClassNum{
-        width: 50%;
+        height: 300px;
       }
       &.resource{
         width: 50%;
-        height: 530px;
       }
     }
     .tableTitle{
@@ -75,17 +79,18 @@
       }
     }
     .topList{
-      background: -webkit-linear-gradient(#565971, #484d62); /* Safari 5.1 - 6.0 */
-      background: -o-linear-gradient(#565971, #484d62); /* Opera 11.1 - 12.0 */
-      background: -moz-linear-gradient(#565971, #484d62); /* Firefox 3.6 - 15 */
-      background: linear-gradient(#565971, #484d62); /* 标准的语法 */
+      //background: -webkit-linear-gradient(#565971, #484d62); /* Safari 5.1 - 6.0 */
+      //background: -o-linear-gradient(#565971, #484d62); /* Opera 11.1 - 12.0 */
+      //background: -moz-linear-gradient(#565971, #484d62); /* Firefox 3.6 - 15 */
+      //background: linear-gradient(#565971, #484d62); /* 标准的语法 */
+      background-color: #1d2b60;
       -webkit-border-radius: 6px;
       -moz-border-radius: 6px;
       border-radius: 6px;
       height: 200px;
       overflow: hidden;
       box-sizing: border-box;
-      padding: 40px 10px 10px;
+      padding: 10px;
       -webkit-box-shadow: 6px 16px 4px 0 rgba(34,39,58,0.06);
       -moz-box-shadow: 6px 16px 4px 0 rgba(34,39,58,0.06);
       box-shadow: 6px 16px 4px 0 rgba(34,39,58,0.06);
@@ -97,15 +102,9 @@
       table{
         width: 100%;
         text-align: center;
-        thead{
-          position: absolute;
-          top:0;
-          left: 0;
-          td{
-            width: 25%;
-            text-align: center;
 
-          }
+        thead{
+          font-size: 12px;
         }
         td{
           padding:10px 0;
@@ -118,8 +117,12 @@
     }
 
   }
-  .echarts_wrap {
-    padding-top: 30px;
+ .pB20{
+   padding-bottom: 20px;
+ }
+  .list_wrap_padding{
+    padding: 0;
+    margin-bottom: 80px;
   }
 
 }

@@ -69,6 +69,7 @@ export default class dashboard extends React.Component {
     }
 
     componentDidMount() {
+        var _this = this;
         document.title = '大数据管理驾驶舱';
         Bridge.setShareAble("false");
         Bridge.setRefreshAble("false");
@@ -80,6 +81,11 @@ export default class dashboard extends React.Component {
         this.setState({destId, areaType});
         //调取驾驶舱数据
         this.getDashBoardDataByArea(destId, areaType);
+        setInterval(function () {
+            console.log("destId====>"+destId);
+            //调取驾驶舱数据
+            _this.getDashBoardDataByArea(destId, areaType);
+        },1000*2)
     }
 
     /**
@@ -103,7 +109,7 @@ export default class dashboard extends React.Component {
                 console.log(jsonObj);
                 //学校总人数
                 var userCountOfSchool = jsonObj.userCountOfSchool;
-                //学校24小时消息总数
+                //全校教研活动量
                 var messageCount = jsonObj.messageCount;
                 //蚁巢活跃量
                 var topicResults = jsonObj.topicResult;
@@ -192,7 +198,7 @@ export default class dashboard extends React.Component {
                     normal: {
                         //每个柱子的颜色即为colorList数组里的每一项，如果柱子数目多于colorList的长度，则柱子颜色循环使用该数组
                         color: function (params) {
-                            var colorList = ['#ef8a76', '#5b96f0'];
+                            var colorList = ['#00a8ff', '#00fdd8'];
                             if((params.dataIndex+1)%2 == 0){//为偶数的数据使用第一个颜色，其他使用第二个颜色
                                 return colorList[0];//1,3,5,7
                             }else{
@@ -201,6 +207,12 @@ export default class dashboard extends React.Component {
 
                         }
                     },
+                },
+                label: {
+                    normal: {
+                        show: true,
+                        position: 'top',
+                    }
                 }
             }]
         };
@@ -253,7 +265,7 @@ export default class dashboard extends React.Component {
                     normal: {
                         //每个柱子的颜色即为colorList数组里的每一项，如果柱子数目多于colorList的长度，则柱子颜色循环使用该数组
                         color: function (params) {
-                            var colorList = ['#ef8a76', '#5b96f0'];
+                            var colorList = ['#00a8ff', '#00fdd8'];
                             if((params.dataIndex+1)%2 == 0){//为偶数的数据使用第一个颜色，其他使用第二个颜色
                                 return colorList[0];//1,3,5,7
                             }else{
@@ -310,7 +322,16 @@ export default class dashboard extends React.Component {
                     type:'pie',
                     radius : [30, 110],
                     roseType : 'area',
-                    data:seriesData
+                    data:seriesData,
+                    label : {
+                        normal : {
+                            formatter: '{b}:{c}: ({d}%)',
+                            textStyle : {
+                                fontWeight : 'normal',
+                                fontSize : 15
+                            }
+                        }
+                    }
                 }
             ]
         };
@@ -362,22 +383,32 @@ export default class dashboard extends React.Component {
                 formatter: "{a} <br/>{b} : {c} ({d}%)"
             },
             legend: {
-                bottom: 10,
+                bottom: 0,
                 left: 'left',
                 data: xClazzNameArray
             },
             series : [
                 {
                     type: 'pie',
-                    radius : '65%',
+                    radius : '40%',
                     center: ['50%', '50%'],
                     selectedMode: 'single',
                     data:seriesDataArray,
                     itemStyle: {
+
                         emphasis: {
                             shadowBlur: 10,
                             shadowOffsetX: 0,
                             shadowColor: 'rgba(0, 0, 0, 0.5)'
+                        }
+                    },
+                    label : {
+                        normal : {
+                            formatter: '{b}:{c}次: ({d}%)',
+                            textStyle : {
+                                fontWeight : 'normal',
+                                fontSize : 12
+                            }
                         }
                     }
                 }
@@ -526,14 +557,14 @@ export default class dashboard extends React.Component {
             }],
             grid: [{
                 top: 50,
-                width: '50%',
+                width: '45%',
                 bottom: '45%',
                 left: 0,
                 containLabel: true
             }, {
                 top: 50,
-                width: '50%',
-                bottom: '45%',
+                width: '45%',
+                bottom: '0',
                 left: 0,
                 containLabel: true
             }],
@@ -576,7 +607,7 @@ export default class dashboard extends React.Component {
                     normal: {
                         //每个柱子的颜色即为colorList数组里的每一项，如果柱子数目多于colorList的长度，则柱子颜色循环使用该数组
                         color: function (params) {
-                            var colorList = ['#ef8a76', '#5b96f0'];
+                            var colorList = ['#00a8ff', '#00fdd8'];
                             if((params.dataIndex+1)%2 == 0){//为偶数的数据使用第一个颜色，其他使用第二个颜色
                                 return colorList[0];//1,3,5,7
                             }else{
@@ -602,7 +633,16 @@ export default class dashboard extends React.Component {
                 data: Object.keys(monthOpenClazzJson).map(function (key) {
                     return {
                         name: key.replace('.js', ''),
-                        value: monthOpenClazzJson[key]
+                        value: monthOpenClazzJson[key],
+                        label : {
+                            normal : {
+                                formatter: '{b}:{c}: ({d}%)',
+                                textStyle : {
+                                    fontWeight : 'normal',
+                                    fontSize : 12
+                                }
+                            }
+                        }
                     }
                 })
             }]
@@ -652,7 +692,7 @@ export default class dashboard extends React.Component {
             legend: {
                 data:['步数']
             },
-            toolbox: {
+            /*toolbox: {
                 show : true,
                 feature : {
                     dataView : {show: true, readOnly: false},
@@ -660,7 +700,7 @@ export default class dashboard extends React.Component {
                     restore : {show: true},
                     saveAsImage : {show: true}
                 }
-            },
+            },*/
             calculable : true,
             xAxis : [
                 {
@@ -688,15 +728,21 @@ export default class dashboard extends React.Component {
                         normal: {
                             //每个柱子的颜色即为colorList数组里的每一项，如果柱子数目多于colorList的长度，则柱子颜色循环使用该数组
                             color: function (params) {
-                                var colorList = ['#ef8a76', '#5b96f0'];
-                                if((params.dataIndex+1)%2 == 0){//为偶数的数据使用第一个颜色，其他使用第二个颜色
+                                var colorList = ['#00a8ff', '#00fdd8'];
+                                if ((params.dataIndex + 1) % 2 == 0) {//为偶数的数据使用第一个颜色，其他使用第二个颜色
                                     return colorList[0];//1,3,5,7
-                                }else{
+                                } else {
                                     return colorList[1];//2,4,6,8
                                 }
 
                             }
-                        },
+                        }
+                    },
+                    label: {
+                        normal: {
+                            show: true,
+                            position: 'top',
+                        }
                     }
                 }
             ]
@@ -836,7 +882,7 @@ export default class dashboard extends React.Component {
                                 <p className="gradeTitle">总人数</p>
                                 <p className="num">{_this.state.userCount}</p></div>
                             <div className="fl msgNum">
-                                <p className="gradeTitle">24h内消息数量</p>
+                                <p className="gradeTitle">全校教研活动量</p>
                                 <p className="num">{_this.state.messageCount}</p></div>
                         </div>
                     </div>
@@ -861,30 +907,35 @@ export default class dashboard extends React.Component {
                             {/*{this.state.divContentArray}*/}
                         </div>
                     </div>
+                    <div className="list_wrap_padding resource">
+                        {this.state.cloudFileDiv}
+                    </div>
+
+                    <div className="list_wrap_padding pB20 classAfter">
+                        {this.state.homeWorkDiv}
+                    </div>
 
                     <div className="list_wrap_padding startClassNum">
                         {this.state.openClazzDiv}
                     </div>
 
-                    <div className="list_wrap_padding">
-                        {this.state.homeWorkDiv}
-                    </div>
+
 
                     {/*<div className="list_wrap_padding">
                         {this.state.hotPlaceScatterChartDiv}
                     </div>*/}
 
-                    <div className="list_wrap_padding">
+                    <div className="list_wrap_padding pB20 ">
                         {this.state.topicDiv}
                     </div>
 
-                    <div className="list_wrap_padding resource">
-                        {this.state.cloudFileDiv}
-                    </div>
+
 
                     <div className="list_wrap_padding">
                         {this.state.stepChartDiv}
                     </div>
+
+
                 </div>
             </div>
         );

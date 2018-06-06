@@ -3,14 +3,10 @@
   height: 100%;
   width: 100%;
   color: #fff;
-  background: -webkit-linear-gradient(#454a60, #35384b);
-  /* Safari 5.1 - 6.0 */
-  background: -o-linear-gradient(#454a60, #35384b);
-  /* Opera 11.1 - 12.0 */
-  background: -moz-linear-gradient(#454a60, #35384b);
-  /* Firefox 3.6 - 15 */
-  background: linear-gradient(#454a60, #35384b);
-  /* 标准的语法 */
+  background-color: #162148;
+}
+#dashboard ::-webkit-scrollbar {
+  display: none;
 }
 #dashboard .clear {
   overflow: hidden;
@@ -48,23 +44,23 @@
   flex-wrap: wrap;
 }
 #dashboard .cont .list_wrap_padding {
-  width: 50%;
+  width: 33.3%;
   height: auto;
   box-sizing: border-box;
-  padding: 0;
 }
 #dashboard .cont .list_wrap_padding.table_class {
-  width: 40%;
-  margin-right: 10%;
+  width: 30%;
   height: 230px;
   overflow: hidden;
 }
+#dashboard .cont .list_wrap_padding.classAfter {
+  width: 20%;
+}
 #dashboard .cont .list_wrap_padding.startClassNum {
-  width: 50%;
+  height: 300px;
 }
 #dashboard .cont .list_wrap_padding.resource {
   width: 50%;
-  height: 530px;
 }
 #dashboard .cont .tableTitle {
   margin-bottom: 10px;
@@ -77,21 +73,14 @@
   margin-bottom: 30px;
 }
 #dashboard .cont .topList {
-  background: -webkit-linear-gradient(#565971, #484d62);
-  /* Safari 5.1 - 6.0 */
-  background: -o-linear-gradient(#565971, #484d62);
-  /* Opera 11.1 - 12.0 */
-  background: -moz-linear-gradient(#565971, #484d62);
-  /* Firefox 3.6 - 15 */
-  background: linear-gradient(#565971, #484d62);
-  /* 标准的语法 */
+  background-color: #1d2b60;
   -webkit-border-radius: 6px;
   -moz-border-radius: 6px;
   border-radius: 6px;
   height: 200px;
   overflow: hidden;
   box-sizing: border-box;
-  padding: 40px 10px 10px;
+  padding: 10px;
   -webkit-box-shadow: 6px 16px 4px 0 rgba(34, 39, 58, 0.06);
   -moz-box-shadow: 6px 16px 4px 0 rgba(34, 39, 58, 0.06);
   box-shadow: 6px 16px 4px 0 rgba(34, 39, 58, 0.06);
@@ -106,13 +95,7 @@
   text-align: center;
 }
 #dashboard .cont .topList table thead {
-  position: absolute;
-  top: 0;
-  left: 0;
-}
-#dashboard .cont .topList table thead td {
-  width: 25%;
-  text-align: center;
+  font-size: 12px;
 }
 #dashboard .cont .topList table td {
   padding: 10px 0;
@@ -121,6 +104,10 @@
   height: 160px;
   overflow-y: auto;
 }
-#dashboard .echarts_wrap {
-  padding-top: 30px;
+#dashboard .pB20 {
+  padding-bottom: 20px;
+}
+#dashboard .list_wrap_padding {
+  padding: 0;
+  margin-bottom: 80px;
 }

@@ -21,8 +21,8 @@
     }
     echarts.registerTheme('chalk2', {
         "color": [
-            "#ef8a76",
-            "#5b96f0",
+            "#00a8ff",
+            "#00fdd8",
             "#f5da83",
             "#fc5d57",
             "#cddbaa",
