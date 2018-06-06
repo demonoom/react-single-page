@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 #warning {
   color: #333;
   font-size: 14px;
@@ -24,4 +25,8 @@
 #warning .am-list-body::before,
 #warning .am-list-body::after {
   display: none;
+=======
+.list_title {
+  border-top: 5px solid #f5f5f5;
+>>>>>>> 946b6ce37c377e446270b8935dc351b7614a1606
 }
