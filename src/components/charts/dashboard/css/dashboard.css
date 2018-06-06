@@ -11,10 +11,35 @@
   background: linear-gradient(#454a60, #35384b);
   /* 标准的语法 */
 }
+#dashboard .clear {
+  overflow: hidden;
+}
+#dashboard .fl {
+  float: left;
+}
+#dashboard .gradeTitle {
+  font-size: 16px;
+  color: #a6abb9;
+  margin: 0;
+}
+#dashboard .numDiv {
+  margin-bottom: 20px;
+}
+#dashboard .numDiv .allNUm {
+  padding-right: 60px;
+}
+#dashboard .numDiv .allNUm .num {
+  font-size: 40px;
+  margin: 0;
+}
+#dashboard .numDiv .msgNum .num {
+  font-size: 26px;
+  margin: 0;
+}
 #dashboard .cont {
   height: 100%;
   overflow-y: auto;
-  margin: 20px;
+  margin: 40px;
   display: flex;
   display: -webkit-flex;
   display: -webkit-inline-flex;
@@ -24,6 +49,7 @@
   width: 50%;
   height: auto;
   box-sizing: border-box;
+  padding: 0;
 }
 #dashboard .cont .list_wrap_padding.resource {
   width: 100%;
@@ -31,6 +57,10 @@
 }
 #dashboard .cont .topTitle {
   width: 100%;
+}
+#dashboard .cont .topTitle .schoolName {
+  font-size: 26px;
+  margin-bottom: 30px;
 }
 #dashboard .cont .topList {
   background: -webkit-linear-gradient(#565971, #484d62);
@@ -46,7 +76,6 @@
   border-radius: 6px;
   height: 200px;
   overflow: hidden;
-  width: 50%;
   box-sizing: border-box;
   padding: 10px;
   -webkit-box-shadow: 6px 16px 4px 0 rgba(34, 39, 58, 0.06);
