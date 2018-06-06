@@ -26,6 +26,7 @@ export default class addNotify extends React.Component {
     }
 
     componentDidMount() {
+        Bridge.setShareAble("false");
         document.title = "通知列表";
         // this.getClazzesByUserId();
     }

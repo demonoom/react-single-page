@@ -21,7 +21,8 @@ export default class clazzDutyList extends React.Component {
     }
 
     componentDidMount() {
-        document.title = '班级荣誉列表';
+        Bridge.setShareAble("false");
+        document.title = '班级值日列表';
         this.getClazzesByUserId(this.state.ident);
     }
 
