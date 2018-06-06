@@ -11,6 +11,7 @@ import ClassDemeanor from './classDemeanor'
 import StudentOnDuty from './studentOnDuty'
 import MoralEducationScore from './moralEducationScore'
 import Header from './header'
+import Health from '../../../warnAndHealthModule/js/health'
 
 var demeanor;
 //消息通信js
@@ -95,6 +96,7 @@ export default class classCardHomePage extends React.Component {
                             <CurrentAttendance
                                 messageUtilObj={this.state.messageInfo}
                             />
+                            <Application/>
                         </div>
                         <div className="home_left">
                             <StudentOnDuty
@@ -105,15 +107,24 @@ export default class classCardHomePage extends React.Component {
                             />
                         </div>
                         <div className="home_center">
-                            <ClassDemeanor
-                                classCommand={this.state.classCommand}
-                            />
                             <div>
-                                <Application/>
+                                <ClassDemeanor
+                                    classCommand={this.state.classCommand}
+                                />
+                            </div>
+                            <div>
                                 <Notify
                                     classCommand={this.state.classCommand}
                                 />
                             </div>
+                        </div>
+                        <div>
+                            <Health
+                                typeFromNoom='step'
+                            />
+                            <Health
+                                typeFromNoom='calories'
+                            />
                         </div>
                     </div>
                 </div>
