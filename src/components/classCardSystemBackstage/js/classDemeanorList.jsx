@@ -17,6 +17,7 @@ export default class classDemeanorList extends React.Component {
     }
 
     componentDidMount() {
+        Bridge.setShareAble("false");
         document.title = '班级风采列表';
         this.getClazzesByUserId(this.state.ident);
     }

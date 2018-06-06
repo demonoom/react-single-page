@@ -35,6 +35,7 @@ export default class notifyBack extends React.Component {
     }
 
     componentDidMount() {
+        Bridge.setShareAble("false");
         document.title = "通知列表";
         //首页显示全部
         this.getClassBrandNoticeListByClassId(false);

@@ -19,6 +19,7 @@ export default class definedTerm extends React.Component {
     }
 
     componentDidMount() {
+        Bridge.setShareAble("false");
         document.title = '自定义学期';
     }
 

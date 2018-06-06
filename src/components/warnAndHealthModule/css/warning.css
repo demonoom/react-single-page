@@ -1,3 +1,32 @@
+<<<<<<< HEAD
+#warning {
+  color: #333;
+  font-size: 14px;
+  height: 100%;
+  overflow: hidden;
+}
+#warning .cont {
+  height: auto;
+  overflow-y: auto;
+}
+#warning .parent {
+  padding: 15px;
+  position: relative;
+}
+#warning .head {
+  position: absolute;
+  left: 15px;
+  top: 18px;
+}
+#warning .student_list {
+  padding: 15px;
+  background-color: #fff;
+}
+#warning .am-list-body::before,
+#warning .am-list-body::after {
+  display: none;
+=======
 .list_title {
   border-top: 5px solid #f5f5f5;
+>>>>>>> 946b6ce37c377e446270b8935dc351b7614a1606
 }
