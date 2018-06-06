@@ -32,7 +32,6 @@ export default class health extends React.Component {
         var locationSearch = locationHref.substr(locationHref.indexOf("?") + 1);
         var classId = locationSearch.split("&")[0].split('=')[1];
         var type = locationSearch.split("&")[1].split('=')[1];
-        console.log(type);
         this.setState({
             classId: classId,
             type: type,
