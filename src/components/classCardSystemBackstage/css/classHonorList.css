@@ -2,3 +2,9 @@
 #classHonorList {
   overflow-y: auto;
 }
+#classHonorList .am-list-item .am-list-line .am-list-content {
+  padding: 15px 0;
+}
+#classHonorList .am-list-item:not(:last-child) .am-list-line::after {
+  background-color: #eeeeee;
+}

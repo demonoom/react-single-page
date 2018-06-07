@@ -193,6 +193,16 @@ const classroomManage = (location, cb) => {
         cb(null, require("./components/classCardSystemBackstage/js/classroomManage").default)
     })
 }
+const addClassroomManage = (location, cb) => {
+    require.ensure([], require => {
+        cb(null, require("./components/classCardSystemBackstage/js/addClassroomManage").default)
+    })
+}
+const addTeachBuild = (location, cb) => {
+    require.ensure([], require => {
+        cb(null, require("./components/classCardSystemBackstage/js/addTeachBuild").default)
+    })
+}
 
 const addCurriculumSchedule = (location, cb) => {
     require.ensure([], require => {
@@ -219,6 +229,7 @@ const classDemeanor = (location, cb) => {
     })
 }
 
+//德育
 const moralEducation = (location, cb) => {
     require.ensure([], require => {
         cb(null, require("./components/classCardSystemBackstage/js/moralEducation").default)
@@ -414,10 +425,45 @@ const particlePath = (location, cb) => {
     )
 }
 
+
 const dashboard = (location, cb) => {
     require.ensure([], require => {
-            cb(null, require("./components/charts/dashboard/dashboard").default)
+        cb(null, require("./components/charts/dashboard/dashboard").default)
+    })
+}
 
+const warning = (location, cb) => {
+    require.ensure([], require => {
+            cb(null, require("./components/warnAndHealthModule/js/warning").default)
+        }
+    )
+}
+
+const healthList = (location, cb) => {
+    require.ensure([], require => {
+            cb(null, require("./components/warnAndHealthModule/js/healthList").default)
+
+        }
+    )
+}
+
+const health = (location, cb) => {
+    require.ensure([], require => {
+            cb(null, require("./components/warnAndHealthModule/js/health").default)
+
+        }
+    )
+}
+
+const warnList = (location, cb) => {
+    require.ensure([], require => {
+        cb(null, require("./components/warnAndHealthModule/js/warnList").default)
+    })
+}
+
+const studentMovement = (location, cb) => {
+    require.ensure([], require => {
+            cb(null, require("./components/charts/heatmap/js/studentMovement").default)
         }
     )
 }
@@ -435,14 +481,14 @@ class Index extends React.Component {
                     {/*<li><Link to="/s3">Form + ...</Link></li>*/}
                     {/*<li><Link to="/s4" style={{fontSize: '24px'}}>蚁巢</Link></li>*/}
                     {/*<li><Link to="/s5" style={{fontSize: '24px'}}>实验</Link></li>*/}
-                    {/*<li><Link to="/questionBank?ident=54208&pointId=4339&title=nihao"*/}
-                    {/*style={{fontSize: '24px'}}>题库</Link></li>*/}
+                    <li><Link to="/questionBank?ident=54208&pointId=4339&title=nihao"
+                              style={{fontSize: '24px'}}>题库</Link></li>
                     {/*<li><Link to="/analysisList?access_user=23836" style={{fontSize: '24px'}}>成绩分析</Link></li>*/}
                     {/*<li><Link to="/searchUserLocationInfo" style={{fontSize: '24px'}}>搜索查看用户位置信息</Link></li>*/}
                     {/*<li><Link to="/studentFaceStatistics" style={{fontSize: '24px'}}>学生脸部表情分析折线图</Link></li>*/}
-                    {/*<li><Link to="/termitePlateLibrary?ident=23836&fileId=-1&title=蚁盘题目&phoneType=0"*/}
-                    {/*style={{fontSize: '24px'}}>蚁盘题库</Link>*/}
-                    {/*</li>*/}
+                    <li><Link to="/termitePlateLibrary?ident=23836&fileId=-1&title=蚁盘题目&phoneType=0"
+                              style={{fontSize: '24px'}}>蚁盘题库</Link>
+                    </li>
                     {/*<li><Link to="/pushSubjectsFromTLibrary?ident=23836&fileId=-1"*/}
                     {/*style={{fontSize: '24px'}}>蚁盘推题</Link></li>*/}
                     {/*<li><Link to="/arrangementWork?ident=23836&fileId=-1"*/}
@@ -457,9 +503,6 @@ class Index extends React.Component {
                     {/*style={{fontSize: '24px'}}>群设置</Link></li>*/}
                     {/*<li><Link*/}
                     {/*to="/m3u8Player?path=http://p6ckz6030.bkt.clouddn.com/recordings/z1.maaee.24827/1524474964_1524476205.m3u8&_k=vdcr12"*/}
-                    {/*style={{fontSize: '24px'}}>m3u8Player</Link></li>*/}
-                    {/*<li><Link*/}
-                    {/*to="/m3u8Player?path=http://bpic.588ku.com/video_listen/588ku_video/18/04/17/17/03/11/video5ad5b84f167d6.mp4"*/}
                     {/*style={{fontSize: '24px'}}>m3u8Player</Link></li>*/}
                     {/*<li><Link*/}
                     {/*to="/HomeWorkUnderstandAnalysisGuideByNoom?ident=23836"*/}
@@ -495,8 +538,8 @@ class Index extends React.Component {
                         to="/classCardHomePage?clazzId=819&roomId=1&mac=14:1f:78:73:1e:c3"
                         style={{fontSize: '24px'}}>班牌首页</Link></li>
                     {/*<li><Link*/}
-                        {/*to="/publicClassCardHomePage?roomId=2&mac=02:00:00:00:00:00"*/}
-                        {/*style={{fontSize: '24px'}}>公共教室班牌首页</Link></li>*/}
+                    {/*to="/publicClassCardHomePage?roomId=2&mac=02:00:00:00:00:00"*/}
+                    {/*style={{fontSize: '24px'}}>公共教室班牌首页</Link></li>*/}
                     {/*<li><Link*/}
                     {/*to="/notifyBack?access_user=23836"*/}
                     {/*style={{fontSize: '24px'}}>通知后台</Link></li>*/}
@@ -530,6 +573,15 @@ class Index extends React.Component {
                     {/*<li><Link*/}
                     {/*to="/particlePath"*/}
                     {/*style={{fontSize: '24px'}}>运动轨迹</Link></li>*/}
+                    <li><Link
+                        to="/warnList?userId=23836"
+                        style={{fontSize: '24px'}}>预警数据列表</Link></li>
+                    <li><Link
+                        to="/healthList?classId=819"
+                        style={{fontSize: '24px'}}>健康数据列表</Link></li>
+                    <li><Link
+                        to="/studentMovement?access_user=23836"
+                        style={{fontSize: '24px'}}>学生轨迹热力</Link></li>
                 </ul>
             </div>
         );
@@ -577,6 +629,8 @@ ReactDOM.render(
             <Route path="workAttendance" getComponent={workAttendance}/>
             <Route path="noticeReadMore" getComponent={noticeReadMore}/>
             <Route path="classroomManage" getComponent={classroomManage}/>
+            <Route path="addClassroomManage" getComponent={addClassroomManage}/>
+            <Route path="addTeachBuild" getComponent={addTeachBuild}/>
             <Route path="workAttendance" getComponent={workAttendance}/>
             <Route path="noticeReadMore" getComponent={noticeReadMore}/>
             <Route path="addCurriculumSchedule" getComponent={addCurriculumSchedule}/>
@@ -613,6 +667,11 @@ ReactDOM.render(
             <Route path="clazzDutyList" getComponent={clazzDutyList}/>
             <Route path="particlePath" getComponent={particlePath}/>
             <Route path="dashboard" getComponent={dashboard}/>
+            <Route path="healthList" getComponent={healthList}/>
+            <Route path="warning" getComponent={warning}/>
+            <Route path="health" getComponent={health}/>
+            <Route path="warnList" getComponent={warnList}/>
+            <Route path="studentMovement" getComponent={studentMovement}/>
         </Route>
     </Router>
     ,

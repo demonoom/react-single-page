@@ -54,7 +54,9 @@ export default class addCurriculumSchedule extends React.Component {
         this.setState({curriculumType});
         window.addEventListener('resize', this.onWindwoResize);
     }
-
+    componentDidMount(){
+        Bridge.setShareAble("false");
+    }
     componentWillUnmount() {
         window.removeEventListener('resize', this.onWindwoResize);
     }

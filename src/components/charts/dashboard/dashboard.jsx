@@ -1,7 +1,8 @@
 import React from 'react';
 import ReactEcharts from 'echarts-for-react';
 import {
-    Toast
+    Toast,
+    NoticeBar
 } from 'antd-mobile';
 import CanvasMap from './canvasMap/canvasMap'
 import './css/dashboard.less';
@@ -63,14 +64,12 @@ var optionForClassColumn = {
         text: '学生考勤统计',
         subtext: '',
         left: 'left',
-        textStyle: {
-            color: '#a6abb9',
-            fontSize: 16,
-        }
     },
     tooltip: {},
     legend: {
-        data: ['人数']
+        data: ['人数'],
+        y:'bottom',
+        x:'left'
     },
     xAxis: {
         data: ['应到', '实到', '缺勤']
@@ -80,6 +79,21 @@ var optionForClassColumn = {
         name: '人数',
         type: 'bar',
         data: [80, 50, 30],
+        itemStyle: {
+            //通常情况下：
+            normal: {
+                //每个柱子的颜色即为colorList数组里的每一项，如果柱子数目多于colorList的长度，则柱子颜色循环使用该数组
+                color: function (params) {
+                    var colorList = ['#00a8ff', '#00fdd8'];
+                    if ((params.dataIndex + 1) % 2 == 0) {//为偶数的数据使用第一个颜色，其他使用第二个颜色
+                        return colorList[0];//1,3,5,7
+                    } else {
+                        return colorList[1];//2,4,6,8
+                    }
+
+                }
+            },
+        },
         label: {
             normal: {
                 show: true,
@@ -95,14 +109,10 @@ var optionForSchoolPie = {
         text: '学校考勤统计',
         subtext: '应到人数 : ' + (867 + 2756) + '人',
         left: 'left',
-        textStyle: {
-            color: '#a6abb9',
-            fontSize: 16,
-        }
     },
     tooltip: {},
     legend: {
-        bottom: 15,
+        bottom: 0,
         left: 'left',
         data: ['实到', '缺勤']
     },
@@ -114,7 +124,6 @@ var optionForSchoolPie = {
             selectedMode: 'single',
             data: [{value: 2756, name: '实到'}, {value: 867, name: '缺勤'}],
             itemStyle: {
-
                 emphasis: {
                     shadowBlur: 10,
                     shadowOffsetX: 0,
@@ -140,14 +149,10 @@ var optionForTeacherPie = {
         text: '教师考勤统计',
         subtext: '',
         left: 'left',
-        textStyle: {
-            color: '#a6abb9',
-            fontSize: 16,
-        }
     },
     tooltip: {},
     legend: {
-        bottom: 15,
+        bottom: 0,
         left: 'left',
         data: ['正常', '迟到', '早退', '缺勤']
     },
@@ -184,7 +189,9 @@ export default class dashboard extends React.Component {
         super(props);
         const nowTimeStamp = Date.now();
         const now = new Date(nowTimeStamp);
-        this.state = {};
+        this.state = {
+            openClazzTrArray: ''
+        };
         this.getDashBoardDataByArea = this.getDashBoardDataByArea.bind(this);
     }
 
@@ -225,7 +232,7 @@ export default class dashboard extends React.Component {
             onResponse: function (result) {
                 var response = result.response;
                 var jsonObj = JSON.parse(response);
-                console.log('223', jsonObj);
+                console.log(jsonObj);
                 //学校总人数
                 var userCountOfSchool = jsonObj.userCountOfSchool;
                 //全校教研活动量
@@ -614,25 +621,10 @@ export default class dashboard extends React.Component {
     }
 
     buildOpenClazzTrArray = (vClazzResults) => {
-        var openClazzTrArray = [];
+        var openClazzTrArray = '';
         vClazzResults.forEach(function (vClazzResult) {
             var vClazzObj = JSON.parse(vClazzResult);
-            var col_vid = vClazzObj.col_vid;
-            var col_cid = vClazzObj.col_cid;
-            var col_teacher_uid = vClazzObj.col_teacher_uid;
-            var col_start_time = WebServiceUtil.formatAllTime(vClazzObj.col_start_time);
-            var clazzType = vClazzObj.clazzType;
-            var clazzName = vClazzObj.clazzName;
-            var teacherName = vClazzObj.teacherName;
-            var courseId = vClazzObj.courseId;
-            var courseName = vClazzObj.courseName;
-            var trObj = <tr>
-                <td>{courseName}</td>
-                <td>{clazzName}</td>
-                <td>{teacherName}</td>
-                <td>{col_start_time}</td>
-            </tr>;
-            openClazzTrArray.push(trObj);
+            openClazzTrArray += vClazzObj.clazz.name + ' ' + vClazzObj.course.name + ' ' + vClazzObj.teacher.userName
         });
         this.setState({openClazzTrArray});
     }
@@ -1017,23 +1009,18 @@ export default class dashboard extends React.Component {
     }
 
 
-
-
     //创建体育运动统计图
-    buildSportsChart(sportData){
+    buildSportsChart(sportData) {
         var _this = this;
-        // console.log(sportData,'sportData');
         var classNameArray = [];
         var classHeartRateArray = [];
-        for(var k in sportData){
+        for (var k in sportData) {
             classHeartRateArray.push(sportData[k].braceletHeartRate.heartRate);
-            classNameArray.push(sportData[k].courseTableItem.clazz.name + sportData[k].courseTableItem.courseName+'课')
+            classNameArray.push(sportData[k].courseTableItem.clazz.name + sportData[k].courseTableItem.courseName + '课')
         }
-        console.log(classHeartRateArray);
-        console.log(classNameArray,'班级');
         var sportOption = _this.buildSportsOption(classNameArray, classHeartRateArray)
         var sportDiv = <div>
-            <div style={{height: '300px'}} className="echarts_wrap">
+            <div style={{height: '270px'}} className="echarts_wrap">
                 <ReactEcharts
                     option={sportOption}
                     style={{height: '100%', width: '100%'}}
@@ -1053,16 +1040,14 @@ export default class dashboard extends React.Component {
                 text: '体育运动量统计',
                 subtext: '',
                 left: 'left',
-                textStyle: {
-                    color: '#a6abb9',
-                    fontSize: 16,
-                }
             },
             tooltip: {
                 trigger: 'axis'
             },
             legend: {
-                data: ['平均心率']
+                data: ['平均心率'],
+                y:'bottom',
+                x:'left'
             },
             xAxis: {
                 data: classNameArray
@@ -1072,7 +1057,21 @@ export default class dashboard extends React.Component {
                 name: '平均心率',
                 type: 'bar',
                 data: classPeopleArray,
+                itemStyle: {
+                    //通常情况下：
+                    normal: {
+                        //每个柱子的颜色即为colorList数组里的每一项，如果柱子数目多于colorList的长度，则柱子颜色循环使用该数组
+                        color: function (params) {
+                            var colorList = ['#00a8ff', '#00fdd8'];
+                            if ((params.dataIndex + 1) % 2 == 0) {//为偶数的数据使用第一个颜色，其他使用第二个颜色
+                                return colorList[0];//1,3,5,7
+                            } else {
+                                return colorList[1];//2,4,6,8
+                            }
 
+                        }
+                    },
+                },
                 label: {
                     normal: {
                         show: true,
@@ -1089,37 +1088,23 @@ export default class dashboard extends React.Component {
             <div id="dashboard">
                 <div className="dashCont">
                     <div className="topTitle">
-                        <div className="schoolName">学校名称：{_this.state.schoolName}</div>
-
+                        <div className="schoolName">{_this.state.schoolName}</div>
+                        <div className="notice">
+                            <NoticeBar marqueeProps={{loop: true, style: {padding: '0 7.5px'}}}>
+                                {'正在开课:' + this.state.openClazzTrArray}
+                            </NoticeBar>
+                        </div>
                     </div>
                     <div className="cont">
                         <div className="clear">
                             <div className="fl left">
-                                {/*当前开课列表*/}
-                                <div className="list_wrap_padding table_class">
-                                    <div className="tableTitle">当前开课列表</div>
-                                    <div className="topList">
-                                        <div className="tableDiv">
-                                            <table>
-                                                <thead>
-                                                <tr>
-                                                    <td>课程</td>
-                                                    <td>班级</td>
-                                                    <td>授课老师</td>
-                                                    <td>开课时间</td>
-                                                </tr>
-                                                </thead>
-                                                <tbody>
-                                                {_this.state.openClazzTrArray}
-                                                </tbody>
-                                            </table>
-                                        </div>
-                                        {/*{this.state.divContentArray}*/}
-                                    </div>
-                                </div>
                                 {/*课前探究性学习*/}
                                 <div className="list_wrap_padding">
                                     {this.state.topicDiv}
+                                </div>
+                                {/*//学习资源分布统计*/}
+                                <div className="list_wrap_padding">
+                                    {this.state.cloudFileDiv}
                                 </div>
                             </div>
                             <div className="center fl">
@@ -1127,11 +1112,15 @@ export default class dashboard extends React.Component {
                                     <div className="clear numDiv">
                                         <div className="fl allNUm">
                                             <p className="gradeTitle">总人数</p>
-                                            <p className="num">{_this.state.userCount}</p></div>
+                                            <p className="num">{_this.state.userCount}</p>
+                                        </div>
                                         <div className="fl msgNum">
                                             <p className="gradeTitle">全校教研活动量</p>
-                                            <p className="num">{_this.state.messageCount}</p></div>
+                                            <p className="num">{_this.state.messageCount}</p>
+                                        </div>
                                     </div>
+                                    {/*热力图*/}
+                                    <CanvasMap/>
                                 </div>
                             </div>
                             <div className="fl right">
@@ -1146,63 +1135,49 @@ export default class dashboard extends React.Component {
                         </div>
 
                         <div className="flex_div bottom">
-                            <div className="list_wrap_padding">
-                                {this.state.cloudFileDiv}
-                            </div>
 
                             <div className="list_wrap_padding">
                                 {this.state.stepChartDiv}
                             </div>
 
+                            {/*//体育运动统计*/}
                             <div className="list_wrap_padding">
-
+                                {this.state.sportDiv}
                             </div>
+                            {/*学生考勤班级柱状图*/}
                             <div className="list_wrap_padding">
-
+                                <div style={{height: '270px'}} className="echarts_wrap">
+                                    <ReactEcharts
+                                        option={optionForClassColumn}
+                                        style={{height: '100%', width: '100%'}}
+                                        theme='chalk2'
+                                        className=''/>
+                                </div>
                             </div>
+
+                            {/*全校考勤饼图*/}
+                            {/*<div className="list_wrap_padding">
+                                <div style={{height: '270px'}} className="echarts_wrap">
+                                    <ReactEcharts
+                                        option={optionForSchoolPie}
+                                        style={{height: '100%', width: '100%'}}
+                                        theme='chalk2'
+                                        className=''/>
+                                </div>
+                            </div>*/}
+
+                            {/*教师考勤饼图*/}
+                            <div className="list_wrap_padding">
+                                <div style={{height: '270px'}} className="echarts_wrap">
+                                    <ReactEcharts
+                                        option={optionForTeacherPie}
+                                        style={{height: '100%', width: '100%'}}
+                                        theme='chalk2'
+                                        className=''/>
+                                </div>
+                            </div>
+
                         </div>
-                    </div>
-
-
-                    {/*学生考勤班级柱状图*/}
-                    <div className="list_wrap_padding">
-                        <div style={{height: '300px'}} className="echarts_wrap">
-                            <ReactEcharts
-                                option={optionForClassColumn}
-                                style={{height: '100%', width: '100%'}}
-                                theme='chalk2'
-                                className=''/>
-                        </div>
-                    </div>
-
-                    {/*全校考勤饼图*/}
-                    <div className="list_wrap_padding">
-                        <div style={{height: '300px'}} className="echarts_wrap">
-                            <ReactEcharts
-                                option={optionForSchoolPie}
-                                style={{height: '100%', width: '100%'}}
-                                theme='chalk2'
-                                className=''/>
-                        </div>
-                    </div>
-
-                    {/*教师考勤饼图*/}
-                    <div className="list_wrap_padding">
-                        <div style={{height: '300px'}} className="echarts_wrap">
-                            <ReactEcharts
-                                option={optionForTeacherPie}
-                                style={{height: '100%', width: '100%'}}
-                                theme='chalk2'
-                                className=''/>
-                        </div>
-                    </div>
-
-                    {/*热力图*/}
-                    <CanvasMap/>
-
-                    {/*//体育运动统计*/}
-                    <div className="list_wrap_padding   ">
-                        {this.state.sportDiv}
                     </div>
                 </div>
             </div>

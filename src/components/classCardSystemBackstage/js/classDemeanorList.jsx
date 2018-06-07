@@ -3,14 +3,12 @@ import {Icon, Toast} from 'antd-mobile';
 import '../css/classDemeanorList.less'
 
 export default class classDemeanorList extends React.Component {
-
     constructor(props) {
         super(props);
         this.state = {};
     }
 
     componentWillMount() {
-        // debugger
         var locationHref = decodeURI(window.location.href);
         var locationSearch = locationHref.substr(locationHref.indexOf("?") + 1);
         var searchArray = locationSearch.split("&");
@@ -19,6 +17,7 @@ export default class classDemeanorList extends React.Component {
     }
 
     componentDidMount() {
+        Bridge.setShareAble("false");
         document.title = '班级风采列表';
         this.getClazzesByUserId(this.state.ident);
     }
@@ -29,8 +28,9 @@ export default class classDemeanorList extends React.Component {
     getClazzesByUserId(ident) {
         var _this = this;
         var param = {
-            "method": 'getClazzesByUserId',
-            "userId": ident
+            "method": 'searchClazz',
+            "aid": ident,
+            "keyWord": "",
         };
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
             onResponse: function (result) {
@@ -43,16 +43,16 @@ export default class classDemeanorList extends React.Component {
                 }
             },
             onError: function (error) {
-                // message.error(error);
+                message.error(error);
             }
         });
     }
 
 
-    toClassDetail(id,name,gradeName) {
+    toClassDetail(id,name) {
         let url;
         if (id) {
-            url = encodeURI(WebServiceUtil.mobileServiceURL + "classDemeanor?ident=" + id +"&className="+gradeName+''+name);
+            url = encodeURI(WebServiceUtil.mobileServiceURL + "classDemeanor?ident=" + id +"&className="+name);
         } else {
 
         }
@@ -70,13 +70,10 @@ export default class classDemeanorList extends React.Component {
         let items = [];
         let item = this.state.listData;
         for (var k in item) {
-            items.push(<li className="am-list-item am-list-item-middle" onClick={this.toClassDetail.bind(this, item[k].id,item[k].name,item[k].grade.name)}>
+            items.push(<li className="am-list-item am-list-item-middle" onClick={this.toClassDetail.bind(this,item[k].id,item[k].name)}>
                 <div className="am-list-line">
                     <div className="am-list-content">
-                        {item[k].grade.name}{item[k].name}
-                    </div>
-                    <div className="am-list-extra">
-                        <span className='classDetail'></span>
+                        {item[k].name}
                     </div>
                     <div className="am-list-arrow am-list-arrow-horizontal"></div>
 

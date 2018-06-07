@@ -34,7 +34,7 @@ export default class curriculumSchedule extends React.Component {
     }
 
     componentDidMount() {
-
+        Bridge.setShareAble("false");
     }
 
     viewCourseTableItemPage(id) {
@@ -142,24 +142,23 @@ export default class curriculumSchedule extends React.Component {
                 {/*<List className="my-list">*/}
                     {/*<Item>{this.state.classTableName}</Item>*/}
                 {/*</List>*/}
-                <WhiteSpace size="lg"/>
                 <div className="curriculum_cont cont_communal">
                     {this.state.classTableArray.map((v, i) => {
                         var week = v.week;
                         var weekStr = v.weekStr;
                         var courseList = v.courseList
                         if (courseList.length == 0) {
-                            return <li>
+                            return <li className="line_public">
                                 <div className="color_6">{weekStr}</div>
                                 <div className="no_curriculum">无课</div>
                             </li>
                         } else {
-                            return <li>
+                            return <li className="line_public">
                                 <div className="color_6">{weekStr}</div>
                                 <div>
                                     {
                                         courseList.map(function (v, i) {
-                                            return <div>
+                                            return <div className="bottom_15">
                                                 <div className="add_title">
                                                     <span className="text_hidden color_7"
                                                           style={{width: 'calc(50% - 20px)'}}>{v.openTime + '-' + v.closeTime}</span>

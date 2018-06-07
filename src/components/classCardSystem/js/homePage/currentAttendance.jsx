@@ -4,6 +4,7 @@ import '../../css/homePage/currentAttendance.less'
 
 var demeanor;
 var timer;
+var timerFlag = false;
 
 export default class currentAttendance extends React.Component {
 
@@ -26,30 +27,32 @@ export default class currentAttendance extends React.Component {
             //获取应到人数
             if (roomId == nextProps.messageUtilObj.data.classroomId) {
                 this.getStudentByCourseTableItem(nextProps.messageUtilObj.data);
-                this.openTimeInterVal(nextProps.messageUtilObj.data);
                 this.setState({openClass: true, clazzId: nextProps.messageUtilObj.data.classTableId})
+                if (!timerFlag) {
+                    this.openTimeInterVal(nextProps.messageUtilObj.data);
+                }
             }
         } else if (nextProps.messageUtilObj.command == 'brand_class_close') {
             if (roomId == nextProps.messageUtilObj.data.classroomId) {
                 this.setState({openClass: false});
                 clearInterval(timer)
+                timerFlag = false;
             }
-        } else if (nextProps.messageUtilObj.command == 'braceletBoxConnect' && WebServiceUtil.isEmpty(nextProps.messageUtilObj.data) == false) {
+        } else if (nextProps.messageUtilObj.command == 'braceletBoxConnect' && WebServiceUtil.isEmpty(nextProps.messageUtilObj.data.classTableId) == false) {
             //重连开课
             if (roomId == nextProps.messageUtilObj.data.classroomId) {
                 this.getStudentByCourseTableItem(nextProps.messageUtilObj.data);
-                this.openTimeInterVal(nextProps.messageUtilObj.data);
                 this.setState({openClass: true, clazzId: nextProps.messageUtilObj.data.classTableId})
+                if (!timerFlag) {
+                    this.openTimeInterVal(nextProps.messageUtilObj.data);
+                }
             }
         }
 
     }
 
     componentDidMount() {
-        // this.getBraceletAttend()
-        // this.getStudentByCourseTableItem()
-        // this.setState({clazzId: 3})
-        // this.openTimeInterVal()
+
     }
 
     openTimeInterVal(data) {
@@ -57,6 +60,7 @@ export default class currentAttendance extends React.Component {
         timer = setInterval(function () {
             demeanor.getBraceletAttend(data)
         }, 10000)
+        timerFlag = true
     }
 
     /**
@@ -91,8 +95,8 @@ export default class currentAttendance extends React.Component {
         var param = {
             "method": 'getBraceletAttend',
             "cid": data.classTableId
-            // "cid": 3
         };
+        console.log(param);
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
             onResponse: function (result) {
                 if (result.msg == '调用成功' || result.success == true) {

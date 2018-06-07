@@ -6,6 +6,13 @@
     display: block;
 
   }
+  .redStar{
+    color: red;
+    font-size: 22px;
+    position: absolute;
+    right: 2px;
+    top: 2px;
+  }
   .am-button-small{
     background-color: #fff;
     height: 44px;
@@ -22,12 +29,12 @@
     height: 100%;
     overflow-y: auto;
   }
-  .am-list-view-scrollview-content {
-    /*height: calc(~"100% - 70px");*/
-    height: 100%;
-    overflow-y: auto;
-    width: 100%;
-  }
+  // .am-list-view-scrollview-content {
+  //   /*height: calc(~"100% - 70px");*/
+  //   height: 100%;
+  //   overflow-y: auto;
+  //   width: 100%;
+  // }
   .am-pull-to-refresh-indicator {
     font-size: 1rem !important;
   }
@@ -65,7 +72,6 @@
     .classInfo{
       position: relative;
       padding: 15px 15px 2px 15px;
-      border-bottom: 1px #f4f4f4 solid;
       line-height: 24px;
       .textOver{
         width: 100%;
@@ -74,13 +80,17 @@
       }
     }
     .classroom{
-      color:#000;
+      color:#333;
     }
     .grade{
       color: #a9a9a9;
       font-size: 15px;
       display: inline-block;
       margin-top: 8px;
+    }
+    .floor{
+      font-size: 14px;
+      padding-left: 10px;
     }
     .noomCardUnbind {
       color: #ff144e;
@@ -120,6 +130,7 @@
   .addModel {
     box-sizing: border-box;
     position: relative;
+    height: 100%;
     .bindGrade{
       padding: 4px 0;
     }
@@ -153,15 +164,17 @@
             .am-list-line {
               padding: 0 20px;
               .am-list-content {
-                font-size: 17px;
-                padding: 1.5rem 1.5rem;
-                border-bottom: 1px solid #d5d5d5;
+                font-size: 15px;
+                padding: 1rem 1rem;
+                border-top: 1px solid #d5d5d5;
                 color: #676767;
+
                 .am-list-brief {
                   font-size: 1.4rem;
                   color: #a2a2a2;
                 }
               }
+
               .am-list-extra {
                 .am-radio.am-radio-checked {
                   height: 100%;
@@ -173,18 +186,21 @@
                 }
               }
             }
+            &:first-child .am-list-content{
+              border-top: none;
+            }
           }
         }
         .am-list-item {
           // padding: 2rem 2rem;
           .am-input-label{
-            color: #3c3c3c;
+            color: #333;
           }
           .am-input-control{
             line-height: 25px;
           }
           .am-input-control input {
-            color: #3c3c3c;
+            color: #333;
           }
         }
 
@@ -210,7 +226,7 @@
       }
     }
     .chooseResult {
-      height: 300px;
+      max-height: 200px;
       overflow: auto;
     }
     .close {
@@ -235,39 +251,56 @@
     .classroomName,
     .gradeName {
       position: relative;
-      .redStar{
-        color: red;
-        font-size: 22px;
-        position: absolute;
-        right: 2px;
-        top: 2px;
-
-      }
       .stIcon {
-        width: 18px;
-        height: 28px;
+        width: 15px;
+        height: 19px;
         position: absolute;
         right: 15px;
         top: 50%;
-        margin-top: -12px;
+        -webkit-transform: translateY(-50%);
+        -moz-transform: translateY(-50%);
+        -ms-transform: translateY(-50%);
+        -o-transform: translateY(-50%);
+        transform: translateY(-50%);
         img{
           width:100%
         }
       }
     }
+    .chooseResult{
+      background: #e4e4e4;
+      .cont{
+        overflow: hidden;
+        border-bottom: 1px #d5d5d5 solid;
+        margin: 0 1rem;
+        color: #666;
+        line-height: 22px;
+        padding: 1rem;
+        font-size: 15px;
+      }
 
+    }
+    .mainCont{
+      height: calc(~"100% - 77px");
+      overflow-y: auto;
+    }
     .bottomBox {
       display: flex;
       position: absolute;
       left:0;
-      bottom: 0;
+      bottom: 15px;
       width: 100%;
       span {
         flex: 1;
         text-align: center;
         font-size: 17px;
-        padding: 1rem;
+        padding: 0;
+        line-height: 47px;
+        height: 47px;
         display: inline-block;
+        -webkit-border-radius: 2px;
+        -moz-border-radius: 2px;
+        border-radius: 2px;
       }
       .bind {
         background: #F56A55;
