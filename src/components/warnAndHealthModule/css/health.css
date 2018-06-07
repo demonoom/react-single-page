@@ -12,33 +12,33 @@
   background: url("../img/crown_first.png");
   background-size: 100% 100%;
   display: inline-block;
-  width: 3.97rem;
-  height: 3.97rem;
+  width: 4rem;
+  height: 4rem;
   position: absolute;
-  top: -0.46rem;
-  left: -0.3rem;
+  bottom: -0.14rem;
+  left: -0.34rem;
   z-index: 100;
 }
 #health .secondClass {
   background: url("../img/crown_second.png");
   background-size: 100% 100%;
   display: inline-block;
-  width: 3.97rem;
-  height: 3.97rem;
+  width: 4rem;
+  height: 4rem;
   position: absolute;
-  top: -0.46rem;
-  left: -0.3rem;
+  bottom: -0.14rem;
+  left: -0.34rem;
   z-index: 100;
 }
 #health .thirdClass {
   background: url("../img/crown_third.png");
   background-size: 100% 100%;
   display: inline-block;
-  width: 3.97rem;
-  height: 3.97rem;
+  width: 4rem;
+  height: 4rem;
   position: absolute;
-  top: -0.46rem;
-  left: -0.3rem;
+  bottom: -0.14rem;
+  left: -0.34rem;
   z-index: 100;
 }
 #health .otherClass {
@@ -55,16 +55,25 @@
   text-align: center;
   font-size: 0.56rem;
 }
+#health .border_img {
+  background: url("../img/border_img.png");
+  width: 3.61rem;
+  height: 3.61rem;
+  position: absolute;
+  top: -0.15rem;
+  left: -0.15rem;
+  background-size: 100% 100%;
+}
 #health .health_cont {
   height: calc(100% - 3.33rem) !important;
-  padding: 1.11rem 1.67rem 0 1.67rem;
+  padding: 1rem 1.44rem 0 1.44rem;
   overflow-x: hidden;
   overflow-y: auto;
 }
 #health .photoItem {
-  width: 4.61rem;
-  margin-right: 1.36rem;
-  margin-bottom: 1.11rem;
+  width: 4rem;
+  margin-right: 1rem;
+  margin-bottom: 1rem;
   text-align: center;
   padding: 0;
   position: relative;
@@ -76,8 +85,8 @@
   -webkit-border-radius: 50%;
   -moz-border-radius: 50%;
   border-radius: 50%;
-  margin: .67rem auto .56rem;
-  border: .14rem #f2f2f2 solid;
+  margin: .64rem auto 0rem auto;
+  border: none;
   position: relative;
 }
 #health .photoItem img {
@@ -85,15 +94,17 @@
   height: 100%;
 }
 #health .photoItem .studentName {
-  font-size: .72rem;
-  color: #565c72;
+  font-size: .67rem;
+  color: #444e6f;
+  line-height: 1;
+  padding: 0.7rem 0 0.5rem 0;
 }
 #health .photoItem .step_number {
   color: #5594fd;
   font-size: 0.83rem;
-  margin-top: 0.44rem;
+  margin-top: 0;
+  line-height: 1;
 }
 #health .photoItem .step_number .step_number_s {
   font-size: 0.56rem;
-  padding-left: 5px;
 }
