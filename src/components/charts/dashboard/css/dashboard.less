@@ -3,11 +3,11 @@
   height: 100%;
   width: 100%;
   color: #fff;
-  background-color: rgba(22,33,72,1);
-  //background: -webkit-linear-gradient(#454a60, #35384b); /* Safari 5.1 - 6.0 */
-  //background: -o-linear-gradient(#454a60, #35384b); /* Opera 11.1 - 12.0 */
-  //background: -moz-linear-gradient(#454a60, #35384b); /* Firefox 3.6 - 15 */
-  //background: linear-gradient(#454a60, #35384b); /* 标准的语法 */
+  //background-color: rgba(22,33,72,1);
+  background: -webkit-radial-gradient(#282b4b, #1b1c27); /* Safari 5.1 - 6.0 */
+  background: -o-radial-gradient(#282b4b, #1b1c27); /* Opera 11.1 - 12.0 */
+  background: -moz-radial-gradient(#282b4b, #1b1c27); /* Firefox 3.6 - 15 */
+  background: radial-gradient(#282b4b, #1b1c27); /* 标准的语法 */
   ::-webkit-scrollbar{
     display: none;
   }
@@ -17,10 +17,19 @@
   .fl{
     float: left;
   }
+  .flex_div{
+    display: flex;
+    display: -webkit-flex;
+    display: -webkit-inline-flex;
+    flex-wrap: wrap;
+    width: 100%;
+  }
+
   .gradeTitle{
     font-size: 16px;
     color: #a6abb9;
     margin:0;
+    //background: url("../image/textBack.png") no-repeat;
   }
   .numDiv{
     margin-bottom: 20px;
@@ -39,42 +48,51 @@
      }
     }
   }
-  .cont{
+  .dashCont{
     height: 100%;
     overflow-y: auto;
-    margin: 40px;
-    display: flex;
-    display: -webkit-flex;
-    display: -webkit-inline-flex;
-    flex-wrap: wrap;
+    margin: 25px 15px 0;
 
+    .cont{
+      padding-bottom: 35px;
+      width: 100%;
+      .left,.right{
+        width: 25%;
+        box-sizing: border-box;
+      }
+      .center{
+        width: 50%;
+      }
+    }
     .list_wrap_padding{
-      width: 25%;
+      width: 100%;
       height: auto;
       box-sizing: border-box;
-      padding-right: 3%;
+      background: url("../image/divBack.png") no-repeat;
+      background-size: 100% 100%;
+      padding: 20px;
       &.table_class{
-        height: 230px;
+        height: 310px;
         overflow: hidden;
       }
-      &.classAfter{
-
-      }
-      &.startClassNum{
-        height: 300px;
-      }
-      &.resource{
-
+      &.map{
+        height: 620px;
+        background: none;
       }
     }
     .tableTitle{
       margin-bottom: 10px;
+      font-weight: bold;
+      color: #fff;
+      font-size: 16px;
+      padding-left: 3px;
     }
     .topTitle{
       width: 100%;
       .schoolName{
-        font-size: 26px;
-        margin-bottom: 30px;
+        font-size: 30px;
+        margin-bottom: 18px;
+        font-weight: bold;
 
       }
     }
@@ -83,7 +101,6 @@
       //background: -o-linear-gradient(#565971, #484d62); /* Opera 11.1 - 12.0 */
       //background: -moz-linear-gradient(#565971, #484d62); /* Firefox 3.6 - 15 */
       //background: linear-gradient(#565971, #484d62); /* 标准的语法 */
-      background-color: #1d2b60;
       -webkit-border-radius: 6px;
       -moz-border-radius: 6px;
       border-radius: 6px;
@@ -117,12 +134,11 @@
     }
 
   }
- .pB20{
-   padding-bottom: 20px;
+ .bottom{
+   .list_wrap_padding{
+     width: 25%;
+   }
  }
-  .list_wrap_padding{
-    padding: 0;
-    margin-bottom: 30px;
-  }
+
 
 }

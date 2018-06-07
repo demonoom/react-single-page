@@ -4,7 +4,14 @@
   height: 100%;
   width: 100%;
   color: #fff;
-  background-color: #162148;
+  background: -webkit-radial-gradient(#282b4b, #1b1c27);
+  /* Safari 5.1 - 6.0 */
+  background: -o-radial-gradient(#282b4b, #1b1c27);
+  /* Opera 11.1 - 12.0 */
+  background: -moz-radial-gradient(#282b4b, #1b1c27);
+  /* Firefox 3.6 - 15 */
+  background: radial-gradient(#282b4b, #1b1c27);
+  /* 标准的语法 */
 }
 #dashboard ::-webkit-scrollbar {
   display: none;
@@ -14,6 +21,13 @@
 }
 #dashboard .fl {
   float: left;
+}
+#dashboard .flex_div {
+  display: flex;
+  display: -webkit-flex;
+  display: -webkit-inline-flex;
+  flex-wrap: wrap;
+  width: 100%;
 }
 #dashboard .gradeTitle {
   font-size: 16px;
@@ -35,40 +49,55 @@
   margin: 0;
   padding-top: 12px;
 }
-#dashboard .cont {
+#dashboard .dashCont {
   height: 100%;
   overflow-y: auto;
-  margin: 40px;
-  display: flex;
-  display: -webkit-flex;
-  display: -webkit-inline-flex;
-  flex-wrap: wrap;
+  margin: 25px 15px 0;
 }
-#dashboard .cont .list_wrap_padding {
-  width: 25%;
-  height: auto;
-  box-sizing: border-box;
-  padding-right: 3%;
-}
-#dashboard .cont .list_wrap_padding.table_class {
-  height: 230px;
-  overflow: hidden;
-}
-#dashboard .cont .list_wrap_padding.startClassNum {
-  height: 300px;
-}
-#dashboard .cont .tableTitle {
-  margin-bottom: 10px;
-}
-#dashboard .cont .topTitle {
+#dashboard .dashCont .cont {
+  padding-bottom: 35px;
   width: 100%;
 }
-#dashboard .cont .topTitle .schoolName {
-  font-size: 26px;
-  margin-bottom: 30px;
+#dashboard .dashCont .cont .left,
+#dashboard .dashCont .cont .right {
+  width: 25%;
+  box-sizing: border-box;
 }
-#dashboard .cont .topList {
-  background-color: #1d2b60;
+#dashboard .dashCont .cont .center {
+  width: 50%;
+}
+#dashboard .dashCont .list_wrap_padding {
+  width: 100%;
+  height: auto;
+  box-sizing: border-box;
+  background: url("../image/divBack.png") no-repeat;
+  background-size: 100% 100%;
+  padding: 20px;
+}
+#dashboard .dashCont .list_wrap_padding.table_class {
+  height: 310px;
+  overflow: hidden;
+}
+#dashboard .dashCont .list_wrap_padding.map {
+  height: 620px;
+  background: none;
+}
+#dashboard .dashCont .tableTitle {
+  margin-bottom: 10px;
+  font-weight: bold;
+  color: #fff;
+  font-size: 16px;
+  padding-left: 3px;
+}
+#dashboard .dashCont .topTitle {
+  width: 100%;
+}
+#dashboard .dashCont .topTitle .schoolName {
+  font-size: 30px;
+  margin-bottom: 18px;
+  font-weight: bold;
+}
+#dashboard .dashCont .topList {
   -webkit-border-radius: 6px;
   -moz-border-radius: 6px;
   border-radius: 6px;
@@ -81,28 +110,24 @@
   box-shadow: 6px 16px 4px 0 rgba(34, 39, 58, 0.06);
   position: relative;
 }
-#dashboard .cont .topList .tableDiv {
+#dashboard .dashCont .topList .tableDiv {
   height: 200px;
   overflow-y: auto;
 }
-#dashboard .cont .topList table {
+#dashboard .dashCont .topList table {
   width: 100%;
   text-align: center;
 }
-#dashboard .cont .topList table thead {
+#dashboard .dashCont .topList table thead {
   font-size: 12px;
 }
-#dashboard .cont .topList table td {
+#dashboard .dashCont .topList table td {
   padding: 10px 0;
 }
-#dashboard .cont .topList table tbody {
+#dashboard .dashCont .topList table tbody {
   height: 160px;
   overflow-y: auto;
 }
-#dashboard .pB20 {
-  padding-bottom: 20px;
-}
-#dashboard .list_wrap_padding {
-  padding: 0;
-  margin-bottom: 30px;
+#dashboard .bottom .list_wrap_padding {
+  width: 25%;
 }
