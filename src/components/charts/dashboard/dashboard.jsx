@@ -41,12 +41,10 @@ var dataGZ = [
     [31,118]
 ];
 
-
 var schema = [
     {name: 'AQIindex', index: 0, text: 'AQI指数'},
 
 ];
-
 
 var itemStyle = {
     normal: {
@@ -82,7 +80,6 @@ export default class dashboard extends React.Component {
         //调取驾驶舱数据
         this.getDashBoardDataByArea(destId, areaType);
         setInterval(function () {
-            console.log("destId====>"+destId);
             //调取驾驶舱数据
             _this.getDashBoardDataByArea(destId, areaType);
         },1000*2)
@@ -106,7 +103,7 @@ export default class dashboard extends React.Component {
             onResponse: function (result) {
                 var response = result.response;
                 var jsonObj = JSON.parse(response);
-                console.log(jsonObj);
+                console.log('223',jsonObj);
                 //学校总人数
                 var userCountOfSchool = jsonObj.userCountOfSchool;
                 //全校教研活动量
@@ -875,6 +872,7 @@ export default class dashboard extends React.Component {
         return (
             <div id="dashboard">
                 <div className="cont">
+                    {/*学校名称 总人数 全校教研活动量*/}
                     <div className="topTitle">
                         <div className="schoolName">学校名称：{_this.state.schoolName}</div>
                         <div className="clear numDiv">
@@ -886,6 +884,8 @@ export default class dashboard extends React.Component {
                                 <p className="num">{_this.state.messageCount}</p></div>
                         </div>
                     </div>
+
+                    {/*当前开课列表*/}
                     <div className="list_wrap_padding table_class">
                         <div className="gradeTitle tableTitle">当前开课列表</div>
                         <div className="topList">
@@ -908,38 +908,33 @@ export default class dashboard extends React.Component {
                         </div>
                     </div>
 
+                    {/*课前探究性学习*/}
                     <div className="list_wrap_padding pB20 ">
                         {this.state.topicDiv}
                     </div>
 
+                    {/*蚁盘资源上传情况统计柱状图*/}
                     <div className="list_wrap_padding pB20 classAfter">
                         {this.state.homeWorkDiv}
                     </div>
 
-
-
+                    {/*开课次数统计的柱形图和饼图*/}
                     <div className="list_wrap_padding startClassNum">
                         {this.state.openClazzDiv}
                     </div>
-
-
 
                     {/*<div className="list_wrap_padding">
                         {this.state.hotPlaceScatterChartDiv}
                     </div>*/}
 
-
-
-
+                    {/*学习资源分布情况统计*/}
                     <div className="list_wrap_padding resource">
                         {this.state.cloudFileDiv}
                     </div>
-
+                    {/*健康情况统计*/}
                     <div className="list_wrap_padding">
                         {this.state.stepChartDiv}
                     </div>
-
-
 
                 </div>
             </div>
