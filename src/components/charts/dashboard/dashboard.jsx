@@ -297,10 +297,6 @@ export default class dashboard extends React.Component {
                 text: '课前探究性学习统计',
                 subtext: '',
                 left: 'left',
-                textStyle: {
-                    color: '#a6abb9',
-                    fontSize: 16,
-                }
             },
             xAxis: {
                 type: 'category',
@@ -353,7 +349,7 @@ export default class dashboard extends React.Component {
         });
         var topicOption = _this.buildTopicBarOption(xClazzNameArray, seriesDataArray);
         var topicDiv = <div>
-            <div style={{height: '300px'}} className="echarts_wrap">
+            <div style={{height: '270px'}} className="echarts_wrap">
                 <ReactEcharts
                     option={topicOption}
                     style={{height: '100%', width: '100%'}}
@@ -407,14 +403,10 @@ export default class dashboard extends React.Component {
                 text: '学习资源分布情况统计',
                 subtext: '',
                 x: 'left',
-                textStyle: {
-                    color: '#a6abb9',
-                    fontSize: 16,
-                }
             },
             tooltip: {
                 trigger: 'item',
-                formatter: "{a} <br/>{b} : {c} ({d}%)"
+                formatter: "{a} <br/>{b} : {c} ({d}%)",
             },
             legend: {
                 x: 'left',
@@ -439,7 +431,8 @@ export default class dashboard extends React.Component {
                 {
                     name: '面积模式',
                     type: 'pie',
-                    radius: [30, 110],
+                    radius: [5, 70],
+                    center: ['50%', '45%'],
                     roseType: 'area',
                     data: seriesData,
                     label: {
@@ -447,7 +440,7 @@ export default class dashboard extends React.Component {
                             formatter: '{b}:{c}: ({d}%)',
                             textStyle: {
                                 fontWeight: 'normal',
-                                fontSize: 15
+                                fontSize: 12
                             }
                         }
                     }
@@ -475,7 +468,7 @@ export default class dashboard extends React.Component {
         // var cloudFileOption = _this.buildCloudFileBarOption(xTeacherNameArray, seriesDataArray);
         var cloudFileOption = _this.buildCloudFilePieOption(xTeacherNameArray, seriesDataArray);
         var cloudFileDiv = <div>
-            <div style={{height: '300px'}} className="echarts_wrap">
+            <div style={{height: '270px'}} className="echarts_wrap">
                 <ReactEcharts
                     option={cloudFileOption}
                     style={{height: '100%', width: '100%'}}
@@ -492,24 +485,20 @@ export default class dashboard extends React.Component {
                 text: '课后作业布置情况分析',
                 subtext: '',
                 left: 'left',
-                textStyle: {
-                    color: '#a6abb9',
-                    fontSize: 16,
-                }
             },
             tooltip: {
                 trigger: 'item',
                 formatter: "{a} <br/>{b} : {c} ({d}%)"
             },
             legend: {
-                bottom: 15,
+                bottom: '0',
                 left: 'left',
                 data: xClazzNameArray
             },
             series: [
                 {
                     type: 'pie',
-                    radius: '50%',
+                    radius: '60%',
                     center: ['50%', '50%'],
                     selectedMode: 'single',
                     data: seriesDataArray,
@@ -552,7 +541,7 @@ export default class dashboard extends React.Component {
         })
         var homeWorkOption = _this.buildHomeWorkOption(xClazzNameArray, seriesDataArray);
         var homeWorkDiv = <div>
-            <div style={{height: '300px'}} className="echarts_wrap">
+            <div style={{height: '270px'}} className="echarts_wrap">
                 <ReactEcharts
                     option={homeWorkOption}
                     style={{height: '100%', width: '100%'}}
@@ -641,7 +630,7 @@ export default class dashboard extends React.Component {
         var _this = this;
         var openClazzOption = _this.buildClazzOpenCountOption(todayOpenClazzJson, monthOpenClazzJson)
         var openClazzDiv = <div>
-            <div style={{height: '300px'}} className="echarts_wrap">
+            <div style={{height: '270px'}} className="echarts_wrap">
                 <ReactEcharts
                     option={openClazzOption}
                     style={{height: '100%', width: '100%'}}
@@ -660,31 +649,24 @@ export default class dashboard extends React.Component {
                 subtext: '',
                 x: 'left',
                 textAlign: 'left',
-                textStyle: {
-                    color: '#a6abb9',
-                    fontSize: 16,
-                }
             }, {
                 text: '本月开课次数统计',
                 subtext: '',
-                x: '52%',
+                x: 'left',
+                y: '56%',
                 textAlign: 'left',
-                textStyle: {
-                    color: '#a6abb9',
-                    fontSize: 16,
-                }
             }],
             grid: [{
                 top: 50,
-                width: '45%',
-                bottom: '15',
+                width: '100%',
+                bottom: '45%',
                 left: 0,
                 containLabel: true
             }, {
-                top: 100,
-                width: '45%',
-                bottom: '0',
-                left: 0,
+
+                width: '100%',
+                left: 10,
+                bottom: 0,
                 containLabel: true
             }],
             xAxis: [{
@@ -747,8 +729,8 @@ export default class dashboard extends React.Component {
                 })
             }, {
                 type: 'pie',
-                radius: [0, '30%'],
-                center: ['75%', '30%'],
+                radius: [0, '20%'],
+                center: ['50%', '82%'],
                 data: Object.keys(monthOpenClazzJson).map(function (key) {
                     return {
                         name: key.replace('.js', ''),
@@ -785,7 +767,7 @@ export default class dashboard extends React.Component {
         });
         var stepOption = _this.buildStepOption(xClazzNameArray, seriesDataArray)
         var stepChartDiv = <div>
-            <div style={{height: '300px'}} className="echarts_wrap">
+            <div style={{width: '100%', height: '270px'}} className="echarts_wrap">
                 <ReactEcharts
                     option={stepOption}
                     style={{height: '100%', width: '100%'}}
@@ -809,7 +791,9 @@ export default class dashboard extends React.Component {
                 trigger: 'axis'
             },
             legend: {
-                data: ['步数']
+                data: ['步数'],
+                bottom: 0,
+                left: 'left',
             },
             /*toolbox: {
                 show : true,
@@ -895,7 +879,7 @@ export default class dashboard extends React.Component {
         });*/
         var hotPlaceScatterOption = _this.buildHotPlaceScatterOption();
         var hotPlaceScatterChartDiv = <div>
-            <div style={{height: '300px'}} className="echarts_wrap">
+            <div style={{height: '270px'}} className="echarts_wrap">
                 <ReactEcharts
                     option={hotPlaceScatterOption}
                     style={{height: '100%', width: '100%'}}
@@ -917,10 +901,7 @@ export default class dashboard extends React.Component {
             legend: {
                 y: 'top',
                 data: ['学生活动热点'],
-                textStyle: {
-                    color: '#fff',
-                    fontSize: 16
-                }
+
             },
             grid: {
                 x: '10%',
@@ -993,71 +974,82 @@ export default class dashboard extends React.Component {
         var _this = this;
         return (
             <div id="dashboard">
-                <div className="cont">
-                    {/*学校名称 总人数 全校教研活动量*/}
+                <div className="dashCont">
                     <div className="topTitle">
                         <div className="schoolName">学校名称：{_this.state.schoolName}</div>
-                        <div className="clear numDiv">
-                            <div className="fl allNUm">
-                                <p className="gradeTitle">总人数</p>
-                                <p className="num">{_this.state.userCount}</p></div>
-                            <div className="fl msgNum">
-                                <p className="gradeTitle">全校教研活动量</p>
-                                <p className="num">{_this.state.messageCount}</p></div>
-                        </div>
-                    </div>
 
-                    {/*当前开课列表*/}
-                    <div className="list_wrap_padding table_class">
-                        <div className="gradeTitle tableTitle">当前开课列表</div>
-                        <div className="topList">
-                            <div className="tableDiv">
-                                <table>
-                                    <thead>
-                                    <tr>
-                                        <td>课程</td>
-                                        <td>班级</td>
-                                        <td>授课老师</td>
-                                        <td>开课时间</td>
-                                    </tr>
-                                    </thead>
-                                    <tbody>
-                                    {_this.state.openClazzTrArray}
-                                    </tbody>
-                                </table>
+                    </div>
+                    <div className="cont">
+                        <div className="clear">
+                            <div className="fl left">
+                                {/*当前开课列表*/}
+                                <div className="list_wrap_padding table_class">
+                                    <div className="tableTitle">当前开课列表</div>
+                                    <div className="topList">
+                                        <div className="tableDiv">
+                                            <table>
+                                                <thead>
+                                                <tr>
+                                                    <td>课程</td>
+                                                    <td>班级</td>
+                                                    <td>授课老师</td>
+                                                    <td>开课时间</td>
+                                                </tr>
+                                                </thead>
+                                                <tbody>
+                                                {_this.state.openClazzTrArray}
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                        {/*{this.state.divContentArray}*/}
+                                    </div>
+                                </div>
+                                {/*课前探究性学习*/}
+                                <div className="list_wrap_padding">
+                                    {this.state.topicDiv}
+                                </div>
                             </div>
-                            {/*{this.state.divContentArray}*/}
+                            <div className="center fl">
+                                <div className="list_wrap_padding map">
+                                    <div className="clear numDiv">
+                                        <div className="fl allNUm">
+                                            <p className="gradeTitle">总人数</p>
+                                            <p className="num">{_this.state.userCount}</p></div>
+                                        <div className="fl msgNum">
+                                            <p className="gradeTitle">全校教研活动量</p>
+                                            <p className="num">{_this.state.messageCount}</p></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div className="fl right">
+                                <div className="list_wrap_padding">
+                                    {this.state.homeWorkDiv}
+                                </div>
+                                <div className="list_wrap_padding">
+                                    {this.state.openClazzDiv}
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div className="flex_div bottom">
+                            <div className="list_wrap_padding">
+                                {this.state.cloudFileDiv}
+                            </div>
+
+                            <div className="list_wrap_padding">
+                                {this.state.stepChartDiv}
+                            </div>
+
+                            <div className="list_wrap_padding">
+
+                            </div>
+                            <div className="list_wrap_padding">
+
+                            </div>
                         </div>
                     </div>
 
-                    {/*课前探究性学习*/}
-                    <div className="list_wrap_padding pB20 ">
-                        {this.state.topicDiv}
-                    </div>
-
-                    {/*蚁盘资源上传情况统计柱状图*/}
-                    <div className="list_wrap_padding pB20 classAfter">
-                        {this.state.homeWorkDiv}
-                    </div>
-
-                    {/*开课次数统计的柱形图和饼图*/}
-                    <div className="list_wrap_padding startClassNum">
-                        {this.state.openClazzDiv}
-                    </div>
-
-                    {/*<div className="list_wrap_padding">
-                        {this.state.hotPlaceScatterChartDiv}
-                    </div>*/}
-
-                    {/*学习资源分布情况统计*/}
-                    <div className="list_wrap_padding resource">
-                        {this.state.cloudFileDiv}
-                    </div>
-
-                    {/*健康情况统计*/}
-                    <div className="list_wrap_padding">
-                        {this.state.stepChartDiv}
-                    </div>
 
                     {/*学生考勤班级柱状图*/}
                     <div className="list_wrap_padding">

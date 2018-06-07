@@ -40,9 +40,9 @@
         "title": {
             "textAlign": 'left',
             "textStyle": {
-                "color": "#a6abb9",
-                "fontWeight":"normal",
+                "color": "#fff",
                 "fontSize": 16,
+                "fontFamily":"Helvetica Neue",
             },
             "subtextStyle": {
                 "color": "#a9aeb6"
