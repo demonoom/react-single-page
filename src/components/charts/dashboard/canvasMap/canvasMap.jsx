@@ -36,7 +36,7 @@ export default class canvasMap extends React.Component {
             canvas = document.getElementById('noom');
             context = canvas.getContext('2d');
             var img = new Image();
-            canvas.width = 720
+            canvas.width = 700
             canvas.height = 400
             context.lineWidth = 10;
             context.lineCap = 'round';
@@ -52,14 +52,20 @@ export default class canvasMap extends React.Component {
      * 模拟打点
      */
     drawPoint(step) {
+        var x = Math.random() * 700;
+        var y = Math.random() * 400;
+
+        var a = Math.random() * 700;
+        var b = Math.random() * 400;
+
         context.beginPath()
         context.strokeStyle = 'red';
-        context.lineTo(100, 100 + step);
+        context.lineTo(x, y);
         context.stroke();
 
         context.beginPath()
         context.strokeStyle = 'black';
-        context.lineTo(345 + step, 356);
+        context.lineTo(a, b);
         context.stroke();
     }
 
