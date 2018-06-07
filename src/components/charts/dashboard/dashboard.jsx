@@ -57,6 +57,127 @@ var itemStyle = {
     }
 };
 
+//班级柱状图option
+var optionForClassColumn = {
+    title: {
+        text: '学生考勤统计',
+        subtext: '',
+        left: 'left',
+        textStyle: {
+            color: '#a6abb9',
+            fontSize: 16,
+        }
+    },
+    tooltip: {},
+    legend: {
+        data: ['人数']
+    },
+    xAxis: {
+        data: ['应到', '实到', '缺勤']
+    },
+    yAxis: {},
+    series: [{
+        name: '人数',
+        type: 'bar',
+        data: [80, 50, 30],
+        label: {
+            normal: {
+                show: true,
+                position: 'top',
+            }
+        }
+    }]
+}
+
+//全校饼图考勤option
+var optionForSchoolPie = {
+    title: {
+        text: '学校考勤统计',
+        subtext: '应到人数 : ' + (867 + 2756) + '人',
+        left: 'left',
+        textStyle: {
+            color: '#a6abb9',
+            fontSize: 16,
+        }
+    },
+    tooltip: {},
+    legend: {
+        bottom: 15,
+        left: 'left',
+        data: ['实到', '缺勤']
+    },
+    series: [
+        {
+            type: 'pie',
+            radius: '50%',
+            center: ['50%', '50%'],
+            selectedMode: 'single',
+            data: [{value: 2756, name: '实到'}, {value: 867, name: '缺勤'}],
+            itemStyle: {
+
+                emphasis: {
+                    shadowBlur: 10,
+                    shadowOffsetX: 0,
+                    shadowColor: 'rgba(0, 0, 0, 0.5)'
+                }
+            },
+            label: {
+                normal: {
+                    formatter: '{d}%',
+                    textStyle: {
+                        fontWeight: 'normal',
+                        fontSize: 12
+                    }
+                }
+            }
+        }
+    ]
+}
+
+//老师饼图考勤option
+var optionForTeacherPie = {
+    title: {
+        text: '教师考勤统计',
+        subtext: '',
+        left: 'left',
+        textStyle: {
+            color: '#a6abb9',
+            fontSize: 16,
+        }
+    },
+    tooltip: {},
+    legend: {
+        bottom: 15,
+        left: 'left',
+        data: ['正常', '迟到', '早退', '缺勤']
+    },
+    series: [
+        {
+            type: 'pie',
+            radius: '50%',
+            center: ['50%', '50%'],
+            selectedMode: 'single',
+            data: [{value: 120, name: '正常'}, {value: 11, name: '迟到'}, {value: 3, name: '早退'}, {value: 9, name: '缺勤'}],
+            itemStyle: {
+                emphasis: {
+                    shadowBlur: 10,
+                    shadowOffsetX: 0,
+                    shadowColor: 'rgba(0, 0, 0, 0.5)'
+                }
+            },
+            label: {
+                normal: {
+                    formatter: '{d}%',
+                    textStyle: {
+                        fontWeight: 'normal',
+                        fontSize: 12
+                    }
+                }
+            }
+        }
+    ]
+}
+
 export default class dashboard extends React.Component {
 
     constructor(props) {
@@ -932,11 +1053,46 @@ export default class dashboard extends React.Component {
                     <div className="list_wrap_padding resource">
                         {this.state.cloudFileDiv}
                     </div>
+
                     {/*健康情况统计*/}
                     <div className="list_wrap_padding">
                         {this.state.stepChartDiv}
                     </div>
 
+                    {/*学生考勤班级柱状图*/}
+                    <div className="list_wrap_padding">
+                        <div style={{height: '300px'}} className="echarts_wrap">
+                            <ReactEcharts
+                                option={optionForClassColumn}
+                                style={{height: '100%', width: '100%'}}
+                                theme='chalk2'
+                                className=''/>
+                        </div>
+                    </div>
+
+                    {/*全校考勤饼图*/}
+                    <div className="list_wrap_padding">
+                        <div style={{height: '300px'}} className="echarts_wrap">
+                            <ReactEcharts
+                                option={optionForSchoolPie}
+                                style={{height: '100%', width: '100%'}}
+                                theme='chalk2'
+                                className=''/>
+                        </div>
+                    </div>
+
+                    {/*教师考勤饼图*/}
+                    <div className="list_wrap_padding">
+                        <div style={{height: '300px'}} className="echarts_wrap">
+                            <ReactEcharts
+                                option={optionForTeacherPie}
+                                style={{height: '100%', width: '100%'}}
+                                theme='chalk2'
+                                className=''/>
+                        </div>
+                    </div>
+
+                    {/*热力图*/}
                     <CanvasMap/>
                 </div>
             </div>
