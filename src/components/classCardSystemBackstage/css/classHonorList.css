@@ -1,4 +1,3 @@
-(node) util.print is deprecated. Use console.log instead.
 #classHonorList {
   overflow-y: auto;
 }
@@ -6,5 +5,5 @@
   padding: 15px 0;
 }
 #classHonorList .am-list-item:not(:last-child) .am-list-line::after {
-  background-color: #eeeeee;
+  background-color: #eee;
 }
