@@ -185,7 +185,9 @@ export default class dashboard extends React.Component {
         super(props);
         const nowTimeStamp = Date.now();
         const now = new Date(nowTimeStamp);
-        this.state = {};
+        this.state = {
+            openClazzTrArray: ''
+        };
         this.getDashBoardDataByArea = this.getDashBoardDataByArea.bind(this);
     }
 
@@ -226,7 +228,6 @@ export default class dashboard extends React.Component {
             onResponse: function (result) {
                 var response = result.response;
                 var jsonObj = JSON.parse(response);
-                console.log('223', jsonObj);
                 //学校总人数
                 var userCountOfSchool = jsonObj.userCountOfSchool;
                 //全校教研活动量
@@ -576,25 +577,10 @@ export default class dashboard extends React.Component {
     }
 
     buildOpenClazzTrArray = (vClazzResults) => {
-        var openClazzTrArray = [];
+        var openClazzTrArray = '';
         vClazzResults.forEach(function (vClazzResult) {
             var vClazzObj = JSON.parse(vClazzResult);
-            var col_vid = vClazzObj.col_vid;
-            var col_cid = vClazzObj.col_cid;
-            var col_teacher_uid = vClazzObj.col_teacher_uid;
-            var col_start_time = WebServiceUtil.formatAllTime(vClazzObj.col_start_time);
-            var clazzType = vClazzObj.clazzType;
-            var clazzName = vClazzObj.clazzName;
-            var teacherName = vClazzObj.teacherName;
-            var courseId = vClazzObj.courseId;
-            var courseName = vClazzObj.courseName;
-            var trObj = <tr>
-                <td>{courseName}</td>
-                <td>{clazzName}</td>
-                <td>{teacherName}</td>
-                <td>{col_start_time}</td>
-            </tr>;
-            openClazzTrArray.push(trObj);
+            openClazzTrArray += vClazzObj.clazz.name + ' ' + vClazzObj.course.name + ' ' + vClazzObj.teacher.userName
         });
         this.setState({openClazzTrArray});
     }
@@ -1051,8 +1037,7 @@ export default class dashboard extends React.Component {
                     </div>
                     <div>
                         <NoticeBar marqueeProps={{loop: true, style: {padding: '0 7.5px'}}}>
-                            正在开课: The arrival time of incomes and transfers of Yu &#39;E Bao will be delayed during
-                            National Day.
+                            {'正在开课:' + this.state.openClazzTrArray}
                         </NoticeBar>
                     </div>
                     <div className="cont">
