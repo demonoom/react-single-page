@@ -8,45 +8,43 @@ import "./css/chalk2";
 import "./css/walden";
 
 var dataGZ = [
-    [1,26],
-    [2,85],
-    [3,78],
-    [4,21],
-    [5,41],
-    [6,56],
-    [7,64],
-    [8,55],
-    [9,76],
-    [10,91],
-    [11,84],
-    [12,64],
-    [13,70],
-    [14,77],
-    [15,109],
-    [16,73],
-    [17,54],
-    [18,51],
-    [19,91],
-    [20,73],
-    [21,73],
-    [22,84],
-    [23,93],
-    [24,99],
-    [25,146],
-    [26,113],
-    [27,81],
-    [28,56],
-    [29,82],
-    [30,106],
-    [31,118]
+    [1, 26],
+    [2, 85],
+    [3, 78],
+    [4, 21],
+    [5, 41],
+    [6, 56],
+    [7, 64],
+    [8, 55],
+    [9, 76],
+    [10, 91],
+    [11, 84],
+    [12, 64],
+    [13, 70],
+    [14, 77],
+    [15, 109],
+    [16, 73],
+    [17, 54],
+    [18, 51],
+    [19, 91],
+    [20, 73],
+    [21, 73],
+    [22, 84],
+    [23, 93],
+    [24, 99],
+    [25, 146],
+    [26, 113],
+    [27, 81],
+    [28, 56],
+    [29, 82],
+    [30, 106],
+    [31, 118]
 ];
-
 
 var schema = [
     {name: 'AQIindex', index: 0, text: 'AQI指数'},
 
 ];
-
 
 var itemStyle = {
     normal: {
@@ -57,6 +55,127 @@ var itemStyle = {
         shadowColor: 'rgba(0, 0, 0, 0.5)'
     }
 };
+
+//班级柱状图option
+var optionForClassColumn = {
+    title: {
+        text: '学生考勤统计',
+        subtext: '',
+        left: 'left',
+        textStyle: {
+            color: '#a6abb9',
+            fontSize: 16,
+        }
+    },
+    tooltip: {},
+    legend: {
+        data: ['人数']
+    },
+    xAxis: {
+        data: ['应到', '实到', '缺勤']
+    },
+    yAxis: {},
+    series: [{
+        name: '人数',
+        type: 'bar',
+        data: [80, 50, 30],
+        label: {
+            normal: {
+                show: true,
+                position: 'top',
+            }
+        }
+    }]
+}
+
+//全校饼图考勤option
+var optionForSchoolPie = {
+    title: {
+        text: '学校考勤统计',
+        subtext: '应到人数 : '+(867+2756)+'人',
+        left: 'left',
+        textStyle: {
+            color: '#a6abb9',
+            fontSize: 16,
+        }
+    },
+    tooltip: {},
+    legend: {
+        bottom: 15,
+        left: 'left',
+        data: ['实到','缺勤']
+    },
+    series: [
+        {
+            type: 'pie',
+            radius: '50%',
+            center: ['50%', '50%'],
+            selectedMode: 'single',
+            data: [{value:2756,name:'实到'},{value:867,name:'缺勤'}],
+            itemStyle: {
+
+                emphasis: {
+                    shadowBlur: 10,
+                    shadowOffsetX: 0,
+                    shadowColor: 'rgba(0, 0, 0, 0.5)'
+                }
+            },
+            label: {
+                normal: {
+                    formatter: '{d}%',
+                    textStyle: {
+                        fontWeight: 'normal',
+                        fontSize: 12
+                    }
+                }
+            }
+        }
+    ]
+}
+
+//老师饼图考勤option
+var optionForTeacherPie = {
+    title: {
+        text: '教师考勤统计',
+        subtext: '',
+        left: 'left',
+        textStyle: {
+            color: '#a6abb9',
+            fontSize: 16,
+        }
+    },
+    tooltip: {},
+    legend: {
+        bottom: 15,
+        left: 'left',
+        data: ['正常','迟到','早退','缺勤']
+    },
+    series: [
+        {
+            type: 'pie',
+            radius: '50%',
+            center: ['50%', '50%'],
+            selectedMode: 'single',
+            data: [{value:120,name:'正常'},{value:11,name:'迟到'},{value:3,name:'早退'},{value:9,name:'缺勤'}],
+            itemStyle: {
+                emphasis: {
+                    shadowBlur: 10,
+                    shadowOffsetX: 0,
+                    shadowColor: 'rgba(0, 0, 0, 0.5)'
+                }
+            },
+            label: {
+                normal: {
+                    formatter: '{d}%',
+                    textStyle: {
+                        fontWeight: 'normal',
+                        fontSize: 12
+                    }
+                }
+            }
+        }
+    ]
+}
 
 export default class dashboard extends React.Component {
 
@@ -82,10 +201,9 @@ export default class dashboard extends React.Component {
         //调取驾驶舱数据
         this.getDashBoardDataByArea(destId, areaType);
         setInterval(function () {
-            console.log("destId====>"+destId);
             //调取驾驶舱数据
             _this.getDashBoardDataByArea(destId, areaType);
-        },1000*2)
+        }, 1000 * 2)
     }
 
     /**
@@ -106,7 +224,7 @@ export default class dashboard extends React.Component {
             onResponse: function (result) {
                 var response = result.response;
                 var jsonObj = JSON.parse(response);
-                console.log(jsonObj);
+                console.log('223', jsonObj);
                 //学校总人数
                 var userCountOfSchool = jsonObj.userCountOfSchool;
                 //全校教研活动量
@@ -131,7 +249,7 @@ export default class dashboard extends React.Component {
                     var userCountJson = JSON.parse(userCountOfSchool);
                     var userCount = userCountJson.userCount;
                     var schoolName = userCountJson.schoolName;
-                    _this.setState({userCount,schoolName});
+                    _this.setState({userCount, schoolName});
                 }
                 //蚁巢班级数量
                 if (WebServiceUtil.isEmpty(topicResults) == false) {
@@ -153,11 +271,11 @@ export default class dashboard extends React.Component {
                     _this.buildOpenClazzTrArray(vClazzResults);
                 }
 
-                if(WebServiceUtil.isEmpty(braceletSportSteps)==false){
+                if (WebServiceUtil.isEmpty(braceletSportSteps) == false) {
                     _this.buildStepBarChart(braceletSportSteps);
                 }
 
-                _this.buildTodayOpenClazzJson(todayOpenClazzResults,currentMonthOpenClazzResults);
+                _this.buildTodayOpenClazzJson(todayOpenClazzResults, currentMonthOpenClazzResults);
 
                 _this.buildHotPlaceScatterChart();
 
@@ -178,8 +296,8 @@ export default class dashboard extends React.Component {
                 text: '课前探究性学习统计',
                 subtext: '',
                 left: 'left',
-                textStyle:{
-                    color:'#a6abb9',
+                textStyle: {
+                    color: '#a6abb9',
                     fontSize: 16,
                 }
             },
@@ -199,9 +317,9 @@ export default class dashboard extends React.Component {
                         //每个柱子的颜色即为colorList数组里的每一项，如果柱子数目多于colorList的长度，则柱子颜色循环使用该数组
                         color: function (params) {
                             var colorList = ['#00a8ff', '#00fdd8'];
-                            if((params.dataIndex+1)%2 == 0){//为偶数的数据使用第一个颜色，其他使用第二个颜色
+                            if ((params.dataIndex + 1) % 2 == 0) {//为偶数的数据使用第一个颜色，其他使用第二个颜色
                                 return colorList[0];//1,3,5,7
-                            }else{
+                            } else {
                                 return colorList[1];//2,4,6,8
                             }
 
@@ -221,7 +339,7 @@ export default class dashboard extends React.Component {
     /**
      * 课前探究性学习
      */
-    buildTopicBarChart=(topicResults)=>{
+    buildTopicBarChart = (topicResults) => {
         var _this = this;
         var xClazzNameArray = [];
         var seriesDataArray = [];
@@ -266,9 +384,9 @@ export default class dashboard extends React.Component {
                         //每个柱子的颜色即为colorList数组里的每一项，如果柱子数目多于colorList的长度，则柱子颜色循环使用该数组
                         color: function (params) {
                             var colorList = ['#00a8ff', '#00fdd8'];
-                            if((params.dataIndex+1)%2 == 0){//为偶数的数据使用第一个颜色，其他使用第二个颜色
+                            if ((params.dataIndex + 1) % 2 == 0) {//为偶数的数据使用第一个颜色，其他使用第二个颜色
                                 return colorList[0];//1,3,5,7
-                            }else{
+                            } else {
                                 return colorList[1];//2,4,6,8
                             }
 
@@ -284,23 +402,23 @@ export default class dashboard extends React.Component {
      */
     buildCloudFilePieOption = (xClazzName, seriesData) => {
         return {
-            title : {
+            title: {
                 text: '学习资源分布情况统计',
                 subtext: '',
-                x:'left',
-                textStyle:{
-                    color:'#a6abb9',
+                x: 'left',
+                textStyle: {
+                    color: '#a6abb9',
                     fontSize: 16,
                 }
             },
-            tooltip : {
+            tooltip: {
                 trigger: 'item',
                 formatter: "{a} <br/>{b} : {c} ({d}%)"
             },
             legend: {
-                x : 'left',
-                y : 'bottom',
-                data:xClazzName
+                x: 'left',
+                y: 'bottom',
+                data: xClazzName
             },
             /*toolbox: {
                 show : true,
@@ -315,20 +433,20 @@ export default class dashboard extends React.Component {
                     saveAsImage : {show: true}
                 }
             },*/
-            calculable : true,
-            series : [
+            calculable: true,
+            series: [
                 {
-                    name:'面积模式',
-                    type:'pie',
-                    radius : [30, 110],
-                    roseType : 'area',
-                    data:seriesData,
-                    label : {
-                        normal : {
+                    name: '面积模式',
+                    type: 'pie',
+                    radius: [30, 110],
+                    roseType: 'area',
+                    data: seriesData,
+                    label: {
+                        normal: {
                             formatter: '{b}:{c}: ({d}%)',
-                            textStyle : {
-                                fontWeight : 'normal',
-                                fontSize : 15
+                            textStyle: {
+                                fontWeight: 'normal',
+                                fontSize: 15
                             }
                         }
                     }
@@ -340,7 +458,7 @@ export default class dashboard extends React.Component {
     /**
      * 创建学习资源分布情况统计
      */
-    buildCloudFileBarChart=(cloudFileResults)=>{
+    buildCloudFileBarChart = (cloudFileResults) => {
         var _this = this;
         var xTeacherNameArray = [];
         var seriesDataArray = [];
@@ -348,7 +466,7 @@ export default class dashboard extends React.Component {
             var cloudFileObj = JSON.parse(cloudFileResult);
             var teacherName = cloudFileObj.col_name;
             var fileCount = cloudFileObj.fileCount;
-            var cloudFileJson = {value:fileCount, name:teacherName};
+            var cloudFileJson = {value: fileCount, name: teacherName};
             xTeacherNameArray.push(teacherName);
             // seriesDataArray.push(fileCount);
             seriesDataArray.push(cloudFileJson);
@@ -367,18 +485,18 @@ export default class dashboard extends React.Component {
         _this.setState({cloudFileDiv});
     }
 
-    buildHomeWorkOption=(xClazzNameArray, seriesDataArray)=>{
+    buildHomeWorkOption = (xClazzNameArray, seriesDataArray) => {
         return {
             title: {
                 text: '课后作业布置情况分析',
                 subtext: '',
                 left: 'left',
-                textStyle:{
-                    color:'#a6abb9',
+                textStyle: {
+                    color: '#a6abb9',
                     fontSize: 16,
                 }
             },
-            tooltip : {
+            tooltip: {
                 trigger: 'item',
                 formatter: "{a} <br/>{b} : {c} ({d}%)"
             },
@@ -387,13 +505,13 @@ export default class dashboard extends React.Component {
                 left: 'left',
                 data: xClazzNameArray
             },
-            series : [
+            series: [
                 {
                     type: 'pie',
-                    radius : '50%',
+                    radius: '50%',
                     center: ['50%', '50%'],
                     selectedMode: 'single',
-                    data:seriesDataArray,
+                    data: seriesDataArray,
                     itemStyle: {
 
                         emphasis: {
@@ -402,12 +520,12 @@ export default class dashboard extends React.Component {
                             shadowColor: 'rgba(0, 0, 0, 0.5)'
                         }
                     },
-                    label : {
-                        normal : {
+                    label: {
+                        normal: {
                             formatter: '{b}:{c}次: ({d}%)',
-                            textStyle : {
-                                fontWeight : 'normal',
-                                fontSize : 12
+                            textStyle: {
+                                fontWeight: 'normal',
+                                fontSize: 12
                             }
                         }
                     }
@@ -419,7 +537,7 @@ export default class dashboard extends React.Component {
     /**
      * 创建蚁盘资源上传情况统计柱状图
      */
-    buildHomeWorkPieChart=(topicHomeWorkResults)=>{
+    buildHomeWorkPieChart = (topicHomeWorkResults) => {
         var _this = this;
         var xClazzNameArray = [];
         var seriesDataArray = [];
@@ -427,11 +545,11 @@ export default class dashboard extends React.Component {
             var topicHomeWorkObj = JSON.parse(topicHomeWorkResult);
             var clazzName = topicHomeWorkObj.col_name;
             var totalTopic = topicHomeWorkObj.totalTopic;
-            var homeWorkJson = {value:totalTopic, name: clazzName};
+            var homeWorkJson = {value: totalTopic, name: clazzName};
             xClazzNameArray.push(clazzName);
             seriesDataArray.push(homeWorkJson);
         })
-        var homeWorkOption = _this.buildHomeWorkOption(xClazzNameArray,seriesDataArray);
+        var homeWorkOption = _this.buildHomeWorkOption(xClazzNameArray, seriesDataArray);
         var homeWorkDiv = <div>
             <div style={{height: '300px'}} className="echarts_wrap">
                 <ReactEcharts
@@ -444,7 +562,7 @@ export default class dashboard extends React.Component {
         _this.setState({homeWorkDiv});
     }
 
-    buildTopicHomeWorkTrArray=(topicHomeWorkResults)=>{
+    buildTopicHomeWorkTrArray = (topicHomeWorkResults) => {
         var trArray = [];
         topicHomeWorkResults.forEach(function (topicHomeWorkResult) {
             var topicHomeWorkObj = JSON.parse(topicHomeWorkResult);
@@ -459,7 +577,7 @@ export default class dashboard extends React.Component {
         this.setState({trArray});
     }
 
-    buildOpenClazzTrArray=(vClazzResults)=>{
+    buildOpenClazzTrArray = (vClazzResults) => {
         var openClazzTrArray = [];
         vClazzResults.forEach(function (vClazzResult) {
             var vClazzObj = JSON.parse(vClazzResult);
@@ -483,7 +601,7 @@ export default class dashboard extends React.Component {
         this.setState({openClazzTrArray});
     }
 
-    buildTodayOpenClazzJson(todayOpenClazzResults,currentMonthOpenClazzResults){
+    buildTodayOpenClazzJson(todayOpenClazzResults, currentMonthOpenClazzResults) {
         var todayOpenClazzJson = {
             "ie": 9743
         };
@@ -491,7 +609,7 @@ export default class dashboard extends React.Component {
         var monthOpenClazzJson = {};
 
         var todayJson = {};
-        if(WebServiceUtil.isEmpty(todayOpenClazzResults)==false){
+        if (WebServiceUtil.isEmpty(todayOpenClazzResults) == false) {
             todayOpenClazzResults.forEach(function (todayOpenClazzResult) {
                 var todayOpenClazzObj = JSON.parse(todayOpenClazzResult);
                 var openCount = todayOpenClazzObj.openCount;
@@ -500,7 +618,7 @@ export default class dashboard extends React.Component {
             });
         }
 
-        if(WebServiceUtil.isEmpty(currentMonthOpenClazzResults)==false){
+        if (WebServiceUtil.isEmpty(currentMonthOpenClazzResults) == false) {
             currentMonthOpenClazzResults.forEach(function (currentMonthOpenClazzResult) {
                 var currentMonthOpenClazzObj = JSON.parse(currentMonthOpenClazzResult);
                 var openCount = currentMonthOpenClazzObj.openCount;
@@ -510,7 +628,7 @@ export default class dashboard extends React.Component {
         }
 
         todayOpenClazzJson.components = todayJson;
-        this.buildOpenClazzBarAndPie(todayOpenClazzJson,monthOpenClazzJson);
+        this.buildOpenClazzBarAndPie(todayOpenClazzJson, monthOpenClazzJson);
     }
 
     /**
@@ -518,9 +636,9 @@ export default class dashboard extends React.Component {
      * @param todayOpenClazzJson
      * @param monthOpenClazzJson
      */
-    buildOpenClazzBarAndPie=(todayOpenClazzJson,monthOpenClazzJson)=>{
+    buildOpenClazzBarAndPie = (todayOpenClazzJson, monthOpenClazzJson) => {
         var _this = this;
-        var openClazzOption = _this.buildClazzOpenCountOption(todayOpenClazzJson,monthOpenClazzJson)
+        var openClazzOption = _this.buildClazzOpenCountOption(todayOpenClazzJson, monthOpenClazzJson)
         var openClazzDiv = <div>
             <div style={{height: '300px'}} className="echarts_wrap">
                 <ReactEcharts
@@ -533,7 +651,7 @@ export default class dashboard extends React.Component {
         _this.setState({openClazzDiv});
     }
 
-    buildClazzOpenCountOption=(todayOpenClazzJson,monthOpenClazzJson)=>{
+    buildClazzOpenCountOption = (todayOpenClazzJson, monthOpenClazzJson) => {
         return {
             tooltip: {},
             title: [{
@@ -541,8 +659,8 @@ export default class dashboard extends React.Component {
                 subtext: '',
                 x: 'left',
                 textAlign: 'left',
-                textStyle:{
-                    color:'#a6abb9',
+                textStyle: {
+                    color: '#a6abb9',
                     fontSize: 16,
                 }
             }, {
@@ -550,8 +668,8 @@ export default class dashboard extends React.Component {
                 subtext: '',
                 x: '52%',
                 textAlign: 'left',
-                textStyle:{
-                    color:'#a6abb9',
+                textStyle: {
+                    color: '#a6abb9',
                     fontSize: 16,
                 }
             }],
@@ -573,9 +691,9 @@ export default class dashboard extends React.Component {
                 splitLine: {
                     show: false
                 },
-                axisLine:{
-                    lineStyle:{
-                        color:'#a6abb9',
+                axisLine: {
+                    lineStyle: {
+                        color: '#a6abb9',
                     }
                 }
 
@@ -590,13 +708,13 @@ export default class dashboard extends React.Component {
                 splitLine: {
                     show: false
                 },
-                axisLine:{
-                    lineStyle:{
-                        color:'#a6abb9',
+                axisLine: {
+                    lineStyle: {
+                        color: '#a6abb9',
                     }
                 }
             }],
-            series: [ {
+            series: [{
                 type: 'bar',
                 stack: 'component',
                 xAxisIndex: 0,
@@ -608,9 +726,9 @@ export default class dashboard extends React.Component {
                         //每个柱子的颜色即为colorList数组里的每一项，如果柱子数目多于colorList的长度，则柱子颜色循环使用该数组
                         color: function (params) {
                             var colorList = ['#00a8ff', '#00fdd8'];
-                            if((params.dataIndex+1)%2 == 0){//为偶数的数据使用第一个颜色，其他使用第二个颜色
+                            if ((params.dataIndex + 1) % 2 == 0) {//为偶数的数据使用第一个颜色，其他使用第二个颜色
                                 return colorList[0];//1,3,5,7
-                            }else{
+                            } else {
                                 return colorList[1];//2,4,6,8
                             }
 
@@ -634,12 +752,12 @@ export default class dashboard extends React.Component {
                     return {
                         name: key.replace('.js', ''),
                         value: monthOpenClazzJson[key],
-                        label : {
-                            normal : {
+                        label: {
+                            normal: {
                                 formatter: '{b}:{c}: ({d}%)',
-                                textStyle : {
-                                    fontWeight : 'normal',
-                                    fontSize : 12
+                                textStyle: {
+                                    fontWeight: 'normal',
+                                    fontSize: 12
                                 }
                             }
                         }
@@ -653,7 +771,7 @@ export default class dashboard extends React.Component {
      * 健康情况统计
      * @param braceletSportSteps
      */
-    buildStepBarChart=(braceletSportSteps)=>{
+    buildStepBarChart = (braceletSportSteps) => {
         var _this = this;
 
         var xClazzNameArray = [];
@@ -680,17 +798,17 @@ export default class dashboard extends React.Component {
     /**
      * 创建步数统计柱形图的option
      */
-    buildStepOption=(xClazzNameArray, seriesDataArray)=>{
+    buildStepOption = (xClazzNameArray, seriesDataArray) => {
         return {
-            title : {
+            title: {
                 text: '健康情况统计',
                 subtext: ''
             },
-            tooltip : {
+            tooltip: {
                 trigger: 'axis'
             },
             legend: {
-                data:['步数']
+                data: ['步数']
             },
             /*toolbox: {
                 show : true,
@@ -701,26 +819,26 @@ export default class dashboard extends React.Component {
                     saveAsImage : {show: true}
                 }
             },*/
-            calculable : true,
-            xAxis : [
+            calculable: true,
+            xAxis: [
                 {
-                    type : 'category',
-                    data : xClazzNameArray
+                    type: 'category',
+                    data: xClazzNameArray
                 }
             ],
-            yAxis : [
+            yAxis: [
                 {
-                    type : 'value',
+                    type: 'value',
                 }
             ],
-            series : [
+            series: [
                 {
-                    name:'步数',
-                    type:'bar',
-                    data:seriesDataArray,
-                    markLine : {
-                        data : [
-                            {type : 'average', name : '平均值'}
+                    name: '步数',
+                    type: 'bar',
+                    data: seriesDataArray,
+                    markLine: {
+                        data: [
+                            {type: 'average', name: '平均值'}
                         ]
                     },
                     itemStyle: {
@@ -763,7 +881,7 @@ export default class dashboard extends React.Component {
         });
     };
 
-    buildHotPlaceScatterChart=()=>{
+    buildHotPlaceScatterChart = () => {
         var _this = this;
 
         /*var xClazzNameArray = [];
@@ -789,85 +907,85 @@ export default class dashboard extends React.Component {
     /**
      * 创建学生活动的热点图
      */
-    buildHotPlaceScatterOption=()=>{
-       return  {
-           backgroundColor: '#404a59',
-           color: [
-               '#dd4444', '#fec42c', '#80F1BE'
-           ],
-           legend: {
-               y: 'top',
-               data: ['学生活动热点'],
-               textStyle: {
-                   color: '#fff',
-                   fontSize: 16
-               }
-           },
-           grid: {
-               x: '10%',
-               x2: 150,
-               y: '18%',
-               y2: '10%'
-           },
-           tooltip: {
-               padding: 10,
-               backgroundColor: '#222',
-               borderColor: '#777',
-               borderWidth: 1,
-               formatter: function (obj) {
-                   var value = obj.value;
-                   return '<div style="border-bottom: 1px solid rgba(255,255,255,.3); font-size: 18px;padding-bottom: 7px;margin-bottom: 7px">'
-                       + obj.seriesName + ' ' + value[0] + '日：'
-                       + value[7]
-                       + '</div>'
-                       + schema[0].text + '：' + value[1] + '<br>';
-               }
-           },
-           xAxis: {
-               type: 'value',
-               name: '日期',
-               nameGap: 16,
-               nameTextStyle: {
-                   color: '#fff',
-                   fontSize: 14
-               },
-               max: 31,
-               splitLine: {
-                   show: false
-               },
-               axisLine: {
-                   lineStyle: {
-                       color: '#eee'
-                   }
-               }
-           },
-           yAxis: {
-               type: 'value',
-               name: '活动区域',
-               nameLocation: 'end',
-               nameGap: 20,
-               nameTextStyle: {
-                   color: '#fff',
-                   fontSize: 16
-               },
-               axisLine: {
-                   lineStyle: {
-                       color: '#eee'
-                   }
-               },
-               splitLine: {
-                   show: false
-               }
-           },
-           series: [
-               {
-                   name: '广州',
-                   type: 'scatter',
-                   itemStyle: itemStyle,
-                   data: dataGZ
-               }
-           ]
-       };
+    buildHotPlaceScatterOption = () => {
+        return {
+            backgroundColor: '#404a59',
+            color: [
+                '#dd4444', '#fec42c', '#80F1BE'
+            ],
+            legend: {
+                y: 'top',
+                data: ['学生活动热点'],
+                textStyle: {
+                    color: '#fff',
+                    fontSize: 16
+                }
+            },
+            grid: {
+                x: '10%',
+                x2: 150,
+                y: '18%',
+                y2: '10%'
+            },
+            tooltip: {
+                padding: 10,
+                backgroundColor: '#222',
+                borderColor: '#777',
+                borderWidth: 1,
+                formatter: function (obj) {
+                    var value = obj.value;
+                    return '<div style="border-bottom: 1px solid rgba(255,255,255,.3); font-size: 18px;padding-bottom: 7px;margin-bottom: 7px">'
+                        + obj.seriesName + ' ' + value[0] + '日：'
+                        + value[7]
+                        + '</div>'
+                        + schema[0].text + '：' + value[1] + '<br>';
+                }
+            },
+            xAxis: {
+                type: 'value',
+                name: '日期',
+                nameGap: 16,
+                nameTextStyle: {
+                    color: '#fff',
+                    fontSize: 14
+                },
+                max: 31,
+                splitLine: {
+                    show: false
+                },
+                axisLine: {
+                    lineStyle: {
+                        color: '#eee'
+                    }
+                }
+            },
+            yAxis: {
+                type: 'value',
+                name: '活动区域',
+                nameLocation: 'end',
+                nameGap: 20,
+                nameTextStyle: {
+                    color: '#fff',
+                    fontSize: 16
+                },
+                axisLine: {
+                    lineStyle: {
+                        color: '#eee'
+                    }
+                },
+                splitLine: {
+                    show: false
+                }
+            },
+            series: [
+                {
+                    name: '广州',
+                    type: 'scatter',
+                    itemStyle: itemStyle,
+                    data: dataGZ
+                }
+            ]
+        };
     }
 
     render() {
@@ -875,6 +993,7 @@ export default class dashboard extends React.Component {
         return (
             <div id="dashboard">
                 <div className="cont">
+                    {/*学校名称 总人数 全校教研活动量*/}
                     <div className="topTitle">
                         <div className="schoolName">学校名称：{_this.state.schoolName}</div>
                         <div className="clear numDiv">
@@ -886,6 +1005,8 @@ export default class dashboard extends React.Component {
                                 <p className="num">{_this.state.messageCount}</p></div>
                         </div>
                     </div>
+
+                    {/*当前开课列表*/}
                     <div className="list_wrap_padding table_class">
                         <div className="gradeTitle tableTitle">当前开课列表</div>
                         <div className="topList">
@@ -908,37 +1029,67 @@ export default class dashboard extends React.Component {
                         </div>
                     </div>
 
+                    {/*课前探究性学习*/}
                     <div className="list_wrap_padding pB20 ">
                         {this.state.topicDiv}
                     </div>
 
+                    {/*蚁盘资源上传情况统计柱状图*/}
                     <div className="list_wrap_padding pB20 classAfter">
                         {this.state.homeWorkDiv}
                     </div>
 
-
-
+                    {/*开课次数统计的柱形图和饼图*/}
                     <div className="list_wrap_padding startClassNum">
                         {this.state.openClazzDiv}
                     </div>
-
-
 
                     {/*<div className="list_wrap_padding">
                         {this.state.hotPlaceScatterChartDiv}
                     </div>*/}
 
-
-
-
+                    {/*学习资源分布情况统计*/}
                     <div className="list_wrap_padding resource">
                         {this.state.cloudFileDiv}
                     </div>
 
+                    {/*健康情况统计*/}
                     <div className="list_wrap_padding">
                         {this.state.stepChartDiv}
                     </div>
 
+                    {/*学生考勤班级柱状图*/}
+                    <div className="list_wrap_padding">
+                        <div style={{height: '300px'}} className="echarts_wrap">
+                            <ReactEcharts
+                                option={optionForClassColumn}
+                                style={{height: '100%', width: '100%'}}
+                                theme='chalk2'
+                                className=''/>
+                        </div>
+                    </div>
+
+                    {/*全校考勤饼图*/}
+                    <div className="list_wrap_padding">
+                        <div style={{height: '300px'}} className="echarts_wrap">
+                            <ReactEcharts
+                                option={optionForSchoolPie}
+                                style={{height: '100%', width: '100%'}}
+                                theme='chalk2'
+                                className=''/>
+                        </div>
+                    </div>
+
+                    {/*教师考勤饼图*/}
+                    <div className="list_wrap_padding">
+                        <div style={{height: '300px'}} className="echarts_wrap">
+                            <ReactEcharts
+                                option={optionForTeacherPie}
+                                style={{height: '100%', width: '100%'}}
+                                theme='chalk2'
+                                className=''/>
+                        </div>
+                    </div>
 
 
                 </div>
