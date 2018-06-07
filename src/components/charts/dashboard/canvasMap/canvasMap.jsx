@@ -32,12 +32,14 @@ export default class canvasMap extends React.Component {
      */
     startStep() {
         setInterval(function () {
+            var width_cont = $(window).width();
+            var canvasWidth = (width_cont-25)/2;
             step += 5;
             canvas = document.getElementById('noom');
             context = canvas.getContext('2d');
             var img = new Image();
-            canvas.width = 700
-            canvas.height = 400
+            canvas.width = canvasWidth;
+            canvas.height = 580;
             context.lineWidth = 10;
             context.lineCap = 'round';
             img.src = Img;

@@ -994,7 +994,7 @@ export default class dashboard extends React.Component {
         console.log(classNameArray,'班级');
         var sportOption = _this.buildSportsOption(classNameArray, classHeartRateArray)
         var sportDiv = <div>
-            <div style={{height: '300px'}} className="echarts_wrap">
+            <div style={{height: '270px'}} className="echarts_wrap">
                 <ReactEcharts
                     option={sportOption}
                     style={{height: '100%', width: '100%'}}
@@ -1014,16 +1014,13 @@ export default class dashboard extends React.Component {
                 text: '体育运动量统计',
                 subtext: '',
                 left: 'left',
-                textStyle: {
-                    color: '#a6abb9',
-                    fontSize: 16,
-                }
             },
             tooltip: {
                 trigger: 'axis'
             },
             legend: {
-                data: ['平均心率']
+                data: ['平均心率'],
+                y:'bottom',
             },
             xAxis: {
                 data: classNameArray
@@ -1051,7 +1048,6 @@ export default class dashboard extends React.Component {
                 <div className="dashCont">
                     <div className="topTitle">
                         <div className="schoolName">学校名称：{_this.state.schoolName}</div>
-
                     </div>
                     <div className="cont">
                         <div className="clear">
@@ -1088,11 +1084,15 @@ export default class dashboard extends React.Component {
                                     <div className="clear numDiv">
                                         <div className="fl allNUm">
                                             <p className="gradeTitle">总人数</p>
-                                            <p className="num">{_this.state.userCount}</p></div>
+                                            <p className="num">{_this.state.userCount}</p>
+                                        </div>
                                         <div className="fl msgNum">
                                             <p className="gradeTitle">全校教研活动量</p>
-                                            <p className="num">{_this.state.messageCount}</p></div>
+                                            <p className="num">{_this.state.messageCount}</p>
+                                        </div>
                                     </div>
+                                    {/*热力图*/}
+                                    <CanvasMap/>
                                 </div>
                             </div>
                             <div className="fl right">
@@ -1115,55 +1115,44 @@ export default class dashboard extends React.Component {
                                 {this.state.stepChartDiv}
                             </div>
 
+                            {/*//体育运动统计*/}
                             <div className="list_wrap_padding">
-
+                                {this.state.sportDiv}
                             </div>
+                            {/*学生考勤班级柱状图*/}
                             <div className="list_wrap_padding">
-
+                                <div style={{height: '270px'}} className="echarts_wrap">
+                                    <ReactEcharts
+                                        option={optionForClassColumn}
+                                        style={{height: '100%', width: '100%'}}
+                                        theme='chalk2'
+                                        className=''/>
+                                </div>
                             </div>
+
+                            {/*全校考勤饼图*/}
+                            <div className="list_wrap_padding">
+                                <div style={{height: '270px'}} className="echarts_wrap">
+                                    <ReactEcharts
+                                        option={optionForSchoolPie}
+                                        style={{height: '100%', width: '100%'}}
+                                        theme='chalk2'
+                                        className=''/>
+                                </div>
+                            </div>
+
+                            {/*教师考勤饼图*/}
+                            <div className="list_wrap_padding">
+                                <div style={{height: '270px'}} className="echarts_wrap">
+                                    <ReactEcharts
+                                        option={optionForTeacherPie}
+                                        style={{height: '100%', width: '100%'}}
+                                        theme='chalk2'
+                                        className=''/>
+                                </div>
+                            </div>
+
                         </div>
-                    </div>
-
-
-                    {/*学生考勤班级柱状图*/}
-                    <div className="list_wrap_padding">
-                        <div style={{height: '300px'}} className="echarts_wrap">
-                            <ReactEcharts
-                                option={optionForClassColumn}
-                                style={{height: '100%', width: '100%'}}
-                                theme='chalk2'
-                                className=''/>
-                        </div>
-                    </div>
-
-                    {/*全校考勤饼图*/}
-                    <div className="list_wrap_padding">
-                        <div style={{height: '300px'}} className="echarts_wrap">
-                            <ReactEcharts
-                                option={optionForSchoolPie}
-                                style={{height: '100%', width: '100%'}}
-                                theme='chalk2'
-                                className=''/>
-                        </div>
-                    </div>
-
-                    {/*教师考勤饼图*/}
-                    <div className="list_wrap_padding">
-                        <div style={{height: '300px'}} className="echarts_wrap">
-                            <ReactEcharts
-                                option={optionForTeacherPie}
-                                style={{height: '100%', width: '100%'}}
-                                theme='chalk2'
-                                className=''/>
-                        </div>
-                    </div>
-
-                    {/*热力图*/}
-                    <CanvasMap/>
-
-                    {/*//体育运动统计*/}
-                    <div className="list_wrap_padding   ">
-                        {this.state.sportDiv}
                     </div>
                 </div>
             </div>
