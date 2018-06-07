@@ -128,19 +128,12 @@ export default class health extends React.Component {
                         className={k == 0 ? 'firstClass' : k == 1 ? 'secondClass' : k == 2 ? 'thirdClass' : 'otherClass'}></div>
                 </div>
                 <div className="studentName">{data[k].users.userName}</div>
-                <div
-                    className="step_number text_hidden">{this.state.type == 'step' ? data[k].sportStep : data[k].calorie}<span
-                    className="step_number_s">{this.state.type == 'step' ? '步' : '卡路里'}</span></div>
+                <div className="step_number text_hidden">{this.state.type == 'step' ? data[k].sportStep : data[k].calorie.toFixed(2)}
+                <span className="step_number_s">{this.state.type == 'step' ? '步' : '卡路里'}</span>
+                </div>
             </div>;
             array.push(item);
         }
-        // const row = (item) => {
-        //     return (
-        //         <Item extra={WebServiceUtil.formatYMD(item.sportDate)} align="top" thumb={item.users.avatar} multipleLine>
-        //             {item.users.userName} <Brief>{this.state.type == 'step'?item.sportStep:item.calorie} {this.state.type == 'step'?'步':'卡路里'}</Brief>
-        //         </Item>
-        //     )
-        // };
         return (
             <div id="health" className="home_content" style={{height: this.state.clientHeight}}>
                 <div className="inner_bg">
