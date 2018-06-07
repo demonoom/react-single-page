@@ -47,7 +47,7 @@ export default class classroomManage extends React.Component {
         var locationSearch = locationHref.substr(locationHref.indexOf("?") + 1);
         var uid = locationSearch.split("&")[0].split("=")[1];
         this.setState({ "uid": uid });
-        this.viewClassRoomPage(uid);
+        this.viewClassRoomPage(uid,true);
         window.addEventListener('resize', classBinding.onWindowResize)
     }
     componentWillUnmount() {
@@ -65,13 +65,16 @@ export default class classroomManage extends React.Component {
     /**
      * 查看教室信息
      */
-    viewClassRoomPage(uid) {
+    viewClassRoomPage(uid,flag) {
         var _this = this;
-        _this.initData.splice(0);
-        _this.state.dataSource = [];
-        _this.state.dataSource = new ListView.DataSource({
-            rowHasChanged: (row1, row2) => row1 !== row2,
-        });
+        if(flag) {
+            _this.initData.splice(0);
+            _this.state.dataSource = [];
+            _this.state.dataSource = new ListView.DataSource({
+                rowHasChanged: (row1, row2) => row1 !== row2,
+            });
+        }
+        
         const dataBlob = {};
         var PageNo = this.state.defaultPageNo;
         var param = {
@@ -142,7 +145,7 @@ export default class classroomManage extends React.Component {
         }
         currentPageNo += 1;
         this.setState({ isLoadingLeft: true, defaultPageNo: currentPageNo });
-        _this.viewClassRoomPage(_this.state.uid);
+        _this.viewClassRoomPage(_this.state.uid,false);
         this.setState({
             dataSource: this.state.dataSource.cloneWithRows(this.initData),
             isLoadingLeft: true,
@@ -153,7 +156,7 @@ export default class classroomManage extends React.Component {
         var divPull = document.getElementsByClassName('am-pull-to-refresh-content');
         divPull[0].style.transform = "translate3d(0px, 30px, 0px)";   //设置拉动后回到的位置
         this.setState({ defaultPageNo: 1, refreshing: true, isLoadingLeft: true });
-        this.viewClassRoomPage(this.state.uid);
+        this.viewClassRoomPage(this.state.uid,true);
     }
 
     /**
@@ -283,11 +286,12 @@ export default class classroomManage extends React.Component {
                         style={{
                             height: classBinding.state.clientHeight,
                         }}
-                    // pullToRefresh={<PullToRefresh
-                    //     onRefresh={this.onRefresh}
-                    //     distanceToRefresh={80}
-                    />}
-                />
+                        pullToRefresh={<PullToRefresh
+                            onRefresh={this.onRefresh}
+                            distanceToRefresh={80}
+                        />
+                        }
+                    />
                     <div className='addBunton' onClick={this.addClassroomM}>
                         <img src={require("../imgs/addBtn.png")} />
                     </div>
