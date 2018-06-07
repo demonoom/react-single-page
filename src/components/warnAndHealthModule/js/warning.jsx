@@ -125,7 +125,7 @@ export default class warning extends React.Component {
                     lastData: lastData
                 })
             }.bind(this), function (result) {   //回调失败
-                Toast.info('获取实时数据失败', 1);
+                Toast.info('获取实时数据失败,计时器已关闭', 5);
                 this.timeClose();
             }.bind(this))
         }.bind(this), second * 1000)
