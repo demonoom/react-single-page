@@ -19,7 +19,7 @@
 #moralEducation .classSearchResult .classSearchResultInfo > div {
   padding: 12px 0;
   font-size: 17px;
-  border-bottom: 1px #f4f4f4 solid;
+  border-bottom: 1px #eee solid;
 }
 #moralEducation .classHealth,
 #moralEducation .classPoliteness {
@@ -31,4 +31,10 @@
 }
 #moralEducation .choiceData {
   font-size: 16px;
+}
+#moralEducation .am-list-item .am-list-line .am-list-content {
+  padding: 15px 0;
+}
+#moralEducation .am-list-line::after {
+  background-color: #eee;
 }

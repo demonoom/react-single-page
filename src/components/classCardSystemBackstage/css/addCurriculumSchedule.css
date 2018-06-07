@@ -14,6 +14,10 @@
   margin-left: 1.07rem;
   margin-bottom: 1.07rem;
 }
+#addCurriculumSchedule .CourseTableArea .am-list-item .am-input-control input,
+#addCurriculumSchedule .CourseTableArea .am-textarea-control textarea {
+  color: #333;
+}
 #addCurriculumSchedule .addCourseButton {
   position: absolute;
   bottom: 15px;
@@ -110,6 +114,7 @@
   border: none;
   text-indent: 8px;
   font-size: 17px;
+  color: #333;
 }
 #addCurriculumSchedule .search_list input::-webkit-input-placeholder {
   color: #bbbbbe;

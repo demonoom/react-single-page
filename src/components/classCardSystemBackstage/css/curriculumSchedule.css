@@ -14,7 +14,6 @@
   height: calc(100% - 145px);
 }
 #curriculumSchedule .curriculum_cont li {
-  border-bottom: 1px solid #f4f4f4;
   padding: 10px 0;
 }
 #curriculumSchedule .curriculum_cont li div.list span {

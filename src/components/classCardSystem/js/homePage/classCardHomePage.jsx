@@ -11,6 +11,7 @@ import ClassDemeanor from './classDemeanor'
 import StudentOnDuty from './studentOnDuty'
 import MoralEducationScore from './moralEducationScore'
 import Header from './header'
+import Health from '../../../warnAndHealthModule/js/health'
 
 var demeanor;
 //消息通信js
@@ -81,10 +82,19 @@ export default class classCardHomePage extends React.Component {
         };
     }
 
+    /**
+     * 一分钟的回调
+     */
+    timeOut() {
+        // demeanor.refs.health.getBraceletSportStepByClazzId(localStorage.getItem("clazzId"))
+    }
+
     render() {
         return (
             <div id="classCardHomePage" style={{height: document.body.clientHeight}}>
-                <Header/>
+                <Header
+                    timeOut={this.timeOut}
+                />
                 <div className="home_content home_content_index">
                     <div className="">
                         {/*班牌首页*/}
@@ -109,12 +119,22 @@ export default class classCardHomePage extends React.Component {
                                 classCommand={this.state.classCommand}
                             />
                             <div>
-                                <Application/>
                                 <Notify
                                     classCommand={this.state.classCommand}
                                 />
+                                <Application/>
                             </div>
                         </div>
+                        {/*<div>*/}
+                        {/*<Health*/}
+                        {/*ref="health"*/}
+                        {/*typeFromNoom='step'*/}
+                        {/*/>*/}
+                        {/*<Health*/}
+                        {/*ref="health"*/}
+                        {/*typeFromNoom='calories'*/}
+                        {/*/>*/}
+                        {/*</div>*/}
                     </div>
                 </div>
             </div>

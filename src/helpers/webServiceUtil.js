@@ -1,7 +1,7 @@
 var isDebug = true;
 var localDomain = "192.168.50.15";   //请求地址
 var isDebugLocal = true;
-var localUrl = "192.168.50.186";    //跳转地址http:
+var localUrl = "192.168.50.29";    //跳转地址http:
 
 
 // //云校本地测试webService地址
@@ -74,13 +74,13 @@ WebServiceUtil.formatYMD = function (nS) {
 WebServiceUtil.formatAllTime = function (nS) {
     var da = new Date(parseInt(nS));
     var year = da.getFullYear();
-    var month = da.getMonth()+1;
+    var month = da.getMonth() + 1;
     var date = da.getDate();
-    var hour = da.getHours()+":";
-    var minutes = da.getMinutes()+":";
+    var hour = da.getHours() + ":";
+    var minutes = da.getMinutes() + ":";
     var sencond = da.getSeconds();
-    var dayStr = [year,month,date].join('-');
-    var dateStr = dayStr +" "+ hour + minutes+sencond;
+    var dayStr = [year, month, date].join('-');
+    var dateStr = dayStr + " " + hour + minutes + sencond;
     return dateStr;
 };
 

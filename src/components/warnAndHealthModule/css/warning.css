@@ -1,0 +1,51 @@
+(node) util.print is deprecated. Use console.log instead.
+#warning {
+  color: #333;
+  font-size: 14px;
+  height: 100%;
+  overflow: hidden;
+}
+#warning .cont {
+  height: 100%;
+  overflow-y: hidden;
+}
+#warning .parent {
+  padding: 15px;
+  position: relative;
+}
+#warning .head {
+  position: absolute;
+  left: 15px;
+  top: 18px;
+}
+#warning .student_list {
+  padding: 15px;
+  background-color: #fff;
+}
+#warning .student_list .list_title {
+  padding-bottom: 10px;
+}
+#warning .student_list .listCont .am-list-item img {
+  width: 40px;
+  height: 40px;
+  -webkit-border-radius: 50%;
+  -moz-border-radius: 50%;
+  border-radius: 50%;
+}
+#warning .student_list .listCont .am-list-content {
+  font-size: 16px;
+}
+#warning .student_list .listCont .am-list-item .am-list-line .am-list-brief {
+  font-size: 14px;
+  color: #666;
+}
+#warning .student_list .listCont .am-list-extra {
+  font-size: 14px;
+}
+#warning .am-list-body::before,
+#warning .am-list-body::after {
+  display: none;
+}
+#warning .am-list-line::after {
+  background-color: #eee;
+}

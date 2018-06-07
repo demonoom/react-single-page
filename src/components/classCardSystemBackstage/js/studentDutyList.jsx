@@ -4,10 +4,6 @@ import '../css/studentDutyList.less'
 
 const alert = Modal.alert;
 
-const seasons = [
-    []
-];
-
 /**
  * 值日生查询页
  */
@@ -49,6 +45,9 @@ export default class studentDutyList extends React.Component {
         this.setState({clazzId, userId, clazzName});
         document.title = clazzName + '班级值日表';
     }
+    componentDidMount(){
+        Bridge.setShareAble("false");
+    }
 
     /**
      * 查看指定班级的值日列表
@@ -89,7 +88,7 @@ export default class studentDutyList extends React.Component {
                         var weekChart = _this.weekNumToChart(week);
                         if (WebServiceUtil.isEmpty(week) == false) {
                             var dutyTag = <div>
-                                <div className="planTitle">
+                                <div className="planTitle line_public">
                                     <div className="top">
                                         <span>星期{weekChart}</span>
                                         <Button className="modifyBtn_common" type="primary" size="small"
