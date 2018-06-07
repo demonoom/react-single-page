@@ -28,16 +28,11 @@ export default class canvasMap extends React.Component {
         var canvasWidth = (width_cont - 25) / 2;
         canvas = document.getElementById('noom');
         context = canvas.getContext('2d');
-        var img = new Image();
         canvas.width = canvasWidth;
         canvas.height = 580;
         context.lineWidth = 10;
         context.lineCap = 'round';
-        img.src = Img;
-        img.onload = function () {
-            context.drawImage(img, 0, 0, canvas.width, canvas.height);
-            demeanor.drawPoint()
-        }
+        demeanor.drawPoint()
         this.startStep()
     }
 
@@ -50,20 +45,13 @@ export default class canvasMap extends React.Component {
             var canvasWidth = (width_cont - 25) / 2;
             canvas = document.getElementById('noom');
             context = canvas.getContext('2d');
-            var img = new Image();
             canvas.width = canvasWidth;
             canvas.height = 550;
             context.lineWidth = 10;
             context.lineCap = 'round';
-            img.src = Img;
-            img.onload = function () {
-                // context.drawImage(img, 0, 0, canvas.width, canvas.height);
-                // setInterval(function () {
-                context.restore()
-                demeanor.drawPoint()
-                // }, 2000)
-            }
-        }, 200)
+            context.restore()
+            demeanor.drawPoint()
+        }, 10000)
     }
 
     /**
