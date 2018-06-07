@@ -52,7 +52,7 @@ export default class canvasMap extends React.Component {
             context = canvas.getContext('2d');
             var img = new Image();
             canvas.width = canvasWidth;
-            canvas.height = 580;
+            canvas.height = 550;
             context.lineWidth = 10;
             context.lineCap = 'round';
             img.src = Img;

@@ -22,6 +22,9 @@
 #dashboard .fl {
   float: left;
 }
+#dashboard .fr {
+  float: right;
+}
 #dashboard .flex_div {
   display: flex;
   display: -webkit-flex;
@@ -93,6 +96,7 @@
 }
 #dashboard .dashCont .topTitle {
   width: 100%;
+  position: relative;
 }
 #dashboard .dashCont .topTitle .schoolName {
   font-size: 30px;
@@ -132,4 +136,18 @@
 }
 #dashboard .bottom .list_wrap_padding {
   width: 25%;
+}
+#dashboard .notice {
+  position: absolute;
+  right: 0;
+  top: 50%;
+  -webkit-transform: translateY(-50%);
+  -moz-transform: translateY(-50%);
+  -ms-transform: translateY(-50%);
+  -o-transform: translateY(-50%);
+  transform: translateY(-50%);
+  width: 26%;
+}
+#dashboard .notice .am-notice-bar {
+  background: none;
 }
