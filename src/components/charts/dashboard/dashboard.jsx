@@ -244,6 +244,8 @@ export default class dashboard extends React.Component {
                 var currentMonthOpenClazzResults = jsonObj.currentMonthOpenClazzResults;
                 //班级步数统计排行
                 var braceletSportSteps = jsonObj.braceletSportSteps;
+                //体育运动量统计
+                var braceletHeartRate = jsonObj.braceletHeartRate;
 
                 //蚁巢班级数量
                 if (WebServiceUtil.isEmpty(userCountOfSchool) == false) {
@@ -274,6 +276,11 @@ export default class dashboard extends React.Component {
 
                 if (WebServiceUtil.isEmpty(braceletSportSteps) == false) {
                     _this.buildStepBarChart(braceletSportSteps);
+                }
+
+                //体育运动量
+                if (WebServiceUtil.isEmpty(braceletHeartRate) == false) {
+                    _this.buildSportsChart(braceletHeartRate);
                 }
 
                 _this.buildTodayOpenClazzJson(todayOpenClazzResults, currentMonthOpenClazzResults);
@@ -989,6 +996,73 @@ export default class dashboard extends React.Component {
         };
     }
 
+
+
+
+    //创建体育运动统计图
+    buildSportsChart(sportData){
+        var _this = this;
+        // console.log(sportData,'sportData');
+        var classNameArray = [];
+        var classHeartRateArray = [];
+        for(var k in sportData){
+            classHeartRateArray.push(sportData[k].braceletHeartRate.heartRate);
+            classNameArray.push(sportData[k].courseTableItem.clazz.name + sportData[k].courseTableItem.courseName+'课')
+        }
+        console.log(classHeartRateArray);
+        console.log(classNameArray,'班级');
+        var sportOption = _this.buildSportsOption(classNameArray, classHeartRateArray)
+        var sportDiv = <div>
+            <div style={{height: '300px'}} className="echarts_wrap">
+                <ReactEcharts
+                    option={sportOption}
+                    style={{height: '100%', width: '100%'}}
+                    theme='chalk2'
+                    className=''/>
+            </div>
+        </div>;
+        _this.setState({sportDiv});
+    }
+
+    /**
+     * 创建体育运动量options
+     */
+    buildSportsOption = (classNameArray, classPeopleArray) => {
+        return {
+            title: {
+                text: '体育运动量统计',
+                subtext: '',
+                left: 'left',
+                textStyle: {
+                    color: '#a6abb9',
+                    fontSize: 16,
+                }
+            },
+            tooltip: {
+                trigger: 'axis'
+            },
+            legend: {
+                data: ['平均心率']
+            },
+            xAxis: {
+                data: classNameArray
+            },
+            yAxis: {},
+            series: [{
+                name: '平均心率',
+                type: 'bar',
+                data: classPeopleArray,
+
+                label: {
+                    normal: {
+                        show: true,
+                        position: 'top',
+                    }
+                }
+            }]
+        };
+    }
+
     render() {
         var _this = this;
         return (
@@ -1094,6 +1168,11 @@ export default class dashboard extends React.Component {
 
                     {/*热力图*/}
                     <CanvasMap/>
+
+                    {/*//体育运动统计*/}
+                    <div className="list_wrap_padding   ">
+                        {this.state.sportDiv}
+                    </div>
                 </div>
             </div>
         );
