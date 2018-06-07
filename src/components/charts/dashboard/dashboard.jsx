@@ -1,7 +1,8 @@
 import React from 'react';
 import ReactEcharts from 'echarts-for-react';
 import {
-    Toast
+    Toast,
+    NoticeBar
 } from 'antd-mobile';
 import CanvasMap from './canvasMap/canvasMap'
 import './css/dashboard.less';
@@ -184,7 +185,9 @@ export default class dashboard extends React.Component {
         super(props);
         const nowTimeStamp = Date.now();
         const now = new Date(nowTimeStamp);
-        this.state = {};
+        this.state = {
+            openClazzTrArray: ''
+        };
         this.getDashBoardDataByArea = this.getDashBoardDataByArea.bind(this);
     }
 
@@ -225,7 +228,6 @@ export default class dashboard extends React.Component {
             onResponse: function (result) {
                 var response = result.response;
                 var jsonObj = JSON.parse(response);
-                console.log('223', jsonObj);
                 //学校总人数
                 var userCountOfSchool = jsonObj.userCountOfSchool;
                 //全校教研活动量
@@ -575,25 +577,10 @@ export default class dashboard extends React.Component {
     }
 
     buildOpenClazzTrArray = (vClazzResults) => {
-        var openClazzTrArray = [];
+        var openClazzTrArray = '';
         vClazzResults.forEach(function (vClazzResult) {
             var vClazzObj = JSON.parse(vClazzResult);
-            var col_vid = vClazzObj.col_vid;
-            var col_cid = vClazzObj.col_cid;
-            var col_teacher_uid = vClazzObj.col_teacher_uid;
-            var col_start_time = WebServiceUtil.formatAllTime(vClazzObj.col_start_time);
-            var clazzType = vClazzObj.clazzType;
-            var clazzName = vClazzObj.clazzName;
-            var teacherName = vClazzObj.teacherName;
-            var courseId = vClazzObj.courseId;
-            var courseName = vClazzObj.courseName;
-            var trObj = <tr>
-                <td>{courseName}</td>
-                <td>{clazzName}</td>
-                <td>{teacherName}</td>
-                <td>{col_start_time}</td>
-            </tr>;
-            openClazzTrArray.push(trObj);
+            openClazzTrArray += vClazzObj.clazz.name + ' ' + vClazzObj.course.name + ' ' + vClazzObj.teacher.userName
         });
         this.setState({openClazzTrArray});
     }
@@ -978,20 +965,15 @@ export default class dashboard extends React.Component {
     }
 
 
-
-
     //创建体育运动统计图
-    buildSportsChart(sportData){
+    buildSportsChart(sportData) {
         var _this = this;
-        // console.log(sportData,'sportData');
         var classNameArray = [];
         var classHeartRateArray = [];
-        for(var k in sportData){
+        for (var k in sportData) {
             classHeartRateArray.push(sportData[k].braceletHeartRate.heartRate);
-            classNameArray.push(sportData[k].courseTableItem.clazz.name + sportData[k].courseTableItem.courseName+'课')
+            classNameArray.push(sportData[k].courseTableItem.clazz.name + sportData[k].courseTableItem.courseName + '课')
         }
-        console.log(classHeartRateArray);
-        console.log(classNameArray,'班级');
         var sportOption = _this.buildSportsOption(classNameArray, classHeartRateArray)
         var sportDiv = <div>
             <div style={{height: '270px'}} className="echarts_wrap">
@@ -1048,6 +1030,11 @@ export default class dashboard extends React.Component {
                 <div className="dashCont">
                     <div className="topTitle">
                         <div className="schoolName">学校名称：{_this.state.schoolName}</div>
+                    </div>
+                    <div>
+                        <NoticeBar marqueeProps={{loop: true, style: {padding: '0 7.5px'}}}>
+                            {'正在开课:' + this.state.openClazzTrArray}
+                        </NoticeBar>
                     </div>
                     <div className="cont">
                         <div className="clear">
