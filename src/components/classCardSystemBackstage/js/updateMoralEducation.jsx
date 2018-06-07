@@ -38,6 +38,7 @@ export default class updateMoralEducation extends React.Component {
     }
 
     componentDidMount() {
+        Bridge.setShareAble("false");
         document.title = `${decodeURI(updateMoralEdu.state.cName)}`;
         this.findMoralEducationById(updateMoralEdu.state.id)
     }

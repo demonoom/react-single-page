@@ -52,6 +52,7 @@ export default class curriculumSchedule extends React.Component {
     }
 
     componentDidMount() {
+        Bridge.setShareAble("false");
         var curriculumType = this.state.curriculumType;
         document.title = '班级课程表';
         if (curriculumType == 2) {

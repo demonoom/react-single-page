@@ -63,7 +63,9 @@ export default class updateCurriculumSchedule extends React.Component {
         this.setState({clazzroomId, classTableId, classTableDetilId})
         this.viewCourseTableItem(classTableDetilId);
     }
-
+    componentDidMount(){
+        Bridge.setShareAble("false");
+    }
     componentWillUnmount() {
         window.removeEventListener('resize', this.onWindwoResize);
     }

@@ -1,0 +1,52 @@
+#warning{
+  color: #333;
+  font-size: 14px;
+  height: 100%;
+  overflow: hidden;
+  .cont{
+    height: 100%;
+    overflow-y: hidden;
+  }
+  .parent{
+    padding: 15px;
+    position: relative;
+  }
+  .head{
+    position: absolute;
+    left: 15px;
+    top: 18px;
+  }
+  .student_list{
+    padding: 15px;
+    background-color: #fff;
+    .list_title{
+      padding-bottom: 10px;
+    }
+    .listCont{
+      .am-list-item img{
+        width: 40px;
+        height: 40px;
+        -webkit-border-radius: 50%;
+        -moz-border-radius: 50%;
+        border-radius: 50%;
+      }
+      .am-list-content{
+        font-size: 16px;
+      }
+      .am-list-item .am-list-line .am-list-brief{
+        font-size: 14px;
+        color: #666;
+      }
+      .am-list-extra{
+        font-size: 14px;
+      }
+    }
+  }
+  .am-list-body::before,.am-list-body::after{
+    display: none;;
+  }
+  .am-list-line::after{
+    background-color: #eee;
+  }
+
+}

@@ -14,10 +14,10 @@
     border: none;
   }
   .curriculum_cont {
-    overflow: auto;
-    height: calc(~"100%" - 59px);
+    overflow-y: auto;
+    overflow-x: hidden;
+    height: 100%;
     li {
-      border-bottom: 1px solid #f4f4f4;
       padding: 10px 0;
       div.list span {
         margin-left: 20px;
@@ -47,7 +47,7 @@
     color: #fff;
     border-radius: 2px;
   }
-  .lineList {
+  .lineList, .list_high, .add_title {
     line-height: 36px;
     height: 36px;
   }
@@ -82,4 +82,11 @@
     text-align: center;
     line-height: 30px;
   }
+  .bottom_15{
+    margin-bottom:15px
+  }
+  li div .bottom_15:last-child{
+    margin-bottom: 0;
+  }
+
 }

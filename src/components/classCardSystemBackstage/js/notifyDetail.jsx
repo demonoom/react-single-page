@@ -20,6 +20,7 @@ export default class notifyDetail extends React.Component {
     }
 
     componentDidMount() {
+        Bridge.setShareAble("false");
         document.title = "通知详情";
     }
 

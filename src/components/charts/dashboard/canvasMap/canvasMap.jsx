@@ -1,11 +1,11 @@
 import React from 'react';
 import {} from 'antd-mobile';
 import Img from '../img/map.png'
+import './css/canvasMap.less'
 
 var demeanor;
 var canvas;
 var context;
-var step = 5;
 
 export default class canvasMap extends React.Component {
 
@@ -24,6 +24,20 @@ export default class canvasMap extends React.Component {
     }
 
     componentDidMount() {
+        var width_cont = $(window).width();
+        var canvasWidth = (width_cont - 25) / 2;
+        canvas = document.getElementById('noom');
+        context = canvas.getContext('2d');
+        var img = new Image();
+        canvas.width = canvasWidth;
+        canvas.height = 580;
+        context.lineWidth = 10;
+        context.lineCap = 'round';
+        img.src = Img;
+        img.onload = function () {
+            context.drawImage(img, 0, 0, canvas.width, canvas.height);
+            demeanor.drawPoint()
+        }
         this.startStep()
     }
 
@@ -33,8 +47,7 @@ export default class canvasMap extends React.Component {
     startStep() {
         setInterval(function () {
             var width_cont = $(window).width();
-            var canvasWidth = (width_cont-25)/2;
-            step += 5;
+            var canvasWidth = (width_cont - 25) / 2;
             canvas = document.getElementById('noom');
             context = canvas.getContext('2d');
             var img = new Image();
@@ -44,21 +57,24 @@ export default class canvasMap extends React.Component {
             context.lineCap = 'round';
             img.src = Img;
             img.onload = function () {
-                context.drawImage(img, 0, 0, canvas.width, canvas.height);
-                demeanor.drawPoint(step)
+                // context.drawImage(img, 0, 0, canvas.width, canvas.height);
+                // setInterval(function () {
+                context.restore()
+                demeanor.drawPoint()
+                // }, 2000)
             }
-        }, 2000)
+        }, 200)
     }
 
     /**
      * 模拟打点
      */
-    drawPoint(step) {
-        var x = Math.random() * 700;
-        var y = Math.random() * 400;
+    drawPoint() {
+        var x = Math.random() * canvas.width - 8;
+        var y = Math.random() * canvas.height - 8;
 
-        var a = Math.random() * 700;
-        var b = Math.random() * 400;
+        var a = Math.random() * canvas.width - 8;
+        var b = Math.random() * canvas.height - 8;
 
         context.beginPath()
         context.strokeStyle = 'red';

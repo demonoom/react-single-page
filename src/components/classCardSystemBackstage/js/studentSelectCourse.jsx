@@ -10,6 +10,7 @@ export default class studentSelectCourse extends React.Component {
     }
 
     componentDidMount() {
+        Bridge.setShareAble("false");
         var locationHref = window.location.href;
         var locationSearch = locationHref.substr(locationHref.indexOf("?") + 1);
         var userId = locationSearch.split("&")[0].split("=")[1];

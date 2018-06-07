@@ -151,6 +151,9 @@ export default class header extends React.Component {
             time = date.getTime();
         timer = setInterval(function () {
             demeanor.setState({timeFoot: set(time)})
+            if (set(time).substr(set(time).length - 2, set(time).length) == '00') {
+                demeanor.props.timeOut()
+            }
             time = Number(time);
             time += 1000;
         }, 1000);

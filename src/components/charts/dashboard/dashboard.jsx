@@ -232,6 +232,7 @@ export default class dashboard extends React.Component {
             onResponse: function (result) {
                 var response = result.response;
                 var jsonObj = JSON.parse(response);
+                console.log(jsonObj);
                 //学校总人数
                 var userCountOfSchool = jsonObj.userCountOfSchool;
                 //全校教研活动量
@@ -287,6 +288,45 @@ export default class dashboard extends React.Component {
                 //体育运动量
                 if (WebServiceUtil.isEmpty(braceletHeartRate) == false) {
                     _this.buildSportsChart(braceletHeartRate);
+                }else{
+                    // classHeartRateArray.push(sportData[k].braceletHeartRate.heartRate);
+                    // classNameArray.push(sportData[k].courseTableItem.clazz.name + sportData[k].courseTableItem.courseName+'课')
+                    let data = [
+                        {
+                            braceletHeartRate:{
+                                heartRate:120,
+                            },
+                            courseTableItem:{
+                                clazz:{
+                                    name:'测试班'
+                                },
+                                courseName:'语文'
+                            }
+                        },
+                        {
+                            braceletHeartRate:{
+                                heartRate:110,
+                            },
+                            courseTableItem:{
+                                clazz:{
+                                    name:'测试班'
+                                },
+                                courseName:'体育'
+                            }
+                        },
+                        {
+                            braceletHeartRate:{
+                                heartRate:130,
+                            },
+                            courseTableItem:{
+                                clazz:{
+                                    name:'测试班'
+                                },
+                                courseName:'英语'
+                            }
+                        }
+                    ]
+                    _this.buildSportsChart(data);
                 }
 
                 _this.buildTodayOpenClazzJson(todayOpenClazzResults, currentMonthOpenClazzResults);
