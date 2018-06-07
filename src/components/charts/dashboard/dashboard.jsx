@@ -1,7 +1,8 @@
 import React from 'react';
 import ReactEcharts from 'echarts-for-react';
 import {
-    Toast
+    Toast,
+    NoticeBar
 } from 'antd-mobile';
 import CanvasMap from './canvasMap/canvasMap'
 import './css/dashboard.less';
@@ -978,20 +979,15 @@ export default class dashboard extends React.Component {
     }
 
 
-
-
     //创建体育运动统计图
-    buildSportsChart(sportData){
+    buildSportsChart(sportData) {
         var _this = this;
-        // console.log(sportData,'sportData');
         var classNameArray = [];
         var classHeartRateArray = [];
-        for(var k in sportData){
+        for (var k in sportData) {
             classHeartRateArray.push(sportData[k].braceletHeartRate.heartRate);
-            classNameArray.push(sportData[k].courseTableItem.clazz.name + sportData[k].courseTableItem.courseName+'课')
+            classNameArray.push(sportData[k].courseTableItem.clazz.name + sportData[k].courseTableItem.courseName + '课')
         }
-        console.log(classHeartRateArray);
-        console.log(classNameArray,'班级');
         var sportOption = _this.buildSportsOption(classNameArray, classHeartRateArray)
         var sportDiv = <div>
             <div style={{height: '300px'}} className="echarts_wrap">
@@ -1052,6 +1048,12 @@ export default class dashboard extends React.Component {
                     <div className="topTitle">
                         <div className="schoolName">学校名称：{_this.state.schoolName}</div>
 
+                    </div>
+                    <div>
+                        <NoticeBar marqueeProps={{loop: true, style: {padding: '0 7.5px'}}}>
+                            正在开课: The arrival time of incomes and transfers of Yu &#39;E Bao will be delayed during
+                            National Day.
+                        </NoticeBar>
                     </div>
                     <div className="cont">
                         <div className="clear">
