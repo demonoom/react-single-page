@@ -82,20 +82,11 @@ export default class classCardHomePage extends React.Component {
         };
     }
 
-    /**
-     * 一分钟的回调
-     */
-    timeOut() {
-        // demeanor.refs.health.getBraceletSportStepByClazzId(localStorage.getItem("clazzId"))
-    }
-
     render() {
         return (
             <div id="classCardHomePage" style={{height: document.body.clientHeight}}>
-                <Header
-                    timeOut={this.timeOut}
-                />
-                <div className="home_content home_content_index">
+                <Header/>
+                <div className="home_content home_content_index index_health" >
                     <div className="">
                         {/*班牌首页*/}
                         <div className="home_right">
@@ -105,6 +96,7 @@ export default class classCardHomePage extends React.Component {
                             <CurrentAttendance
                                 messageUtilObj={this.state.messageInfo}
                             />
+                            <Application/>
                         </div>
                         <div className="home_left">
                             <StudentOnDuty
@@ -115,26 +107,23 @@ export default class classCardHomePage extends React.Component {
                             />
                         </div>
                         <div className="home_center">
-                            <ClassDemeanor
-                                classCommand={this.state.classCommand}
-                            />
-                            <div>
+                            <div className="index_center_l">
+                                <ClassDemeanor
+                                    classCommand={this.state.classCommand}
+                                />
                                 <Notify
                                     classCommand={this.state.classCommand}
                                 />
-                                <Application/>
+                            </div>
+                            <div className="index_center_l health_left">
+                                <Health typeFromNoom='step'
+                                />
+                                <Health typeFromNoom='calories'
+                                />
+                                <span className="home_titleMore health_home_titleMore1">更多<i className="titleMore"></i></span>
+                                <span className="home_titleMore health_home_titleMore2">更多<i className="titleMore"></i></span>
                             </div>
                         </div>
-                        {/*<div>*/}
-                        {/*<Health*/}
-                        {/*ref="health"*/}
-                        {/*typeFromNoom='step'*/}
-                        {/*/>*/}
-                        {/*<Health*/}
-                        {/*ref="health"*/}
-                        {/*typeFromNoom='calories'*/}
-                        {/*/>*/}
-                        {/*</div>*/}
                     </div>
                 </div>
             </div>
