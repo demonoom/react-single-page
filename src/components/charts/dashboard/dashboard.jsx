@@ -68,8 +68,8 @@ var optionForClassColumn = {
     tooltip: {},
     legend: {
         data: ['人数'],
-        y:'bottom',
-        x:'left'
+        y: 'bottom',
+        x: 'left'
     },
     xAxis: {
         data: ['应到', '实到', '缺勤']
@@ -232,6 +232,8 @@ export default class dashboard extends React.Component {
             onResponse: function (result) {
                 var response = result.response;
                 var jsonObj = JSON.parse(response);
+
+                console.log(jsonObj);
                 //学校总人数
                 var userCountOfSchool = jsonObj.userCountOfSchool;
                 //全校教研活动量
@@ -262,17 +264,30 @@ export default class dashboard extends React.Component {
                 }
                 //蚁巢班级数量
                 if (WebServiceUtil.isEmpty(topicResults) == false) {
-                    _this.buildTopicBarChart(topicResults);
+                    if (topicResults.length >= 30) {
+                        _this.buildTopicBarChart(topicResults.splice(0, 10));
+                    } else {
+                        _this.buildTopicBarChart(topicResults);
+                    }
+
                 }
                 //老师蚁盘资源上传情况
                 if (WebServiceUtil.isEmpty(cloudFileResults) == false) {
-                    _this.buildCloudFileBarChart(cloudFileResults);
+                    if (cloudFileResults.length >= 30) {
+                        _this.buildCloudFileBarChart(cloudFileResults.splice(0, 10));
+                    } else {
+                        _this.buildCloudFileBarChart(cloudFileResults);
+                    }
                 }
 
                 //老师蚁盘资源上传情况
                 if (WebServiceUtil.isEmpty(topicHomeWorkResults) == false) {
                     // _this.buildTopicHomeWorkTrArray(topicHomeWorkResults);
-                    _this.buildHomeWorkPieChart(topicHomeWorkResults);
+                    if (topicHomeWorkResults.length >= 30) {
+                        _this.buildHomeWorkPieChart(topicHomeWorkResults.splice(0, 10));
+                    } else {
+                        _this.buildHomeWorkPieChart(topicHomeWorkResults);
+                    }
                 }
 
                 //正在上课的课堂列表
@@ -282,46 +297,64 @@ export default class dashboard extends React.Component {
 
                 if (WebServiceUtil.isEmpty(braceletSportSteps) == false) {
                     _this.buildStepBarChart(braceletSportSteps);
+                } else {
+                    var obj = [{
+                        clazz: {
+                            name: '一年级一班'
+                        },
+                        sportStep: 239
+                    }, {
+                        clazz: {
+                            name: '三年级一班'
+                        },
+                        sportStep: 2345
+                    }, {
+                        clazz: {
+                            name: '一年级四班'
+                        },
+                        sportStep: 4243
+                    }]
+                    _this.buildStepBarChart(obj);
                 }
 
                 //体育运动量
                 if (WebServiceUtil.isEmpty(braceletHeartRate) == false) {
                     _this.buildSportsChart(braceletHeartRate);
-                }else{
+                } else {
                     // classHeartRateArray.push(sportData[k].braceletHeartRate.heartRate);
                     // classNameArray.push(sportData[k].courseTableItem.clazz.name + sportData[k].courseTableItem.courseName+'课')
                     let data = [
                         {
-                            braceletHeartRate:{
-                                heartRate:120,
+                            braceletHeartRate: {
+                                heartRate: 120,
                             },
-                            courseTableItem:{
-                                clazz:{
-                                    name:'测试班'
+                            courseTableItem: {
+                                clazz: {
+                                    name: '测试班'
                                 },
-                                courseName:'语文'
+                                courseName: '语文'
                             }
                         },
                         {
-                            braceletHeartRate:{
-                                heartRate:110,
+                            braceletHeartRate: {
+                                heartRate: 110,
                             },
-                            courseTableItem:{
-                                clazz:{
-                                    name:'测试班'
+                            courseTableItem: {
+                                clazz: {
+                                    name: '测试班'
                                 },
-                                courseName:'体育'
+                                courseName: '体育'
                             }
                         },
                         {
-                            braceletHeartRate:{
-                                heartRate:130,
+                            braceletHeartRate: {
+                                heartRate: 130,
                             },
-                            courseTableItem:{
-                                clazz:{
-                                    name:'测试班'
+                            courseTableItem: {
+                                clazz: {
+                                    name: '测试班'
                                 },
-                                courseName:'英语'
+                                courseName: '英语'
                             }
                         }
                     ]
@@ -655,6 +688,8 @@ export default class dashboard extends React.Component {
         }
 
         todayOpenClazzJson.components = todayJson;
+        // this.buildOpenClazzBarAndPie(todayOpenClazzJson, monthOpenClazzJson.splice(0, 10));
+
         this.buildOpenClazzBarAndPie(todayOpenClazzJson, monthOpenClazzJson);
     }
 
@@ -1045,8 +1080,8 @@ export default class dashboard extends React.Component {
             },
             legend: {
                 data: ['平均心率'],
-                y:'bottom',
-                x:'left'
+                y: 'bottom',
+                x: 'left'
             },
             xAxis: {
                 data: classNameArray
