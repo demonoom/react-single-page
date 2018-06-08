@@ -338,7 +338,7 @@ export default class boxBracelet extends React.Component {
                     <Card>
                         <Card.Header
                             className='noomCardHeader'
-                            title={rowData.room.name}
+                            title={'教室名称:'+rowData.room.name}
                             extra={<span className='noomCardUnbind'
                                          onClick={_this.showAlert.bind(this, rowData)}>解绑</span>}
                         />
@@ -346,7 +346,6 @@ export default class boxBracelet extends React.Component {
                             MAC:{rowData.macAddress}
                         </Card.Body>
                     </Card>
-                    <WhiteSpace size="lg"/>
                 </WingBlank>
             )
         };
@@ -359,7 +358,7 @@ export default class boxBracelet extends React.Component {
                         ref={el => this.lv = el}
                         dataSource={this.state.dataSource}    //数据类型是 ListViewDataSource
                         renderFooter={() => (
-                            <div style={{paddingTop: 5, paddingBottom: 40, textAlign: 'center'}}>
+                            <div style={{paddingTop: 5, paddingBottom: 5, textAlign: 'center'}}>
                                 {this.state.isLoadingLeft ? '正在加载' : '已经全部加载完毕'}
                             </div>)}
                         renderRow={row}   //需要的参数包括一行数据等,会返回一个可渲染的组件为这行数据渲染  返回renderable
@@ -391,7 +390,7 @@ export default class boxBracelet extends React.Component {
                                 value={bindDing.state.macId}
                                 editable={false}
                             >MAC:</InputItem>
-                            <img className='scanIcon' src={require('../imgs/timg.png')} alt="" onClick={this.scanMac}/>
+                            <img className='scanIcon' src={require('../imgs/icon_scan.png')} alt="" onClick={this.scanMac}/>
                         </div>
 
                         <div className='stName'>
@@ -401,7 +400,7 @@ export default class boxBracelet extends React.Component {
                                 onChange={this.inputOnChange.bind(this)}
                                 value={this.state.stNameValue}
                             >教室:</InputItem>
-                            <img className='stIcon' src={require("../imgs/search.png")} type='search'
+                            <img className='stIcon' src={require("../imgs/icon_search.png")} type='search'
                                  onClick={this.searchWatchBindCandidate}/>
                         </div>
 

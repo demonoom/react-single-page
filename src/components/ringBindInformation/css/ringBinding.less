@@ -1,41 +1,32 @@
 #ringBinding {
   text-align: center;
-  font-size: 20px;
+  background-color: #f4f4f4;
   >div {
     background: #fff;
-    padding: 5.8rem 3.6rem;
+    line-height: 55px;
     display: flex;
 
     >span {
-      font-size: 1rem;
-      color: #3c3c3c;
-      line-height: 5rem;
-      margin-left: 4.8rem;
+      font-size: 15px;
+      margin-left: 55px;
     }
   }
-  .bracelet::after{
-    content: '';
-    position: absolute;
-    bottom: 0;
-    left: 5%;
-    width: 90%;
-    height: 0.05rem;
-    border: 1PX solid #eee;
-  }
-  .bracelet {
-    // margin-bottom: 25px;
-    // font-size: 35px;
+  .bracelet,.box{
+    padding: 0 15px;
+    border-bottom: 15px #f4f4f4 solid;
     position: relative;
-    img {
-      width: 5rem;
-      height: 5rem;
+    img{
+      width: 45px;
+      height: 45px;
+      position: absolute;
+      top:50%;
+      left: 15px;
+      -webkit-transform: translateY(-50%);
+      -moz-transform: translateY(-50%);
+      -ms-transform: translateY(-50%);
+      -o-transform: translateY(-50%);
+      transform: translateY(-50%);
     }
   }
-  .box {
-    // font-size: 35px;
-    img {
-      width: 5rem;
-      height: 5rem;
-    }
-  }
+
 }
