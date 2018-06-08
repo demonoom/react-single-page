@@ -155,14 +155,14 @@ export default class getClassRoomList extends React.Component {
                         <div className="classInfo line_public">
                             <div className="am-list-item am-list-item-middle">
                                 <div className="am-list-line">
-                                    <div className="am-list-content">{rowData.name}</div>
+                                    <div className="am-list-content">教室名称：{rowData.name}</div>
                                     <div className="am-list-arrow am-list-arrow-horizontal"></div>
                                 </div>
                             </div>
                             <div className="classroom_subject textOver" style={{width: '100%'}}>
                                 {
                                     rowData.defaultBindedClazz ?
-                                        <span className="grade">{rowData.defaultBindedClazz.name}</span> :
+                                        <span className="grade">绑定班级：{rowData.defaultBindedClazz.name}</span> :
                                         <span className="grade"></span>
                                 }
                             </div>
