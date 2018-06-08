@@ -1368,12 +1368,12 @@ export default class dashboard extends React.Component {
         return (
             <div id="dashboard">
                 <div className="dashCont">
-
+                    <div className="bodyIcon">
+                        <img className="icon_topLeft" src={require("./image/bodyIcon.gif")}/>
+                        <img className="icon_topRight" src={require("./image/bodyIcon.gif")}/>
+                    </div>
                     <div className="topTitle clear">
-                        <div className="bodyIcon">
-                            <img className="icon_topLeft" src={require("./image/bodyIcon1.gif")}/>
-                            <img className="icon_topRight" src={require("./image/bodyIcon1.gif")}/>
-                        </div>
+
                         <div className="notice fl">
                             <NoticeBar marqueeProps={{loop: true, style: {padding: '0 7.5px'}}}>
                                 {'正在开课:' + this.state.openClazzTrArray}
@@ -1409,9 +1409,15 @@ export default class dashboard extends React.Component {
                                     {this.state.homeWorkDiv}
                                 </div>
 
-                                {/*//体育运动统计*/}
+                                {/*学生考勤班级柱状图*/}
                                 <div className="list_wrap_padding">
-                                    {this.state.sportDiv}
+                                    <div style={{height: '270px'}} className="echarts_wrap">
+                                        <ReactEcharts
+                                            option={optionForClassColumn}
+                                            style={{height: '100%', width: '100%'}}
+                                            theme='chalk2'
+                                            className=''/>
+                                    </div>
                                 </div>
                             </div>
 
@@ -1428,15 +1434,10 @@ export default class dashboard extends React.Component {
                                 {this.state.flowPieChartDiv}
                             </div>
 
-                            {/*学生考勤班级柱状图*/}
+
+                            {/*//体育运动统计*/}
                             <div className="list_wrap_padding">
-                                <div style={{height: '270px'}} className="echarts_wrap">
-                                    <ReactEcharts
-                                        option={optionForClassColumn}
-                                        style={{height: '100%', width: '100%'}}
-                                        theme='chalk2'
-                                        className=''/>
-                                </div>
+                                {this.state.sportDiv}
                             </div>
 
                             {/*教师考勤饼图*/}
@@ -1466,8 +1467,8 @@ export default class dashboard extends React.Component {
                         </div>
                     </div>
                     <div className="bodyIcon">
-                        <img className="icon_bottomLeft" src={require("./image/bodyIcon1.gif")}/>
-                        <img className="icon_bottomRight" src={require("./image/bodyIcon1.gif")}/>
+                        <img className="icon_bottomLeft" src={require("./image/bodyIcon.gif")}/>
+                        <img className="icon_bottomRight" src={require("./image/bodyIcon.gif")}/>
                     </div>
 
                 </div>

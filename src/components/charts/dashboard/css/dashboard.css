@@ -46,10 +46,16 @@
   left: 2px;
   top: 2px;
   -webkit-transform: rotate(90deg);
-  -moz-transform: rotate(90deg);
   -ms-transform: rotate(90deg);
-  -o-transform: rotate(90deg);
   transform: rotate(90deg);
+  -moz-transform: scaleX(-1);
+  -webkit-transform: scaleX(-1);
+  -o-transform: scaleX(-1);
+  transform: scaleX(-1);
+  -moz-transform: scaleY(-1);
+  -webkit-transform: scaleY(-1);
+  -o-transform: scaleY(-1);
+  transform: scaleY(-1);
 }
 #dashboard .bodyIcon img.icon_topRight {
   right: 2px;
@@ -62,16 +68,23 @@
 }
 #dashboard .bodyIcon img.icon_bottomLeft {
   left: 2px;
-  bottom: 15px;
+  bottom: 0;
 }
 #dashboard .bodyIcon img.icon_bottomRight {
   right: 2px;
-  bottom: 15px;
+  bottom: 0;
   -webkit-transform: rotate(270deg);
   -moz-transform: rotate(270deg);
   -ms-transform: rotate(270deg);
   -o-transform: rotate(270deg);
   transform: rotate(270deg);
+  -webkit-transform: rotate(90deg);
+  -ms-transform: rotate(90deg);
+  transform: rotate(90deg);
+  -moz-transform: scaleX(-1);
+  -webkit-transform: scaleX(-1);
+  -o-transform: scaleX(-1);
+  transform: scaleX(-1);
 }
 #dashboard .numDiv {
   margin-bottom: 20px;
@@ -174,6 +187,8 @@
 }
 #dashboard .notice {
   width: 25%;
+  padding-left: 20px;
+  box-sizing: border-box;
 }
 #dashboard .notice .am-notice-bar {
   background: none;
