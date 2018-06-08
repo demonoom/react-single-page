@@ -208,10 +208,10 @@ export default class dashboard extends React.Component {
         this.setState({destId, areaType});
         //调取驾驶舱数据
         this.getDashBoardDataByArea(destId, areaType);
-        setInterval(function () {
-            //调取驾驶舱数据
-            _this.getDashBoardDataByArea(destId, areaType);
-        }, 1000 * 2)
+        /* setInterval(function () {
+             //调取驾驶舱数据
+             _this.getDashBoardDataByArea(destId, areaType);
+         }, 1000 * 2)*/
     }
 
     /**
@@ -243,7 +243,8 @@ export default class dashboard extends React.Component {
                 //每个学校老师上传的蚁盘资源数量
                 var cloudFileResults = jsonObj.cloudFileResult;
                 //每个班发布的蚁巢作业数量
-                var topicHomeWorkResults = jsonObj.topicHomeWorkResult;
+                // var topicHomeWorkResults = jsonObj.topicHomeWorkResult;
+                var homeWorkSubjectResults = jsonObj.homeWorkSubjectResults;
                 //正在上课的课堂列表
                 var vClazzResults = jsonObj.vClazzResult;
                 //今日开课次数统计
@@ -254,6 +255,8 @@ export default class dashboard extends React.Component {
                 var braceletSportSteps = jsonObj.braceletSportSteps;
                 //体育运动量统计
                 var braceletHeartRate = jsonObj.braceletHeartRate;
+                //教务审批统计数据
+                var proceCountResults = jsonObj.proceCountResults;
 
                 //蚁巢班级数量
                 if (WebServiceUtil.isEmpty(userCountOfSchool) == false) {
@@ -280,15 +283,30 @@ export default class dashboard extends React.Component {
                     }
                 }
 
-                //老师蚁盘资源上传情况
-                if (WebServiceUtil.isEmpty(topicHomeWorkResults) == false) {
+                //蚁巢作业的发布情况统计
+                /*if (WebServiceUtil.isEmpty(topicHomeWorkResults) == false) {
                     // _this.buildTopicHomeWorkTrArray(topicHomeWorkResults);
                     if (topicHomeWorkResults.length >= 30) {
                         _this.buildHomeWorkPieChart(topicHomeWorkResults.splice(0, 10));
                     } else {
                         _this.buildHomeWorkPieChart(topicHomeWorkResults);
                     }
+                }*/
+
+                //班级课后作业的布置情况统计，统计每个班发布的题目数量
+                if (WebServiceUtil.isEmpty(homeWorkSubjectResults)==false && homeWorkSubjectResults.length >= 30) {
+                    _this.buildHomeWorkPieChart(homeWorkSubjectResults.splice(0, 10));
+                } else {
+                    _this.buildHomeWorkPieChart(homeWorkSubjectResults);
                 }
+                /*if (WebServiceUtil.isEmpty(homeWorkSubjectResults) == false) {
+                    // _this.buildTopicHomeWorkTrArray(topicHomeWorkResults);
+                    if (homeWorkSubjectResults.length >= 30) {
+                        _this.buildHomeWorkPieChart(homeWorkSubjectResults.splice(0, 10));
+                    } else {
+                        _this.buildHomeWorkPieChart(homeWorkSubjectResults);
+                    }
+                }*/
 
                 //正在上课的课堂列表
                 if (WebServiceUtil.isEmpty(vClazzResults) == false) {
@@ -360,6 +378,8 @@ export default class dashboard extends React.Component {
                     ]
                     _this.buildSportsChart(data);
                 }
+
+                _this.buildFlowPieChart(proceCountResults);
 
                 _this.buildTodayOpenClazzJson(todayOpenClazzResults, currentMonthOpenClazzResults);
 
@@ -543,7 +563,14 @@ export default class dashboard extends React.Component {
         var seriesDataArray = [];
         cloudFileResults.forEach(function (cloudFileResult) {
             var cloudFileObj = JSON.parse(cloudFileResult);
+            var teacherObj = cloudFileObj.teacher;
+            var courseName = "";
             var teacherName = cloudFileObj.col_name;
+            if(WebServiceUtil.isEmpty(teacherObj)==false && WebServiceUtil.isEmpty(teacherObj.course)==false){
+                var courseObj = teacherObj.course;
+                courseName = courseObj.name;
+                teacherName += "(" + courseName + ")";
+            }
             var fileCount = cloudFileObj.fileCount;
             var cloudFileJson = {value: fileCount, name: teacherName};
             xTeacherNameArray.push(teacherName);
@@ -564,7 +591,7 @@ export default class dashboard extends React.Component {
         _this.setState({cloudFileDiv});
     }
 
-    buildHomeWorkOption = (xClazzNameArray, seriesDataArray) => {
+    /*buildHomeWorkOption = (xClazzNameArray, seriesDataArray) => {
         return {
             title: {
                 text: '课后作业布置情况分析',
@@ -607,23 +634,96 @@ export default class dashboard extends React.Component {
                 }
             ]
         };
+    }*/
+
+    buildHomeWorkOption = (xClazzNameArray, seriesDataArray) => {
+        return {
+            title: {
+                text: '课后作业布置情况分析',
+                subtext: ''
+            },
+            tooltip: {
+                trigger: 'axis'
+            },
+            legend: {
+                data: ['作业题目数量'],
+                bottom: 0,
+                left: 'left',
+            },
+            /*toolbox: {
+                show : true,
+                feature : {
+                    dataView : {show: true, readOnly: false},
+                    magicType : {show: true, type: ['line', 'bar']},
+                    restore : {show: true},
+                    saveAsImage : {show: true}
+                }
+            },*/
+            calculable: true,
+            xAxis: [
+                {
+                    type: 'category',
+                    data: xClazzNameArray
+                }
+            ],
+            yAxis: [
+                {
+                    type: 'value',
+                }
+            ],
+            series: [
+                {
+                    name: '步数',
+                    type: 'bar',
+                    data: seriesDataArray,
+                    markLine: {
+                        data: [
+                            {type: 'average', name: '平均值'}
+                        ]
+                    },
+                    itemStyle: {
+                        //通常情况下：
+                        normal: {
+                            //每个柱子的颜色即为colorList数组里的每一项，如果柱子数目多于colorList的长度，则柱子颜色循环使用该数组
+                            color: function (params) {
+                                var colorList = ['#00a8ff', '#00fdd8'];
+                                if ((params.dataIndex + 1) % 2 == 0) {//为偶数的数据使用第一个颜色，其他使用第二个颜色
+                                    return colorList[0];//1,3,5,7
+                                } else {
+                                    return colorList[1];//2,4,6,8
+                                }
+
+                            }
+                        }
+                    },
+                    label: {
+                        normal: {
+                            show: true,
+                            position: 'top',
+                        }
+                    }
+                }
+            ]
+        };
     }
 
     /**
      * 创建蚁盘资源上传情况统计柱状图
      */
-    buildHomeWorkPieChart = (topicHomeWorkResults) => {
+    buildHomeWorkPieChart = (homeWorkSubjectResults) => {
         var _this = this;
         var xClazzNameArray = [];
         var seriesDataArray = [];
-        topicHomeWorkResults.forEach(function (topicHomeWorkResult) {
-            var topicHomeWorkObj = JSON.parse(topicHomeWorkResult);
-            var clazzName = topicHomeWorkObj.col_name;
-            var totalTopic = topicHomeWorkObj.totalTopic;
-            var homeWorkJson = {value: totalTopic, name: clazzName};
-            xClazzNameArray.push(clazzName);
-            seriesDataArray.push(homeWorkJson);
-        })
+        if(WebServiceUtil.isEmpty(homeWorkSubjectResults)==false){
+            homeWorkSubjectResults.forEach(function (homeWorkSubjectResult) {
+                var homeWorkSubjectObj = JSON.parse(homeWorkSubjectResult);
+                var clazzName = homeWorkSubjectObj.clazzName;
+                var subjectCount = homeWorkSubjectObj.subjectCount;
+                // var homeWorkJson = {value: subjectCount, name: clazzName};
+                xClazzNameArray.push(clazzName);
+                seriesDataArray.push(subjectCount);
+            })
+        }
         var homeWorkOption = _this.buildHomeWorkOption(xClazzNameArray, seriesDataArray);
         var homeWorkDiv = <div>
             <div style={{height: '270px'}} className="echarts_wrap">
@@ -729,9 +829,9 @@ export default class dashboard extends React.Component {
                 textAlign: 'left',
             }],
             grid: [{
-                top: 50,
+                top: 40,
                 width: '100%',
-                bottom: '45%',
+                bottom: '48%',
                 left: 0,
                 containLabel: true
             }, {
@@ -772,6 +872,7 @@ export default class dashboard extends React.Component {
             series: [{
                 type: 'bar',
                 stack: 'component',
+                height:'45%',
                 xAxisIndex: 0,
                 yAxisIndex: 0,
                 z: 3,
@@ -1116,6 +1217,87 @@ export default class dashboard extends React.Component {
         };
     }
 
+    /**
+     * 教务审批统计
+     * @param
+     */
+    buildFlowPieChart = (proceCountResults) => {
+        var _this = this;
+        var xFlowNameArray = [];
+        var ySeriesDataArray = [];
+        if(WebServiceUtil.isEmpty(proceCountResults)==false){
+            proceCountResults.forEach(function (proceCountObj) {
+                var procDefName = proceCountObj.procDefName;
+                var procCount = proceCountObj.procCount;
+                var seriesJson = {value: procCount, name: procDefName};
+                xFlowNameArray.push(procDefName);
+                ySeriesDataArray.push(seriesJson);
+            });
+        }
+        var flowOption = _this.buildFlowOption(xFlowNameArray, ySeriesDataArray)
+        var flowPieChartDiv = <div>
+            <div style={{width: '100%', height: '270px'}} className="echarts_wrap">
+                <ReactEcharts
+                    option={flowOption}
+                    style={{height: '100%', width: '100%'}}
+                    theme='chalk2'
+                    className=''/>
+            </div>
+        </div>;
+        _this.setState({flowPieChartDiv});
+    }
+
+    //教务审批统计option
+    buildFlowOption = (xFlowNameArray, ySeriesDataArray) => {
+        return {
+            title: {
+                text: '教务审批统计',
+                subtext: '',
+                left: 'left',
+            },
+            tooltip: {},
+            legend: {
+                bottom: 0,
+                left: 'left',
+                data: xFlowNameArray
+            },
+            series: [
+                {
+                    type: 'pie',
+                    radius: '50%',
+                    center: ['50%', '50%'],
+                    selectedMode: 'single',
+                    data: ySeriesDataArray,
+                    itemStyle: {
+                        emphasis: {
+                            shadowBlur: 10,
+                            shadowOffsetX: 0,
+                            shadowColor: 'rgba(0, 0, 0, 0.5)'
+                        }
+                    },
+                    /*label: {
+                        normal: {
+                            formatter: '{d}%',
+                            textStyle: {
+                                fontWeight: 'normal',
+                                fontSize: 12
+                            }
+                        }
+                    }*/
+                    label: {
+                        normal: {
+                            formatter: '{b}:{c}次: ({d}%)',
+                            textStyle: {
+                                fontWeight: 'normal',
+                                fontSize: 12
+                            }
+                        }
+                    }
+                }
+            ]
+        }
+    }
+
     render() {
         var _this = this;
         return (
@@ -1144,10 +1326,6 @@ export default class dashboard extends React.Component {
                             <div className="center fl">
                                 <div className="list_wrap_padding map">
                                     <div className="clear numDiv">
-                                        <div className="fl allNUm">
-                                            <p className="gradeTitle">总人数</p>
-                                            <p className="num">{_this.state.userCount}</p>
-                                        </div>
                                         <div className="fl msgNum">
                                             <p className="gradeTitle">全校教研活动量</p>
                                             <p className="num">{_this.state.messageCount}</p>
@@ -1162,7 +1340,8 @@ export default class dashboard extends React.Component {
                                     {this.state.homeWorkDiv}
                                 </div>
                                 <div className="list_wrap_padding">
-                                    {this.state.openClazzDiv}
+                                    {/*{this.state.openClazzDiv}*/}
+                                    {this.state.flowPieChartDiv}
                                 </div>
                             </div>
 
