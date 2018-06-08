@@ -72,7 +72,7 @@ export default class healthList extends React.Component {
                 <div className="inner_bg">
                     <div className="navBar">
                         <span onClick={this.historyGoBack}>首页</span>
-                        <span className="icon">></span>
+                        <span className="icon"></span>
                         <span>健康数据列表</span>
                     </div>
                     <div style={{

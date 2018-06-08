@@ -140,8 +140,8 @@ export default class health extends React.Component {
                 <div className="inner_bg">
                     <div className="navBar">
                         <span onClick={this.historyGoBack}>首页</span>
-                        <span className="icon">></span>
-                        <span>步数排行榜</span>
+                        <span className="icon"></span>
+                        <span>{this.state.type == 'step' ? '步数排行榜' : '卡路里排行榜'}</span>
                     </div>
 
                     <div className="health_cont">{array}</div>

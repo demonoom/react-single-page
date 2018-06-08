@@ -272,8 +272,17 @@ hr {
   border-bottom: .05rem #f4f4f4 solid;
   padding: 0 .56rem;
 }
+.navBar span {
+  display: inline-block;
+}
 .navBar .icon {
-  padding: 0 .56rem;
+  margin: 0 .56rem;
+  background: url("components/classCardSystem/imgs/backArrow.png") no-repeat;
+  width: 0.47rem;
+  height: 0.81rem;
+  background-size: 100% 100%;
+  position: relative;
+  top: 1px;
 }
 .home_content {
   width: calc(100% - 1.66rem);

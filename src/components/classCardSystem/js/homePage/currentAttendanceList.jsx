@@ -170,7 +170,7 @@ export default class currentAttendanceList extends React.Component {
                 <div className="inner_bg">
                     <div className="navBar">
                         <span onClick={this.turnToHomePage}>首页</span>
-                        <span className="icon"> &gt; </span>
+                        <span className="icon"></span>
                         <span>考勤详情</span>
                         <div className="right">
                             <span style={{marginLeft: '20px'}}>

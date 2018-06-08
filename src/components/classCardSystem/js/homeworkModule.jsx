@@ -147,7 +147,7 @@ export default class homeworkModule extends React.Component {
                 <div className="inner_bg">
                     <div className="navBar">
                         <span onClick={this.historyGoBack}>首页</span>
-                        <span className="icon">></span>
+                        <span className="icon"></span>
                         <span>蚁巢作业</span>
                     </div>
                     <ListView
