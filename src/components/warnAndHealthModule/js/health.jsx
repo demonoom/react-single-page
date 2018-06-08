@@ -126,11 +126,12 @@ export default class health extends React.Component {
                     <img className="noomImg" src={data[k].users.avatar} alt=""/>
                     <div
                         className={k == 0 ? 'firstClass' : k == 1 ? 'secondClass' : k == 2 ? 'thirdClass' : 'otherClass'}></div>
+                    <div className="border_img"></div>
                 </div>
                 <div className="studentName">{data[k].users.userName}</div>
-                <div className="step_number text_hidden">{this.state.type == 'step' ? data[k].sportStep : data[k].calorie.toFixed(2)}
-                <span className="step_number_s">{this.state.type == 'step' ? '步' : '卡路里'}</span>
-                </div>
+                <div
+                    className="step_number textOver">{this.state.type == 'step' ? data[k].sportStep : data[k].calorie.toFixed(2)}<span
+                    className="step_number_s">{this.state.type == 'step' ? '步' : '卡路里'}</span></div>
             </div>;
             array.push(item);
         }
