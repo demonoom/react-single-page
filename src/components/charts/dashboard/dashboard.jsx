@@ -294,14 +294,19 @@ export default class dashboard extends React.Component {
                 }*/
 
                 //班级课后作业的布置情况统计，统计每个班发布的题目数量
-                if (WebServiceUtil.isEmpty(homeWorkSubjectResults) == false) {
+                if (WebServiceUtil.isEmpty(homeWorkSubjectResults)==false && homeWorkSubjectResults.length >= 30) {
+                    _this.buildHomeWorkPieChart(homeWorkSubjectResults.splice(0, 10));
+                } else {
+                    _this.buildHomeWorkPieChart(homeWorkSubjectResults);
+                }
+                /*if (WebServiceUtil.isEmpty(homeWorkSubjectResults) == false) {
                     // _this.buildTopicHomeWorkTrArray(topicHomeWorkResults);
                     if (homeWorkSubjectResults.length >= 30) {
                         _this.buildHomeWorkPieChart(homeWorkSubjectResults.splice(0, 10));
                     } else {
                         _this.buildHomeWorkPieChart(homeWorkSubjectResults);
                     }
-                }
+                }*/
 
                 //正在上课的课堂列表
                 if (WebServiceUtil.isEmpty(vClazzResults) == false) {
@@ -374,9 +379,7 @@ export default class dashboard extends React.Component {
                     _this.buildSportsChart(data);
                 }
 
-                if (WebServiceUtil.isEmpty(proceCountResults) == false) {
-                    _this.buildFlowPieChart(proceCountResults);
-                }
+                _this.buildFlowPieChart(proceCountResults);
 
                 _this.buildTodayOpenClazzJson(todayOpenClazzResults, currentMonthOpenClazzResults);
 
@@ -561,11 +564,15 @@ export default class dashboard extends React.Component {
         cloudFileResults.forEach(function (cloudFileResult) {
             var cloudFileObj = JSON.parse(cloudFileResult);
             var teacherObj = cloudFileObj.teacher;
-            var courseObj = teacherObj.course;
-            var courseName = courseObj.name;
+            var courseName = "";
             var teacherName = cloudFileObj.col_name;
+            if(WebServiceUtil.isEmpty(teacherObj)==false && WebServiceUtil.isEmpty(teacherObj.course)==false){
+                var courseObj = teacherObj.course;
+                courseName = courseObj.name;
+                teacherName += "(" + courseName + ")";
+            }
             var fileCount = cloudFileObj.fileCount;
-            var cloudFileJson = {value: fileCount, name: teacherName + "(" + courseName + ")"};
+            var cloudFileJson = {value: fileCount, name: teacherName};
             xTeacherNameArray.push(teacherName);
             // seriesDataArray.push(fileCount);
             seriesDataArray.push(cloudFileJson);
@@ -707,14 +714,16 @@ export default class dashboard extends React.Component {
         var _this = this;
         var xClazzNameArray = [];
         var seriesDataArray = [];
-        homeWorkSubjectResults.forEach(function (homeWorkSubjectResult) {
-            var homeWorkSubjectObj = JSON.parse(homeWorkSubjectResult);
-            var clazzName = homeWorkSubjectObj.clazzName;
-            var subjectCount = homeWorkSubjectObj.subjectCount;
-            // var homeWorkJson = {value: subjectCount, name: clazzName};
-            xClazzNameArray.push(clazzName);
-            seriesDataArray.push(subjectCount);
-        })
+        if(WebServiceUtil.isEmpty(homeWorkSubjectResults)==false){
+            homeWorkSubjectResults.forEach(function (homeWorkSubjectResult) {
+                var homeWorkSubjectObj = JSON.parse(homeWorkSubjectResult);
+                var clazzName = homeWorkSubjectObj.clazzName;
+                var subjectCount = homeWorkSubjectObj.subjectCount;
+                // var homeWorkJson = {value: subjectCount, name: clazzName};
+                xClazzNameArray.push(clazzName);
+                seriesDataArray.push(subjectCount);
+            })
+        }
         var homeWorkOption = _this.buildHomeWorkOption(xClazzNameArray, seriesDataArray);
         var homeWorkDiv = <div>
             <div style={{height: '270px'}} className="echarts_wrap">
@@ -1216,13 +1225,15 @@ export default class dashboard extends React.Component {
         var _this = this;
         var xFlowNameArray = [];
         var ySeriesDataArray = [];
-        proceCountResults.forEach(function (proceCountObj) {
-            var procDefName = proceCountObj.procDefName;
-            var procCount = proceCountObj.procCount;
-            var seriesJson = {value: procCount, name: procDefName};
-            xFlowNameArray.push(procDefName);
-            ySeriesDataArray.push(seriesJson);
-        });
+        if(WebServiceUtil.isEmpty(proceCountResults)==false){
+            proceCountResults.forEach(function (proceCountObj) {
+                var procDefName = proceCountObj.procDefName;
+                var procCount = proceCountObj.procCount;
+                var seriesJson = {value: procCount, name: procDefName};
+                xFlowNameArray.push(procDefName);
+                ySeriesDataArray.push(seriesJson);
+            });
+        }
         var flowOption = _this.buildFlowOption(xFlowNameArray, ySeriesDataArray)
         var flowPieChartDiv = <div>
             <div style={{width: '100%', height: '270px'}} className="echarts_wrap">
@@ -1315,10 +1326,6 @@ export default class dashboard extends React.Component {
                             <div className="center fl">
                                 <div className="list_wrap_padding map">
                                     <div className="clear numDiv">
-                                        <div className="fl allNUm">
-                                            <p className="gradeTitle">总人数</p>
-                                            <p className="num">{_this.state.userCount}</p>
-                                        </div>
                                         <div className="fl msgNum">
                                             <p className="gradeTitle">全校教研活动量</p>
                                             <p className="num">{_this.state.messageCount}</p>
