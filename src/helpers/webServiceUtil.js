@@ -65,6 +65,24 @@ WebServiceUtil.formatYMD = function (nS) {
 };
 
 /**
+ * 时间戳转年月日时分秒，完整时间显示
+ * @param nS
+ * @returns {string}
+ */
+WebServiceUtil.formatAllTime = function (nS) {
+    var da = new Date(parseInt(nS));
+    var year = da.getFullYear();
+    var month = da.getMonth() + 1;
+    var date = da.getDate();
+    var hour = da.getHours() + ":";
+    var minutes = da.getMinutes() + ":";
+    var sencond = da.getSeconds();
+    var dayStr = [year, month, date].join('-');
+    var dateStr = dayStr + " " + hour + minutes + sencond;
+    return dateStr;
+};
+
+/**
  * 时间戳转年月
  * @param nS
  * @returns {string}

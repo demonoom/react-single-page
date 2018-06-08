@@ -1,0 +1,167 @@
+#dashboard {
+  overflow:hidden;
+  height: 100%;
+  width: 100%;
+  color: #fff;
+  //background-color: rgba(22,33,72,1);
+  background: -webkit-radial-gradient(#282b4b, #1b1c27); /* Safari 5.1 - 6.0 */
+  background: -o-radial-gradient(#282b4b, #1b1c27); /* Opera 11.1 - 12.0 */
+  background: -moz-radial-gradient(#282b4b, #1b1c27); /* Firefox 3.6 - 15 */
+  background: radial-gradient(#282b4b, #1b1c27); /* 标准的语法 */
+  ::-webkit-scrollbar{
+    display: none;
+  }
+  .clear{
+    overflow: hidden;
+  }
+  .fl{
+    float: left;
+  }
+  .fr{
+    float: right;
+  }
+  .flex_div{
+    display: flex;
+    display: -webkit-flex;
+    display: -webkit-inline-flex;
+    flex-wrap: wrap;
+    width: 100%;
+  }
+
+  .gradeTitle{
+    font-size: 16px;
+    color: #a6abb9;
+    margin:0;
+    //background: url("../image/textBack.png") no-repeat;
+  }
+  .numDiv{
+    margin-bottom: 20px;
+    margin-left: 30px;
+    .allNUm{
+      padding-right: 60px;
+      .num{
+        font-size: 40px;
+        margin:0;
+      }
+    }
+    .msgNum{
+     .num{
+       font-size: 26px;
+       margin:0;
+       padding-top: 12px;
+     }
+    }
+  }
+  .dashCont{
+    height: 100%;
+    overflow-y: auto;
+    margin: 25px 15px 0;
+
+    .cont{
+      padding-bottom: 35px;
+      width: 100%;
+      .left,.right{
+        width: 25%;
+        box-sizing: border-box;
+      }
+      .center{
+        width: 50%;
+      }
+    }
+    .list_wrap_padding{
+      width: 100%;
+      height: auto;
+      box-sizing: border-box;
+      background: url("../image/divBack.png") no-repeat;
+      background-size: 100% 100%;
+      padding: 20px;
+      &.table_class{
+        height: 310px;
+        overflow: hidden;
+      }
+      &.map{
+        height: 620px;
+        background: none;
+        padding: 0;
+      }
+    }
+    .tableTitle{
+      margin-bottom: 10px;
+      font-weight: bold;
+      color: #fff;
+      font-size: 16px;
+      padding-left: 3px;
+    }
+    .topTitle{
+      width: 100%;
+      position: relative;
+      .schoolName{
+        font-size: 30px;
+        margin-bottom: 18px;
+        font-weight: bold;
+
+      }
+    }
+    .topList{
+      //background: -webkit-linear-gradient(#565971, #484d62); /* Safari 5.1 - 6.0 */
+      //background: -o-linear-gradient(#565971, #484d62); /* Opera 11.1 - 12.0 */
+      //background: -moz-linear-gradient(#565971, #484d62); /* Firefox 3.6 - 15 */
+      //background: linear-gradient(#565971, #484d62); /* 标准的语法 */
+      -webkit-border-radius: 6px;
+      -moz-border-radius: 6px;
+      border-radius: 6px;
+      height: 200px;
+      overflow: hidden;
+      box-sizing: border-box;
+      padding: 10px;
+      -webkit-box-shadow: 6px 16px 4px 0 rgba(34,39,58,0.06);
+      -moz-box-shadow: 6px 16px 4px 0 rgba(34,39,58,0.06);
+      box-shadow: 6px 16px 4px 0 rgba(34,39,58,0.06);
+      position: relative;
+      .tableDiv{
+        height: 200px;
+        overflow-y: auto;
+      }
+      table{
+        width: 100%;
+        text-align: center;
+
+        thead{
+          font-size: 12px;
+        }
+        td{
+          padding:10px 0;
+        }
+        tbody{
+          height: 160px;
+          overflow-y: auto;
+        }
+      }
+    }
+
+  }
+ .bottom{
+   .list_wrap_padding{
+     width: 25%;
+   }
+ }
+  .notice{
+    position: absolute;
+    right: 0;
+    top:50%;
+    -webkit-transform: translateY(-50%);
+    -moz-transform: translateY(-50%);
+    -ms-transform: translateY(-50%);
+    -o-transform: translateY(-50%);
+    transform: translateY(-50%);
+    width: 25%;
+    .am-notice-bar{
+      background: none;
+    }
+    .am-notice-bar-icon{
+      margin-left: 5px;
+    }
+  }
+
+
+}

@@ -182,7 +182,7 @@ export default class schoolPlan extends React.Component {
             <div id="schoolPlan" style={{ height: document.body.clientHeight }}>
                 <div className="Img_cont">
                     <div className="classDemeanor_title">平面图展示</div>
-                    <div className='calmShowImg my_flex my_flex_wrap'>
+                    <div className='calmShowImg'>
                         {this.state.imgArrAtShow.map((v) => {
                             return <div className="calmImg">
                                 <img className='uploadImgBtn' src={v.path} alt="" />

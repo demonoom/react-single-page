@@ -10,7 +10,6 @@ import {
     Picker
 } from 'antd-mobile';
 
-import '../css/updateClassroom.less'
 import { ucs2 } from 'punycode';
 
 const Item = List.Item;
@@ -176,9 +175,9 @@ export default class updateClassroom extends React.Component {
             data: d,
             buildingId,
         });
-        if (updateCM.state.buildingId == -1) {
-            this.toAddTeachBuild();
-        }
+        // if (updateCM.state.buildingId == -1) {
+        //     this.toAddTeachBuild();
+        // }
     };
     /**
     * 班级选择改变事件
@@ -260,12 +259,7 @@ export default class updateClassroom extends React.Component {
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
             onResponse: function (result) {
                 if (result.msg == '调用成功' && result.success == true) {
-                    var arr = [
-                        {
-                            value: -1,
-                            label: "新增教学楼"
-                        }
-                    ];
+                    var arr = [];
                     result.response.forEach(function (v, i) {
                         arr.push({
                             value: v.id, label: v.name
@@ -366,8 +360,13 @@ export default class updateClassroom extends React.Component {
                                             <Item arrow="horizontal" onClick={this.viewSchoolBuildingPage.bind(this,
                                                 updateCM.state.uid, false)
                                             }
-                                            >选择教学楼</Item>
+                                            >选择教室所在教学楼</Item>
                                         </Picker>
+                                        <div className="addFloor" onClick={this.toAddTeachBuild}>
+
+                                            新增教学楼
+                                            {/*<button >+</button>新增教学楼*/}
+                                        </div>
                                     </div>
                                     :
                                     <div></div>

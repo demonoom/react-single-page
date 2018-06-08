@@ -105,6 +105,7 @@ export default class moralEducation extends React.Component {
         return (
             <div id="moralEducation" style={{ height: moralEd.state.clientHeight }}>
                 <div className='tableDiv' style={{ height: moralEd.state.clientHeight }}>
+                    <div className="noticeMsg_common">请在列表中选择班级进行设置</div>
                     {
                         moralEd.state.searchData.map((v, i) => {
                             return <div className="am-list-item am-list-item-middle" onClick={this.toAssessMoralE.bind(this, v)}>

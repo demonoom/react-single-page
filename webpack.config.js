@@ -121,6 +121,7 @@ module.exports = {
         //         warnings: false
         //     }
         // }),
+
         //将开发模式变为生产模式
         new webpack.DefinePlugin({
             'process.env': {
