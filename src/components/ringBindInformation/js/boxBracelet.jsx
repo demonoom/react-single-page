@@ -338,12 +338,12 @@ export default class boxBracelet extends React.Component {
                     <Card>
                         <Card.Header
                             className='noomCardHeader'
-                            title={'教室名称:'+rowData.room.name}
+                            title={'教室名称：'+rowData.room.name}
                             extra={<span className='noomCardUnbind'
                                          onClick={_this.showAlert.bind(this, rowData)}>解绑</span>}
                         />
                         <Card.Body>
-                            MAC:{rowData.macAddress}
+                            MAC：{rowData.macAddress}
                         </Card.Body>
                     </Card>
                 </WingBlank>
@@ -389,7 +389,7 @@ export default class boxBracelet extends React.Component {
                             <InputItem
                                 value={bindDing.state.macId}
                                 editable={false}
-                            >MAC:</InputItem>
+                            >MAC：</InputItem>
                             <img className='scanIcon' src={require('../imgs/icon_scan.png')} alt="" onClick={this.scanMac}/>
                         </div>
 
@@ -399,7 +399,7 @@ export default class boxBracelet extends React.Component {
                                 data-seed="logId"
                                 onChange={this.inputOnChange.bind(this)}
                                 value={this.state.stNameValue}
-                            >教室:</InputItem>
+                            >教室：</InputItem>
                             <img className='stIcon' src={require("../imgs/icon_search.png")} type='search'
                                  onClick={this.searchWatchBindCandidate}/>
                         </div>
