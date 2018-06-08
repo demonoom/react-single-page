@@ -1,5 +1,7 @@
 #dashboard {
-  overflow:hidden;
+  overflow-x:hidden;
+  overflow-y: auto;
+  position: relative;
   height: 100%;
   width: 100%;
   color: #fff;
@@ -34,31 +36,67 @@
     margin:0;
     //background: url("../image/textBack.png") no-repeat;
   }
+
+  .bodyIcon{
+    i{
+      //background: url("../image/bodyIcon.gif") no-repeat;
+      width: 40px;
+      height: 40px;
+      display: block;
+      position: absolute;
+      &.icon_topLeft{
+        left: 2px;
+        top:2px;
+      }
+      &.icon_topRight{
+        right: 2px;
+        top:2px;
+        -webkit-transform: rotate(90deg);
+        -moz-transform: rotate(90deg);
+        -ms-transform: rotate(90deg);
+        -o-transform: rotate(90deg);
+        transform: rotate(90deg);
+      }
+      &.icon_bottomLeft{
+        left: 2px;
+        bottom:15px;
+        -webkit-transform: rotate(270deg);
+        -moz-transform: rotate(270deg);
+        -ms-transform: rotate(270deg);
+        -o-transform: rotate(270deg);
+        transform: rotate(270deg);
+      }
+      &.icon_bottomRight{
+        right: 2px;
+        bottom:15px;
+        -webkit-transform: rotate(180deg);
+        -moz-transform: rotate(180deg);
+        -ms-transform: rotate(180deg);
+        -o-transform: rotate(180deg);
+        transform: rotate(180deg);
+      }
+    }
+  }
+
   .numDiv{
     margin-bottom: 20px;
     margin-left: 30px;
-    .allNUm{
-      padding-right: 60px;
-      .num{
-        font-size: 40px;
-        margin:0;
-      }
-    }
     .msgNum{
+      text-align: center;
+      padding-top: 10px;
      .num{
        font-size: 26px;
        margin:0;
        padding-top: 12px;
+       color: #fff;
+       padding-left: 5px;
      }
     }
   }
   .dashCont{
-    height: 100%;
-    overflow-y: auto;
-    margin: 25px 15px 0;
-
+    padding: 25px 15px 35px;
+    position: relative;
     .cont{
-      padding-bottom: 35px;
       width: 100%;
       .left,.right{
         width: 25%;
@@ -99,6 +137,8 @@
         font-size: 30px;
         margin-bottom: 18px;
         font-weight: bold;
+        width: 50%;
+        text-align: center;
 
       }
     }
@@ -146,14 +186,7 @@
    }
  }
   .notice{
-    position: absolute;
-    right: 0;
-    top:50%;
-    -webkit-transform: translateY(-50%);
-    -moz-transform: translateY(-50%);
-    -ms-transform: translateY(-50%);
-    -o-transform: translateY(-50%);
-    transform: translateY(-50%);
+    margin-left: 30px;
     width: 25%;
     .am-notice-bar{
       background: none;
@@ -163,5 +196,15 @@
     }
   }
 
+  @keyframes flight {
+    100%{
+      transform: translateX(30px);
+      opacity: 0.8;
+    }
 
+    0%{
+      transform: translateX(0);
+      opacity: 0.2;
+    }
+  }
 }

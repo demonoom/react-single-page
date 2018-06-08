@@ -1303,13 +1303,20 @@ export default class dashboard extends React.Component {
         return (
             <div id="dashboard">
                 <div className="dashCont">
-                    <div className="topTitle">
-                        <div className="schoolName">{_this.state.schoolName}</div>
-                        <div className="notice">
+
+                    <div className="topTitle clear">
+                        <div className="bodyIcon">
+                            <i className="icon_topLeft">
+                                <img src={require("./image/bodyIcon.gif")}/>
+                            </i>
+                            <i className="icon_topRight"></i>
+                        </div>
+                        <div className="notice fl">
                             <NoticeBar marqueeProps={{loop: true, style: {padding: '0 7.5px'}}}>
                                 {'正在开课:' + this.state.openClazzTrArray}
                             </NoticeBar>
                         </div>
+                        <div className="schoolName fl">{_this.state.schoolName}</div>
                     </div>
                     <div className="cont">
                         <div className="clear">
@@ -1327,8 +1334,7 @@ export default class dashboard extends React.Component {
                                 <div className="list_wrap_padding map">
                                     <div className="clear numDiv">
                                         <div className="fl msgNum">
-                                            <p className="gradeTitle">全校教研活动量</p>
-                                            <p className="num">{_this.state.messageCount}</p>
+                                            <p className="gradeTitle">全校教研活动量:<span className="num">{_this.state.messageCount}</span></p>
                                         </div>
                                     </div>
                                     {/*热力图*/}
@@ -1339,9 +1345,10 @@ export default class dashboard extends React.Component {
                                 <div className="list_wrap_padding">
                                     {this.state.homeWorkDiv}
                                 </div>
+
+                                {/*//体育运动统计*/}
                                 <div className="list_wrap_padding">
-                                    {/*{this.state.openClazzDiv}*/}
-                                    {this.state.flowPieChartDiv}
+                                    {this.state.sportDiv}
                                 </div>
                             </div>
 
@@ -1353,15 +1360,27 @@ export default class dashboard extends React.Component {
                                 {this.state.stepChartDiv}
                             </div>
 
-                            {/*//体育运动统计*/}
                             <div className="list_wrap_padding">
-                                {this.state.sportDiv}
+                                {/*{this.state.openClazzDiv}*/}
+                                {this.state.flowPieChartDiv}
                             </div>
+
                             {/*学生考勤班级柱状图*/}
                             <div className="list_wrap_padding">
                                 <div style={{height: '270px'}} className="echarts_wrap">
                                     <ReactEcharts
                                         option={optionForClassColumn}
+                                        style={{height: '100%', width: '100%'}}
+                                        theme='chalk2'
+                                        className=''/>
+                                </div>
+                            </div>
+
+                            {/*教师考勤饼图*/}
+                            <div className="list_wrap_padding">
+                                <div style={{height: '270px'}} className="echarts_wrap">
+                                    <ReactEcharts
+                                        option={optionForTeacherPie}
                                         style={{height: '100%', width: '100%'}}
                                         theme='chalk2'
                                         className=''/>
@@ -1379,19 +1398,15 @@ export default class dashboard extends React.Component {
                                 </div>
                             </div>*/}
 
-                            {/*教师考勤饼图*/}
-                            <div className="list_wrap_padding">
-                                <div style={{height: '270px'}} className="echarts_wrap">
-                                    <ReactEcharts
-                                        option={optionForTeacherPie}
-                                        style={{height: '100%', width: '100%'}}
-                                        theme='chalk2'
-                                        className=''/>
-                                </div>
-                            </div>
+
 
                         </div>
                     </div>
+                    <div className="bodyIcon">
+                        <i className="icon_bottomLeft"></i>
+                        <i className="icon_bottomRight"></i>
+                    </div>
+
                 </div>
             </div>
         );

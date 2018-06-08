@@ -70,7 +70,7 @@ module.exports = {
                 }
             },
             {
-                test: /\.(jpg|png)$/,
+                test: /\.(jpg|png|gif)$/,
                 loader: "url-loader?limit=8192"
             },
             // 注意：如下不使用 ExtractTextPlugin 的写法，不能单独 build 出 css 文件
