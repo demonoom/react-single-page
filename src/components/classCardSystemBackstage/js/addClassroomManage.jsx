@@ -265,7 +265,7 @@ export default class addClassroomManage extends React.Component {
                             <WhiteSpace size="lg" />
                             <div className='gradeName'>
                                 <InputItem
-                                    placeholder="请输入班级名称"
+                                    placeholder="请输入班级名称并搜索"
                                     data-seed="logId"
                                     onChange={v => {
                                         classBinding.setState({
@@ -302,11 +302,13 @@ export default class addClassroomManage extends React.Component {
                                     <Item arrow="horizontal" onClick={this.viewSchoolBuildingPage.bind(this,
                                         classBinding.state.uid)
                                     }
-                                    >选择教学楼</Item>
+                                    >选择教室所在教学楼</Item>
                                 </Picker>
                             </div>
-                            <div>
-                                <button onClick={this.toAddTeachBuild}>+</button>新增教学楼
+                            <div className="addFloor" onClick={this.toAddTeachBuild}>
+
+                                新增教学楼
+                                {/*<button >+</button>新增教学楼*/}
                             </div>
                         </List>
                     </div>
