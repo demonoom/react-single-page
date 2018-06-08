@@ -360,7 +360,7 @@ export default class updateClassroom extends React.Component {
                                             <Item arrow="horizontal" onClick={this.viewSchoolBuildingPage.bind(this,
                                                 updateCM.state.uid, false)
                                             }
-                                            >选择教学楼</Item>
+                                            >选择教室所在教学楼</Item>
                                         </Picker>
                                         <div className="addFloor" onClick={this.toAddTeachBuild}>
 

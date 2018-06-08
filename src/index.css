@@ -420,6 +420,14 @@ hr {
   -ms-transform: scaleY(0.5);
   transform: scaleY(0.5);
 }
+.noticeMsg_common {
+  background: #eee url("components/classCardSystemBackstage/imgs/noticeIcon.png") no-repeat 30px 9px;
+  background-size: 18px;
+  font-size: 15px;
+  color: #666;
+  line-height: 18px;
+  padding: 11px 10px 11px 57px;
+}
 /*班牌屏幕适配*/
 @media only screen and (min-width: 768px) and (max-width: 799px) {
   html {
