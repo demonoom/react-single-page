@@ -820,9 +820,9 @@ export default class dashboard extends React.Component {
                 textAlign: 'left',
             }],
             grid: [{
-                top: 50,
+                top: 40,
                 width: '100%',
-                bottom: '45%',
+                bottom: '48%',
                 left: 0,
                 containLabel: true
             }, {
@@ -863,6 +863,7 @@ export default class dashboard extends React.Component {
             series: [{
                 type: 'bar',
                 stack: 'component',
+                height:'45%',
                 xAxisIndex: 0,
                 yAxisIndex: 0,
                 z: 3,
