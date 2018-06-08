@@ -177,9 +177,9 @@ export default class classCardHomePageDoor extends React.Component {
                         className="arrow_right"></i></li>
                     <li onClick={this.turnToMoralEducation}><i className="icon icon_moralEducationScore"></i>德育评价管理<i
                         className="arrow_right"></i></li>
-                    <li onClick={this.turnToWarnList}><i className="icon icon_moralEducationScore"></i>课堂预警<i
+                    <li onClick={this.turnToWarnList}><i className="icon icon_earlyWarning"></i>课堂预警<i
                         className="arrow_right"></i></li>
-                    <li onClick={this.turnToStudentMovement}><i className="icon icon_moralEducationScore"></i>学生运动轨迹<i
+                    <li onClick={this.turnToStudentMovement}><i className="icon icon_exercise"></i>学生运动轨迹<i
                         className="arrow_right"></i></li>
                 </ul>
             </div>
