@@ -1,7 +1,7 @@
 import React from 'react';
 import { Icon, Toast } from 'antd-mobile';
 
-import "../css/classDutyList.less"
+import "../css/clazzDutyList.less"
 
 var classD;
 export default class clazzDutyList extends React.Component {

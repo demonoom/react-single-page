@@ -101,12 +101,7 @@ export default class addClassroomManage extends React.Component {
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
             onResponse: function (result) {
                 if (result.msg == '调用成功' && result.success == true) {
-                    var arr = [
-                        {
-                            value: 0,
-                            label: "新增教学楼"
-                        }
-                    ];
+                    var arr = [];
                     result.response.forEach(function (v, i) {
                         arr.push({
                             value: v.id, label: v.name
@@ -232,9 +227,9 @@ export default class addClassroomManage extends React.Component {
             data: d,
             buildingId,
         });
-        if (classBinding.state.buildingId == 0) {
-            this.toAddTeachBuild();
-        }
+        // if (classBinding.state.buildingId == 0) {
+        //     this.toAddTeachBuild();
+        // }
     };
     /**
     * 班级选择改变事件
@@ -309,6 +304,9 @@ export default class addClassroomManage extends React.Component {
                                     }
                                     >选择教学楼</Item>
                                 </Picker>
+                            </div>
+                            <div>
+                                <button onClick={this.toAddTeachBuild}>+</button>新增教学楼
                             </div>
                         </List>
                     </div>

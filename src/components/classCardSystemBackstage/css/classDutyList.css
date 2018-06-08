@@ -3,6 +3,9 @@
   overflow-y: auto;
   font-size: 17px;
 }
+#classDutyList .am-list-item .am-list-line .am-list-content {
+  padding: 15px 0 !important;
+}
 #classDutyList .textOver {
   overflow: hidden;
   white-space: nowrap;

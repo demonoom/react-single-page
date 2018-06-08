@@ -1,0 +1,10 @@
+#clazzDutyList {
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+#clazzDutyList .am-list-item .am-list-line .am-list-content {
+  padding: 15px 0 !important;
+}
+#clazzDutyList .am-list-line::after {
+  background-color: #eee !important;
+}
