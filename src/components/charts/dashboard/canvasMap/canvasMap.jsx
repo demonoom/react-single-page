@@ -32,7 +32,7 @@ export default class canvasMap extends React.Component {
         canvas.height = 580;
         context.lineWidth = 10;
         context.lineCap = 'round';
-        demeanor.drawPoint()
+        // demeanor.drawPoint()
         this.startStep()
     }
 
@@ -50,7 +50,7 @@ export default class canvasMap extends React.Component {
             context.lineWidth = 10;
             context.lineCap = 'round';
             context.restore()
-            demeanor.drawPoint()
+            // demeanor.drawPoint()
         }, 10000)
     }
 
