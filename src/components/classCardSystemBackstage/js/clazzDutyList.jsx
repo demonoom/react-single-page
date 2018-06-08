@@ -81,6 +81,7 @@ export default class clazzDutyList extends React.Component {
         }
         return (
             <div id="clazzDutyList" style={{ height: document.body.clientHeight,overflow:"auto" }}>
+                <div className="noticeMsg_common">请在列表中选择班级进行设置</div>
                 <ul>
                     {items}
                 </ul>
