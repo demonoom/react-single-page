@@ -1,6 +1,5 @@
 import React from 'react';
 import {} from 'antd-mobile';
-import Img from '../img/map.png'
 import './css/canvasMap.less'
 
 var demeanor;
@@ -28,12 +27,22 @@ export default class canvasMap extends React.Component {
         var canvasWidth = (width_cont - 25) / 2;
         canvas = document.getElementById('noom');
         context = canvas.getContext('2d');
-        canvas.width = canvasWidth;
+        canvas.width = 620;
         canvas.height = 580;
         context.lineWidth = 10;
         context.lineCap = 'round';
         demeanor.drawPoint()
         this.startStep()
+    }
+
+    componentDidUpdate() {
+        document.getElementById("noom").addEventListener('click', demeanor.simulateClick);
+    }
+
+    simulateClick(e) {
+        console.log(e.offsetX);
+        console.log(e.offsetY);
+        alert(e.offsetX+'-'+e.offsetY)
     }
 
     /**
@@ -45,7 +54,7 @@ export default class canvasMap extends React.Component {
             var canvasWidth = (width_cont - 25) / 2;
             canvas = document.getElementById('noom');
             context = canvas.getContext('2d');
-            canvas.width = canvasWidth;
+            canvas.width = 620;
             canvas.height = 550;
             context.lineWidth = 10;
             context.lineCap = 'round';
@@ -73,10 +82,15 @@ export default class canvasMap extends React.Component {
         context.strokeStyle = 'black';
         context.lineTo(a, b);
         context.stroke();
+
+        context.beginPath()
+        context.strokeStyle = 'yellow';
+        context.lineTo(211, 206);
+        context.stroke();
     }
 
-    canvasOnClick() {
-
+    canvasOnClick(e) {
+        console.log(e.target);
     }
 
     render() {
