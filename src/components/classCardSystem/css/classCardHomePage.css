@@ -194,6 +194,27 @@
   display: inline-block;
   background-size: 100% 100%;
 }
+#classCardHomePage .app_list_img .stepNumber {
+  width: 1.94rem;
+  height: 1.94rem;
+  background: url("../imgs/icon_stepNumber.png");
+  display: inline-block;
+  background-size: 100% 100%;
+}
+#classCardHomePage .app_list_img .calorie {
+  width: 1.94rem;
+  height: 1.94rem;
+  background: url("../imgs/icon_calorie.png");
+  display: inline-block;
+  background-size: 100% 100%;
+}
+#classCardHomePage .app_list_img .message {
+  width: 1.94rem;
+  height: 1.94rem;
+  background: url("../imgs/icon_message.png");
+  display: inline-block;
+  background-size: 100% 100%;
+}
 #classCardHomePage .app_list_text {
   font-size: 0.61rem;
   width: 100%;
