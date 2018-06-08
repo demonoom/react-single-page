@@ -562,7 +562,7 @@ class Index extends React.Component {
                         to="/classCardHomePageDoor?access_user=23836"
                         style={{fontSize: '24px'}}>后台总入口</Link></li>
                     <li><Link
-                        to="/dashboard?destId=9&areaType=0"
+                        to="/dashboard?destId=17&areaType=0"
                         style={{fontSize: '24px'}}>管理驾驶舱</Link></li>
                     {/*<li><Link*/}
                     {/*to="/fileAnalysis?aid=590961"*/}
