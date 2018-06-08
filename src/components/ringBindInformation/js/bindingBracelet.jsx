@@ -360,8 +360,8 @@ export default class bindingBracelet extends React.Component {
                         />
                         <Card.Body>
                             <div className="student_contList">
-                                <div className="student_list"><span>MAC：</span><span>{rowData.macAddress}</span></div>
-                                <div className="student_list2"><span>ID：</span><span>{rowData.bindingUser.colAccount}</span></div>
+                                <div className="student_list text_hidden"><span>MAC：</span><span>{rowData.macAddress}</span></div>
+                                <div className="student_list2 text_hidden"><span>ID：</span><span>{rowData.bindingUser.colAccount}</span></div>
                             </div>
                             <div className="studen_contList2">
                                 <span className="class">班级：</span><span className="classinfo">{ rowData.bindingUser.clazz.name}</span>
