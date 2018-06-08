@@ -462,6 +462,13 @@ const studentMovement = (location, cb) => {
     )
 }
 
+const schoolPlan = (location, cb) => {
+    require.ensure([], require => {
+            cb(null, require("./components/classCardSystemBackstage/js/schoolPlan").default)
+        }
+    )
+}
+
 import './index.less';
 
 class Index extends React.Component {
@@ -662,6 +669,7 @@ ReactDOM.render(
             <Route path="health" getComponent={health}/>
             <Route path="warnList" getComponent={warnList}/>
             <Route path="studentMovement" getComponent={studentMovement}/>
+            <Route path="schoolPlan" getComponent={schoolPlan} />
         </Route>
     </Router>
     ,

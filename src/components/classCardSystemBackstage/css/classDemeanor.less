@@ -1,8 +1,28 @@
-#classDemeanor {
+#classDemeanor,
+#schoolPlan {
+  .calmImg {
+    position: relative;
+  }
   .Img_cont{
     height: calc(~"100%" - 77px);
     overflow-y: auto;
     overflow-x: hidden;
+  }
+  .calmShowImg {
+    min-height: 17rem;
+    background-color: #fff;
+    padding: 10px;
+    .uploadImgBtn {
+      max-width: 100%;
+      max-height: 100%;
+    }
+    .delImgBtn {
+      position: absolute;
+      right: 5px;
+      top: 5px;
+      width: 1.5rem;
+      height: 1.5rem;
+    }
   }
   .showImg {
     min-height: 17rem;

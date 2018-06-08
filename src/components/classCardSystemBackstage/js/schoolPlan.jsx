@@ -1,43 +1,45 @@
 import React from 'react';
-import {Picker, List, WhiteSpace, WingBlank, Button, Toast,Modal} from 'antd-mobile';
+import { WhiteSpace, WingBlank, Button, Toast, Modal } from 'antd-mobile';
 import '../css/classDemeanor.less'
 
-var demeanor;
+var sPlan;
 const alert = Modal.alert;
 
-export default class classDemeanor extends React.Component {
+export default class schoolPlan extends React.Component {
 
     constructor(props) {
         super(props);
-        demeanor = this;
+        sPlan = this;
         this.state = {
             data: [],
-            imgFromAndArr: [],
-            imgArr: [],
+            imgArrAtUp: [],
+            imgArrAtShow: [],
         };
     }
 
     componentDidMount() {
+        document.title = "学校平面图页面";
         Bridge.setShareAble("false");
         var locationHref = decodeURI(window.location.href);
         var locationSearch = locationHref.substr(locationHref.indexOf("?") + 1);
         var ident = locationSearch.split("&")[0].split('=')[1];
-        var className = locationSearch.split("&")[1].split('=')[1];
-        document.title = className;
-        this.setState({classId:ident});
-        this.getClassDemeanorInfo(ident);
+        this.setState({ ident: ident });
+        this.getSchoolMap(ident);
     }
-
-    getClassDemeanorInfo(id) {
+    /**
+     * 获取学校地图信息
+     * @param {*} id 
+     */
+    getSchoolMap(id) {
         var param = {
-            "method": 'getClassDemeanorInfo',
-            "clazzId": id,
-            "type": 1
+            "method": 'viewSchoolMapPage',
+            "adminId": id,
+            "pn": -1
         };
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
             onResponse: function (result) {
                 if (result.msg == '调用成功' || result.success == true) {
-                    demeanor.setState({imgArr: result.response});
+                    sPlan.setState({ imgArrAtShow: result.response });
                 }
             },
             onError: function (error) {
@@ -50,6 +52,10 @@ export default class classDemeanor extends React.Component {
      * 原生上传照片返回地址
      */
     uploadImgBtn() {
+        if (sPlan.state.imgArrAtUp.length == 1) {
+            Toast.info("只能上传一张照片")
+            return
+        }
         var data = {
             method: 'uploadClassDemeanor',
         };
@@ -57,7 +63,7 @@ export default class classDemeanor extends React.Component {
         Bridge.callHandler(data, function (res) {
             //拿到图片地址,显示在页面等待上传
             var arr = res.split(',');
-            demeanor.setState({imgFromAndArr: demeanor.state.imgFromAndArr.concat(arr)});
+            sPlan.setState({ imgArrAtUp: sPlan.state.imgArrAtUp.concat(arr) });
         }, function (error) {
             console.log(error);
         });
@@ -67,62 +73,69 @@ export default class classDemeanor extends React.Component {
      * 本地上传照片
      */
     uploadImg = () => {
-        if (demeanor.state.imgFromAndArr.length == 0) {
+        if (sPlan.state.imgArrAtUp.length == 0) {
             Toast.fail('请先选择照片')
             return
         }
-        demeanor.state.imgFromAndArr.forEach(function (v, i) {
+        if (sPlan.state.imgArrAtShow.length == 1) {
+            Toast.info("只能上传一张照片")
+        }
+        sPlan.state.imgArrAtUp.forEach(function (v, i) {
             var param = {
-                "method": 'saveClassDemeanorInfo',
-                "clazzId": demeanor.state.classId,
-                "imagePath": v,
-                "type": 1
+                "method": 'bindSchoolMap',
+                "adminId": sPlan.state.ident,
+                "mapURL": v,
             };
             WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
                 onResponse: function (result) {
                     if (result.msg == '调用成功' || result.success == true) {
-                        if (i == demeanor.state.imgFromAndArr.length - 1) {
+                        if (i == sPlan.state.imgArrAtUp.length - 1) {
                             Toast.success('上传成功');
                             //刷新上半部
-                            demeanor.getClassDemeanorInfo(demeanor.state.classId)
-                            demeanor.state.imgFromAndArr.splice(0)
+                            sPlan.getSchoolMap(sPlan.state.ident)
+                            sPlan.state.imgArrAtUp.splice(0)
                         }
                     }
                 },
                 onError: function (error) {
-                    // message.error(error);
+                    message.error(error);
                 }
             });
         })
     }
-
-    deleteClassDemeanorInfo(id) {
-        this.showAlert(function(){
+    /**
+     * 删除展示模块的照片
+     * @param {*} id 
+     */
+    delSchoolMap(id) {
+        this.showAlert(function () {
             var param = {
-                "method": 'deleteClassDemeanorInfo',
-                "id": id,
+                "method": 'unbindSchoolMap',
+                "mId": id,
             };
             WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
                 onResponse: function (result) {
                     if (result.msg == '调用成功' || result.success == true) {
-                        var arr = demeanor.state.imgArr
-                        demeanor.state.imgArr.forEach((v, i) => {
+                        var arr = sPlan.state.imgArrAtShow
+                        sPlan.state.imgArrAtShow.forEach((v, i) => {
                             if (v.id == id) {
                                 arr.splice(i, 1);
                             }
                         })
-                        demeanor.setState({imgArr: arr})
+                        sPlan.setState({ imgArrAtShow: arr })
                     }
                 },
                 onError: function (error) {
-                    // message.error(error);
+                    message.error(error);
                 }
             });
-        },function(){
+        }, function () {
             // console.log('已取消');
         });
     }
-
+    /**
+     * 删除弹出框
+     */
     showAlert = (success, cancel) => {
         var phoneType = navigator.userAgent;
         var phone;
@@ -135,54 +148,57 @@ export default class classDemeanor extends React.Component {
         const alertInstance = alert('删除图片', '确定删除此照片吗?', [
             {
                 text: '取消', onPress: () => {
-                if (cancel) {
-                    cancel();
-                }
-            }, style: 'default'
+                    if (cancel) {
+                        cancel();
+                    }
+                }, style: 'default'
             },
             {
                 text: '确定', onPress: () => {
-                if (success) {
-                    success()
+                    if (success) {
+                        success()
+                    }
                 }
-            }
             },
         ], phone);
     }
 
-    deleteimgFromAndArr(index) {
-
-        var arr = demeanor.state.imgFromAndArr;
-        demeanor.state.imgFromAndArr.forEach((v, i) => {
+    /**
+     * 上传模块的删除
+     * @param {*} index 
+     */
+    delImgAtUp(index) {
+        var arr = sPlan.state.imgArrAtUp;
+        sPlan.state.imgArrAtUp.forEach((v, i) => {
             if (i == index) {
                 arr.splice(i, 1);
             }
         })
-        demeanor.setState({imgFromAndArr: arr})
+        sPlan.setState({ imgArrAtUp: arr })
     }
 
     render() {
         return (
-            <div id="classDemeanor" style={{height: document.body.clientHeight}}>
+            <div id="schoolPlan" style={{ height: document.body.clientHeight }}>
                 <div className="Img_cont">
-                    <div className="classDemeanor_title">风采展示</div>
-                    <div className='showImg my_flex my_flex_wrap'>
-                        {this.state.imgArr.map((v) => {
-                            return <div className="listImg flex_center">
-                                <img className='uploadImgBtn' src={v.imagePath} alt=""/>
-                                <img onClick={this.deleteClassDemeanorInfo.bind(this, v.id)} className='delImgBtn'
-                                     src={require('../imgs/delPic.png')} alt=""/>
+                    <div className="classDemeanor_title">平面图展示</div>
+                    <div className='calmShowImg my_flex my_flex_wrap'>
+                        {this.state.imgArrAtShow.map((v) => {
+                            return <div className="calmImg">
+                                <img className='uploadImgBtn' src={v.path} alt="" />
+                                <img onClick={this.delSchoolMap.bind(this, v.id)} className='delImgBtn'
+                                    src={require('../imgs/delPic.png')} alt="" />
                             </div>
                         })}
                     </div>
-                    <WhiteSpace size="lg"/>
+                    <WhiteSpace size="lg" />
                     <div className="classDemeanor_title">上传照片</div>
                     <div className='uploadImg my_flex my_flex_wrap'>
-                        {this.state.imgFromAndArr.map((v, i) => {
+                        {this.state.imgArrAtUp.map((v, i) => {
                             return <div className="listImg flex_center">
-                                <img className='uploadImgBtn' src={v} alt=""/>
-                                <img onClick={this.deleteimgFromAndArr.bind(this, i)} className='delImgBtn'
-                                     src={require('../imgs/delPic.png')} alt=""/>
+                                <img className='uploadImgBtn' src={v} alt="" />
+                                <img onClick={this.delImgAtUp.bind(this, i)} className='delImgBtn'
+                                    src={require('../imgs/delPic.png')} alt="" />
                             </div>
                         })}
                         <img
@@ -194,7 +210,7 @@ export default class classDemeanor extends React.Component {
                     </div>
                 </div>
                 <div className='addCourseButton'>
-                    <WhiteSpace size="lg"/>
+                    <WhiteSpace size="lg" />
                     <WingBlank>
                         <Button type="warning" onClick={this.uploadImg}>上传</Button>
                     </WingBlank>
