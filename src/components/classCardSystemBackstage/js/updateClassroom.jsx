@@ -10,7 +10,6 @@ import {
     Picker
 } from 'antd-mobile';
 
-import '../css/updateClassroom.less'
 import { ucs2 } from 'punycode';
 
 const Item = List.Item;
