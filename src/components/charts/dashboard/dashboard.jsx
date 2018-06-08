@@ -59,7 +59,7 @@ var itemStyle = {
 };
 
 //班级柱状图option
-var optionForClassColumn = {
+/*var optionForClassColumn = {
     title: {
         text: '学生考勤统计',
         subtext: '',
@@ -101,6 +101,56 @@ var optionForClassColumn = {
             }
         }
     }]
+}*/
+
+var optionForClassColumn = {
+    title: {
+        text: '学生考勤统计',
+        subtext: '',
+        left: 'left',
+    },
+    tooltip: {},
+    legend: {
+        bottom: 0,
+        left: 'left',
+        data: ['应到', '实到', '缺勤']
+    },
+    series: [
+        {
+            type: 'pie',
+            radius: '50%',
+            center: ['50%', '50%'],
+            selectedMode: 'single',
+            data: [{value:1300, name: '应到'},
+                {value:1100, name: '实到'},
+                {value:200, name: '缺勤'}],
+            itemStyle: {
+                emphasis: {
+                    shadowBlur: 10,
+                    shadowOffsetX: 0,
+                    shadowColor: 'rgba(0, 0, 0, 0.5)'
+                }
+            },
+            /*label: {
+                normal: {
+                    formatter: '{d}%',
+                    textStyle: {
+                        fontWeight: 'normal',
+                        fontSize: 12
+                    }
+                }
+            }*/
+            label: {
+                normal: {
+                    formatter: '{b}:{c}人: ({d}%)',
+                    textStyle: {
+                        fontWeight: 'normal',
+                        fontSize: 12
+                    }
+                }
+            }
+        }
+    ]
 }
 
 //全校饼图考勤option
@@ -237,7 +287,8 @@ export default class dashboard extends React.Component {
                 //学校总人数
                 var userCountOfSchool = jsonObj.userCountOfSchool;
                 //全校教研活动量
-                var messageCount = jsonObj.messageCount;
+                // var messageCount = jsonObj.messageCount;
+                var messageCount = 1380;
                 //蚁巢活跃量
                 var topicResults = jsonObj.topicResult;
                 //每个学校老师上传的蚁盘资源数量
@@ -309,9 +360,11 @@ export default class dashboard extends React.Component {
                 }*/
 
                 //正在上课的课堂列表
-                if (WebServiceUtil.isEmpty(vClazzResults) == false) {
+                /*if (WebServiceUtil.isEmpty(vClazzResults) == false) {
                     _this.buildOpenClazzTrArray(vClazzResults);
-                }
+                }*/
+
+                _this.buildOpenClazzTrArray(vClazzResults);
 
                 if (WebServiceUtil.isEmpty(braceletSportSteps) == false) {
                     _this.buildStepBarChart(braceletSportSteps);
@@ -721,9 +774,19 @@ export default class dashboard extends React.Component {
                 var subjectCount = homeWorkSubjectObj.subjectCount;
                 // var homeWorkJson = {value: subjectCount, name: clazzName};
                 xClazzNameArray.push(clazzName);
+                // seriesDataArray.push(subjectCount);
+                var subjectCount = Math.ceil(Math.random()*10)+20;
                 seriesDataArray.push(subjectCount);
             })
         }
+        xClazzNameArray.push("六年级五班");
+        // seriesDataArray.push(subjectCount);
+        var subjectCount = Math.ceil(Math.random()*10)+20;
+        seriesDataArray.push(subjectCount);
+        xClazzNameArray.push("四年级三班");
+        // seriesDataArray.push(subjectCount);
+        var subjectCount2 = Math.ceil(Math.random()*10)+20;
+        seriesDataArray.push(subjectCount2);
         var homeWorkOption = _this.buildHomeWorkOption(xClazzNameArray, seriesDataArray);
         var homeWorkDiv = <div>
             <div style={{height: '270px'}} className="echarts_wrap">
@@ -758,6 +821,8 @@ export default class dashboard extends React.Component {
             var vClazzObj = JSON.parse(vClazzResult);
             openClazzTrArray += vClazzObj.clazz.name + ' ' + vClazzObj.course.name + ' ' + vClazzObj.teacher.userName
         });
+        openClazzTrArray += "四年级三班" + ' ' + "数学" + ' ' + "王宁";
+        // openClazzTrArray += "五年级一班" + ' ' + "语文" + ' ' + "李思";
         this.setState({openClazzTrArray});
     }
 
