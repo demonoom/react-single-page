@@ -41,8 +41,20 @@ export default class application extends React.Component {
         });
     }
 
-    intoHealthList() {
-        var url = WebServiceUtil.mobileServiceURL + "healthList?classId=" + localStorage.getItem('clazzId');
+    toStep() {
+        var url = WebServiceUtil.mobileServiceURL + "health?classId=" + localStorage.getItem('clazzId') + "&healthType=step";
+        var data = {
+            method: 'openNewPage',
+            url: url
+        };
+
+        Bridge.callHandler(data, null, function (error) {
+            window.location.href = url;
+        });
+    }
+
+    toCalories() {
+        var url = WebServiceUtil.mobileServiceURL + "health?classId=" + localStorage.getItem('clazzId') + "&healthType=calories";
         var data = {
             method: 'openNewPage',
             url: url
@@ -66,12 +78,13 @@ export default class application extends React.Component {
                         <div className="app_list_img"><span className="message"></span></div>
                         <div className="app_list_text text_hidden">NFC</div>
                     </li>
-                    <li className="app_list" onClick={this.intoHealthList}>
+                    <li className="app_list" onClick={this.toStep}>
                         <div className="app_list_img"><span className="stepNumber"></span></div>
                         <div className="app_list_text text_hidden">步数</div>
                     </li>
-                    <li className="app_list" onClick={this.intoHealthList}>
+                    <li className="app_list" onClick={this.toCalories}>
                         <div className="app_list_img"><span className="calorie"></span></div>
+
                         <div className="app_list_text text_hidden">卡路里</div>
                     </li>
                 </div>

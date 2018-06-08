@@ -1,7 +1,8 @@
 var isDebug = false;
-var localDomain = "192.168.50.34";   //请求地址
+var localDomain = "192.168.50.15";   //请求地址
 var isDebugLocal = true;
-var localUrl = "192.168.50.163";    //跳转地址http:
+var localUrl = "192.168.50.186";    //跳转地址http:
+
 
 // //云校本地测试webService地址
 // var elearningWebserviceURLOfLocal = "http://" + localDomain + ":8888/elearning/elearningControl/";
@@ -63,6 +64,24 @@ WebServiceUtil.formatYMD = function (nS) {
     var date = da.getDate();
     var ymdStr = [year, month, date].join('-');
     return ymdStr;
+};
+
+/**
+ * 时间戳转年月日时分秒，完整时间显示
+ * @param nS
+ * @returns {string}
+ */
+WebServiceUtil.formatAllTime = function (nS) {
+    var da = new Date(parseInt(nS));
+    var year = da.getFullYear();
+    var month = da.getMonth() + 1;
+    var date = da.getDate();
+    var hour = da.getHours() + ":";
+    var minutes = da.getMinutes() + ":";
+    var sencond = da.getSeconds();
+    var dayStr = [year, month, date].join('-');
+    var dateStr = dayStr + " " + hour + minutes + sencond;
+    return dateStr;
 };
 
 /**
