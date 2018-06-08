@@ -348,11 +348,12 @@ export default class getClassTableList extends React.Component {
                                     })}
                                     platform="ios"
                                     color="#4dd865"
+                                    text-align="left"
                                     onClick={(checked) => {
                                         _this.changeStatus(checked, rowData)
                                     }}
                                 />}
-                            >开启状态：</List.Item>
+                            ><span className="open_text">开启状态：</span></List.Item>
                         </List>
                         <Button className="modifyBtn_common" type="primary" size="small" onClick={this.changeTableName.bind(this, rowData)}></Button>
                         <Button type="primary" size="small" className="btn_del deleteBtn_common"  onClick={this.showAlert.bind(this, rowData)}></Button>
@@ -371,7 +372,7 @@ export default class getClassTableList extends React.Component {
                             </div>
                         </div>
                         <div className="tableListDate textOver">
-                            <span className="classroom">创建时间：{rowData.createTime}</span>
+                            <span className="classroom"><span className="classroom_span">创建时间：</span>{rowData.createTime}</span>
                         </div>
 
                         {/*/!*Button<Button className="modifyBtn_common" type="primary" size="small" onClick={this.changeTableName.bind(this, rowData)}></Button>

@@ -364,7 +364,6 @@ export default class bindingBracelet extends React.Component {
                         <Card.Footer content={"班级" + ":" + rowData.bindingUser.clazz.name}
                                      extra={<div>ID:{rowData.bindingUser.colAccount}</div>}/>
                     </Card>
-                    <WhiteSpace size="lg"/>
                 </WingBlank>
             )
         };
@@ -410,7 +409,7 @@ export default class bindingBracelet extends React.Component {
                                 value={bindDing.state.macId}
                                 editable={false}
                             >MAC:</InputItem>
-                            <img className='scanIcon' src={require('../imgs/timg.png')} alt="" onClick={this.scanMac}/>
+                            <img className='scanIcon' src={require('../imgs/icon_scan.png')} alt="" onClick={this.scanMac}/>
                         </div>
 
                         <div className='stName'>
@@ -420,7 +419,7 @@ export default class bindingBracelet extends React.Component {
                                 onChange={this.inputOnChange.bind(this)}
                                 value={this.state.stNameValue}
                             >姓名:</InputItem>
-                            <img id='stIcon' className='stIcon' src={require('../imgs/search.png')}
+                            <img id='stIcon' className='stIcon' src={require('../imgs/icon_search.png')}
                                  onClick={this.searchWatchBindCandidate}/>
                         </div>
 
