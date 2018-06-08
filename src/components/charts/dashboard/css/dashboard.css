@@ -38,18 +38,12 @@
   color: #a6abb9;
   margin: 0;
 }
-#dashboard .bodyIcon i {
-  width: 40px;
-  height: 40px;
+#dashboard .bodyIcon img {
   display: block;
   position: absolute;
 }
-#dashboard .bodyIcon i.icon_topLeft {
+#dashboard .bodyIcon img.icon_topLeft {
   left: 2px;
-  top: 2px;
-}
-#dashboard .bodyIcon i.icon_topRight {
-  right: 2px;
   top: 2px;
   -webkit-transform: rotate(90deg);
   -moz-transform: rotate(90deg);
@@ -57,23 +51,27 @@
   -o-transform: rotate(90deg);
   transform: rotate(90deg);
 }
-#dashboard .bodyIcon i.icon_bottomLeft {
+#dashboard .bodyIcon img.icon_topRight {
+  right: 2px;
+  top: 2px;
+  -webkit-transform: rotate(180deg);
+  -moz-transform: rotate(180deg);
+  -ms-transform: rotate(180deg);
+  -o-transform: rotate(180deg);
+  transform: rotate(180deg);
+}
+#dashboard .bodyIcon img.icon_bottomLeft {
   left: 2px;
+  bottom: 15px;
+}
+#dashboard .bodyIcon img.icon_bottomRight {
+  right: 2px;
   bottom: 15px;
   -webkit-transform: rotate(270deg);
   -moz-transform: rotate(270deg);
   -ms-transform: rotate(270deg);
   -o-transform: rotate(270deg);
   transform: rotate(270deg);
-}
-#dashboard .bodyIcon i.icon_bottomRight {
-  right: 2px;
-  bottom: 15px;
-  -webkit-transform: rotate(180deg);
-  -moz-transform: rotate(180deg);
-  -ms-transform: rotate(180deg);
-  -o-transform: rotate(180deg);
-  transform: rotate(180deg);
 }
 #dashboard .numDiv {
   margin-bottom: 20px;
@@ -175,7 +173,6 @@
   width: 25%;
 }
 #dashboard .notice {
-  margin-left: 30px;
   width: 25%;
 }
 #dashboard .notice .am-notice-bar {

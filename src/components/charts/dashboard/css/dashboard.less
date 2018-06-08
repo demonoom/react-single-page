@@ -38,44 +38,43 @@
   }
 
   .bodyIcon{
-    i{
-      //background: url("../image/bodyIcon.gif") no-repeat;
-      width: 40px;
-      height: 40px;
-      display: block;
-      position: absolute;
-      &.icon_topLeft{
-        left: 2px;
-        top:2px;
+
+      img{
+        display: block;
+        position: absolute;
+        &.icon_topLeft{
+          left: 2px;
+          top:2px;
+          -webkit-transform: rotate(90deg);
+          -moz-transform: rotate(90deg);
+          -ms-transform: rotate(90deg);
+          -o-transform: rotate(90deg);
+          transform: rotate(90deg);
+        }
+        &.icon_topRight{
+          right: 2px;
+          top:2px;
+          -webkit-transform: rotate(180deg);
+          -moz-transform: rotate(180deg);
+          -ms-transform: rotate(180deg);
+          -o-transform: rotate(180deg);
+          transform: rotate(180deg);
+        }
+        &.icon_bottomLeft{
+          left: 2px;
+          bottom:15px;
+
+        }
+        &.icon_bottomRight{
+          right: 2px;
+          bottom:15px;
+          -webkit-transform: rotate(270deg);
+          -moz-transform: rotate(270deg);
+          -ms-transform: rotate(270deg);
+          -o-transform: rotate(270deg);
+          transform: rotate(270deg);
+        }
       }
-      &.icon_topRight{
-        right: 2px;
-        top:2px;
-        -webkit-transform: rotate(90deg);
-        -moz-transform: rotate(90deg);
-        -ms-transform: rotate(90deg);
-        -o-transform: rotate(90deg);
-        transform: rotate(90deg);
-      }
-      &.icon_bottomLeft{
-        left: 2px;
-        bottom:15px;
-        -webkit-transform: rotate(270deg);
-        -moz-transform: rotate(270deg);
-        -ms-transform: rotate(270deg);
-        -o-transform: rotate(270deg);
-        transform: rotate(270deg);
-      }
-      &.icon_bottomRight{
-        right: 2px;
-        bottom:15px;
-        -webkit-transform: rotate(180deg);
-        -moz-transform: rotate(180deg);
-        -ms-transform: rotate(180deg);
-        -o-transform: rotate(180deg);
-        transform: rotate(180deg);
-      }
-    }
   }
 
   .numDiv{
@@ -186,7 +185,6 @@
    }
  }
   .notice{
-    margin-left: 30px;
     width: 25%;
     .am-notice-bar{
       background: none;

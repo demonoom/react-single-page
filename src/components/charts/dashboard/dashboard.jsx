@@ -1306,17 +1306,15 @@ export default class dashboard extends React.Component {
 
                     <div className="topTitle clear">
                         <div className="bodyIcon">
-                            <i className="icon_topLeft">
-                                <img src={require("./image/bodyIcon.gif")}/>
-                            </i>
-                            <i className="icon_topRight"></i>
+                            <img className="icon_topLeft" src={require("./image/bodyIcon1.gif")}/>
+                            <img className="icon_topRight" src={require("./image/bodyIcon1.gif")}/>
                         </div>
                         <div className="notice fl">
                             <NoticeBar marqueeProps={{loop: true, style: {padding: '0 7.5px'}}}>
                                 {'正在开课:' + this.state.openClazzTrArray}
                             </NoticeBar>
                         </div>
-                        <div className="schoolName fl">{_this.state.schoolName}</div>
+                        <div className="schoolName fl">{/*{_this.state.schoolName}*/}西安市第九十九中学</div>
                     </div>
                     <div className="cont">
                         <div className="clear">
@@ -1403,8 +1401,8 @@ export default class dashboard extends React.Component {
                         </div>
                     </div>
                     <div className="bodyIcon">
-                        <i className="icon_bottomLeft"></i>
-                        <i className="icon_bottomRight"></i>
+                        <img className="icon_bottomLeft" src={require("./image/bodyIcon1.gif")}/>
+                        <img className="icon_bottomRight" src={require("./image/bodyIcon1.gif")}/>
                     </div>
 
                 </div>
