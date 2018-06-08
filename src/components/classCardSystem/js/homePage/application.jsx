@@ -63,12 +63,16 @@ export default class application extends React.Component {
                         <div className="app_list_text text_hidden">蚁巢作业</div>
                     </li>
                     <li className="app_list" onClick={this.intoNFC}>
-                        <div className="app_list_img"><span className="task"></span></div>
+                        <div className="app_list_img"><span className="message"></span></div>
                         <div className="app_list_text text_hidden">NFC</div>
                     </li>
                     <li className="app_list" onClick={this.intoHealthList}>
-                        <div className="app_list_img"><span className="task"></span></div>
-                        <div className="app_list_text text_hidden">健康数据</div>
+                        <div className="app_list_img"><span className="stepNumber"></span></div>
+                        <div className="app_list_text text_hidden">步数</div>
+                    </li>
+                    <li className="app_list" onClick={this.intoHealthList}>
+                        <div className="app_list_img"><span className="calorie"></span></div>
+                        <div className="app_list_text text_hidden">卡路里</div>
                     </li>
                 </div>
             </div>
