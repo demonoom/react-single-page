@@ -1,4 +1,3 @@
-(node) util.print is deprecated. Use console.log instead.
 #assessMoralEducation .textOver {
   line-height: 20px;
 }
@@ -10,7 +9,6 @@
 }
 #assessMoralEducation .classInfo {
   padding: 23px 15px 13px;
-  position: relative;
   font-size: 15px;
   color: #666;
 }

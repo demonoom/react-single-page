@@ -1,4 +1,19 @@
 (node) util.print is deprecated. Use console.log instead.
 .divContainer {
   overflow: auto;
+  background-color: #fff;
+}
+.divContainer .divContent {
+  font-size: 14px;
+  color: #666;
+  line-height: 20px;
+  padding: 15px;
+  padding-top: 0;
+  text-align: justify;
+}
+.divContainer .divContent h5 {
+  color: #333;
+  text-align: center;
+  font-size: 17px;
+  font-weight: normal;
 }

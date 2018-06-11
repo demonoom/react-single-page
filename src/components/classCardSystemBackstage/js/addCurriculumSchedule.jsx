@@ -385,7 +385,7 @@ export default class addCurriculumSchedule extends React.Component {
                 <div className="search_list my_flex">
                     <input type="text"
                            onChange={teacherV.teacgerChange.bind(this, i)}
-                           placeholder="请输入老师姓名"
+                           placeholder="请输入老师姓名并搜索"
                            value={teacherV.state.ClassTableDataArr[i].teacherId}
                     />
                     <img onClick={teacherV.getTeacherData.bind(this, i)} src={require("../imgs/icon_search.png")}/>
