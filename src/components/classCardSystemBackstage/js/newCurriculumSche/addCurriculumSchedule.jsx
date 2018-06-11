@@ -338,7 +338,7 @@ export default class addCurriculumSchedule extends React.Component {
                     <input type="text"
                            style={{'margin-left':'-8px'}}
                            onChange={teacherV.teacgerChange.bind(this, i)}
-                           placeholder="请输入老师姓名"
+                           placeholder="请输入老师姓名并搜索"
                            value={teacherV.state.ClassTableDataArr[i].tercherName}
                     />
                     <img onClick={teacherV.getTeacherData.bind(this, i)} src={require("../../imgs/icon_search.png")}/>
@@ -348,7 +348,7 @@ export default class addCurriculumSchedule extends React.Component {
                     <input type="text"
                            style={{'margin-left':'-8px'}}
                            onChange={teacherV.classChange.bind(this, i)}
-                           placeholder="请输入上课班级"
+                           placeholder="请输入上课班级并搜索"
                            value={teacherV.state.ClassTableDataArr[i].className}
                     />
                     <img onClick={teacherV.getClassData.bind(this, i)} src={require("../../imgs/icon_search.png")}/>
