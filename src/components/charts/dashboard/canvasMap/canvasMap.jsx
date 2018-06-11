@@ -34,11 +34,32 @@ export default class canvasMap extends React.Component {
         canvas.height = 550;
         context.lineWidth = 10;
         context.lineCap = 'round';
-        // demeanor.drawPoint()
-        // this.startStep()
         setInterval(function () {
             demeanor.viewRoomHeapmap()
         }, 1000)
+        this.getSchoolMapBySchoolId()
+    }
+
+    /**
+     * 查看学校绑定的所有地图
+     */
+    getSchoolMapBySchoolId() {
+        var param = {
+            "method": 'getSchoolMapBySchoolId',
+            "schId": localStorage.getItem('destId'),
+        };
+
+        WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
+            onResponse: function (result) {
+                console.log(result);
+                if (result.msg == '调用成功' || result.success == true) {
+                    // demeanor.drawPoint(result.response)
+                }
+            },
+            onError: function (error) {
+
+            }
+        });
     }
 
     /**
