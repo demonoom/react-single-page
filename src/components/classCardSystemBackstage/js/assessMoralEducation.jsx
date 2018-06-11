@@ -32,6 +32,7 @@ export default class assessMoralEducation extends React.Component {
         this.state = {
             dataSource: dataSource.cloneWithRows(this.initData),
             defaultPageNo: 1,
+            theFirstData:[],
             clientHeight: document.body.clientHeight,
             selectData: [],
             calmHeight: document.body.clientHeight - 150
@@ -53,7 +54,7 @@ export default class assessMoralEducation extends React.Component {
     componentDidMount() {
         Bridge.setShareAble("false");
         document.title = `${decodeURI(assessME.state.cName)}`;
-        this.getMoralEducationInfoList(assessME.state.classId)
+        this.getMoralEducationInfoList(assessME.state.classId,true)
         //添加对视窗大小的监听,在屏幕转换以及键盘弹起时重设各项高度
         window.addEventListener('resize', assessME.onWindowResize)
     }
@@ -78,13 +79,15 @@ export default class assessMoralEducation extends React.Component {
     /**
      * 查看对应教室ID的德育信息
      */
-    getMoralEducationInfoList(classId) {
+    getMoralEducationInfoList(classId,flag) {
         var _this = this;
-        _this.initData.splice(0);
-        _this.state.dataSource = [];
-        _this.state.dataSource = new ListView.DataSource({
-            rowHasChanged: (row1, row2) => row1 !== row2,
-        });
+        if(flag){
+            _this.initData.splice(0);
+            _this.state.dataSource = [];
+            _this.state.dataSource = new ListView.DataSource({
+                rowHasChanged: (row1, row2) => row1 !== row2,
+            });
+        }
         const dataBlob = {};
         var PageNo = this.state.defaultPageNo;
         var param = {
@@ -95,6 +98,9 @@ export default class assessMoralEducation extends React.Component {
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
             onResponse: function (result) {
                 if (result.msg == '调用成功' && result.success == true) {
+                    if(_this.state.defaultPageNo === 1){
+                        assessME.state.theFirstData = result.response;
+                    }
                     assessME.state.selectData = result.response
                     var arr = result.response;
                     var pager = result.pager;
@@ -108,6 +114,10 @@ export default class assessMoralEducation extends React.Component {
                             isLoading = false;
                         } else {
                             isLoading = true;
+                        }
+                        if(pager.pager > pager.pageCount){
+                            isLoading = false;
+                            return;
                         }
                     } else {
                         isLoading = false;
@@ -134,12 +144,12 @@ export default class assessMoralEducation extends React.Component {
     onEndReached = (event) => {
         var _this = this;
         var currentPageNo = this.state.defaultPageNo;
-        if (!this.state.isLoadingLeft && !this.state.hasMore) {
+        if (!this.state.isLoadingLeft) {
             return;
         }
         currentPageNo += 1;
         this.setState({ isLoadingLeft: true, defaultPageNo: currentPageNo });
-        _this.getMoralEducationInfoList(_this.state.classId);
+        _this.getMoralEducationInfoList(_this.state.classId,false);
         this.setState({
             dataSource: this.state.dataSource.cloneWithRows(this.initData),
             isLoadingLeft: true,
@@ -150,7 +160,7 @@ export default class assessMoralEducation extends React.Component {
         var divPull = document.getElementsByClassName('am-pull-to-refresh-content');
         divPull[0].style.transform = "translate3d(0px, 30px, 0px)";   //设置拉动后回到的位置
         this.setState({ defaultPageNo: 1, refreshing: true, isLoadingLeft: true });
-        this.getMoralEducationInfoList(this.state.classId);
+        this.getMoralEducationInfoList(this.state.classId,true);
     }
 
     /**
@@ -267,7 +277,7 @@ export default class assessMoralEducation extends React.Component {
 
                 <div className='tableDiv' style={{ height: assessME.state.clientHeight }}>
                     {
-                        assessME.state.selectData.length === 0 ?
+                        assessME.state.selectData.length === 0 && assessME.state.theFirstData.length === 0 ?
                             <div className="nodata">暂无德育评价信息</div>
                             : <ListView
                                 ref={el => this.lv = el}
