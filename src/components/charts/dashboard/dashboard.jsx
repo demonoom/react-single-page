@@ -48,191 +48,6 @@ var schema = [
 
 ];
 
-var itemStyle = {
-    normal: {
-        opacity: 0.8,
-        shadowBlur: 10,
-        shadowOffsetX: 0,
-        shadowOffsetY: 0,
-        shadowColor: 'rgba(0, 0, 0, 0.5)'
-    }
-};
-
-//班级柱状图option
-/*var optionForClassColumn = {
-    title: {
-        text: '学生考勤统计',
-        subtext: '',
-        left: 'left',
-    },
-    tooltip: {},
-    legend: {
-        data: ['人数'],
-        y: 'bottom',
-        x: 'left'
-    },
-    xAxis: {
-        data: ['应到', '实到', '缺勤']
-    },
-    yAxis: {},
-    series: [{
-        name: '人数',
-        type: 'bar',
-        data: [80, 50, 30],
-        itemStyle: {
-            //通常情况下：
-            normal: {
-                //每个柱子的颜色即为colorList数组里的每一项，如果柱子数目多于colorList的长度，则柱子颜色循环使用该数组
-                color: function (params) {
-                    var colorList = ['#00a8ff', '#00fdd8'];
-                    if ((params.dataIndex + 1) % 2 == 0) {//为偶数的数据使用第一个颜色，其他使用第二个颜色
-                        return colorList[0];//1,3,5,7
-                    } else {
-                        return colorList[1];//2,4,6,8
-                    }
-
-                }
-            },
-        },
-        label: {
-            normal: {
-                show: true,
-                position: 'top',
-            }
-        }
-    }]
-}*/
-
-var optionForClassColumn = {
-    title: {
-        text: '学生考勤统计',
-        subtext: '',
-        left: 'left',
-    },
-    tooltip: {},
-    legend: {
-        bottom: 0,
-        left: 'left',
-        data: ['应到', '实到', '缺勤']
-    },
-    series: [
-        {
-            type: 'pie',
-            radius: '50%',
-            center: ['50%', '50%'],
-            selectedMode: 'single',
-            data: [{value:1300, name: '应到'},
-                {value:1100, name: '实到'},
-                {value:200, name: '缺勤'}],
-            itemStyle: {
-                emphasis: {
-                    shadowBlur: 10,
-                    shadowOffsetX: 0,
-                    shadowColor: 'rgba(0, 0, 0, 0.5)'
-                }
-            },
-            /*label: {
-                normal: {
-                    formatter: '{d}%',
-                    textStyle: {
-                        fontWeight: 'normal',
-                        fontSize: 12
-                    }
-                }
-            }*/
-            label: {
-                normal: {
-                    formatter: '{b}:{c}人: ({d}%)',
-                    textStyle: {
-                        fontWeight: 'normal',
-                        fontSize: 12
-                    }
-                }
-            }
-        }
-    ]
-}
-
-//全校饼图考勤option
-var optionForSchoolPie = {
-    title: {
-        text: '学校考勤统计',
-        subtext: '应到人数 : ' + (867 + 2756) + '人',
-        left: 'left',
-    },
-    tooltip: {},
-    legend: {
-        bottom: 0,
-        left: 'left',
-        data: ['实到', '缺勤']
-    },
-    series: [
-        {
-            type: 'pie',
-            radius: '50%',
-            center: ['50%', '50%'],
-            selectedMode: 'single',
-            data: [{value: 2756, name: '实到'}, {value: 867, name: '缺勤'}],
-            itemStyle: {
-                emphasis: {
-                    shadowBlur: 10,
-                    shadowOffsetX: 0,
-                    shadowColor: 'rgba(0, 0, 0, 0.5)'
-                }
-            },
-            label: {
-                normal: {
-                    formatter: '{d}%',
-                    textStyle: {
-                        fontWeight: 'normal',
-                        fontSize: 12
-                    }
-                }
-            }
-        }
-    ]
-}
-
-//老师饼图考勤option
-var optionForTeacherPie = {
-    title: {
-        text: '教师考勤统计',
-        subtext: '',
-        left: 'left',
-    },
-    tooltip: {},
-    legend: {
-        bottom: 0,
-        left: 'left',
-        data: ['正常', '迟到', '早退', '缺勤']
-    },
-    series: [
-        {
-            type: 'pie',
-            radius: '50%',
-            center: ['50%', '50%'],
-            selectedMode: 'single',
-            data: [{value: 120, name: '正常'}, {value: 11, name: '迟到'}, {value: 3, name: '早退'}, {value: 9, name: '缺勤'}],
-            itemStyle: {
-                emphasis: {
-                    shadowBlur: 10,
-                    shadowOffsetX: 0,
-                    shadowColor: 'rgba(0, 0, 0, 0.5)'
-                }
-            },
-            label: {
-                normal: {
-                    formatter: '{d}%',
-                    textStyle: {
-                        fontWeight: 'normal',
-                        fontSize: 12
-                    }
-                }
-            }
-        }
-    ]
-}
-
 export default class dashboard extends React.Component {
 
     constructor(props) {
@@ -247,7 +62,7 @@ export default class dashboard extends React.Component {
 
     componentDidMount() {
         var _this = this;
-        document.title = '大数据管理驾驶舱';
+        document.title = '小蚂蚁智慧校园大数据管理驾驶舱';
         Bridge.setShareAble("false");
         Bridge.setRefreshAble("false");
         var locationHref = window.location.href;
@@ -257,12 +72,32 @@ export default class dashboard extends React.Component {
         var areaType = searchArray[1].split('=')[1];
         this.setState({destId, areaType});
         localStorage.setItem("destId", destId);
+        this.viewTeacherPunchStatistics(destId);
         //调取驾驶舱数据
         this.getDashBoardDataByArea(destId, areaType);
         /* setInterval(function () {
              //调取驾驶舱数据
              _this.getDashBoardDataByArea(destId, areaType);
          }, 1000 * 2)*/
+    }
+
+    viewTeacherPunchStatistics(destId, areaType) {
+        var _this = this;
+        var param;
+        param = {
+            "method": 'viewTeacherPunchStatistics',
+            "schId": destId,
+        };
+
+        WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
+            onResponse: function (result) {
+                var response = result.response;
+                _this.buildTeacherAttendancePieChart(response);
+            },
+            onError: function (error) {
+                Toast.fail(error, 1);
+            }
+        });
     }
 
     /**
@@ -328,112 +163,27 @@ export default class dashboard extends React.Component {
                     _this.buildCloudFileBarChart(cloudFileResults);
                 }
 
-                //蚁巢作业的发布情况统计
-                /*if (WebServiceUtil.isEmpty(topicHomeWorkResults) == false) {
-                    // _this.buildTopicHomeWorkTrArray(topicHomeWorkResults);
-                    if (topicHomeWorkResults.length >= 30) {
-                        _this.buildHomeWorkPieChart(topicHomeWorkResults.splice(0, 10));
-                    } else {
-                        _this.buildHomeWorkPieChart(topicHomeWorkResults);
-                    }
-                }*/
-
                 //班级课后作业的布置情况统计，统计每个班发布的题目数量
                 if (WebServiceUtil.isEmpty(homeWorkSubjectResults)==false && homeWorkSubjectResults.length >= 30) {
                     _this.buildHomeWorkPieChart(homeWorkSubjectResults.splice(0, 10));
                 } else {
                     _this.buildHomeWorkPieChart(homeWorkSubjectResults);
                 }
-                /*if (WebServiceUtil.isEmpty(homeWorkSubjectResults) == false) {
-                    // _this.buildTopicHomeWorkTrArray(topicHomeWorkResults);
-                    if (homeWorkSubjectResults.length >= 30) {
-                        _this.buildHomeWorkPieChart(homeWorkSubjectResults.splice(0, 10));
-                    } else {
-                        _this.buildHomeWorkPieChart(homeWorkSubjectResults);
-                    }
-                }*/
-
-                //正在上课的课堂列表
-                /*if (WebServiceUtil.isEmpty(vClazzResults) == false) {
-                    _this.buildOpenClazzTrArray(vClazzResults);
-                }*/
 
                 _this.buildOpenClazzTrArray(vClazzResults);
 
                 _this.buildStepBarChart(braceletSportSteps);
 
-                /*if (WebServiceUtil.isEmpty(braceletSportSteps) == false) {
-                    _this.buildStepBarChart(braceletSportSteps);
-                } else {
-                    var obj = [{
-                        clazz: {
-                            name: '一年级一班'
-                        },
-                        sportStep: 239
-                    }, {
-                        clazz: {
-                            name: '三年级一班'
-                        },
-                        sportStep: 2345
-                    }, {
-                        clazz: {
-                            name: '一年级四班'
-                        },
-                        sportStep: 4243
-                    }]
-                    _this.buildStepBarChart(obj);
-                }*/
-
                 //体育运动量
                 _this.buildSportsChart(braceletHeartRate);
-                /*if (WebServiceUtil.isEmpty(braceletHeartRate) == false) {
-                    _this.buildSportsChart(braceletHeartRate);
-                } else {
-                    // classHeartRateArray.push(sportData[k].braceletHeartRate.heartRate);
-                    // classNameArray.push(sportData[k].courseTableItem.clazz.name + sportData[k].courseTableItem.courseName+'课')
-                    let data = [
-                        {
-                            braceletHeartRate: {
-                                heartRate: 120,
-                            },
-                            courseTableItem: {
-                                clazz: {
-                                    name: '测试班'
-                                },
-                                courseName: '语文'
-                            }
-                        },
-                        {
-                            braceletHeartRate: {
-                                heartRate: 110,
-                            },
-                            courseTableItem: {
-                                clazz: {
-                                    name: '测试班'
-                                },
-                                courseName: '体育'
-                            }
-                        },
-                        {
-                            braceletHeartRate: {
-                                heartRate: 130,
-                            },
-                            courseTableItem: {
-                                clazz: {
-                                    name: '测试班'
-                                },
-                                courseName: '英语'
-                            }
-                        }
-                    ]
-                    _this.buildSportsChart(data);
-                }*/
 
                 _this.buildFlowPieChart(proceCountResults);
 
-                _this.buildTodayOpenClazzJson(todayOpenClazzResults, currentMonthOpenClazzResults);
+                _this.buildStudentAttendancePieChart();
 
-                _this.buildHotPlaceScatterChart();
+                // _this.buildTodayOpenClazzJson(todayOpenClazzResults, currentMonthOpenClazzResults);
+
+                // _this.buildHotPlaceScatterChart();
 
                 _this.setState({messageCount});
             },
@@ -513,40 +263,6 @@ export default class dashboard extends React.Component {
             </div>
         </div>;
         _this.setState({topicDiv});
-    }
-
-    /**
-     * 构建蚁盘统计数据的柱形图数据
-     */
-    buildCloudFileBarOption = (xClazzName, seriesData) => {
-        return {
-            xAxis: {
-                type: 'category',
-                data: xClazzName
-            },
-            yAxis: {
-                type: 'value'
-            },
-            series: [{
-                data: seriesData,
-                type: 'bar',
-                itemStyle: {
-                    //通常情况下：
-                    normal: {
-                        //每个柱子的颜色即为colorList数组里的每一项，如果柱子数目多于colorList的长度，则柱子颜色循环使用该数组
-                        color: function (params) {
-                            var colorList = ['#00a8ff', '#00fdd8'];
-                            if ((params.dataIndex + 1) % 2 == 0) {//为偶数的数据使用第一个颜色，其他使用第二个颜色
-                                return colorList[0];//1,3,5,7
-                            } else {
-                                return colorList[1];//2,4,6,8
-                            }
-
-                        }
-                    },
-                }
-            }]
-        };
     }
 
     /**
@@ -640,51 +356,6 @@ export default class dashboard extends React.Component {
         </div>;
         _this.setState({cloudFileDiv});
     }
-
-    /*buildHomeWorkOption = (xClazzNameArray, seriesDataArray) => {
-        return {
-            title: {
-                text: '课后作业布置情况分析',
-                subtext: '',
-                left: 'left',
-            },
-            tooltip: {
-                trigger: 'item',
-                formatter: "{a} <br/>{b} : {c} ({d}%)"
-            },
-            legend: {
-                bottom: '0',
-                left: 'left',
-                data: xClazzNameArray
-            },
-            series: [
-                {
-                    type: 'pie',
-                    radius: '60%',
-                    center: ['50%', '50%'],
-                    selectedMode: 'single',
-                    data: seriesDataArray,
-                    itemStyle: {
-
-                        emphasis: {
-                            shadowBlur: 10,
-                            shadowOffsetX: 0,
-                            shadowColor: 'rgba(0, 0, 0, 0.5)'
-                        }
-                    },
-                    label: {
-                        normal: {
-                            formatter: '{b}:{c}次: ({d}%)',
-                            textStyle: {
-                                fontWeight: 'normal',
-                                fontSize: 12
-                            }
-                        }
-                    }
-                }
-            ]
-        };
-    }*/
 
     buildHomeWorkOption = (xClazzNameArray, seriesDataArray) => {
         return {
@@ -789,21 +460,10 @@ export default class dashboard extends React.Component {
         _this.setState({homeWorkDiv});
     }
 
-    buildTopicHomeWorkTrArray = (topicHomeWorkResults) => {
-        var trArray = [];
-        topicHomeWorkResults.forEach(function (topicHomeWorkResult) {
-            var topicHomeWorkObj = JSON.parse(topicHomeWorkResult);
-            var clazzName = topicHomeWorkObj.col_name;
-            var totalTopic = topicHomeWorkObj.totalTopic;
-            var trObj = <tr>
-                <td>{clazzName}</td>
-                <td>{totalTopic}</td>
-            </tr>;
-            trArray.push(trObj);
-        });
-        this.setState({trArray});
-    }
-
+    /**
+     * 创建正在开课的跑马灯数据
+     * @param vClazzResults
+     */
     buildOpenClazzTrArray = (vClazzResults) => {
         var openClazzTrArray = '';
         vClazzResults.forEach(function (vClazzResult) {
@@ -815,7 +475,7 @@ export default class dashboard extends React.Component {
         this.setState({openClazzTrArray});
     }
 
-    buildTodayOpenClazzJson(todayOpenClazzResults, currentMonthOpenClazzResults) {
+    /*buildTodayOpenClazzJson(todayOpenClazzResults, currentMonthOpenClazzResults) {
         var todayOpenClazzJson = {
             "ie": 9743
         };
@@ -845,14 +505,14 @@ export default class dashboard extends React.Component {
         // this.buildOpenClazzBarAndPie(todayOpenClazzJson, monthOpenClazzJson.splice(0, 10));
 
         this.buildOpenClazzBarAndPie(todayOpenClazzJson, monthOpenClazzJson);
-    }
+    }*/
 
     /**
      * 开课次数统计的柱形图和饼图
      * @param todayOpenClazzJson
      * @param monthOpenClazzJson
      */
-    buildOpenClazzBarAndPie = (todayOpenClazzJson, monthOpenClazzJson) => {
+    /*buildOpenClazzBarAndPie = (todayOpenClazzJson, monthOpenClazzJson) => {
         var _this = this;
         var openClazzOption = _this.buildClazzOpenCountOption(todayOpenClazzJson, monthOpenClazzJson)
         var openClazzDiv = <div>
@@ -865,9 +525,9 @@ export default class dashboard extends React.Component {
             </div>
         </div>;
         _this.setState({openClazzDiv});
-    }
+    }*/
 
-    buildClazzOpenCountOption = (todayOpenClazzJson, monthOpenClazzJson) => {
+    /*buildClazzOpenCountOption = (todayOpenClazzJson, monthOpenClazzJson) => {
         return {
             tooltip: {},
             title: [{
@@ -975,7 +635,7 @@ export default class dashboard extends React.Component {
                 })
             }]
         };
-    }
+    }*/
 
     /**
      * 健康情况统计
@@ -1079,31 +739,20 @@ export default class dashboard extends React.Component {
         };
     }
 
-    onChartClick = (index, optional) => {
-        var arr = this.state.subjectDivContentArray;
-        var analysisUrl = WebServiceUtil.mobileServiceURL + "brotherXu?clazzId=" + this.state.clazzId + "&pushTime=" + this.state.pushTime + "&stuId=" + arr[index].stuJsonArray[optional.dataIndex].stuId;
-
-        var data = {
-            method: 'openNewPage',
-            url: analysisUrl,
-        };
-
-        Bridge.callHandler(data, null, function (error) {
-            window.location.href = analysisUrl;
-        });
-    };
-
-    buildHotPlaceScatterChart = () => {
+    /**
+     * 气泡图demo
+     */
+    /*buildHotPlaceScatterChart = () => {
         var _this = this;
 
-        /*var xClazzNameArray = [];
+        /!*var xClazzNameArray = [];
         var seriesDataArray = [];
         braceletSportSteps.forEach(function (braceletSportStepObj) {
             var clazzName = braceletSportStepObj.clazz.name;
             var sportStep = braceletSportStepObj.sportStep;
             xClazzNameArray.push(clazzName);
             seriesDataArray.push(sportStep);
-        });*/
+        });*!/
         var hotPlaceScatterOption = _this.buildHotPlaceScatterOption();
         var hotPlaceScatterChartDiv = <div>
             <div style={{height: '270px'}} className="echarts_wrap">
@@ -1114,12 +763,12 @@ export default class dashboard extends React.Component {
             </div>
         </div>;
         _this.setState({hotPlaceScatterChartDiv});
-    }
+    }*/
 
     /**
      * 创建学生活动的热点图
      */
-    buildHotPlaceScatterOption = () => {
+    /*buildHotPlaceScatterOption = () => {
         return {
             backgroundColor: '#404a59',
             color: [
@@ -1195,7 +844,7 @@ export default class dashboard extends React.Component {
                 }
             ]
         };
-    }
+    }*/
 
 
     //创建体育运动统计图
@@ -1301,7 +950,12 @@ export default class dashboard extends React.Component {
         _this.setState({flowPieChartDiv});
     }
 
-    //教务审批统计option
+    /**
+     * 教务审批统计option
+     * @param xFlowNameArray
+     * @param ySeriesDataArray
+     * @returns {{title: {text: string, subtext: string, left: string}, tooltip: {}, legend: {bottom: number, left: string, data: *}, series: [null]}}
+     */
     buildFlowOption = (xFlowNameArray, ySeriesDataArray) => {
         return {
             title: {
@@ -1329,15 +983,6 @@ export default class dashboard extends React.Component {
                             shadowColor: 'rgba(0, 0, 0, 0.5)'
                         }
                     },
-                    /*label: {
-                        normal: {
-                            formatter: '{d}%',
-                            textStyle: {
-                                fontWeight: 'normal',
-                                fontSize: 12
-                            }
-                        }
-                    }*/
                     label: {
                         normal: {
                             formatter: '{b}:{c}次: ({d}%)',
@@ -1350,6 +995,233 @@ export default class dashboard extends React.Component {
                 }
             ]
         }
+    }
+
+    /**
+     * 老师考勤统计
+     * @param
+     */
+    buildTeacherAttendancePieChart = (attendanceResults) => {
+        var _this = this;
+        var xAttendanceNameArray = [];
+        var ySeriesDataArray = [];
+        if(WebServiceUtil.isEmpty(attendanceResults)==false){
+            console.log(attendanceResults);
+            var absent = attendanceResults["absent"];
+            var early = attendanceResults["early"];
+            var late = attendanceResults["late"];
+            var miss = attendanceResults["miss"];
+            var sum = attendanceResults["sum"];
+            var othersData = 0;
+            if(WebServiceUtil.isEmpty(absent)==false){
+                xAttendanceNameArray.push("旷工");
+                var absentJson = {value: absent, name: '旷工'};
+                ySeriesDataArray.push(absentJson);
+                othersData += parseInt(absent);
+            }
+            if(WebServiceUtil.isEmpty(early)==false){
+                xAttendanceNameArray.push("早退");
+                var earlyJson = {value: early, name: '早退'};
+                ySeriesDataArray.push(earlyJson);
+                othersData += parseInt(early);
+            }
+            if(WebServiceUtil.isEmpty(late)==false){
+                xAttendanceNameArray.push("迟到");
+                var lateJson = {value: late, name: '迟到'};
+                ySeriesDataArray.push(lateJson);
+                othersData += parseInt(late);
+            }
+            if(WebServiceUtil.isEmpty(miss)==false){
+                xAttendanceNameArray.push("缺勤");
+                var missJson = {value: miss, name: '缺勤'};
+                ySeriesDataArray.push(missJson);
+                othersData += parseInt(miss);
+            }
+            if(WebServiceUtil.isEmpty(sum)==false){
+                var normal = parseInt(sum) - parseInt(othersData);
+                xAttendanceNameArray.push("正常");
+                var normalJson = {value: normal, name: '正常'};
+                ySeriesDataArray.push(normalJson);
+            }
+
+        }
+        var attendanceOption = _this.buildTeacherAttendanceOption(xAttendanceNameArray, ySeriesDataArray)
+        var attendancePieChartDiv = <div>
+            <div style={{width: '100%', height: '270px'}} className="echarts_wrap">
+                <ReactEcharts
+                    option={attendanceOption}
+                    style={{height: '100%', width: '100%'}}
+                    theme='chalk2'
+                    className=''/>
+            </div>
+        </div>;
+        _this.setState({attendancePieChartDiv});
+    }
+
+    /**
+     * 构建老师考勤报表的Option结构
+     * @param xFlowNameArray
+     * @param ySeriesDataArray
+     * @returns {{title: {text: string, subtext: string, left: string}, tooltip: {}, legend: {bottom: number, left: string, data: *}, series: [null]}}
+     */
+    buildTeacherAttendanceOption = (xAttendanceNameArray, ySeriesDataArray) => {
+        return {
+            title: {
+                text: '教师考勤统计',
+                subtext: '',
+                left: 'left',
+            },
+            tooltip: {},
+            legend: {
+                bottom: 0,
+                left: 'left',
+                data: xAttendanceNameArray
+            },
+            series: [
+                {
+                    type: 'pie',
+                    radius: '50%',
+                    center: ['50%', '50%'],
+                    selectedMode: 'single',
+                    data: ySeriesDataArray,
+                    itemStyle: {
+                        emphasis: {
+                            shadowBlur: 10,
+                            shadowOffsetX: 0,
+                            shadowColor: 'rgba(0, 0, 0, 0.5)'
+                        }
+                    },
+                    label: {
+                        normal: {
+                            formatter: '{b}:{c}人: ({d}%)',
+                            textStyle: {
+                                fontWeight: 'normal',
+                                fontSize: 12
+                            }
+                        }
+                    }
+                }
+            ]
+        };
+    }
+
+    /**
+     * 学生考勤统计
+     * @param
+     */
+    buildStudentAttendancePieChart = (attendanceResults) => {
+        var _this = this;
+        var xAttendanceNameArray = [];
+        var ySeriesDataArray = [];
+        if(WebServiceUtil.isEmpty(attendanceResults)==false){
+            console.log(attendanceResults);
+            var absent = attendanceResults["absent"];
+            var early = attendanceResults["early"];
+            var late = attendanceResults["late"];
+            var miss = attendanceResults["miss"];
+            var sum = attendanceResults["sum"];
+            var othersData = 0;
+            if(WebServiceUtil.isEmpty(absent)==false){
+                xAttendanceNameArray.push("旷工");
+                var absentJson = {value: absent, name: '旷工'};
+                ySeriesDataArray.push(absentJson);
+                othersData += parseInt(absent);
+            }
+            if(WebServiceUtil.isEmpty(early)==false){
+                xAttendanceNameArray.push("早退");
+                var earlyJson = {value: early, name: '早退'};
+                ySeriesDataArray.push(earlyJson);
+                othersData += parseInt(early);
+            }
+            if(WebServiceUtil.isEmpty(late)==false){
+                xAttendanceNameArray.push("迟到");
+                var lateJson = {value: late, name: '迟到'};
+                ySeriesDataArray.push(lateJson);
+                othersData += parseInt(late);
+            }
+            if(WebServiceUtil.isEmpty(miss)==false){
+                xAttendanceNameArray.push("缺勤");
+                var missJson = {value: miss, name: '缺勤'};
+                ySeriesDataArray.push(missJson);
+                othersData += parseInt(miss);
+            }
+            if(WebServiceUtil.isEmpty(sum)==false){
+                var normal = parseInt(sum) - parseInt(othersData);
+                xAttendanceNameArray.push("正常");
+                var normalJson = {value: normal, name: '正常'};
+                ySeriesDataArray.push(normalJson);
+            }
+
+        }
+        var attendanceOption = _this.buildStudentAttendanceOption(xAttendanceNameArray, ySeriesDataArray)
+        var studentAttendancePieChartDiv = <div>
+            <div style={{width: '100%', height: '270px'}} className="echarts_wrap">
+                <ReactEcharts
+                    option={attendanceOption}
+                    style={{height: '100%', width: '100%'}}
+                    theme='chalk2'
+                    className=''/>
+            </div>
+        </div>;
+        _this.setState({studentAttendancePieChartDiv});
+    }
+
+    /**
+     * 构建学生考勤报表的Option结构
+     * @param xFlowNameArray
+     * @param ySeriesDataArray
+     * @returns {{title: {text: string, subtext: string, left: string}, tooltip: {}, legend: {bottom: number, left: string, data: *}, series: [null]}}
+     */
+    buildStudentAttendanceOption = (xAttendanceNameArray, ySeriesDataArray) => {
+        return {
+            title: {
+                text: '学生考勤统计',
+                subtext: '',
+                left: 'left',
+            },
+            tooltip: {},
+            legend: {
+                bottom: 0,
+                left: 'left',
+                data: ['应到', '实到', '缺勤']
+            },
+            series: [
+                {
+                    type: 'pie',
+                    radius: '50%',
+                    center: ['50%', '50%'],
+                    selectedMode: 'single',
+                    data: [{value:1100, name: '应到'},
+                        {value:1100, name: '实到'},
+                        {value:200, name: '缺勤'}],
+                    itemStyle: {
+                        emphasis: {
+                            shadowBlur: 10,
+                            shadowOffsetX: 0,
+                            shadowColor: 'rgba(0, 0, 0, 0.5)'
+                        }
+                    },
+                    /*label: {
+                        normal: {
+                            formatter: '{d}%',
+                            textStyle: {
+                                fontWeight: 'normal',
+                                fontSize: 12
+                            }
+                        }
+                    }*/
+                    label: {
+                        normal: {
+                            formatter: '{b}:{c}人: ({d}%)',
+                            textStyle: {
+                                fontWeight: 'normal',
+                                fontSize: 12
+                            }
+                        }
+                    }
+                }
+            ]
+        };
     }
 
     render() {
@@ -1400,13 +1272,14 @@ export default class dashboard extends React.Component {
 
                                 {/*学生考勤班级柱状图*/}
                                 <div className="list_wrap_padding">
-                                    <div style={{height: '270px'}} className="echarts_wrap">
+                                    {/*<div style={{height: '270px'}} className="echarts_wrap">
                                         <ReactEcharts
                                             option={optionForClassColumn}
                                             style={{height: '100%', width: '100%'}}
                                             theme='chalk2'
                                             className=''/>
-                                    </div>
+                                    </div>*/}
+                                    {this.state.studentAttendancePieChartDiv}
                                 </div>
                             </div>
 
@@ -1431,13 +1304,14 @@ export default class dashboard extends React.Component {
 
                             {/*教师考勤饼图*/}
                             <div className="list_wrap_padding">
-                                <div style={{height: '270px'}} className="echarts_wrap">
+                                {/*<div style={{height: '270px'}} className="echarts_wrap">
                                     <ReactEcharts
                                         option={optionForTeacherPie}
                                         style={{height: '100%', width: '100%'}}
                                         theme='chalk2'
                                         className=''/>
-                                </div>
+                                </div>*/}
+                                {this.state.attendancePieChartDiv}
                             </div>
 
                             {/*全校考勤饼图*/}
