@@ -1,3 +1,4 @@
+(node) util.print is deprecated. Use console.log instead.
 #classCardHomePage .home_right {
   width: 13.33rem;
   float: right;
@@ -168,8 +169,8 @@
   border-top: 1px solid #e5ebf7;
 }
 #classCardHomePage .application_cont {
-  padding: 0.56rem 0.83rem 0.56rem 0.61rem;
-  height: 5.28rem;
+  padding: 0.56rem 0.83rem 0 0.61rem;
+  height: 6rem;
   overflow-x: hidden;
   overflow-y: auto;
 }
@@ -191,6 +192,27 @@
   width: 1.94rem;
   height: 1.94rem;
   background: url("../imgs/icon_task.png");
+  display: inline-block;
+  background-size: 100% 100%;
+}
+#classCardHomePage .app_list_img .stepNumber {
+  width: 1.94rem;
+  height: 1.94rem;
+  background: url("../imgs/icon_stepNumber.png");
+  display: inline-block;
+  background-size: 100% 100%;
+}
+#classCardHomePage .app_list_img .calorie {
+  width: 1.94rem;
+  height: 1.94rem;
+  background: url("../imgs/icon_calorie.png");
+  display: inline-block;
+  background-size: 100% 100%;
+}
+#classCardHomePage .app_list_img .message {
+  width: 1.94rem;
+  height: 1.94rem;
+  background: url("../imgs/icon_message.png");
   display: inline-block;
   background-size: 100% 100%;
 }

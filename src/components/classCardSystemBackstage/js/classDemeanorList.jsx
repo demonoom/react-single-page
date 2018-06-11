@@ -81,6 +81,7 @@ export default class classDemeanorList extends React.Component {
         }
         return (
             <div id="classDemeanorList" style={{height: document.body.clientHeight}}>
+                <div className="noticeMsg_common">请在列表中选择班级进行设置</div>
                 <ul>
                     {items}
                 </ul>
