@@ -287,8 +287,7 @@ export default class dashboard extends React.Component {
                 //学校总人数
                 var userCountOfSchool = jsonObj.userCountOfSchool;
                 //全校教研活动量
-                // var messageCount = jsonObj.messageCount;
-                var messageCount = 1380;
+                var messageCount = jsonObj.messageCount;
                 //蚁巢活跃量
                 var topicResults = jsonObj.topicResult;
                 //每个学校老师上传的蚁盘资源数量
@@ -317,21 +316,16 @@ export default class dashboard extends React.Component {
                     _this.setState({userCount, schoolName});
                 }
                 //蚁巢班级数量
-                if (WebServiceUtil.isEmpty(topicResults) == false) {
-                    if (topicResults.length >= 30) {
-                        _this.buildTopicBarChart(topicResults.splice(0, 10));
-                    } else {
-                        _this.buildTopicBarChart(topicResults);
-                    }
-
+                if (WebServiceUtil.isEmpty(topicResults) == false && topicResults.length >= 30) {
+                    _this.buildTopicBarChart(topicResults.splice(0, 10));
+                } else {
+                    _this.buildTopicBarChart(topicResults);
                 }
                 //老师蚁盘资源上传情况
-                if (WebServiceUtil.isEmpty(cloudFileResults) == false) {
-                    if (cloudFileResults.length >= 30) {
-                        _this.buildCloudFileBarChart(cloudFileResults.splice(0, 10));
-                    } else {
-                        _this.buildCloudFileBarChart(cloudFileResults);
-                    }
+                if (WebServiceUtil.isEmpty(cloudFileResults) == false && cloudFileResults.length >= 30) {
+                    _this.buildCloudFileBarChart(cloudFileResults.splice(0, 10));
+                } else {
+                    _this.buildCloudFileBarChart(cloudFileResults);
                 }
 
                 //蚁巢作业的发布情况统计
@@ -366,7 +360,9 @@ export default class dashboard extends React.Component {
 
                 _this.buildOpenClazzTrArray(vClazzResults);
 
-                if (WebServiceUtil.isEmpty(braceletSportSteps) == false) {
+                _this.buildStepBarChart(braceletSportSteps);
+
+                /*if (WebServiceUtil.isEmpty(braceletSportSteps) == false) {
                     _this.buildStepBarChart(braceletSportSteps);
                 } else {
                     var obj = [{
@@ -386,10 +382,11 @@ export default class dashboard extends React.Component {
                         sportStep: 4243
                     }]
                     _this.buildStepBarChart(obj);
-                }
+                }*/
 
                 //体育运动量
-                if (WebServiceUtil.isEmpty(braceletHeartRate) == false) {
+                _this.buildSportsChart(braceletHeartRate);
+                /*if (WebServiceUtil.isEmpty(braceletHeartRate) == false) {
                     _this.buildSportsChart(braceletHeartRate);
                 } else {
                     // classHeartRateArray.push(sportData[k].braceletHeartRate.heartRate);
@@ -430,7 +427,7 @@ export default class dashboard extends React.Component {
                         }
                     ]
                     _this.buildSportsChart(data);
-                }
+                }*/
 
                 _this.buildFlowPieChart(proceCountResults);
 
@@ -779,14 +776,6 @@ export default class dashboard extends React.Component {
                 seriesDataArray.push(subjectCount);
             })
         }
-        xClazzNameArray.push("六年级五班");
-        // seriesDataArray.push(subjectCount);
-        var subjectCount = Math.ceil(Math.random()*10)+20;
-        seriesDataArray.push(subjectCount);
-        xClazzNameArray.push("四年级三班");
-        // seriesDataArray.push(subjectCount);
-        var subjectCount2 = Math.ceil(Math.random()*10)+20;
-        seriesDataArray.push(subjectCount2);
         var homeWorkOption = _this.buildHomeWorkOption(xClazzNameArray, seriesDataArray);
         var homeWorkDiv = <div>
             <div style={{height: '270px'}} className="echarts_wrap">
@@ -821,7 +810,7 @@ export default class dashboard extends React.Component {
             var vClazzObj = JSON.parse(vClazzResult);
             openClazzTrArray += vClazzObj.clazz.name + ' ' + vClazzObj.course.name + ' ' + vClazzObj.teacher.userName
         });
-        openClazzTrArray += "四年级三班" + ' ' + "数学" + ' ' + "王宁";
+        // openClazzTrArray += "四年级三班" + ' ' + "数学" + ' ' + "王宁";
         // openClazzTrArray += "五年级一班" + ' ' + "语文" + ' ' + "李思";
         this.setState({openClazzTrArray});
     }
@@ -1379,7 +1368,7 @@ export default class dashboard extends React.Component {
                                 {'正在开课:' + this.state.openClazzTrArray}
                             </NoticeBar>
                         </div>
-                        <div className="schoolName fl">{/*{_this.state.schoolName}*/}西安市第九十九中学</div>
+                        <div className="schoolName fl">{_this.state.schoolName}{/*西安市第九十九中学*/}</div>
                     </div>
                     <div className="cont">
                         <div className="clear">
