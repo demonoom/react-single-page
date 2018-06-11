@@ -174,7 +174,7 @@ export default class studentMovement extends React.Component {
 
     buildLine(data) {
         if (WebServiceUtil.isEmpty(data.content)) {
-            Toast.fail('未查到相关数据')
+            Toast.fail('未查到相关数据',3)
             return
         }
         var roomArr = []

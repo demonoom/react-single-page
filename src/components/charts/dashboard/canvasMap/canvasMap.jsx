@@ -48,7 +48,6 @@ export default class canvasMap extends React.Component {
 
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
             onResponse: function (result) {
-                console.log(result);
                 if (result.msg == '调用成功' || result.success == true) {
                     var sectionStyle = {
                         backgroundSize: "100% 100%",
@@ -56,9 +55,10 @@ export default class canvasMap extends React.Component {
                     };
                     _this.setState({sectionStyle});
                     //查看当前时间的教室人数热点图
+                    demeanor.viewRoomHeapmap()
                     timer = setInterval(function () {
                         demeanor.viewRoomHeapmap()
-                    }, 1000)
+                    }, 10000)
                 }
             },
             onError: function (error) {
@@ -72,8 +72,10 @@ export default class canvasMap extends React.Component {
      */
     viewRoomHeapmap() {
         var param = {
-            "method": 'viewRoomHeapmap',
-            "schId": localStorage.getItem('destId'),
+            // "method": 'viewRoomHeapmap',
+            "method": 'getBraceletStudentLocationBySchoolId',
+            // "schId": localStorage.getItem('destId'),
+            "schoolId": localStorage.getItem('destId'),
         };
 
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
@@ -104,7 +106,13 @@ export default class canvasMap extends React.Component {
                     var numY = Math.random() * 10 * Math.pow(-1, Math.round(Math.random()));
 
                     context.beginPath()
-                    context.strokeStyle = 'black';
+                    if (v.count < 20) {
+                        context.strokeStyle = '#0000ff';
+                    } else if (v.count > 50) {
+                        context.strokeStyle = '#c00000';
+                    } else {
+                        context.strokeStyle = '#fffc00';
+                    }
                     context.lineTo(canvas.width * v.location.x + numX, canvas.height * v.location.y + numY);
                     context.stroke();
                 }
@@ -114,8 +122,10 @@ export default class canvasMap extends React.Component {
 
     render() {
         return (
-            <div id="canvasMap" style={this.state.sectionStyle}>
-                <canvas id="noom"></canvas>
+            <div id="canvasMap">
+                <canvas
+                    id="noom" style={this.state.sectionStyle}
+                />
             </div>
         );
     }

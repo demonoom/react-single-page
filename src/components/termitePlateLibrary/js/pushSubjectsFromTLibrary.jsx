@@ -213,7 +213,7 @@ export default class pushSubjectsFromTLibrary extends React.Component {
     pushSubjects() {
         //向客户端发送id,交给客户端处理
         if (tLibrary.state.pushSubjectsArr.length == 0) {
-            Toast.fail('请选择要推送的题目', 1);
+            Toast.fail('请选择要推送的题目', 3);
             return
         }
         var ids = tLibrary.state.pushSubjectsArr.join(',');

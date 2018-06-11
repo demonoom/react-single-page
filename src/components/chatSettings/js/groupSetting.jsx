@@ -507,7 +507,7 @@ export default class groupSetting extends React.Component {
     changeChatGroupName(value) {
         var _this = this;
         if (value.trim().length == 0) {
-            Toast.fail('群组名称不能为空', 1);
+            Toast.fail('群组名称不能为空', 3);
             return
         }
         var param = {
@@ -580,7 +580,7 @@ export default class groupSetting extends React.Component {
                         Toast.fail(error, 2);
                     });
                 } else {
-                    Toast.fail('退出群聊失败', 1);
+                    Toast.fail('退出群聊失败', 2);
                 }
             }
         })
@@ -617,7 +617,7 @@ export default class groupSetting extends React.Component {
                 if (result.msg == '调用成功' && result.success == true) {
 
                 } else {
-                    Toast.fail(result.msg, 1);
+                    Toast.fail(result.msg, 2);
                 }
             }
         })

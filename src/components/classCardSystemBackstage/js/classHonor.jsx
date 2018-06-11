@@ -72,7 +72,7 @@ export default class classHonor extends React.Component {
      */
     uploadImg = () => {
         if (demeanor.state.imgFromAndArr.length == 0) {
-            Toast.fail('请先选择照片')
+            Toast.fail('请先选择照片',2)
             return
         }
         // if (WebServiceUtil.isEmpty(demeanor.state.asyncValue)) {

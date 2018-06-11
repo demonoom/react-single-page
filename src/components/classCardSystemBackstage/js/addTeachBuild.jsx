@@ -45,7 +45,7 @@ export default class addTeachBuild extends React.Component {
                         console.log(error);
                     });
                 } else {
-                    Toast.fail(result.msg, 1);
+                    Toast.fail(result.msg, 3);
                 }
             },
             onError: function (error) {

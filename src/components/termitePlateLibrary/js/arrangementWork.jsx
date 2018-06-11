@@ -210,7 +210,7 @@ export default class arrangementWork extends React.Component {
     arrangementWork() {
         //向客户端发送id,交给客户端处理
         if (tLibrary.state.arrangementWorkArr.length == 0) {
-            Toast.fail('请选择要布置的题目', 1);
+            Toast.fail('请选择要布置的题目', 2);
             return
         }
 

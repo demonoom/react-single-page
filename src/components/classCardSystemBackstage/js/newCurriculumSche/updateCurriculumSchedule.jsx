@@ -144,7 +144,7 @@ export default class updateCurriculumSchedule extends React.Component {
     addCourseTableItem = () => {
         var _this = this;
         if (this.state.asyncValue.length == 0) {
-            Toast.fail('请选择星期');
+            Toast.fail('请选择星期',2);
             return
         }
         // if (this.state.indexAsyncValue.length == 0) {
@@ -152,13 +152,13 @@ export default class updateCurriculumSchedule extends React.Component {
         //     return
         // }
         if (this.state.ClassTableDataArr.length == 0) {
-            Toast.fail('课表不能为空');
+            Toast.fail('课表不能为空',2);
             return
         }
         for (var i = 0; i < this.state.ClassTableDataArr.length; i++) {
             var v = this.state.ClassTableDataArr[i];
             if (v.startTimeData == '开始时间' || v.endTimeData == '结束时间' || v.clazzName == '' || v.teacherId == '' || v.classId == '') {
-                Toast.fail('课表存在空值');
+                Toast.fail('课表存在空值',2);
                 return false
             }
         }
@@ -196,7 +196,7 @@ export default class updateCurriculumSchedule extends React.Component {
                         });
                     }, 1000)
                 } else {
-                    Toast.fail(result.msg, 1);
+                    Toast.fail(result.msg, 3);
                 }
             },
             onError: function (error) {

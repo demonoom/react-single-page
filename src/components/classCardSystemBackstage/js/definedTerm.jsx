@@ -54,11 +54,11 @@ export default class definedTerm extends React.Component {
         var startDateTime = this.state.startDateTime;
         var endDateTime = this.state.endDateTime;
         if (WebServiceUtil.isEmpty(inputValue)) {
-            Toast.fail('请确定已选择时间并填写学期名称');
+            Toast.fail('请确定已选择时间并填写学期名称',3);
             return
         }
         if (startDateTime === endDateTime) {
-            Toast.fail('日期设置错误,请检查');
+            Toast.fail('日期设置错误,请检查',3);
             return
         }
         var time = new Date().getFullYear() + '';
@@ -92,7 +92,7 @@ export default class definedTerm extends React.Component {
                         });
                     }, 1000)
                 } else {
-                    Toast.fail(result.msg)
+                    Toast.fail(result.msg,3)
                 }
             },
             onError: function (error) {

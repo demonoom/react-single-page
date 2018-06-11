@@ -211,7 +211,14 @@ export default class dashboard extends React.Component {
             },
             xAxis: {
                 type: 'category',
-                data: xClazzName
+                data: xClazzName,
+                padding: [5, 10],
+                axisLabel: {
+                    //这个是倾斜角度，也是考虑到文字过多的时候，方式覆盖采用倾斜
+                    rotate: 40,
+                    //这里是考虑到x轴文件过多的时候设置的，如果文字太多，默认是间隔显示，设置为0，标示全部显示，当然，如果x轴都不显示，那也就没有意义了
+                    interval :0
+                }
             },
             yAxis: {
                 type: 'value'
@@ -253,7 +260,7 @@ export default class dashboard extends React.Component {
         var seriesDataArray = [];
         topicResults.forEach(function (topicResult) {
             var topicObj = JSON.parse(topicResult);
-            var clazzName = topicObj.col_name;
+            var clazzName = topicObj.clazz.grade.name + '' + topicObj.col_name;
             var totalTopic = topicObj.totalTopic;
             xClazzNameArray.push(clazzName);
             seriesDataArray.push(totalTopic);
@@ -1017,13 +1024,15 @@ export default class dashboard extends React.Component {
             var early = attendanceResults["early"];
             var late = attendanceResults["late"];
             var miss = attendanceResults["miss"];
+            var missPeople = attendanceResults["missPeople"];
             var sum = attendanceResults["sum"];
+            var normal = attendanceResults["normal"];
             var othersData = 0;
             if(WebServiceUtil.isEmpty(absent)==false){
                 xAttendanceNameArray.push("旷工");
                 var absentJson = {value: absent, name: '旷工'};
                 ySeriesDataArray.push(absentJson);
-                othersData += parseInt(absent);
+                // othersData += parseInt(absent);
             }
             if(WebServiceUtil.isEmpty(early)==false){
                 xAttendanceNameArray.push("早退");
@@ -1038,13 +1047,19 @@ export default class dashboard extends React.Component {
                 othersData += parseInt(late);
             }
             if(WebServiceUtil.isEmpty(miss)==false){
-                xAttendanceNameArray.push("缺勤");
-                var missJson = {value: miss, name: '缺勤'};
-                ySeriesDataArray.push(missJson);
+               /* xAttendanceNameArray.push("缺勤");
+                var missPerson = parseInt(parseInt(miss)/2);
+                var missJson = {value: missPerson, name: '缺勤'};
+                ySeriesDataArray.push(missJson);*/
                 othersData += parseInt(miss);
             }
-            if(WebServiceUtil.isEmpty(sum)==false){
-                var normal = parseInt(sum) - parseInt(othersData);
+            if(WebServiceUtil.isEmpty(missPeople)==false){
+                xAttendanceNameArray.push("缺卡");
+                var missPeopleJson = {value: missPeople, name: '缺卡'};
+                ySeriesDataArray.push(missPeopleJson);
+            }
+            if(WebServiceUtil.isEmpty(normal)==false){
+                // var normal = parseInt(sum) - parseInt(othersData);
                 xAttendanceNameArray.push("正常");
                 var normalJson = {value: normal, name: '正常'};
                 ySeriesDataArray.push(normalJson);

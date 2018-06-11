@@ -74,7 +74,7 @@ export default class schoolPlan extends React.Component {
      */
     uploadImg = () => {
         if (sPlan.state.imgArrAtUp.length == 0) {
-            Toast.fail('请先选择照片')
+            Toast.fail('请先选择照片',2)
             return
         }
         if (sPlan.state.imgArrAtShow.length == 1) {
