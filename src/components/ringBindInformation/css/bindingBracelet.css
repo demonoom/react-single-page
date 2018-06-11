@@ -1,3 +1,4 @@
+(node) util.print is deprecated. Use console.log instead.
 #bindingBracelet {
   font-size: 17px;
 }
@@ -41,6 +42,9 @@
 }
 #bindingBracelet .tableDiv .am-card-footer {
   margin-bottom: 1rem;
+  padding: 0;
+  color: #666;
+  font-size: 15px;
 }
 #bindingBracelet .tableDiv .am-card-header-extra {
   width: 70px;
@@ -78,7 +82,8 @@
   width: 44px;
   height: 44px;
   border-radius: 50%;
-  margin-right: 1rem;
+  margin-right: 15px;
+  margin-top: 2px;
 }
 #bindingBracelet .tableDiv .addBunton {
   width: 3rem;
@@ -92,6 +97,38 @@
 }
 #bindingBracelet .tableDiv .liName {
   font-size: 30px;
+}
+#bindingBracelet .tableDiv .studentCardHeader {
+  padding: 11px 0 !important;
+}
+#bindingBracelet .tableDiv .studentCardHeader .am-card-header-content img {
+  float: left;
+}
+#bindingBracelet .student_contList {
+  margin-bottom: 15px;
+}
+#bindingBracelet .student_contList div {
+  display: inline-block;
+}
+#bindingBracelet .student_contList .student_list {
+  width: 60%;
+}
+#bindingBracelet .student_contList .student_list2 {
+  width: calc(40% - 15px);
+  margin-left: 15px;
+  text-align: right;
+}
+#bindingBracelet .studen_contList2 {
+  line-height: 34px;
+}
+#bindingBracelet .studen_contList2 span {
+  float: left;
+}
+#bindingBracelet .studen_contList2 .class {
+  width: 50px;
+}
+#bindingBracelet .studen_contList2 .classinfo {
+  width: calc(100% - 50px);
 }
 #bindingBracelet .addModel {
   box-sizing: border-box;
@@ -127,8 +164,8 @@
   color: #666;
 }
 #bindingBracelet .addModel .am-list .am-list-body .chooseResult .am-list-item .am-list-line .am-list-content .am-list-brief {
-  font-size: 1.4rem;
-  color: #a2a2a2;
+  font-size: 14px;
+  color: #7b7b7b;
 }
 #bindingBracelet .addModel .am-list .am-list-body .chooseResult .am-list-item .am-list-line .am-list-extra .am-radio.am-radio-checked {
   height: 100%;

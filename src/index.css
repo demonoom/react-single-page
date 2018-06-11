@@ -1,3 +1,4 @@
+(node) util.print is deprecated. Use console.log instead.
 html,
 body {
   height: 100%;
@@ -76,7 +77,7 @@ hr {
   font-size: 14px;
 }
 .color_red {
-  color: #F46A55;
+  color: #f46a55;
 }
 .line_item {
   height: 8px;
@@ -272,8 +273,17 @@ hr {
   border-bottom: .05rem #f4f4f4 solid;
   padding: 0 .56rem;
 }
+.navBar span {
+  display: inline-block;
+}
 .navBar .icon {
-  padding: 0 .56rem;
+  margin: 0 .56rem;
+  background: url("components/classCardSystem/imgs/backArrow.png") no-repeat;
+  width: 0.47rem;
+  height: 0.81rem;
+  background-size: 100% 100%;
+  position: relative;
+  top: 1px;
 }
 .home_content {
   width: calc(100% - 1.66rem);
@@ -421,7 +431,7 @@ hr {
   transform: scaleY(0.5);
 }
 .noticeMsg_common {
-  background: #eee url("components/classCardSystemBackstage/imgs/noticeIcon.png") no-repeat 30px 9px;
+  background: #eeeeee url("components/classCardSystemBackstage/imgs/noticeIcon.png") no-repeat 30px 9px;
   background-size: 18px;
   font-size: 15px;
   color: #666;

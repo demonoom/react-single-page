@@ -1,4 +1,1 @@
-#canvasMap {
-  background: url("../../../dashboard/image/schoolMap.png") no-repeat;
-  background-size: 100% 100%;
-}
+(node) util.print is deprecated. Use console.log instead.
