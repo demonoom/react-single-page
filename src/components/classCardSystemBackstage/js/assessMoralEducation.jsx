@@ -69,7 +69,7 @@ export default class assessMoralEducation extends React.Component {
      */
     onWindowResize() {
         setTimeout(function () {
-            moralassessMEEd.setState({
+            assessME.setState({
                 clientHeight: document.body.clientHeight,
                 calmHeight: document.body.clientHeight - 150
             });
