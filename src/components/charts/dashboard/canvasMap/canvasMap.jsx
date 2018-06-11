@@ -88,15 +88,11 @@ export default class canvasMap extends React.Component {
         context.lineTo(211, 206);
         context.stroke();
     }
-
-    canvasOnClick(e) {
-        console.log(e.target);
-    }
-
+    
     render() {
         return (
             <div id="canvasMap">
-                <canvas id="noom" onClick={this.canvasOnClick}></canvas>
+                <canvas id="noom"></canvas>
             </div>
         );
     }
