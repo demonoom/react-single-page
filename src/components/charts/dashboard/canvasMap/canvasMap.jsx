@@ -41,6 +41,9 @@ export default class canvasMap extends React.Component {
         }, 1000)
     }
 
+    /**
+     * 查看当前时间的教室人数热点图
+     */
     viewRoomHeapmap() {
         var param = {
             "method": 'viewRoomHeapmap',
@@ -60,7 +63,7 @@ export default class canvasMap extends React.Component {
     }
 
     /**
-     * 模拟打点
+     * 数据打点
      */
     drawPoint(data) {
         //清除画布
@@ -69,7 +72,7 @@ export default class canvasMap extends React.Component {
             console.log(data);
             data.forEach(function (v, i) {
                 for (var i = 0; i < v.count; i++) {
-                    // Math.random()*3
+
                     var numX = Math.random() * 10 * Math.pow(-1, Math.round(Math.random()));
                     var numY = Math.random() * 10 * Math.pow(-1, Math.round(Math.random()));
 

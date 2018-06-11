@@ -1,5 +1,5 @@
 import React from 'react';
-import {Icon} from 'antd-mobile';
+import { Icon } from 'antd-mobile';
 import '../css/classCardHomePageDoor.less'
 
 export default class classCardHomePageDoor extends React.Component {
@@ -14,7 +14,7 @@ export default class classCardHomePageDoor extends React.Component {
         var locationSearch = locationHref.substr(locationHref.indexOf("?") + 1);
         var searchArray = locationSearch.split("&");
         var ident = searchArray[0].split('=')[1];
-        this.setState({ident})
+        this.setState({ ident })
     }
 
     componentDidMount() {
@@ -156,9 +156,22 @@ export default class classCardHomePageDoor extends React.Component {
         });
     }
 
+    /**
+     * 学习啊平面图
+     */
+    turnSchoolPlan = () => {
+        var url = WebServiceUtil.mobileServiceURL + "schoolPlan?userId="+this.state.ident;
+        var data = {
+            method: 'openNewPage',
+            url: url
+        };
+        Bridge.callHandler(data, null, function (error) {
+            window.location.href = url;
+        });
+    }
     render() {
         return (
-            <div id="classCardHomePageDoor" style={{height: document.body.clientHeight, overflow: 'auto'}}>
+            <div id="classCardHomePageDoor" style={{ height: document.body.clientHeight, overflow: 'auto' }}>
                 <ul className="classCardHomePageDoor">
                     <li onClick={this.turnToClassroomManage}><i className="icon icon_ClassroomManagement"></i>教室管理<i
                         className="arrow_right"></i></li>
@@ -180,6 +193,8 @@ export default class classCardHomePageDoor extends React.Component {
                     <li onClick={this.turnToWarnList}><i className="icon icon_earlyWarning"></i>课堂预警<i
                         className="arrow_right"></i></li>
                     <li onClick={this.turnToStudentMovement}><i className="icon icon_exercise"></i>学生运动轨迹<i
+                        className="arrow_right"></i></li>
+                    <li onClick={this.turnSchoolPlan}><i className="icon icon_moralEducationScore"></i>学校平面图<i
                         className="arrow_right"></i></li>
                 </ul>
             </div>
