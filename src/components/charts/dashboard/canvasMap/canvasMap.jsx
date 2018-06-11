@@ -1,17 +1,11 @@
 import React from 'react';
 import {} from 'antd-mobile';
-import Background from '../image/schoolMap.png';
 import './css/canvasMap.less'
 
 var demeanor;
 var canvas;
 var context;
-
-var sectionStyle = {
-    backgroundSize: "100% 100%",
-// makesure here is String确保这里是一个字符串，以下是es6写法
-    backgroundImage: `url(${Background})`
-};
+var timer;
 
 export default class canvasMap extends React.Component {
 
@@ -34,26 +28,19 @@ export default class canvasMap extends React.Component {
         canvas.height = 550;
         context.lineWidth = 10;
         context.lineCap = 'round';
-        setInterval(function () {
-            demeanor.viewRoomHeapmap()
-        }, 1000)
+        //查看学校绑定的所有地图
         this.getSchoolMapBySchoolId()
     }
 
-    componentDidUpdate() {
-        document.getElementById("noom").addEventListener('click', demeanor.simulateClick);
-    }
-
-    simulateClick(e) {
-        console.log(e.offsetX);
-        console.log(e.offsetY);
-        alert(e.offsetX+'-'+e.offsetY)
+    componentWillUnmount() {
+        clearInterval(timer)
     }
 
     /**
      * 查看学校绑定的所有地图
      */
     getSchoolMapBySchoolId() {
+        var _this = this;
         var param = {
             "method": 'getSchoolMapBySchoolId',
             "schId": localStorage.getItem('destId'),
@@ -61,9 +48,16 @@ export default class canvasMap extends React.Component {
 
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
             onResponse: function (result) {
-                console.log(result);
                 if (result.msg == '调用成功' || result.success == true) {
-                    // demeanor.drawPoint(result.response)
+                    var sectionStyle = {
+                        backgroundSize: "100% 100%",
+                        backgroundImage: `url(${result.response.path})`
+                    };
+                    _this.setState({sectionStyle});
+                    //查看当前时间的教室人数热点图
+                    timer = setInterval(function () {
+                        demeanor.viewRoomHeapmap()
+                    }, 1000)
                 }
             },
             onError: function (error) {
@@ -84,6 +78,7 @@ export default class canvasMap extends React.Component {
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
             onResponse: function (result) {
                 if (result.msg == '调用成功' || result.success == true) {
+                    //数据打点
                     demeanor.drawPoint(result.response)
                 }
             },
@@ -115,10 +110,10 @@ export default class canvasMap extends React.Component {
             })
         }
     }
-    
+
     render() {
         return (
-            <div id="canvasMap" style={sectionStyle}>
+            <div id="canvasMap" style={this.state.sectionStyle}>
                 <canvas id="noom"></canvas>
             </div>
         );
