@@ -475,6 +475,12 @@ const schoolPlan = (location, cb) => {
     )
 }
 
+const littleAntPolicy = (location, cb) => {
+    require.ensure([], require => {
+            cb(null, require("./components/littleAntPolicy/littleAntPolicy").default)
+        }
+    )
+}
 import './index.less';
 
 class Index extends React.Component {
@@ -571,6 +577,7 @@ class Index extends React.Component {
                     <li><Link
                         to="/dashboard?destId=9&areaType=0"
                         style={{fontSize: '24px'}}>管理驾驶舱</Link></li>
+
                     {/*<li><Link*/}
                     {/*to="/fileAnalysis?aid=590961"*/}
                     {/*style={{fontSize: '24px'}}>文件表情分析</Link></li>*/}
@@ -589,6 +596,9 @@ class Index extends React.Component {
                     <li><Link
                         to="/studentMovement?access_user=23836"
                         style={{fontSize: '24px'}}>学生轨迹热力</Link></li>
+                    <li><Link
+                        to="/littleAntPolicy"
+                        style={{fontSize: '24px'}}>小蚂蚁服务与政策</Link></li>
                 </ul>
             </div>
         );
@@ -679,7 +689,8 @@ ReactDOM.render(
             <Route path="health" getComponent={health}/>
             <Route path="warnList" getComponent={warnList}/>
             <Route path="studentMovement" getComponent={studentMovement}/>
-            <Route path="schoolPlan" getComponent={schoolPlan} />
+            <Route path="schoolPlan" getComponent={schoolPlan}/>
+            <Route path="littleAntPolicy" getComponent={littleAntPolicy}/>
         </Route>
     </Router>
     ,
