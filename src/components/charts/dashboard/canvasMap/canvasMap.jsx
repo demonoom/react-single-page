@@ -1,11 +1,17 @@
 import React from 'react';
 import {} from 'antd-mobile';
-import Img from '../img/map.png'
+import Background from '../image/schoolMap.png';
 import './css/canvasMap.less'
 
 var demeanor;
 var canvas;
 var context;
+
+var sectionStyle = {
+    backgroundSize: "100% 100%",
+// makesure here is String确保这里是一个字符串，以下是es6写法
+    backgroundImage: `url(${Background})`
+};
 
 export default class canvasMap extends React.Component {
 
@@ -19,70 +25,67 @@ export default class canvasMap extends React.Component {
 
     }
 
-    componentWillReceiveProps(nextProps) {
-
-    }
-
     componentDidMount() {
         var width_cont = $(window).width();
         var canvasWidth = (width_cont - 25) / 2;
         canvas = document.getElementById('noom');
         context = canvas.getContext('2d');
         canvas.width = canvasWidth;
-        canvas.height = 580;
+        canvas.height = 550;
         context.lineWidth = 10;
         context.lineCap = 'round';
-        demeanor.drawPoint()
-        this.startStep()
+        // demeanor.drawPoint()
+        // this.startStep()
+        setInterval(function () {
+            demeanor.viewRoomHeapmap()
+        }, 1000)
     }
 
-    /**
-     * 开始步数
-     */
-    startStep() {
-        setInterval(function () {
-            var width_cont = $(window).width();
-            var canvasWidth = (width_cont - 25) / 2;
-            canvas = document.getElementById('noom');
-            context = canvas.getContext('2d');
-            canvas.width = canvasWidth;
-            canvas.height = 550;
-            context.lineWidth = 10;
-            context.lineCap = 'round';
-            context.restore()
-            demeanor.drawPoint()
-        }, 10000)
+    viewRoomHeapmap() {
+        var param = {
+            "method": 'viewRoomHeapmap',
+            "schId": localStorage.getItem('destId'),
+        };
+
+        WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
+            onResponse: function (result) {
+                if (result.msg == '调用成功' || result.success == true) {
+                    demeanor.drawPoint(result.response)
+                }
+            },
+            onError: function (error) {
+
+            }
+        });
     }
 
     /**
      * 模拟打点
      */
-    drawPoint() {
-        var x = Math.random() * canvas.width - 8;
-        var y = Math.random() * canvas.height - 8;
+    drawPoint(data) {
+        //清除画布
+        context.clearRect(0, 0, canvas.width, canvas.height);
+        if (WebServiceUtil.isEmpty(data) == false) {
+            console.log(data);
+            data.forEach(function (v, i) {
+                for (var i = 0; i < v.count; i++) {
+                    // Math.random()*3
+                    var numX = Math.random() * 10 * Math.pow(-1, Math.round(Math.random()));
+                    var numY = Math.random() * 10 * Math.pow(-1, Math.round(Math.random()));
 
-        var a = Math.random() * canvas.width - 8;
-        var b = Math.random() * canvas.height - 8;
-
-        context.beginPath()
-        context.strokeStyle = 'red';
-        context.lineTo(x, y);
-        context.stroke();
-
-        context.beginPath()
-        context.strokeStyle = 'black';
-        context.lineTo(a, b);
-        context.stroke();
-    }
-
-    canvasOnClick() {
-
+                    context.beginPath()
+                    context.strokeStyle = 'black';
+                    context.lineTo(canvas.width * v.location.x + numX, canvas.height * v.location.y + numY);
+                    context.stroke();
+                }
+            })
+        }
     }
 
     render() {
         return (
-            <div id="canvasMap">
-                <canvas id="noom" onClick={this.canvasOnClick}></canvas>
+            <div id="canvasMap" style={sectionStyle}>
+                <canvas id="noom"></canvas>
             </div>
         );
     }

@@ -206,6 +206,7 @@ export default class dashboard extends React.Component {
         var destId = searchArray[0].split('=')[1];
         var areaType = searchArray[1].split('=')[1];
         this.setState({destId, areaType});
+        localStorage.setItem("destId", destId);
         //调取驾驶舱数据
         this.getDashBoardDataByArea(destId, areaType);
         setInterval(function () {
@@ -233,7 +234,6 @@ export default class dashboard extends React.Component {
                 var response = result.response;
                 var jsonObj = JSON.parse(response);
 
-                console.log(jsonObj);
                 //学校总人数
                 var userCountOfSchool = jsonObj.userCountOfSchool;
                 //全校教研活动量
@@ -772,7 +772,7 @@ export default class dashboard extends React.Component {
             series: [{
                 type: 'bar',
                 stack: 'component',
-                height:'45%',
+                height: '45%',
                 xAxisIndex: 0,
                 yAxisIndex: 0,
                 z: 3,
