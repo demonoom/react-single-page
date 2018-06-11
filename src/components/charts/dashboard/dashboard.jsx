@@ -72,7 +72,7 @@ export default class dashboard extends React.Component {
         var areaType = searchArray[1].split('=')[1];
         this.setState({destId, areaType});
         localStorage.setItem("destId", destId);
-        this.viewTeacherPunchStatistics(destId);
+        // this.viewTeacherPunchStatistics(destId);
         //调取驾驶舱数据
         this.getDashBoardDataByArea(destId, areaType);
         /* setInterval(function () {
@@ -142,6 +142,10 @@ export default class dashboard extends React.Component {
                 var braceletHeartRate = jsonObj.braceletHeartRate;
                 //教务审批统计数据
                 var proceCountResults = jsonObj.proceCountResults;
+                //老师考勤数据
+                var teacherAttendance = jsonObj.teacherAttendance;
+                //学生考勤数据
+                var studAttendance = jsonObj.studAttendance;
 
                 //蚁巢班级数量
                 if (WebServiceUtil.isEmpty(userCountOfSchool) == false) {
@@ -179,7 +183,9 @@ export default class dashboard extends React.Component {
 
                 _this.buildFlowPieChart(proceCountResults);
 
-                _this.buildStudentAttendancePieChart();
+                _this.buildStudentAttendancePieChart(studAttendance);
+
+                _this.buildTeacherAttendancePieChart(teacherAttendance);
 
                 // _this.buildTodayOpenClazzJson(todayOpenClazzResults, currentMonthOpenClazzResults);
 
@@ -1113,45 +1119,33 @@ export default class dashboard extends React.Component {
         var _this = this;
         var xAttendanceNameArray = [];
         var ySeriesDataArray = [];
+        var allAbsentCount = 0;
+        var allPunchCount = 0;
+        var allTotalCount = 0;
         if(WebServiceUtil.isEmpty(attendanceResults)==false){
-            console.log(attendanceResults);
-            var absent = attendanceResults["absent"];
-            var early = attendanceResults["early"];
-            var late = attendanceResults["late"];
-            var miss = attendanceResults["miss"];
-            var sum = attendanceResults["sum"];
-            var othersData = 0;
-            if(WebServiceUtil.isEmpty(absent)==false){
-                xAttendanceNameArray.push("旷工");
-                var absentJson = {value: absent, name: '旷工'};
-                ySeriesDataArray.push(absentJson);
-                othersData += parseInt(absent);
-            }
-            if(WebServiceUtil.isEmpty(early)==false){
-                xAttendanceNameArray.push("早退");
-                var earlyJson = {value: early, name: '早退'};
-                ySeriesDataArray.push(earlyJson);
-                othersData += parseInt(early);
-            }
-            if(WebServiceUtil.isEmpty(late)==false){
-                xAttendanceNameArray.push("迟到");
-                var lateJson = {value: late, name: '迟到'};
-                ySeriesDataArray.push(lateJson);
-                othersData += parseInt(late);
-            }
-            if(WebServiceUtil.isEmpty(miss)==false){
-                xAttendanceNameArray.push("缺勤");
-                var missJson = {value: miss, name: '缺勤'};
-                ySeriesDataArray.push(missJson);
-                othersData += parseInt(miss);
-            }
-            if(WebServiceUtil.isEmpty(sum)==false){
-                var normal = parseInt(sum) - parseInt(othersData);
-                xAttendanceNameArray.push("正常");
-                var normalJson = {value: normal, name: '正常'};
-                ySeriesDataArray.push(normalJson);
-            }
-
+            attendanceResults.forEach(function (attendanceObj) {
+                var absentCount = attendanceObj["absentCount"];
+                var punchCount = attendanceObj["punchCount"];
+                var totalCount = attendanceObj["totalCount"];
+                allAbsentCount += parseInt(absentCount);
+                allPunchCount += parseInt(punchCount);
+                allTotalCount += parseInt(totalCount);
+            });
+        }
+        if(WebServiceUtil.isEmpty(allAbsentCount)==false){
+            xAttendanceNameArray.push("缺勤");
+            var absentJson = {value: allAbsentCount, name: '缺勤'};
+            ySeriesDataArray.push(absentJson);
+        }
+        if(WebServiceUtil.isEmpty(allPunchCount)==false){
+            xAttendanceNameArray.push("实到");
+            var punchCountJson = {value: allPunchCount, name: '实到'};
+            ySeriesDataArray.push(punchCountJson);
+        }
+        if(WebServiceUtil.isEmpty(allTotalCount)==false){
+            xAttendanceNameArray.push("应到");
+            var totalCountJson = {value: allTotalCount, name: '应到'};
+            ySeriesDataArray.push(totalCountJson);
         }
         var attendanceOption = _this.buildStudentAttendanceOption(xAttendanceNameArray, ySeriesDataArray)
         var studentAttendancePieChartDiv = <div>
@@ -1183,7 +1177,7 @@ export default class dashboard extends React.Component {
             legend: {
                 bottom: 0,
                 left: 'left',
-                data: ['应到', '实到', '缺勤']
+                data: xAttendanceNameArray
             },
             series: [
                 {
@@ -1191,9 +1185,7 @@ export default class dashboard extends React.Component {
                     radius: '50%',
                     center: ['50%', '50%'],
                     selectedMode: 'single',
-                    data: [{value:1100, name: '应到'},
-                        {value:1100, name: '实到'},
-                        {value:200, name: '缺勤'}],
+                    data: ySeriesDataArray,
                     itemStyle: {
                         emphasis: {
                             shadowBlur: 10,
