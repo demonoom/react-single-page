@@ -63,9 +63,11 @@ export default class updateCurriculumSchedule extends React.Component {
         this.setState({clazzroomId, classTableId, classTableDetilId})
         this.viewCourseTableItem(classTableDetilId);
     }
-    componentDidMount(){
+
+    componentDidMount() {
         Bridge.setShareAble("false");
     }
+
     componentWillUnmount() {
         window.removeEventListener('resize', this.onWindwoResize);
     }
@@ -175,13 +177,13 @@ export default class updateCurriculumSchedule extends React.Component {
                 "teacherId": this.state.ClassTableDataArr[0].teacherId,
             }
         };
-        if (this.state.ClassTableDataArr[0].nodeDetal.trim().length != 0) {
-            param.cti.comment = this.state.ClassTableDataArr[0].nodeDetal
+        if (WebServiceUtil.isEmpty(this.state.ClassTableDataArr[0].nodeDetal) == false) {
+            if (this.state.ClassTableDataArr[0].nodeDetal.trim().length != 0) {
+                param.cti.comment = this.state.ClassTableDataArr[0].nodeDetal
+            }
         }
-        console.log(param);
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
             onResponse: function (result) {
-                console.log(result);
                 if (result.msg == '调用成功' || result.success == true) {
                     Toast.success('成功');
                     //关闭当前窗口，并刷新上一个页面
@@ -391,7 +393,7 @@ export default class updateCurriculumSchedule extends React.Component {
                 {/*搜索老师*/}
                 <div className="search_list my_flex">
                     <input type="text"
-                           style={{'margin-left':'-8px'}}
+                           style={{'margin-left': '-8px'}}
                            onChange={teacherV.teacgerChange.bind(this, i)}
                            placeholder="请输入老师姓名"
                            value={teacherV.state.ClassTableDataArr[i].tercherName}
@@ -401,7 +403,7 @@ export default class updateCurriculumSchedule extends React.Component {
                 {/*搜索班级*/}
                 <div className="search_list my_flex">
                     <input type="text"
-                           style={{'margin-left':'-8px'}}
+                           style={{'margin-left': '-8px'}}
                            onChange={teacherV.classChange.bind(this, i)}
                            placeholder="请输入上课班级"
                            value={teacherV.state.ClassTableDataArr[i].className}
@@ -421,7 +423,7 @@ export default class updateCurriculumSchedule extends React.Component {
                 <div className="flex_container my_flex flex_addElement">
                     <TextareaItem
                         rows={1}
-                        style={{'margin-left':'-8px'}}
+                        style={{'margin-left': '-8px'}}
                         className="add_element"
                         placeholder="添加备注"
                         labelNumber={2}
@@ -503,13 +505,13 @@ export default class updateCurriculumSchedule extends React.Component {
                     {/*<WhiteSpace size="lg"/>*/}
                     {/*/!*选择课时*!/*/}
                     {/*<Picker*/}
-                        {/*data={this.state.indexData}*/}
-                        {/*cols={1}*/}
-                        {/*value={this.state.indexAsyncValue}*/}
-                        {/*onPickerChange={this.onIndexPickerChange}*/}
-                        {/*onOk={this.onIndexPickerChange}*/}
+                    {/*data={this.state.indexData}*/}
+                    {/*cols={1}*/}
+                    {/*value={this.state.indexAsyncValue}*/}
+                    {/*onPickerChange={this.onIndexPickerChange}*/}
+                    {/*onOk={this.onIndexPickerChange}*/}
                     {/*>*/}
-                        {/*<List.Item arrow="horizontal">选择课时</List.Item>*/}
+                    {/*<List.Item arrow="horizontal">选择课时</List.Item>*/}
                     {/*</Picker>*/}
                     {/*累加部分*/}
                     <div className='CourseTableArea'>

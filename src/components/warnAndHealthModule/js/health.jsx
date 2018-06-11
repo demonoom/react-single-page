@@ -126,11 +126,12 @@ export default class health extends React.Component {
                     <img className="noomImg" src={data[k].users.avatar} alt=""/>
                     <div
                         className={k == 0 ? 'firstClass' : k == 1 ? 'secondClass' : k == 2 ? 'thirdClass' : 'otherClass'}></div>
+                    <div className="border_img"></div>
                 </div>
                 <div className="studentName">{data[k].users.userName}</div>
-                <div className="step_number text_hidden">{this.state.type == 'step' ? data[k].sportStep : data[k].calorie.toFixed(2)}
-                <span className="step_number_s">{this.state.type == 'step' ? '步' : '卡路里'}</span>
-                </div>
+                <div
+                    className="step_number textOver">{this.state.type == 'step' ? data[k].sportStep : data[k].calorie.toFixed(2)}<span
+                    className="step_number_s">{this.state.type == 'step' ? '步' : '卡路里'}</span></div>
             </div>;
             array.push(item);
         }
@@ -139,8 +140,8 @@ export default class health extends React.Component {
                 <div className="inner_bg">
                     <div className="navBar">
                         <span onClick={this.historyGoBack}>首页</span>
-                        <span className="icon">></span>
-                        <span>步数排行榜</span>
+                        <span className="icon"></span>
+                        <span>{this.state.type == 'step' ? '步数排行榜' : '卡路里排行榜'}</span>
                     </div>
 
                     <div className="health_cont">{array}</div>

@@ -351,7 +351,7 @@ export default class bindingBracelet extends React.Component {
                     <WhiteSpace size="lg"/>
                     <Card>
                         <Card.Header
-                            className='noomCardHeader'
+                            className='noomCardHeader studentCardHeader'
                             title={rowData.name}
                             thumb={rowData.bindingUser.avatar}
                             //thumb='http://60.205.86.217/upload6/2018-02-09/19/805eee4a-b707-49a2-9c75-d5b14ed9227b.jpg'
@@ -359,12 +359,15 @@ export default class bindingBracelet extends React.Component {
                                          onClick={_this.showAlert.bind(this, rowData)}>解绑</span>}
                         />
                         <Card.Body>
-                            <div>MAC:{rowData.macAddress}</div>
+                            <div className="student_contList">
+                                <div className="student_list text_hidden"><span>MAC：</span><span>{rowData.macAddress}</span></div>
+                                <div className="student_list2 text_hidden"><span>ID：</span><span>{rowData.bindingUser.colAccount}</span></div>
+                            </div>
+                            <div className="studen_contList2">
+                                <span className="class">班级：</span><span className="classinfo">{ rowData.bindingUser.clazz.name}</span>
+                            </div>
                         </Card.Body>
-                        <Card.Footer content={"班级" + ":" + rowData.bindingUser.clazz.name}
-                                     extra={<div>ID:{rowData.bindingUser.colAccount}</div>}/>
                     </Card>
-                    <WhiteSpace size="lg"/>
                 </WingBlank>
             )
         };
@@ -409,8 +412,8 @@ export default class bindingBracelet extends React.Component {
                             <InputItem
                                 value={bindDing.state.macId}
                                 editable={false}
-                            >MAC:</InputItem>
-                            <img className='scanIcon' src={require('../imgs/timg.png')} alt="" onClick={this.scanMac}/>
+                            >MAC：</InputItem>
+                            <img className='scanIcon' src={require('../imgs/icon_scan.png')} alt="" onClick={this.scanMac}/>
                         </div>
 
                         <div className='stName'>
@@ -419,8 +422,8 @@ export default class bindingBracelet extends React.Component {
                                 data-seed="logId"
                                 onChange={this.inputOnChange.bind(this)}
                                 value={this.state.stNameValue}
-                            >姓名:</InputItem>
-                            <img id='stIcon' className='stIcon' src={require('../imgs/search.png')}
+                            >姓名：</InputItem>
+                            <img id='stIcon' className='stIcon' src={require('../imgs/icon_search.png')}
                                  onClick={this.searchWatchBindCandidate}/>
                         </div>
 

@@ -68,22 +68,24 @@ export default class healthList extends React.Component {
 
     render() {
         return (
-            <div id="healthList" style={{height: this.state.clientHeight}}>
-                <div className="navBar">
-                    <span onClick={this.historyGoBack}>首页</span>
-                    <span className="icon">></span>
-                    <span>健康数据列表</span>
+            <div id="healthList" className="home_content" style={{height: this.state.clientHeight}}>
+                <div className="inner_bg">
+                    <div className="navBar">
+                        <span onClick={this.historyGoBack}>首页</span>
+                        <span className="icon"></span>
+                        <span>健康数据列表</span>
+                    </div>
+                    <div style={{
+                        textAlign:'center',
+                        padding:'10px 0px',
+                        borderBottom:'1px solid #ccc'
+                    }} onClick={this.toRanking.bind(this,'step')}>步数</div>
+                    <div style={{
+                        textAlign:'center',
+                        padding:'10px 0px',
+                        borderBottom:'1px solid #ccc'
+                    }} onClick={this.toRanking.bind(this,'calories')}>卡路里</div>
                 </div>
-                <div style={{
-                    textAlign:'center',
-                    padding:'10px 0px',
-                    borderBottom:'1px solid #ccc'
-                }} onClick={this.toRanking.bind(this,'step')}>步数</div>
-                <div style={{
-                    textAlign:'center',
-                    padding:'10px 0px',
-                    borderBottom:'1px solid #ccc'
-                }} onClick={this.toRanking.bind(this,'calories')}>卡路里</div>
             </div>
         );
     }

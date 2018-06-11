@@ -221,6 +221,9 @@
   width: 170px;
   display: inline-block;
 }
+#getClassTableList .amList .am-list-item .am-list-line .am-list-extra {
+  text-align: left;
+}
 #getClassTableList .amList .am-list-item .am-list-line .am-list-content {
   color: #666 !important;
 }
@@ -266,4 +269,11 @@
 }
 #getClassTableList .am-list-body div:not(:last-child) .am-list-line {
   border-bottom: 1px solid transparent;
+}
+#getClassTableList .open_text {
+  font-size: 16px;
+}
+#getClassTableList .classroom_span {
+  width: 89px;
+  display: inline-block;
 }

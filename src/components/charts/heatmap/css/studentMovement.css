@@ -6,8 +6,8 @@
   background-color: #f6f6f6;
   color: #333;
   text-align: left;
-  height: 44px;
-  line-height: 44px;
+  height: 38px;
+  line-height: 38px;
   width: 100%;
   display: inline-block;
   text-indent: 8px;
@@ -27,7 +27,7 @@
 }
 #studentMovement .teacher_list div:first-child,
 #studentMovement .teacher_list div:nth-child(2) {
-  width: 40%;
+  width: 35%;
 }
 #studentMovement .icon_triangle {
   width: 0;
@@ -37,13 +37,13 @@
   border-color: #a9a9a9 transparent transparent transparent;
   position: absolute;
   right: 10px;
-  top: 19px;
+  top: 16px;
 }
 #studentMovement .blue_btn {
   border: none;
-  height: 44px;
-  line-height: 44px;
-  width: 20%;
+  height: 38px;
+  line-height: 38px;
+  width: calc(30% - 16px);
   margin-left: 8px;
   font-size: 16px;
   background: #F56A55 ;

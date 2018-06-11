@@ -101,12 +101,7 @@ export default class addClassroomManage extends React.Component {
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
             onResponse: function (result) {
                 if (result.msg == '调用成功' && result.success == true) {
-                    var arr = [
-                        {
-                            value: 0,
-                            label: "新增教学楼"
-                        }
-                    ];
+                    var arr = [];
                     result.response.forEach(function (v, i) {
                         arr.push({
                             value: v.id, label: v.name
@@ -232,9 +227,9 @@ export default class addClassroomManage extends React.Component {
             data: d,
             buildingId,
         });
-        if (classBinding.state.buildingId == 0) {
-            this.toAddTeachBuild();
-        }
+        // if (classBinding.state.buildingId == 0) {
+        //     this.toAddTeachBuild();
+        // }
     };
     /**
     * 班级选择改变事件
@@ -270,7 +265,7 @@ export default class addClassroomManage extends React.Component {
                             <WhiteSpace size="lg" />
                             <div className='gradeName'>
                                 <InputItem
-                                    placeholder="请输入班级名称"
+                                    placeholder="请输入班级名称并搜索"
                                     data-seed="logId"
                                     onChange={v => {
                                         classBinding.setState({
@@ -307,8 +302,13 @@ export default class addClassroomManage extends React.Component {
                                     <Item arrow="horizontal" onClick={this.viewSchoolBuildingPage.bind(this,
                                         classBinding.state.uid)
                                     }
-                                    >选择教学楼</Item>
+                                    >选择教室所在教学楼</Item>
                                 </Picker>
+                            </div>
+                            <div className="addFloor" onClick={this.toAddTeachBuild}>
+
+                                新增教学楼
+                                {/*<button >+</button>新增教学楼*/}
                             </div>
                         </List>
                     </div>
@@ -320,3 +320,6 @@ export default class addClassroomManage extends React.Component {
         )
     }
 }
+
+
+

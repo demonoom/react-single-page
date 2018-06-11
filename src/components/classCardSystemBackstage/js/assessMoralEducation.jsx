@@ -250,7 +250,7 @@ export default class assessMoralEducation extends React.Component {
                             </div>
                         </div>
                         <div className="btnDiv">
-                            <span className="createTime">{WebServiceUtil.formatYMD(rowData.createTime)}</span>
+                            <span className="createTime">创建时间：{WebServiceUtil.formatYMD(rowData.createTime)}</span>
                             <span className='modifyBtn_common' onClick={this.toUpdateMoralEducation.bind(this, rowData)}></span>
                             <span className='deleteBtn_common' 
                                 onClick={this.showAlert.bind(this,rowData.id)}

@@ -1,7 +1,7 @@
 import React from 'react';
 import { Icon, Toast } from 'antd-mobile';
 
-import "../css/classDutyList.less"
+import "../css/clazzDutyList.less"
 
 var classD;
 export default class clazzDutyList extends React.Component {
@@ -81,6 +81,7 @@ export default class clazzDutyList extends React.Component {
         }
         return (
             <div id="clazzDutyList" style={{ height: document.body.clientHeight,overflow:"auto" }}>
+                <div className="noticeMsg_common">请在列表中选择班级进行设置</div>
                 <ul>
                     {items}
                 </ul>
