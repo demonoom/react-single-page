@@ -13,7 +13,7 @@ import {
     Button,
 } from 'antd-mobile';
 import '../css/assessMoralEducation.less'
-import { ucs2 } from 'punycode';
+import {ucs2} from 'punycode';
 
 const CheckboxItem = Checkbox.CheckboxItem;
 const AgreeItem = Checkbox.AgreeItem;
@@ -32,6 +32,7 @@ export default class assessMoralEducation extends React.Component {
         this.state = {
             dataSource: dataSource.cloneWithRows(this.initData),
             defaultPageNo: 1,
+            theFirstData:[],
             clientHeight: document.body.clientHeight,
             selectData: [],
             calmHeight: document.body.clientHeight - 150
@@ -50,10 +51,11 @@ export default class assessMoralEducation extends React.Component {
         })
 
     }
+
     componentDidMount() {
         Bridge.setShareAble("false");
         document.title = `${decodeURI(assessME.state.cName)}`;
-        this.getMoralEducationInfoList(assessME.state.classId)
+        this.getMoralEducationInfoList(assessME.state.classId,true)
         //添加对视窗大小的监听,在屏幕转换以及键盘弹起时重设各项高度
         window.addEventListener('resize', assessME.onWindowResize)
     }
@@ -68,7 +70,7 @@ export default class assessMoralEducation extends React.Component {
      */
     onWindowResize() {
         setTimeout(function () {
-            moralassessMEEd.setState({
+            assessME.setState({
                 clientHeight: document.body.clientHeight,
                 calmHeight: document.body.clientHeight - 150
             });
@@ -78,13 +80,15 @@ export default class assessMoralEducation extends React.Component {
     /**
      * 查看对应教室ID的德育信息
      */
-    getMoralEducationInfoList(classId) {
+    getMoralEducationInfoList(classId,flag) {
         var _this = this;
-        _this.initData.splice(0);
-        _this.state.dataSource = [];
-        _this.state.dataSource = new ListView.DataSource({
-            rowHasChanged: (row1, row2) => row1 !== row2,
-        });
+        if(flag){
+            _this.initData.splice(0);
+            _this.state.dataSource = [];
+            _this.state.dataSource = new ListView.DataSource({
+                rowHasChanged: (row1, row2) => row1 !== row2,
+            });
+        }
         const dataBlob = {};
         var PageNo = this.state.defaultPageNo;
         var param = {
@@ -95,6 +99,9 @@ export default class assessMoralEducation extends React.Component {
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
             onResponse: function (result) {
                 if (result.msg == '调用成功' && result.success == true) {
+                    if(_this.state.defaultPageNo === 1){
+                        assessME.state.theFirstData = result.response;
+                    }
                     assessME.state.selectData = result.response
                     var arr = result.response;
                     var pager = result.pager;
@@ -109,6 +116,10 @@ export default class assessMoralEducation extends React.Component {
                         } else {
                             isLoading = true;
                         }
+                        if(pager.pager > pager.pageCount){
+                            isLoading = false;
+                            return;
+                        }
                     } else {
                         isLoading = false;
                     }
@@ -119,7 +130,7 @@ export default class assessMoralEducation extends React.Component {
                         refreshing: false,
                     })
                 } else {
-                    Toast.fail(result.msg, 1);
+                    Toast.fail(result.msg, 3);
                 }
             },
             onError: function (error) {
@@ -134,12 +145,12 @@ export default class assessMoralEducation extends React.Component {
     onEndReached = (event) => {
         var _this = this;
         var currentPageNo = this.state.defaultPageNo;
-        if (!this.state.isLoadingLeft && !this.state.hasMore) {
+        if (!this.state.isLoadingLeft) {
             return;
         }
         currentPageNo += 1;
         this.setState({ isLoadingLeft: true, defaultPageNo: currentPageNo });
-        _this.getMoralEducationInfoList(_this.state.classId);
+        _this.getMoralEducationInfoList(_this.state.classId,false);
         this.setState({
             dataSource: this.state.dataSource.cloneWithRows(this.initData),
             isLoadingLeft: true,
@@ -150,7 +161,7 @@ export default class assessMoralEducation extends React.Component {
         var divPull = document.getElementsByClassName('am-pull-to-refresh-content');
         divPull[0].style.transform = "translate3d(0px, 30px, 0px)";   //设置拉动后回到的位置
         this.setState({ defaultPageNo: 1, refreshing: true, isLoadingLeft: true });
-        this.getMoralEducationInfoList(this.state.classId);
+        this.getMoralEducationInfoList(this.state.classId,true);
     }
 
     /**
@@ -167,6 +178,7 @@ export default class assessMoralEducation extends React.Component {
         });
 
     }
+
     /**
      * 根据ID删除德育信息
      */
@@ -193,7 +205,7 @@ export default class assessMoralEducation extends React.Component {
                         dataSource: _this.state.dataSource.cloneWithRows(_this.initData)
                     });
                 } else {
-                    Toast.fail(result.msg)
+                    Toast.fail(result.msg, 3)
                 }
             },
             onError: function (error) {
@@ -201,6 +213,7 @@ export default class assessMoralEducation extends React.Component {
             }
         });
     }
+
     /**
      * searchClassroomName搜索班级的名称
      */
@@ -216,7 +229,7 @@ export default class assessMoralEducation extends React.Component {
         });
     }
 
-      /**
+    /**
      * 删除弹出框
      */
     showAlert = (sId) => {
@@ -233,47 +246,49 @@ export default class assessMoralEducation extends React.Component {
             {text: '确定', onPress: () => _this.delMoralEducation(sId)},
         ], phone);
     };
+
     render() {
         var _this = this;
         const row = (rowData, sectionID, rowID) => {
             return (<div>
-                {
-                    <div className="classInfo line_public">
-                        <div className="topDiv">
-                            <div className="fl">
-                                <span>班级卫生评分</span>
-                                <span className="healthScore">{rowData.health}</span>分
+                    {
+                        <div className="classInfo line_public">
+                            <div className="topDiv">
+                                <div className="fl">
+                                    <span>班级卫生评分</span>
+                                    <span className="healthScore">{rowData.health}</span>分
+                                </div>
+                                <div className="fr">
+                                    <span>班级礼貌评分</span>
+                                    <span className="politenessScore">{rowData.politeness}</span>分
+                                </div>
                             </div>
-                            <div className="fr">
-                                <span>班级礼貌评分</span>
-                                <span className="politenessScore">{rowData.politeness}</span>分
+                            <div className="btnDiv">
+                                <span className="createTime">创建时间：{WebServiceUtil.formatYMD(rowData.createTime)}</span>
+                                <span className='modifyBtn_common'
+                                      onClick={this.toUpdateMoralEducation.bind(this, rowData)}></span>
+                                <span className='deleteBtn_common'
+                                      onClick={this.showAlert.bind(this, rowData.id)}
+                                ></span>
                             </div>
                         </div>
-                        <div className="btnDiv">
-                            <span className="createTime">创建时间：{WebServiceUtil.formatYMD(rowData.createTime)}</span>
-                            <span className='modifyBtn_common' onClick={this.toUpdateMoralEducation.bind(this, rowData)}></span>
-                            <span className='deleteBtn_common' 
-                                onClick={this.showAlert.bind(this,rowData.id)}
-                            ></span>
-                        </div>
-                    </div>
-                }
-            </div>
+                    }
+                </div>
 
             )
         };
         return (
-            <div id="assessMoralEducation" style={{ height: assessME.state.clientHeight }}>
+            <div id="assessMoralEducation" style={{height: assessME.state.clientHeight}}>
 
-                <div className='tableDiv' style={{ height: assessME.state.clientHeight }}>
+                <div className='tableDiv' style={{height: assessME.state.clientHeight}}>
                     {
-                        assessME.state.selectData.length === 0 ?
+                        assessME.state.selectData.length === 0 && assessME.state.theFirstData.length === 0 ?
                             <div className="nodata">暂无德育评价信息</div>
                             : <ListView
                                 ref={el => this.lv = el}
                                 dataSource={this.state.dataSource}    //数据类型是 ListViewDataSource
                                 renderFooter={() => (
-                                    <div style={{ paddingTop: 5, paddingBottom: 40, textAlign: 'center' }}>
+                                    <div style={{paddingTop: 5, paddingBottom: 40, textAlign: 'center'}}>
                                         {this.state.isLoadingLeft ? '正在加载' : '已经全部加载完毕'}
                                     </div>)}
                                 renderRow={row}   //需要的参数包括一行数据等,会返回一个可渲染的组件为这行数据渲染  返回renderable
@@ -295,7 +310,7 @@ export default class assessMoralEducation extends React.Component {
                             />
                     }
                     <div className='addBunton' onClick={this.toaddMoralEducation}>
-                        <img src={require("../imgs/addBtn.png")} />
+                        <img src={require("../imgs/addBtn.png")}/>
                     </div>
                 </div>
             </div>

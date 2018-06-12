@@ -309,7 +309,7 @@ export default class getClassTableList extends React.Component {
                         dataSource: _this.state.dataSource.cloneWithRows(_this.initData)
                     });
                 } else {
-                    Toast.fail(result.msg, 1)
+                    Toast.fail(result.msg, 3)
                     _this.state.dataSource = [];
                     _this.state.dataSource = new ListView.DataSource({
                         rowHasChanged: (row1, row2) => row1 !== row2,

@@ -161,7 +161,7 @@ export default class bindingBracelet extends React.Component {
                         dataSource: _this.state.dataSource.cloneWithRows(_this.initData)
                     });
                 } else {
-                    Toast.fail(result.msg, 1);
+                    Toast.fail(result.msg, 3);
                 }
             },
             onError: function (error) {
@@ -213,7 +213,7 @@ export default class bindingBracelet extends React.Component {
     binding = () => {
         var _this = this;
         if (this.state.searchCheckValue == '' || bindDing.state.macId == '') {
-            Toast.fail('未选择学生或手环',)
+            Toast.fail('未选择学生或手环',3)
             return
         }
         var param = {
@@ -233,7 +233,7 @@ export default class bindingBracelet extends React.Component {
                     _this.setState({chooseResultDiv: 'none'});
                     _this.viewWatchPage(_this.state.loginUser);
                 } else {
-                    Toast.fail(result.msg, 1);
+                    Toast.fail(result.msg, 3);
                 }
             },
             onError: function (error) {
@@ -250,7 +250,7 @@ export default class bindingBracelet extends React.Component {
         this.setState({searchData: []});
         var _this = this;
         if (this.state.stNameValue.trim().length == 0) {
-            Toast.fail('请输入学生姓名', 1)
+            Toast.fail('请输入学生姓名', 3)
             return
         }
         var param = {
@@ -285,10 +285,10 @@ export default class bindingBracelet extends React.Component {
                         });
                         Toast.hide();
                     } else {
-                        Toast.fail('没有找到该学生', 1)
+                        Toast.fail('没有找到该学生', 3)
                     }
                 } else {
-                    Toast.fail(result.msg, 1);
+                    Toast.fail(result.msg, 3);
                 }
             },
             onError: function (error) {

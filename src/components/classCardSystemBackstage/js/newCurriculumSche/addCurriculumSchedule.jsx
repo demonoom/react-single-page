@@ -84,17 +84,17 @@ export default class addCurriculumSchedule extends React.Component {
     addCourseTableItem = () => {
         var _this = this;
         if (this.state.asyncValue.length == 0) {
-            Toast.fail('请选择星期');
+            Toast.fail('请选择星期',2);
             return
         }
         if (this.state.ClassTableDataArr.length == 0) {
-            Toast.fail('课表不能为空');
+            Toast.fail('课表不能为空',2);
             return
         }
         for (var i = 0; i < this.state.ClassTableDataArr.length; i++) {
             var v = this.state.ClassTableDataArr[i];
             if (v.startTimeData == '开始时间' || v.endTimeData == '结束时间' || v.clazzName == '' || v.teacherId == '' || v.classId == '') {
-                Toast.fail('课表存在空值');
+                Toast.fail('课表存在空值',2);
                 return false
             }
         }
@@ -137,7 +137,7 @@ export default class addCurriculumSchedule extends React.Component {
                         });
                     }, 1000)
                 } else {
-                    Toast.fail(result.msg, 1);
+                    Toast.fail(result.msg, 3);
                 }
             },
             onError: function (error) {
@@ -338,7 +338,7 @@ export default class addCurriculumSchedule extends React.Component {
                     <input type="text"
                            style={{'margin-left':'-8px'}}
                            onChange={teacherV.teacgerChange.bind(this, i)}
-                           placeholder="请输入老师姓名"
+                           placeholder="请输入老师姓名并搜索"
                            value={teacherV.state.ClassTableDataArr[i].tercherName}
                     />
                     <img onClick={teacherV.getTeacherData.bind(this, i)} src={require("../../imgs/icon_search.png")}/>
@@ -348,7 +348,7 @@ export default class addCurriculumSchedule extends React.Component {
                     <input type="text"
                            style={{'margin-left':'-8px'}}
                            onChange={teacherV.classChange.bind(this, i)}
-                           placeholder="请输入上课班级"
+                           placeholder="请输入上课班级并搜索"
                            value={teacherV.state.ClassTableDataArr[i].className}
                     />
                     <img onClick={teacherV.getClassData.bind(this, i)} src={require("../../imgs/icon_search.png")}/>

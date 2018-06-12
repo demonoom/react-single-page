@@ -395,7 +395,7 @@ export default class questionBank extends React.Component {
                     this.state.delCheckBoxCheckedArr.splice(0);
                 } else if (buttonIndex == 2) {
                     if (this.state.checkBoxCheckedArr.length == 0) {
-                        Toast.fail('还未选择题目', 1);
+                        Toast.fail('还未选择题目', 2);
                         return
                     }
                     //对于ios过审之前的处理
@@ -412,7 +412,7 @@ export default class questionBank extends React.Component {
                     };
 
                     Bridge.callHandler(data, null, function (error) {
-                        Toast.fail(error, 1);
+                        Toast.fail(error, 2);
                     });
 
                     //清空勾选状态与数据

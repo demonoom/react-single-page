@@ -50,7 +50,7 @@ export default class healthList extends React.Component {
                 window.location.href = url;
             });
         }else{
-            Toast.fail('type参数有误');
+            Toast.fail('type参数有误',2);
         }
     }
 

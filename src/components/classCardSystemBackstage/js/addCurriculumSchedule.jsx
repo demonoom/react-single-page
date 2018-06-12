@@ -134,29 +134,29 @@ export default class addCurriculumSchedule extends React.Component {
             if (_this.state.curriculumType == 2) {
                 tipMessage = "请选择教室";
             }
-            Toast.fail(tipMessage);
+            Toast.fail(tipMessage,3);
             return
         }
         if (this.state.termAsyncValue.length == 0) {
-            Toast.fail('请选择学期');
+            Toast.fail('请选择学期',2);
             return
         }
         if (this.state.asyncValue.length == 0) {
-            Toast.fail('请选择星期');
+            Toast.fail('请选择星期',2);
             return
         }
         if (this.state.ClassTableDataArr.length == 0) {
-            Toast.fail('课表不能为空');
+            Toast.fail('课表不能为空',2);
             return
         }
         for (var i = 0; i < this.state.ClassTableDataArr.length; i++) {
             var v = this.state.ClassTableDataArr[i];
             if (v.startTimeData == '开始时间' || v.endTimeData == '结束时间' || v.clazzName == '' || v.teacherName == '' ) {
-                Toast.fail('课表存在空值');
+                Toast.fail('课表存在空值',2);
                 return false
             }
             if (_this.state.curriculumType == 1 && v.classAd == '上课地点') {
-                Toast.fail('课表存在空值');
+                Toast.fail('课表存在空值',2);
                 return false
             }
         }
@@ -314,7 +314,7 @@ export default class addCurriculumSchedule extends React.Component {
     getTeacherData(i) {
         teacherV.state.terData = []
         if (teacherV.state.ClassTableDataArr[i].teacherId == '') {
-            Toast.fail('请输入老师姓名搜索')
+            Toast.fail('请输入老师姓名搜索',3)
             return
         }
         let param = {
@@ -339,7 +339,7 @@ export default class addCurriculumSchedule extends React.Component {
                             // teacherV.state.terData = arr;
                             // teacherV.buildClassTable();
                         } else {
-                            Toast.fail('未搜到相关老师')
+                            Toast.fail('未搜到相关老师',3)
                         }
                     }
                 }
@@ -385,7 +385,7 @@ export default class addCurriculumSchedule extends React.Component {
                 <div className="search_list my_flex">
                     <input type="text"
                            onChange={teacherV.teacgerChange.bind(this, i)}
-                           placeholder="请输入老师姓名"
+                           placeholder="请输入老师姓名并搜索"
                            value={teacherV.state.ClassTableDataArr[i].teacherId}
                     />
                     <img onClick={teacherV.getTeacherData.bind(this, i)} src={require("../imgs/icon_search.png")}/>
@@ -575,7 +575,7 @@ export default class addCurriculumSchedule extends React.Component {
      */
     searchTerResLeave() {
         if(teacherV.state.teacherName == undefined){
-            Toast.fail('请选择教师');
+            Toast.fail('请选择教师',2);
             return
         }
         document.getElementById('searchTerRes').className = 'searchTerRes ding_leave'

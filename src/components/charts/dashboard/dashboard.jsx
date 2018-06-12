@@ -75,10 +75,10 @@ export default class dashboard extends React.Component {
         // this.viewTeacherPunchStatistics(destId);
         //调取驾驶舱数据
         this.getDashBoardDataByArea(destId, areaType);
-        /* setInterval(function () {
-             //调取驾驶舱数据
-             _this.getDashBoardDataByArea(destId, areaType);
-         }, 1000 * 2)*/
+        setInterval(function () {
+            //调取驾驶舱数据
+            _this.getDashBoardDataByArea(destId, areaType);
+        }, 1000 * 2)
     }
 
     viewTeacherPunchStatistics(destId, areaType) {
@@ -168,7 +168,7 @@ export default class dashboard extends React.Component {
                 }
 
                 //班级课后作业的布置情况统计，统计每个班发布的题目数量
-                if (WebServiceUtil.isEmpty(homeWorkSubjectResults)==false && homeWorkSubjectResults.length >= 30) {
+                if (WebServiceUtil.isEmpty(homeWorkSubjectResults) == false && homeWorkSubjectResults.length >= 30) {
                     _this.buildHomeWorkPieChart(homeWorkSubjectResults.splice(0, 10));
                 } else {
                     _this.buildHomeWorkPieChart(homeWorkSubjectResults);
@@ -211,7 +211,14 @@ export default class dashboard extends React.Component {
             },
             xAxis: {
                 type: 'category',
-                data: xClazzName
+                data: xClazzName,
+                padding: [5, 10],
+                axisLabel: {
+                    //这个是倾斜角度，也是考虑到文字过多的时候，方式覆盖采用倾斜
+                    rotate: 30,
+                    //这里是考虑到x轴文件过多的时候设置的，如果文字太多，默认是间隔显示，设置为0，标示全部显示，当然，如果x轴都不显示，那也就没有意义了
+                    interval: 0
+                }
             },
             yAxis: {
                 type: 'value'
@@ -253,7 +260,7 @@ export default class dashboard extends React.Component {
         var seriesDataArray = [];
         topicResults.forEach(function (topicResult) {
             var topicObj = JSON.parse(topicResult);
-            var clazzName = topicObj.col_name;
+            var clazzName = topicObj.clazz.grade.name + '' + topicObj.col_name;
             var totalTopic = topicObj.totalTopic;
             xClazzNameArray.push(clazzName);
             seriesDataArray.push(totalTopic);
@@ -338,7 +345,7 @@ export default class dashboard extends React.Component {
             var teacherObj = cloudFileObj.teacher;
             var courseName = "";
             var teacherName = cloudFileObj.col_name;
-            if(WebServiceUtil.isEmpty(teacherObj)==false && WebServiceUtil.isEmpty(teacherObj.course)==false){
+            if (WebServiceUtil.isEmpty(teacherObj) == false && WebServiceUtil.isEmpty(teacherObj.course) == false) {
                 var courseObj = teacherObj.course;
                 courseName = courseObj.name;
                 teacherName += "(" + courseName + ")";
@@ -390,7 +397,13 @@ export default class dashboard extends React.Component {
             xAxis: [
                 {
                     type: 'category',
-                    data: xClazzNameArray
+                    data: xClazzNameArray,
+                    axisLabel: {
+                        //这个是倾斜角度，也是考虑到文字过多的时候，方式覆盖采用倾斜
+                        rotate: 30,
+                        //这里是考虑到x轴文件过多的时候设置的，如果文字太多，默认是间隔显示，设置为0，标示全部显示，当然，如果x轴都不显示，那也就没有意义了
+                        interval: 0
+                    }
                 }
             ],
             yAxis: [
@@ -441,7 +454,7 @@ export default class dashboard extends React.Component {
         var _this = this;
         var xClazzNameArray = [];
         var seriesDataArray = [];
-        if(WebServiceUtil.isEmpty(homeWorkSubjectResults)==false){
+        if (WebServiceUtil.isEmpty(homeWorkSubjectResults) == false) {
             homeWorkSubjectResults.forEach(function (homeWorkSubjectResult) {
                 var homeWorkSubjectObj = JSON.parse(homeWorkSubjectResult);
                 var clazzName = homeWorkSubjectObj.clazzName;
@@ -449,7 +462,7 @@ export default class dashboard extends React.Component {
                 // var homeWorkJson = {value: subjectCount, name: clazzName};
                 xClazzNameArray.push(clazzName);
                 // seriesDataArray.push(subjectCount);
-                var subjectCount = Math.ceil(Math.random()*10)+20;
+                // var subjectCount = Math.ceil(Math.random()*10)+20;
                 seriesDataArray.push(subjectCount);
             })
         }
@@ -471,13 +484,13 @@ export default class dashboard extends React.Component {
      * @param vClazzResults
      */
     buildOpenClazzTrArray = (vClazzResults) => {
-        var openClazzTrArray = '';
+        var openClazzTrArray = []
         vClazzResults.forEach(function (vClazzResult) {
             var vClazzObj = JSON.parse(vClazzResult);
-            openClazzTrArray += vClazzObj.clazz.name + ' ' + vClazzObj.course.name + ' ' + vClazzObj.teacher.userName
+            openClazzTrArray.push(<span style={{marginRight: '30px'}}>
+                {vClazzObj.clazz.name + ' ' + vClazzObj.course.name + ' ' + vClazzObj.teacher.userName}
+            </span>)
         });
-        // openClazzTrArray += "四年级三班" + ' ' + "数学" + ' ' + "王宁";
-        // openClazzTrArray += "五年级一班" + ' ' + "语文" + ' ' + "李思";
         this.setState({openClazzTrArray});
     }
 
@@ -652,8 +665,9 @@ export default class dashboard extends React.Component {
 
         var xClazzNameArray = [];
         var seriesDataArray = [];
+        console.log(braceletSportSteps);
         braceletSportSteps.forEach(function (braceletSportStepObj) {
-            var clazzName = braceletSportStepObj.clazz.name;
+            var clazzName = braceletSportStepObj.clazz.grade.name + '' + braceletSportStepObj.clazz.name;
             var sportStep = braceletSportStepObj.sportStep;
             xClazzNameArray.push(clazzName);
             seriesDataArray.push(sportStep);
@@ -701,7 +715,13 @@ export default class dashboard extends React.Component {
             xAxis: [
                 {
                     type: 'category',
-                    data: xClazzNameArray
+                    data: xClazzNameArray,
+                    axisLabel: {
+                        //这个是倾斜角度，也是考虑到文字过多的时候，方式覆盖采用倾斜
+                        rotate: 25,
+                        //这里是考虑到x轴文件过多的时候设置的，如果文字太多，默认是间隔显示，设置为0，标示全部显示，当然，如果x轴都不显示，那也就没有意义了
+                        interval: 0
+                    }
                 }
             ],
             yAxis: [
@@ -860,7 +880,7 @@ export default class dashboard extends React.Component {
         var classHeartRateArray = [];
         for (var k in sportData) {
             classHeartRateArray.push(sportData[k].braceletHeartRate.heartRate);
-            classNameArray.push(sportData[k].courseTableItem.clazz.name + sportData[k].courseTableItem.courseName + '课')
+            classNameArray.push(sportData[k].courseTableItem.clazz.grade.name + '' + sportData[k].courseTableItem.clazz.name + sportData[k].courseTableItem.courseName + '课')
         }
         var sportOption = _this.buildSportsOption(classNameArray, classHeartRateArray)
         var sportDiv = <div>
@@ -894,7 +914,13 @@ export default class dashboard extends React.Component {
                 x: 'left'
             },
             xAxis: {
-                data: classNameArray
+                data: classNameArray,
+                axisLabel: {
+                    //这个是倾斜角度，也是考虑到文字过多的时候，方式覆盖采用倾斜
+                    rotate: 30,
+                    //这里是考虑到x轴文件过多的时候设置的，如果文字太多，默认是间隔显示，设置为0，标示全部显示，当然，如果x轴都不显示，那也就没有意义了
+                    interval: 0
+                }
             },
             yAxis: {},
             series: [{
@@ -934,7 +960,7 @@ export default class dashboard extends React.Component {
         var _this = this;
         var xFlowNameArray = [];
         var ySeriesDataArray = [];
-        if(WebServiceUtil.isEmpty(proceCountResults)==false){
+        if (WebServiceUtil.isEmpty(proceCountResults) == false) {
             proceCountResults.forEach(function (proceCountObj) {
                 var procDefName = proceCountObj.procDefName;
                 var procCount = proceCountObj.procCount;
@@ -1011,40 +1037,48 @@ export default class dashboard extends React.Component {
         var _this = this;
         var xAttendanceNameArray = [];
         var ySeriesDataArray = [];
-        if(WebServiceUtil.isEmpty(attendanceResults)==false){
+        if (WebServiceUtil.isEmpty(attendanceResults) == false) {
             console.log(attendanceResults);
             var absent = attendanceResults["absent"];
             var early = attendanceResults["early"];
             var late = attendanceResults["late"];
             var miss = attendanceResults["miss"];
+            var missPeople = attendanceResults["missPeople"];
             var sum = attendanceResults["sum"];
+            var normal = attendanceResults["normal"];
             var othersData = 0;
-            if(WebServiceUtil.isEmpty(absent)==false){
+            if (WebServiceUtil.isEmpty(absent) == false) {
                 xAttendanceNameArray.push("旷工");
                 var absentJson = {value: absent, name: '旷工'};
                 ySeriesDataArray.push(absentJson);
-                othersData += parseInt(absent);
+                // othersData += parseInt(absent);
             }
-            if(WebServiceUtil.isEmpty(early)==false){
+            if (WebServiceUtil.isEmpty(early) == false) {
                 xAttendanceNameArray.push("早退");
                 var earlyJson = {value: early, name: '早退'};
                 ySeriesDataArray.push(earlyJson);
                 othersData += parseInt(early);
             }
-            if(WebServiceUtil.isEmpty(late)==false){
+            if (WebServiceUtil.isEmpty(late) == false) {
                 xAttendanceNameArray.push("迟到");
                 var lateJson = {value: late, name: '迟到'};
                 ySeriesDataArray.push(lateJson);
                 othersData += parseInt(late);
             }
-            if(WebServiceUtil.isEmpty(miss)==false){
-                xAttendanceNameArray.push("缺勤");
-                var missJson = {value: miss, name: '缺勤'};
-                ySeriesDataArray.push(missJson);
+            if (WebServiceUtil.isEmpty(miss) == false) {
+                /* xAttendanceNameArray.push("缺勤");
+                 var missPerson = parseInt(parseInt(miss)/2);
+                 var missJson = {value: missPerson, name: '缺勤'};
+                 ySeriesDataArray.push(missJson);*/
                 othersData += parseInt(miss);
             }
-            if(WebServiceUtil.isEmpty(sum)==false){
-                var normal = parseInt(sum) - parseInt(othersData);
+            if (WebServiceUtil.isEmpty(missPeople) == false) {
+                xAttendanceNameArray.push("缺卡");
+                var missPeopleJson = {value: missPeople, name: '缺卡'};
+                ySeriesDataArray.push(missPeopleJson);
+            }
+            if (WebServiceUtil.isEmpty(normal) == false) {
+                // var normal = parseInt(sum) - parseInt(othersData);
                 xAttendanceNameArray.push("正常");
                 var normalJson = {value: normal, name: '正常'};
                 ySeriesDataArray.push(normalJson);
@@ -1122,7 +1156,7 @@ export default class dashboard extends React.Component {
         var allAbsentCount = 0;
         var allPunchCount = 0;
         var allTotalCount = 0;
-        if(WebServiceUtil.isEmpty(attendanceResults)==false){
+        if (WebServiceUtil.isEmpty(attendanceResults) == false) {
             attendanceResults.forEach(function (attendanceObj) {
                 var absentCount = attendanceObj["absentCount"];
                 var punchCount = attendanceObj["punchCount"];
@@ -1132,17 +1166,17 @@ export default class dashboard extends React.Component {
                 allTotalCount += parseInt(totalCount);
             });
         }
-        if(WebServiceUtil.isEmpty(allAbsentCount)==false){
+        if (WebServiceUtil.isEmpty(allAbsentCount) == false) {
             xAttendanceNameArray.push("缺勤");
             var absentJson = {value: allAbsentCount, name: '缺勤'};
             ySeriesDataArray.push(absentJson);
         }
-        if(WebServiceUtil.isEmpty(allPunchCount)==false){
+        if (WebServiceUtil.isEmpty(allPunchCount) == false) {
             xAttendanceNameArray.push("实到");
             var punchCountJson = {value: allPunchCount, name: '实到'};
             ySeriesDataArray.push(punchCountJson);
         }
-        if(WebServiceUtil.isEmpty(allTotalCount)==false){
+        if (WebServiceUtil.isEmpty(allTotalCount) == false) {
             xAttendanceNameArray.push("应到");
             var totalCountJson = {value: allTotalCount, name: '应到'};
             ySeriesDataArray.push(totalCountJson);
@@ -1229,7 +1263,7 @@ export default class dashboard extends React.Component {
 
                         <div className="notice fl">
                             <NoticeBar marqueeProps={{loop: true, style: {padding: '0 7.5px'}}}>
-                                {'正在开课:' + this.state.openClazzTrArray}
+                                正在开课:{this.state.openClazzTrArray}
                             </NoticeBar>
                         </div>
                         <div className="schoolName fl">{_this.state.schoolName}{/*西安市第九十九中学*/}</div>
@@ -1250,7 +1284,8 @@ export default class dashboard extends React.Component {
                                 <div className="list_wrap_padding map">
                                     <div className="clear numDiv">
                                         <div className="fl msgNum">
-                                            <p className="gradeTitle">全校教研活动量:<span className="num">{_this.state.messageCount}</span></p>
+                                            <p className="gradeTitle">全校教研活动量:<span
+                                                className="num">{_this.state.messageCount}</span></p>
                                         </div>
                                     </div>
                                     {/*热力图*/}
@@ -1316,7 +1351,6 @@ export default class dashboard extends React.Component {
                                         className=''/>
                                 </div>
                             </div>*/}
-
 
 
                         </div>

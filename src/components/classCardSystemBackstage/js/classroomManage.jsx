@@ -109,7 +109,7 @@ export default class classroomManage extends React.Component {
                         refreshing: false
                     })
                 } else {
-                    Toast.fail(result.msg, 1);
+                    Toast.fail(result.msg, 3);
                 }
             },
             onError: function (error) {
@@ -202,7 +202,7 @@ export default class classroomManage extends React.Component {
                         dataSource: _this.state.dataSource.cloneWithRows(_this.initData)
                     });
                 } else {
-                    Toast.fail(result.msg)
+                    Toast.fail(result.msg,3)
                 }
 
             },

@@ -66,7 +66,7 @@ export default class warnList extends React.Component {
                 window.location.href = url;
             });
         }else{
-            Toast.fail('参数有误');
+            Toast.fail('参数有误',2);
         }
     }
 

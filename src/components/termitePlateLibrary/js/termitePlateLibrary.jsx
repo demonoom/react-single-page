@@ -260,7 +260,7 @@ export default class termitePlateLibrary extends React.Component {
      */
     creatFile(value) {
         if (value.length == 0) {
-            Toast.fail('文件夹名称不能为空', 1);
+            Toast.fail('文件夹名称不能为空', 3);
             return
         }
         var _this = this;
@@ -378,7 +378,7 @@ export default class termitePlateLibrary extends React.Component {
                         dataSource: _this.state.dataSource.cloneWithRows(_this.initData)
                     });
                 } else {
-                    Toast.fail('删除失败', 1);
+                    Toast.fail('删除失败', 2);
                 }
             },
             onError: function (error) {
@@ -431,7 +431,7 @@ export default class termitePlateLibrary extends React.Component {
      */
     renameFile(str, data) {
         if (str.length == 0) {
-            Toast.fail('文件夹名称不能为空', 1);
+            Toast.fail('文件夹名称不能为空', 3);
             return
         }
         var _this = this;
@@ -466,7 +466,7 @@ export default class termitePlateLibrary extends React.Component {
                     //     });
                     // }, 100);
                 } else {
-                    Toast.fail('重命名失败', 1);
+                    Toast.fail('重命名失败', 2);
                 }
             },
             onError: function (error) {
