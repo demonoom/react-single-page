@@ -13,7 +13,7 @@ import {
     Flex,
 } from 'antd-mobile';
 import '../css/classroomManage.less'
-import { ucs2 } from 'punycode';
+import {ucs2} from 'punycode';
 
 const Item = List.Item;
 const Brief = Item.Brief;
@@ -45,36 +45,40 @@ export default class classroomManage extends React.Component {
         document.title = '绑定教室信息';
         var locationHref = window.location.href;
         var locationSearch = locationHref.substr(locationHref.indexOf("?") + 1);
+        console.log(locationSearch);
         var uid = locationSearch.split("&")[0].split("=")[1];
-        this.setState({ "uid": uid });
-        this.viewClassRoomPage(uid,true);
+        this.setState({"uid": uid});
+        this.viewClassRoomPage(uid, true);
         window.addEventListener('resize', classBinding.onWindowResize)
     }
+
     componentWillUnmount() {
         //解除监听
         window.removeEventListener('resize', classBinding.onWindowResize)
     }
+
     /**
-    * 视窗改变时改变高度
-    */
+     * 视窗改变时改变高度
+     */
     onWindowResize() {
         setTimeout(function () {
-            classBinding.setState({ clientHeight: document.body.clientHeight });
+            classBinding.setState({clientHeight: document.body.clientHeight});
         }, 100)
     }
+
     /**
      * 查看教室信息
      */
-    viewClassRoomPage(uid,flag) {
+    viewClassRoomPage(uid, flag) {
         var _this = this;
-        if(flag) {
+        if (flag) {
             _this.initData.splice(0);
             _this.state.dataSource = [];
             _this.state.dataSource = new ListView.DataSource({
                 rowHasChanged: (row1, row2) => row1 !== row2,
             });
         }
-        
+
         const dataBlob = {};
         var PageNo = this.state.defaultPageNo;
         var param = {
@@ -144,8 +148,8 @@ export default class classroomManage extends React.Component {
             return;
         }
         currentPageNo += 1;
-        this.setState({ isLoadingLeft: true, defaultPageNo: currentPageNo });
-        _this.viewClassRoomPage(_this.state.uid,false);
+        this.setState({isLoadingLeft: true, defaultPageNo: currentPageNo});
+        _this.viewClassRoomPage(_this.state.uid, false);
         this.setState({
             dataSource: this.state.dataSource.cloneWithRows(this.initData),
             isLoadingLeft: true,
@@ -155,13 +159,13 @@ export default class classroomManage extends React.Component {
     onRefresh = () => {
         var divPull = document.getElementsByClassName('am-pull-to-refresh-content');
         divPull[0].style.transform = "translate3d(0px, 30px, 0px)";   //设置拉动后回到的位置
-        this.setState({ defaultPageNo: 1, refreshing: true, isLoadingLeft: true });
-        this.viewClassRoomPage(this.state.uid,true);
+        this.setState({defaultPageNo: 1, refreshing: true, isLoadingLeft: true});
+        this.viewClassRoomPage(this.state.uid, true);
     }
 
     /**
      * 根据ID修改教室
-     * @param {*} id 
+     * @param {*} id
      */
     toUpdatePage(id) {
         var url = WebServiceUtil.mobileServiceURL + "updateClassroom" + "?classId=" + id.id + "&uid=" + classBinding.state.uid;
@@ -177,7 +181,7 @@ export default class classroomManage extends React.Component {
 
     /**
      * 根据ID删除教室
-     * @param {*} classRoomId 
+     * @param {*} classRoomId
      */
     delClassroom(classRoomId) {
         var _this = this;
@@ -202,7 +206,7 @@ export default class classroomManage extends React.Component {
                         dataSource: _this.state.dataSource.cloneWithRows(_this.initData)
                     });
                 } else {
-                    Toast.fail(result.msg,3)
+                    Toast.fail(result.msg, 3)
                 }
 
             },
@@ -211,9 +215,10 @@ export default class classroomManage extends React.Component {
             }
         });
     }
+
     /**
-    * 删除弹出框
-    */
+     * 删除弹出框
+     */
     showAlert = (sId) => {
         var phoneType = navigator.userAgent;
         var phone;
@@ -224,56 +229,78 @@ export default class classroomManage extends React.Component {
         }
         var _this = this;
         const alertInstance = alert('删除', '您确定要删除吗?', [
-            { text: '取消', onPress: () => console.log('cancel'), style: 'default' },
-            { text: '确定', onPress: () => _this.delClassroom(sId) },
+            {text: '取消', onPress: () => console.log('cancel'), style: 'default'},
+            {text: '确定', onPress: () => _this.delClassroom(sId)},
         ], phone);
     };
+
+    /**
+     * 批量编辑教室坐标
+     */
+    bindCoordinates() {
+        var phoneType = navigator.userAgent;
+        if (phoneType.indexOf('iPhone') > -1 || phoneType.indexOf('iPad') > -1 || phoneType.indexOf('Android') > -1) {
+            Toast.info('请在浏览器中的小蚂蚁教师端完成该功能', 3)
+            return
+        }
+        var data = {
+            method: 'bindCoordinates'
+        };
+        Bridge.callHandler(data, null, function (error) {
+            Toast.fail(error, 5)
+        });
+    }
 
     render() {
         var _this = this;
         const row = (rowData, sectionID, rowID) => {
             return (<div>
-                {
-                    <div className="classInfo line_public">
-                        <div className="textOver">
-                            <span className="classroom">教室名称：{rowData.name}</span>
-                            <span className="floor">{rowData.building.name ? `(${rowData.building.name})` : ""}</span>
-                        </div>
+                    {
+                        <div className="classInfo line_public">
+                            <div className="textOver">
+                                <span className="classroom">教室名称：{rowData.name}</span>
+                                <span
+                                    className="floor">{rowData.building.name ? `(${rowData.building.name})` : ""}</span>
+                            </div>
 
-                        <div className="textOver">
-                            {
-                                rowData.defaultBindedClazz ? <span className="grade">绑定班级：{rowData.defaultBindedClazz.name}</span> : <span className="grade"></span>
-                            }
+                            <div className="textOver">
+                                {
+                                    rowData.defaultBindedClazz ?
+                                        <span className="grade">绑定班级：{rowData.defaultBindedClazz.name}</span> :
+                                        <span className="grade"></span>
+                                }
 
-                        </div>
-                        <div className="div_creatTime">
+                            </div>
+                            <div className="div_creatTime">
                             <span className="creatTime">
                                 创建时间：
                                 {
                                     WebServiceUtil.formatYMD(rowData.createTime)
                                 }
                             </span>
-                            <Button className="modifyBtn_common" type="primary" size="small" onClick={this.toUpdatePage.bind(this, rowData)}></Button>
-                            <Button type="primary" size="small" className="btn_del deleteBtn_common"
-                                onClick={this.showAlert.bind(this, rowData.id)}
-                            ></Button>
+                                <Button className="modifyBtn_common" type="primary" size="small"
+                                        onClick={this.toUpdatePage.bind(this, rowData)}></Button>
+                                <Button type="primary" size="small" className="btn_del deleteBtn_common"
+                                        onClick={this.showAlert.bind(this, rowData.id)}
+                                ></Button>
+                            </div>
                         </div>
-                    </div>
-                }
-            </div>
+                    }
+                </div>
 
             )
         };
 
         return (
-            <div id="classroomManage" style={{ height: classBinding.state.clientHeight }}>
-                <div className='tableDiv' style={{ height: classBinding.state.clientHeight }}>
+            <div id="classroomManage" style={{height: classBinding.state.clientHeight}}>
+                <div className='tableDiv' style={{height: classBinding.state.clientHeight}}>
+                    <li onClick={_this.bindCoordinates}>批量编辑教室坐标</li>
                     {/*这是列表数据,包括添加按钮*/}
                     <ListView
                         ref={el => this.lv = el}
                         dataSource={this.state.dataSource}    //数据类型是 ListViewDataSource
                         renderFooter={() => (
-                            <div style={{ paddingTop: 5, paddingBottom: 40, textAlign: 'center' }}>
+                            <div style={{paddingTop: 5, paddingBottom: 40, textAlign: 'center'}}>
                                 {this.state.isLoadingLeft ? '正在加载' : '已经全部加载完毕'}
                             </div>)}
                         renderRow={row}   //需要的参数包括一行数据等,会返回一个可渲染的组件为这行数据渲染  返回renderable
@@ -295,7 +322,7 @@ export default class classroomManage extends React.Component {
                         }
                     />
                     <div className='addBunton' onClick={this.addClassroomM}>
-                        <img src={require("../imgs/addBtn.png")} />
+                        <img src={require("../imgs/addBtn.png")}/>
                     </div>
                 </div>
 
