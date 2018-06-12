@@ -244,7 +244,7 @@ export default class classroomManage extends React.Component {
                             }
                         </div>
                         <div className="div_creatTime">
-                            <span className="creatTime">
+                            <span className="creatTime textOver">
                                 所处位置：
                                 {
                                    rowData.building ? 

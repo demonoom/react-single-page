@@ -85,8 +85,9 @@ export default class addTeachBuild extends React.Component {
                         value={this.state.teachBuildValue}
                     >教学楼名称<i className='redStar'>*</i></InputItem>
                 </div>
-                <div>
-                    <List renderHeader={() => '是否危险区'}>
+
+                <div className="isDangerArea">
+                    <List renderHeader={() => '是否危险区：'}>
                         {data.map(i => (
                             <RadioItem key={i.value} checked={this.state.value === i.value} onChange={() => this.onChange(i.value)}>
                                 {i.label}
