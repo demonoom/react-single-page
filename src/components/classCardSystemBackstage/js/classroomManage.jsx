@@ -237,20 +237,20 @@ export default class classroomManage extends React.Component {
                     <div className="classInfo line_public">
                         <div className="textOver">
                             <span className="classroom">教室名称：{rowData.name}</span>
-                            <span className="floor">{rowData.building.name ? `(${rowData.building.name})` : ""}</span>
                         </div>
-
                         <div className="textOver">
                             {
                                 rowData.defaultBindedClazz ? <span className="grade">绑定班级：{rowData.defaultBindedClazz.name}</span> : <span className="grade"></span>
                             }
-
                         </div>
                         <div className="div_creatTime">
                             <span className="creatTime">
-                                创建时间：
+                                所处位置：
                                 {
-                                    WebServiceUtil.formatYMD(rowData.createTime)
+                                   rowData.building ? 
+                                    <span>{rowData.building.name}
+                                    <span>({rowData.building.dangerArea ? "是" : "否"})</span></span>
+                                  : "暂未选择位置"
                                 }
                             </span>
                             <Button className="modifyBtn_common" type="primary" size="small" onClick={this.toUpdatePage.bind(this, rowData)}></Button>

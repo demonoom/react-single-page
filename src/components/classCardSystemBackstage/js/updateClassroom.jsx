@@ -19,7 +19,6 @@ const RadioItem = Radio.RadioItem;
 var updateCM;
 
 export default class updateClassroom extends React.Component {
-
     constructor(props) {
         super(props);
         updateCM = this;
@@ -42,11 +41,11 @@ export default class updateClassroom extends React.Component {
             "uid": uid,
             classIdBynoom
         })
-        this.setState({});
         this.viewSchoolBuildingPage(uid, true);
     }
 
     componentDidMount() {
+        
         Bridge.setShareAble("false");
         document.title = '编辑教室信息';
         //添加对视窗大小的监听,在屏幕转换以及键盘弹起时重设各项高度
@@ -74,8 +73,8 @@ export default class updateClassroom extends React.Component {
                     var roomName = clazzRoom.name;
                     var gradeName = clazzRoom.defaultBindedClazz.name;
                     var defaultId = clazzRoom.defaultBindedClazz.id;
-                    var teachBuildValue = clazzRoom.building.name;
-                    var buildingId = [clazzRoom.building.id];
+                    var teachBuildValue = clazzRoom.building ? clazzRoom.building.name : "";
+                    var buildingId = [clazzRoom.building ? clazzRoom.building.id : ""];
                     _this.setState({
                         'classroomValue': roomName,
                         "gradeValue": gradeName,
@@ -97,7 +96,7 @@ export default class updateClassroom extends React.Component {
      */
     onWindowResize() {
         setTimeout(function () {
-            updateCM.setState({ clientHeight: document.body.clientHeight});
+            updateCM.setState({ clientHeight: document.body.clientHeight });
         }, 100)
     }
     /**
@@ -159,6 +158,7 @@ export default class updateClassroom extends React.Component {
 
     //选择器改变事件
     onPickerChange = (val) => {
+        
         const d = [...this.state.teachBuildData];
         const buildingId = [...val];
         this.setState({
@@ -166,6 +166,14 @@ export default class updateClassroom extends React.Component {
             buildingId,
         });
     };
+
+    //取消事件
+    onCancle = () => {
+         updateCM.setState({
+            "buildingId": updateCM.state.classIdBynoom
+        })
+        this.viewSchoolBuildingPage(updateCM.state.uid, true);
+    }
 
     //选择器确定事件
     viewCourseTableItemPage = (val) => {
@@ -175,9 +183,6 @@ export default class updateClassroom extends React.Component {
             data: d,
             buildingId,
         });
-        // if (updateCM.state.buildingId == -1) {
-        //     this.toAddTeachBuild();
-        // }
     };
     /**
     * 班级选择改变事件
@@ -283,10 +288,6 @@ export default class updateClassroom extends React.Component {
    * 增加教学楼
    */
     toAddTeachBuild = () => {
-        updateCM.setState({
-            "teachBuildValue": "",
-            "buildingId": ""
-        })
         var url = WebServiceUtil.mobileServiceURL + "addTeachBuild?uid=" + updateCM.state.uid;
         var data = {
             method: 'openNewPage',
@@ -346,7 +347,6 @@ export default class updateClassroom extends React.Component {
                             </div>
                             <WhiteSpace size="lg" />
                             {
-                                updateCM.state.buildingId != 0 ?
                                     <div className='teachBuild'>
                                         <Picker
                                             data={this.state.teachBuildData}
@@ -360,16 +360,14 @@ export default class updateClassroom extends React.Component {
                                             <Item arrow="horizontal" onClick={this.viewSchoolBuildingPage.bind(this,
                                                 updateCM.state.uid, false)
                                             }
-                                            >选择教室所在教学楼</Item>
+                                            >选择班级所处位置</Item>
                                         </Picker>
                                         <div className="addFloor" onClick={this.toAddTeachBuild}>
-
-                                            新增教学楼
+                                            新增位置信息
                                             {/*<button >+</button>新增教学楼*/}
                                         </div>
                                     </div>
-                                    :
-                                    <div></div>
+
                             }
                         </List>
                     </div>

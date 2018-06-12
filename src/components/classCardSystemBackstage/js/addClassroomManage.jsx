@@ -122,7 +122,6 @@ export default class addClassroomManage extends React.Component {
     */
     toAddTeachBuild = () => {
         classBinding.setState({
-            "teachBuildValue": "",
             "buildingId": ""
         })
         var url = WebServiceUtil.mobileServiceURL + "addTeachBuild?uid=" + classBinding.state.uid;
@@ -219,6 +218,12 @@ export default class addClassroomManage extends React.Component {
         });
     };
 
+    onCancle = ()=>{
+        classBinding.setState({
+            // "teachBuildValue": "",
+            "buildingId": ""
+        })
+    }
     //选择器确定事件
     viewCourseTableItemPage = (val) => {
         const d = [...this.state.teachBuildData];
@@ -302,12 +307,11 @@ export default class addClassroomManage extends React.Component {
                                     <Item arrow="horizontal" onClick={this.viewSchoolBuildingPage.bind(this,
                                         classBinding.state.uid)
                                     }
-                                    >选择教室所在教学楼</Item>
+                                    >选择班级所处位置</Item>
                                 </Picker>
                             </div>
                             <div className="addFloor" onClick={this.toAddTeachBuild}>
-
-                                新增教学楼
+                                新增位置信息
                                 {/*<button >+</button>新增教学楼*/}
                             </div>
                         </List>
