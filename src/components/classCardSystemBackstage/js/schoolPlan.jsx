@@ -28,7 +28,7 @@ export default class schoolPlan extends React.Component {
     }
     /**
      * 获取学校地图信息
-     * @param {*} id 
+     * @param {*} id
      */
     getSchoolMap(id) {
         var param = {
@@ -105,7 +105,7 @@ export default class schoolPlan extends React.Component {
     }
     /**
      * 删除展示模块的照片
-     * @param {*} id 
+     * @param {*} id
      */
     delSchoolMap(id) {
         this.showAlert(function () {
@@ -165,7 +165,7 @@ export default class schoolPlan extends React.Component {
 
     /**
      * 上传模块的删除
-     * @param {*} index 
+     * @param {*} index
      */
     delImgAtUp(index) {
         var arr = sPlan.state.imgArrAtUp;
