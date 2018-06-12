@@ -481,6 +481,13 @@ const littleAntPolicy = (location, cb) => {
     }
     )
 }
+//微信授权登录
+const wxLogin = (location, cb) => {
+    require.ensure([], require => {
+            cb(null, require("./components/wxLogin/wxLogin").default)
+        }
+    )
+}
 import './index.less';
 
 class Index extends React.Component {
@@ -598,6 +605,9 @@ class Index extends React.Component {
                     <li><Link
                         to="/littleAntPolicy"
                         style={{ fontSize: '24px' }}>小蚂蚁服务与政策</Link></li>
+                    <li><Link
+                        to="/wxLogin"
+                        style={{ fontSize: '24px' }}>授权登录</Link></li>
                 </ul>
             </div>
         );
@@ -690,6 +700,7 @@ ReactDOM.render(
             <Route path="studentMovement" getComponent={studentMovement} />
             <Route path="schoolPlan" getComponent={schoolPlan} />
             <Route path="littleAntPolicy" getComponent={littleAntPolicy} />
+            <Route path="wxLogin" getComponent={wxLogin} />
         </Route>
     </Router>
     ,
