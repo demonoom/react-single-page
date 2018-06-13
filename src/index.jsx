@@ -488,6 +488,20 @@ const wxLogin = (location, cb) => {
         }
     )
 }
+
+const warningAdminList = (location, cb) => {
+    require.ensure([], require => {
+            cb(null, require("./components/warningAdmin/js/warningAdminList").default)
+        }
+    )
+}
+
+const addWarnAdmin = (location, cb) => {
+    require.ensure([], require => {
+            cb(null, require("./components/warningAdmin/js/addWarnAdmin").default)
+        }
+    )
+}
 import './index.less';
 
 class Index extends React.Component {
@@ -608,6 +622,9 @@ class Index extends React.Component {
                     <li><Link
                         to="/wxLogin"
                         style={{ fontSize: '24px' }}>授权登录</Link></li>
+                    <li><Link
+                        to="/warningAdminList?schoolId=9&userId=23836"
+                        style={{ fontSize: '24px' }}>预警人员管理</Link></li>
                 </ul>
             </div>
         );
@@ -701,6 +718,8 @@ ReactDOM.render(
             <Route path="schoolPlan" getComponent={schoolPlan} />
             <Route path="littleAntPolicy" getComponent={littleAntPolicy} />
             <Route path="wxLogin" getComponent={wxLogin} />
+            <Route path="warningAdminList" getComponent={warningAdminList} />
+            <Route path="addWarnAdmin" getComponent={addWarnAdmin} />
         </Route>
     </Router>
     ,
