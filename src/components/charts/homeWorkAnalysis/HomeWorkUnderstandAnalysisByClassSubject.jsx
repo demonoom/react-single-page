@@ -64,11 +64,12 @@ export default class HomeWorkUnderstandAnalysisByClassSubject extends React.Comp
         var pushTime = searchArray[1].split('=')[1];
         var ident = searchArray[2].split('=')[1];
         var censusType = searchArray[3].split('=')[1];
-        this.setState({ident, clazzId, pushTime, censusType});
-        this.getHomeWorkUnderstandAnalysisByClassSubject(clazzId, pushTime, censusType);
+        var teacherId = searchArray[4].split('=')[1];
+        this.setState({ident, clazzId, pushTime, censusType,teacherId});
+        this.getHomeWorkUnderstandAnalysisByClassSubject(clazzId, pushTime,teacherId, censusType);
     }
 
-    getHomeWorkUnderstandAnalysisByClassSubject(clazzId, pushTime, censusType) {
+    getHomeWorkUnderstandAnalysisByClassSubject(clazzId, pushTime,teacherId, censusType) {
         var _this = this;
         var param;
         if (censusType == 0) {
@@ -78,6 +79,7 @@ export default class HomeWorkUnderstandAnalysisByClassSubject extends React.Comp
                 "clazzId": clazzId,
                 "pushTime": pushTime,
                 "viewType": 0,
+                "teacherId": teacherId
             };
         } else {
             this.setState({divDisplay: false});
@@ -86,6 +88,7 @@ export default class HomeWorkUnderstandAnalysisByClassSubject extends React.Comp
                 "clazzId": clazzId,
                 "pushTime": pushTime,
                 "viewType": 1,
+                "teacherId": teacherId
             };
 
         }
@@ -353,7 +356,8 @@ export default class HomeWorkUnderstandAnalysisByClassSubject extends React.Comp
                         position: 'top'        //这里可以自己选择位置
                     }
                 }
-            }, {
+            }
+            /*, {
                 name: '平均理解度',
                 type: 'bar',
                 barGap: '-100%',
@@ -372,7 +376,8 @@ export default class HomeWorkUnderstandAnalysisByClassSubject extends React.Comp
                 },
                 z: -12,
                 data: lineData
-            }, {
+            }*/
+            /*, {
                 name: '平均理解度',
                 type: 'pictorialBar',
                 symbol: 'rect',
@@ -386,7 +391,8 @@ export default class HomeWorkUnderstandAnalysisByClassSubject extends React.Comp
                 symbolMargin: 1,
                 z: -10,
                 data: lineData
-            }]
+            }*/
+            ]
         };
     };
     buildChartOption2 = (category,barData,lineData) => {
@@ -467,7 +473,8 @@ export default class HomeWorkUnderstandAnalysisByClassSubject extends React.Comp
                         position: 'top'        //这里可以自己选择位置
                     }
                 }
-            }, {
+            }
+            /*, {
                 name: '班级平均时长',
                 type: 'bar',
                 barGap: '-100%',
@@ -500,7 +507,8 @@ export default class HomeWorkUnderstandAnalysisByClassSubject extends React.Comp
                 symbolMargin: 1,
                 z: -10,
                 data: lineData
-            }]
+            }*/
+            ]
         };
     };
     getLoadingOption = () => {
@@ -572,7 +580,7 @@ export default class HomeWorkUnderstandAnalysisByClassSubject extends React.Comp
         var date = parseInt(da.getDate()) > 9 ? da.getDate() : "0" + da.getDate();
         var dayStr = [year, month, date].join('-');
         //todo 调用接口，完成班级学生平均理解度和平均时长数据的获取
-        this.getHomeWorkUnderstandAnalysisByClassSubject(this.state.clazzId[0], dayStr);
+        this.getHomeWorkUnderstandAnalysisByClassSubject(this.state.clazzId[0],dayStr, this.state.teacherId);
     };
 
     render() {
