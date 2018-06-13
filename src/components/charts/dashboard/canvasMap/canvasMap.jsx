@@ -1,11 +1,14 @@
 import React from 'react';
 import {} from 'antd-mobile';
 import './css/canvasMap.less'
+import dangerImg from './danger.png'
 
 var demeanor;
 var canvas;
 var context;
 var timer;
+var danger = new Image();
+danger.src = dangerImg
 
 export default class canvasMap extends React.Component {
 
@@ -58,7 +61,7 @@ export default class canvasMap extends React.Component {
                     demeanor.viewRoomHeapmap()
                     timer = setInterval(function () {
                         demeanor.viewRoomHeapmap()
-                    }, 10000)
+                    }, 1000)
                 }
             },
             onError: function (error) {
@@ -101,20 +104,23 @@ export default class canvasMap extends React.Component {
             console.log(data);
             data.forEach(function (v, i) {
                 for (var i = 0; i < v.count; i++) {
-
                     var numX = Math.random() * 10 * Math.pow(-1, Math.round(Math.random()));
                     var numY = Math.random() * 10 * Math.pow(-1, Math.round(Math.random()));
 
-                    context.beginPath()
-                    if (v.count < 20) {
-                        context.strokeStyle = '#0000ff';
-                    } else if (v.count > 50) {
-                        context.strokeStyle = '#c00000';
+                    if (v.isDangerArea) {
+                        context.drawImage(danger, canvas.width * v.location.x + numX, canvas.height * v.location.y + numY);
                     } else {
-                        context.strokeStyle = '#fffc00';
+                        context.beginPath()
+                        if (v.count < 20) {
+                            context.strokeStyle = '#0000ff';
+                        } else if (v.count > 50) {
+                            context.strokeStyle = '#c00000';
+                        } else {
+                            context.strokeStyle = '#fffc00';
+                        }
+                        context.lineTo(canvas.width * v.location.x + numX, canvas.height * v.location.y + numY);
+                        context.stroke();
                     }
-                    context.lineTo(canvas.width * v.location.x + numX, canvas.height * v.location.y + numY);
-                    context.stroke();
                 }
             })
         }

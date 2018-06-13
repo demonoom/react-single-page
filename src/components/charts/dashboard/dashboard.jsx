@@ -670,7 +670,6 @@ export default class dashboard extends React.Component {
 
         var xClazzNameArray = [];
         var seriesDataArray = [];
-        console.log(braceletSportSteps);
         braceletSportSteps.forEach(function (braceletSportStepObj) {
             var clazzName = braceletSportStepObj.clazz.grade.name + '' + braceletSportStepObj.clazz.name;
             var sportStep = braceletSportStepObj.sportStep;
@@ -1043,7 +1042,6 @@ export default class dashboard extends React.Component {
         var xAttendanceNameArray = [];
         var ySeriesDataArray = [];
         if (WebServiceUtil.isEmpty(attendanceResults) == false) {
-            console.log(attendanceResults);
             var absent = attendanceResults["absent"];
             var early = attendanceResults["early"];
             var late = attendanceResults["late"];
