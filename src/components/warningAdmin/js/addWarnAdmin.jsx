@@ -157,7 +157,7 @@ export default class addWarnAdmin extends React.Component {
 
         return (
             <div id="addWarnAdmin">
-                <SearchBar cancelText="搜索" onCancel={this.searchSubmit.bind(this)} onSubmit={this.searchSubmit.bind(this)} placeholder="请输入预警人姓名" maxLength={8} />
+                <SearchBar showCancelButton={true} cancelText="搜索" onCancel={this.searchSubmit.bind(this)} onSubmit={this.searchSubmit.bind(this)} placeholder="请输入预警人姓名" maxLength={8} />
                 <div className='content_box' style={{height:this.state.clientHeight - 44 + 'px',overflow:'auto'}}>
                     {this.state.listInnerHTML}
                 </div>
