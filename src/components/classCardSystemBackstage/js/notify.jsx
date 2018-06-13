@@ -32,15 +32,66 @@ export default class notifyBack extends React.Component {
         var locationSearch = locationHref.substr(locationHref.indexOf("?") + 1);
         var ident = locationSearch.split("&")[0].split('=')[1];
         this.setState({ident});
+        this.getClassBrandNoticeListByUserId(ident);
     }
 
     componentDidMount() {
         Bridge.setShareAble("false");
         document.title = "通知列表";
         //首页显示全部
-        this.getClassBrandNoticeListByClassId(false);
+        // this.getClassBrandNoticeListByClassId(false);
     }
+    
+    /**
+     * 通知列表
+     */
 
+    getClassBrandNoticeListByUserId(ident){
+        var _this = this;
+        _this.state.dataSource = [];
+        _this.state.dataSource = new ListView.DataSource({
+            rowHasChanged: (row1, row2) => row1 !== row2,
+        });
+        var dataBlob = {};
+        var PageNo = this.state.defaultPageNo;
+        var param = {
+            "method":"getClassBrandNoticeListByUserId",
+            "userId":ident,
+            "pageNo":PageNo
+        }
+         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
+            onResponse: result => {
+                if (result.msg == '调用成功' || result.success) {
+                    classBinding.state.selectData = result.response
+                    var arr = result.response;
+                    var pager = result.pager;
+                    for (let i = 0; i < arr.length; i++) {
+                        var topic = arr[i];
+                        dataBlob[`${i}`] = topic;
+                    }
+                    var isLoading = false;
+                    if (arr.length > 0) {
+                        if (pager.pageCount == 1 && pager.rsCount < 30) {
+                            isLoading = false;
+                        } else {
+                            isLoading = true;
+                        }
+                    } else {
+                        isLoading = false;
+                    }
+                    _this.initData = _this.initData.concat(arr);
+                    _this.setState({
+                        dataSource: _this.state.dataSource.cloneWithRows(_this.initData),
+                        isLoadingLeft: isLoading,
+                        refreshing: false
+                    })
+                }
+            },
+            onError: function (error) {
+                Toast.info('获取列表失败', error);
+            }
+        });
+    }
     //通过教室id获取通知列表
     getClassBrandNoticeListByClassId(classroomId) {
         var _this = this;
@@ -58,13 +109,7 @@ export default class notifyBack extends React.Component {
                 "classroomId": classroomId,
                 "pageNo": PageNo,
             }
-        } else {
-            param = {
-                "method": 'getClassBrandNoticeListByClassId',
-                "classroomId": "",
-                "pageNo": PageNo,
-            }
-        }
+        } 
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
             onResponse: result => {
                 if (result.msg == '调用成功' || result.success) {

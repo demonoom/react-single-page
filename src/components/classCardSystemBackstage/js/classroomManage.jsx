@@ -249,8 +249,10 @@ export default class classroomManage extends React.Component {
                                 {
                                    rowData.building ? 
                                     <span>{rowData.building.name}
-                                    <span>({rowData.building.dangerArea ? "是" : "否"})</span></span>
-                                  : "暂未选择位置"
+                                        <span>({rowData.building.dangerArea ? "是" : "否"})</span>
+                                    </span>
+                                  :
+                                   "暂未选择位置"
                                 }
                             </span>
                             <Button className="modifyBtn_common" type="primary" size="small" onClick={this.toUpdatePage.bind(this, rowData)}></Button>
