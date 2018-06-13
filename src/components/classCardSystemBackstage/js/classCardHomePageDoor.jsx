@@ -15,11 +15,30 @@ export default class classCardHomePageDoor extends React.Component {
         var searchArray = locationSearch.split("&");
         var ident = searchArray[0].split('=')[1];
         this.setState({ident})
+        this.getUserByAccount(ident)
     }
 
     componentDidMount() {
         Bridge.setShareAble("false");
         document.title = '班牌系统'
+    }
+
+    getUserByAccount(ident) {
+        var _this = this;
+        var param = {
+            "method": 'getUserByAccount',
+            "account": 'te' + ident,
+        };
+        WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
+            onResponse: (result) => {
+                if (result.msg == '调用成功' || result.success == true) {
+                    _this.setState({schoolId: result.response.schoolId})
+                }
+            },
+            onError: function (error) {
+                // message.error(error);
+            }
+        });
     }
 
     /**
@@ -156,6 +175,17 @@ export default class classCardHomePageDoor extends React.Component {
         });
     }
 
+    turnWarningAdminList = () => {
+        var url = WebServiceUtil.mobileServiceURL + "warningAdminList?schoolId=" + this.state.schoolId + "&userId=" + this.state.ident;
+        var data = {
+            method: 'openNewPage',
+            url: url
+        };
+        Bridge.callHandler(data, null, function (error) {
+            window.location.href = url;
+        });
+    }
+
     render() {
         return (
             <div id="classCardHomePageDoor" style={{height: document.body.clientHeight, overflow: 'auto'}}>
@@ -180,6 +210,8 @@ export default class classCardHomePageDoor extends React.Component {
                     <li onClick={this.turnToWarnList}><i className="icon icon_earlyWarning"></i>课堂预警<i
                         className="arrow_right"></i></li>
                     <li onClick={this.turnToStudentMovement}><i className="icon icon_exercise"></i>学生运动轨迹<i
+                        className="arrow_right"></i></li>
+                    <li onClick={this.turnWarningAdminList}><i className="icon icon_moralEducationScore"></i>预警人员管理<i
                         className="arrow_right"></i></li>
                 </ul>
             </div>

@@ -17,7 +17,8 @@ export default class noticeReadMore extends React.Component {
             dataSource: dataSource.cloneWithRows(this.initData),
             clientHeight: document.body.clientHeight,
             listViewDisplay: false,
-            defaultPageNo: 1
+            defaultPageNo: 1,
+            initArrData:[]
         }
     }
 
@@ -41,6 +42,7 @@ export default class noticeReadMore extends React.Component {
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
             onResponse: function (result) {
                 if (result.success == true && result.msg == "调用成功") {
+                    _this.state.initArrData = result.response;
                     if (result.response.length === 0) {
                         _this.setState({"isLoadingLeft": false})
                     } else {
@@ -153,7 +155,11 @@ export default class noticeReadMore extends React.Component {
                         <span className="icon"></span>
                         <span>通知</span>
                     </div>
-                    <ListView
+                    {
+                        this.state.initArrData.length == 0 ?
+                        <div>123</div>
+                        :
+                        <ListView
                         ref={el => this.lv = el}
                         dataSource={this.state.dataSource}    //数据类型是 ListViewDataSource
                         renderFooter={() => (
@@ -174,6 +180,8 @@ export default class noticeReadMore extends React.Component {
                             display: this.state.listViewDisplay ? 'block' : 'none'
                         }}
                     />
+                    }
+                    
                 </div>
             </div>
         )

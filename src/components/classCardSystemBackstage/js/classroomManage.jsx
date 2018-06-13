@@ -231,6 +231,7 @@ export default class classroomManage extends React.Component {
         const alertInstance = alert('删除', '您确定要删除吗?', [
             {text: '取消', onPress: () => console.log('cancel'), style: 'default'},
             {text: '确定', onPress: () => _this.delClassroom(sId)},
+
         ], phone);
     };
 
@@ -275,7 +276,12 @@ export default class classroomManage extends React.Component {
                             <span className="creatTime">
                                 创建时间：
                                 {
-                                    WebServiceUtil.formatYMD(rowData.createTime)
+                                    rowData.building ?
+                                        <span>{rowData.building.name}
+                                            <span>({rowData.building.dangerArea ? "是" : "否"})</span>
+                                    </span>
+                                        :
+                                        "暂未选择位置"
                                 }
                             </span>
                                 <Button className="modifyBtn_common" type="primary" size="small"
@@ -294,7 +300,8 @@ export default class classroomManage extends React.Component {
         return (
             <div id="classroomManage" style={{height: classBinding.state.clientHeight}}>
                 <div className='tableDiv' style={{height: classBinding.state.clientHeight}}>
-                    <li className="edit_coordinateLi line_public"><span onClick={_this.bindCoordinates} className="edit_coordinate">批量编辑教室坐标</span></li>
+                    <li className="edit_coordinateLi line_public"><span onClick={_this.bindCoordinates}
+                                                                        className="edit_coordinate">批量编辑教室坐标</span></li>
                     {/*这是列表数据,包括添加按钮*/}
                     <ListView
                         ref={el => this.lv = el}

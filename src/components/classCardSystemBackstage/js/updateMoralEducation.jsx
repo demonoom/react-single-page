@@ -96,19 +96,19 @@ export default class updateMoralEducation extends React.Component {
         var health = updateMoralEdu.state.health + ''
 
         if (politeness.trim().length == 0) {
-            Toast.fail('请填写礼貌评分',2)
+            Toast.fail('请填写礼貌评分', 2)
             return
         }
         if (politeness.trim() > 100 || politeness.trim() < 0) {
-            Toast.fail('请填写有效的礼貌评分',3)
+            Toast.fail('请填写有效的礼貌评分', 3)
             return
         }
         if (health.trim().length == 0) {
-            Toast.fail('请填写健康评分',2)
+            Toast.fail('请填写健康评分', 2)
             return
         }
         if (health.trim() > 100 || health.trim() < 0) {
-            Toast.fail('请填写有效的健康评分',3)
+            Toast.fail('请填写有效的健康评分', 3)
             return
         }
         const param = {

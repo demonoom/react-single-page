@@ -4,11 +4,16 @@
     position: relative;
     .right{
       top:50%;
-      margin-top: -1.1rem;
       position: absolute;
       right:0;
       font-weight: normal;
       font-size: .67rem;
+      -webkit-transform: translateY(-50%);
+      -moz-transform: translateY(-50%);
+      -ms-transform: translateY(-50%);
+      -o-transform: translateY(-50%);
+      transform: translateY(-50%);
+
       .blue{
         color: #5091fe;
         font-size: .72rem;
@@ -21,12 +26,13 @@
         padding-right: 1.67rem;
       }
       .btn{
-        padding: .2rem .6rem;
+        padding: .15rem .6rem;
         font-size: .56rem;
         -webkit-border-radius: .6rem;
         -moz-border-radius: .6rem;
         border-radius: .6rem;
         margin-right: .56rem;
+        display: inline;
       }
       .noSign{
         margin-right: .56rem;
@@ -41,7 +47,7 @@
     }
   }
   .content{
-    padding:.83rem .2rem .83rem 0.5rem;
+    padding:.83rem 0 .83rem 0.5rem;
     overflow-x: hidden;
     overflow-y: auto;
     box-sizing: border-box;
@@ -58,9 +64,9 @@
     .signIcon_green{    //已签到图标样式
       position: absolute;
       right: 13%;
-      bottom: 23%;
-      width: 30px;
-      height: 30px;
+      top:3.95rem;
+      width: 1.2rem;
+      height: 1.2rem;
       z-index:2;
       border-radius: 50%;
     }
@@ -87,18 +93,28 @@
       font-size: .72rem;
       color: #565c72;
       padding-top: .28rem;
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+      display: block;
     }
     .signIcon{
       font-size: .61rem;
       color: #fff;
-      padding: .2rem .6rem;
+      padding: .15rem 0;
       -webkit-border-radius: .6rem;
       -moz-border-radius: .6rem;
       border-radius: .6rem;
       position: absolute;
       top: 4rem;
-      left: 0.4rem;
+      left: 50%;
+      -webkit-transform: translateX(-50%);
+      -moz-transform: translateX(-50%);
+      -ms-transform: translateX(-50%);
+      -o-transform: translateX(-50%);
+      transform: translateX(-50%);
       background-color: #f13010;
+      width: 3rem;
     }
   }
 }

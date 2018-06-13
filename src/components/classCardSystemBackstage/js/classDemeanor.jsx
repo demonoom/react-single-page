@@ -132,7 +132,7 @@ export default class classDemeanor extends React.Component {
             phone = 'android'
         }
 
-        const alertInstance = alert('删除图片', '确定删除此照片吗?', [
+        const alertInstance = alert('确定删除此照片吗?', '', [
             {
                 text: '取消', onPress: () => {
                 if (cancel) {
