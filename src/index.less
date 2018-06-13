@@ -295,35 +295,6 @@ hr {
   }
 
 }
-.notify_contModal{
-  width: 26.31rem !important;
-  height:23.67rem;
-  margin: auto;
-  .am-modal-close{
-    top: 15px;
-  }
-  .am-modal-content{
-    padding-top: 0 !important;
-  }
-  .am-modal-header{
-    padding: 2.06rem 0 0.33rem 0;
-    border-bottom: 0.05rem solid #f35454;
-    margin: 0 2.22rem;
-
-  }
-  .am-modal-title{
-    color: #191c26;
-    font-size: 0.67rem;
-    font-weight: bold;
-  }
-  .am-modal-content .am-modal-body{
-    padding: 0.28rem 0 2.22rem 0 !important;
-    height: 17.84rem;
-    font-size: 0.56rem;
-    color: #565c72;
-    text-align: left;
-  }
-}
 .empty_center{
   position: absolute;
   top:50%;
@@ -429,6 +400,44 @@ hr {
   line-height: 18px;
   padding: 11px 10px 11px 57px;
 }
+/* 首页通知 */
+.notify_contModal{
+  width: 26.31rem !important;
+  height:23.67rem;
+  margin: auto;
+  .am-modal-close{
+    top: 15px;
+  }
+  .am-modal-content{
+    padding-top: 0 !important;
+  }
+  .am-modal-header{
+    padding: 2.06rem 0 0.33rem 0 !important;
+    border-bottom: 0.05rem solid #f35454;
+    margin: 0 2.22rem;
+
+  }
+  .am-modal-title{
+    color: #191c26;
+    font-size: 0.72rem;
+    font-weight: bold;
+  }
+  .am-modal-content .am-modal-body{
+    padding: 0.56rem 0 2.22rem 0 !important;
+    height: 17.44rem;
+    font-size: 0.61rem;
+    color: #565c72;
+    text-align: left;
+  }
+  .am-modal-content .am-modal-body .cont{
+    height: 100%;
+    padding: 0 2.22rem 0 2.22rem;
+    overflow-x: hidden;
+    overflow-y: auto
+  }
+}
+/* 首页通知end */
+
 /*班牌屏幕适配*/
 @media only screen and (min-width: 768px) and (max-width: 799px){
   html{
