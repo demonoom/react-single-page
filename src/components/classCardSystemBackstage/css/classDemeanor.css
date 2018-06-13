@@ -27,6 +27,12 @@
   width: 1.5rem;
   height: 1.5rem;
 }
+#classDemeanor .showImg,
+#schoolPlan .showImg {
+  min-height: 17rem;
+  background: #fff;
+  padding: 0 15px 15px 5px;
+}
 #classDemeanor .uploadImg,
 #schoolPlan .uploadImg {
   min-height: 7.5rem;
@@ -68,6 +74,14 @@
 #schoolPlan .listImg img {
   max-height: 100%;
   max-width: 100%;
+}
+#classDemeanor .listImg img.delImgBtn,
+#schoolPlan .listImg img.delImgBtn {
+  position: absolute;
+  right: 5px;
+  top: 5px;
+  width: 1.5rem;
+  height: 1.5rem;
 }
 #classDemeanor .classDemeanor_title,
 #schoolPlan .classDemeanor_title {
