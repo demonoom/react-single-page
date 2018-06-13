@@ -65,7 +65,8 @@
 }
 #classroomManage .tableDiv .classInfo {
   position: relative;
-  padding: 15px 15px 2px 15px;
+  padding-top: 15px;
+  margin: 0 15px 2px 15px;
   line-height: 24px;
 }
 #classroomManage .tableDiv .classInfo .textOver {
@@ -291,4 +292,19 @@
   height: 17px;
   line-height: 17px;
   margin-top: 14px;
+}
+#classroomManage .edit_coordinateLi {
+  background: #fff;
+  padding: 15px 0 13px 15px;
+}
+#classroomManage .edit_coordinate {
+  border-radius: 4px;
+  padding: 0 10px;
+  color: #3672ed;
+  text-align: center;
+  font-size: 16px;
+  display: inline-block;
+  background: url("../imgs/edit_coordinate.png") no-repeat;
+  background-size: 18px ;
+  text-indent: 15px;
 }
