@@ -1,9 +1,29 @@
 #warningAdminList{
+  .am-list-view-scrollview-content{
+    width: 100%;
+  }
   .itemDelete{
     position: absolute;
     top: 50%;
     right: 10px;
     transform: translateY(-50%);
     padding: 10px;
+  }
+  .am-list-body::before,.am-list-body::after,.am-list-body,.am-list-line::after{
+    background: none;
+    border: 0;
+  }
+  .am-list-item{
+    border-bottom: .5px #eee solid;
+    img{
+      width: 44px;
+      height: 44px;
+      -webkit-border-radius: 50%;
+      -moz-border-radius: 50%;
+      border-radius: 50%;
+    }
+    .am-list-line-multiple .am-list-content{
+      max-width: calc(~"100% - 40px");
+    }
   }
 }

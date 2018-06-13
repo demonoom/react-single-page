@@ -196,7 +196,7 @@ export default class warningAdminList extends React.Component {
                     <Item align="top" thumb={item.avatar}
                           multipleLine>
                         {item.userName} <Brief>{item.colUtype}</Brief>
-                        <div className="itemDelete" onClick={this.deleteItem.bind(this,item.colUid,item.userName)}>删除</div>
+                        <div className="itemDelete deleteBtn_common" onClick={this.deleteItem.bind(this,item.colUid,item.userName)}></div>
                     </Item>
                 </List>
             )
