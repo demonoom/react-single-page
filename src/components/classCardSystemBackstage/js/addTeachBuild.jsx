@@ -1,12 +1,14 @@
 import React from "react";
-import { InputItem, Toast } from 'antd-mobile';
+import { InputItem, Toast,List,Radio} from 'antd-mobile';
 import "../css/addTeachBuild.less"
 var addTeachB;
+const RadioItem = Radio.RadioItem;
 export default class addTeachBuild extends React.Component {
     constructor(props) {
         super(props);
         addTeachB = this;
         this.state = {
+            value:true,
             teachBuildValue: ""
         }
     }
@@ -28,9 +30,12 @@ export default class addTeachBuild extends React.Component {
             "method": 'addSchoolBuilding',
             "building": {
                 "name": addTeachB.state.teachBuildValue,
-                "creatorId": addTeachB.state.uid
+                "creatorId": addTeachB.state.uid,
+                "isDangerArea":addTeachB.state.value
             }
         };
+
+        console.log(param);
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
             onResponse: function (result) {
                 if (result.msg == '调用成功' && result.success == true) {
@@ -53,7 +58,19 @@ export default class addTeachBuild extends React.Component {
             }
         });
     }
+    /**
+     * 是否为危险区的改变
+     */
+    onChange = (value) => {
+        this.setState({
+          value,
+        });
+      };
     render() {
+        const data = [
+            { value: true, label: '是' },
+            { value: false, label: '否' },
+        ];
         return (
             <div id="addTeachBuild">
                 <div className='teachBuild'>
@@ -67,6 +84,16 @@ export default class addTeachBuild extends React.Component {
                         }}
                         value={this.state.teachBuildValue}
                     >教学楼名称<i className='redStar'>*</i></InputItem>
+                </div>
+
+                <div className="isDangerArea">
+                    <List renderHeader={() => '是否危险区：'}>
+                        {data.map(i => (
+                            <RadioItem key={i.value} checked={this.state.value === i.value} onChange={() => this.onChange(i.value)}>
+                                {i.label}
+                            </RadioItem>
+                        ))}
+                    </List>
                 </div>
                 <div className="bottomBox submitBtn">
                     <span className="submit" onClick={this.submitNewTeactBuild}>提 交</span>

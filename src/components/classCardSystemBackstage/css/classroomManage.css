@@ -14,6 +14,12 @@
   right: 2px;
   top: 2px;
 }
+#classroomManage .am-list-line {
+  border: 0;
+}
+#classroomManage .am-list-view-scrollview-content {
+  width: 100%;
+}
 #classroomManage .am-button-small {
   background-color: #fff;
   height: 44px;
@@ -110,6 +116,7 @@
   font-size: 15px;
   color: #a9a9a9;
   display: inline-block;
+  width: calc(100% - 85px) !important;
 }
 #classroomManage .addModel {
   box-sizing: border-box;
