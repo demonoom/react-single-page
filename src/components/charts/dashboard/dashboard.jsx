@@ -184,6 +184,7 @@ export default class dashboard extends React.Component {
                 _this.buildFlowPieChart(proceCountResults);
 
                 _this.buildStudentAttendancePieChart(studAttendance);
+                // _this.buildStudentAttendanceMultiPieChart(studAttendance);
 
                 _this.buildTeacherAttendancePieChart(teacherAttendance);
 
@@ -209,6 +210,9 @@ export default class dashboard extends React.Component {
                 subtext: '',
                 left: 'left',
             },
+            tooltip: {
+                trigger: 'axis'
+            },
             xAxis: {
                 type: 'category',
                 data: xClazzName,
@@ -224,6 +228,7 @@ export default class dashboard extends React.Component {
                 type: 'value'
             },
             series: [{
+                name: '学习次数',
                 data: seriesData,
                 type: 'bar',
                 itemStyle: {
@@ -313,7 +318,7 @@ export default class dashboard extends React.Component {
             calculable: true,
             series: [
                 {
-                    name: '面积模式',
+                    name: '资源数量',
                     type: 'pie',
                     radius: [5, 70],
                     center: ['50%', '45%'],
@@ -413,7 +418,7 @@ export default class dashboard extends React.Component {
             ],
             series: [
                 {
-                    name: '步数',
+                    name: '作业题目数量',
                     type: 'bar',
                     data: seriesDataArray,
                     markLine: {
@@ -665,7 +670,6 @@ export default class dashboard extends React.Component {
 
         var xClazzNameArray = [];
         var seriesDataArray = [];
-        console.log(braceletSportSteps);
         braceletSportSteps.forEach(function (braceletSportStepObj) {
             var clazzName = braceletSportStepObj.clazz.grade.name + '' + braceletSportStepObj.clazz.name;
             var sportStep = braceletSportStepObj.sportStep;
@@ -1038,7 +1042,6 @@ export default class dashboard extends React.Component {
         var xAttendanceNameArray = [];
         var ySeriesDataArray = [];
         if (WebServiceUtil.isEmpty(attendanceResults) == false) {
-            console.log(attendanceResults);
             var absent = attendanceResults["absent"];
             var early = attendanceResults["early"];
             var late = attendanceResults["late"];
@@ -1153,36 +1156,42 @@ export default class dashboard extends React.Component {
         var _this = this;
         var xAttendanceNameArray = [];
         var ySeriesDataArray = [];
-        var allAbsentCount = 0;
-        var allPunchCount = 0;
-        var allTotalCount = 0;
+        var totalTipArray=[];
         if (WebServiceUtil.isEmpty(attendanceResults) == false) {
-            attendanceResults.forEach(function (attendanceObj) {
-                var absentCount = attendanceObj["absentCount"];
-                var punchCount = attendanceObj["punchCount"];
-                var totalCount = attendanceObj["totalCount"];
-                allAbsentCount += parseInt(absentCount);
-                allPunchCount += parseInt(punchCount);
-                allTotalCount += parseInt(totalCount);
-            });
-        }
-        if (WebServiceUtil.isEmpty(allAbsentCount) == false) {
-            xAttendanceNameArray.push("缺勤");
-            var absentJson = {value: allAbsentCount, name: '缺勤'};
-            ySeriesDataArray.push(absentJson);
-        }
-        if (WebServiceUtil.isEmpty(allPunchCount) == false) {
-            xAttendanceNameArray.push("实到");
-            var punchCountJson = {value: allPunchCount, name: '实到'};
-            ySeriesDataArray.push(punchCountJson);
-        }
-        if (WebServiceUtil.isEmpty(allTotalCount) == false) {
-            xAttendanceNameArray.push("应到");
-            var totalCountJson = {value: allTotalCount, name: '应到'};
-            ySeriesDataArray.push(totalCountJson);
+            for(var gradeName in attendanceResults){
+                console.log("gradeName:"+gradeName);
+                var valueJson = attendanceResults[gradeName];
+                console.log(valueJson);
+                var absentCount = valueJson.absentCount;
+                var punchCount = valueJson.punchCount;
+                var totalCount = valueJson.totalCount;
+                if (WebServiceUtil.isEmpty(absentCount) == false) {
+                    var gradeTip = gradeName+"缺勤";
+                    xAttendanceNameArray.push(gradeTip);
+                    var absentJson = {value: absentCount, name: gradeTip};
+                    ySeriesDataArray.push(absentJson);
+                }
+                if (WebServiceUtil.isEmpty(punchCount) == false) {
+                    var gradeTip = gradeName+"实到";
+                    xAttendanceNameArray.push(gradeTip);
+                    var punchCountJson = {value: punchCount, name: gradeTip};
+                    ySeriesDataArray.push(punchCountJson);
+                }
+                if (WebServiceUtil.isEmpty(totalCount) == false) {
+                    totalTipArray.push(<span style={{marginLeft:'15px'}}>{gradeName}应到:{totalCount}人</span>);
+                }
+                /*if (WebServiceUtil.isEmpty(totalCount) == false) {
+                    var gradeTip = gradeName+"应到";
+                    xAttendanceNameArray.push(gradeTip);
+                    var totalCountJson = {value: totalCount, name: gradeTip};
+                    ySeriesDataArray.push(totalCountJson);
+                }*/
+            }
         }
         var attendanceOption = _this.buildStudentAttendanceOption(xAttendanceNameArray, ySeriesDataArray)
         var studentAttendancePieChartDiv = <div>
+            <div style={{fontSize: '16px',fontWeight:'bold'}}>学生考勤统计</div>
+            <div>{totalTipArray}</div>
             <div style={{width: '100%', height: '270px'}} className="echarts_wrap">
                 <ReactEcharts
                     option={attendanceOption}
@@ -1203,7 +1212,7 @@ export default class dashboard extends React.Component {
     buildStudentAttendanceOption = (xAttendanceNameArray, ySeriesDataArray) => {
         return {
             title: {
-                text: '学生考勤统计',
+                // text: '学生考勤统计',
                 subtext: '',
                 left: 'left',
             },
@@ -1247,6 +1256,122 @@ export default class dashboard extends React.Component {
                     }
                 }
             ]
+        };
+    }
+
+
+    /**
+     * 构建学生考勤的嵌套饼图
+     * @param
+     */
+    buildStudentAttendanceMultiPieChart = (attendanceResults) => {
+        var _this = this;
+        var attendanceData=[];
+        if (WebServiceUtil.isEmpty(attendanceResults) == false) {
+            for(var gradeName in attendanceResults){
+                var valueJson = attendanceResults[gradeName];
+                var absentCount = valueJson.absentCount;
+                var punchCount = valueJson.punchCount;
+                // var totalCount = valueJson.totalCount;
+                var attendanceJson = {
+                    name: gradeName,
+                    itemStyle: {
+                        color: '#da0d68'
+                    },
+                    children: [{
+                        name: '实到',
+                        value:punchCount,
+                        itemStyle: {
+                            color: '#e0719c'
+                        }
+                    }, {
+                        name: '缺勤',
+                        value:absentCount,
+                        itemStyle: {
+                            color: '#e0a18c'
+                        }
+                    }]
+                };
+                attendanceData.push(attendanceJson);
+            }
+        }
+        var attendanceOption = _this.buildStudentAttendanceMultiPieOption(attendanceData);
+        var studentAttendancePieChartDiv = <div>
+            <div style={{width: '100%', height: '310px'}} className="echarts_wrap">
+                <ReactEcharts
+                    option={attendanceOption}
+                    style={{height: '100%', width: '100%'}}
+                    theme='chalk2'
+                    className=''/>
+            </div>
+        </div>;
+        _this.setState({studentAttendancePieChartDiv});
+    }
+
+
+    /**
+     * 以嵌套饼图的形式构建学生的考勤
+     */
+    buildStudentAttendanceMultiPieOption(attendanceData){
+        return {
+            title: {
+                text: '学生考勤统计',
+                textStyle: {
+                    fontSize: 14,
+                    align: 'center'
+                },
+            },
+            tooltip: {
+                trigger: 'item',
+                formatter: "{b} : {c}",
+            },
+            series: {
+                type: 'sunburst',
+                highlightPolicy: 'ancestor',
+                data: attendanceData,
+                radius: [0, '100%'],
+                sort: null,
+                levels: [{}, {
+                    r0: '15%',
+                    r: '35%',
+                    itemStyle: {
+                        borderWidth: 2
+                    },
+                    label: {
+                        rotate: 'tangential'
+                    }
+                }, {
+                    r0: '35%',
+                    r: '70%',
+                    label: {
+                        align: 'right'
+                    }
+                }, {
+                    r0: '70%',
+                    r: '72%',
+                    label: {
+                        position: 'outside',
+                        padding: 3,
+                        silent: false
+                    },
+                    itemStyle: {
+                        borderWidth: 3
+                    }
+                }],
+                label:{            //饼图图形上的文本标签
+                    normal:{
+                        show:true,
+                        position:'inner', //标签的位置
+                        textStyle : {
+                            fontWeight : 300 ,
+                            fontSize : 12    //文字的字体大小
+                        },
+                        formatter:'{b}{c}人'
+
+
+                    }
+                }
+            }
         };
     }
 

@@ -333,7 +333,8 @@ export default class brotherXu extends React.Component {
                         position: 'top'        //这里可以自己选择位置
                     }
                 }
-            }, {
+            }
+            /*, {
                 name: '班级平均理解度',
                 type: 'bar',
                 barGap: '-100%',
@@ -366,7 +367,8 @@ export default class brotherXu extends React.Component {
                 symbolMargin: 1,
                 z: -10,
                 data: lineData
-            }]
+            }*/
+            ]
         };
     };
     buildChartOption2 = (category,barData,lineData) => {

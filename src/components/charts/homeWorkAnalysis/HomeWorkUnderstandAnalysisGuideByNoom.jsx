@@ -98,8 +98,8 @@ export default class HomeWorkUnderstandAnalysisGuideByNoom extends React.Compone
         });
     };
 
-    analysisByClass(colClazzId, useDate) {
-        var analysisUrl = WebServiceUtil.mobileServiceURL + "homeWorkUnderstandAnalysisByClassSubject?clazzId=" + colClazzId + "&pushTime=" + useDate + "&ident=" + this.state.ident + "&censusType=0";
+    analysisByClass(colClazzId, useDate,teacherId) {
+        var analysisUrl = WebServiceUtil.mobileServiceURL + "homeWorkUnderstandAnalysisByClassSubject?clazzId=" + colClazzId + "&pushTime=" + useDate + "&ident=" + this.state.ident + "&censusType=0&teacherId="+teacherId;
 
         var data = {
             method: 'openNewPage',
@@ -121,7 +121,7 @@ export default class HomeWorkUnderstandAnalysisGuideByNoom extends React.Compone
                     <WingBlank size="lg">
                         <WhiteSpace size="lg"/>
                         <Card
-                            onClick={this.analysisByClass.bind(this, rowData.colClazzId, WebServiceUtil.formatYMD(rowData.useDate))}>
+                            onClick={this.analysisByClass.bind(this, rowData.colClazzId, WebServiceUtil.formatYMD(rowData.useDate),rowData.colLeaderUid)}>
                             <Card.Header
                                 title={rowData.clazzName}
                                 extra={<span>{WebServiceUtil.formatYMD(rowData.useDate)}</span>}
