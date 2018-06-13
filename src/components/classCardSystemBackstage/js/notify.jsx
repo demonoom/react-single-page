@@ -184,7 +184,7 @@ export default class notifyBack extends React.Component {
             phone = 'android'
         }
         var _this = this;
-        const alertInstance = alert('删除', '您确定要删除吗?', [
+        const alertInstance = alert('您确定要删除吗?', '', [
             {text: '取消', onPress: () => console.log('cancel'), style: 'default'},
             {text: '确定', onPress: () => _this.deleteNotify(sId)},
 
