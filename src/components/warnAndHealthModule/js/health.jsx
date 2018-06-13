@@ -1,6 +1,6 @@
 import React from 'react';
 import '../css/health.less';
-import {List, Toast, ListView, Tabs, InputItem} from 'antd-mobile';
+import { List, Toast, ListView, Tabs, InputItem } from 'antd-mobile';
 
 const Item = List.Item;
 const Brief = Item.Brief;
@@ -20,6 +20,8 @@ export default class health extends React.Component {
         this.state = {
             // dataSource: dataSource.cloneWithRows(this.initData),   //listView数据类型
             clientHeight: document.body.clientHeight,   //总高
+            initArrData: [],
+            dataFlag:false,
             // isLoadingLeft: true,  //加载提示文字
             // defaultPageNo: 1,  //页码
             // hasMore:true,     //加载更多flag
@@ -59,24 +61,20 @@ export default class health extends React.Component {
         };
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
             onResponse: result => {
-                console.log(result);
+
                 if (result.msg == '调用成功' || result.success) {
-                    // let arr = result.response;
+                    let arr = result.response;
+                    _this.state.initArrData = result.response;
                     this.setState({
                         listData: result.response,
                     })
-                    // if (arr.length > 0) {
-                    //     this.initData = this.initData.concat(arr);
-                    //     this.setState({
-                    //         dataSource: this.state.dataSource.cloneWithRows(this.initData),
-                    //         isLoadingLeft: false,
-                    //     })
-                    // } else {
-                    //     this.setState({
-                    //         isLoadingLeft: false,
-                    //         hasMore:false,  //无数据 关闭加载更多
-                    //     })
-                    // }
+                    if (arr.length > 0) {
+                       
+                    } else {
+                        this.setState({
+                            dataFlag:true
+                        })
+                    }
                 }
             },
             onError: function (error) {
@@ -123,7 +121,7 @@ export default class health extends React.Component {
         for (var k in data) {
             let item = <div className="photoItem">
                 <div className="imgDiv">
-                    <img className="noomImg" src={data[k].users.avatar} alt=""/>
+                    <img className="noomImg" src={data[k].users.avatar} alt="" />
                     <div
                         className={k == 0 ? 'firstClass' : k == 1 ? 'secondClass' : k == 2 ? 'thirdClass' : 'otherClass'}></div>
                     <div className="border_img"></div>
@@ -131,12 +129,13 @@ export default class health extends React.Component {
                 <div className="studentName">{data[k].users.userName}</div>
                 <div
                     className="step_number textOver">{this.state.type == 'step' ? data[k].sportStep : data[k].calorie.toFixed(2)}<span
-                    className="step_number_s">{this.state.type == 'step' ? '步' : '卡路里'}</span></div>
+                        className="step_number_s">{this.state.type == 'step' ? '步' : '卡路里'}</span></div>
             </div>;
             array.push(item);
         }
+
         return (
-            <div id="health" className="home_content" style={{height: this.state.clientHeight}}>
+            <div id="health" className="home_content" style={{ height: this.state.clientHeight }}>
                 <div className="inner_bg">
                     <div className="navBar">
                         <span onClick={this.historyGoBack}>首页</span>
@@ -144,13 +143,21 @@ export default class health extends React.Component {
                         <span>{this.state.type == 'step' ? '步数排行榜' : '卡路里排行榜'}</span>
                     </div>
 
-                    <div className="health_cont">{array}
-                        <div className="emptyPage_content">
-                            <div className="empty_center">
-                                <div className="emptyPage_icon emptyPage_publicImg"></div>
-                                <div className="emptyPage_text">暂无数据</div>
-                            </div>
-                        </div>
+                    <div className="health_cont">
+                        {
+                            this.state.initArrData.length != 0 ?
+                                array
+                                :this.state.dataFlag?
+                                <div className="emptyPage_content">
+                                    <div className="empty_center">
+                                        <div className="emptyPage_icon emptyPage_publicImg"></div>
+                                        <div className="emptyPage_text">暂无数据</div>
+                                    </div>
+                                </div>: <div></div> 
+
+                        }
+
+
                     </div>
 
                     {/*<List className="my-list">*/}
