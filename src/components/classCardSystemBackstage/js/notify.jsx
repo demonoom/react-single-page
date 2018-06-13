@@ -1,9 +1,10 @@
 import React from 'react';
-import {List, Icon, Toast, Picker, WhiteSpace, ListView} from 'antd-mobile';
+import {List, Icon, Toast, Picker, WhiteSpace, ListView, Modal,} from 'antd-mobile';
 import '../css/notify.less'
 
 const Item = List.Item;
 const Brief = Item.Brief;
+const alert = Modal.alert;
 var classBinding;
 
 export default class notifyBack extends React.Component {
@@ -171,7 +172,30 @@ export default class notifyBack extends React.Component {
     }
 
     //删除通知信息
-    deleteNotify(notifyId) {
+     /**
+     * 删除弹出框
+     */
+    showAlert = (sId) => {
+        var phoneType = navigator.userAgent;
+        var phone;
+        if (phoneType.indexOf('iPhone') > -1 || phoneType.indexOf('iPad') > -1) {
+            phone = 'ios'
+        } else {
+            phone = 'android'
+        }
+        var _this = this;
+        const alertInstance = alert('删除', '您确定要删除吗?', [
+            {text: '取消', onPress: () => console.log('cancel'), style: 'default'},
+            {text: '确定', onPress: () => _this.deleteNotify(sId)},
+
+        ], phone);
+
+        
+    };
+    /**
+     * 根据ID删除
+     */
+    deleteNotify(notifyId){
         var _this = this;
         //获取班级选择项
         var param = {
@@ -202,7 +226,7 @@ export default class notifyBack extends React.Component {
             }
         });
     }
-
+    
 
     //选择器改变事件
     onPickerChange = (val) => {
@@ -293,7 +317,7 @@ export default class notifyBack extends React.Component {
                     </Item>
                     {/* <Icon onClick={this.deleteNotify.bind(this, item.id)} type='cross-circle-o'
                           className="deleteNoifty"></Icon>*/}
-                    <div onClick={this.deleteNotify.bind(this, item.id)} type='cross-circle-o'
+                    <div onClick={this.showAlert.bind(this, item.id)} type='cross-circle-o'
                          className="deleteNoifty deleteBtn_common"></div>
                     <img src={require("../imgs/icon_notifyList.png")} alt="头像" className="headPic"/>
                 </div>
