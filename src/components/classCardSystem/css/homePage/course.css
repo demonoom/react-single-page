@@ -33,7 +33,7 @@
   display: inline-block;
 }
 #course .classTableB .terPic {
-  margin-top: 0.33rem;
+  margin-top: 0.8rem;
   position: absolute;
   left: 50%;
   transform: translateX(-50%);
@@ -41,4 +41,13 @@
   height: 2.5rem;
   border-radius: 50%;
   text-align: center;
+}
+#course .classTableB .terPic_name {
+  margin-top: 3.7rem;
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  border-radius: 50%;
+  text-align: center;
+  font-size: 0.61rem;
 }

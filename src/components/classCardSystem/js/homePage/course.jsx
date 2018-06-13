@@ -100,7 +100,7 @@ export default class course extends React.Component {
                         <div className='time'>{classData.openTime + '-' + classData.closeTime}</div>
                         <div><span className='name'>{classData.courseName}</span></div>
                         <img className='terPic' src={classData.teacher.avatar} alt=""/>
-                        <div>{classData.teacher.userName}</div>
+                        <div className="terPic_name">{classData.teacher.userName}</div>
                     </div>}
             </div>
         );
