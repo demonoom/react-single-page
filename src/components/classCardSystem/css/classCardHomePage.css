@@ -268,7 +268,7 @@
   padding: 0 0.83rem 0 0;
 }
 #classCardHomePage .studentOnDuty_today {
-  color: #2a3350 ;
+  color: #2a3350;
   font-size: 0.72rem;
   margin: 0 0 0.83rem 0;
   font-weight: normal;
@@ -276,12 +276,12 @@
 #classCardHomePage .empty_icon {
   width: 3rem;
   height: 3rem;
-  margin-bottom: 0.36rem ;
+  margin-bottom: 0.36rem;
   display: inline-block;
   margin-top: -0.5rem;
 }
 #classCardHomePage .empty_text {
-  font-size: 0.56rem ;
+  font-size: 0.56rem;
   color: #959ab1;
   text-align: center;
 }
@@ -312,7 +312,7 @@
 #classCardHomePage .publicempty_icon {
   width: 6rem;
   height: 6rem;
-  margin-bottom: 0.36rem ;
+  margin-bottom: 0.36rem;
   display: inline-block;
   margin-top: -1rem;
 }

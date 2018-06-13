@@ -157,7 +157,12 @@ export default class noticeReadMore extends React.Component {
                     </div>
                     {
                         this.state.initArrData.length == 0 ?
-                        <div>123</div>
+                        <div className="emptyPage_content">
+                            <div className="empty_center">
+                                <div className="emptyPage_icon emptyPage_publicImg"></div>
+                                <div className="emptyPage_text">暂无数据</div>
+                            </div>
+                        </div>
                         :
                         <ListView
                         ref={el => this.lv = el}
