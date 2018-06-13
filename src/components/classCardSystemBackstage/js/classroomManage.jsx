@@ -260,8 +260,6 @@ export default class classroomManage extends React.Component {
                         <div className="classInfo line_public">
                             <div className="textOver">
                                 <span className="classroom">教室名称：{rowData.name}</span>
-                                <span
-                                    className="floor">{rowData.building.name ? `(${rowData.building.name})` : ""}</span>
                             </div>
 
                             <div className="textOver">
@@ -274,7 +272,7 @@ export default class classroomManage extends React.Component {
                             </div>
                             <div className="div_creatTime">
                             <span className="creatTime">
-                                创建时间：
+                                所处位置：
                                 {
                                     rowData.building ?
                                         <span>{rowData.building.name}
@@ -337,3 +335,4 @@ export default class classroomManage extends React.Component {
         );
     }
 }
+
