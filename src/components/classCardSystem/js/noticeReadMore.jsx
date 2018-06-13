@@ -18,7 +18,8 @@ export default class noticeReadMore extends React.Component {
             clientHeight: document.body.clientHeight,
             listViewDisplay: false,
             defaultPageNo: 1,
-            initArrData:[]
+            initArrData:[],
+            dataFlag:false
         }
     }
 
@@ -61,6 +62,9 @@ export default class noticeReadMore extends React.Component {
                             }
                         } else {
                             isLoading = false;
+                            _this.setState({
+                                dataFlag:true
+                            })
                         }
                         _this.initData = _this.initData.concat(arr);
                         _this.setState({
@@ -156,13 +160,13 @@ export default class noticeReadMore extends React.Component {
                         <span>通知</span>
                     </div>
                     {
-                        this.state.initArrData.length == 0 ?
+                        this.state.initArrData.length == 0 ?this.state.dataFlag?
                         <div className="emptyPage_content">
                             <div className="empty_center">
                                 <div className="emptyPage_icon emptyPage_publicImg"></div>
                                 <div className="emptyPage_text">暂无数据</div>
                             </div>
-                        </div>
+                        </div>:<div></div>
                         :
                         <ListView
                         ref={el => this.lv = el}
