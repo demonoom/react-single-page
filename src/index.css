@@ -1,3 +1,4 @@
+(node) util.print is deprecated. Use console.log instead.
 html,
 body {
   height: 100%;
@@ -76,7 +77,7 @@ hr {
   font-size: 14px;
 }
 .color_red {
-  color: #F46A55;
+  color: #f46a55;
 }
 .line_item {
   height: 8px;
@@ -303,34 +304,6 @@ hr {
   box-sizing: border-box;
   overflow: hidden;
 }
-.notify_contModal {
-  width: 26.31rem !important;
-  height: 23.67rem;
-  margin: auto;
-}
-.notify_contModal .am-modal-close {
-  top: 15px;
-}
-.notify_contModal .am-modal-content {
-  padding-top: 0 !important;
-}
-.notify_contModal .am-modal-header {
-  padding: 2.06rem 0 0.33rem 0;
-  border-bottom: 0.05rem solid #f35454;
-  margin: 0 2.22rem;
-}
-.notify_contModal .am-modal-title {
-  color: #191c26;
-  font-size: 0.67rem;
-  font-weight: bold;
-}
-.notify_contModal .am-modal-content .am-modal-body {
-  padding: 0.28rem 0 2.22rem 0 !important;
-  height: 17.84rem;
-  font-size: 0.56rem;
-  color: #565c72;
-  text-align: left;
-}
 .empty_center {
   position: absolute;
   top: 50%;
@@ -386,22 +359,26 @@ hr {
 .am-modal-content .am-modal-title {
   color: #333;
   line-height: 22px;
+  font-size: 17px;
 }
 .am-modal-content .am-modal-input input {
   padding-left: 6px;
 }
 .am-modal-content .am-modal-button {
-  font-size: 17px !important;
+  font-size: 16px !important;
   height: 45px !important;
   line-height: 45px !important;
   color: #108ee9 !important;
 }
 .am-modal-content .am-modal-header {
-  padding: 6px 15px 7px !important;
+  padding: 6px 15px 5px !important;
 }
 .am-modal-content .am-modal-button-group-h .am-modal-button:last-child::before,
 .am-modal-content .am-modal-button-group-h::before {
   background-color: #dfdfdf !important;
+}
+.am-modal-content .am-modal-body {
+  padding: 0 15px 12px!important;
 }
 .am-list-item .am-list-line .am-list-content,
 .am-list-item .am-input-label {
@@ -430,13 +407,72 @@ hr {
   transform: scaleY(0.5);
 }
 .noticeMsg_common {
-  background: #eee url("components/classCardSystemBackstage/imgs/noticeIcon.png") no-repeat 30px 9px;
+  background: #eeeeee url("components/classCardSystemBackstage/imgs/noticeIcon.png") no-repeat 30px 9px;
   background-size: 18px;
   font-size: 15px;
   color: #666;
   line-height: 18px;
   padding: 11px 10px 11px 57px;
 }
+/*首页通知*/
+.notify_contModal {
+  width: 26.31rem !important;
+  height: 23.67rem;
+  margin: auto;
+}
+.notify_contModal .am-modal-close {
+  top: 15px;
+}
+.notify_contModal .am-modal-content {
+  padding-top: 0 !important;
+}
+.notify_contModal .am-modal-header {
+  padding: 2.06rem 0 0.33rem 0 !important;
+  border-bottom: 0.05rem solid #f35454;
+  margin: 0 2.22rem;
+}
+.notify_contModal .am-modal-title {
+  color: #191c26;
+  font-size: 0.72rem;
+  font-weight: bold;
+}
+.notify_contModal .am-modal-content .am-modal-body {
+  padding: 0.56rem 0 2.22rem 0 !important;
+  height: 17.36rem;
+  font-size: 0.61rem;
+  color: #565c72;
+  text-align: left;
+}
+.notify_contModal .am-modal-content .am-modal-body .cont {
+  height: 100%;
+  padding: 0 2.22rem 0 2.22rem;
+  overflow-x: hidden;
+  overflow-y: auto;
+  line-height: 1.3rem;
+}
+/*首页通知end*/
+/* 公共空页面图start */
+.emptyPage_content {
+  position: relative;
+  height: calc(100% - 4rem);
+}
+.emptyPage_icon {
+  width: 10.86rem;
+  height: 7.36rem;
+  margin-bottom: 0.36rem ;
+  display: inline-block;
+  margin-top: -0.5rem;
+}
+.emptyPage_text {
+  font-size: 0.7rem ;
+  color: #959ab1;
+  text-align: center;
+}
+.emptyPage_publicImg {
+  background: url("components/classCardSystem/imgs/icon_emptypage.png") no-repeat;
+  background-size: 100%;
+}
+/* 公共空页面图end */
 /*班牌屏幕适配*/
 @media only screen and (min-width: 768px) and (max-width: 799px) {
   html {

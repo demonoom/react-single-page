@@ -97,7 +97,7 @@ export default class curriculumSchedule extends React.Component {
             phone = 'android'
         }
         var _this = this;
-        const alertInstance = alert('删除', '您确定要删除该课表项吗?', [
+        const alertInstance = alert('您确定要删除该课表项吗?', '', [
             {text: '取消', onPress: () => console.log('cancel'), style: 'default'},
             {text: '确定', onPress: () => _this.delSchedule(sId, week)},
         ], phone);

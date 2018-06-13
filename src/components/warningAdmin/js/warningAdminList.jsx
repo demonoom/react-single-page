@@ -128,7 +128,7 @@ export default class warningAdminList extends React.Component {
             phone = 'android'
         }
 
-        const alertInstance = alert('删除预警人员', '确定删除'+userName+'吗?', [
+        const alertInstance = alert('确定删除'+userName+'吗?', '', [
             {
                 text: '取消', onPress: () => {
                 if (cancel) {

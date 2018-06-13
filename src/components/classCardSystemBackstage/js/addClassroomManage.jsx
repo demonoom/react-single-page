@@ -23,6 +23,7 @@ export default class addClassroomManage extends React.Component {
             teachBuildData: [],
             buildingId: [],
             gradeValue: [],
+            data:[]
         };
     }
     componentDidMount() {
@@ -192,6 +193,9 @@ export default class addClassroomManage extends React.Component {
     */
     gradeOk = (val) => {
         const d = [...this.state.searchData];
+        classBinding.setState({
+            gradeValue:d[0].label
+        })
         const gradeValueByNoom = [...val];
         this.setState({
             data: d,

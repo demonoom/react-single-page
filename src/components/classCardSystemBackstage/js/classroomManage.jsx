@@ -223,7 +223,7 @@ export default class classroomManage extends React.Component {
             phone = 'android'
         }
         var _this = this;
-        const alertInstance = alert('删除', '您确定要删除吗?', [
+        const alertInstance = alert('您确定要删除吗?', '', [
             { text: '取消', onPress: () => console.log('cancel'), style: 'default' },
             { text: '确定', onPress: () => _this.delClassroom(sId) },
         ], phone);
@@ -249,8 +249,10 @@ export default class classroomManage extends React.Component {
                                 {
                                    rowData.building ? 
                                     <span>{rowData.building.name}
-                                    <span>({rowData.building.dangerArea ? "是" : "否"})</span></span>
-                                  : "暂未选择位置"
+                                        <span>({rowData.building.dangerArea ? "是" : "否"})</span>
+                                    </span>
+                                  :
+                                   "暂未选择位置"
                                 }
                             </span>
                             <Button className="modifyBtn_common" type="primary" size="small" onClick={this.toUpdatePage.bind(this, rowData)}></Button>
