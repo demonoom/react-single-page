@@ -109,18 +109,18 @@ module.exports = {
             name: 'vendor',
             filename: 'shared.js'
         }),
-        // new webpack.optimize.UglifyJsPlugin({
-        //     //压缩插件,使用npm 安装, cnpm会报错
-        //     mangle: {
-        //         except: ['$super', '$', 'exports', 'require', 'module', '_']
-        //     },
-        //     output: {
-        //         comments: false,  // remove all comments
-        //     },
-        //     compress: {
-        //         warnings: false
-        //     }
-        // }),
+        new webpack.optimize.UglifyJsPlugin({
+            //压缩插件,使用npm 安装, cnpm会报错
+            mangle: {
+                except: ['$super', '$', 'exports', 'require', 'module', '_']
+            },
+            output: {
+                comments: false,  // remove all comments
+            },
+            compress: {
+                warnings: false
+            }
+        }),
 
         //将开发模式变为生产模式
         new webpack.DefinePlugin({
