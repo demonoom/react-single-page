@@ -1,5 +1,5 @@
 import React from 'react';
-import {Toast,ListView} from 'antd-mobile';
+import { Toast, ListView } from 'antd-mobile';
 import '../css/homeworkModule.less';
 
 
@@ -19,6 +19,8 @@ export default class homeworkModule extends React.Component {
             clientHeight: document.body.clientHeight,
             defaultPageNo: 1,
             listViewDisplay: false,
+            initArrData: [],
+            dataFlag: false,
         };
     }
 
@@ -28,7 +30,7 @@ export default class homeworkModule extends React.Component {
         var locationSearch = locationHref.substr(locationHref.indexOf("?") + 1);
         var searchArray = locationSearch.split("&");
         var classId = searchArray[0].split("=")[1];
-        this.setState({"classId": classId})
+        this.setState({ "classId": classId })
         this.getHomeworkData(classId);
     }
 
@@ -49,8 +51,9 @@ export default class homeworkModule extends React.Component {
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
             onResponse: function (result) {
                 if (result.success == true && result.msg == "调用成功") {
+                    _this.state.initArrData = result.response;
                     if (result.response.length === 0) {
-                        _this.setState({"isLoadingLeft": false})
+                        _this.setState({ "isLoadingLeft": false })
                     } else {
                         _this.setState({
                             homeworkData: result.response
@@ -70,6 +73,9 @@ export default class homeworkModule extends React.Component {
                             }
                         } else {
                             isLoading = false;
+                            _this.setState({
+                                dataFlag: true
+                            })
                         }
                         _this.initData = _this.initData.concat(arr);
                         _this.setState({
@@ -78,7 +84,7 @@ export default class homeworkModule extends React.Component {
                             refreshing: false
                         })
                     }
-                }else {
+                } else {
                     Toast.fail(result.msg, 1);
                 }
             },
@@ -97,7 +103,7 @@ export default class homeworkModule extends React.Component {
             return;
         }
         currentPageNo += 1;
-        this.setState({isLoadingLeft: true, defaultPageNo: currentPageNo});
+        this.setState({ isLoadingLeft: true, defaultPageNo: currentPageNo });
         this.getHomeworkData(this.state.classId);
         this.setState({
             dataSource: this.state.dataSource.cloneWithRows(this.initData),
@@ -125,7 +131,7 @@ export default class homeworkModule extends React.Component {
                     <div className="homeworkInfo">
                         <div className="homeworkL">
                             <div className="imgInfo">
-                                <img src={rowData.fromUser.avatar}/>
+                                <img src={rowData.fromUser.avatar} />
                                 <span className="textOver">{rowData.fromUser.userName}</span>
                             </div>
                         </div>
@@ -135,48 +141,54 @@ export default class homeworkModule extends React.Component {
                         </div>
                         <div className="homeworkR">
                             <p>{WebServiceUtil.formatYMD(rowData.createTime)}</p>
-                            {rowData.attachMents.length == 0 ? '' : <img src={rowData.attachMents[0].address}/>}
-                            <img/>
+                            {rowData.attachMents.length == 0 ? '' : <img src={rowData.attachMents[0].address} />}
+                            <img />
                         </div>
                     </div>
                 </div>
             )
         };
+
         return (
-            <div id="homeworkModule" className="home_content" style={{height: document.body.clientHeight}}>
+            <div id="homeworkModule" className="home_content" style={{ height: document.body.clientHeight }}>
                 <div className="inner_bg">
                     <div className="navBar">
                         <span onClick={this.historyGoBack}>首页</span>
                         <span className="icon"></span>
                         <span>蚁巢作业</span>
                     </div>
-                    <div className="emptyPage_content">
-                        <div className="empty_center">
-                            <div className="emptyPage_icon emptyPage_publicImg"></div>
-                            <div className="emptyPage_text">暂无数据</div>
-                        </div>
-                    </div>
-                    <ListView
-                        ref={el => this.lv = el}
-                        dataSource={this.state.dataSource}    //数据类型是 ListViewDataSource
-                        renderFooter={() => (
-                            <div style={{paddingTop: 5, paddingBottom: 40, textAlign: 'center'}}>
-                                {this.state.isLoadingLeft ? '正在加载' : '已经全部加载完毕'}
-                            </div>)}
-                        renderRow={row}   //需要的参数包括一行数据等,会返回一个可渲染的组件为这行数据渲染  返回renderable
-                        className="am-list"
-                        pageSize={15}    //每次事件循环（每帧）渲染的行数
-                        //useBodyScroll  //使用 html 的 body 作为滚动容器   bool类型   不应这么写  否则无法下拉刷新
-                        scrollRenderAheadDistance={200}   //当一个行接近屏幕范围多少像素之内的时候，就开始渲染这一行
-                        onEndReached={this.onEndReached}  //当所有的数据都已经渲染过，并且列表被滚动到距离最底部不足onEndReachedThreshold个像素的距离时调用
-                        onEndReachedThreshold={10}  //调用onEndReached之前的临界值，单位是像素  number类型
-                        initialListSize={15}   //指定在组件刚挂载的时候渲染多少行数据，用这个属性来确保首屏显示合适数量的数据
-                        scrollEventThrottle={20}     //控制在滚动过程中，scroll事件被调用的频率
-                        style={{
-                            height: this.state.clientHeight,
-                            display: this.state.listViewDisplay ? 'block' : 'none'
-                        }}
-                    />
+                    {
+                        this.state.initArrData.length == 0 ? this.state.dataFlag ?
+                            <div className="emptyPage_content">
+                                <div className="empty_center">
+                                    <div className="emptyPage_icon emptyPage_publicImg"></div>
+                                    <div className="emptyPage_text">暂无数据</div>
+                                </div>
+                            </div> : <div ></div>
+                            :
+                            <ListView
+                                ref={el => this.lv = el}
+                                dataSource={this.state.dataSource}    //数据类型是 ListViewDataSource
+                                renderFooter={() => (
+                                    <div style={{ paddingTop: 5, paddingBottom: 40, textAlign: 'center' }}>
+                                        {this.state.isLoadingLeft ? '正在加载' : '已经全部加载完毕'}
+                                    </div>)}
+                                renderRow={row}   //需要的参数包括一行数据等,会返回一个可渲染的组件为这行数据渲染  返回renderable
+                                className="am-list"
+                                pageSize={15}    //每次事件循环（每帧）渲染的行数
+                                //useBodyScroll  //使用 html 的 body 作为滚动容器   bool类型   不应这么写  否则无法下拉刷新
+                                scrollRenderAheadDistance={200}   //当一个行接近屏幕范围多少像素之内的时候，就开始渲染这一行
+                                onEndReached={this.onEndReached}  //当所有的数据都已经渲染过，并且列表被滚动到距离最底部不足onEndReachedThreshold个像素的距离时调用
+                                onEndReachedThreshold={10}  //调用onEndReached之前的临界值，单位是像素  number类型
+                                initialListSize={15}   //指定在组件刚挂载的时候渲染多少行数据，用这个属性来确保首屏显示合适数量的数据
+                                scrollEventThrottle={20}     //控制在滚动过程中，scroll事件被调用的频率
+                                style={{
+                                    height: this.state.clientHeight,
+                                    display: this.state.listViewDisplay ? 'block' : 'none'
+                                }}
+                            />
+                    }
+
                 </div>
             </div>
         );
