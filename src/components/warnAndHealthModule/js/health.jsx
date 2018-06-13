@@ -144,7 +144,14 @@ export default class health extends React.Component {
                         <span>{this.state.type == 'step' ? '步数排行榜' : '卡路里排行榜'}</span>
                     </div>
 
-                    <div className="health_cont">{array}</div>
+                    <div className="health_cont">{array}
+                        <div className="emptyPage_content">
+                            <div className="empty_center">
+                                <div className="emptyPage_icon emptyPage_publicImg"></div>
+                                <div className="emptyPage_text">暂无数据</div>
+                            </div>
+                        </div>
+                    </div>
 
                     {/*<List className="my-list">*/}
                     {/*<ListView*/}

@@ -150,6 +150,12 @@ export default class homeworkModule extends React.Component {
                         <span className="icon"></span>
                         <span>蚁巢作业</span>
                     </div>
+                    <div className="emptyPage_content">
+                        <div className="empty_center">
+                            <div className="emptyPage_icon emptyPage_publicImg"></div>
+                            <div className="emptyPage_text">暂无数据</div>
+                        </div>
+                    </div>
                     <ListView
                         ref={el => this.lv = el}
                         dataSource={this.state.dataSource}    //数据类型是 ListViewDataSource
