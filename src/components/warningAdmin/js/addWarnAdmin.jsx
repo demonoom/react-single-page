@@ -124,7 +124,7 @@ export default class addWarnAdmin extends React.Component {
             phone = 'android'
         }
 
-        const alertInstance = alert('添加预警人员', '确定添加'+userName+'为预警人员吗?', [
+        const alertInstance = alert('确定添加'+userName+'为预警人员吗?','', [
             {
                 text: '取消', onPress: () => {
                 if (cancel) {
