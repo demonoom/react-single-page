@@ -124,7 +124,7 @@ export default class addWarnAdmin extends React.Component {
             phone = 'android'
         }
 
-        const alertInstance = alert('添加预警人员', '确定添加'+userName+'为预警人员吗?', [
+        const alertInstance = alert('确定添加'+userName+'为预警人员吗?','', [
             {
                 text: '取消', onPress: () => {
                 if (cancel) {
@@ -157,7 +157,7 @@ export default class addWarnAdmin extends React.Component {
 
         return (
             <div id="addWarnAdmin">
-                <SearchBar cancelText="搜索" onCancel={this.searchSubmit.bind(this)} onSubmit={this.searchSubmit.bind(this)} placeholder="请输入预警人姓名" maxLength={8} />
+                <SearchBar showCancelButton={true} cancelText="搜索" onCancel={this.searchSubmit.bind(this)} onSubmit={this.searchSubmit.bind(this)} placeholder="请输入预警人姓名" maxLength={8} />
                 <div className='content_box' style={{height:this.state.clientHeight - 44 + 'px',overflow:'auto'}}>
                     {this.state.listInnerHTML}
                 </div>

@@ -1,8 +1,0 @@
-(node) util.print is deprecated. Use console.log instead.
-#warningAdminList .itemDelete {
-  position: absolute;
-  top: 50%;
-  right: 10px;
-  transform: translateY(-50%);
-  padding: 10px;
-}
