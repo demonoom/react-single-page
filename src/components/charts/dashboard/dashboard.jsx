@@ -1156,29 +1156,28 @@ export default class dashboard extends React.Component {
         var _this = this;
         var xAttendanceNameArray = [];
         var ySeriesDataArray = [];
-        var totalTipArray=[];
+        var totalTipArray = [];
         if (WebServiceUtil.isEmpty(attendanceResults) == false) {
-            for(var gradeName in attendanceResults){
-                console.log("gradeName:"+gradeName);
+            for (var gradeName in attendanceResults) {
                 var valueJson = attendanceResults[gradeName];
-                console.log(valueJson);
                 var absentCount = valueJson.absentCount;
                 var punchCount = valueJson.punchCount;
                 var totalCount = valueJson.totalCount;
                 if (WebServiceUtil.isEmpty(absentCount) == false) {
-                    var gradeTip = gradeName+"缺勤";
+                    var gradeTip = gradeName + "缺勤";
                     xAttendanceNameArray.push(gradeTip);
                     var absentJson = {value: absentCount, name: gradeTip};
                     ySeriesDataArray.push(absentJson);
                 }
                 if (WebServiceUtil.isEmpty(punchCount) == false) {
-                    var gradeTip = gradeName+"实到";
+                    var gradeTip = gradeName + "实到";
                     xAttendanceNameArray.push(gradeTip);
                     var punchCountJson = {value: punchCount, name: gradeTip};
                     ySeriesDataArray.push(punchCountJson);
                 }
                 if (WebServiceUtil.isEmpty(totalCount) == false) {
-                    totalTipArray.push(<span style={{marginRight:'8px', color:'#e4e4e4', fontSize:'12px',lineHeight:'26px'}}>{gradeName}应到:{totalCount}人</span>);
+                    totalTipArray.push(<span
+                        style={{marginRight: '8px', color: '#e4e4e4', fontSize: '12px', lineHeight: '26px'}}>{gradeName}应到:{totalCount}人</span>);
                 }
                 /*if (WebServiceUtil.isEmpty(totalCount) == false) {
                     var gradeTip = gradeName+"应到";
@@ -1189,10 +1188,10 @@ export default class dashboard extends React.Component {
             }
         }
         var attendanceOption = _this.buildStudentAttendanceOption(xAttendanceNameArray, ySeriesDataArray)
-        var studentAttendancePieChartDiv = <div style={{position:'relative'}}>
-            <div style={{fontSize: '16px',fontWeight:'bold'}}>学生考勤统计</div>
+        var studentAttendancePieChartDiv = <div style={{position: 'relative'}}>
+            <div style={{fontSize: '16px', fontWeight: 'bold'}}>学生考勤统计</div>
             <div style={{width: '100%', height: '252px'}} className="echarts_wrap">
-                <div style={{width: '100%', maxHeight: '40px', paddingTop:'12px'}}>{totalTipArray}</div>
+                <div style={{width: '100%', maxHeight: '40px', paddingTop: '12px'}}>{totalTipArray}</div>
                 <div style={{width: '100%', height: '200px'}}>
                     <ReactEcharts
                         option={attendanceOption}
@@ -1268,9 +1267,9 @@ export default class dashboard extends React.Component {
      */
     buildStudentAttendanceMultiPieChart = (attendanceResults) => {
         var _this = this;
-        var attendanceData=[];
+        var attendanceData = [];
         if (WebServiceUtil.isEmpty(attendanceResults) == false) {
-            for(var gradeName in attendanceResults){
+            for (var gradeName in attendanceResults) {
                 var valueJson = attendanceResults[gradeName];
                 var absentCount = valueJson.absentCount;
                 var punchCount = valueJson.punchCount;
@@ -1282,13 +1281,13 @@ export default class dashboard extends React.Component {
                     },
                     children: [{
                         name: '实到',
-                        value:punchCount,
+                        value: punchCount,
                         itemStyle: {
                             color: '#e0719c'
                         }
                     }, {
                         name: '缺勤',
-                        value:absentCount,
+                        value: absentCount,
                         itemStyle: {
                             color: '#e0a18c'
                         }
@@ -1314,7 +1313,7 @@ export default class dashboard extends React.Component {
     /**
      * 以嵌套饼图的形式构建学生的考勤
      */
-    buildStudentAttendanceMultiPieOption(attendanceData){
+    buildStudentAttendanceMultiPieOption(attendanceData) {
         return {
             title: {
                 text: '学生考勤统计',
@@ -1360,21 +1359,25 @@ export default class dashboard extends React.Component {
                         borderWidth: 3
                     }
                 }],
-                label:{            //饼图图形上的文本标签
-                    normal:{
-                        show:true,
-                        position:'inner', //标签的位置
-                        textStyle : {
-                            fontWeight : 300 ,
-                            fontSize : 12    //文字的字体大小
+                label: {            //饼图图形上的文本标签
+                    normal: {
+                        show: true,
+                        position: 'inner', //标签的位置
+                        textStyle: {
+                            fontWeight: 300,
+                            fontSize: 12    //文字的字体大小
                         },
-                        formatter:'{b}{c}人'
+                        formatter: '{b}{c}人'
 
 
                     }
                 }
             }
         };
+    }
+
+    dangerStrCallBack = (str) => {
+        this.setState({dangerStr: str})
     }
 
     render() {
@@ -1393,6 +1396,13 @@ export default class dashboard extends React.Component {
                                 正在开课:{this.state.openClazzTrArray}
                             </NoticeBar>
                         </div>
+
+                        <div className="notice fl">
+                            <NoticeBar marqueeProps={{loop: true, style: {padding: '0 7.5px'}}}>
+                                {this.state.dangerStr}
+                            </NoticeBar>
+                        </div>
+
                         <div className="schoolName fl">{_this.state.schoolName}{/*西安市第九十九中学*/}</div>
                     </div>
                     <div className="cont">
@@ -1416,7 +1426,9 @@ export default class dashboard extends React.Component {
                                         </div>
                                     </div>
                                     {/*热力图*/}
-                                    <CanvasMap/>
+                                    <CanvasMap
+                                        dangerStrCallBack={this.dangerStrCallBack}
+                                    />
                                 </div>
                             </div>
                             <div className="fl right">
