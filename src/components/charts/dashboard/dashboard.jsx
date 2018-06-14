@@ -1396,7 +1396,7 @@ export default class dashboard extends React.Component {
                                 正在开课:{this.state.openClazzTrArray}
                             </NoticeBar>
                         </div>
-                        <div className="schoolName fl">{_this.state.schoolName}{/*西安市第九十九中学*/}</div>
+                        <div className="schoolName textOver fl">{_this.state.schoolName}{/*西安市第九十九中学*/}</div>
                         <div className="notice fl">
                             <NoticeBar marqueeProps={{loop: true, style: {padding: '0 7.5px'}}}>
                                 {this.state.dangerStr}
