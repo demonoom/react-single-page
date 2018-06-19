@@ -1178,7 +1178,7 @@ export default class dashboard extends React.Component {
                     ySeriesDataArray.push(punchCountJson);
                 }
                 if (WebServiceUtil.isEmpty(totalCount) == false) {
-                    totalTipArray.push(<span style={{marginLeft:'15px'}}>{gradeName}应到:{totalCount}人</span>);
+                    totalTipArray.push(<span style={{marginRight:'8px', color:'#e4e4e4', fontSize:'12px',lineHeight:'26px'}}>{gradeName}应到:{totalCount}人</span>);
                 }
                 /*if (WebServiceUtil.isEmpty(totalCount) == false) {
                     var gradeTip = gradeName+"应到";
@@ -1189,15 +1189,17 @@ export default class dashboard extends React.Component {
             }
         }
         var attendanceOption = _this.buildStudentAttendanceOption(xAttendanceNameArray, ySeriesDataArray)
-        var studentAttendancePieChartDiv = <div>
+        var studentAttendancePieChartDiv = <div style={{position:'relative'}}>
             <div style={{fontSize: '16px',fontWeight:'bold'}}>学生考勤统计</div>
-            <div>{totalTipArray}</div>
-            <div style={{width: '100%', height: '270px'}} className="echarts_wrap">
-                <ReactEcharts
-                    option={attendanceOption}
-                    style={{height: '100%', width: '100%'}}
-                    theme='chalk2'
-                    className=''/>
+            <div style={{width: '100%', height: '252px'}} className="echarts_wrap">
+                <div style={{width: '100%', maxHeight: '40px', paddingTop:'12px'}}>{totalTipArray}</div>
+                <div style={{width: '100%', height: '200px'}}>
+                    <ReactEcharts
+                        option={attendanceOption}
+                        style={{height: '100%', width: '100%'}}
+                        theme='chalk2'
+                        className=''/>
+                </div>
             </div>
         </div>;
         _this.setState({studentAttendancePieChartDiv});

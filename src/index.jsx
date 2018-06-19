@@ -502,6 +502,13 @@ const addWarnAdmin = (location, cb) => {
         }
     )
 }
+
+const waterWork = (location, cb) => {
+    require.ensure([], require => {
+            cb(null, require("./components/waterWork/waterWork").default)
+        }
+    )
+}
 import './index.less';
 
 class Index extends React.Component {
@@ -610,6 +617,11 @@ class Index extends React.Component {
                     <li><Link
                         to="/wxLogin"
                         style={{fontSize: '24px'}}>授权登录</Link></li>
+                    <li>
+                        <Link   
+                            to="/waterWork" style={{fontSize: '24px'}}>水滴作业</Link>
+                    </li>
+                  
                 </ul>
             </div>
         );
@@ -705,6 +717,7 @@ ReactDOM.render(
             <Route path="wxLogin" getComponent={wxLogin}/>
             <Route path="warningAdminList" getComponent={warningAdminList}/>
             <Route path="addWarnAdmin" getComponent={addWarnAdmin}/>
+            <Route path="waterWork" getComponent={waterWork} />
         </Route>
     </Router>
     ,
