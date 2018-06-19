@@ -109,7 +109,7 @@ module.exports = {
             name: 'vendor',
             filename: 'shared.js'
         }),
-        
+
         new webpack.optimize.UglifyJsPlugin({
             //压缩插件,使用npm 安装, cnpm会报错
             mangle: {
