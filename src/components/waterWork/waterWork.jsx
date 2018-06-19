@@ -2,6 +2,7 @@ import React from 'react';
 import "./waterWork.less";
 
 
+
 export default class waterWork extends React.Component {
     constructor(props) {
         super(props);
@@ -35,17 +36,21 @@ export default class waterWork extends React.Component {
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
             onResponse: function (result) {
                 console.log(result);
-
                 if (result.msg == '调用成功' || result.success == true) {
                     var arr = [];
+
                     _this.state.initData = result.response;
                     _this.state.initData.forEach((v, i) => {
                         let html = <div>
                             {/* <div>作业内容:{v.homework.topic.content}</div> */}
                             {/* <div>老师：{v.homework.teacher.userName}</div> */}
                             <div className="water" onClick={_this.toWaterDetail.bind(this, v.index)} >
-                                <div> {parseInt((v.answerCount / v.answerTotalCount)*100)+"%"}</div>
-                                <span>第{v.index+1}题</span>
+                                <i className="before"></i>
+                                <div className="inner">
+                                    <div> {parseInt((v.answerCount / v.answerTotalCount)*100)+"%"}</div>
+                                    <span>第{v.index+1}题</span>
+                                </div>
+                                <i className="after"></i>
                             </div>
                         </div>
                         arr.push(html)
