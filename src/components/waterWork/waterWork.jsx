@@ -6,30 +6,13 @@ export default class waterWork extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            initData: [
-               
-            ],
+            initData: [],
             htmlList: []
         }
     }
 
     componentDidMount() {
         var _this = this;
-        
-        // _this.state.initData.forEach((v, i) => {
-        //     let html = <div>
-        //         <div>作业内容:{v.homework.topic.content}</div>
-        //         <div>老师：{v.homework.teacher.userName}</div>
-        //         <div className="water" onClick={this.toWaterDetail.bind(this, v.homework.id)} >
-        //             <div>{v.answerCount / v.answerTotalCount}</div>
-        //             <span>第{v.index}题</span>
-        //         </div>
-        //     </div>
-        //     arr.push(html)
-        // })
-        // _this.setState({
-        //     htmlList: arr
-        // })
         document.title = '题目水滴页';
         var locationHref = window.location.href;
         var locationSearch = locationHref.substr(locationHref.indexOf("?") + 1);
