@@ -523,7 +523,7 @@ class Index extends React.Component {
                     {/*<li><Link to="/s4" style={{fontSize: '24px'}}>蚁巢</Link></li>*/}
                     {/*<li><Link to="/s5" style={{fontSize: '24px'}}>实验</Link></li>*/}
                     {/*<li><Link to="/questionBank?ident=54208&pointId=4339&title=nihao"*/}
-                    {/*style={{fontSize: '24px'}}>题库</Link></li>*/}
+                              {/*style={{fontSize: '24px'}}>题库</Link></li>*/}
                     {/*<li><Link to="/analysisList?access_user=23836" style={{fontSize: '24px'}}>成绩分析</Link></li>*/}
                     {/*<li><Link to="/searchUserLocationInfo" style={{fontSize: '24px'}}>搜索查看用户位置信息</Link></li>*/}
                     {/*<li><Link to="/studentFaceStatistics" style={{fontSize: '24px'}}>学生脸部表情分析折线图</Link></li>*/}
@@ -619,7 +619,7 @@ class Index extends React.Component {
                         style={{fontSize: '24px'}}>授权登录</Link></li>
                     <li>
                         <Link   
-                            to="/waterWork" style={{fontSize: '24px'}}>水滴作业</Link>
+                            to="/waterWork?tid=153&stuId=23993" style={{fontSize: '24px'}}>水滴作业</Link>
                     </li>
                   
                 </ul>
