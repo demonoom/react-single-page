@@ -266,11 +266,13 @@ export default class dashboardByCity extends React.Component {
         }
         var label = new BMap.Label(label, opts);  // 创建文本标注对象
         label.setStyle({
-            color : "red",
+            color : "#01a8ff",
             fontSize : "12px",
             height : "20px",
             lineHeight : "20px",
-            fontFamily:"微软雅黑"
+            fontFamily:"微软雅黑",
+            background:'#1a1c3a',
+            border:'1px solid rgba(1, 168, 255, 0.3 )'
         });
         map.addOverlay(label);
     }
@@ -1713,7 +1715,7 @@ export default class dashboardByCity extends React.Component {
                                         </div>
                                     </div>
                                     {/*热力图*/}
-                                    <div id="container" style={{height:555}}></div>
+                                    <div className="city_container"><div id="container" style={{height:542}}></div></div>
                                 </div>
                             </div>
                             <div className="fl right">
