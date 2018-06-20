@@ -1,10 +1,12 @@
 import React from 'react';
 import "./waterWork.less";
+import {Toast} from 'antd-mobile'
 
-
+var water;
 export default class waterWork extends React.Component {
     constructor(props) {
         super(props);
+        water = this;
         this.state = {
             initData: [],
             htmlList: []
@@ -67,13 +69,15 @@ export default class waterWork extends React.Component {
      * @param {*} id 
      */
     toWaterDetail(index) {
-        console.log(index)
+        var _this = this;
         var data = {
             method: 'waterDetailMethod',
-            id: index,
+            id: index+"",
+            tId:water.state.tId+""
         };
+        console.log(data);
         Bridge.callHandler(data, null, function (error) {
-            
+            // Toast.info(error,5)
         });
 
     }
