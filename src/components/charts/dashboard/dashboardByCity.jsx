@@ -197,21 +197,21 @@ export default class dashboardByCity extends React.Component {
         console.log("heatmapOverlay==>"+heatmapOverlay);
         map.addOverlay(heatmapOverlay);
 
-        var shiyanPoint = {"lng":111.294118,"lat":30.704039,"count":2500};
-        var hongxingPoint = {"lng":111.295668,"lat":30.696735,"count":2500};
-        var xueyuanPoint = {"lng":111.288046,"lat":30.705785,"count":1000};
+        var shiyanPoint = {"lng":111.294118,"lat":30.704039,"count":20};
+        var hongxingPoint = {"lng":111.295668,"lat":30.696735,"count":50};
+        var xueyuanPoint = {"lng":111.288046,"lat":30.705785,"count":100};
         var dongfanghongPoint = {"lng":111.294969,"lat":30.711028,"count":500};
         var lvluoluPoint = {"lng":111.308549,"lat":30.710214,"count":300};
         var shiliuPoint = {"lng":111.301484,"lat":30.709493,"count":1300};
-        var sanzhongPoint = {"lng":111.285824,"lat":30.71006,"count":1300};
+        var sanzhongPoint = {"lng":111.285824,"lat":30.71006,"count":100};
         var dongshanPoint = {"lng":111.31251,"lat":30.707076,"count":1300};
         var ershiwuPoint = {"lng":111.32984,"lat":30.752772,"count":1300};
-        var waixiaoPoint = {"lng":111.351552,"lat":30.694649,"count":1300};
-        var yangchaluPoint = {"lng":111.329699,"lat":30.676113,"count":1300};
-        var shiyiPoint = {"lng":111.330512,"lat":30.675438,"count":1300};
-        var wjshiyanPoint = {"lng":111.309781,"lat":30.695075,"count":1300};
+        var waixiaoPoint = {"lng":111.351552,"lat":30.694649,"count":130};
+        var yangchaluPoint = {"lng":111.329699,"lat":30.676113,"count":100};
+        var shiyiPoint = {"lng":111.330512,"lat":30.675438,"count":130};
+        var wjshiyanPoint = {"lng":111.309781,"lat":30.695075,"count":130};
         var shisiPoint = {"lng":111.307925,"lat":30.696832,"count":1300};
-        var yilingPoint = {"lng":111.32487,"lat":30.700525,"count":1300};
+        var yilingPoint = {"lng":111.32487,"lat":30.700525,"count":100};
 
         var points =[
             shiyanPoint,//宜昌市实验小学
