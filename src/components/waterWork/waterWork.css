@@ -31,7 +31,6 @@
   animation: rotate 8s linear infinite;
   z-index: 10;
   background: url("img/wave1.png") no-repeat center bottom;
-  background-size: 100% 60% !important;
 }
 #waterWorkContent .water .inner {
   position: absolute;
