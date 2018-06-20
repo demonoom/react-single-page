@@ -4,7 +4,7 @@ import '../css/LookAtTheAnswer.less'
 
 var LookAtTheAnswer;
 
-export default class m3u8Player extends React.Component {
+export default class lookAtTheAnswer extends React.Component {
 
     constructor(props) {
         super(props);
