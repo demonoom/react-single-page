@@ -54,9 +54,9 @@
 }
 #LookAtTheAnswer .answerCont {
   color: #666;
-  line-height: 1;
+  line-height: 1.5;
   font-size: 15px;
-  padding-top: 15px;
+  padding-top: 10px;
 }
 #LookAtTheAnswer .ansImgCont {
   margin: 0 0 0 -15px;
