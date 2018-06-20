@@ -1715,7 +1715,7 @@ export default class dashboardByCity extends React.Component {
                                         </div>
                                     </div>
                                     {/*热力图*/}
-                                    <div className="city_container"><div id="container" style={{height:542}}></div></div>
+                                    <div id="container" style={{height:555}}></div>
                                 </div>
                             </div>
                             <div className="fl right">
