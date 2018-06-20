@@ -202,16 +202,16 @@ export default class dashboardByCity extends React.Component {
         var xueyuanPoint = {"lng":111.288046,"lat":30.705785,"count":100};
         var dongfanghongPoint = {"lng":111.294969,"lat":30.711028,"count":500};
         var lvluoluPoint = {"lng":111.308549,"lat":30.710214,"count":300};
-        var shiliuPoint = {"lng":111.301484,"lat":30.709493,"count":1300};
+        var shiliuPoint = {"lng":111.301484,"lat":30.709493,"count":80};
         var sanzhongPoint = {"lng":111.285824,"lat":30.71006,"count":100};
-        var dongshanPoint = {"lng":111.31251,"lat":30.707076,"count":1300};
-        var ershiwuPoint = {"lng":111.32984,"lat":30.752772,"count":1300};
+        var dongshanPoint = {"lng":111.31251,"lat":30.707076,"count":800};
+        var ershiwuPoint = {"lng":111.32984,"lat":30.752772,"count":13};
         var waixiaoPoint = {"lng":111.351552,"lat":30.694649,"count":130};
         var yangchaluPoint = {"lng":111.329699,"lat":30.676113,"count":100};
         var shiyiPoint = {"lng":111.330512,"lat":30.675438,"count":130};
         var wjshiyanPoint = {"lng":111.309781,"lat":30.695075,"count":130};
-        var shisiPoint = {"lng":111.307925,"lat":30.696832,"count":1300};
-        var yilingPoint = {"lng":111.32487,"lat":30.700525,"count":100};
+        var shisiPoint = {"lng":111.307925,"lat":30.696832,"count":2300};
+        var yilingPoint = {"lng":111.32487,"lat":30.700525,"count":90};
 
         var points =[
             shiyanPoint,//宜昌市实验小学
@@ -710,45 +710,47 @@ export default class dashboardByCity extends React.Component {
      * @param seriesDataArray
      */
     buildScientificData=(xClazzNameArray,seriesDataArray)=>{
-        var seriesJson = {value: 10, name: "宜昌市实验小学"};
-        xClazzNameArray.push("宜昌市实验小学");
-        seriesDataArray.push(seriesJson);
 
         var seriesJson = {value: 35, name: "宜昌市西陵区红星路小学"};
         xClazzNameArray.push("宜昌市西陵区红星路小学");
-        seriesDataArray.push(seriesJson);
-
-        var seriesJson = {value: 22, name: "宜昌市西陵区学院街小学"};
-        xClazzNameArray.push("宜昌市西陵区学院街小学");
         seriesDataArray.push(seriesJson);
 
         var seriesJson = {value: 32, name: "宜昌市西陵区东方红小学"};
         xClazzNameArray.push("宜昌市西陵区东方红小学");
         seriesDataArray.push(seriesJson);
 
-        var seriesJson = {value: 23, name: "宜昌市西陵区绿萝路小学"};
-        xClazzNameArray.push("宜昌市西陵区绿萝路小学");
-        seriesDataArray.push(seriesJson);
-
         var seriesJson = {value: 31, name: "宜昌市第十六中学"};
         xClazzNameArray.push("宜昌市第十六中学");
-        seriesDataArray.push(seriesJson);
-
-        var seriesJson = {value: 26, name: "宜昌市第三中学"};
-        xClazzNameArray.push("宜昌市第三中学");
         seriesDataArray.push(seriesJson);
 
         var seriesJson = {value: 27, name: "宜昌市东山中学"};
         xClazzNameArray.push("宜昌市东山中学");
         seriesDataArray.push(seriesJson);
 
-        var seriesJson = {value: 17, name: "宜昌市第二十五中学"};
-        xClazzNameArray.push("宜昌市第二十五中学");
+        var seriesJson = {value: 26, name: "宜昌市第三中学"};
+        xClazzNameArray.push("宜昌市第三中学");
+        seriesDataArray.push(seriesJson);
+
+        var seriesJson = {value: 23, name: "宜昌市西陵区绿萝路小学"};
+        xClazzNameArray.push("宜昌市西陵区绿萝路小学");
+        seriesDataArray.push(seriesJson);
+
+        var seriesJson = {value: 22, name: "宜昌市西陵区学院街小学"};
+        xClazzNameArray.push("宜昌市西陵区学院街小学");
         seriesDataArray.push(seriesJson);
 
         var seriesJson = {value: 20, name: "宜昌市外国语初级中学"};
         xClazzNameArray.push("宜昌市外国语初级中学");
         seriesDataArray.push(seriesJson);
+
+        var seriesJson = {value: 17, name: "宜昌市第二十五中学"};
+        xClazzNameArray.push("宜昌市第二十五中学");
+        seriesDataArray.push(seriesJson);
+
+        var seriesJson = {value: 10, name: "宜昌市实验小学"};
+        xClazzNameArray.push("宜昌市实验小学");
+        seriesDataArray.push(seriesJson);
+
     }
     /**
      * 创建正在开课的跑马灯数据
