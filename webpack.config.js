@@ -110,7 +110,7 @@ module.exports = {
             filename: 'shared.js'
         }),
 
-        new webpack.optimize.UglifyJsPlugin({
+        /*new webpack.optimize.UglifyJsPlugin({
             //压缩插件,使用npm 安装, cnpm会报错
             mangle: {
                 except: ['$super', '$', 'exports', 'require', 'module', '_']
@@ -121,7 +121,7 @@ module.exports = {
             compress: {
                 warnings: false
             }
-        }),
+        }),*/
 
         //将开发模式变为生产模式
         new webpack.DefinePlugin({

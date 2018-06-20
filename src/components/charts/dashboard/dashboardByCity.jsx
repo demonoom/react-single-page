@@ -48,6 +48,83 @@ var schema = [
 
 ];
 var map = null;
+
+var mapStyleJson = [
+    {
+        "featureType": "poi",
+        "elementType": "all",
+        "stylers": {
+            "visibility": "off"
+        }
+    },
+    {
+        "featureType": "background",
+        "elementType": "all",
+        "stylers": {
+            "color": "#1a1c3aff"
+        }
+    },
+    {
+        "featureType": "arterial",
+        "elementType": "all",
+        "stylers": {
+            "color": "#444444ff"
+        }
+    },
+    {
+        "featureType": "local",
+        "elementType": "all",
+        "stylers": {
+            "color": "#000000ff"
+        }
+    },
+    {
+        "featureType": "educationlabel",    //教育兴趣点
+        "elementType": "labels.text.stroke",
+        "stylers": {
+            "color": "#ffd966ff",
+            "visibility": "on"
+        }
+    },
+    {
+        "featureType": "medicallabel",//医疗兴趣点
+        "elementType": "labels.text.stroke",
+        "stylers": {
+            "color": "#1a1c3aff",
+            "visibility": "off"
+        }
+    },
+    {
+        "featureType": "airportlabel",  //机场兴趣点
+        "elementType": "labels.text.stroke",
+        "stylers": {
+            "color": "#1a1c3aff",
+            "visibility": "off"
+        }
+    },
+    {
+        "featureType": "scenicspotslabel",//旅游景点兴趣点
+        "elementType": "labels.text.stroke",
+        "stylers": {
+            "color": "#1a1c3aff",
+            "visibility": "off"
+        }
+    },
+    {
+        "featureType": "building",
+        "elementType": "all",
+        "stylers": {
+            "visibility": "off"
+        }
+    },
+    {
+        "featureType": "manmade",
+        "elementType": "all",
+        "stylers": {
+            "visibility": "off"
+        }
+    }
+];
 export default class dashboardByCity extends React.Component {
 
     constructor(props) {
@@ -55,7 +132,8 @@ export default class dashboardByCity extends React.Component {
         const nowTimeStamp = Date.now();
         const now = new Date(nowTimeStamp);
         this.state = {
-            openClazzTrArray: ''
+            openClazzTrArray: '',
+            dangerStr:'以下学校存在健康/出行风险:宜昌市夷陵中学  宜昌市伍家岗区杨岔路小学'
         };
         this.getDashBoardDataByArea = this.getDashBoardDataByArea.bind(this);
     }
@@ -85,9 +163,14 @@ export default class dashboardByCity extends React.Component {
     buildBaiduMap=()=>{
         map = new BMap.Map("container");          // 创建地图实例
         console.log("1111"+map);
-        var point = new BMap.Point(111.317235, 30.720205);
-        map.centerAndZoom(point, 14);             // 初始化地图，设置中心点坐标和地图级别
+        var point = new BMap.Point(111.31251,30.707076);
+        map.centerAndZoom(point, 15);             // 初始化地图，设置中心点坐标和地图级别
         map.enableScrollWheelZoom(); // 允许滚轮缩放
+        map.setCurrentCity("宜昌市");
+        // map.setMapStyle({style:'dark'});
+        map.setMapStyle({
+            styleJson:mapStyleJson
+        });
         console.log("map=====>"+map);
         this.getPoints();
     }
@@ -113,27 +196,82 @@ export default class dashboardByCity extends React.Component {
         console.log("heatmapOverlay==>"+heatmapOverlay);
         map.addOverlay(heatmapOverlay);
 
-        var points =[
-            {"lng":111.294118,"lat":30.704039,"count":2500},//宜昌市实验小学
-            {"lng":111.295668,"lat":30.696735,"count":2500},//宜昌市西陵区红星路小学
-            {"lng":111.288046,"lat":30.705785,"count":1000},//宜昌市西陵区学院街小学
-            {"lng":111.294969,"lat":30.711028,"count":500},//宜昌市西陵区东方红小学
-            {"lng":111.308549,"lat":30.710214,"count":300},//宜昌市西陵区绿萝路小学
-            {"lng":111.301484,"lat":30.709493,"count":1300},//宜昌市第十六中学
-            {"lng":111.285824,"lat":30.71006,"count":1300},//宜昌市第三中学
-            {"lng":111.31251,"lat":30.707076,"count":1300},//宜昌市东山中学
-            {"lng":111.32984,"lat":30.752772,"count":1300},//宜昌市第二十五中学
-            {"lng":111.351552,"lat":30.694649,"count":1300},//宜昌市外国语初级中学
+        var shiyanPoint = {"lng":111.294118,"lat":30.704039,"count":2500};
+        var hongxingPoint = {"lng":111.295668,"lat":30.696735,"count":2500};
+        var xueyuanPoint = {"lng":111.288046,"lat":30.705785,"count":1000};
+        var dongfanghongPoint = {"lng":111.294969,"lat":30.711028,"count":500};
+        var lvluoluPoint = {"lng":111.308549,"lat":30.710214,"count":300};
+        var shiliuPoint = {"lng":111.301484,"lat":30.709493,"count":1300};
+        var sanzhongPoint = {"lng":111.285824,"lat":30.71006,"count":1300};
+        var dongshanPoint = {"lng":111.31251,"lat":30.707076,"count":1300};
+        var ershiwuPoint = {"lng":111.32984,"lat":30.752772,"count":1300};
+        var waixiaoPoint = {"lng":111.351552,"lat":30.694649,"count":1300};
+        var yangchaluPoint = {"lng":111.329699,"lat":30.676113,"count":1300};
+        var shiyiPoint = {"lng":111.330512,"lat":30.675438,"count":1300};
+        var wjshiyanPoint = {"lng":111.309781,"lat":30.695075,"count":1300};
+        var shisiPoint = {"lng":111.307925,"lat":30.696832,"count":1300};
+        var yilingPoint = {"lng":111.32487,"lat":30.700525,"count":1300};
 
+        var points =[
+            shiyanPoint,//宜昌市实验小学
+            hongxingPoint,//宜昌市西陵区红星路小学
+            xueyuanPoint,//宜昌市西陵区学院街小学
+            dongfanghongPoint,//宜昌市西陵区东方红小学
+            lvluoluPoint,//宜昌市西陵区绿萝路小学
+            shiliuPoint,//宜昌市第十六中学
+            sanzhongPoint,//宜昌市第三中学
+            dongshanPoint,//宜昌市东山中学
+            ershiwuPoint,//宜昌市第二十五中学
+            waixiaoPoint,//宜昌市外国语初级中学
+            yangchaluPoint,//宜昌市伍家岗区杨岔路小学
+            shiyiPoint,//宜昌市第十一中学
+            wjshiyanPoint,//宜昌市伍家岗区实验小学
+            shisiPoint,//宜昌市第十四中学
+            yilingPoint,//宜昌市夷陵中学
         ];
+
+        this.addMapPointLabel(shiyanPoint,"宜昌市实验小学");
+        this.addMapPointLabel(hongxingPoint,"宜昌市西陵区红星路小学");
+        this.addMapPointLabel(xueyuanPoint,"宜昌市西陵区学院街小学");
+        this.addMapPointLabel(dongfanghongPoint,"宜昌市西陵区东方红小学");
+        this.addMapPointLabel(lvluoluPoint,"宜昌市西陵区绿萝路小学");
+        this.addMapPointLabel(shiliuPoint,"宜昌市第十六中学");
+        this.addMapPointLabel(sanzhongPoint,"宜昌市第三中学");
+        this.addMapPointLabel(dongshanPoint,"宜昌市东山中学");
+        this.addMapPointLabel(ershiwuPoint,"宜昌市第二十五中学");
+        this.addMapPointLabel(waixiaoPoint,"宜昌市外国语初级中学");
+        this.addMapPointLabel(yangchaluPoint,"宜昌市伍家岗区杨岔路小学");
+        this.addMapPointLabel(shiyiPoint,"宜昌市第十一中学");
+        this.addMapPointLabel(wjshiyanPoint,"宜昌市伍家岗区实验小学");
+        this.addMapPointLabel(shisiPoint,"宜昌市第十四中学");
+        this.addMapPointLabel(yilingPoint,"宜昌市夷陵中学");
+
         this.setState({points});
 
         console.log("points==>"+points);
         heatmapOverlay.setDataSet({data:points,max:100});
-        /*
+        /*var gradient = {
+            .33:'rgb(34, 139, 34)',//外圈颜色
+            .66:'rgb(255, 255, 0)',//中间颜色
+            1:'rgb(255, 0, 0)'//内圈颜色
+        };
+        heatmapOverlay.setOptions({"gradient":gradient,"opacity":50});*/
+    }
 
-        heatmapOverlay.setDataSet({data:points,max:100});
-        */
+    addMapPointLabel=(pointJson,label)=>{
+        var opts = {
+            position : pointJson,    // 指定文本标注所在的地理位置
+            offset   : new BMap.Size(10, -10)    //设置文本偏移量
+        }
+        var label = new BMap.Label(label, opts);  // 创建文本标注对象
+        label.setStyle({
+            color : "red",
+            fontSize : "12px",
+            height : "20px",
+            lineHeight : "20px",
+            fontFamily:"微软雅黑"
+        });
+        map.addOverlay(label);
     }
 
     isSupportCanvas=()=>{
@@ -185,8 +323,11 @@ export default class dashboardByCity extends React.Component {
                 var messageCount = jsonObj.messageCount;
                 //蚁巢活跃量
                 var topicResults = jsonObj.topicResult;
+                //蚁巢活跃量
+                var topicResult1 = jsonObj.topicResult1;
                 //每个学校老师上传的蚁盘资源数量
                 var cloudFileResults = jsonObj.cloudFileResult;
+                var cloudFileResult1 = jsonObj.cloudFileResult1;
                 //每个班发布的蚁巢作业数量
                 // var topicHomeWorkResults = jsonObj.topicHomeWorkResult;
                 var homeWorkSubjectResults = jsonObj.homeWorkSubjectResults;
@@ -198,50 +339,61 @@ export default class dashboardByCity extends React.Component {
                 var currentMonthOpenClazzResults = jsonObj.currentMonthOpenClazzResults;
                 //班级步数统计排行
                 var braceletSportSteps = jsonObj.braceletSportSteps;
+                var braceletSportSteps1 = jsonObj.braceletSportSteps1;
                 //体育运动量统计
                 var braceletHeartRate = jsonObj.braceletHeartRate;
-                //教务审批统计数据
+                var braceletHeartRate1 = jsonObj.braceletHeartRate1;
+                //共享课堂数量数据
                 var proceCountResults = jsonObj.proceCountResults;
                 //老师考勤数据
                 var teacherAttendance = jsonObj.teacherAttendance;
                 //学生考勤数据
                 var studAttendance = jsonObj.studAttendance;
 
+                var schoolName = "宜昌市教育管理大数据";
+                _this.setState({schoolName});
+
                 //蚁巢班级数量
                 if (WebServiceUtil.isEmpty(userCountOfSchool) == false) {
                     var userCountJson = JSON.parse(userCountOfSchool);
                     var userCount = userCountJson.userCount;
-                    var schoolName = userCountJson.schoolName;
-                    _this.setState({userCount, schoolName});
+                    /*var schoolName = userCountJson.schoolName;*/
+                    _this.setState({userCount});
                 }
                 //蚁巢班级数量
-                if (WebServiceUtil.isEmpty(topicResults) == false && topicResults.length >= 30) {
+                /*if (WebServiceUtil.isEmpty(topicResults) == false && topicResults.length >= 30) {
                     _this.buildTopicBarChart(topicResults.splice(0, 10));
                 } else {
                     _this.buildTopicBarChart(topicResults);
+                }*/
+                if (WebServiceUtil.isEmpty(topicResult1) == false && topicResult1.length >= 30) {
+                    _this.buildTopicBarChart(topicResult1.splice(0, 10));
+                } else {
+                    _this.buildTopicBarChart(topicResult1);
                 }
                 //老师蚁盘资源上传情况
-                if (WebServiceUtil.isEmpty(cloudFileResults) == false && cloudFileResults.length >= 30) {
-                    _this.buildCloudFileBarChart(cloudFileResults.splice(0, 10));
+                if (WebServiceUtil.isEmpty(cloudFileResult1) == false && cloudFileResult1.length >= 30) {
+                    _this.buildCloudFileBarChart(cloudFileResult1.splice(0, 10));
                 } else {
-                    _this.buildCloudFileBarChart(cloudFileResults);
+                    _this.buildCloudFileBarChart(cloudFileResult1);
                 }
 
                 //班级课后作业的布置情况统计，统计每个班发布的题目数量
                 if (WebServiceUtil.isEmpty(homeWorkSubjectResults) == false && homeWorkSubjectResults.length >= 30) {
-                    _this.buildHomeWorkPieChart(homeWorkSubjectResults.splice(0, 10));
+                    _this.buildScientificPieChart(homeWorkSubjectResults.splice(0, 10));
                 } else {
-                    _this.buildHomeWorkPieChart(homeWorkSubjectResults);
+                    _this.buildScientificPieChart(homeWorkSubjectResults);
                 }
 
                 _this.buildOpenClazzTrArray(vClazzResults);
 
-                _this.buildStepBarChart(braceletSportSteps);
+                _this.buildStepBarChart(braceletSportSteps1);
 
                 //体育运动量
-                _this.buildSportsChart(braceletHeartRate);
+                _this.buildSportsChart(braceletHeartRate1);
 
-                _this.buildFlowPieChart(proceCountResults);
+                //共享课堂数量
+                _this.buildShareClassChart();
 
                 _this.buildStudentAttendancePieChart(studAttendance);
                 // _this.buildStudentAttendanceMultiPieChart(studAttendance);
@@ -252,12 +404,24 @@ export default class dashboardByCity extends React.Component {
 
                 // _this.buildHotPlaceScatterChart();
 
-                _this.setState({messageCount});
+                /*_this.setState({messageCount});*/
+                _this.buildMessageCount(topicResult1,messageCount);
             },
             onError: function (error) {
                 Toast.fail(error, 1);
             }
         });
+    }
+
+    buildMessageCount=(topicResult1,messageCount)=>{
+        var allSchoolTopicCount = 0;
+        topicResult1.forEach(function (topicResult) {
+            var topicObj = JSON.parse(topicResult);
+            var totalTopic = topicObj.totalTopic;
+            allSchoolTopicCount += parseInt(totalTopic);
+        });
+        allSchoolTopicCount += parseInt(messageCount);
+        this.setState({messageCount:allSchoolTopicCount});
     }
 
     /**
@@ -266,7 +430,7 @@ export default class dashboardByCity extends React.Component {
     buildTopicBarOption = (xClazzName, seriesData) => {
         return {
             title: {
-                text: '课前探究性学习统计',
+                text: '网络学习空间活跃度',
                 subtext: '',
                 left: 'left',
             },
@@ -317,7 +481,7 @@ export default class dashboardByCity extends React.Component {
     }
 
     /**
-     * 课前探究性学习
+     * 网络学习空间活跃度
      */
     buildTopicBarChart = (topicResults) => {
         var _this = this;
@@ -325,9 +489,9 @@ export default class dashboardByCity extends React.Component {
         var seriesDataArray = [];
         topicResults.forEach(function (topicResult) {
             var topicObj = JSON.parse(topicResult);
-            var clazzName = topicObj.clazz.grade.name + '' + topicObj.col_name;
+            var schoolName = topicObj.school.name;
             var totalTopic = topicObj.totalTopic;
-            xClazzNameArray.push(clazzName);
+            xClazzNameArray.push(schoolName);
             seriesDataArray.push(totalTopic);
         });
         var topicOption = _this.buildTopicBarOption(xClazzNameArray, seriesDataArray);
@@ -349,7 +513,7 @@ export default class dashboardByCity extends React.Component {
     buildCloudFilePieOption = (xClazzName, seriesData) => {
         return {
             title: {
-                text: '学习资源分布情况统计',
+                text: '教学资源流动量',
                 subtext: '',
                 x: 'left',
             },
@@ -399,7 +563,7 @@ export default class dashboardByCity extends React.Component {
     }
 
     /**
-     * 创建学习资源分布情况统计
+     * 创建教学资源流动量统计
      */
     buildCloudFileBarChart = (cloudFileResults) => {
         var _this = this;
@@ -407,21 +571,13 @@ export default class dashboardByCity extends React.Component {
         var seriesDataArray = [];
         cloudFileResults.forEach(function (cloudFileResult) {
             var cloudFileObj = JSON.parse(cloudFileResult);
-            var teacherObj = cloudFileObj.teacher;
-            var courseName = "";
-            var teacherName = cloudFileObj.col_name;
-            if (WebServiceUtil.isEmpty(teacherObj) == false && WebServiceUtil.isEmpty(teacherObj.course) == false) {
-                var courseObj = teacherObj.course;
-                courseName = courseObj.name;
-                teacherName += "(" + courseName + ")";
-            }
+            var schoolName = cloudFileObj.school.name;
             var fileCount = cloudFileObj.fileCount;
-            var cloudFileJson = {value: fileCount, name: teacherName};
-            xTeacherNameArray.push(teacherName);
+            var cloudFileJson = {value: fileCount, name: schoolName};
+            xTeacherNameArray.push(schoolName);
             // seriesDataArray.push(fileCount);
             seriesDataArray.push(cloudFileJson);
         });
-        // var cloudFileOption = _this.buildCloudFileBarOption(xTeacherNameArray, seriesDataArray);
         var cloudFileOption = _this.buildCloudFilePieOption(xTeacherNameArray, seriesDataArray);
         var cloudFileDiv = <div>
             <div style={{height: '270px'}} className="echarts_wrap">
@@ -435,17 +591,17 @@ export default class dashboardByCity extends React.Component {
         _this.setState({cloudFileDiv});
     }
 
-    buildHomeWorkOption = (xClazzNameArray, seriesDataArray) => {
+    buildScientificOption = (xClazzNameArray, seriesDataArray) => {
         return {
             title: {
-                text: '课后作业布置情况分析',
+                text: '科研项目数量',
                 subtext: ''
             },
             tooltip: {
                 trigger: 'axis'
             },
             legend: {
-                data: ['作业题目数量'],
+                data: ['科研项目数量'],
                 bottom: 0,
                 left: 'left',
             },
@@ -478,7 +634,7 @@ export default class dashboardByCity extends React.Component {
             ],
             series: [
                 {
-                    name: '作业题目数量',
+                    name: '科研项目数量',
                     type: 'bar',
                     data: seriesDataArray,
                     markLine: {
@@ -513,13 +669,13 @@ export default class dashboardByCity extends React.Component {
     }
 
     /**
-     * 创建蚁盘资源上传情况统计柱状图
+     * 科研统计
      */
-    buildHomeWorkPieChart = (homeWorkSubjectResults) => {
+    buildScientificPieChart = () => {
         var _this = this;
         var xClazzNameArray = [];
         var seriesDataArray = [];
-        if (WebServiceUtil.isEmpty(homeWorkSubjectResults) == false) {
+        /*if (WebServiceUtil.isEmpty(homeWorkSubjectResults) == false) {
             homeWorkSubjectResults.forEach(function (homeWorkSubjectResult) {
                 var homeWorkSubjectObj = JSON.parse(homeWorkSubjectResult);
                 var clazzName = homeWorkSubjectObj.clazzName;
@@ -530,8 +686,9 @@ export default class dashboardByCity extends React.Component {
                 // var subjectCount = Math.ceil(Math.random()*10)+20;
                 seriesDataArray.push(subjectCount);
             })
-        }
-        var homeWorkOption = _this.buildHomeWorkOption(xClazzNameArray, seriesDataArray);
+        }*/
+        this.buildScientificData(xClazzNameArray,seriesDataArray);
+        var homeWorkOption = _this.buildScientificOption(xClazzNameArray, seriesDataArray);
         var homeWorkDiv = <div>
             <div style={{height: '270px'}} className="echarts_wrap">
                 <ReactEcharts
@@ -545,6 +702,52 @@ export default class dashboardByCity extends React.Component {
     }
 
     /**
+     * 构建科研数量统计
+     * @param xClazzNameArray
+     * @param seriesDataArray
+     */
+    buildScientificData=(xClazzNameArray,seriesDataArray)=>{
+        var seriesJson = {value: 10, name: "宜昌市实验小学"};
+        xClazzNameArray.push("宜昌市实验小学");
+        seriesDataArray.push(seriesJson);
+
+        var seriesJson = {value: 35, name: "宜昌市西陵区红星路小学"};
+        xClazzNameArray.push("宜昌市西陵区红星路小学");
+        seriesDataArray.push(seriesJson);
+
+        var seriesJson = {value: 22, name: "宜昌市西陵区学院街小学"};
+        xClazzNameArray.push("宜昌市西陵区学院街小学");
+        seriesDataArray.push(seriesJson);
+
+        var seriesJson = {value: 32, name: "宜昌市西陵区东方红小学"};
+        xClazzNameArray.push("宜昌市西陵区东方红小学");
+        seriesDataArray.push(seriesJson);
+
+        var seriesJson = {value: 23, name: "宜昌市西陵区绿萝路小学"};
+        xClazzNameArray.push("宜昌市西陵区绿萝路小学");
+        seriesDataArray.push(seriesJson);
+
+        var seriesJson = {value: 31, name: "宜昌市第十六中学"};
+        xClazzNameArray.push("宜昌市第十六中学");
+        seriesDataArray.push(seriesJson);
+
+        var seriesJson = {value: 26, name: "宜昌市第三中学"};
+        xClazzNameArray.push("宜昌市第三中学");
+        seriesDataArray.push(seriesJson);
+
+        var seriesJson = {value: 27, name: "宜昌市东山中学"};
+        xClazzNameArray.push("宜昌市东山中学");
+        seriesDataArray.push(seriesJson);
+
+        var seriesJson = {value: 17, name: "宜昌市第二十五中学"};
+        xClazzNameArray.push("宜昌市第二十五中学");
+        seriesDataArray.push(seriesJson);
+
+        var seriesJson = {value: 20, name: "宜昌市外国语初级中学"};
+        xClazzNameArray.push("宜昌市外国语初级中学");
+        seriesDataArray.push(seriesJson);
+    }
+    /**
      * 创建正在开课的跑马灯数据
      * @param vClazzResults
      */
@@ -552,8 +755,9 @@ export default class dashboardByCity extends React.Component {
         var openClazzTrArray = []
         vClazzResults.forEach(function (vClazzResult) {
             var vClazzObj = JSON.parse(vClazzResult);
+            var schoolName = vClazzObj.teacher.schoolName;
             openClazzTrArray.push(<span style={{marginRight: '30px'}}>
-                {vClazzObj.clazz.name + ' ' + vClazzObj.course.name + ' ' + vClazzObj.teacher.userName}
+                {schoolName+vClazzObj.clazz.name + ' ' + vClazzObj.course.name + ' ' + vClazzObj.teacher.userName}
             </span>)
         });
         this.setState({openClazzTrArray});
@@ -731,9 +935,9 @@ export default class dashboardByCity extends React.Component {
         var xClazzNameArray = [];
         var seriesDataArray = [];
         braceletSportSteps.forEach(function (braceletSportStepObj) {
-            var clazzName = braceletSportStepObj.clazz.grade.name + '' + braceletSportStepObj.clazz.name;
+            var schoolName = braceletSportStepObj.school.name;
             var sportStep = braceletSportStepObj.sportStep;
-            xClazzNameArray.push(clazzName);
+            xClazzNameArray.push(schoolName);
             seriesDataArray.push(sportStep);
         });
         var stepOption = _this.buildStepOption(xClazzNameArray, seriesDataArray)
@@ -943,8 +1147,9 @@ export default class dashboardByCity extends React.Component {
         var classNameArray = [];
         var classHeartRateArray = [];
         for (var k in sportData) {
-            classHeartRateArray.push(sportData[k].braceletHeartRate.heartRate);
-            classNameArray.push(sportData[k].courseTableItem.clazz.grade.name + '' + sportData[k].courseTableItem.clazz.name + sportData[k].courseTableItem.courseName + '课')
+            var heartRate = sportData[k].braceletHeartRate / sportData[k].number;
+            classHeartRateArray.push(heartRate);
+            classNameArray.push(sportData[k].school.name)
         }
         var sportOption = _this.buildSportsOption(classNameArray, classHeartRateArray)
         var sportDiv = <div>
@@ -1017,22 +1222,14 @@ export default class dashboardByCity extends React.Component {
     }
 
     /**
-     * 教务审批统计
+     * 共享课堂数量
      * @param
      */
-    buildFlowPieChart = (proceCountResults) => {
+    buildShareClassChart = () => {
         var _this = this;
         var xFlowNameArray = [];
         var ySeriesDataArray = [];
-        if (WebServiceUtil.isEmpty(proceCountResults) == false) {
-            proceCountResults.forEach(function (proceCountObj) {
-                var procDefName = proceCountObj.procDefName;
-                var procCount = proceCountObj.procCount;
-                var seriesJson = {value: procCount, name: procDefName};
-                xFlowNameArray.push(procDefName);
-                ySeriesDataArray.push(seriesJson);
-            });
-        }
+        _this.buildShareClassData(xFlowNameArray,ySeriesDataArray);
         var flowOption = _this.buildFlowOption(xFlowNameArray, ySeriesDataArray)
         var flowPieChartDiv = <div>
             <div style={{width: '100%', height: '270px'}} className="echarts_wrap">
@@ -1046,8 +1243,52 @@ export default class dashboardByCity extends React.Component {
         _this.setState({flowPieChartDiv});
     }
 
+    buildShareClassData=(xFlowNameArray,ySeriesDataArray)=>{
+
+        var seriesJson = {value: 10, name: "宜昌市实验小学"};
+        xFlowNameArray.push("宜昌市实验小学");
+        ySeriesDataArray.push(seriesJson);
+
+        var seriesJson = {value: 35, name: "宜昌市西陵区红星路小学"};
+        xFlowNameArray.push("宜昌市西陵区红星路小学");
+        ySeriesDataArray.push(seriesJson);
+
+        var seriesJson = {value: 22, name: "宜昌市西陵区学院街小学"};
+        xFlowNameArray.push("宜昌市西陵区学院街小学");
+        ySeriesDataArray.push(seriesJson);
+
+        var seriesJson = {value: 32, name: "宜昌市西陵区东方红小学"};
+        xFlowNameArray.push("宜昌市西陵区东方红小学");
+        ySeriesDataArray.push(seriesJson);
+
+        var seriesJson = {value: 23, name: "宜昌市西陵区绿萝路小学"};
+        xFlowNameArray.push("宜昌市西陵区绿萝路小学");
+        ySeriesDataArray.push(seriesJson);
+
+        var seriesJson = {value: 31, name: "宜昌市第十六中学"};
+        xFlowNameArray.push("宜昌市第十六中学");
+        ySeriesDataArray.push(seriesJson);
+
+        var seriesJson = {value: 26, name: "宜昌市第三中学"};
+        xFlowNameArray.push("宜昌市第三中学");
+        ySeriesDataArray.push(seriesJson);
+
+        var seriesJson = {value: 27, name: "宜昌市东山中学"};
+        xFlowNameArray.push("宜昌市东山中学");
+        ySeriesDataArray.push(seriesJson);
+
+        var seriesJson = {value: 17, name: "宜昌市第二十五中学"};
+        xFlowNameArray.push("宜昌市第二十五中学");
+        ySeriesDataArray.push(seriesJson);
+
+        var seriesJson = {value: 20, name: "宜昌市外国语初级中学"};
+        xFlowNameArray.push("宜昌市外国语初级中学");
+        ySeriesDataArray.push(seriesJson);
+
+    }
+
     /**
-     * 教务审批统计option
+     * 共享课堂数量option
      * @param xFlowNameArray
      * @param ySeriesDataArray
      * @returns {{title: {text: string, subtext: string, left: string}, tooltip: {}, legend: {bottom: number, left: string, data: *}, series: [null]}}
@@ -1055,7 +1296,7 @@ export default class dashboardByCity extends React.Component {
     buildFlowOption = (xFlowNameArray, ySeriesDataArray) => {
         return {
             title: {
-                text: '教务审批统计',
+                text: '共享课堂数量',
                 subtext: '',
                 left: 'left',
             },
@@ -1101,53 +1342,23 @@ export default class dashboardByCity extends React.Component {
         var _this = this;
         var xAttendanceNameArray = [];
         var ySeriesDataArray = [];
-        if (WebServiceUtil.isEmpty(attendanceResults) == false) {
-            var absent = attendanceResults["absent"];
-            var early = attendanceResults["early"];
-            var late = attendanceResults["late"];
-            var miss = attendanceResults["miss"];
-            var missPeople = attendanceResults["missPeople"];
-            var sum = attendanceResults["sum"];
-            var normal = attendanceResults["normal"];
-            var othersData = 0;
-            if (WebServiceUtil.isEmpty(absent) == false) {
-                xAttendanceNameArray.push("旷工");
-                var absentJson = {value: absent, name: '旷工'};
-                ySeriesDataArray.push(absentJson);
-                // othersData += parseInt(absent);
-            }
-            if (WebServiceUtil.isEmpty(early) == false) {
-                xAttendanceNameArray.push("早退");
-                var earlyJson = {value: early, name: '早退'};
-                ySeriesDataArray.push(earlyJson);
-                othersData += parseInt(early);
-            }
-            if (WebServiceUtil.isEmpty(late) == false) {
-                xAttendanceNameArray.push("迟到");
-                var lateJson = {value: late, name: '迟到'};
-                ySeriesDataArray.push(lateJson);
-                othersData += parseInt(late);
-            }
-            if (WebServiceUtil.isEmpty(miss) == false) {
-                /* xAttendanceNameArray.push("缺勤");
-                 var missPerson = parseInt(parseInt(miss)/2);
-                 var missJson = {value: missPerson, name: '缺勤'};
-                 ySeriesDataArray.push(missJson);*/
-                othersData += parseInt(miss);
-            }
-            if (WebServiceUtil.isEmpty(missPeople) == false) {
-                xAttendanceNameArray.push("缺卡");
-                var missPeopleJson = {value: missPeople, name: '缺卡'};
-                ySeriesDataArray.push(missPeopleJson);
-            }
-            if (WebServiceUtil.isEmpty(normal) == false) {
-                // var normal = parseInt(sum) - parseInt(othersData);
-                xAttendanceNameArray.push("正常");
-                var normalJson = {value: normal, name: '正常'};
-                ySeriesDataArray.push(normalJson);
-            }
 
-        }
+        xAttendanceNameArray.push("正常");
+        var absentJson = {value: 2134, name: "正常"};
+        ySeriesDataArray.push(absentJson);
+
+        xAttendanceNameArray.push("请假");
+        var absentJson = {value: 23, name: "请假"};
+        ySeriesDataArray.push(absentJson);
+
+        xAttendanceNameArray.push("缺勤");
+        var absentJson = {value: 11, name: "缺勤"};
+        ySeriesDataArray.push(absentJson);
+
+        xAttendanceNameArray.push("研学");
+        var absentJson = {value: 24, name: "研学"};
+        ySeriesDataArray.push(absentJson);
+
         var attendanceOption = _this.buildTeacherAttendanceOption(xAttendanceNameArray, ySeriesDataArray)
         var attendancePieChartDiv = <div>
             <div style={{width: '100%', height: '270px'}} className="echarts_wrap">
@@ -1217,7 +1428,7 @@ export default class dashboardByCity extends React.Component {
         var xAttendanceNameArray = [];
         var ySeriesDataArray = [];
         var totalTipArray=[];
-        if (WebServiceUtil.isEmpty(attendanceResults) == false) {
+        /*if (WebServiceUtil.isEmpty(attendanceResults) == false) {
             for(var gradeName in attendanceResults){
                 // console.log("gradeName:"+gradeName);
                 var valueJson = attendanceResults[gradeName];
@@ -1240,14 +1451,34 @@ export default class dashboardByCity extends React.Component {
                 if (WebServiceUtil.isEmpty(totalCount) == false) {
                     totalTipArray.push(<span style={{marginRight:'8px', color:'#e4e4e4', fontSize:'12px',lineHeight:'26px'}}>{gradeName}应到:{totalCount}人</span>);
                 }
-                /*if (WebServiceUtil.isEmpty(totalCount) == false) {
+                /!*if (WebServiceUtil.isEmpty(totalCount) == false) {
                     var gradeTip = gradeName+"应到";
                     xAttendanceNameArray.push(gradeTip);
                     var totalCountJson = {value: totalCount, name: gradeTip};
                     ySeriesDataArray.push(totalCountJson);
-                }*/
+                }*!/
             }
-        }
+        }*/
+        var gradeTip = "实到总和";
+        xAttendanceNameArray.push(gradeTip);
+        var absentJson = {value: 17563, name: gradeTip};
+        ySeriesDataArray.push(absentJson);
+
+        var gradeTip = "请假总和";
+        xAttendanceNameArray.push(gradeTip);
+        var absentJson = {value: 328, name: gradeTip};
+        ySeriesDataArray.push(absentJson);
+
+        var gradeTip = "缺勤总和";
+        xAttendanceNameArray.push(gradeTip);
+        var absentJson = {value: 138, name: gradeTip};
+        ySeriesDataArray.push(absentJson);
+
+        var gradeTip = "研学总和";
+        xAttendanceNameArray.push(gradeTip);
+        var absentJson = {value: 324, name: gradeTip};
+        ySeriesDataArray.push(absentJson);
+
         var attendanceOption = _this.buildStudentAttendanceOption(xAttendanceNameArray, ySeriesDataArray)
         var studentAttendancePieChartDiv = <div style={{position:'relative'}}>
             <div style={{fontSize: '16px',fontWeight:'bold'}}>学生考勤统计</div>
@@ -1454,15 +1685,20 @@ export default class dashboardByCity extends React.Component {
                             </NoticeBar>
                         </div>
                         <div className="schoolName fl">{_this.state.schoolName}{/*西安市第九十九中学*/}</div>
+                        <div className="notice fl">
+                            <NoticeBar marqueeProps={{loop: true, style: {padding: '0 7.5px'}}}>
+                                {this.state.dangerStr}
+                            </NoticeBar>
+                        </div>
                     </div>
                     <div className="cont">
                         <div className="clear">
                             <div className="fl left">
-                                {/*课前探究性学习*/}
+                                {/*网络学习空间活跃度*/}
                                 <div className="list_wrap_padding">
                                     {this.state.topicDiv}
                                 </div>
-                                {/*//学习资源分布统计*/}
+                                {/*//教学资源流动量统计*/}
                                 <div className="list_wrap_padding">
                                     {this.state.cloudFileDiv}
                                 </div>
