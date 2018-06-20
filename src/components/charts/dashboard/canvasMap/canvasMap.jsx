@@ -24,7 +24,7 @@ export default class canvasMap extends React.Component {
 
     componentDidMount() {
         var width_cont = $(window).width();
-        var canvasWidth = (width_cont - 25) / 2;
+        var canvasWidth = (width_cont - 50) / 2;
         canvas = document.getElementById('noom');
         context = canvas.getContext('2d');
         canvas.width = canvasWidth;
