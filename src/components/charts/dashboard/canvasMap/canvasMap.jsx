@@ -61,7 +61,7 @@ export default class canvasMap extends React.Component {
                     demeanor.viewRoomHeapmap()
                     timer = setInterval(function () {
                         demeanor.viewRoomHeapmap()
-                    }, 1000)
+                    }, 10000)
                 }
             },
             onError: function (error) {
@@ -102,6 +102,7 @@ export default class canvasMap extends React.Component {
         context.clearRect(0, 0, canvas.width, canvas.height);
         if (WebServiceUtil.isEmpty(data) == false) {
             console.log(data);
+            var dangerStr = '';
             data.forEach(function (v, i) {
                 for (var i = 0; i < v.count; i++) {
                     var numX = Math.random() * 10 * Math.pow(-1, Math.round(Math.random()));
@@ -114,7 +115,7 @@ export default class canvasMap extends React.Component {
                         if (v.count < 20) {
                             context.strokeStyle = '#0000ff';
                         } else if (v.count > 50) {
-                            context.strokeStyle = '#c00000';
+                            context.strokeStyle = '#ff6100';
                         } else {
                             context.strokeStyle = '#fffc00';
                         }
@@ -122,7 +123,15 @@ export default class canvasMap extends React.Component {
                         context.stroke();
                     }
                 }
-            })
+                if (v.isDangerArea) {
+                    if (WebServiceUtil.isEmpty(v.dangerUsers) == false) {
+                        v.dangerUsers.forEach(function (item, index) {
+                            dangerStr += item.userName + '进入了危险区' + v.dangerArea + ' '
+                        })
+                    }
+                }
+            });
+            demeanor.props.dangerStrCallBack(dangerStr)
         }
     }
 

@@ -42,12 +42,12 @@ export default class notifyBack extends React.Component {
         //首页显示全部
         // this.getClassBrandNoticeListByClassId(false);
     }
-    
+
     /**
      * 通知列表
      */
 
-    getClassBrandNoticeListByUserId(ident){
+    getClassBrandNoticeListByUserId(ident) {
         var _this = this;
         _this.state.dataSource = [];
         _this.state.dataSource = new ListView.DataSource({
@@ -56,11 +56,11 @@ export default class notifyBack extends React.Component {
         var dataBlob = {};
         var PageNo = this.state.defaultPageNo;
         var param = {
-            "method":"getClassBrandNoticeListByUserId",
-            "userId":ident,
-            "pageNo":PageNo
+            "method": "getClassBrandNoticeListByUserId",
+            "userId": ident,
+            "pageNo": PageNo
         }
-         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
+        WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
             onResponse: result => {
                 if (result.msg == '调用成功' || result.success) {
                     classBinding.state.selectData = result.response
@@ -93,6 +93,7 @@ export default class notifyBack extends React.Component {
             }
         });
     }
+
     //通过教室id获取通知列表
     getClassBrandNoticeListByClassId(classroomId) {
         var _this = this;
@@ -110,7 +111,7 @@ export default class notifyBack extends React.Component {
                 "classroomId": classroomId,
                 "pageNo": PageNo,
             }
-        } 
+        }
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
             onResponse: result => {
                 if (result.msg == '调用成功' || result.success) {
@@ -172,7 +173,7 @@ export default class notifyBack extends React.Component {
     }
 
     //删除通知信息
-     /**
+    /**
      * 删除弹出框
      */
     showAlert = (sId) => {
@@ -190,12 +191,13 @@ export default class notifyBack extends React.Component {
 
         ], phone);
 
-        
+
     };
+
     /**
      * 根据ID删除
      */
-    deleteNotify(notifyId){
+    deleteNotify(notifyId) {
         var _this = this;
         //获取班级选择项
         var param = {
@@ -226,7 +228,7 @@ export default class notifyBack extends React.Component {
             }
         });
     }
-    
+
 
     //选择器改变事件
     onPickerChange = (val) => {
@@ -264,7 +266,8 @@ export default class notifyBack extends React.Component {
         }
         currentPageNo += 1;
         this.setState({isLoadingLeft: true, defaultPageNo: currentPageNo});
-        _this.getClassBrandNoticeListByClassId(_this.state.classroomId);
+        // _this.getClassBrandNoticeListByClassId(_this.state.classroomId);
+        _this.getClassBrandNoticeListByUserId(_this.state.ident);
         this.setState({
             dataSource: this.state.dataSource.cloneWithRows(this.initData),
             isLoadingLeft: true,
@@ -278,7 +281,7 @@ export default class notifyBack extends React.Component {
         var param = {
             "method": 'viewClassRoomPage',
             "uid": classBinding.state.ident,
-            "pn": classBinding.state.defaultPageNo
+            "pn": -1
         };
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
             onResponse: (result) => {
