@@ -503,12 +503,21 @@ const addWarnAdmin = (location, cb) => {
     )
 }
 
+//查看作答
+const LookAtTheAnswer = (location, cb) => {
+    require.ensure([], require => {
+            cb(null, require("./components/LookAtTheAnswer/js/LookAtTheAnswer").default)
+        }
+    )
+}
+
 const waterWork = (location, cb) => {
     require.ensure([], require => {
             cb(null, require("./components/waterWork/waterWork").default)
         }
     )
 }
+
 import './index.less';
 
 class Index extends React.Component {
@@ -523,12 +532,12 @@ class Index extends React.Component {
                     {/*<li><Link to="/s4" style={{fontSize: '24px'}}>蚁巢</Link></li>*/}
                     {/*<li><Link to="/s5" style={{fontSize: '24px'}}>实验</Link></li>*/}
                     {/*<li><Link to="/questionBank?ident=54208&pointId=4339&title=nihao"*/}
-                              {/*style={{fontSize: '24px'}}>题库</Link></li>*/}
+                    {/*style={{fontSize: '24px'}}>题库</Link></li>*/}
                     {/*<li><Link to="/analysisList?access_user=23836" style={{fontSize: '24px'}}>成绩分析</Link></li>*/}
                     {/*<li><Link to="/searchUserLocationInfo" style={{fontSize: '24px'}}>搜索查看用户位置信息</Link></li>*/}
                     {/*<li><Link to="/studentFaceStatistics" style={{fontSize: '24px'}}>学生脸部表情分析折线图</Link></li>*/}
                     {/*<li><Link to="/termitePlateLibrary?ident=23836&fileId=-1&title=蚁盘题目&phoneType=0"*/}
-                              {/*style={{fontSize: '24px'}}>蚁盘题库</Link>*/}
+                    {/*style={{fontSize: '24px'}}>蚁盘题库</Link>*/}
                     {/*</li>*/}
                     {/*<li><Link to="/pushSubjectsFromTLibrary?ident=23836&fileId=-1"*/}
                     {/*style={{fontSize: '24px'}}>蚁盘推题</Link></li>*/}
@@ -617,11 +626,13 @@ class Index extends React.Component {
                     <li><Link
                         to="/wxLogin"
                         style={{fontSize: '24px'}}>授权登录</Link></li>
+                    <li><Link
+                        to="/lookAtTheAnswer?tpId=154&access_user=23836"
+                        style={{fontSize: '24px'}}>查看作答</Link></li>
                     <li>
-                        <Link   
+                        <Link
                             to="/waterWork?tid=153&stuId=23993" style={{fontSize: '24px'}}>水滴作业</Link>
                     </li>
-                  
                 </ul>
             </div>
         );
@@ -717,7 +728,8 @@ ReactDOM.render(
             <Route path="wxLogin" getComponent={wxLogin}/>
             <Route path="warningAdminList" getComponent={warningAdminList}/>
             <Route path="addWarnAdmin" getComponent={addWarnAdmin}/>
-            <Route path="waterWork" getComponent={waterWork} />
+            <Route path="lookAtTheAnswer" getComponent={LookAtTheAnswer}/>
+            <Route path="waterWork" getComponent={waterWork}/>
         </Route>
     </Router>
     ,
