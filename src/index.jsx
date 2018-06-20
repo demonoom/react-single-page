@@ -511,6 +511,13 @@ const LookAtTheAnswer = (location, cb) => {
     )
 }
 
+const waterWork = (location, cb) => {
+    require.ensure([], require => {
+            cb(null, require("./components/waterWork/waterWork").default)
+        }
+    )
+}
+
 import './index.less';
 
 class Index extends React.Component {
@@ -622,6 +629,10 @@ class Index extends React.Component {
                     <li><Link
                         to="/lookAtTheAnswer?tpId=154&access_user=23836"
                         style={{fontSize: '24px'}}>查看作答</Link></li>
+                    <li>
+                        <Link
+                            to="/waterWork?tid=153&stuId=23993" style={{fontSize: '24px'}}>水滴作业</Link>
+                    </li>
                 </ul>
             </div>
         );
@@ -718,6 +729,7 @@ ReactDOM.render(
             <Route path="warningAdminList" getComponent={warningAdminList}/>
             <Route path="addWarnAdmin" getComponent={addWarnAdmin}/>
             <Route path="lookAtTheAnswer" getComponent={LookAtTheAnswer}/>
+            <Route path="waterWork" getComponent={waterWork}/>
         </Route>
     </Router>
     ,
