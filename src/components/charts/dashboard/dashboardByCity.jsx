@@ -165,7 +165,8 @@ export default class dashboardByCity extends React.Component {
         console.log("1111"+map);
         var point = new BMap.Point(111.31251,30.707076);
         map.centerAndZoom(point, 15);             // 初始化地图，设置中心点坐标和地图级别
-        map.enableScrollWheelZoom(); // 允许滚轮缩放
+        // map.enableScrollWheelZoom(); // 允许滚轮缩放
+        map.disableScrollWheelZoom(); // 允许滚轮缩放
         map.setCurrentCity("宜昌市");
         // map.setMapStyle({style:'dark'});
         map.setMapStyle({
