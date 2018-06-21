@@ -101,10 +101,10 @@ export default class lookAtTheAnswer extends React.Component {
                             })
                         }
                         var ansItem = <div>
-                            <div>第{i + 1}题</div>
-                            <div>{v.textContent}</div>
+                            <div className="answerList">第{i + 1}题：</div>
+                            <div className="answerCont">{v.textContent}</div>
                             <div>{ansImgArr}</div>
-                            <div>{ansAudioArr}</div>
+                            <div className="ansAudio">{ansAudioArr}</div>
                         </div>
                     }
                     arr.push(ansItem)
@@ -125,9 +125,9 @@ export default class lookAtTheAnswer extends React.Component {
         if (WebServiceUtil.isEmpty(TabData.answerList) == false) {
             TabData.answerList.forEach(function (v, i) {
                 if (v.type == 1 || v.type == 3) {
-                    var ansItem = <div>
-                        <span>第{i + 1}题</span>
-                        <span>{v.textContent}</span>
+                    var ansItem = <div className="answerList answer_bor">
+                        <div>第{i + 1}题：</div>
+                        <div className="answerCont">{v.textContent}</div>
                     </div>
                 } else {
                     var imgArr = v.picContent.split(',');
@@ -137,8 +137,10 @@ export default class lookAtTheAnswer extends React.Component {
                     if (imgArr.length != 0) {
                         imgArr.forEach(function (item, index) {
                             ansImgArr.push(
-                                <img src={item} style={{width: '20%'}}
-                                     onClick={_this.imgOnClick.bind(this, item, v.picContent)}/>
+                                <span className="ansImg">
+                                    <img className="empty_center" src={item}
+                                         onClick={_this.imgOnClick.bind(this, item, v.picContent)}/>
+                                </span>
                             )
                         })
                     }
@@ -154,11 +156,11 @@ export default class lookAtTheAnswer extends React.Component {
                             )
                         })
                     }
-                    var ansItem = <div>
-                        <div>第{i + 1}题</div>
-                        <div>{v.textContent}</div>
-                        <div>{ansImgArr}</div>
-                        <div>{ansAudioArr}</div>
+                    var ansItem = <div className="answerList">
+                        <div >第{i + 1}题：</div>
+                        <div className="answerCont">{v.textContent}</div>
+                        <div className="ansImgCont">{ansImgArr}</div>
+                        <div className="ansAudio">{ansAudioArr}</div>
                     </div>
                 }
                 arr.push(ansItem)
@@ -205,7 +207,7 @@ export default class lookAtTheAnswer extends React.Component {
             <div id="LookAtTheAnswer">
                 <Tabs
                     tabs={this.state.nameArr}
-                    renderTabBar={props => <Tabs.DefaultTabBar {...props} page={3}/>}
+                    renderTabBar={props => <Tabs.DefaultTabBar {...props} page={5}/>}
                     onChange={this.tabOnChange}
                     swipeable={false}   //是否可以滑动内容切换
                     animated={true}     //是否开启切换动画
@@ -214,12 +216,10 @@ export default class lookAtTheAnswer extends React.Component {
                 >
                     <div
                         style={{
-                            height: '150px',
-                            backgroundColor: '#fff',
-                            height: document.body.clientHeight
+                            height:document.body.clientHeight
                         }}
                     >
-                        {this.state.ansArr}
+                        <div className="answerContent">{this.state.ansArr}</div>
                     </div>
                 </Tabs>
             </div>
