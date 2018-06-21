@@ -56,6 +56,7 @@ export default class m3u8Player extends React.Component {
      * @param data
      */
     buildSourceObj(data) {
+        data[0] = data[4];
         var _this = this;
         var array = [];
         var arr = [];
@@ -71,9 +72,9 @@ export default class m3u8Player extends React.Component {
             if (WebServiceUtil.isEmpty(data[0].answerList) == false) {
                 data[0].answerList.forEach(function (v, i) {
                     if (v.type == 1 || v.type == 3) {
-                        var ansItem = <div>
-                            <span>第{i + 1}题</span>
-                            <span>{v.textContent}</span>
+                        var ansItem = <div className="answerList">
+                            <div>第{i + 1}题</div>
+                            <div className="answerCont">{v.textContent}</div>
                         </div>
                     } else {
                         var imgArr = v.picContent.split(',');
@@ -83,28 +84,32 @@ export default class m3u8Player extends React.Component {
                         if (imgArr.length != 0) {
                             imgArr.forEach(function (item, index) {
                                 ansImgArr.push(
-                                    <img src={item} style={{width: '20%'}}
+                                    <span className="ansImg">
+                                    <img src={item}  className="empty_center"
                                          onClick={_this.imgOnClick.bind(this, item, v.picContent)}/>
+                                    </span>
                                 )
                             })
                         }
                         if (audioArr.length != 0) {
                             audioArr.forEach(function (src, srcIndex) {
                                 ansAudioArr.push(
-                                    <div className="audio_left" onClick={_this.topicVoicePlay}>
+                                    <div className="ansAudio">
+                                        <div className="audio_left" onClick={_this.topicVoicePlay}>
                                         <audio src={src}
                                                controls="controls"
                                                loop="false"
                                                hidden="true"></audio>
                                     </div>
+                                    </div>
                                 )
                             })
                         }
-                        var ansItem = <div>
-                            <div className="answerList">第{i + 1}题：</div>
+                        var ansItem = <div className="answerList">
+                            <div>第{i + 1}题：</div>
                             <div className="answerCont">{v.textContent}</div>
-                            <div>{ansImgArr}</div>
-                            <div className="ansAudio">{ansAudioArr}</div>
+                            <div className="ansImgCont">{ansImgArr}</div>
+                            {ansAudioArr}
                         </div>
                     }
                     arr.push(ansItem)
@@ -125,7 +130,7 @@ export default class m3u8Player extends React.Component {
         if (WebServiceUtil.isEmpty(TabData.answerList) == false) {
             TabData.answerList.forEach(function (v, i) {
                 if (v.type == 1 || v.type == 3) {
-                    var ansItem = <div className="answerList answer_bor">
+                    var ansItem = <div className="answerList">
                         <div>第{i + 1}题：</div>
                         <div className="answerCont">{v.textContent}</div>
                     </div>
@@ -147,11 +152,13 @@ export default class m3u8Player extends React.Component {
                     if (audioArr.length != 0) {
                         audioArr.forEach(function (src, srcIndex) {
                             ansAudioArr.push(
-                                <div className="audio_left" onClick={_this.topicVoicePlay}>
+                                <div className="ansAudio">
+                                    <div className="audio_left" onClick={_this.topicVoicePlay}>
                                     <audio src={src}
                                            controls="controls"
                                            loop="false"
                                            hidden="true"></audio>
+                                    </div>
                                 </div>
                             )
                         })
@@ -160,7 +167,7 @@ export default class m3u8Player extends React.Component {
                         <div >第{i + 1}题：</div>
                         <div className="answerCont">{v.textContent}</div>
                         <div className="ansImgCont">{ansImgArr}</div>
-                        <div className="ansAudio">{ansAudioArr}</div>
+                        {ansAudioArr}
                     </div>
                 }
                 arr.push(ansItem)
