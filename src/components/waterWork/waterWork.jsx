@@ -14,7 +14,7 @@ export default class waterWork extends React.Component {
 
     componentDidMount() {
         var _this = this;
-        document.title = '题目水滴页';
+        document.title = '题目列表';
         var locationHref = window.location.href;
         var locationSearch = locationHref.substr(locationHref.indexOf("?") + 1);
         var searchArray = locationSearch.split("&");
@@ -41,16 +41,19 @@ export default class waterWork extends React.Component {
 
                     _this.state.initData = result.response;
                     _this.state.initData.forEach((v, i) => {
-                        var waterBackSize = "100% "+parseInt((v.answerCount / v.answerTotalCount)*100+2)+"%";
-                        let html = <div><div className="water" onClick={_this.toWaterDetail.bind(this, v.index)} >
-                            {/* <div>作业内容:{v.homework.topic.content}</div> */}
-                            {/* <div>老师：{v.homework.teacher.userName}</div> */}
-                                <i className="before" style={{backgroundSize:waterBackSize}}></i>
-                                <div className="inner">
-                                    <div> {parseInt((v.answerCount / v.answerTotalCount)*100)+"%"}</div>
-                                    <span>第{v.index+1}题</span>
+                        var waterBackSize = "100% "+parseInt((v.answerCount / v.answerTotalCount)*100+8)+"%";
+                        let html = <div>
+                                <div className="water" onClick={_this.toWaterDetail.bind(this, v.index)} >
+                                    {/* <div>作业内容:{v.homework.topic.content}</div> */}
+                                    {/* <div>老师：{v.homework.teacher.userName}</div> */}
+                                    <i className="before" style={{backgroundSize:waterBackSize}}></i>
+                                    <div className="inner">
+                                        <div> {parseInt((v.answerCount / v.answerTotalCount)*100)+"%"}</div>
+                                        <span>已提交</span>
+                                    </div>
                                 </div>
-                            </div></div>
+                            <span className="num">第{v.index+1}题</span>
+                        </div>
                         arr.push(html)
                     })
                     _this.setState({

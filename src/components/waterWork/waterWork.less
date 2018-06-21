@@ -13,11 +13,13 @@
         padding: 15px 0;
         width: 90%;
         &>div{
-            width: 33.3%;
+          width: 33.3%;
+          text-align: center;
+          padding-bottom: 28px;
         }
     }
     .water {
-        margin: 10px auto;
+        margin: 0 auto 7px;
         width: 60px;
         height: 60px;
         border-radius: 50%;
@@ -29,14 +31,15 @@
 
         .before{
             position: absolute;
+            display: block;
             width: 120px;
-            height: 109%;
-            top: -8%;
+            height: 68px;
+            top: -6px;
             left: -60px;
-            animation: rotate 8s linear infinite;
-            z-index: 10;
-            background: url("img/wave1.png") no-repeat center bottom;
-            //background-size: 100% 60% !important;
+            animation: rotate 10s linear infinite;
+            z-index: 0;
+            background: url("img/wave1.png") no-repeat left bottom;
+            //background-size: 100% 108% !important;
         }
 
         .inner{
@@ -49,24 +52,28 @@
             -o-transform: translate(-50%,-50%);
             transform: translate(-50%,-50%);
             width: 100%;
-            font-size: 14px;
+            font-size: 13px;
             z-index: 50;
             color:#333;
             div{
                 padding-bottom: 5px;
+                font-size: 16px;
             }
         }
+    }
 
+    .num{
+      font-size: 15px;
     }
     @keyframes rotate {
-        0% {
-            transform: translateX(0) translateZ(0);
-        }
+      0% {
+        left: -50px;
+      }
         50% {
-            transform:translateX(60px) translateZ(-2px);
+          left: 0px;;
         }
         100% {
-            transform:translateX(0) translateZ(0);
+          left: -50px;;
         }
     }
     @media only screen and (min-width: 768px){
@@ -77,24 +84,33 @@
                 height: 100px;
                 .before{
                     width: 200px;
+                    height: 109px;
                     left: -100px;
+                    top: -7px;
 
                 }
                 .inner{
                     font-size: 16px;
+                    &>div{
+                      padding-bottom: 8px;
+                      font-size: 18px;
+                    }
                 }
             }
+          .num{
+            font-size: 18px ;
+          }
         }
         @keyframes rotate {
-            0% {
-                transform: translateX(0) translateZ(0);
-            }
-            50% {
-                transform:translateX(100px) translateZ(-2px);
-            }
-            100% {
-                transform:translateX(0) translateZ(0);
-            }
+          0% {
+            left: -100px;
+          }
+          50% {
+            left: -50px;
+          }
+          100% {
+            left: -100px;
+          }
         }
     }
 }
