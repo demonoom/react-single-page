@@ -36,7 +36,7 @@
   height: 68px;
   top: -6px;
   left: -60px;
-  animation: rotate 10s linear infinite;
+  animation: rotate 5s linear infinite;
   z-index: 0;
   background: url("img/wave1.png") no-repeat left bottom;
 }
