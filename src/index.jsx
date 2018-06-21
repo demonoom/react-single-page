@@ -432,6 +432,12 @@ const dashboard = (location, cb) => {
     })
 }
 
+const dashboardByCity = (location, cb) => {
+    require.ensure([], require => {
+        cb(null, require("./components/charts/dashboard/dashboardByCity").default)
+    })
+}
+
 const warning = (location, cb) => {
     require.ensure([], require => {
             cb(null, require("./components/warnAndHealthModule/js/warning").default)
@@ -614,6 +620,9 @@ class Index extends React.Component {
                     <li><Link
                         to="/dashboard?destId=9&areaType=0"
                         style={{fontSize: '24px'}}>管理驾驶舱</Link></li>
+                    <li><Link
+                        to="/dashboardByCity?destId=9&areaType=0"
+                        style={{fontSize: '24px'}}>宜昌市教育局管理驾驶舱</Link></li>
                     {/*<li><Link*/}
                     {/*to="/fileAnalysis?aid=590961"*/}
                     {/*style={{fontSize: '24px'}}>文件表情分析</Link></li>*/}
@@ -718,6 +727,7 @@ ReactDOM.render(
             <Route path="clazzDutyList" getComponent={clazzDutyList}/>
             <Route path="particlePath" getComponent={particlePath}/>
             <Route path="dashboard" getComponent={dashboard}/>
+            <Route path="dashboardByCity" getComponent={dashboardByCity}/>
             <Route path="healthList" getComponent={healthList}/>
             <Route path="warning" getComponent={warning}/>
             <Route path="health" getComponent={health}/>
