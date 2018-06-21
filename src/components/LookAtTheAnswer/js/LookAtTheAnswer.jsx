@@ -56,6 +56,7 @@ export default class m3u8Player extends React.Component {
      * @param data
      */
     buildSourceObj(data) {
+        data[0] = data[4];
         var _this = this;
         var array = [];
         var arr = [];
@@ -71,9 +72,9 @@ export default class m3u8Player extends React.Component {
             if (WebServiceUtil.isEmpty(data[0].answerList) == false) {
                 data[0].answerList.forEach(function (v, i) {
                     if (v.type == 1 || v.type == 3) {
-                        var ansItem = <div>
-                            <span>第{i + 1}题</span>
-                            <span>{v.textContent}</span>
+                        var ansItem = <div className="answerList">
+                            <div>第{i + 1}题</div>
+                            <div className="answerCont">{v.textContent}</div>
                         </div>
                     } else {
                         var imgArr = v.picContent.split(',');
@@ -83,28 +84,32 @@ export default class m3u8Player extends React.Component {
                         if (imgArr.length != 0) {
                             imgArr.forEach(function (item, index) {
                                 ansImgArr.push(
-                                    <img src={item} style={{width: '20%'}}
+                                    <span className="ansImg">
+                                    <img src={item}  className="empty_center"
                                          onClick={_this.imgOnClick.bind(this, item, v.picContent)}/>
+                                    </span>
                                 )
                             })
                         }
                         if (audioArr.length != 0) {
                             audioArr.forEach(function (src, srcIndex) {
                                 ansAudioArr.push(
-                                    <div className="audio_left" onClick={_this.topicVoicePlay}>
+                                    <div className="ansAudio">
+                                        <div className="audio_left" onClick={_this.topicVoicePlay}>
                                         <audio src={src}
                                                controls="controls"
                                                loop="false"
                                                hidden="true"></audio>
                                     </div>
+                                    </div>
                                 )
                             })
                         }
-                        var ansItem = <div>
-                            <div>第{i + 1}题</div>
-                            <div>{v.textContent}</div>
-                            <div>{ansImgArr}</div>
-                            <div>{ansAudioArr}</div>
+                        var ansItem = <div className="answerList">
+                            <div>第{i + 1}题：</div>
+                            <div className="answerCont">{v.textContent}</div>
+                            <div className="ansImgCont">{ansImgArr}</div>
+                            {ansAudioArr}
                         </div>
                     }
                     arr.push(ansItem)
@@ -125,9 +130,9 @@ export default class m3u8Player extends React.Component {
         if (WebServiceUtil.isEmpty(TabData.answerList) == false) {
             TabData.answerList.forEach(function (v, i) {
                 if (v.type == 1 || v.type == 3) {
-                    var ansItem = <div>
-                        <span>第{i + 1}题</span>
-                        <span>{v.textContent}</span>
+                    var ansItem = <div className="answerList">
+                        <div>第{i + 1}题：</div>
+                        <div className="answerCont">{v.textContent}</div>
                     </div>
                 } else {
                     var imgArr = v.picContent.split(',');
@@ -137,28 +142,32 @@ export default class m3u8Player extends React.Component {
                     if (imgArr.length != 0) {
                         imgArr.forEach(function (item, index) {
                             ansImgArr.push(
-                                <img src={item} style={{width: '20%'}}
-                                     onClick={_this.imgOnClick.bind(this, item, v.picContent)}/>
+                                <span className="ansImg">
+                                    <img className="empty_center" src={item}
+                                         onClick={_this.imgOnClick.bind(this, item, v.picContent)}/>
+                                </span>
                             )
                         })
                     }
                     if (audioArr.length != 0) {
                         audioArr.forEach(function (src, srcIndex) {
                             ansAudioArr.push(
-                                <div className="audio_left" onClick={_this.topicVoicePlay}>
+                                <div className="ansAudio">
+                                    <div className="audio_left" onClick={_this.topicVoicePlay}>
                                     <audio src={src}
                                            controls="controls"
                                            loop="false"
                                            hidden="true"></audio>
+                                    </div>
                                 </div>
                             )
                         })
                     }
-                    var ansItem = <div>
-                        <div>第{i + 1}题</div>
-                        <div>{v.textContent}</div>
-                        <div>{ansImgArr}</div>
-                        <div>{ansAudioArr}</div>
+                    var ansItem = <div className="answerList">
+                        <div >第{i + 1}题：</div>
+                        <div className="answerCont">{v.textContent}</div>
+                        <div className="ansImgCont">{ansImgArr}</div>
+                        {ansAudioArr}
                     </div>
                 }
                 arr.push(ansItem)
@@ -205,7 +214,7 @@ export default class m3u8Player extends React.Component {
             <div id="LookAtTheAnswer">
                 <Tabs
                     tabs={this.state.nameArr}
-                    renderTabBar={props => <Tabs.DefaultTabBar {...props} page={3}/>}
+                    renderTabBar={props => <Tabs.DefaultTabBar {...props} page={5}/>}
                     onChange={this.tabOnChange}
                     swipeable={false}   //是否可以滑动内容切换
                     animated={true}     //是否开启切换动画
@@ -214,12 +223,10 @@ export default class m3u8Player extends React.Component {
                 >
                     <div
                         style={{
-                            height: '150px',
-                            backgroundColor: '#fff',
-                            height: document.body.clientHeight
+                            height:document.body.clientHeight
                         }}
                     >
-                        {this.state.ansArr}
+                        <div className="answerContent">{this.state.ansArr}</div>
                     </div>
                 </Tabs>
             </div>
