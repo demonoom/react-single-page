@@ -502,6 +502,21 @@ const addWarnAdmin = (location, cb) => {
         }
     )
 }
+
+const answerFormStudent = (location, cb) => {
+    require.ensure([], require => {
+            cb(null, require("./components/answerManagement/js/answerFormStudent").default)
+        }
+    )
+}
+
+const answerListFormTeacher = (location, cb) => {
+    require.ensure([], require => {
+            cb(null, require("./components/answerManagement/js/answerListFormTeacher").default)
+        }
+    )
+}
+
 import './index.less';
 
 class Index extends React.Component {
@@ -607,9 +622,15 @@ class Index extends React.Component {
                     {/*<li><Link*/}
                     {/*to="/particlePath"*/}
                     {/*style={{fontSize: '24px'}}>运动轨迹</Link></li>*/}
+                    {/*<li><Link*/}
+                        {/*to="/wxLogin"*/}
+                        {/*style={{fontSize: '24px'}}>授权登录</Link></li>*/}
                     <li><Link
-                        to="/wxLogin"
-                        style={{fontSize: '24px'}}>授权登录</Link></li>
+                        to="/answerListFormTeacher?teacherId=23836&topicId=8888"
+                        style={{fontSize: '24px'}}>查看学生作答情况(老师)</Link></li>
+                    {/*<li><Link*/}
+                        {/*to="/answerFormStudent?studentId=23991&topicId=8888"*/}
+                        {/*style={{fontSize: '24px'}}>查看作答答案(学生)</Link></li>*/}
                 </ul>
             </div>
         );
@@ -705,6 +726,8 @@ ReactDOM.render(
             <Route path="wxLogin" getComponent={wxLogin}/>
             <Route path="warningAdminList" getComponent={warningAdminList}/>
             <Route path="addWarnAdmin" getComponent={addWarnAdmin}/>
+            <Route path="answerFormStudent" getComponent={answerFormStudent}/>
+            <Route path="answerListFormTeacher" getComponent={answerListFormTeacher}/>
         </Route>
     </Router>
     ,
