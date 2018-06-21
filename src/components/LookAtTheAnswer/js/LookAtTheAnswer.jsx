@@ -80,7 +80,7 @@ export default class lookAtTheAnswer extends React.Component {
                         var ansImgArr = [];
                         var audioArr = v.audioContent.split(',')
                         var ansAudioArr = [];
-                        if (imgArr.length != 0) {
+                        if (imgArr.length != 0 || WebServiceUtil.isEmpty(v.picContent) == false) {
                             imgArr.forEach(function (item, index) {
                                 ansImgArr.push(
                                     <img src={item} style={{width: '20%'}}
@@ -88,7 +88,7 @@ export default class lookAtTheAnswer extends React.Component {
                                 )
                             })
                         }
-                        if (audioArr.length != 0) {
+                        if (audioArr.length != 0 || WebServiceUtil.isEmpty(v.audioContent) == false) {
                             audioArr.forEach(function (src, srcIndex) {
                                 ansAudioArr.push(
                                     <div className="audio_left" onClick={_this.topicVoicePlay}>
@@ -134,7 +134,7 @@ export default class lookAtTheAnswer extends React.Component {
                     var ansImgArr = [];
                     var audioArr = v.audioContent.split(',')
                     var ansAudioArr = [];
-                    if (imgArr.length != 0) {
+                    if (imgArr.length != 0 || WebServiceUtil.isEmpty(v.picContent) == false) {
                         imgArr.forEach(function (item, index) {
                             ansImgArr.push(
                                 <span className="ansImg">
@@ -144,20 +144,23 @@ export default class lookAtTheAnswer extends React.Component {
                             )
                         })
                     }
-                    if (audioArr.length != 0) {
+                    if (audioArr.length != 0 && WebServiceUtil.isEmpty(v.audioContent) == false) {
                         audioArr.forEach(function (src, srcIndex) {
                             ansAudioArr.push(
                                 <div className="audio_left" onClick={_this.topicVoicePlay}>
-                                    <audio src={src}
-                                           controls="controls"
-                                           loop="false"
-                                           hidden="true"></audio>
+                                    <audio
+                                        src={src}
+                                        controls="controls"
+                                        loop="false"
+                                        hidden="true"
+                                        className="audioNoom"
+                                    ></audio>
                                 </div>
                             )
                         })
                     }
                     var ansItem = <div className="answerList">
-                        <div >第{i + 1}题：</div>
+                        <div>第{i + 1}题：</div>
                         <div className="answerCont">{v.textContent}</div>
                         <div className="ansImgCont">{ansImgArr}</div>
                         <div className="ansAudio">{ansAudioArr}</div>
@@ -176,6 +179,12 @@ export default class lookAtTheAnswer extends React.Component {
     topicVoicePlay(e) {
         var music = e.target.children[0];
         var music_btn = e.target;
+        for (var i = 0; i < $('.audioNoom').length; i++) {
+            console.log($('.audioNoom')[i]);
+        }
+        console.log('----------------------')
+        console.log(music_btn);
+        console.log(music);
         if (music.paused) {
             music.play();
             music_btn.className = 'audio_left_run';
@@ -216,7 +225,7 @@ export default class lookAtTheAnswer extends React.Component {
                 >
                     <div
                         style={{
-                            height:document.body.clientHeight
+                            height: document.body.clientHeight
                         }}
                     >
                         <div className="answerContent">{this.state.ansArr}</div>
