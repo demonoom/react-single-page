@@ -255,6 +255,7 @@ export default class classroomManage extends React.Component {
     render() {
         var _this = this;
         const row = (rowData, sectionID, rowID) => {
+             console.log(rowData);
             return (<div>
                     {
                         <div className="classInfo line_public">
@@ -276,7 +277,6 @@ export default class classroomManage extends React.Component {
                                 {
                                     rowData.building ?
                                         <span>{rowData.building.name}
-                                            <span>({rowData.building.dangerArea ? "是" : "否"})</span>
                                     </span>
                                         :
                                         "暂未选择位置"

@@ -481,6 +481,13 @@ const schoolPlan = (location, cb) => {
     )
 }
 
+const attendanceTime =  (location, cb) => {
+    require.ensure([], require => {
+            cb(null, require("./components/classCardSystemBackstage/js/attendanceTime").default)
+        }
+    )
+}
+
 const littleAntPolicy = (location, cb) => {
     require.ensure([], require => {
             cb(null, require("./components/littleAntPolicy/littleAntPolicy").default)
@@ -660,7 +667,11 @@ class Index extends React.Component {
                         style={{fontSize: '24px'}}>查看作答</Link></li>
                     <li>
                         <Link
-                            to="/waterWork?tid=153&stuId=23993" style={{fontSize: '24px'}}>水滴作业</Link>
+                            to="/waterWork?tid=332&stuId=23993" style={{fontSize: '24px'}}>水滴作业</Link>
+                    </li>
+                    <li>
+                        <Link   
+                            to="/attendanceTime" style={{fontSize: '24px'}}>考勤考勤</Link>
                     </li>
                 </ul>
             </div>
@@ -760,6 +771,8 @@ ReactDOM.render(
             <Route path="wxLogin" getComponent={wxLogin}/>
             <Route path="warningAdminList" getComponent={warningAdminList}/>
             <Route path="addWarnAdmin" getComponent={addWarnAdmin}/>
+            <Route path="waterWork" getComponent={waterWork} />
+            <Route path="attendanceTime" getComponent={attendanceTime} />
             <Route path="answerFormStudent" getComponent={answerFormStudent}/>
             <Route path="answerListFormTeacher" getComponent={answerListFormTeacher}/>
             <Route path="lookAtTheAnswer" getComponent={LookAtTheAnswer}/>

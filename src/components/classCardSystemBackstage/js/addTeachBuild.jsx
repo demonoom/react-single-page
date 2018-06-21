@@ -8,7 +8,6 @@ export default class addTeachBuild extends React.Component {
         super(props);
         addTeachB = this;
         this.state = {
-            value:true,
             teachBuildValue: ""
         }
     }
@@ -26,15 +25,27 @@ export default class addTeachBuild extends React.Component {
      * 提交新增的教学楼名称
      */
     submitNewTeactBuild() {
-        var param = {
-            "method": 'addSchoolBuilding',
-            "building": {
-                "name": addTeachB.state.teachBuildValue,
-                "creatorId": addTeachB.state.uid,
-                "isDangerArea":addTeachB.state.value
-            }
-        };
 
+        var param;
+        if(addTeachB.state.value == undefined){
+            param = {
+                "method": 'addSchoolBuilding',
+                "building": {
+                    "name": addTeachB.state.teachBuildValue,
+                    "creatorId": addTeachB.state.uid
+                }
+            };
+        }else {
+            param = {
+                "method": 'addSchoolBuilding',
+                "building": {
+                    "name": addTeachB.state.teachBuildValue,
+                    "creatorId": addTeachB.state.uid,
+                    "type":addTeachB.state.value
+                }
+            };
+        }
+        console.log(param);
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
             onResponse: function (result) {
                 if (result.msg == '调用成功' && result.success == true) {
@@ -67,8 +78,8 @@ export default class addTeachBuild extends React.Component {
       };
     render() {
         const data = [
-            { value: true, label: '是' },
-            { value: false, label: '否' },
+            { value: 1, label: '危险区' },
+            { value: 3, label: '打卡区' },
         ];
         return (
             <div id="addTeachBuild">
@@ -86,7 +97,7 @@ export default class addTeachBuild extends React.Component {
                 </div>
 
                 <div className="isDangerArea">
-                    <List renderHeader={() => '是否危险区：'}>
+                    <List renderHeader={() => '选择区域：'}>
                         {data.map(i => (
                             <RadioItem key={i.value} checked={this.state.value === i.value} onChange={() => this.onChange(i.value)}>
                                 {i.label}
