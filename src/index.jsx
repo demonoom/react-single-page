@@ -432,6 +432,12 @@ const dashboard = (location, cb) => {
     })
 }
 
+const dashboardByCity = (location, cb) => {
+    require.ensure([], require => {
+        cb(null, require("./components/charts/dashboard/dashboardByCity").default)
+    })
+}
+
 const warning = (location, cb) => {
     require.ensure([], require => {
             cb(null, require("./components/warnAndHealthModule/js/warning").default)
@@ -505,14 +511,27 @@ const addWarnAdmin = (location, cb) => {
 
 const answerFormStudent = (location, cb) => {
     require.ensure([], require => {
-            cb(null, require("./components/answerManagement/js/answerFormStudent").default)
+        cb(null, require("./components/answerManagement/js/answerFormStudent").default)
+//查看作答
+    })
+}
+const LookAtTheAnswer = (location, cb) => {
+    require.ensure([], require => {
+            cb(null, require("./components/LookAtTheAnswer/js/LookAtTheAnswer").default)
         }
     )
 }
 
 const answerListFormTeacher = (location, cb) => {
     require.ensure([], require => {
-            cb(null, require("./components/answerManagement/js/answerListFormTeacher").default)
+        cb(null, require("./components/answerManagement/js/answerListFormTeacher").default)
+
+    })
+}
+
+const waterWork = (location, cb) => {
+    require.ensure([], require => {
+            cb(null, require("./components/waterWork/waterWork").default)
         }
     )
 }
@@ -531,12 +550,12 @@ class Index extends React.Component {
                     {/*<li><Link to="/s4" style={{fontSize: '24px'}}>蚁巢</Link></li>*/}
                     {/*<li><Link to="/s5" style={{fontSize: '24px'}}>实验</Link></li>*/}
                     {/*<li><Link to="/questionBank?ident=54208&pointId=4339&title=nihao"*/}
-                              {/*style={{fontSize: '24px'}}>题库</Link></li>*/}
+                    {/*style={{fontSize: '24px'}}>题库</Link></li>*/}
                     {/*<li><Link to="/analysisList?access_user=23836" style={{fontSize: '24px'}}>成绩分析</Link></li>*/}
                     {/*<li><Link to="/searchUserLocationInfo" style={{fontSize: '24px'}}>搜索查看用户位置信息</Link></li>*/}
                     {/*<li><Link to="/studentFaceStatistics" style={{fontSize: '24px'}}>学生脸部表情分析折线图</Link></li>*/}
                     {/*<li><Link to="/termitePlateLibrary?ident=23836&fileId=-1&title=蚁盘题目&phoneType=0"*/}
-                              {/*style={{fontSize: '24px'}}>蚁盘题库</Link>*/}
+                    {/*style={{fontSize: '24px'}}>蚁盘题库</Link>*/}
                     {/*</li>*/}
                     {/*<li><Link to="/pushSubjectsFromTLibrary?ident=23836&fileId=-1"*/}
                     {/*style={{fontSize: '24px'}}>蚁盘推题</Link></li>*/}
@@ -613,6 +632,9 @@ class Index extends React.Component {
                     <li><Link
                         to="/dashboard?destId=9&areaType=0"
                         style={{fontSize: '24px'}}>管理驾驶舱</Link></li>
+                    <li><Link
+                        to="/dashboardByCity?destId=9&areaType=0"
+                        style={{fontSize: '24px'}}>宜昌市教育局管理驾驶舱</Link></li>
                     {/*<li><Link*/}
                     {/*to="/fileAnalysis?aid=590961"*/}
                     {/*style={{fontSize: '24px'}}>文件表情分析</Link></li>*/}
@@ -623,14 +645,23 @@ class Index extends React.Component {
                     {/*to="/particlePath"*/}
                     {/*style={{fontSize: '24px'}}>运动轨迹</Link></li>*/}
                     {/*<li><Link*/}
-                        {/*to="/wxLogin"*/}
-                        {/*style={{fontSize: '24px'}}>授权登录</Link></li>*/}
+                    {/*to="/wxLogin"*/}
+                    {/*style={{fontSize: '24px'}}>授权登录</Link></li>*/}
                     <li><Link
                         to="/answerListFormTeacher?teacherId=23836&topicId=8888"
                         style={{fontSize: '24px'}}>查看学生作答情况(老师)</Link></li>
                     {/*<li><Link*/}
-                        {/*to="/answerFormStudent?studentId=23991&topicId=8888"*/}
-                        {/*style={{fontSize: '24px'}}>查看作答答案(学生)</Link></li>*/}
+                    {/*to="/answerFormStudent?studentId=23991&topicId=8888"*/}
+                    {/*style={{fontSize: '24px'}}>查看作答答案(学生)</Link></li>*/}
+                    {/*to="/wxLogin"*/}
+                    {/*style={{fontSize: '24px'}}>授权登录</Link></li>*/}
+                    <li><Link
+                        to="/lookAtTheAnswer?tpId=154&access_user=23836"
+                        style={{fontSize: '24px'}}>查看作答</Link></li>
+                    <li>
+                        <Link
+                            to="/waterWork?tid=153&stuId=23993" style={{fontSize: '24px'}}>水滴作业</Link>
+                    </li>
                 </ul>
             </div>
         );
@@ -666,12 +697,14 @@ ReactDOM.render(
             <Route path="chatMsg" getComponent={chatMsg}/>
             <Route path="longList" getComponent={longList}/>
             <Route path="homeWorkUnderstandAnalysisByClass" getComponent={homeWorkUnderstandAnalysisByClass}/>
-            <Route path="homeWorkUnderstandAnalysisByStudent" getComponent={homeWorkUnderstandAnalysisByStudent}/>
+            <Route path="homeWorkUnderstandAnalysisByStudent"
+                   getComponent={homeWorkUnderstandAnalysisByStudent}/>
             <Route path="homeWorkUnderstandAnalysisByClassSubject"
                    getComponent={homeWorkUnderstandAnalysisByClassSubject}/>
             <Route path="homeWorkUnderstandAnalysisGuide" getComponent={homeWorkUnderstandAnalysisGuide}/>
             <Route path="m3u8Player" getComponent={m3u8Player}/>
-            <Route path="HomeWorkUnderstandAnalysisGuideByNoom" getComponent={HomeWorkUnderstandAnalysisGuideByNoom}/>
+            <Route path="HomeWorkUnderstandAnalysisGuideByNoom"
+                   getComponent={HomeWorkUnderstandAnalysisGuideByNoom}/>
             <Route path="brotherXu" getComponent={brotherXu}/>
             <Route path="homeworkModule" getComponent={homeworkModule}/>
             <Route path="curriculumSchedule" getComponent={curriculumSchedule}/>
@@ -716,6 +749,7 @@ ReactDOM.render(
             <Route path="clazzDutyList" getComponent={clazzDutyList}/>
             <Route path="particlePath" getComponent={particlePath}/>
             <Route path="dashboard" getComponent={dashboard}/>
+            <Route path="dashboardByCity" getComponent={dashboardByCity}/>
             <Route path="healthList" getComponent={healthList}/>
             <Route path="warning" getComponent={warning}/>
             <Route path="health" getComponent={health}/>
@@ -728,7 +762,10 @@ ReactDOM.render(
             <Route path="addWarnAdmin" getComponent={addWarnAdmin}/>
             <Route path="answerFormStudent" getComponent={answerFormStudent}/>
             <Route path="answerListFormTeacher" getComponent={answerListFormTeacher}/>
+            <Route path="lookAtTheAnswer" getComponent={LookAtTheAnswer}/>
+            <Route path="waterWork" getComponent={waterWork}/>
         </Route>
     </Router>
     ,
     document.getElementById('example'));
+
