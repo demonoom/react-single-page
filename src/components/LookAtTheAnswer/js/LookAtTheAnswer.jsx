@@ -71,40 +71,49 @@ export default class lookAtTheAnswer extends React.Component {
             if (WebServiceUtil.isEmpty(data[0].answerList) == false) {
                 data[0].answerList.forEach(function (v, i) {
                     if (v.type == 1 || v.type == 3) {
-                        var ansItem = <div>
-                            <span>第{i + 1}题</span>
-                            <span>{v.textContent}</span>
+                        var ansItem = <div className="answerList">
+                            <div>第{i + 1}题</div>
+                            <div className="answerCont">{v.textContent}</div>
                         </div>
                     } else {
                         var imgArr = v.picContent.split(',');
                         var ansImgArr = [];
                         var audioArr = v.audioContent.split(',')
                         var ansAudioArr = [];
-                        if (imgArr.length != 0 || WebServiceUtil.isEmpty(v.picContent) == false) {
+                        if (imgArr.length != 0 && WebServiceUtil.isEmpty(v.picContent) == false) {
                             imgArr.forEach(function (item, index) {
                                 ansImgArr.push(
-                                    <img src={item} style={{width: '20%'}}
+                                    <span className="ansImg">
+                                    <img src={item} className="empty_center"
                                          onClick={_this.imgOnClick.bind(this, item, v.picContent)}/>
+                                    </span>
                                 )
                             })
                         }
-                        if (audioArr.length != 0 || WebServiceUtil.isEmpty(v.audioContent) == false) {
+                        if (audioArr.length != 0 && WebServiceUtil.isEmpty(v.audioContent) == false) {
                             audioArr.forEach(function (src, srcIndex) {
                                 ansAudioArr.push(
-                                    <div className="audio_left" onClick={_this.topicVoicePlay}>
-                                        <audio src={src}
-                                               controls="controls"
-                                               loop="false"
-                                               hidden="true"></audio>
+                                    <div className="ansAudio" onClick={_this.topicVoicePlay}>
+                                        <div className="audio_left">
+                                            <audio
+                                                src={src}
+                                                controls="controls"
+                                                loop="false"
+                                                hidden="true"
+                                                className="audioNoom"
+                                            ></audio>
+                                        </div>
                                     </div>
                                 )
                             })
                         }
-                        var ansItem = <div>
-                            <div className="answerList">第{i + 1}题：</div>
-                            <div className="answerCont">{v.textContent}</div>
-                            <div>{ansImgArr}</div>
-                            <div className="ansAudio">{ansAudioArr}</div>
+                        var ansItem = <div className="answerList">
+                            <div>第{i + 1}题：</div>
+                            <div className="answerCont"
+                                 style={{display: WebServiceUtil.isEmpty(v.textContent) ? 'none' : 'block'}}
+                            >{v.textContent}</div>
+                            <div className="ansImgCont">{ansImgArr}</div>
+                            {ansAudioArr}
                         </div>
                     }
                     arr.push(ansItem)
@@ -125,7 +134,7 @@ export default class lookAtTheAnswer extends React.Component {
         if (WebServiceUtil.isEmpty(TabData.answerList) == false) {
             TabData.answerList.forEach(function (v, i) {
                 if (v.type == 1 || v.type == 3) {
-                    var ansItem = <div className="answerList answer_bor">
+                    var ansItem = <div className="answerList">
                         <div>第{i + 1}题：</div>
                         <div className="answerCont">{v.textContent}</div>
                     </div>
@@ -134,7 +143,7 @@ export default class lookAtTheAnswer extends React.Component {
                     var ansImgArr = [];
                     var audioArr = v.audioContent.split(',')
                     var ansAudioArr = [];
-                    if (imgArr.length != 0 || WebServiceUtil.isEmpty(v.picContent) == false) {
+                    if (imgArr.length != 0 && WebServiceUtil.isEmpty(v.picContent) == false) {
                         imgArr.forEach(function (item, index) {
                             ansImgArr.push(
                                 <span className="ansImg">
@@ -147,23 +156,27 @@ export default class lookAtTheAnswer extends React.Component {
                     if (audioArr.length != 0 && WebServiceUtil.isEmpty(v.audioContent) == false) {
                         audioArr.forEach(function (src, srcIndex) {
                             ansAudioArr.push(
-                                <div className="audio_left" onClick={_this.topicVoicePlay}>
-                                    <audio
-                                        src={src}
-                                        controls="controls"
-                                        loop="false"
-                                        hidden="true"
-                                        className="audioNoom"
-                                    ></audio>
+                                <div className="ansAudio" onClick={_this.topicVoicePlay}>
+                                    <div className="audio_left">
+                                        <audio
+                                            src={src}
+                                            controls="controls"
+                                            loop="false"
+                                            hidden="true"
+                                            className="audioNoom"
+                                        ></audio>
+                                    </div>
                                 </div>
                             )
                         })
                     }
                     var ansItem = <div className="answerList">
                         <div>第{i + 1}题：</div>
-                        <div className="answerCont">{v.textContent}</div>
+                        <div className="answerCont"
+                             style={{display: WebServiceUtil.isEmpty(v.textContent) ? 'none' : 'block'}}
+                        >{v.textContent}</div>
                         <div className="ansImgCont">{ansImgArr}</div>
-                        <div className="ansAudio">{ansAudioArr}</div>
+                        {ansAudioArr}
                     </div>
                 }
                 arr.push(ansItem)
@@ -177,15 +190,17 @@ export default class lookAtTheAnswer extends React.Component {
      * @param e
      */
     topicVoicePlay(e) {
-        var music = e.target.children[0];
-        var music_btn = e.target;
-        for (var i = 0; i < $('.audioNoom').length; i++) {
-            console.log($('.audioNoom')[i]);
-        }
-        console.log('----------------------')
-        console.log(music_btn);
-        console.log(music);
+        var music = e.target.children[0].children[0];
+        var music_btn = e.target.children[0];
         if (music.paused) {
+            for (var i = 0; i < $('.audioNoom').length; i++) {
+                if (!$('.audioNoom')[i].paused) {
+                    $('.audioNoom')[i].pause();
+                }
+            }
+            for (var i = 0; i < $('.audio_left_run').length; i++) {
+                $('.audio_left_run')[i].className = 'audio_left'
+            }
             music.play();
             music_btn.className = 'audio_left_run';
         }
