@@ -10,9 +10,7 @@ import {
 import {createForm} from 'rc-form';
 
 
-// import '../../css/newCurriculumSche/getClassTableList.less'
-
-var classBinding;
+var AttenT;
 const prompt = Modal.prompt;
 const alert = Modal.alert;
 
@@ -20,7 +18,7 @@ export default class getClassTableList extends React.Component {
 
     constructor(props) {
         super(props);
-        classBinding = this;
+        AttenT = this;
         const dataSource = new ListView.DataSource({
             rowHasChanged: (row1, row2) => row1 !== row2,
         });
@@ -33,19 +31,19 @@ export default class getClassTableList extends React.Component {
 
     componentDidMount() {
         Bridge.setShareAble("false");
-        document.title = '课程表列表';
+        document.title = '考勤时段列表';
         var locationHref = window.location.href;
         var locationSearch = locationHref.substr(locationHref.indexOf("?") + 1);
         var uid = locationSearch.split("&")[0].split("=")[1];
         this.setState({"uid": uid});
-        this.viewCourseTablePage(uid);
+        this.viewSchoolAttendancePage(uid);
         //添加对视窗大小的监听,在屏幕转换以及键盘弹起时重设各项高度
-        window.addEventListener('resize', classBinding.onWindowResize)
+        window.addEventListener('resize', AttenT.onWindowResize)
     }
 
     componentWillUnmount() {
         //解除监听
-        window.removeEventListener('resize', classBinding.onWindowResize)
+        window.removeEventListener('resize', AttenT.onWindowResize)
     }
 
     /**
@@ -53,14 +51,14 @@ export default class getClassTableList extends React.Component {
      */
     onWindowResize() {
         setTimeout(function () {
-            classBinding.setState({clientHeight: document.body.clientHeight});
+            AttenT.setState({clientHeight: document.body.clientHeight});
         }, 100)
     }
 
     /**
      * 查看教室的所有课表
      */
-    viewCourseTablePage(uid) {
+    viewSchoolAttendancePage(uid) {
         var _this = this;
         _this.initData.splice(0);
         _this.state.dataSource = [];
@@ -69,9 +67,10 @@ export default class getClassTableList extends React.Component {
         });
         const dataBlob = {};
         var param = {
-            "method": 'viewCourseTablePage',
-            "rid": uid,
+            "method": 'viewSchoolAttendancePage',
+            "adminId": uid,
         };
+        
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
             onResponse: function (result) {
                 if (result.msg == '调用成功' && result.success == true) {
@@ -96,55 +95,49 @@ export default class getClassTableList extends React.Component {
     /**
      * 去课表列表
      **/
-    turnToClassTableDetil(rowData) {
-        var currentAttendanceListUrl = encodeURI(WebServiceUtil.mobileServiceURL + "newAddCurriculumSchedule?clazzroomId=" + this.state.uid + "&classTableId=" + rowData.id + "&classTableName=" + rowData.name);
-
-        var data = {
-            method: 'openNewPage',
-            url: currentAttendanceListUrl
-        };
-
-        Bridge.callHandler(data, null, function (error) {
-            window.location.href = currentAttendanceListUrl;
-        });
+    turnToNewAttendanceTime(rowData) {
+        var url = WebServiceUtil.mobileServiceURL + "newAttendanceTime?uid="+AttenT.state.uid;
+            var data = {
+                method: 'openNewPage',
+                url: url,
+            };
+            Bridge.callHandler(data, null, function (error) {
+                window.location.href = url;
+            });
     }
 
     /**
-     * 修改名称
+     * 
      * @param name
      */
-    changeTableName(data, event) {
-        event.stopPropagation();
-        var phoneType = navigator.userAgent;
-        var phone;
-        if (phoneType.indexOf('iPhone') > -1 || phoneType.indexOf('iPad') > -1) {
-            phone = 'ios'
-        } else {
-            phone = 'android'
-        }
-
-        prompt('请输入课表名称', '', [
-            {text: '取消'},
-            {text: '确定', onPress: value => classBinding.changeTName(value, data)},
-        ], 'default', data.name, [], phone)
-        if (phone == 'ios') {
-            document.getElementsByClassName('am-modal-input')[0].getElementsByTagName('input')[0].focus();
-        }
+    updateAttendanceTime(data, event) {
+        
+        var url = WebServiceUtil.mobileServiceURL + "updateAttendanceTime?uid="+AttenT.state.uid +"&id="+data.id;
+        var data = {
+            method: 'openNewPage',
+            url: url,
+        };
+        Bridge.callHandler(data, null, function (error) {
+            window.location.href = url;
+        });
+        
+        
     }
 
     /**
-     *　更新教室某个课表状态
-     * @param ctId   课表id
+     *　更新班级
+     * @param aId   班级ID
      * @param condition 课表状态 0 = 删除, 1 =　启用, 3 = 停用
      * @throws Exception
      */
-    delTable(data) {
+    delAttendanceTime(data) {
         var _this = this;
         var param = {
-            "method": 'changeCourseTableStatus',
+            "method": 'changeSchoolAttendanceStatus',
             "condition": 0,
-            "ctId": data.id,
+            "aId": data.id,
         };
+
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
             onResponse: (result) => {
                 if (result.msg == '调用成功' || result.success == true) {
@@ -181,87 +174,21 @@ export default class getClassTableList extends React.Component {
         } else {
             phone = 'android'
         }
-        var _this = this;
         const alertInstance = alert('您确定要删除该课表吗?', '', [
             {text: '取消', onPress: () => console.log('cancel'), style: 'default'},
-            {text: '确定', onPress: () => _this.delTable(data)},
+            {text: '确定', onPress: () => AttenT.delAttendanceTime(data)},
         ], phone);
     };
 
+   
     /**
-     * 创建新课表
-     **/
-    creatNewT(value) {
+     * 改变启用停用状态
+     */
+    changeSchoolAttendanceStatus(checked, rowData) {
         var _this = this;
         var param = {
-            "method": 'addCourseTable',
-            "courseTable": {
-                "name": value,
-                "roomId": this.state.uid,
-                "creatorId": JSON.parse(localStorage.getItem('classTableIdent')).colUid
-            },
-        };
-        WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
-            onResponse: (result) => {
-                if (result.msg == '调用成功' || result.success == true) {
-                    Toast.success('新建成功', 1)
-                    _this.viewCourseTablePage(_this.state.uid)
-                } else {
-                    Toast.fail(result.msg, 2)
-                }
-            },
-            onError: function (error) {
-                Toast.warn('保存失败');
-            }
-        });
-    }
-
-    /**
-     * 修改课表名
-     **/
-    changeTName(value, data) {
-        var _this = this;
-        var param = {
-            "method": 'updateCourseTable',
-            "courseTable": {
-                "roomId": this.state.uid,
-                "creatorId": JSON.parse(localStorage.getItem('classTableIdent')).colUid,
-                "name": value,
-                "id": data.id,
-                "status": data.status
-            },
-        };
-        WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
-            onResponse: (result) => {
-                if (result.msg == '调用成功' || result.success == true) {
-                    Toast.success('修改成功')
-                    _this.state.dataSource = [];
-                    _this.state.dataSource = new ListView.DataSource({
-                        rowHasChanged: (row1, row2) => row1 !== row2,
-                    });
-                    _this.initData.forEach(function (v, i) {
-                        if (data.id == v.id) {
-                            v.name = value;
-                        }
-                    });
-                    _this.setState({
-                        dataSource: _this.state.dataSource.cloneWithRows(_this.initData)
-                    });
-                } else {
-                    Toast.fail(result.msg, 2)
-                }
-            },
-            onError: function (error) {
-                Toast.warn('修改失败');
-            }
-        });
-    }
-
-    changeStatus(checked, rowData) {
-        var _this = this;
-        var param = {
-            "method": 'changeCourseTableStatus',
-            "ctId": rowData.id,
+            "method": 'changeSchoolAttendanceStatus',
+            "aId": rowData.id,
         };
         var status,
             str;
@@ -313,10 +240,8 @@ export default class getClassTableList extends React.Component {
     }
 
     render() {
-        var _this = this;
-
+     
         const row = (rowData, sectionID, rowID) => {
-
             let SwitchExample = (props) => {
                 const {getFieldProps} = props.form;
                 return (
@@ -332,12 +257,12 @@ export default class getClassTableList extends React.Component {
                                     color="#4dd865"
                                     text-align="left"
                                     onClick={(checked) => {
-                                        _this.changeStatus(checked, rowData)
+                                        AttenT.changeSchoolAttendanceStatus(checked, rowData)
                                     }}
                                 />}
                             ><span className="open_text">开启状态：</span></List.Item>
                         </List>
-                        <Button className="modifyBtn_common" type="primary" size="small" onClick={this.changeTableName.bind(this, rowData)}></Button>
+                        <Button className="modifyBtn_common" type="primary" size="small" onClick={this.updateAttendanceTime.bind(this, rowData)}></Button>
                         <Button type="primary" size="small" className="btn_del deleteBtn_common"  onClick={this.showAlert.bind(this, rowData)}></Button>
                     </div>
                 );
@@ -345,31 +270,25 @@ export default class getClassTableList extends React.Component {
             SwitchExample = createForm()(SwitchExample);
 
             return (
-                <div className="classInfo line_public">
-                    <div onClick={this.turnToClassTableDetil.bind(this, rowData)}>
-                        <div className="am-list-item am-list-item-middle">
-                            <div className="am-list-line">
-                                <div className="am-list-content">{rowData.name}</div>
-                                <div className="am-list-arrow am-list-arrow-horizontal"></div>
-                            </div>
+                <div className="classInfo line_public attendanceCont">
+                    <div>
+                        <div className="title">
+                            {rowData.name}
                         </div>
                         <div className="tableListDate textOver">
-                            <span className="classroom"><span className="classroom_span">创建时间：</span>{rowData.createTime}</span>
+                            <div className="classroom time"><span className="classroom_span">入校时间：</span>{rowData.itemList[0].checkIn}</div>
+                            <div className="classroom time"><span className="classroom_span">离校时间：</span>{rowData.itemList[0].checkOut}</div>
                         </div>
-
-                        {/*/!*Button<Button className="modifyBtn_common" type="primary" size="small" onClick={this.changeTableName.bind(this, rowData)}></Button>
-                        <Button type="primary" size="small" className="btn_del deleteBtn_common" onClick={this.showAlert.bind(this, rowData)}></Button>*!/*/}
                     </div>
                     <SwitchExample/>
                 </div>
             )
         };
         return (
-            <div id="getClassTableList" style={{height: classBinding.state.clientHeight}}>
-                <div className='tableDiv' style={{height: classBinding.state.clientHeight}}>
-                    <div className='addBunton' onClick={this.turnToClassTableDetil}>
-                        +
-                        {/* +<img src={require("../../imgs/addBtn.png")} /> */}
+            <div id="getClassTableList" style={{height: AttenT.state.clientHeight}}>
+                <div className='tableDiv' style={{height: AttenT.state.clientHeight}}>
+                    <div className='addBunton' onClick={this.turnToNewAttendanceTime}>
+                        <img src={require("../imgs/addBtn.png")} />
                     </div>
                     {/*这是列表数据,包括添加按钮*/}
                     <ListView
@@ -389,7 +308,7 @@ export default class getClassTableList extends React.Component {
                         initialListSize={30}   //指定在组件刚挂载的时候渲染多少行数据，用这个属性来确保首屏显示合适数量的数据
                         scrollEventThrottle={20}     //控制在滚动过程中，scroll事件被调用的频率
                         style={{
-                            height: classBinding.state.clientHeight,
+                            height: AttenT.state.clientHeight,
                         }}
                     />
                 </div>

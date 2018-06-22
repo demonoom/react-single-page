@@ -409,6 +409,7 @@ const newUpdateCurriculumSchedule = (location, cb) => {
     })
 }
 
+
 const classHonorList = (location, cb) => {
     require.ensure([], require => {
             cb(null, require("./components/classCardSystemBackstage/js/classHonorList").default)
@@ -487,7 +488,17 @@ const attendanceTime =  (location, cb) => {
         }
     )
 }
-
+const newAttendanceTime = (location, cb) => {
+    require.ensure([], require => {
+            cb(null, require("./components/classCardSystemBackstage/js/newAttendanceTime").default)
+        }
+    )
+}
+const updateAttendanceTime = (location, cb) => {
+    require.ensure([], require => {
+        cb(null, require("./components/classCardSystemBackstage/js/updateAttendanceTime").default)
+    })
+}
 const littleAntPolicy = (location, cb) => {
     require.ensure([], require => {
             cb(null, require("./components/littleAntPolicy/littleAntPolicy").default)
@@ -539,6 +550,20 @@ const answerListFormTeacher = (location, cb) => {
 const waterWork = (location, cb) => {
     require.ensure([], require => {
             cb(null, require("./components/waterWork/waterWork").default)
+        }
+    )
+}
+
+const attendanceSatisticaForClass = (location, cb) => {
+    require.ensure([], require => {
+            cb(null, require("./components/attendance/js/attendanceSatisticaForClass").default)
+        }
+    )
+}
+
+const attendanceStatistical = (location, cb) => {
+    require.ensure([], require => {
+            cb(null, require("./components/attendance/js/attendanceStatistical").default)
         }
     )
 }
@@ -671,8 +696,14 @@ class Index extends React.Component {
                     </li>
                     <li>
                         <Link   
-                            to="/attendanceTime" style={{fontSize: '24px'}}>考勤考勤</Link>
+                            to="/attendanceTime?uid=23836" style={{fontSize: '24px'}}>考勤考勤</Link>
                     </li>
+                    <li><Link
+                        to="/attendanceStatistical?schoolId=9"
+                        style={{fontSize: '24px'}}>出勤率统计(饼图)</Link></li>
+                    <li><Link
+                        to="/attendanceSatisticaForClass?schoolId=9"
+                        style={{fontSize: '24px'}}>班级出勤率统计(柱状图)</Link></li>
                 </ul>
             </div>
         );
@@ -773,10 +804,14 @@ ReactDOM.render(
             <Route path="addWarnAdmin" getComponent={addWarnAdmin}/>
             <Route path="waterWork" getComponent={waterWork} />
             <Route path="attendanceTime" getComponent={attendanceTime} />
+            <Route path="newAttendanceTime" getComponent={newAttendanceTime} />
+            <Route path="updateAttendanceTime" getComponent={updateAttendanceTime} />
             <Route path="answerFormStudent" getComponent={answerFormStudent}/>
             <Route path="answerListFormTeacher" getComponent={answerListFormTeacher}/>
             <Route path="lookAtTheAnswer" getComponent={LookAtTheAnswer}/>
             <Route path="waterWork" getComponent={waterWork}/>
+            <Route path="attendanceStatistical" getComponent={attendanceStatistical}/>
+            <Route path="attendanceSatisticaForClass" getComponent={attendanceSatisticaForClass}/>
         </Route>
     </Router>
     ,
