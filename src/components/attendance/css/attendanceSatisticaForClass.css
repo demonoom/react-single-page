@@ -1,0 +1,14 @@
+(node) util.print is deprecated. Use console.log instead.
+#attendanceSatisticaForClass {
+  background: #fff;
+}
+#attendanceSatisticaForClass .data_list {
+  padding: 5px 0 5px 15px;
+}
+#attendanceSatisticaForClass .am-whitespace.am-whitespace-lg {
+  background: #f4f4f4;
+}
+#attendanceSatisticaForClass .dom_cont {
+  padding: 15px 0;
+  background: #fff !important;
+}

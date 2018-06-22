@@ -1,9 +1,10 @@
 import React from 'react';
 import ReactEcharts from 'echarts-for-react';
 import {
-    Toast, DatePicker, List, Button, ActivityIndicator
+    Toast, DatePicker, List, Button, ActivityIndicator,WhiteSpace
 } from 'antd-mobile';
 import '../css/attendanceSatisticaForClass.less'
+import '../css/macarons'
 
 export default class attendanceSatisticaForClass extends React.Component {
 
@@ -40,7 +41,14 @@ export default class attendanceSatisticaForClass extends React.Component {
                 left:'center'
             },
             backgroundColor:'white',
-            color: ['#003366', '#006699', '#4cabce', '#e5323e'],
+            center: ['50%', '55%'],
+            grid:{
+                x:25,
+                y:25,
+                x2:25,
+                y2:80,
+            },
+            //color: ['#003366', '#006699', '#4cabce', '#e5323e'],
             tooltip: {
                 trigger: 'axis',
                 axisPointer: {
@@ -51,6 +59,16 @@ export default class attendanceSatisticaForClass extends React.Component {
                 data: ['应到', '准时', '缺勤', '迟到'],
                 bottom:'0'
             },
+            dataZoom: [
+                {
+                    show: true,
+                    //开始位置的百分比，0 - 100
+                    start: 0,
+                    //结束位置的百分比，0 - 100
+                    end: 100,
+                    bottom:"7%",
+                }
+            ],
             calculable: true,
             xAxis: [
                 {
@@ -126,9 +144,12 @@ export default class attendanceSatisticaForClass extends React.Component {
 
     getData(data) {   //设置数据结构
         console.log(data);
+        if(!data){
+            Toast.info('暂无数据',1);
+        }
         var xClassArray = [],lateArray=[],allArray=[],actuallyArray=[],noAttendanceArray=[];
         for(var k in data){
-            xClassArray.push(data[k].clazz.name);
+            xClassArray.push(data[k].clazz.grade?data[k].clazz.grade.name+''+data[k].clazz.name:data[k].clazz.name);
             lateArray.push(data[k].attendanceLate);
             allArray.push(data[k].allSchoolStudent);
             actuallyArray.push(data[k].attendanceStudent);
@@ -136,10 +157,12 @@ export default class attendanceSatisticaForClass extends React.Component {
         }
         var columnarChartOption = this.buildChartOption(xClassArray,lateArray,allArray,actuallyArray,noAttendanceArray);
         var reactDom =
-            <ReactEcharts
+            <ReactEcharts start
+
                 option={columnarChartOption}
-                style={{height: this.state.clientHeight / 2, width: '100%'}}
-            />
+                style={{height: this.state.clientHeight / 2 + 50, width: '100%'}}
+                theme='macarons'
+                className=''/>
         this.setState({
             domArray: reactDom,
         });
@@ -193,18 +216,19 @@ export default class attendanceSatisticaForClass extends React.Component {
                 height: this.state.clientHeight + 'px',
                 overflow: 'auto',
             }}>
-                <DatePicker
-                    mode="date"
-                    // title="Select Date"
-                    extra={this.state.date}
-                    value={this.state.date}
-                    // onChange={date => this.setState({ date })}
-                    onOk={this.dateChange.bind(this)}
-                >
-                    <List.Item arrow="horizontal">选择日期</List.Item>
-                </DatePicker>
+                    <DatePicker
+                        mode="date"
+                        // title="Select Date"
+                        extra={this.state.date}
+                        value={this.state.date}
+                        // onChange={date => this.setState({ date })}
+                        onOk={this.dateChange.bind(this)}
 
-                <div>
+                    >
+                        <List.Item arrow="horizontal" className="data_list">选择日期</List.Item>
+                    </DatePicker>
+                <WhiteSpace size="lg"/>
+                <div className="dom_cont">
                     {this.state.domArray}
                 </div>
 

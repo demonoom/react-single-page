@@ -4,6 +4,7 @@ import {
     Toast, DatePicker, List, Button, Picker
 } from 'antd-mobile';
 import '../css/answerListFormTeacher.less'
+import '../css/macarons'
 
 export default class answerListFormTeacher extends React.Component {
 
@@ -46,7 +47,7 @@ export default class answerListFormTeacher extends React.Component {
             legend: {
                 data: ['平均' + text, text],
                 textStyle: {
-                    color: '#5793f3'
+                    // color: '#5793f3'
                 }
             },
             dataZoom: [
@@ -62,7 +63,7 @@ export default class answerListFormTeacher extends React.Component {
                 data: category,
                 axisLine: {
                     lineStyle: {
-                        color: '#5793f3'
+                        // color: '#5793f3'
                     }
                 }
             },
@@ -70,7 +71,7 @@ export default class answerListFormTeacher extends React.Component {
                 splitLine: {show: false},
                 axisLine: {
                     lineStyle: {
-                        color: '#5793F0'
+                        // color: '#5793F0'
                     }
                 }
             },
@@ -97,13 +98,13 @@ export default class answerListFormTeacher extends React.Component {
                         show: true,
                         position: 'top',
                         barBorderRadius: 5,
-                        color: (
-                            0, 0, 0, 1,
-                                [
-                                    {offset: 0, color: '#14c8d4'},
-                                    {offset: 1, color: '#43eec6'}
-                                ]
-                        )
+                        // color: (
+                        //     0, 0, 0, 1,
+                        //         [
+                        //             {offset: 0, color: '#14c8d4'},
+                        //             {offset: 1, color: '#43eec6'}
+                        //         ]
+                        // )
                     }
                 },
                 data: barData,
@@ -171,12 +172,13 @@ export default class answerListFormTeacher extends React.Component {
                         option={columnarChartOption}
                         style={{height: '100%', width: '100%'}}
                         onEvents={onEvents}
+                        theme='macarons'
                     />
                 reactEchartsArray.push(reactDom);
             }
             var rem = <div>
                 <div className="title">题目{data[k].questionCount}</div>
-                <div className="sort">本题耗时排名:{data[k].sort}</div>
+                <div className="sort">{this.state.type == 0?'本题耗时排名':'本體理解度排名'}:{data[k].sort}</div>
                 <div style={{height: '300px'}} className="echarts_wrap">
                     {reactEchartsArray}
                 </div>
@@ -193,7 +195,8 @@ export default class answerListFormTeacher extends React.Component {
         var param = {
             "method": 'getFuzzyHomeworkEmotionByTopicId',
             "topicId": this.state.topicId,
-            "userId": this.state.teacherId
+            "userId": this.state.teacherId,
+            "type":this.state.type,
         };
 
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
