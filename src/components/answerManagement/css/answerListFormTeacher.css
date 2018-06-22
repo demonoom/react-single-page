@@ -1,37 +1,33 @@
 #answerListFormTeacher {
-    background: white;
-    position: relative;
+  background: white;
+  position: relative;
 }
-
 #answerListFormTeacher .title {
-    background: #f5f5f5;
-    padding: 5px;
-    width: 90%;
-    margin: 10px auto;
+  background: #f5f5f5;
+  padding: 5px;
+  width: 90%;
+  margin: 10px auto;
 }
-
 #answerListFormTeacher .sort {
-    color: blueviolet;
-    text-align: right;
-    padding-right: 15px;
-    font-size: .2em;
+  color: blueviolet;
+  text-align: right;
+  padding-right: 15px;
+  font-size: .2em;
 }
-
 #answerListFormTeacher .topButton {
-    position: absolute;
-    left: 50%;
-    top: 0;
-    width: 99%;
-    height: 25px;
-    background: deepskyblue;
-    transform: translateX(-50%);
-    color: white;
-    border: none;
-    z-index: 9999;
+  position: absolute;
+  left: 50%;
+  top: 0;
+  width: 99%;
+  height: 25px;
+  background: deepskyblue;
+  transform: translateX(-50%);
+  color: white;
+  border: none;
+  z-index: 9999;
 }
-
 #answerListFormTeacher .canvasBox {
-    overflow: auto;
-    padding-top: 25px;
-    box-sizing: border-box;
+  overflow: auto;
+  padding-top: 25px;
+  box-sizing: border-box;
 }
