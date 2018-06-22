@@ -481,6 +481,13 @@ const schoolPlan = (location, cb) => {
     )
 }
 
+const attendanceTime =  (location, cb) => {
+    require.ensure([], require => {
+            cb(null, require("./components/classCardSystemBackstage/js/attendanceTime").default)
+        }
+    )
+}
+
 const littleAntPolicy = (location, cb) => {
     require.ensure([], require => {
             cb(null, require("./components/littleAntPolicy/littleAntPolicy").default)
@@ -532,6 +539,20 @@ const answerListFormTeacher = (location, cb) => {
 const waterWork = (location, cb) => {
     require.ensure([], require => {
             cb(null, require("./components/waterWork/waterWork").default)
+        }
+    )
+}
+
+const attendanceSatisticaForClass = (location, cb) => {
+    require.ensure([], require => {
+            cb(null, require("./components/attendance/js/attendanceSatisticaForClass").default)
+        }
+    )
+}
+
+const attendanceStatistical = (location, cb) => {
+    require.ensure([], require => {
+            cb(null, require("./components/attendance/js/attendanceStatistical").default)
         }
     )
 }
@@ -650,9 +671,9 @@ class Index extends React.Component {
                     <li><Link
                         to="/answerListFormTeacher?teacherId=23836&topicId=8888"
                         style={{fontSize: '24px'}}>查看学生作答情况(老师)</Link></li>
-                    {/*<li><Link*/}
-                    {/*to="/answerFormStudent?studentId=23991&topicId=8888"*/}
-                    {/*style={{fontSize: '24px'}}>查看作答答案(学生)</Link></li>*/}
+                    <li><Link
+                        to="/answerFormStudent?studentId=23991&topicId=8888"
+                        style={{fontSize: '24px'}}>查看作答答案(学生)</Link></li>
                     {/*to="/wxLogin"*/}
                     {/*style={{fontSize: '24px'}}>授权登录</Link></li>*/}
                     <li><Link
@@ -660,8 +681,18 @@ class Index extends React.Component {
                         style={{fontSize: '24px'}}>查看作答</Link></li>
                     <li>
                         <Link
-                            to="/waterWork?tid=153&stuId=23993" style={{fontSize: '24px'}}>水滴作业</Link>
+                            to="/waterWork?tid=332&stuId=23993" style={{fontSize: '24px'}}>水滴作业</Link>
                     </li>
+                    <li>
+                        <Link   
+                            to="/attendanceTime" style={{fontSize: '24px'}}>考勤考勤</Link>
+                    </li>
+                    <li><Link
+                        to="/attendanceStatistical?schoolId=9"
+                        style={{fontSize: '24px'}}>出勤率统计(饼图)</Link></li>
+                    <li><Link
+                        to="/attendanceSatisticaForClass?schoolId=9"
+                        style={{fontSize: '24px'}}>班级出勤率统计(柱状图)</Link></li>
                 </ul>
             </div>
         );
@@ -760,10 +791,14 @@ ReactDOM.render(
             <Route path="wxLogin" getComponent={wxLogin}/>
             <Route path="warningAdminList" getComponent={warningAdminList}/>
             <Route path="addWarnAdmin" getComponent={addWarnAdmin}/>
+            <Route path="waterWork" getComponent={waterWork} />
+            <Route path="attendanceTime" getComponent={attendanceTime} />
             <Route path="answerFormStudent" getComponent={answerFormStudent}/>
             <Route path="answerListFormTeacher" getComponent={answerListFormTeacher}/>
             <Route path="lookAtTheAnswer" getComponent={LookAtTheAnswer}/>
             <Route path="waterWork" getComponent={waterWork}/>
+            <Route path="attendanceStatistical" getComponent={attendanceStatistical}/>
+            <Route path="attendanceSatisticaForClass" getComponent={attendanceSatisticaForClass}/>
         </Route>
     </Router>
     ,

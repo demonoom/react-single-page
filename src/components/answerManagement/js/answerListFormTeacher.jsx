@@ -17,13 +17,12 @@ export default class answerListFormTeacher extends React.Component {
     }
 
     componentDidMount() {
-        document.title = '作业分析老师';
+        document.title = '作业表情分析';
         var locationHref = window.location.href;
         var locationSearch = locationHref.substr(locationHref.indexOf("?") + 1);
         var searchArray = locationSearch.split("&");
         var teacherId = searchArray[0].split('=')[1];
         var topicId = searchArray[1].split('=')[1];
-        console.log(teacherId);
         this.setState({
             topicId:topicId,
             teacherId:teacherId,

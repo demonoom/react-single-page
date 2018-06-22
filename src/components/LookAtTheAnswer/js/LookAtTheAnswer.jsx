@@ -4,7 +4,7 @@ import '../css/LookAtTheAnswer.less'
 
 var LookAtTheAnswer;
 
-export default class m3u8Player extends React.Component {
+export default class lookAtTheAnswer extends React.Component {
 
     constructor(props) {
         super(props);
@@ -56,64 +56,89 @@ export default class m3u8Player extends React.Component {
      * @param data
      */
     buildSourceObj(data) {
-        data[0] = data[4];
+        data[0] = data[4]
         var _this = this;
         var array = [];
         var arr = [];
+        var ansItem;
+        var ansContent = <div>
+            未作答
+        </div>;
+        var dataDefault = data[0]
         if (WebServiceUtil.isEmpty(data) == false) {
             data.forEach(function (v, i) {
                 var obj = {
                     title: v.student.userName,
                     id: v.student.colUid,
-                    answerList: v.answerList
+                    answerList: v.answerList,
+                    itemList: v.itemList,
                 }
                 array.push(obj)
             })
-            if (WebServiceUtil.isEmpty(data[0].answerList) == false) {
-                data[0].answerList.forEach(function (v, i) {
-                    if (v.type == 1 || v.type == 3) {
-                        var ansItem = <div className="answerList">
-                            <div>第{i + 1}题</div>
-                            <div className="answerCont">{v.textContent}</div>
-                        </div>
-                    } else {
-                        var imgArr = v.picContent.split(',');
-                        var ansImgArr = [];
-                        var audioArr = v.audioContent.split(',')
-                        var ansAudioArr = [];
-                        if (imgArr.length != 0) {
-                            imgArr.forEach(function (item, index) {
-                                ansImgArr.push(
-                                    <span className="ansImg">
-                                    <img src={item}  className="empty_center"
-                                         onClick={_this.imgOnClick.bind(this, item, v.picContent)}/>
+
+            for (var j = 0; j < dataDefault.itemList.length; j++) {
+                ansItem = <div className="answerList">
+                    <div>第{dataDefault.itemList[j].index + 1}题：</div>
+                    {ansContent}
+                </div>
+
+                if (WebServiceUtil.isEmpty(dataDefault.answerList) == false) {
+                    dataDefault.answerList.forEach(function (v, i) {
+                        if (v.item.index == dataDefault.itemList[j].index) {
+                            if (v.type == 1 || v.type == 3) {
+                                var ansIndexItem = <div className="answerList">
+                                    <div className="answerCont">{v.textContent}</div>
+                                </div>
+                            } else {
+                                var imgArr = v.picContent.split(',');
+                                var ansImgArr = [];
+                                var audioArr = v.audioContent.split(',')
+                                var ansAudioArr = [];
+                                if (imgArr.length != 0 && WebServiceUtil.isEmpty(v.picContent) == false) {
+                                    imgArr.forEach(function (item, index) {
+                                        ansImgArr.push(
+                                            <span className="ansImg">
+                                        <img className="empty_center" src={item}
+                                             onClick={_this.imgOnClick.bind(this, item, v.picContent)}/>
                                     </span>
-                                )
-                            })
+                                        )
+                                    })
+                                }
+                                if (audioArr.length != 0 && WebServiceUtil.isEmpty(v.audioContent) == false) {
+                                    audioArr.forEach(function (src, srcIndex) {
+                                        ansAudioArr.push(
+                                            <div className="ansAudio" onClick={_this.topicVoicePlay}>
+                                                <div className="audio_left">
+                                                    <audio
+                                                        src={src}
+                                                        controls="controls"
+                                                        loop="false"
+                                                        hidden="true"
+                                                        className="audioNoom"
+                                                    ></audio>
+                                                </div>
+                                            </div>
+                                        )
+                                    })
+                                }
+                                var ansIndexItem = <div className="answerList">
+                                    <div className="answerCont"
+                                         style={{display: WebServiceUtil.isEmpty(v.textContent) ? 'none' : 'block'}}
+                                    >{v.textContent}</div>
+                                    <div className="ansImgCont">{ansImgArr}</div>
+                                    {ansAudioArr}
+                                </div>
+                            }
+                            ansItem = <div className="answerList">
+                                <div>第{dataDefault.itemList[j].index + 1}题：</div>
+                                <div>
+                                    {ansIndexItem}
+                                </div>
+                            </div>
                         }
-                        if (audioArr.length != 0) {
-                            audioArr.forEach(function (src, srcIndex) {
-                                ansAudioArr.push(
-                                    <div className="ansAudio">
-                                        <div className="audio_left" onClick={_this.topicVoicePlay}>
-                                        <audio src={src}
-                                               controls="controls"
-                                               loop="false"
-                                               hidden="true"></audio>
-                                    </div>
-                                    </div>
-                                )
-                            })
-                        }
-                        var ansItem = <div className="answerList">
-                            <div>第{i + 1}题：</div>
-                            <div className="answerCont">{v.textContent}</div>
-                            <div className="ansImgCont">{ansImgArr}</div>
-                            {ansAudioArr}
-                        </div>
-                    }
-                    arr.push(ansItem)
-                })
+                    })
+                }
+                arr.push(ansItem)
             }
         }
         this.setState({nameArr: array, ansArr: arr});
@@ -126,52 +151,74 @@ export default class m3u8Player extends React.Component {
      */
     tabOnChange = (TabData, index) => {
         var _this = this
-        var arr = []
-        if (WebServiceUtil.isEmpty(TabData.answerList) == false) {
-            TabData.answerList.forEach(function (v, i) {
-                if (v.type == 1 || v.type == 3) {
-                    var ansItem = <div className="answerList">
-                        <div>第{i + 1}题：</div>
-                        <div className="answerCont">{v.textContent}</div>
-                    </div>
-                } else {
-                    var imgArr = v.picContent.split(',');
-                    var ansImgArr = [];
-                    var audioArr = v.audioContent.split(',')
-                    var ansAudioArr = [];
-                    if (imgArr.length != 0) {
-                        imgArr.forEach(function (item, index) {
-                            ansImgArr.push(
-                                <span className="ansImg">
-                                    <img className="empty_center" src={item}
-                                         onClick={_this.imgOnClick.bind(this, item, v.picContent)}/>
-                                </span>
-                            )
-                        })
+        var arr = [];
+        var ansItem;
+        var ansContent = <div>
+            未作答
+        </div>;
+        for (var j = 0; j < TabData.itemList.length; j++) {
+            ansItem = <div className="answerList">
+                <div>第{TabData.itemList[j].index + 1}题：</div>
+                {ansContent}
+            </div>
+
+            if (WebServiceUtil.isEmpty(TabData.answerList) == false) {
+                TabData.answerList.forEach(function (v, i) {
+                    if (v.item.index == TabData.itemList[j].index) {
+                        if (v.type == 1 || v.type == 3) {
+                            var ansIndexItem = <div className="answerList">
+                                <div className="answerCont">{v.textContent}</div>
+                            </div>
+                        } else {
+                            var imgArr = v.picContent.split(',');
+                            var ansImgArr = [];
+                            var audioArr = v.audioContent.split(',')
+                            var ansAudioArr = [];
+                            if (imgArr.length != 0 && WebServiceUtil.isEmpty(v.picContent) == false) {
+                                imgArr.forEach(function (item, index) {
+                                    ansImgArr.push(
+                                        <span className="ansImg">
+                                        <img className="empty_center" src={item}
+                                             onClick={_this.imgOnClick.bind(this, item, v.picContent)}/>
+                                    </span>
+                                    )
+                                })
+                            }
+                            if (audioArr.length != 0 && WebServiceUtil.isEmpty(v.audioContent) == false) {
+                                audioArr.forEach(function (src, srcIndex) {
+                                    ansAudioArr.push(
+                                        <div className="ansAudio" onClick={_this.topicVoicePlay}>
+                                            <div className="audio_left">
+                                                <audio
+                                                    src={src}
+                                                    controls="controls"
+                                                    loop="false"
+                                                    hidden="true"
+                                                    className="audioNoom"
+                                                ></audio>
+                                            </div>
+                                        </div>
+                                    )
+                                })
+                            }
+                            var ansIndexItem = <div className="answerList">
+                                <div className="answerCont"
+                                     style={{display: WebServiceUtil.isEmpty(v.textContent) ? 'none' : 'block'}}
+                                >{v.textContent}</div>
+                                <div className="ansImgCont">{ansImgArr}</div>
+                                {ansAudioArr}
+                            </div>
+                        }
+                        ansItem = <div className="answerList">
+                            <div>第{TabData.itemList[j].index + 1}题：</div>
+                            <div>
+                                {ansIndexItem}
+                            </div>
+                        </div>
                     }
-                    if (audioArr.length != 0) {
-                        audioArr.forEach(function (src, srcIndex) {
-                            ansAudioArr.push(
-                                <div className="ansAudio">
-                                    <div className="audio_left" onClick={_this.topicVoicePlay}>
-                                    <audio src={src}
-                                           controls="controls"
-                                           loop="false"
-                                           hidden="true"></audio>
-                                    </div>
-                                </div>
-                            )
-                        })
-                    }
-                    var ansItem = <div className="answerList">
-                        <div >第{i + 1}题：</div>
-                        <div className="answerCont">{v.textContent}</div>
-                        <div className="ansImgCont">{ansImgArr}</div>
-                        {ansAudioArr}
-                    </div>
-                }
-                arr.push(ansItem)
-            })
+                })
+            }
+            arr.push(ansItem)
         }
         this.setState({ansArr: arr})
     }
@@ -181,9 +228,17 @@ export default class m3u8Player extends React.Component {
      * @param e
      */
     topicVoicePlay(e) {
-        var music = e.target.children[0];
-        var music_btn = e.target;
+        var music = e.target.children[0].children[0];
+        var music_btn = e.target.children[0];
         if (music.paused) {
+            for (var i = 0; i < $('.audioNoom').length; i++) {
+                if (!$('.audioNoom')[i].paused) {
+                    $('.audioNoom')[i].pause();
+                }
+            }
+            for (var i = 0; i < $('.audio_left_run').length; i++) {
+                $('.audio_left_run')[i].className = 'audio_left'
+            }
             music.play();
             music_btn.className = 'audio_left_run';
         }
@@ -223,7 +278,7 @@ export default class m3u8Player extends React.Component {
                 >
                     <div
                         style={{
-                            height:document.body.clientHeight
+                            height: document.body.clientHeight
                         }}
                     >
                         <div className="answerContent">{this.state.ansArr}</div>

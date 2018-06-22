@@ -1,3 +1,4 @@
+(node) util.print is deprecated. Use console.log instead.
 #addTeachBuild .am-input-label-5 {
   width: auto !important;
   position: relative;
@@ -61,7 +62,7 @@
 #addTeachBuild .isDangerArea .am-radio-item {
   display: inline-block;
   background: none;
-  width: 55px;
+  width: 88px;
 }
 #addTeachBuild .isDangerArea .am-radio-inner:after {
   border: 0;
