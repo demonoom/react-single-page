@@ -218,7 +218,7 @@ export default class newAttendanceTime extends React.Component {
 
     render() {
         const ComeChildren = ({ extra, onClick, children }) => (
-            <div className="am-list-item">
+            <div className="am-list-item am-list-item-middle">
                 <div className="am-list-line">
                     <div className="am-list-content">{children}<i className="redStar">*</i></div>
                     <div className="am-list-extra" onClick={onClick}>{extra}</div>
@@ -227,7 +227,7 @@ export default class newAttendanceTime extends React.Component {
             </div>
         );
         const LeaveChildren = ({ extra, onClick, children }) => (
-            <div className="am-list-item">
+            <div className="am-list-item am-list-item-middle">
                 <div className="am-list-line">
                     <div className="am-list-content">{children}<i className="redStar">*</i></div>
                     <div className="am-list-extra" onClick={onClick}>{extra}</div>

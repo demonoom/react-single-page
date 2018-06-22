@@ -21,13 +21,6 @@
   bottom: 15px;
   width: 100%;
 }
-#newAttendanceTime .am-list-item .am-list-line .am-list-content,
-#newAttendanceTime .am-list-extra {
-  line-height: 30px;
-}
-#newAttendanceTime .am-list-item .am-list-line .am-list-arrow {
-  margin-top: 14.5px;
-}
 #newAttendanceTime .teachBuild .redStar {
   left: 106px;
   top: 2px;
@@ -36,9 +29,6 @@
   width: 120px;
   margin-right: 2px;
   position: relative;
-}
-#newAttendanceTime .teachBuild .am-list-item .am-input-control {
-  line-height: 25px;
 }
 #newAttendanceTime .teachBuild .am-list-item .am-input-control input {
   font-size: 16px;
