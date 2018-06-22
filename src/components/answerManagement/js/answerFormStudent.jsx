@@ -17,7 +17,7 @@ export default class answerFormStudent extends React.Component {
     }
 
     componentDidMount() {
-        document.title = '作业分析(学生)';
+        document.title = '作业表情分析';
         var locationHref = window.location.href;
         var locationSearch = locationHref.substr(locationHref.indexOf("?") + 1);
         var searchArray = locationSearch.split("&");

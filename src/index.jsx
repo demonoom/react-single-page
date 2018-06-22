@@ -668,9 +668,9 @@ class Index extends React.Component {
                     <li><Link
                         to="/answerListFormTeacher?teacherId=23836&topicId=8888"
                         style={{fontSize: '24px'}}>查看学生作答情况(老师)</Link></li>
-                    {/*<li><Link*/}
-                    {/*to="/answerFormStudent?studentId=23991&topicId=8888"*/}
-                    {/*style={{fontSize: '24px'}}>查看作答答案(学生)</Link></li>*/}
+                    <li><Link
+                        to="/answerFormStudent?studentId=23991&topicId=8888"
+                        style={{fontSize: '24px'}}>查看作答答案(学生)</Link></li>
                     {/*to="/wxLogin"*/}
                     {/*style={{fontSize: '24px'}}>授权登录</Link></li>*/}
                     <li><Link
