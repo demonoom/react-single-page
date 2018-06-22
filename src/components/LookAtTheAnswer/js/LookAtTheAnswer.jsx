@@ -56,12 +56,11 @@ export default class lookAtTheAnswer extends React.Component {
      * @param data
      */
     buildSourceObj(data) {
-        data[0] = data[4]
         var _this = this;
         var array = [];
         var arr = [];
         var ansItem;
-        var ansContent = <div>
+        var ansContent = <div className="answerContNo">
             未作答
         </div>;
         var dataDefault = data[0]
@@ -86,7 +85,7 @@ export default class lookAtTheAnswer extends React.Component {
                     dataDefault.answerList.forEach(function (v, i) {
                         if (v.item.index == dataDefault.itemList[j].index) {
                             if (v.type == 1 || v.type == 3) {
-                                var ansIndexItem = <div className="answerList">
+                                var ansIndexItem = <div className="">
                                     <div className="answerCont">{v.textContent}</div>
                                 </div>
                             } else {
@@ -121,7 +120,7 @@ export default class lookAtTheAnswer extends React.Component {
                                         )
                                     })
                                 }
-                                var ansIndexItem = <div className="answerList">
+                                var ansIndexItem = <div className="">
                                     <div className="answerCont"
                                          style={{display: WebServiceUtil.isEmpty(v.textContent) ? 'none' : 'block'}}
                                     >{v.textContent}</div>
@@ -153,7 +152,7 @@ export default class lookAtTheAnswer extends React.Component {
         var _this = this
         var arr = [];
         var ansItem;
-        var ansContent = <div>
+        var ansContent = <div className="answerContNo">
             未作答
         </div>;
         for (var j = 0; j < TabData.itemList.length; j++) {
@@ -166,7 +165,7 @@ export default class lookAtTheAnswer extends React.Component {
                 TabData.answerList.forEach(function (v, i) {
                     if (v.item.index == TabData.itemList[j].index) {
                         if (v.type == 1 || v.type == 3) {
-                            var ansIndexItem = <div className="answerList">
+                            var ansIndexItem = <div>
                                 <div className="answerCont">{v.textContent}</div>
                             </div>
                         } else {
@@ -201,7 +200,7 @@ export default class lookAtTheAnswer extends React.Component {
                                     )
                                 })
                             }
-                            var ansIndexItem = <div className="answerList">
+                            var ansIndexItem = <div>
                                 <div className="answerCont"
                                      style={{display: WebServiceUtil.isEmpty(v.textContent) ? 'none' : 'block'}}
                                 >{v.textContent}</div>

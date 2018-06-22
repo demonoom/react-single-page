@@ -179,7 +179,7 @@ export default class answerListFormTeacher extends React.Component {
             }
             var rem = <div className="canvasBox_cont">
                 <div className="title">题目{data[k].questionCount}</div>
-                <div className="sort">本题耗时排名:{data[k].sort}</div>
+                <div className="sort">{this.state.type == 0?'本题耗时排名':'本體理解度排名'}:{data[k].sort}</div>
                 <div style={{height: '300px'}} className="echarts_wrap">
                     {reactDom}
                 </div>

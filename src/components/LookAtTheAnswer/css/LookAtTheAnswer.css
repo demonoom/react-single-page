@@ -39,7 +39,7 @@
 }
 #LookAtTheAnswer .answerContent {
   padding: 10px 15px;
-  height: calc(100% - 30px);
+  height: calc(100% - 35px);
   overflow-y: auto;
 }
 #LookAtTheAnswer .answerList {
@@ -57,6 +57,12 @@
   color: #666;
   line-height: 1.5;
   font-size: 15px;
+  padding-top: 10px;
+}
+#LookAtTheAnswer .answerContNo {
+  color: #888;
+  line-height: 1.5;
+  font-size: 14px;
   padding-top: 10px;
 }
 #LookAtTheAnswer .ansImgCont {
