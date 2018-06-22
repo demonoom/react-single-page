@@ -174,7 +174,7 @@ export default class getClassTableList extends React.Component {
         } else {
             phone = 'android'
         }
-        const alertInstance = alert('您确定要删除该课表吗?', '', [
+        const alertInstance = alert('您确定要删除该考勤吗?', '', [
             {text: '取消', onPress: () => console.log('cancel'), style: 'default'},
             {text: '确定', onPress: () => AttenT.delAttendanceTime(data)},
         ], phone);
