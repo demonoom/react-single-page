@@ -156,6 +156,7 @@ export default class answerFormStudent extends React.Component {
                 <ReactEcharts
                     option={columnarChartOptionForTime}
                     style={{height: '100%', width: '100%'}}
+                    theme='macarons'
                 />
             </div>
         </div>

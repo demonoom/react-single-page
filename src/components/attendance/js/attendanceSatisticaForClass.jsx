@@ -41,6 +41,13 @@ export default class attendanceSatisticaForClass extends React.Component {
                 left:'center'
             },
             backgroundColor:'white',
+            center: ['50%', '55%'],
+            grid:{
+                x:25,
+                y:25,
+                x2:25,
+                y2:80,
+            },
             //color: ['#003366', '#006699', '#4cabce', '#e5323e'],
             tooltip: {
                 trigger: 'axis',
@@ -52,6 +59,16 @@ export default class attendanceSatisticaForClass extends React.Component {
                 data: ['应到', '准时', '缺勤', '迟到'],
                 bottom:'0'
             },
+            dataZoom: [
+                {
+                    show: true,
+                    //开始位置的百分比，0 - 100
+                    start: 0,
+                    //结束位置的百分比，0 - 100
+                    end: 100,
+                    bottom:"7%",
+                }
+            ],
             calculable: true,
             xAxis: [
                 {
@@ -129,7 +146,7 @@ export default class attendanceSatisticaForClass extends React.Component {
         console.log(data);
         var xClassArray = [],lateArray=[],allArray=[],actuallyArray=[],noAttendanceArray=[];
         for(var k in data){
-            xClassArray.push(data[k].clazz.name);
+            xClassArray.push(data[k].clazz.grade?data[k].clazz.grade.name+''+data[k].clazz.name:data[k].clazz.name);
             lateArray.push(data[k].attendanceLate);
             allArray.push(data[k].allSchoolStudent);
             actuallyArray.push(data[k].attendanceStudent);
@@ -139,7 +156,7 @@ export default class attendanceSatisticaForClass extends React.Component {
         var reactDom =
             <ReactEcharts
                 option={columnarChartOption}
-                style={{height: this.state.clientHeight / 2, width: '100%'}}
+                style={{height: this.state.clientHeight / 2 + 50, width: '100%'}}
                 theme='macarons'
                 className=''/>
         this.setState({
