@@ -141,6 +141,7 @@ export default class answerListFormTeacher extends React.Component {
         var domArray = [];
         // debugger;
         for (var k in data) {  //todo 循环生成题目
+            var reactDom = [];
             var reactEchartsArray = [];   //要渲染的图表数组
             var classArray = data[k].clazzArray;   //获取到班级数组
             for (var v in classArray) {  //todo 循环生成图表
@@ -167,20 +168,20 @@ export default class answerListFormTeacher extends React.Component {
                 let onEvents = {
                     'click': this.onChartClick.bind(this, idArray),
                 }
-                var reactDom =
+                reactDom =
                     <ReactEcharts
                         option={columnarChartOption}
                         style={{height: '100%', width: '100%'}}
                         onEvents={onEvents}
                         theme='macarons'
                     />
-                reactEchartsArray.push(reactDom);
+                // reactEchartsArray.push(reactDom);
             }
-            var rem = <div>
+            var rem = <div className="canvasBox_cont">
                 <div className="title">题目{data[k].questionCount}</div>
                 <div className="sort">本题耗时排名:{data[k].sort}</div>
                 <div style={{height: '300px'}} className="echarts_wrap">
-                    {reactEchartsArray}
+                    {reactDom}
                 </div>
             </div>
             domArray.push(rem);
@@ -195,7 +196,8 @@ export default class answerListFormTeacher extends React.Component {
         var param = {
             "method": 'getFuzzyHomeworkEmotionByTopicId',
             "topicId": this.state.topicId,
-            "userId": this.state.teacherId
+            "userId": this.state.teacherId,
+            "type":this.state.type
         };
 
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
