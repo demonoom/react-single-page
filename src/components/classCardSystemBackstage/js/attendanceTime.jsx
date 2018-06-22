@@ -272,7 +272,7 @@ export default class getClassTableList extends React.Component {
             return (
                 <div className="classInfo line_public attendanceCont">
                     <div>
-                        <div className="title">
+                        <div className="title textOver">
                             {rowData.name}
                         </div>
                         <div className="tableListDate textOver">
