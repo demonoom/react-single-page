@@ -218,20 +218,21 @@ export default class newAttendanceTime extends React.Component {
 
     render() {
         const ComeChildren = ({ extra, onClick, children }) => (
-            <div
-                style={{ backgroundColor: '#fff', height: '45px', lineHeight: '45px', padding: '0 15px' }}
-            >
-                {children}
-                <span onClick={onClick} style={{ float: 'right', color: '#888' }}>{extra}</span>
+            <div className="am-list-item">
+                <div className="am-list-line">
+                    <div className="am-list-content">{children}<i className="redStar">*</i></div>
+                    <div className="am-list-extra" onClick={onClick}>{extra}</div>
+                    <div className="am-list-arrow am-list-arrow-horizontal"></div>
+                </div>
             </div>
         );
         const LeaveChildren = ({ extra, onClick, children }) => (
-            <div
-
-                style={{ backgroundColor: '#fff', height: '45px', lineHeight: '45px', padding: '0 15px' }}
-            >
-                {children}
-                <span onClick={onClick} style={{ float: 'right', color: '#888' }}>{extra}</span>
+            <div className="am-list-item">
+                <div className="am-list-line">
+                    <div className="am-list-content">{children}<i className="redStar">*</i></div>
+                    <div className="am-list-extra" onClick={onClick}>{extra}</div>
+                    <div className="am-list-arrow am-list-arrow-horizontal"></div>
+                </div>
             </div>
         );
         return (

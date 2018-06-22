@@ -7,7 +7,7 @@ import {
     InputItem,
     DatePicker,
 } from 'antd-mobile';
-// import '../css/newCurriculumSche/addCurriculumSchedule.less'
+import '../css/newAttendanceTime.less'
 
 var addAT;
 
@@ -99,19 +99,22 @@ export default class newAttendanceTime extends React.Component {
 
     render() {
         const ComeChildren = ({ extra, onClick, children }) => (
-            <div
-                style={{ backgroundColor: '#fff', height: '45px', lineHeight: '45px', padding: '0 15px' }}
-            >
-                {children}
-                <span onClick={onClick} style={{ float: 'right', color: '#888' }}>{extra}</span>
+            <div className="am-list-item">
+                <div className="am-list-line">
+                    <div className="am-list-content">{children}<i className="redStar">*</i></div>
+                    <div className="am-list-extra" onClick={onClick}>{extra}</div>
+                    <div className="am-list-arrow am-list-arrow-horizontal"></div>
+                </div>
             </div>
+
         );
         const LeaveChildren = ({ extra, onClick, children }) => (
-            <div
-                style={{ backgroundColor: '#fff', height: '45px', lineHeight: '45px', padding: '0 15px' }}
-            >
-                {children}
-                <span onClick={onClick} style={{ float: 'right', color: '#888' }}>{extra}</span>
+            <div className="am-list-item">
+                <div className="am-list-line">
+                    <div className="am-list-content">{children}<i className="redStar">*</i></div>
+                    <div className="am-list-extra" onClick={onClick}>{extra}</div>
+                    <div className="am-list-arrow am-list-arrow-horizontal"></div>
+                </div>
             </div>
         );
         return (
@@ -121,7 +124,7 @@ export default class newAttendanceTime extends React.Component {
                     <WhiteSpace size="lg" />
                     <div className='teachBuild'>
                         <InputItem
-                            placeholder="请选择教学楼"
+                            placeholder="请输入考勤时段名称"
                             data-seed="logId"
                             onChange={v => {
                                 addAT.setState({

@@ -270,17 +270,14 @@ export default class getClassTableList extends React.Component {
             SwitchExample = createForm()(SwitchExample);
 
             return (
-                <div className="classInfo line_public">
+                <div className="classInfo line_public attendanceCont">
                     <div>
-                        <div className="am-list-item am-list-item-middle">
-                            <div className="am-list-line">
-                                <div className="am-list-content">{rowData.name}</div>
-                                <div className="am-list-arrow am-list-arrow-horizontal"></div>
-                            </div>
+                        <div className="title">
+                            {rowData.name}
                         </div>
                         <div className="tableListDate textOver">
-                            <div className="classroom"><span className="classroom_span">入校时间：</span>{rowData.itemList[0].checkIn}</div>
-                            <div className="classroom"><span className="classroom_span">离校时间：</span>{rowData.itemList[0].checkOut}</div>
+                            <div className="classroom time"><span className="classroom_span">入校时间：</span>{rowData.itemList[0].checkIn}</div>
+                            <div className="classroom time"><span className="classroom_span">离校时间：</span>{rowData.itemList[0].checkOut}</div>
                         </div>
                     </div>
                     <SwitchExample/>
