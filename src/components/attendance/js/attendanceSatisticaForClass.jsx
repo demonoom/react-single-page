@@ -144,6 +144,9 @@ export default class attendanceSatisticaForClass extends React.Component {
 
     getData(data) {   //设置数据结构
         console.log(data);
+        if(!data){
+            Toast.info('暂无数据');
+        }
         var xClassArray = [],lateArray=[],allArray=[],actuallyArray=[],noAttendanceArray=[];
         for(var k in data){
             xClassArray.push(data[k].clazz.grade?data[k].clazz.grade.name+''+data[k].clazz.name:data[k].clazz.name);
@@ -154,7 +157,8 @@ export default class attendanceSatisticaForClass extends React.Component {
         }
         var columnarChartOption = this.buildChartOption(xClassArray,lateArray,allArray,actuallyArray,noAttendanceArray);
         var reactDom =
-            <ReactEcharts
+            <ReactEcharts start
+
                 option={columnarChartOption}
                 style={{height: this.state.clientHeight / 2 + 50, width: '100%'}}
                 theme='macarons'
