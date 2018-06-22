@@ -4,6 +4,7 @@ import {
     Toast, DatePicker, List, Button, ActivityIndicator
 } from 'antd-mobile';
 import '../css/attendanceSatisticaForClass.less'
+import '../css/macarons'
 
 export default class attendanceSatisticaForClass extends React.Component {
 
@@ -40,7 +41,7 @@ export default class attendanceSatisticaForClass extends React.Component {
                 left:'center'
             },
             backgroundColor:'white',
-            color: ['#003366', '#006699', '#4cabce', '#e5323e'],
+            //color: ['#003366', '#006699', '#4cabce', '#e5323e'],
             tooltip: {
                 trigger: 'axis',
                 axisPointer: {
@@ -139,7 +140,8 @@ export default class attendanceSatisticaForClass extends React.Component {
             <ReactEcharts
                 option={columnarChartOption}
                 style={{height: this.state.clientHeight / 2, width: '100%'}}
-            />
+                theme='macarons'
+                className=''/>
         this.setState({
             domArray: reactDom,
         });
