@@ -1,10 +1,10 @@
 import React from 'react';
 import ReactEcharts from 'echarts-for-react';
 import {
-    Toast, DatePicker, List, Button, ActivityIndicator
+    Toast, DatePicker, List, Button, ActivityIndicator,WhiteSpace
 } from 'antd-mobile';
 import '../css/attendanceStatistical.less'
-
+import '../css/macarons'
 export default class attendanceStatistical extends React.Component {
 
     constructor(props) {
@@ -36,8 +36,8 @@ export default class attendanceStatistical extends React.Component {
         return {
             backgroundColor:'white',
             title: {
-                text: '出勤率:' + (attendancePercent * 100) + '%',
-                subtext: '应到:' + allSchoolStudent + '人',
+                text: '出勤率：' + (attendancePercent * 100) + '%',
+                subtext: '应到：' + allSchoolStudent + '人',
                 left: 'center',
                 subtextStyle: {
                     color: '#999',          // 副标题文字颜色
@@ -104,6 +104,7 @@ export default class attendanceStatistical extends React.Component {
             <ReactEcharts
                 option={columnarChartOption}
                 style={{height: this.state.clientHeight / 2 + this.state.clientHeight * 0.05, width: '100%'}}
+                theme='macarons'
             />
         this.setState({
             domArray: reactDom,
@@ -166,10 +167,10 @@ export default class attendanceStatistical extends React.Component {
                     // onChange={date => this.setState({ date })}
                     onOk={this.dateChange.bind(this)}
                 >
-                    <List.Item arrow="horizontal">选择日期</List.Item>
+                    <List.Item arrow="horizontal" className="data_list">选择日期</List.Item>
                 </DatePicker>
-
-                <div>
+                <WhiteSpace size="lg"/>
+                <div className="dom_cont">
                     {this.state.domArray}
                 </div>
 

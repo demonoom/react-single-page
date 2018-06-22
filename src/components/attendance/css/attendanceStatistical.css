@@ -1,0 +1,13 @@
+#attendanceStatistical {
+  background: #fff;
+}
+#attendanceStatistical .data_list {
+  padding: 5px 0 5px 15px;
+}
+#attendanceStatistical .am-whitespace.am-whitespace-lg {
+  background: #f4f4f4;
+}
+#attendanceStatistical .dom_cont {
+  padding: 15px 0;
+  background: #fff !important;
+}

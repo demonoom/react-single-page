@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactEcharts from 'echarts-for-react';
 import {
-    Toast, DatePicker, List, Button, ActivityIndicator
+    Toast, DatePicker, List, Button, ActivityIndicator,WhiteSpace
 } from 'antd-mobile';
 import '../css/attendanceSatisticaForClass.less'
 import '../css/macarons'
@@ -195,18 +195,19 @@ export default class attendanceSatisticaForClass extends React.Component {
                 height: this.state.clientHeight + 'px',
                 overflow: 'auto',
             }}>
-                <DatePicker
-                    mode="date"
-                    // title="Select Date"
-                    extra={this.state.date}
-                    value={this.state.date}
-                    // onChange={date => this.setState({ date })}
-                    onOk={this.dateChange.bind(this)}
-                >
-                    <List.Item arrow="horizontal">选择日期</List.Item>
-                </DatePicker>
+                    <DatePicker
+                        mode="date"
+                        // title="Select Date"
+                        extra={this.state.date}
+                        value={this.state.date}
+                        // onChange={date => this.setState({ date })}
+                        onOk={this.dateChange.bind(this)}
 
-                <div>
+                    >
+                        <List.Item arrow="horizontal" className="data_list">选择日期</List.Item>
+                    </DatePicker>
+                <WhiteSpace size="lg"/>
+                <div className="dom_cont">
                     {this.state.domArray}
                 </div>
 
