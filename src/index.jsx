@@ -409,6 +409,7 @@ const newUpdateCurriculumSchedule = (location, cb) => {
     })
 }
 
+
 const classHonorList = (location, cb) => {
     require.ensure([], require => {
             cb(null, require("./components/classCardSystemBackstage/js/classHonorList").default)
@@ -487,7 +488,17 @@ const attendanceTime =  (location, cb) => {
         }
     )
 }
-
+const newAttendanceTime = (location, cb) => {
+    require.ensure([], require => {
+            cb(null, require("./components/classCardSystemBackstage/js/newAttendanceTime").default)
+        }
+    )
+}
+const updateAttendanceTime = (location, cb) => {
+    require.ensure([], require => {
+        cb(null, require("./components/classCardSystemBackstage/js/updateAttendanceTime").default)
+    })
+}
 const littleAntPolicy = (location, cb) => {
     require.ensure([], require => {
             cb(null, require("./components/littleAntPolicy/littleAntPolicy").default)
@@ -685,7 +696,7 @@ class Index extends React.Component {
                     </li>
                     <li>
                         <Link   
-                            to="/attendanceTime" style={{fontSize: '24px'}}>考勤考勤</Link>
+                            to="/attendanceTime?uid=23836" style={{fontSize: '24px'}}>考勤考勤</Link>
                     </li>
                     <li><Link
                         to="/attendanceStatistical?schoolId=9"
@@ -793,6 +804,8 @@ ReactDOM.render(
             <Route path="addWarnAdmin" getComponent={addWarnAdmin}/>
             <Route path="waterWork" getComponent={waterWork} />
             <Route path="attendanceTime" getComponent={attendanceTime} />
+            <Route path="newAttendanceTime" getComponent={newAttendanceTime} />
+            <Route path="updateAttendanceTime" getComponent={updateAttendanceTime} />
             <Route path="answerFormStudent" getComponent={answerFormStudent}/>
             <Route path="answerListFormTeacher" getComponent={answerListFormTeacher}/>
             <Route path="lookAtTheAnswer" getComponent={LookAtTheAnswer}/>
