@@ -21,10 +21,10 @@
     }
     echarts.registerTheme('macarons', {
         "color": [
-            "#3fb1e3",
-            "#63c98e",
+            "#0085b6",
+            "#00d49d",
             "#fab74d",
-            "#ff7373",
+            "#ff5020",
             "#c4ebad",
             "#96dee8"
         ],
@@ -192,10 +192,10 @@
             "symbol": "emptyCircle",
             "smooth": false,
             "color": [
-                "#3fb1e3",
-                "#63c98e",
+                "#0085b6",
+                "#00d49d",
                 "#fab74d",
-                "#ff7373",
+                "#ff5020",
                 "#c4ebad",
                 "#96dee8"
             ],
