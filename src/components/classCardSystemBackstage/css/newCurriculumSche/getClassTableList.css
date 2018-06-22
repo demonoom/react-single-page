@@ -270,10 +270,14 @@
   width: 89px;
   display: inline-block;
 }
+#getClassTableList .am-list-view-scrollview-content {
+  width: 100%;
+}
 #getClassTableList .attendanceCont .title {
   color: #333;
   font-size: 17px;
   padding: 5px 15px 0;
+  box-sizing: border-box;
 }
 #getClassTableList .attendanceCont .am-list-item {
   min-height: 38px;
