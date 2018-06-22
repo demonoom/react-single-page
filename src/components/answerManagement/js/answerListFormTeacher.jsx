@@ -177,8 +177,8 @@ export default class answerListFormTeacher extends React.Component {
                 reactEchartsArray.push(reactDom);
             }
             var rem = <div>
-                <div className="title">题目{data[k].questionCount}</div>
-                <div className="sort">{this.state.type == 0?'本题耗时排名':'本體理解度排名'}:{data[k].sort}</div>
+                <div className="">题目{data[k].questionCount}</div>
+                <div className="">{this.state.type == 0?'本题耗时排名':'本體理解度排名'}:{data[k].sort}</div>
                 <div style={{height: '300px'}} className="echarts_wrap">
                     {reactEchartsArray}
                 </div>
