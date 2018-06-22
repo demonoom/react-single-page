@@ -94,6 +94,9 @@ export default class attendanceStatistical extends React.Component {
 
     getData(data) {   //设置数据结构
         console.log(data, 'data');
+        if(!data){
+            Toast.info('暂无数据',1);
+        }
         var noAttendanceStudent = data.noAttendanceStudent; //缺勤
         var attendanceStudent = data.attendanceStudent;   //实到
         var allSchoolStudent = data.allSchoolStudent; //应到

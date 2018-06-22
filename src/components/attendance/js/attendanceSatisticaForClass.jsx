@@ -145,7 +145,7 @@ export default class attendanceSatisticaForClass extends React.Component {
     getData(data) {   //设置数据结构
         console.log(data);
         if(!data){
-            Toast.info('暂无数据');
+            Toast.info('暂无数据',1);
         }
         var xClassArray = [],lateArray=[],allArray=[],actuallyArray=[],noAttendanceArray=[];
         for(var k in data){

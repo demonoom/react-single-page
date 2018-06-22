@@ -698,12 +698,12 @@ class Index extends React.Component {
                         <Link   
                             to="/attendanceTime?uid=23836" style={{fontSize: '24px'}}>考勤考勤</Link>
                     </li>
-                    <li><Link
-                        to="/attendanceStatistical?schoolId=9"
-                        style={{fontSize: '24px'}}>出勤率统计(饼图)</Link></li>
-                    <li><Link
-                        to="/attendanceSatisticaForClass?schoolId=9"
-                        style={{fontSize: '24px'}}>班级出勤率统计(柱状图)</Link></li>
+                    {/*<li><Link*/}
+                        {/*to="/attendanceStatistical?schoolId=9"*/}
+                        {/*style={{fontSize: '24px'}}>出勤率统计(饼图)</Link></li>*/}
+                    {/*<li><Link*/}
+                        {/*to="/attendanceSatisticaForClass?schoolId=9"*/}
+                        {/*style={{fontSize: '24px'}}>班级出勤率统计(柱状图)</Link></li>*/}
                 </ul>
             </div>
         );
