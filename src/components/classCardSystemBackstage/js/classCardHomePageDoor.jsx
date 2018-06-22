@@ -1,5 +1,5 @@
 import React from 'react';
-import {Icon, Toast} from 'antd-mobile';
+import { Icon, Toast } from 'antd-mobile';
 import '../css/classCardHomePageDoor.less'
 
 export default class classCardHomePageDoor extends React.Component {
@@ -14,7 +14,7 @@ export default class classCardHomePageDoor extends React.Component {
         var locationSearch = locationHref.substr(locationHref.indexOf("?") + 1);
         var searchArray = locationSearch.split("&");
         var ident = searchArray[0].split('=')[1];
-        this.setState({ident})
+        this.setState({ ident })
         this.getUserByAccount(ident)
     }
 
@@ -32,7 +32,7 @@ export default class classCardHomePageDoor extends React.Component {
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
             onResponse: (result) => {
                 if (result.msg == '调用成功' || result.success == true) {
-                    _this.setState({schoolId: result.response.schoolId})
+                    _this.setState({ schoolId: result.response.schoolId })
                 }
             },
             onError: function (error) {
@@ -186,9 +186,19 @@ export default class classCardHomePageDoor extends React.Component {
         });
     }
 
+    turnToAttendanceTime = () => {
+        var url = WebServiceUtil.mobileServiceURL + "attendanceTime?uid="+ this.state.ident;
+        var data = {
+            method: 'openNewPage',
+            url: url
+        };
+        Bridge.callHandler(data, null, function (error) {
+            window.location.href = url;
+        });
+    }
     render() {
         return (
-            <div id="classCardHomePageDoor" style={{height: document.body.clientHeight, overflow: 'auto'}}>
+            <div id="classCardHomePageDoor" style={{ height: document.body.clientHeight, overflow: 'auto' }}>
                 <ul className="classCardHomePageDoor">
                     <li onClick={this.turnToClassroomManage}><i className="icon icon_ClassroomManagement"></i>教室管理<i
                         className="arrow_right"></i></li>
@@ -212,6 +222,8 @@ export default class classCardHomePageDoor extends React.Component {
                     <li onClick={this.turnToStudentMovement}><i className="icon icon_exercise"></i>学生运动轨迹<i
                         className="arrow_right"></i></li>
                     <li onClick={this.turnWarningAdminList}><i className="icon icon_moralEducationScore"></i>预警人员管理<i
+                        className="arrow_right"></i></li>
+                    <li onClick={this.turnToAttendanceTime}><i className="icon icon_moralEducationScore"></i>考勤时段设置<i
                         className="arrow_right"></i></li>
                 </ul>
             </div>
