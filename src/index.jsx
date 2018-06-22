@@ -554,6 +554,20 @@ const waterWork = (location, cb) => {
     )
 }
 
+const attendanceSatisticaForClass = (location, cb) => {
+    require.ensure([], require => {
+            cb(null, require("./components/attendance/js/attendanceSatisticaForClass").default)
+        }
+    )
+}
+
+const attendanceStatistical = (location, cb) => {
+    require.ensure([], require => {
+            cb(null, require("./components/attendance/js/attendanceStatistical").default)
+        }
+    )
+}
+
 import './index.less';
 
 class Index extends React.Component {
@@ -684,6 +698,12 @@ class Index extends React.Component {
                         <Link   
                             to="/attendanceTime?uid=23836" style={{fontSize: '24px'}}>考勤考勤</Link>
                     </li>
+                    <li><Link
+                        to="/attendanceStatistical?schoolId=9"
+                        style={{fontSize: '24px'}}>出勤率统计(饼图)</Link></li>
+                    <li><Link
+                        to="/attendanceSatisticaForClass?schoolId=9"
+                        style={{fontSize: '24px'}}>班级出勤率统计(柱状图)</Link></li>
                 </ul>
             </div>
         );
@@ -790,6 +810,8 @@ ReactDOM.render(
             <Route path="answerListFormTeacher" getComponent={answerListFormTeacher}/>
             <Route path="lookAtTheAnswer" getComponent={LookAtTheAnswer}/>
             <Route path="waterWork" getComponent={waterWork}/>
+            <Route path="attendanceStatistical" getComponent={attendanceStatistical}/>
+            <Route path="attendanceSatisticaForClass" getComponent={attendanceSatisticaForClass}/>
         </Route>
     </Router>
     ,
