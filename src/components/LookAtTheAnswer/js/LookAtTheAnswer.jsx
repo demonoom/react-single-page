@@ -162,6 +162,7 @@ export default class lookAtTheAnswer extends React.Component {
             </div>
 
             if (WebServiceUtil.isEmpty(TabData.answerList) == false) {
+
                 TabData.answerList.forEach(function (v, i) {
                     if (v.item.index == TabData.itemList[j].index) {
                         if (v.type == 1 || v.type == 3) {
@@ -169,9 +170,9 @@ export default class lookAtTheAnswer extends React.Component {
                                 <div className="answerCont">{v.textContent}</div>
                             </div>
                         } else {
-                            var imgArr = v.picContent.split(',');
+                            var imgArr = v.picContent ? v.picContent.split(',') : [];
                             var ansImgArr = [];
-                            var audioArr = v.audioContent.split(',')
+                            var audioArr = v.audioContent ? v.audioContent.split(',') : []
                             var ansAudioArr = [];
                             if (imgArr.length != 0 && WebServiceUtil.isEmpty(v.picContent) == false) {
                                 imgArr.forEach(function (item, index) {
@@ -204,7 +205,9 @@ export default class lookAtTheAnswer extends React.Component {
                                 <div className="answerCont"
                                      style={{display: WebServiceUtil.isEmpty(v.textContent) ? 'none' : 'block'}}
                                 >{v.textContent}</div>
-                                <div className="ansImgCont">{ansImgArr}</div>
+                                {
+                                    ansImgArr.length == 0 ? "" : <div className="ansImgCont">{ansImgArr}</div>
+                                }
                                 {ansAudioArr}
                             </div>
                         }
