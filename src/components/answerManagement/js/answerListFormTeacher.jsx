@@ -25,9 +25,9 @@ export default class answerListFormTeacher extends React.Component {
         var teacherId = searchArray[0].split('=')[1];
         var topicId = searchArray[1].split('=')[1];
         this.setState({
-            topicId:topicId,
-            teacherId:teacherId,
-        },function(){
+            topicId: topicId,
+            teacherId: teacherId,
+        }, function () {
             this.getFuzzyHomeworkEmotionByTopicId();
         }.bind(this))
     }
@@ -121,8 +121,8 @@ export default class answerListFormTeacher extends React.Component {
 
     onChartClick(idArray, optional) {
         console.log(idArray[optional.dataIndex], '学生id');
-        if(idArray[optional.dataIndex]){
-            var analysisUrl = WebServiceUtil.mobileServiceURL + "answerFormStudent?studentId=" + idArray[optional.dataIndex]+"&topicId="+this.state.topicId;
+        if (idArray[optional.dataIndex]) {
+            var analysisUrl = WebServiceUtil.mobileServiceURL + "answerFormStudent?studentId=" + idArray[optional.dataIndex] + "&topicId=" + this.state.topicId;
             var data = {
                 method: 'openNewPage',
                 url: analysisUrl,
@@ -130,7 +130,7 @@ export default class answerListFormTeacher extends React.Component {
             Bridge.callHandler(data, null, function (error) {
                 window.location.href = analysisUrl;
             });
-        }else{
+        } else {
             Toast.info('学生id不存在!');
         }
 
@@ -180,7 +180,7 @@ export default class answerListFormTeacher extends React.Component {
             }
             var rem = <div className="canvasBox_cont">
                 <div className="title">题目{data[k].questionCount}</div>
-                <div className="sort">{this.state.type == 0?'本题耗时排名':'本體理解度排名'}:{data[k].sort}</div>
+                <div className="sort">{this.state.type == 0 ? '本题耗时排名' : '本體理解度排名'}:{data[k].sort}</div>
                 <div style={{height: '300px'}} className="echarts_wrap">
                     {reactDom}
                 </div>
@@ -198,7 +198,7 @@ export default class answerListFormTeacher extends React.Component {
             "method": 'getFuzzyHomeworkEmotionByTopicId',
             "topicId": this.state.topicId,
             "userId": this.state.teacherId,
-            "type":this.state.type
+            "type": this.state.type
         };
 
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
@@ -229,9 +229,10 @@ export default class answerListFormTeacher extends React.Component {
                 height: this.state.clientHeight + 'px',
                 // overflow: 'auto',
             }}>
-                <button className="topButton" onClick={this.tabType.bind(this)}>切换至{this.state.type == 0 ? '时长统计' : '理解度统计'}</button>
+                <button className="topButton" onClick={this.tabType.bind(this)}>
+                    切换至{this.state.type == 0 ? '时长统计' : '理解度统计'}</button>
                 <div className="canvasBox" style={{
-                    height:this.state.clientHeight + 'px'
+                    height: this.state.clientHeight + 'px'
                 }}>
                     {this.state.domArray}
                 </div>
