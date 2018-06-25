@@ -175,6 +175,7 @@ export default class answerListFormTeacher extends React.Component {
                         onEvents={onEvents}
                         theme='macarons'
                     />
+                console.log(reactDom);
                 // reactEchartsArray.push(reactDom);
             }
             var rem = <div className="canvasBox_cont">
