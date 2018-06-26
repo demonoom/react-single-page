@@ -96,4 +96,16 @@
   .am-tabs-default-bar-underline{
     border:1px #73B6F5 solid;
   }
+  .am-tabs-default-bar-tab{
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    display: inline-block;
+    line-height: 27px;
+    text-align: center;
+    border-bottom: none!important;
+    &::after{
+      display: none !important;
+    }
+  }
 }

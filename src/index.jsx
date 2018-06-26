@@ -702,7 +702,7 @@ class Index extends React.Component {
                     {/*to="/wxLogin"*/}
                     {/*style={{fontSize: '24px'}}>授权登录</Link></li>*/}
                     <li><Link
-                        to="/lookAtTheAnswer?tpId=154&access_user=23836"
+                        to="/lookAtTheAnswer?tpId=1285598&access_user=23836"
                         style={{fontSize: '24px'}}>查看作答</Link></li>
                     <li>
                         <Link
