@@ -568,6 +568,20 @@ const attendanceStatistical = (location, cb) => {
     )
 }
 
+const attendanceStatistical = (location, cb) => {
+    require.ensure([], require => {
+            cb(null, require("./components/attendance/js/attendanceStatistical").default)
+        }
+    )
+}
+
+const attendanceStatistical = (location, cb) => {
+    require.ensure([], require => {
+            cb(null, require("./components/attendance/js/attendanceStatistical").default)
+        }
+    )
+}
+
 import './index.less';
 
 class Index extends React.Component {

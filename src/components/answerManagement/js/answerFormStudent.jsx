@@ -126,14 +126,14 @@ export default class answerFormStudent extends React.Component {
         var category = [], barData = [], lineData = [],barDataForTime=[],lineDataForTime = [],sum=0,timeSum=0;
         for (var k in data) {
             category.push('题目' + data[k].answer.item.index);
-            barData.push(data[k].understand);
-            barDataForTime.push(data[k].elapsedTime);
+            barData.push((data[k].understand).toFixed(2));
+            barDataForTime.push((data[k].elapsedTime).toFixed(2));
             sum += data[k].understand;
             timeSum += data[k].elapsedTime;
         }
         for(var k in data){
-            lineData.push(sum / data.length);
-            lineDataForTime.push(timeSum / data.length);
+            lineData.push((sum / data.length).toFixed(2));
+            lineDataForTime.push((timeSum / data.length).toFixed(2));
         }
         var columnarChartOption = this.buildChartOption(category, barData, lineData,0);
         var columnarChartOptionForTime = this.buildChartOption(category,barDataForTime,lineDataForTime,1)
