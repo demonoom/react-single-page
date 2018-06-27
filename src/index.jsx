@@ -568,6 +568,28 @@ const attendanceStatistical = (location, cb) => {
     )
 }
 
+/**
+ * AR教材部分
+ */
+const ARTextbookList = (location, cb) => {
+    require.ensure([], require => {
+            cb(null, require("./components/ARTextbook/js/ARTextbookList").default)
+        }
+    )
+}
+
+const addARTextbook = (location, cb) => {
+    require.ensure([], require => {
+            cb(null, require("./components/ARTextbook/js/addARTextbook").default)
+        }
+    )
+}
+const UpdateARTextbook =  (location, cb) => {
+    require.ensure([], require => {
+            cb(null, require("./components/ARTextbook/js/UpdateARTextbook").default)
+        }
+    )
+}
 import './index.less';
 
 class Index extends React.Component {
@@ -698,6 +720,12 @@ class Index extends React.Component {
                         <Link   
                             to="/attendanceTime?uid=23836" style={{fontSize: '24px'}}>考勤考勤</Link>
                     </li>
+
+                    <li>
+                        <Link
+                            to="/ARTextbookList?uid=23836" style={{fontSize: '24px'}}
+                        >AR教材</Link>
+                    </li>
                     {/*<li><Link*/}
                         {/*to="/attendanceStatistical?schoolId=9"*/}
                         {/*style={{fontSize: '24px'}}>出勤率统计(饼图)</Link></li>*/}
@@ -812,6 +840,9 @@ ReactDOM.render(
             <Route path="waterWork" getComponent={waterWork}/>
             <Route path="attendanceStatistical" getComponent={attendanceStatistical}/>
             <Route path="attendanceSatisticaForClass" getComponent={attendanceSatisticaForClass}/>
+            <Route path="ARTextbookList" getComponent={ARTextbookList} />
+            <Route path="addARTextbook" getComponent={addARTextbook} />
+            <Route path="UpdateARTextbook" getComponent={UpdateARTextbook} />
         </Route>
     </Router>
     ,
