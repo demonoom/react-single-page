@@ -590,6 +590,16 @@ const UpdateARTextbook =  (location, cb) => {
         }
     )
 }
+
+/**
+ * 早到之星
+ */
+const excellentStu = (location, cb) => {
+    require.ensure([], require => {
+            cb(null, require("./components/classCardSystemBackstage/js/excellentStu").default)
+        }
+    )
+}
 import './index.less';
 
 class Index extends React.Component {
@@ -726,6 +736,9 @@ class Index extends React.Component {
                             to="/ARTextbookList?uid=23836" style={{fontSize: '24px'}}
                         >AR教材</Link>
                     </li>
+                    <li><Link
+                        to="/excellentStu?classId=819"
+                        style={{fontSize: '24px'}}>早到之星</Link></li>
                     {/*<li><Link*/}
                         {/*to="/attendanceStatistical?schoolId=9"*/}
                         {/*style={{fontSize: '24px'}}>出勤率统计(饼图)</Link></li>*/}
@@ -843,6 +856,7 @@ ReactDOM.render(
             <Route path="ARTextbookList" getComponent={ARTextbookList} />
             <Route path="addARTextbook" getComponent={addARTextbook} />
             <Route path="UpdateARTextbook" getComponent={UpdateARTextbook} />
+            <Route path="excellentStu" getComponent={excellentStu} />
         </Route>
     </Router>
     ,
