@@ -86,6 +86,10 @@ export default class application extends React.Component {
                         <div className="app_list_img"><span className="calorie"></span></div>
                         <div className="app_list_text text_hidden">卡路里</div>
                     </li>
+                    <li className="app_list" onClick={this.toCalories}>
+                        <div className="app_list_img"><span className="i-excellentStu"></span></div>
+                        <div className="app_list_text text_hidden">早到之星</div>
+                    </li>
                 </div>
             </div>
         );
