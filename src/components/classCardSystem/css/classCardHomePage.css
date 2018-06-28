@@ -215,6 +215,13 @@
   display: inline-block;
   background-size: 100% 100%;
 }
+#classCardHomePage .app_list_img .morning_star {
+  width: 1.75rem;
+  height: 1.75rem;
+  background: url("../imgs/morning_star.png");
+  display: inline-block;
+  background-size: 100% 100%;
+}
 #classCardHomePage .app_list_text {
   font-size: 0.61rem;
   width: 100%;
