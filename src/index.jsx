@@ -568,16 +568,16 @@ const attendanceStatistical = (location, cb) => {
     )
 }
 
-const attendanceStatistical = (location, cb) => {
+const inAndOutSchool = (location, cb) => {
     require.ensure([], require => {
-            cb(null, require("./components/attendance/js/attendanceStatistical").default)
+            cb(null, require("./components/attendance/js/inAndOutSchool").default)
         }
     )
 }
 
-const attendanceStatistical = (location, cb) => {
+const classAttendance = (location, cb) => {
     require.ensure([], require => {
-            cb(null, require("./components/attendance/js/attendanceStatistical").default)
+            cb(null, require("./components/attendance/js/classAttendance").default)
         }
     )
 }
@@ -693,12 +693,12 @@ class Index extends React.Component {
                     {/*<li><Link*/}
                     {/*to="/wxLogin"*/}
                     {/*style={{fontSize: '24px'}}>授权登录</Link></li>*/}
-                    <li><Link
-                        to="/answerListFormTeacher?teacherId=23836&topicId=8888"
-                        style={{fontSize: '24px'}}>查看学生作答情况(老师)</Link></li>
-                    <li><Link
-                        to="/answerFormStudent?studentId=23991&topicId=8888"
-                        style={{fontSize: '24px'}}>查看作答答案(学生)</Link></li>
+                    {/*<li><Link*/}
+                        {/*to="/answerListFormTeacher?teacherId=23836&topicId=8888"*/}
+                        {/*style={{fontSize: '24px'}}>查看学生作答情况(老师)</Link></li>*/}
+                    {/*<li><Link*/}
+                        {/*to="/answerFormStudent?studentId=23991&topicId=8888"*/}
+                        {/*style={{fontSize: '24px'}}>查看作答答案(学生)</Link></li>*/}
                     {/*to="/wxLogin"*/}
                     {/*style={{fontSize: '24px'}}>授权登录</Link></li>*/}
                     <li><Link
@@ -711,6 +711,14 @@ class Index extends React.Component {
                     <li>
                         <Link   
                             to="/attendanceTime?uid=23836" style={{fontSize: '24px'}}>考勤考勤</Link>
+                    </li>
+                    <li>
+                        <Link
+                            to="/inAndOutSchool?uid=23836" style={{fontSize: '24px'}}>出入校园考勤</Link>
+                    </li>
+                    <li>
+                        <Link
+                            to="/classAttendance?uid=23836" style={{fontSize: '24px'}}>班级考勤</Link>
                     </li>
                     {/*<li><Link*/}
                         {/*to="/attendanceStatistical?schoolId=9"*/}
@@ -826,6 +834,8 @@ ReactDOM.render(
             <Route path="waterWork" getComponent={waterWork}/>
             <Route path="attendanceStatistical" getComponent={attendanceStatistical}/>
             <Route path="attendanceSatisticaForClass" getComponent={attendanceSatisticaForClass}/>
+            <Route path="inAndOutSchool" getComponent={inAndOutSchool}/>
+            <Route path="classAttendance" getComponent={classAttendance}/>
         </Route>
     </Router>
     ,
