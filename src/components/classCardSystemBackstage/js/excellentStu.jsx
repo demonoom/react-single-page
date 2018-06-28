@@ -1,5 +1,6 @@
 import React from "react";
 import {Toast} from "antd-mobile"
+import "../css/excellentStu.less"
 var topStu;
 export default class excellentStu  extends React.Component{
     constructor(props){
@@ -33,7 +34,8 @@ export default class excellentStu  extends React.Component{
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
             onResponse: result => {
                 if (result.success) {
-                    console.log(result.response)
+                    console.log(result.response);
+                    //var response = [{"attendTime":1530193673000,"user":{"avatar":"http://192.168.50.15:8080/Excoord_For_Education/userPhoto/default_avatar.png","colAccount":"ST23993","colPasswd":"bd3adc44bd53e6473e81885d05252f38","colUid":23993,"colUtype":"STUD","colValid":1,"schoolId":9,"schoolName":"hzbtest","userName":"小兔兔"}},{"attendTime":1530193673000,"user":{"avatar":"http://192.168.50.34:8080/Excoord_For_Education/userPhoto/default_avatar.png","colAccount":"ST23993","colPasswd":"bd3adc44bd53e6473e81885d05252f38","colUid":23993,"colUtype":"STUD","colValid":1,"schoolId":9,"schoolName":"hzbtest","userName":"小兔兔"}},{"attendTime":1530193673000,"user":{"avatar":"http://192.168.50.34:8080/Excoord_For_Education/userPhoto/default_avatar.png","colAccount":"ST23993","colPasswd":"bd3adc44bd53e6473e81885d05252f38","colUid":23993,"colUtype":"STUD","colValid":1,"schoolId":9,"schoolName":"hzbtest","userName":"小兔兔"}},{"attendTime":1530193673000,"user":{"avatar":"http://192.168.50.34:8080/Excoord_For_Education/userPhoto/default_avatar.png","colAccount":"ST23993","colPasswd":"bd3adc44bd53e6473e81885d05252f38","colUid":23993,"colUtype":"STUD","colValid":1,"schoolId":9,"schoolName":"hzbtest","userName":"小兔兔"}},{"attendTime":1530193673000,"user":{"avatar":"http://192.168.50.34:8080/Excoord_For_Education/userPhoto/default_avatar.png","colAccount":"ST23993","colPasswd":"bd3adc44bd53e6473e81885d05252f38","colUid":23993,"colUtype":"STUD","colValid":1,"schoolId":9,"schoolName":"hzbtest","userName":"小兔兔"}},{"attendTime":1530193673000,"user":{"avatar":"http://192.168.50.34:8080/Excoord_For_Education/userPhoto/default_avatar.png","colAccount":"ST23993","colPasswd":"bd3adc44bd53e6473e81885d05252f38","colUid":23993,"colUtype":"STUD","colValid":1,"schoolId":9,"schoolName":"hzbtest","userName":"小兔兔"}},{"attendTime":1530193673000,"user":{"avatar":"http://192.168.50.34:8080/Excoord_For_Education/userPhoto/default_avatar.png","colAccount":"ST23993","colPasswd":"bd3adc44bd53e6473e81885d05252f38","colUid":23993,"colUtype":"STUD","colValid":1,"schoolId":9,"schoolName":"hzbtest","userName":"小兔兔"}},{"attendTime":1530193673000,"user":{"avatar":"http://192.168.50.34:8080/Excoord_For_Education/userPhoto/default_avatar.png","colAccount":"ST23993","colPasswd":"bd3adc44bd53e6473e81885d05252f38","colUid":23993,"colUtype":"STUD","colValid":1,"schoolId":9,"schoolName":"hzbtest","userName":"小兔兔"}},{"attendTime":1530193673000,"user":{"avatar":"http://192.168.50.34:8080/Excoord_For_Education/userPhoto/default_avatar.png","colAccount":"ST23993","colPasswd":"bd3adc44bd53e6473e81885d05252f38","colUid":23993,"colUtype":"STUD","colValid":1,"schoolId":9,"schoolName":"hzbtest","userName":"小兔兔"}},{"attendTime":1530193673000,"user":{"avatar":"http://192.168.50.34:8080/Excoord_For_Education/userPhoto/default_avatar.png","colAccount":"ST23993","colPasswd":"bd3adc44bd53e6473e81885d05252f38","colUid":23993,"colUtype":"STUD","colValid":1,"schoolId":9,"schoolName":"hzbtest","userName":"小兔兔"}}];
                     this.setState({
                         getExcellentStuData:result.response
                     })
@@ -59,27 +61,42 @@ export default class excellentStu  extends React.Component{
         });
     }
     render(){
-        
         return (
-            <div>
-                <div className="navBar">
+            <div id="excellentStu" className="home_content">
+                <div className="inner_bg">
+                    <div className="navBar">
                         <span onClick={this.historyGoBack}>首页</span>
                         <span className="icon"></span>
                         <span>早到之星</span>
                     </div>
-                {
-                    topStu.state.getExcellentStuData.map((v,i)=>{
-                        console.log(v);
-                        return (
-                            <div>
-                                <span>{i+1}</span>
-                                <img src={v.user.avatar} />
-                                <span>{WebServiceUtil.formatHM(v.attendTime)}</span>
-                                <span>{v.user.userName}</span>
-                            </div>
-                        )
-                    })
-                }
+                    <div className="cont my_flex">
+                        <div className="left">
+                            {
+                                topStu.state.getExcellentStuData.map((v,i)=>{
+                                    console.log(v);
+                                    return (
+                                        <div className="my_flex">
+                                            <span className="num">第{i+1}名</span>
+                                            <div className="info">
+                                                <img src={v.user.avatar} />
+                                                <span className="userName textOver">{v.user.userName}</span>
+                                            </div>
+                                            <span className="time">
+                                                <img src={require("../imgs/clock.png")}/>
+                                                {WebServiceUtil.formatHM(v.attendTime)}
+                                            </span>
+
+                                        </div>
+                                    )
+                                })
+                            }
+                        </div>
+                        <div className="right">
+                            <img className="icon_topLeft" src={require("../imgs/rightPic.png")}/>
+                        </div>
+                    </div>
+                </div>
+
             </div>
         )
     }
