@@ -724,7 +724,7 @@ class Index extends React.Component {
                         style={{fontSize: '24px'}}>查看作答</Link></li>
                     <li>
                         <Link
-                            to="/waterWork?tid=332&stuId=23993" style={{fontSize: '24px'}}>水滴作业</Link>
+                            to="/waterWork?tid=8888&stuId=23993" style={{fontSize: '24px'}}>水滴作业</Link>
                     </li>
                     <li>
                         <Link   
