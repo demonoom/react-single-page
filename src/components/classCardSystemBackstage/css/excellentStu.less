@@ -16,11 +16,14 @@
         color: #2a3350;
         font-size: .78rem;
         .num{
-            width: 33.33%;
+            width: 23.33%;
           font-size: .83rem;
         }
         .info{
-          width: 33.33%;
+          width: 43.33%;
+          text-align: left;
+          padding-left: 2.5rem;
+          box-sizing: border-box;
           .userName{
             display: inline-block;
             line-height: 2.25rem;
@@ -38,14 +41,14 @@
           }
         }
         .time{
-          width: 33.33%;
+          width: 33%;
           color: #367aed;
           img{
             width: .78rem;
             height: .78rem;
             margin-right: .38rem;
             vertical-align: middle;
-            margin-top: -.1rem;
+            margin-top: -.15rem;
           }
         }
       }
@@ -65,6 +68,8 @@
         .info{
           width: 100%;
           color: #fff;
+          text-align: center;
+          padding-left: 0;
           img{
             border: .16rem #fff solid;
             width: 3.17rem;
@@ -84,13 +89,14 @@
           }
         }
         .time{
+          width: 100%;
           display: block;
           margin: 0 auto;
         }
 
       }
       &>div:nth-child(1){
-        left: 10.6rem;
+        left: 10.4rem;
       }
       &>div:nth-child(2){
         left: -.15rem;
@@ -110,7 +116,6 @@
       width: calc(~"100% - 31.83rem");
       img{
         width: 100%;
-        height: 100%;
       }
     }
   }

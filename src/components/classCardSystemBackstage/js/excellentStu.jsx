@@ -77,9 +77,9 @@ export default class excellentStu  extends React.Component{
                                     return (
                                         <div className="my_flex">
                                             <span className="num">第{i+1}名</span>
-                                            <div className="info">
+                                            <div className="info textOver">
                                                 <img src={v.user.avatar} />
-                                                <span className="userName textOver">{v.user.userName}</span>
+                                                <span className="userName">{v.user.userName}</span>
                                             </div>
                                             <span className="time">
                                                 <img src={require("../imgs/clock.png")}/>
