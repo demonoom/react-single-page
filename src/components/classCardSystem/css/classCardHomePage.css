@@ -1,3 +1,4 @@
+(node) util.print is deprecated. Use console.log instead.
 #classCardHomePage .home_right {
   width: 13.33rem;
   float: right;
@@ -212,6 +213,13 @@
   width: 1.75rem;
   height: 1.75rem;
   background: url("../imgs/icon_message.png");
+  display: inline-block;
+  background-size: 100% 100%;
+}
+#classCardHomePage .app_list_img .i-excellentStu {
+  width: 1.75rem;
+  height: 1.75rem;
+  background: url("../imgs/i-excellentStu.png");
   display: inline-block;
   background-size: 100% 100%;
 }

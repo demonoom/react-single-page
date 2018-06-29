@@ -244,18 +244,18 @@ export default class classCardHomePageDoor extends React.Component {
                         className="arrow_right"></i></li>
                     <li onClick={this.turnToMoralEducation}><i className="icon icon_moralEducationScore"></i>德育评价管理<i
                         className="arrow_right"></i></li>
-                    <li onClick={this.turnToWarnList}><i className="icon icon_earlyWarning"></i>课堂预警<i
+                    {/*<li onClick={this.turnToWarnList}><i className="icon icon_earlyWarning"></i>课堂预警<i
                         className="arrow_right"></i></li>
                     <li onClick={this.turnToStudentMovement}><i className="icon icon_exercise"></i>学生运动轨迹<i
-                        className="arrow_right"></i></li>
+                        className="arrow_right"></i></li>*/}
                     <li onClick={this.turnWarningAdminList}><i className="icon icon_moralEducationScore"></i>预警人员管理<i
                         className="arrow_right"></i></li>
                     <li onClick={this.turnToAttendanceTime}><i className="icon icon_moralEducationScore"></i>考勤时段设置<i
                        className="arrow_right"></i></li>
-                    <li onClick={this.toAttendanceStatistical}><i className="icon icon_moralEducationScore"></i>出勤率统计(饼图)<i
+                    {/*<li onClick={this.toAttendanceStatistical}><i className="icon icon_moralEducationScore"></i>出勤率统计(饼图)<i
                         className="arrow_right"></i></li>
                     <li onClick={this.toAttendanceSatisticaForClass}><i className="icon icon_moralEducationScore"></i>出勤率统计(柱状图)<i
-                        className="arrow_right"></i></li>
+                        className="arrow_right"></i></li>*/}
                 </ul>
             </div>
         );
