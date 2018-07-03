@@ -65,6 +65,18 @@ export default class application extends React.Component {
         });
     }
 
+    excellentStu() {
+        var url = WebServiceUtil.mobileServiceURL + "excellentStu?classId=" + localStorage.getItem('clazzId');
+        var data = {
+            method: 'openNewPage',
+            url: url
+        };
+
+        Bridge.callHandler(data, null, function (error) {
+            window.location.href = url;
+        });
+    }
+
     render() {
         return (
             <div id="application" className="application_height home_card">
@@ -85,6 +97,10 @@ export default class application extends React.Component {
                     <li className="app_list" onClick={this.toCalories}>
                         <div className="app_list_img"><span className="calorie"></span></div>
                         <div className="app_list_text text_hidden">卡路里</div>
+                    </li>
+                    <li className="app_list" onClick={this.excellentStu}>
+                        <div className="app_list_img"><span className="i-excellentStu"></span></div>
+                        <div className="app_list_text text_hidden">早到之星</div>
                     </li>
                 </div>
             </div>
