@@ -43,20 +43,22 @@ export default class waterWork extends React.Component {
                     var arr = [];
                     _this.state.initData = result.response;
                     _this.state.initData.forEach((v, i) => {
-                        var waterBackSize = "100% "+parseInt((v.answerCount / v.answerTotalCount)*100+8)+"%";
-                        let html = <div>
+                        var waterBackSize = "100% "+Math.ceil((v.answerCount / v.answerTotalCount)*100+8)+"%";
+                        if(v.answerTotalCount == 0){
+                            
+                        }else {
+                            let html = <div>
                                 <div className="water" onClick={_this.toWaterDetail.bind(this, v.index)} >
-                                    {/* <div>作业内容:{v.homework.topic.content}</div> */}
-                                    {/* <div>老师：{v.homework.teacher.userName}</div> */}
                                     <i className="before" style={{backgroundSize:waterBackSize}}></i>
                                     <div className="inner">
-                                        <div> {parseInt((v.answerCount / v.answerTotalCount)*100)+"%"}</div>
+                                        <div> {Math.ceil((v.answerCount / v.answerTotalCount)*100)+"%"}</div>
                                         <span>已提交</span>
                                     </div>
                                 </div>
                             <span className="num">第{v.index+1}题</span>
                         </div>
                         arr.push(html)
+                        }
                     })
                     _this.setState({
                         htmlList: arr

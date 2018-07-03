@@ -17,15 +17,19 @@
   font-size: .78rem;
 }
 #excellentStu .cont .left > div .num {
-  width: 33.33%;
+  width: 29%;
   font-size: .83rem;
 }
 #excellentStu .cont .left > div .info {
-  width: 33.33%;
+  width: 38%;
+  text-align: left;
+  padding-left: 1.8rem;
+  box-sizing: border-box;
 }
 #excellentStu .cont .left > div .info .userName {
   display: inline-block;
   line-height: 2.25rem;
+  width: calc(100% - 2.75rem);
 }
 #excellentStu .cont .left > div .info img {
   width: 1.94rem;
@@ -39,7 +43,7 @@
   margin-top: 0.23rem;
 }
 #excellentStu .cont .left > div .time {
-  width: 33.33%;
+  width: 32%;
   color: #367aed;
 }
 #excellentStu .cont .left > div .time img {
@@ -47,7 +51,7 @@
   height: .78rem;
   margin-right: .38rem;
   vertical-align: middle;
-  margin-top: -0.1rem;
+  margin-top: -0.15rem;
 }
 #excellentStu .cont .left > div:nth-child(1),
 #excellentStu .cont .left > div:nth-child(2),
@@ -71,6 +75,8 @@
 #excellentStu .cont .left > div:nth-child(3) .info {
   width: 100%;
   color: #fff;
+  text-align: center;
+  padding-left: 0;
 }
 #excellentStu .cont .left > div:nth-child(1) .info img,
 #excellentStu .cont .left > div:nth-child(2) .info img,
@@ -88,19 +94,20 @@
 #excellentStu .cont .left > div:nth-child(2) .info .userName,
 #excellentStu .cont .left > div:nth-child(3) .info .userName {
   display: block;
-  margin-top: .28rem;
-  margin-bottom: .3rem;
   font-size: .83rem ;
   line-height: 1.2;
+  width: 90%;
+  margin: .28rem auto .3rem;
 }
 #excellentStu .cont .left > div:nth-child(1) .time,
 #excellentStu .cont .left > div:nth-child(2) .time,
 #excellentStu .cont .left > div:nth-child(3) .time {
+  width: 100%;
   display: block;
   margin: 0 auto;
 }
 #excellentStu .cont .left > div:nth-child(1) {
-  left: 10.6rem;
+  left: 10.4rem;
 }
 #excellentStu .cont .left > div:nth-child(2) {
   left: -0.15rem;
@@ -119,5 +126,4 @@
 }
 #excellentStu .cont .right img {
   width: 100%;
-  height: 100%;
 }

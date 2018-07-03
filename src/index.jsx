@@ -582,6 +582,14 @@ const classAttendance = (location, cb) => {
     )
 }
 
+//发送模板消息 至 微信
+const wxTemplate = (location, cb) => {
+    require.ensure([], require => {
+            cb(null, require("./components/wxLogin/wxTempalte").default)
+        }
+    )
+}
+
 import './index.less';
 
 class Index extends React.Component {
@@ -706,7 +714,7 @@ class Index extends React.Component {
                         style={{fontSize: '24px'}}>查看作答</Link></li>
                     <li>
                         <Link
-                            to="/waterWork?tid=332&stuId=23993" style={{fontSize: '24px'}}>水滴作业</Link>
+                            to="/waterWork?tid=8888&stuId=23993" style={{fontSize: '24px'}}>水滴作业</Link>
                     </li>
                     <li>
                         <Link   
@@ -720,6 +728,11 @@ class Index extends React.Component {
                         <Link
                             to="/classAttendance?uid=23836" style={{fontSize: '24px'}}>班级考勤</Link>
                     </li>
+                    <li>
+                        <Link
+                            to="/wxTemplate?uid=23836" style={{fontSize: '24px'}}>微信模板消息</Link>
+                    </li>
+
                     {/*<li><Link*/}
                         {/*to="/attendanceStatistical?schoolId=9"*/}
                         {/*style={{fontSize: '24px'}}>出勤率统计(饼图)</Link></li>*/}
@@ -836,6 +849,7 @@ ReactDOM.render(
             <Route path="attendanceSatisticaForClass" getComponent={attendanceSatisticaForClass}/>
             <Route path="inAndOutSchool" getComponent={inAndOutSchool}/>
             <Route path="classAttendance" getComponent={classAttendance}/>
+            <Route path="wxTemplate" getComponent={wxTemplate}/>
         </Route>
     </Router>
     ,
