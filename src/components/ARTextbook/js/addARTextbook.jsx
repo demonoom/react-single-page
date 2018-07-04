@@ -11,8 +11,7 @@ import {
     TextareaItem,
     Radio
 } from 'antd-mobile';
-import "../../classCardSystemBackstage/css/classDemeanor.less"
-// import '../css/addCurriculumSchedule.less'
+import "../css/addARTextbook.less"
 
 var teacherV;
 
@@ -28,7 +27,7 @@ export default class addARTextbook extends React.Component {
             clientHeight: document.body.clientHeight,
             fileNewArr: [],  //存储附件
             picNewArr: [],  //存储照片
-            videoNewArr: [] //存储视频
+            videoNewArr: [], //存储视频
         };
     }
 
@@ -61,6 +60,12 @@ export default class addARTextbook extends React.Component {
      * 新增AR教材
      */
     addARBook = () => {
+
+
+
+
+
+
         if (teacherV.state.ARTextbookValue == undefined) {
             Toast.info("请输入AR教材名称")
             return
@@ -69,7 +74,7 @@ export default class addARTextbook extends React.Component {
             Toast.info("请上传附件")
             return
         }
-        
+
         if (teacherV.state.ARTextbookDataArr.length == 0) {
             Toast.info("AR教材的图片和视频不能为空")
             return
@@ -78,13 +83,13 @@ export default class addARTextbook extends React.Component {
             Toast.info("请输入页码")
             return
         }
-        
-        if(teacherV.state.picNewArr.length == 0){
+
+        if (teacherV.state.picNewArr.length == 0) {
             Toast.info("请上传照片")
             return
         }
-        
-        if(teacherV.state.videoNewArr.length == 0){
+
+        if (teacherV.state.videoNewArr.length == 0) {
             Toast.info("请上传视频")
             return
         }
@@ -99,23 +104,21 @@ export default class addARTextbook extends React.Component {
             "bookData": {
                 "creatorId": teacherV.state.uid,
                 "name": teacherV.state.ARTextbookValue,
-                "attachment": filePath
+                "attachment": filePath[0]
             }
         }
+
         var classArray = [];
         this.state.ARTextbookDataArr.forEach(function (v, i) {
             classArray.push({
-                "pageNoValue": v.pageNoValue,
-                "index": i + 1,
-                "pic": v.picPath[0],
-                "video": v.videoPath[0]
+                "page": v.pageNoValue,
+                "index": i,
+                "pic": v.picPath,
+                "video": v.videoPath.join(",")
             })
         })
         param.bookData.itemList = classArray;
-
-        console.log(param);
-        return
-        
+        console.log(param, "param")
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
             onResponse: function (result) {
                 if (result.msg == '调用成功' || result.success == true) {
@@ -145,12 +148,21 @@ export default class addARTextbook extends React.Component {
      */
     inputOnChange = (index, value) => {
         this.setState({
-            pageNoValue:value
+            pageNoValue: value
         })
         this.state.ARTextbookDataArr[index].pageNoValue = value;
         this.buildARTextbook();
     }
 
+    /**
+     *播放视频 
+     */
+    theVideoPlay(i) {
+        // console.log("dianji", i)
+        var videoDiv = $(".videoDiv")
+        videoDiv[i].play();
+
+    }
     /**
      * 根据数据构建,完成数据的动态绑定
      */
@@ -160,45 +172,30 @@ export default class addARTextbook extends React.Component {
         this.state.ARTextbookDataArr.forEach(function (v, i) {
             ARTextbookArr.push(<div>
                 <div className="cont_communal add_title font_gray">第{i + 1}组</div>
-                <div className="flex_container my_flex flex_addElement">
+                <div className="flex_container my_flex flex_addElement calm">
                     <InputItem
                         className="add_element"
                         placeholder="请输入页码"
                         value={v.pageNoValue}
                         onChange={_this.inputOnChange.bind(this, i)}
-                    ></InputItem>
+                    ><div>页码</div></InputItem>
                 </div>
-                {
-                    teacherV.state.ARTextbookDataArr[i].picPath.map((v, i) => {
-                        return (
-                            <img src={v} />
-                        )
-                    })
+                <img className="imgTag" src={teacherV.state.ARTextbookDataArr[i].picPath} />
+                <span>{teacherV.state.ARTextbookDataArr[i].picName}</span>
 
-                }
+                <button className="uploadAttech" onClick={teacherV.uploadImage.bind(this, i)}>上传图片</button><br />
                 {
-                    teacherV.state.ARTextbookDataArr[i].picName.map((v, i) => {
+                    teacherV.state.ARTextbookDataArr[i].videoObj.map((v, i) => {
                         return (
-                            <span>{v}</span>
+                            <div>
+                                <span onClick={teacherV.theVideoPlay.bind(this, i)}>播放</span>
+                                <video className="videoDiv" src={v.videoPath}></video>
+                                <span>{v.videoName}</span>
+                            </div>
                         )
                     })
                 }
-                <div onClick={teacherV.uploadImage.bind(this, i)}>上传图片</div>
-                {
-                    teacherV.state.ARTextbookDataArr[i].videoPath.map((v, i) => {
-                        return (
-                            <video src={v}></video>
-                        )
-                    })
-                }
-                {
-                    teacherV.state.ARTextbookDataArr[i].videoName.map((v, i) => {
-                        return (
-                            <span>{v}</span>
-                        )
-                    })
-                }
-                <div onClick={teacherV.uploadVideo.bind(this, i)}>上传视频</div>
+                <button className="uploadAttech" onClick={teacherV.uploadVideo.bind(this, i)}>上传视频</button>
 
             </div>)
             _this.setState({ ARTextbookArr })
@@ -222,6 +219,7 @@ export default class addARTextbook extends React.Component {
             picPath: [],
             picName: [],
             videoPath: [],
+            videoObj: [],
             videoName: []
         });
         this.buildARTextbook();
@@ -234,7 +232,7 @@ export default class addARTextbook extends React.Component {
      */
     uploadFile() {
         var data = {
-            method: 'selectPictures',
+            method: 'selectAttech',
         };
         Bridge.callHandler(data, function (res) {
             // 拿到附件地址,显示在页面等待上传
@@ -270,8 +268,12 @@ export default class addARTextbook extends React.Component {
                     picPath: item[0],
                     picName: item[1].split("=")[1]
                 })
-                teacherV.state.ARTextbookDataArr[index].picPath.push(newArr[i].picPath);
-                teacherV.state.ARTextbookDataArr[index].picName.push(newArr[i].picName);
+
+
+                // teacherV.state.ARTextbookDataArr[index].picPath.push(newArr[i].picPath);
+                // teacherV.state.ARTextbookDataArr[index].picName.push(newArr[i].picName);
+                teacherV.state.ARTextbookDataArr[index].picPath = newArr[i].picPath
+                teacherV.state.ARTextbookDataArr[index].picName = newArr[i].picName;
             })
             teacherV.setState({ picNewArr: newArr });
             teacherV.buildARTextbook();
@@ -297,10 +299,12 @@ export default class addARTextbook extends React.Component {
                     videoPath: item[0],
                     videoName: item[1].split("=")[1]
                 })
+                teacherV.state.ARTextbookDataArr[index].videoObj.push(newArr[i]);
                 teacherV.state.ARTextbookDataArr[index].videoPath.push(newArr[i].videoPath);
                 teacherV.state.ARTextbookDataArr[index].videoName.push(newArr[i].videoName);
             })
-            teacherV.setState({ videoNewArr: newArr });
+            var calmArr = teacherV.state.videoNewArr.concat(newArr);
+            teacherV.setState({ videoNewArr: calmArr });
             teacherV.buildARTextbook();
         }, function (error) {
             console.log(error);
@@ -308,7 +312,7 @@ export default class addARTextbook extends React.Component {
     }
     render() {
         return (
-            <div id="addCurriculumSchedule" style={{ height: this.state.clientHeight }}>
+            <div id="addARTextbook" style={{ height: this.state.clientHeight }}>
                 <div className="search_bg" style={{ display: this.state.search_bg ? 'block' : 'none' }}></div>
                 <div className="addCurriculum_cont">
                     <WhiteSpace size="lg" />
@@ -319,7 +323,7 @@ export default class addARTextbook extends React.Component {
                             ARTextbookValue: v
                         })}
                     ><div onClick={() => this.labelFocusInst.focus()}>AR教材</div></InputItem>
-                    <button onClick={teacherV.uploadFile}>上传附件</button>
+                    <button className="uploadAttech" onClick={teacherV.uploadFile}>上传附件</button>
                     {
                         teacherV.state.fileNewArr.map((v, i) => {
                             console.log("hahahhahahahha", v)

@@ -1,0 +1,18 @@
+#UpdateARTextbook {
+  overflow: auto;
+  position: relative;
+}
+#UpdateARTextbook .imgDiv {
+  width: 50px;
+}
+#UpdateARTextbook .videoDiv {
+  width: 100px;
+}
+#UpdateARTextbook .uploadAttech {
+  width: 100px;
+  height: 20px;
+  background-color: #fff;
+}
+#UpdateARTextbook .mt3PX {
+  margin: 20px 0;
+}
