@@ -11,8 +11,7 @@ import {
     TextareaItem,
     Radio
 } from 'antd-mobile';
-import "../../classCardSystemBackstage/css/classDemeanor.less"
-// import '../css/addCurriculumSchedule.less'
+import "../css/addARTextbook.less"
 
 var teacherV;
 
@@ -28,7 +27,7 @@ export default class addARTextbook extends React.Component {
             clientHeight: document.body.clientHeight,
             fileNewArr: [],  //存储附件
             picNewArr: [],  //存储照片
-            videoNewArr: [] //存储视频
+            videoNewArr: [], //存储视频
         };
     }
 
@@ -61,6 +60,12 @@ export default class addARTextbook extends React.Component {
      * 新增AR教材
      */
     addARBook = () => {
+
+
+
+
+
+
         if (teacherV.state.ARTextbookValue == undefined) {
             Toast.info("请输入AR教材名称")
             return
@@ -107,7 +112,7 @@ export default class addARTextbook extends React.Component {
         this.state.ARTextbookDataArr.forEach(function (v, i) {
             classArray.push({
                 "page": v.pageNoValue,
-                "index": i + 1,
+                "index": i,
                 "pic": v.picPath,
                 "video": v.videoPath.join(",")
             })
@@ -119,13 +124,13 @@ export default class addARTextbook extends React.Component {
                 if (result.msg == '调用成功' || result.success == true) {
                     Toast.success('成功');
                     //关闭当前窗口，并刷新上一个页面
-                    // var data = {
-                    //     method: 'finishForRefresh',
-                    // };
+                    var data = {
+                        method: 'finishForRefresh',
+                    };
 
-                    // Bridge.callHandler(data, null, function (error) {
-                    //     console.log(error);
-                    // });
+                    Bridge.callHandler(data, null, function (error) {
+                        console.log(error);
+                    });
                 } else {
                     Toast.fail(result.msg, 5);
                 }
@@ -153,10 +158,10 @@ export default class addARTextbook extends React.Component {
      *播放视频 
      */
     theVideoPlay(i) {
-        console.log("dianji", i)
+        // console.log("dianji", i)
         var videoDiv = $(".videoDiv")
         videoDiv[i].play();
-      
+
     }
     /**
      * 根据数据构建,完成数据的动态绑定
@@ -167,7 +172,7 @@ export default class addARTextbook extends React.Component {
         this.state.ARTextbookDataArr.forEach(function (v, i) {
             ARTextbookArr.push(<div>
                 <div className="cont_communal add_title font_gray">第{i + 1}组</div>
-                <div className="flex_container my_flex flex_addElement">
+                <div className="flex_container my_flex flex_addElement calm">
                     <InputItem
                         className="add_element"
                         placeholder="请输入页码"
@@ -175,10 +180,10 @@ export default class addARTextbook extends React.Component {
                         onChange={_this.inputOnChange.bind(this, i)}
                     ><div>页码</div></InputItem>
                 </div>
-                <img src={teacherV.state.ARTextbookDataArr[i].picPath} />
+                <img className="imgTag" src={teacherV.state.ARTextbookDataArr[i].picPath} />
                 <span>{teacherV.state.ARTextbookDataArr[i].picName}</span>
 
-                <div onClick={teacherV.uploadImage.bind(this, i)}>上传图片</div>
+                <button className="uploadAttech" onClick={teacherV.uploadImage.bind(this, i)}>上传图片</button><br />
                 {
                     teacherV.state.ARTextbookDataArr[i].videoObj.map((v, i) => {
                         return (
@@ -190,7 +195,7 @@ export default class addARTextbook extends React.Component {
                         )
                     })
                 }
-                <div onClick={teacherV.uploadVideo.bind(this, i)}>上传视频</div>
+                <button className="uploadAttech" onClick={teacherV.uploadVideo.bind(this, i)}>上传视频</button>
 
             </div>)
             _this.setState({ ARTextbookArr })
@@ -307,7 +312,7 @@ export default class addARTextbook extends React.Component {
     }
     render() {
         return (
-            <div id="addCurriculumSchedule" style={{ height: this.state.clientHeight }}>
+            <div id="addARTextbook" style={{ height: this.state.clientHeight }}>
                 <div className="search_bg" style={{ display: this.state.search_bg ? 'block' : 'none' }}></div>
                 <div className="addCurriculum_cont">
                     <WhiteSpace size="lg" />
@@ -318,7 +323,7 @@ export default class addARTextbook extends React.Component {
                             ARTextbookValue: v
                         })}
                     ><div onClick={() => this.labelFocusInst.focus()}>AR教材</div></InputItem>
-                    <button onClick={teacherV.uploadFile}>上传附件</button>
+                    <button className="uploadAttech" onClick={teacherV.uploadFile}>上传附件</button>
                     {
                         teacherV.state.fileNewArr.map((v, i) => {
                             console.log("hahahhahahahha", v)

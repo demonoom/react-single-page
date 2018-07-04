@@ -78,7 +78,6 @@ export default class newAttendanceTime extends React.Component {
         }
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
             onResponse: function (result) {
-                console.log(result);
                 if (result.msg == '调用成功' || result.success == true) {
                     Toast.success('成功');
                     //关闭当前窗口，并刷新上一个页面

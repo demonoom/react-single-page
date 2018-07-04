@@ -568,8 +568,30 @@ const attendanceStatistical = (location, cb) => {
     )
 }
 
+const inAndOutSchool = (location, cb) => {
+    require.ensure([], require => {
+            cb(null, require("./components/attendance/js/inAndOutSchool").default)
+        }
+    )
+}
+
+const classAttendance = (location, cb) => {
+    require.ensure([], require => {
+            cb(null, require("./components/attendance/js/classAttendance").default)
+        }
+    )
+}
+
+//发送模板消息 至 微信
+const wxTemplate = (location, cb) => {
+    require.ensure([], require => {
+            cb(null, require("./components/wxLogin/wxTempalte").default)
+        }
+    )
+}
+
 /**
- * AR教材部分
+ * AR教材
  */
 const ARTextbookList = (location, cb) => {
     require.ensure([], require => {
@@ -577,29 +599,31 @@ const ARTextbookList = (location, cb) => {
         }
     )
 }
-
 const addARTextbook = (location, cb) => {
     require.ensure([], require => {
             cb(null, require("./components/ARTextbook/js/addARTextbook").default)
         }
     )
 }
-const UpdateARTextbook =  (location, cb) => {
+const UpdateARTextbook = (location, cb) => {
     require.ensure([], require => {
             cb(null, require("./components/ARTextbook/js/UpdateARTextbook").default)
         }
     )
 }
-
-/**
- * 早到之星
- */
-const excellentStu = (location, cb) => {
+const groupList = (location, cb) => {
     require.ensure([], require => {
-            cb(null, require("./components/classCardSystemBackstage/js/excellentStu").default)
+            cb(null, require("./components/ARTextbook/js/groupList").default)
         }
     )
 }
+const ArIndex = (location, cb) => {
+    require.ensure([], require => {
+            cb(null, require("./components/ARTextbook/js/ArIndex").default)
+        }
+    )
+}
+
 import './index.less';
 
 class Index extends React.Component {
@@ -708,15 +732,15 @@ class Index extends React.Component {
                     {/*<li><Link*/}
                     {/*to="/particlePath"*/}
                     {/*style={{fontSize: '24px'}}>运动轨迹</Link></li>*/}
+                    <li><Link
+                    to="/wxLogin"
+                    style={{fontSize: '24px'}}>授权登录</Link></li>
                     {/*<li><Link*/}
-                    {/*to="/wxLogin"*/}
-                    {/*style={{fontSize: '24px'}}>授权登录</Link></li>*/}
-                    <li><Link
-                        to="/answerListFormTeacher?teacherId=23836&topicId=8888"
-                        style={{fontSize: '24px'}}>查看学生作答情况(老师)</Link></li>
-                    <li><Link
-                        to="/answerFormStudent?studentId=23991&topicId=8888"
-                        style={{fontSize: '24px'}}>查看作答答案(学生)</Link></li>
+                        {/*to="/answerListFormTeacher?teacherId=23836&topicId=8888"*/}
+                        {/*style={{fontSize: '24px'}}>查看学生作答情况(老师)</Link></li>*/}
+                    {/*<li><Link*/}
+                        {/*to="/answerFormStudent?studentId=23991&topicId=8888"*/}
+                        {/*style={{fontSize: '24px'}}>查看作答答案(学生)</Link></li>*/}
                     {/*to="/wxLogin"*/}
                     {/*style={{fontSize: '24px'}}>授权登录</Link></li>*/}
                     <li><Link
@@ -730,15 +754,27 @@ class Index extends React.Component {
                         <Link   
                             to="/attendanceTime?uid=23836" style={{fontSize: '24px'}}>考勤考勤</Link>
                     </li>
-
                     <li>
                         <Link
-                            to="/ARTextbookList?uid=23836" style={{fontSize: '24px'}}
-                        >AR教材</Link>
+                            to="/inAndOutSchool?uid=23836" style={{fontSize: '24px'}}>出入校园考勤</Link>
                     </li>
-                    <li><Link
-                        to="/excellentStu?classId=819"
-                        style={{fontSize: '24px'}}>早到之星</Link></li>
+                    <li>
+                        <Link
+                            to="/classAttendance?uid=23836" style={{fontSize: '24px'}}>班级考勤</Link>
+                    </li>
+                    <li>
+                        <Link
+                            to="/wxTemplate?uid=23836" style={{fontSize: '24px'}}>微信模板消息</Link>
+                    </li>
+                    <li>
+                        <Link
+                            to="/ARTextbookList?uid=23836" style={{fontSize: '24px'}}>AR教材</Link>
+                    </li>
+                    <li>
+                        <Link
+                            to="/ArIndex?uid=23836" style={{fontSize: '24px'}}>AR首页</Link>
+                    </li>
+
                     {/*<li><Link*/}
                         {/*to="/attendanceStatistical?schoolId=9"*/}
                         {/*style={{fontSize: '24px'}}>出勤率统计(饼图)</Link></li>*/}
@@ -853,10 +889,14 @@ ReactDOM.render(
             <Route path="waterWork" getComponent={waterWork}/>
             <Route path="attendanceStatistical" getComponent={attendanceStatistical}/>
             <Route path="attendanceSatisticaForClass" getComponent={attendanceSatisticaForClass}/>
+            <Route path="inAndOutSchool" getComponent={inAndOutSchool}/>
+            <Route path="classAttendance" getComponent={classAttendance}/>
+            <Route path="wxTemplate" getComponent={wxTemplate}/>
             <Route path="ARTextbookList" getComponent={ARTextbookList} />
             <Route path="addARTextbook" getComponent={addARTextbook} />
             <Route path="UpdateARTextbook" getComponent={UpdateARTextbook} />
-            <Route path="excellentStu" getComponent={excellentStu} />
+            <Route path="groupList" getComponent={groupList} />
+            <Route path="ArIndex" getComponent={ArIndex} />
         </Route>
     </Router>
     ,

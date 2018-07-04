@@ -11,7 +11,7 @@ import {
     TextareaItem,
     Radio
 } from 'antd-mobile';
-import "../../classCardSystemBackstage/css/classDemeanor.less"
+import "../css/UpdateARTextbook.less"
 import { ECONNABORTED } from 'constants';
 // import '../css/addCurriculumSchedule.less'
 
@@ -34,16 +34,21 @@ export default class addARTextbook extends React.Component {
     }
 
     componentWillMount() {
-        document.title = '修改AR教材';
         var locationHref = window.location.href;
         var locationSearch = locationHref.substr(locationHref.indexOf("?") + 1);
         var bId = locationSearch.split("&")[0].split("=")[1];
         var uId = locationSearch.split("&")[1].split("=")[1];
-        this.setState({ "bId": bId,"uId":uId });
-        this.viewARBook(bId);
+        var getIndex = locationSearch.split("&")[2].split("=")[1];
+        this.setState({ "bId": bId,"uId":uId,"getIndex":getIndex });
+        console.log(getIndex,"index");
+        console.log(uId,"uId");
+        this.viewARBook(bId,getIndex);
         window.addEventListener('resize', this.onWindwoResize);
     }
     componentDidMount() {
+        var index = Number(this.state.getIndex)+1
+        document.title = '修改AR教材第'+index+"组数据";
+
         Bridge.setShareAble("false");
     }
     componentWillUnmount() {
@@ -90,6 +95,18 @@ export default class addARTextbook extends React.Component {
         // var videoPath = teacherV.state.videoNewArr.map((v, i) => {
         //     return v.videoPath
         // })
+        console.log(teacherV.state.itemList,"ghjk");
+        var arr = teacherV.state.itemList;
+        for(var k in arr){
+            console.log(teacherV.state.getIndex,"eeee")
+            if(k == teacherV.state.getIndex){
+                console.log(arr[k],"cccc")
+                arr[k].index = k;
+                arr[k].page = teacherV.state.pageNoValue;
+                arr[k].pic = teacherV.state.picNewObj;
+                arr[k].video = teacherV.state.videoNewObj.join(",")
+            }
+        }
         var param = {
             "method": 'updateARBook',
             "bookData": {
@@ -98,23 +115,24 @@ export default class addARTextbook extends React.Component {
                 "name": teacherV.state.ARTextbookValue,
                 "attachment": teacherV.state.attachment,
                 "status":teacherV.state.status,
-                "itemList": [
-                    {
-                        "index":teacherV.state.index,
-                        "page": teacherV.state.pageNoValue,
-                        "pic": teacherV.state.picNewObj,
-                        "video": teacherV.state.videoNewObj.join(",")
-                    }
-                ]
+                "itemList": arr
             }
         }
         console.log(param);
 
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
             onResponse: function (result) {
+                console.log(result,"rerererre")
                 if (result.msg == '调用成功' || result.success == true) {
                     Toast.success('成功');
                     //关闭当前窗口，并刷新上一个页面
+                    var data = {
+                        method: 'finishForRefresh',
+                    };
+            
+                    Bridge.callHandler(data, null, function (error) {
+                        console.log(error);
+                    });
                 } else {
                     Toast.fail(result.msg, 5);
                 }
@@ -138,7 +156,7 @@ export default class addARTextbook extends React.Component {
     /**
        * 查看单独的AR教材
        */
-    viewARBook(bId) {
+    viewARBook(bId,index) {
 
         var param = {
             "method": 'viewARBook',
@@ -150,16 +168,16 @@ export default class addARTextbook extends React.Component {
                 console.log(result, "viewARBook")
                 if (result.msg == '调用成功' || result.success == true) {
                     teacherV.state.initData = result.response;
-                    console.log(teacherV.state.initData.itemList[0].video.split(","),"video")
+                    // console.log(teacherV.state.initData.itemList[0].video.split(","),"video")
                     
                     teacherV.setState({
                         ARTextbookValue: teacherV.state.initData.name,
-                        pageNoValue: teacherV.state.initData.itemList[0].page,
+                        pageNoValue: teacherV.state.initData.itemList[index].page,
                         attachment:teacherV.state.initData.attachment,
                         status:teacherV.state.initData.status,
-                        index:teacherV.state.initData.itemList[0].index,
-                        videoNewObj:teacherV.state.initData.itemList[0].video.split(","),
-                        picNewObj:teacherV.state.initData.itemList[0].pic,
+                        index:teacherV.state.initData.itemList[index].index,
+                        videoNewObj:teacherV.state.initData.itemList[index].video.split(","),
+                        picNewObj:teacherV.state.initData.itemList[index].pic,
                         itemList:teacherV.state.initData.itemList
                     })
                 } else {
@@ -253,6 +271,16 @@ export default class addARTextbook extends React.Component {
             console.log(error);
         });
     }
+
+    /**
+     *播放视频 
+     */
+    theVideoPlay(i) {
+        // console.log("dianji", i)
+        var videoDiv = $(".videoDiv")
+        videoDiv[i].play();
+      
+    }
     render() {
         var _this = this;
         // var imgStr;
@@ -268,7 +296,7 @@ export default class addARTextbook extends React.Component {
         // console.log(Attech,"atatatta")
 
         return (
-            <div id="addCurriculumSchedule" style={{ height: this.state.clientHeight }}>
+            <div id="UpdateARTextbook" style={{ height: this.state.clientHeight }}>
                 <div className="search_bg" style={{ display: this.state.search_bg ? 'block' : 'none' }}></div>
                 <div className="addCurriculum_cont">
                     <WhiteSpace size="lg" />
@@ -282,9 +310,16 @@ export default class addARTextbook extends React.Component {
                     ><div onClick={() => this.labelFocusInst.focus()}>AR教材</div></InputItem>
                     {/* 显示附件 */}
                     {
-                       <span>{teacherV.state.attachment}</span>
+                       <div>附件地址：{teacherV.state.attachment}</div>
                     }
-                    <button onClick={teacherV.uploadFile}>修改附件</button>
+                    <button className="uploadAttech" onClick={teacherV.uploadFile}>修改附件</button>
+                    
+                    {
+                        teacherV.state.itemList.map((v,i)=>{
+                            
+                        })
+                    }
+                    <div className="mt3PX">第{Number(teacherV.state.getIndex)+1}组数据</div>
                     <InputItem
                         className="add_element"
                         placeholder="请输入页码"
@@ -292,24 +327,21 @@ export default class addARTextbook extends React.Component {
                         onChange={_this.inputOnChange}
                     ><div>页码</div></InputItem>
                     {
-                        teacherV.state.itemList.map((v,i)=>{
-                            
-                        })
+                        <img className="imgDiv" src={teacherV.state.picNewObj} />
                     }
-                    <div>第{teacherV.state.index}组</div>
-
-                    {
-                        <img src={teacherV.state.picNewObj} />
-                    }
-                    <div onClick={teacherV.uploadImage}>修改图片</div>
+                    <br /><button className="uploadAttech" onClick={teacherV.uploadImage}>修改图片</button><br/><br/>
                     {
                         teacherV.state.videoNewObj.map((v,i)=>{
                             return (
-                                <video src={v}></video>
+                                <div>
+                                     <video className="videoDiv" src={v}></video>
+                                     <span onClick={_this.theVideoPlay.bind(this, i)}>播放</span>
+                                </div>
+                               
                             )
                         })
                     }
-                    <div onClick={teacherV.uploadVideo}>修改视频</div>
+                    <button className="uploadAttech" onClick={teacherV.uploadVideo}>修改视频</button>
                 </div>
                 <div className='addCourseButton'>
                     <WhiteSpace size="lg" />

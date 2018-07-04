@@ -150,18 +150,18 @@ export default class answerListFormTeacher extends React.Component {
                 for (var s in studentArray) {  //todo 循环添加x轴数字及柱状数据
                     category.push(studentArray[s].users.userName);
                     if (this.state.type == 0) {
-                        barData.push(studentArray[s].understand);
+                        barData.push((studentArray[s].understand).toFixed(2));
                         sum += studentArray[s].understand;
                         console.log('理解度')
                     } else {
-                        barData.push(studentArray[s].elapsedTime);
+                        barData.push((studentArray[s].elapsedTime).toFixed(2));
                         sum += studentArray[s].elapsedTime;
                         console.log('时长')
                     }
                     idArray.push(studentArray[s].studentId)
                 }
                 for (var s in studentArray) {   //循环添加平均值
-                    lineData.push(sum / studentArray.length);
+                    lineData.push((sum / studentArray.length).toFixed(2));
                 }
 
                 var columnarChartOption = this.buildChartOption(category, barData, lineData);
@@ -175,11 +175,12 @@ export default class answerListFormTeacher extends React.Component {
                         onEvents={onEvents}
                         theme='macarons'
                     />
+                console.log(reactDom);
                 // reactEchartsArray.push(reactDom);
             }
             var rem = <div className="canvasBox_cont">
                 <div className="title">题目{data[k].questionCount}</div>
-                <div className="sort">{this.state.type == 0 ? '本题耗时排名' : '本體理解度排名'}:{data[k].sort}</div>
+                <div className="sort">{this.state.type == 0 ? '本题耗时排名' : '本题理解度排名'}:{data[k].sort}</div>
                 <div style={{height: '300px'}} className="echarts_wrap">
                     {reactDom}
                 </div>

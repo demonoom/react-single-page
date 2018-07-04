@@ -38,6 +38,7 @@ export default class ARTextbookList extends React.Component {
         var locationHref = window.location.href;
         var locationSearch = locationHref.substr(locationHref.indexOf("?") + 1);
         var uid = locationSearch.split("&")[0].split("=")[1];
+        console.log(uid)
         this.setState({ "uid": uid });
         console.log(uid);
         this.viewARBookPage(uid,true);
@@ -163,7 +164,7 @@ export default class ARTextbookList extends React.Component {
             Toast.info("已发布，不能修改");
             return;
         }
-        var url = encodeURI(WebServiceUtil.mobileServiceURL + "UpdateARTextbook?bId=" + data.id+"&uid="+classBinding.state.uid);
+        var url = encodeURI(WebServiceUtil.mobileServiceURL + "groupList?bId=" + data.id+"&uid="+classBinding.state.uid);
         var data = {
             method: 'openNewPage',
             url: url
@@ -336,7 +337,7 @@ export default class ARTextbookList extends React.Component {
             )
         };
         return (
-            <div id="getClassTableList" style={{ height: classBinding.state.clientHeight }}>
+            <div id="ARTextbookList" style={{ height: classBinding.state.clientHeight }}>
                 <div className='tableDiv' style={{ height: classBinding.state.clientHeight }}>
                     <div className='addBunton' onClick={this.toAddARTextbook}>
                         <img src={require("../imgs/addBtn.png")} />
