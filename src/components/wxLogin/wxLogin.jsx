@@ -7,7 +7,7 @@ export default class wxLogin extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            appId: 'wx9d076742b77044dd',
+            appId: 'wx181574f3ea687daf',
             local: window.location.href,
             info:'###',
             openid:0
@@ -32,7 +32,7 @@ export default class wxLogin extends React.Component {
                 })
                 setTimeout(function () {
                     console.log(this.state.local);
-                    window.location.href = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=" + this.state.appId + "&redirect_uri=" + encodeURIComponent('http://192.168.50.15:8080/elearning//common/weChatLoginOpenId.jsp') + "&response_type=code&scope=snsapi_userinfo&state="+encodeURIComponent(this.state.local)+"#wechat_redirect";
+                    window.location.href = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=" + this.state.appId + "&redirect_uri=" + encodeURIComponent('http://www.maaee.com/elearning/common/weChatLoginOpenId.jsp') + "&response_type=code&scope=snsapi_userinfo&state="+encodeURIComponent(this.state.local)+"#wechat_redirect";
                 }.bind(this), 2000)
             }
 
