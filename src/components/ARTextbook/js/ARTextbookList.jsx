@@ -24,23 +24,7 @@ export default class ARTextbookList extends React.Component {
         const dataSource = new ListView.DataSource({
             rowHasChanged: (row1, row2) => row1 !== row2,
         });
-        this.initData = [{
-            "creatorId": "123123",
-            "id": 111,
-            "name": "123",
-            "attachment": [
-
-            ],
-            "itemList": [
-                {
-                    "index": 1,
-                    "pageNoValue": 32,
-                    "pic": "http://",
-                    "video": "http://"
-                }
-            ]
-
-        }];
+        this.initData = [];
         this.state = {
             dataSource: dataSource.cloneWithRows(this.initData),
             clientHeight: document.body.clientHeight,
@@ -55,7 +39,8 @@ export default class ARTextbookList extends React.Component {
         var locationSearch = locationHref.substr(locationHref.indexOf("?") + 1);
         var uid = locationSearch.split("&")[0].split("=")[1];
         this.setState({ "uid": uid });
-        this.viewARBookPage(uid);
+        console.log(uid);
+        this.viewARBookPage(uid,true);
         //添加对视窗大小的监听,在屏幕转换以及键盘弹起时重设各项高度
         window.addEventListener('resize', classBinding.onWindowResize)
     }
@@ -73,6 +58,61 @@ export default class ARTextbookList extends React.Component {
             classBinding.setState({ clientHeight: document.body.clientHeight });
         }, 100)
     }
+
+
+     /**
+     *获取AR教材列表
+     */
+    viewARBookPage = (uid,flag) => {
+        var _this = this;
+        if (flag) {
+            _this.initData.splice(0);
+            _this.state.dataSource = [];
+            _this.state.dataSource = new ListView.DataSource({
+                rowHasChanged: (row1, row2) => row1 !== row2,
+            });
+        }
+        const dataBlob = {};
+        var PageNo = this.state.defaultPageNo;
+        var param = {
+            "method": 'viewARBookPage',
+            "adminId": uid,
+            "pn": -1
+        };
+        WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
+            onResponse: function (result) {
+                console.log(result,"result");
+                if (result.msg == '调用成功' || result.success == true) {
+                    var arr = result.response;
+                    var pager = result.pager;
+                    for (let i = 0; i < arr.length; i++) {
+                        var topic = arr[i];
+                        dataBlob[`${i}`] = topic;
+                    }
+                    var isLoading = false;
+                    if (arr.length > 0) {
+                        if (pager.pageCount == 1 && pager.rsCount < 30) {
+                            isLoading = false;
+                        } else {
+                            isLoading = true;
+                        }
+                    } else {
+                        isLoading = false;
+                    }
+                    _this.initData = _this.initData.concat(arr);
+                    _this.setState({
+                        dataSource: _this.state.dataSource.cloneWithRows(_this.initData),
+                        isLoadingLeft: isLoading,
+                        refreshing: false
+                    })
+                }
+            },
+            onError: function (error) {
+                // message.error(error);
+            }
+        });
+    }
+
     /**
     *  ListView数据全部渲染完毕的回调
     */
@@ -84,7 +124,7 @@ export default class ARTextbookList extends React.Component {
         }
         currentPageNo += 1;
         this.setState({ isLoadingLeft: true, defaultPageNo: currentPageNo });
-        _this.viewClassRoomPage(_this.state.uid, false);
+        _this.viewARBookPage(_this.state.uid, false);
         this.setState({
             dataSource: this.state.dataSource.cloneWithRows(this.initData),
             isLoadingLeft: true,
@@ -95,40 +135,10 @@ export default class ARTextbookList extends React.Component {
         var divPull = document.getElementsByClassName('am-pull-to-refresh-content');
         divPull[0].style.transform = "translate3d(0px, 30px, 0px)";   //设置拉动后回到的位置
         this.setState({ defaultPageNo: 1, refreshing: true, isLoadingLeft: true });
-        this.viewClassRoomPage(this.state.uid, true);
+        this.viewARBookPage(this.state.uid, true);
     }
 
-    /**
-     *获取AR教材列表
-     */
-    viewARBookPage = (uid) => {
-        var _this = this;
-        var param = {
-            "method": 'viewARBookPage',
-            "uid": uid,
-            "pn": -1
-        };
-        WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
-            onResponse: function (result) {
-                console.log(result);
-                if (result.msg !== '调用成功' || result.success !== true) {
-                    if (WebServiceUtil.isEmpty(result.response) == false) {
-                        var arr = [];
-                        result.response.forEach(function (v, i) {
-                            arr.push({
-                                value: v.id, label: v.name
-                            })
-                        })
-                        _this.setState({ posData: arr });
-                    }
-                }
-            },
-            onError: function (error) {
-                // message.error(error);
-            }
-        });
-    }
-
+   
 
     /**
      * 跳转新增页面
@@ -149,6 +159,10 @@ export default class ARTextbookList extends React.Component {
      * toUpdateARTextbook
      */
     toUpdateARTextbook(data) {
+        if(data.status == 1){
+            Toast.info("已发布，不能修改");
+            return;
+        }
         var url = encodeURI(WebServiceUtil.mobileServiceURL + "UpdateARTextbook?bId=" + data.id+"&uid="+classBinding.state.uid);
         var data = {
             method: 'openNewPage',
@@ -165,6 +179,7 @@ export default class ARTextbookList extends React.Component {
      * @throws Exception
      */
     changeARBookStatus(data) {
+       
         var _this = this;
         var param = {
             "method": 'changeARBookStatus',
@@ -173,6 +188,7 @@ export default class ARTextbookList extends React.Component {
         };
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
             onResponse: (result) => {
+                console.log(result,"delete")
                 if (result.msg == '调用成功' || result.success == true) {
                     Toast.success('删除成功', 1)
                     _this.state.dataSource = [];
@@ -199,6 +215,10 @@ export default class ARTextbookList extends React.Component {
      * 删除弹出框
      */
     showAlert = (data, event) => {
+        if(data.status == 1){
+            Toast.info("已发布，不能删除");
+            return;
+        }
         event.stopPropagation();
         var phoneType = navigator.userAgent;
         var phone;
@@ -219,57 +239,38 @@ export default class ARTextbookList extends React.Component {
      * 点击发布
      */
     publish(data){
+        console.log(data,"publishData");
         var _this = this;
         var param = {
             "method": 'changeARBookStatus',
             "condition":1,
             "bId": data.id,
         };
-        // var status,
-        //     str;
-        // if (checked) {
-        //     param.condition = 1
-        //     status = 1
-        //     str = '启用成功'
-        // } else {
-        //     param.condition = 3
-        //     status = 3
-        //     str = '停用成功'
-        // }
+        console.log(param);
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
             onResponse: (result) => {
+                console.log(result)
                 if (result.msg == '调用成功' || result.success == true) {
                     Toast.success("发布成功", 1)
+                    Toast.success('修改成功')
                     _this.state.dataSource = [];
                     _this.state.dataSource = new ListView.DataSource({
                         rowHasChanged: (row1, row2) => row1 !== row2,
                     });
-                    // _this.initData.forEach(function (v, i) {
-                    //     if (rowData.id == v.id) {
-                    //         v.status = status;
-                    //     }
-                    // });
+                    _this.initData.forEach(function (v, i) {
+                        if (data.id == v.id) {
+                            v.status = 1;
+                        }
+                    });
                     _this.setState({
                         dataSource: _this.state.dataSource.cloneWithRows(_this.initData)
                     });
                 } else {
                     Toast.fail(result.msg, 3)
-                    _this.state.dataSource = [];
-                    _this.state.dataSource = new ListView.DataSource({
-                        rowHasChanged: (row1, row2) => row1 !== row2,
-                    });
-                    // _this.initData.forEach(function (v, i) {
-                    //     if (rowData.id == v.id) {
-                    //         v.status = 3;
-                    //     }
-                    // });
-                    _this.setState({
-                        dataSource: _this.state.dataSource.cloneWithRows(_this.initData)
-                    });
                 }
             },
             onError: function (error) {
-                Toast.warn('修改失败');
+                Toast.info('修改失败');
             }
         });
     }
@@ -278,6 +279,11 @@ export default class ARTextbookList extends React.Component {
      * 发布弹出框
      */
     showPublishAlert = (data, event) => {
+        console.log(data,"calmmmm")
+        if(data.status == 1){
+            Toast.info("已发布");
+            return;
+        }
         event.stopPropagation();
         var phoneType = navigator.userAgent;
         var phone;
@@ -293,96 +299,25 @@ export default class ARTextbookList extends React.Component {
         ], phone);
     };
 
-    /**
-     * 更改发布状态
-     * @param {*} checked 
-     * @param {*} rowData 
-     */
-    // changeStatus(checked, rowData) {
-    //     var _this = this;
-    //     var param = {
-    //         "method": 'changeARBookStatus',
-    //         "bId": rowData.id,
-    //     };
-    //     var status,
-    //         str;
-    //     if (checked) {
-    //         param.condition = 1
-    //         status = 1
-    //         str = '开启发布'
-    //     } else {
-    //         param.condition = 3
-    //         status = 3
-    //         str = '关闭发布'
-    //     }
-    //     WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
-    //         onResponse: (result) => {
-    //             if (result.msg == '调用成功' || result.success == true) {
-    //                 Toast.success(str, 1)
-    //                 _this.state.dataSource = [];
-    //                 _this.state.dataSource = new ListView.DataSource({
-    //                     rowHasChanged: (row1, row2) => row1 !== row2,
-    //                 });
-    //                 _this.initData.forEach(function (v, i) {
-    //                     if (rowData.id == v.id) {
-    //                         v.status = status;
-    //                     }
-    //                 });
-    //                 _this.setState({
-    //                     dataSource: _this.state.dataSource.cloneWithRows(_this.initData)
-    //                 });
-    //             } else {
-    //                 Toast.fail(result.msg, 3)
-    //                 _this.state.dataSource = [];
-    //                 _this.state.dataSource = new ListView.DataSource({
-    //                     rowHasChanged: (row1, row2) => row1 !== row2,
-    //                 });
-    //                 _this.initData.forEach(function (v, i) {
-    //                     if (rowData.id == v.id) {
-    //                         v.status = 3;
-    //                     }
-    //                 });
-    //                 _this.setState({
-    //                     dataSource: _this.state.dataSource.cloneWithRows(_this.initData)
-    //                 });
-    //             }
-    //         },
-    //         onError: function (error) {
-    //             Toast.warn('修改失败');
-    //         }
-    //     });
-    // }
+   
 
     render() {
+        console.log("执行render")
         var _this = this;
         const row = (rowData, sectionID, rowID) => {
+            console.log(rowData,"rowData")
             let SwitchExample = (props) => {
                 const { getFieldProps } = props.form;
                 return (
                     <div className="amList_cont">
-                        {/* <List className="amList">
-                            <List.Item
-                                extra={<Switch
-                                    {...getFieldProps('Switch8', {
-                                        initialValue: rowData.status == 3 ? false : true,
-                                        valuePropName: 'checked',
-                                    })}
-                                    platform="ios"
-                                    color="#4dd865"
-                                    text-align="left"
-                                    onClick={(checked) => {
-                                        _this.showPublishAlert.bind(checked, rowData)
-                                    }}
-                                />}
-                            ><span className="open_text">发布状态：</span></List.Item>
-                        </List> */}
                         <Button className="modifyBtn_common" type="primary" size="small" onClick={this.toUpdateARTextbook.bind(this, rowData)}></Button>
                         <Button type="primary" size="small" className="btn_del deleteBtn_common" onClick={this.showAlert.bind(this, rowData)}></Button>
-                        <Button size="small" onClick={_this.showPublishAlert.bind(this, rowData)}>发布</Button>
+                        <Button size="small" onClick={_this.showPublishAlert.bind(this, rowData)}>{rowData.status == -1 ? "未发布":"已发布"}</Button>
                     </div>
                 );
             };
             SwitchExample = createForm()(SwitchExample);
+            
             return (
                 <div className="classInfo line_public">
                     <div>
@@ -393,7 +328,7 @@ export default class ARTextbookList extends React.Component {
                             </div>
                         </div>
                         <div className="tableListDate textOver">
-                            <span className="classroom"><span className="classroom_span">创建时间：</span>{rowData.createTime}</span>
+                            <span className="classroom"><span className="classroom_span">创建时间：</span>{WebServiceUtil.formatYMD(rowData.createTime)}</span>
                         </div>
                     </div>
                     <SwitchExample />
