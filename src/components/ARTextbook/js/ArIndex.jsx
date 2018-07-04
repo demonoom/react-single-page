@@ -13,14 +13,14 @@ export default class ArIndex extends React.Component {
     }
 
     toArScan() {
-        // var url = WebServiceUtil.mobileServiceURL + "ARTextbookList";
-        // var data = {
-        //     method: 'openNewPage',
-        //     url: url
-        // };
-        // Bridge.callHandler(data, null, function (error) {
-        //     window.location.href = url;
-        // });
+        var url = "https://www.maaee.com:6443/easyAr/";
+        var data = {
+            method: 'openNewPage',
+            url: url
+        };
+        Bridge.callHandler(data, null, function (error) {
+            window.location.href = url;
+        });
     }
     render() {
         var _this = this;
