@@ -46,13 +46,13 @@ export default class wxTempalte extends React.Component {
             "method": 'postTemplateMessageForPublicWx',
             "accessToken": this.state.access,
             "messageJson": {
-                "touser": "oHVXv0TFo3DMoDAsjIWPduYtG3x4",
+                "touser": "o-w611I9nKqTHcT3P34srzwIrf6U",
                 "template_id": "i2POFltLLGjGhgMp0elwcGWlOU2IIFZE4lA8yWiabPA",
-                "url": "http://weixin.qq.com/download",
-                "miniprogram": {
+                //"url": "http://weixin.qq.com/download",
+                /*"miniprogram": {
                     // "appid":"xiaochengxuappid12345",
                     // "pagepath":"index?foo=bar"
-                },
+                },*/
                 "data": {
                     "first": {
                         "value":"~~~~~~",
