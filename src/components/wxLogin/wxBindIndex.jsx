@@ -148,17 +148,23 @@ export default class wxBindIndex extends React.Component {
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
             onResponse: (result) => {
                 console.log(result, 'access');
-                this.setState({
-                    result:result,
-                })
                 if (result.success) {
                     Toast.info('成功');
+                    this.setState({
+                        result:'成功',
+                    })
                 } else {
                     Toast.info('保存失败');
+                    this.setState({
+                        result:'保存失败:'+ result.msg,
+                    })
                 }
             },
             onError: function (error) {
                 Toast.info('请求失败');
+                this.setState({
+                    result:'请求失败',
+                })
             }
         });
     }
