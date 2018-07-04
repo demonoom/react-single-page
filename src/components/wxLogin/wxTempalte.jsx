@@ -9,6 +9,32 @@ export default class wxTempalte extends React.Component {
             access: '不存在',
             template: '未发送'
         };
+        var param = {
+            "method": 'postTemplateMessageForPublicWx',
+            "accessToken": this.state.access,
+            "messageJson": {
+                "touser": "oHVXv0TFo3DMoDAsjIWPduYtG3x4",
+                "template_id": "MUPNO6Kk_Skoe8R28xnCcNjq6L2XSMA3ZmvSUHKSArE",
+                "data": {
+                    "first": {
+                        "value":"",
+                        "color":"#173177"
+                    },
+                    "keyword1":{
+                        "value":"张三",
+                        "color":"#173177"
+                    },
+                    "keyword2": {
+                        "value":"2018-06-08 8:00:00",
+                        "color":"#173177"
+                    },
+                    "remark":{
+                        "value":"您好,您的孩子张三已出校门!",
+                        "color":"#173177"
+                    }
+                }
+            }
+        };
 
     }
 

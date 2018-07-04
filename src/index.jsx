@@ -590,6 +590,14 @@ const wxTemplate = (location, cb) => {
     )
 }
 
+//微信绑定页面
+const wxBindIndex = (location, cb) => {
+    require.ensure([], require => {
+            cb(null, require("./components/wxLogin/wxBindIndex").default)
+        }
+    )
+}
+
 import './index.less';
 
 class Index extends React.Component {
@@ -701,6 +709,9 @@ class Index extends React.Component {
                     <li><Link
                     to="/wxLogin"
                     style={{fontSize: '24px'}}>授权登录</Link></li>
+                    <li><Link
+                        to="/wxBindIndex"
+                        style={{fontSize: '24px'}}>微信绑定</Link></li>
                     {/*<li><Link*/}
                         {/*to="/answerListFormTeacher?teacherId=23836&topicId=8888"*/}
                         {/*style={{fontSize: '24px'}}>查看学生作答情况(老师)</Link></li>*/}
@@ -850,6 +861,7 @@ ReactDOM.render(
             <Route path="inAndOutSchool" getComponent={inAndOutSchool}/>
             <Route path="classAttendance" getComponent={classAttendance}/>
             <Route path="wxTemplate" getComponent={wxTemplate}/>
+            <Route path="wxBindIndex" getComponent={wxBindIndex}/>
         </Route>
     </Router>
     ,
