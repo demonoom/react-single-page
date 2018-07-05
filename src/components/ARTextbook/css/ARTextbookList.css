@@ -4,6 +4,9 @@
 #ARTextbookList .am-list-view-scrollview-content {
   width: 100%;
 }
+#ARTextbookList .am-list-body {
+  border: 0 !important;
+}
 #ARTextbookList .classInfo {
   padding: 15px;
 }
@@ -20,6 +23,7 @@
 }
 #ARTextbookList .classInfo .am-button-primary {
   background-color: #fff;
+  border: 0;
 }
 #ARTextbookList .classInfo .am-button::before {
   display: none;

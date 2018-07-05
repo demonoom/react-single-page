@@ -1,3 +1,15 @@
 #wxBindIndex .am-list-item .am-input-label.am-input-label-5 {
   width: 110px;
 }
+#wxBindIndex .tel_element {
+  position: relative;
+}
+#wxBindIndex #telImg {
+  position: absolute;
+  top: 50%;
+  right: 10px;
+  width: 25px;
+  height: 25px;
+  transform: translateY(-50%);
+  z-index: 99;
+}
