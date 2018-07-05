@@ -178,7 +178,6 @@ export default class wxBindIndex extends React.Component {
         const { value } = this.state;
         return (
             <div id="wxBindIndex">
-<<<<<<< HEAD
                 <div className="isDangerArea">
                     <List renderHeader={() => '选择角色'}>
                         {data.map(i => (
@@ -188,37 +187,19 @@ export default class wxBindIndex extends React.Component {
                         ))}
                     </List>
                     <WhiteSpace size="lg"/>
-=======
-                <List renderHeader={() => '请选择您的用户角色'}>
-                    {data.map(i => (
-                        <RadioItem key={i.value} checked={value === i.value} onChange={() => this.onChange(i.value)}>
-                            {i.label}
-                        </RadioItem>
-                    ))}
-                </List>
-                <div className="tel_element">
-                    <InputItem
-                        maxLength={11}
-                        placeholder="请输入手机号码"
-                        value={this.state.tel}
-                        onChange={this.inputOnChange}
-                    >
-                    </InputItem>
-                    <img style={{
-                        display:this.state.telSuccess == 'success' || this.state.telSuccess == 'error'?'block':'none'
-                    }} id="telImg" src={this.state.telSuccess == 'success'?require("./imgs/success1.png"):require('./imgs/error.png')} alt=""/>
-                </div>
+                    <div className="tel_element">
+                        <InputItem
+                            maxLength={11}
+                            placeholder="请输入手机号码"
+                            value={this.state.tel}
+                            onChange={this.inputOnChange}
+                        >手机号码
+                        </InputItem>
+                        <img style={{
+                            display:this.state.telSuccess == 'success' || this.state.telSuccess == 'error'?'block':'none'
+                        }} id="telImg" src={this.state.telSuccess == 'success'?require("./imgs/success1.png"):require('./imgs/error.png')} alt=""/>
+                    </div>
 
-                <div>
->>>>>>> 793966c752635c8f27b14cda764406c893778669
-                    <InputItem
-                        // className="add_element"
-                        maxLength={100}
-                        placeholder="请输入手机号码"
-                        value={this.state.tel}
-                        onChange={this.inputOnChange}
-                    >手机号码
-                    </InputItem>
                     <WhiteSpace size="lg"/>
                     <div className="Verification">
                         <InputItem
