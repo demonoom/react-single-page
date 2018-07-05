@@ -352,11 +352,8 @@ export default class addARTextbook extends React.Component {
                     </div>
 
                 </div>
-                <div className='addCourseButton'>
-                    <WhiteSpace size="lg" />
-                    <WingBlank>
-                        <Button type="warning" onClick={this.addARBook}>提交</Button>
-                    </WingBlank>
+                <div className='submitBtn'>
+                    <Button type="warning" onClick={this.addARBook}>提交</Button>
                 </div>
             </div>
         );

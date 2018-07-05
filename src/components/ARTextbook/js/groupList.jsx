@@ -1,4 +1,5 @@
 import React from "react"
+import "../css/groupList.less"
 var teacherV;
 export default class ARTextbookList extends React.Component {
     constructor(props){
@@ -72,8 +73,11 @@ export default class ARTextbookList extends React.Component {
         var domArray = [];
         for(var k in item){
             domArray.push(
-                <div onClick={this.toUpdateARTextbook.bind(this,k)}>
-                    AR教材第{Number(k)+1}组
+                <div className="am-list-item am-list-item-middle" onClick={this.toUpdateARTextbook.bind(this,k)}>
+                    <div className="am-list-line">
+                        <div className="am-list-content">AR教材第{Number(k)+1}组</div>
+                        <div className="am-list-arrow am-list-arrow-horizontal"></div>
+                    </div>
                 </div>
             )
         }
@@ -84,7 +88,7 @@ export default class ARTextbookList extends React.Component {
     render(){
         var _this = this;
         return (
-            <div>{_this.state.domArray}</div>
+            <div id="groupList">{_this.state.domArray}</div>
         )
     }
 }
