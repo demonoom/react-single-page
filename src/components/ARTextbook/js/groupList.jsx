@@ -12,7 +12,6 @@ export default class ARTextbookList extends React.Component {
         var locationSearch = locationHref.substr(locationHref.indexOf("?") + 1);
         var bId = locationSearch.split("&")[0].split("=")[1];
         var uId = locationSearch.split("&")[1].split("=")[1];
-        console.log(uId,"group");
         this.viewARBook(bId);
         this.setState({ "bId": bId,"uId":uId });
        
@@ -26,14 +25,11 @@ export default class ARTextbookList extends React.Component {
             "method": 'viewARBook',
             "bId": bId
         }
-        console.log(param);
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
             onResponse:  (result)=> {
                 console.log(result, "viewARBook")
                 if (result.msg == '调用成功' || result.success == true) {
                     teacherV.state.initData = result.response;
-                    console.log(teacherV.state.initData.itemList[0].video.split(","),"video")
-                    
                     teacherV.setState({
                         itemList:teacherV.state.initData.itemList
                     })
@@ -71,9 +67,13 @@ export default class ARTextbookList extends React.Component {
     buildDOM = (item)=>{
         var domArray = [];
         for(var k in item){
+        console.log(item,"item");
+
             domArray.push(
                 <div onClick={this.toUpdateARTextbook.bind(this,k)}>
-                    AR教材第{Number(k)+1}组
+                    <span>第{Number(k)+1}组</span>
+                    <img src={item[k].pic} />
+                    <span>第{item[k].page}页</span>
                 </div>
             )
         }
