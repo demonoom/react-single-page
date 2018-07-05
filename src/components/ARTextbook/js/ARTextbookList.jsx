@@ -40,7 +40,7 @@ export default class ARTextbookList extends React.Component {
         console.log(uid)
         this.setState({ "uid": uid });
         console.log(uid);
-        this.viewARBookPage(uid,true);
+        this.viewARBookPage(uid, true);
         //添加对视窗大小的监听,在屏幕转换以及键盘弹起时重设各项高度
         window.addEventListener('resize', classBinding.onWindowResize)
     }
@@ -60,10 +60,10 @@ export default class ARTextbookList extends React.Component {
     }
 
 
-     /**
-     *获取AR教材列表
-     */
-    viewARBookPage = (uid,flag) => {
+    /**
+    *获取AR教材列表
+    */
+    viewARBookPage = (uid, flag) => {
         var _this = this;
         if (flag) {
             _this.initData.splice(0);
@@ -81,7 +81,7 @@ export default class ARTextbookList extends React.Component {
         };
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
             onResponse: function (result) {
-                console.log(result,"result");
+                console.log(result, "result");
                 if (result.msg == '调用成功' || result.success == true) {
                     var arr = result.response;
                     var pager = result.pager;
@@ -138,7 +138,7 @@ export default class ARTextbookList extends React.Component {
         this.viewARBookPage(this.state.uid, true);
     }
 
-   
+
 
     /**
      * 跳转新增页面
@@ -159,11 +159,11 @@ export default class ARTextbookList extends React.Component {
      * toUpdateARTextbook
      */
     toUpdateARTextbook(data) {
-        if(data.status == 1){
+        if (data.status == 1) {
             Toast.info("已发布，不能修改");
             return;
         }
-        var url = encodeURI(WebServiceUtil.mobileServiceURL + "groupList?bId=" + data.id+"&uid="+classBinding.state.uid);
+        var url = encodeURI(WebServiceUtil.mobileServiceURL + "groupList?bId=" + data.id + "&uid=" + classBinding.state.uid);
         var data = {
             method: 'openNewPage',
             url: url
@@ -179,7 +179,7 @@ export default class ARTextbookList extends React.Component {
      * @throws Exception
      */
     changeARBookStatus(data) {
-       
+
         var _this = this;
         var param = {
             "method": 'changeARBookStatus',
@@ -188,7 +188,7 @@ export default class ARTextbookList extends React.Component {
         };
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
             onResponse: (result) => {
-                console.log(result,"delete")
+                console.log(result, "delete")
                 if (result.msg == '调用成功' || result.success == true) {
                     Toast.success('删除成功', 1)
                     _this.state.dataSource = [];
@@ -215,7 +215,7 @@ export default class ARTextbookList extends React.Component {
      * 删除弹出框
      */
     showAlert = (data, event) => {
-        if(data.status == 1){
+        if (data.status == 1) {
             Toast.info("已发布，不能删除");
             return;
         }
@@ -238,12 +238,12 @@ export default class ARTextbookList extends React.Component {
     /**
      * 点击发布
      */
-    publish(data){
-        console.log(data,"publishData");
+    publish(data) {
+        console.log(data, "publishData");
         var _this = this;
         var param = {
             "method": 'changeARBookStatus',
-            "condition":1,
+            "condition": 1,
             "bId": data.id,
         };
         console.log(param);
@@ -279,8 +279,8 @@ export default class ARTextbookList extends React.Component {
      * 发布弹出框
      */
     showPublishAlert = (data, event) => {
-        console.log(data,"calmmmm")
-        if(data.status == 1){
+        console.log(data, "calmmmm")
+        if (data.status == 1) {
             Toast.info("已发布");
             return;
         }
@@ -299,25 +299,30 @@ export default class ARTextbookList extends React.Component {
         ], phone);
     };
 
-   
+
 
     render() {
         console.log("执行render")
         var _this = this;
         const row = (rowData, sectionID, rowID) => {
-            console.log(rowData,"rowData")
+            console.log(rowData, "rowData")
             let SwitchExample = (props) => {
                 const { getFieldProps } = props.form;
                 return (
                     <div className="amList_cont">
-                        <Button className="modifyBtn_common" type="primary" size="small" onClick={this.toUpdateARTextbook.bind(this, rowData)}></Button>
-                        <Button type="primary" size="small" className="btn_del deleteBtn_common" onClick={this.showAlert.bind(this, rowData)}></Button>
-                        <Button size="small" className="publishBtn" onClick={_this.showPublishAlert.bind(this, rowData)}>{rowData.status == -1 ? "发布":"已发布"}</Button>
+                        {rowData.status == -1 ? <div>
+                            <Button size="small" className="publishBtn" onClick={_this.showPublishAlert.bind(this, rowData)}>发布</Button>
+                            <Button className="modifyBtn_common" type="primary" size="small" onClick={this.toUpdateARTextbook.bind(this, rowData)}></Button>
+                            <Button type="primary" size="small" className="btn_del deleteBtn_common" onClick={this.showAlert.bind(this, rowData)}></Button>
+                        </div>
+                            :
+                            "已发布"}
+                        
                     </div>
                 );
             };
             SwitchExample = createForm()(SwitchExample);
-            
+
             return (
                 <div className="classInfo line_public my_flex">
                     <div className="textCOnt">
