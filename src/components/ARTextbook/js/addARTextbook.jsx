@@ -188,9 +188,9 @@ export default class addARTextbook extends React.Component {
                     teacherV.state.ARTextbookDataArr[i].videoObj.map((v, i) => {
                         return (
                             <div>
-                                <span onClick={teacherV.theVideoPlay.bind(this, i)}>播放</span>
-                                <video className="videoDiv" src={v.videoPath}></video>
-                                <span>{v.videoName}</span>
+                                {/* <span >播放</span> */}
+                                <video onClick={teacherV.theVideoPlay.bind(this, i)} className="videoDiv" src={v.videoPath}></video>
+                                {/* <span>{v.videoName}</span> */}
                             </div>
                         )
                     })
@@ -327,16 +327,20 @@ export default class addARTextbook extends React.Component {
                     {
                         teacherV.state.fileNewArr.map((v, i) => {
                             console.log("hahahhahahahha", v)
-                            var imgStr;
-                            if (v.fileExtra == "pdf") {
-                                imgStr = "pdf 图片"
-                            } else if (v.fileExtra == "ppt") {
-                                imgStr = "PPT图片"
-                            }
+                            var imgStr = "hahah";
+                            // if (v.fileExtra == "pdf") {
+                            //     imgStr = "pdf 图片"
+                            // } else if (v.fileExtra == "ppt") {
+                            //     imgStr = "PPT图片"
+                            // }else if (v.fileExtra == "doc" || v.fileExtra == "docx" ) {
+                            //     imgStr = "word图片"
+                            // }else {
+                            //     imgStr = "默认图标"
+                            // }
                             return (
                                 <div>
                                     <div>{imgStr}</div>
-                                    <div>{v.fileName}</div>
+                                    {/* <div>{v.fileName}</div> */}
                                 </div>
                             )
                         })
