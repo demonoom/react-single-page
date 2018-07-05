@@ -1,3 +1,4 @@
+(node) util.print is deprecated. Use console.log instead.
 html,
 body {
   height: 100%;
@@ -356,9 +357,9 @@ hr {
 }
 /*删除弹窗*/
 .am-modal-content .am-modal-title {
-  color: #333;
+  color: #333 !important;
   line-height: 22px;
-  font-size: 17px;
+  font-size: 17px!important;
 }
 .am-modal-content .am-modal-input input {
   padding-left: 6px;
@@ -431,8 +432,8 @@ hr {
   margin: 0 2.22rem;
 }
 .notify_contModal .am-modal-title {
-  color: #191c26;
-  font-size: 0.72rem;
+  color: #191c26!important;
+  font-size: 0.72rem!important;
   font-weight: bold;
 }
 .notify_contModal .am-modal-content .am-modal-body {

@@ -310,7 +310,8 @@ export default class addARTextbook extends React.Component {
                     ><div onClick={() => this.labelFocusInst.focus()}>AR教材</div></InputItem>
                     {/* 显示附件 */}
                     {
-                       <div>附件地址：{teacherV.state.attachment}</div>
+                    //    <div>附件地址：{teacherV.state.attachment}</div>
+                    <div>图标 ------ 附件</div>
                     }
                     <button className="uploadAttech" onClick={teacherV.uploadFile}>修改附件</button>
                     
@@ -319,7 +320,7 @@ export default class addARTextbook extends React.Component {
                             
                         })
                     }
-                    <div className="mt3PX">第{Number(teacherV.state.getIndex)+1}组数据</div>
+                    {/* <div className="mt3PX">第{Number(teacherV.state.getIndex)+1}组数据</div> */}
                     <InputItem
                         className="add_element"
                         placeholder="请输入页码"
@@ -334,8 +335,8 @@ export default class addARTextbook extends React.Component {
                         teacherV.state.videoNewObj.map((v,i)=>{
                             return (
                                 <div>
-                                     <video className="videoDiv" src={v}></video>
-                                     <span onClick={_this.theVideoPlay.bind(this, i)}>播放</span>
+                                     <video onClick={_this.theVideoPlay.bind(this, i)} className="videoDiv" src={v}></video>
+                                     {/* <span >播放</span> */}
                                 </div>
                                
                             )
