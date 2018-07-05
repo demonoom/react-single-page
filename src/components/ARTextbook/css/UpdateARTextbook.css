@@ -26,6 +26,7 @@
   background: #eee;
   margin-right: 15px;
   overflow: hidden;
+  margin-bottom: 15px;
 }
 #UpdateARTextbook .i_uploadAttech div {
   background: rgba(0, 0, 0, 0.4);
@@ -41,7 +42,7 @@
   margin: 20px 0;
 }
 #UpdateARTextbook .item_list20 {
-  padding: 5px 15px 15px 15px;
+  padding: 5px 15px 0 15px;
 }
 #UpdateARTextbook .am-list-item .am-input-label.am-input-label-5 {
   color: #666 !important;
@@ -54,8 +55,17 @@
   background-size: 100%;
 }
 #UpdateARTextbook .div68 {
-  height: 68px;
+  min-height: 68px;
+  flex: 1;
 }
 #UpdateARTextbook .am-list-item:not(:last-child) .am-list-line {
   border-bottom: none;
+}
+#UpdateARTextbook .submitBtn .am-button {
+  border: none;
+}
+#UpdateARTextbook .addCurriculum_cont {
+  height: calc(100% - 77px);
+  overflow-x: hidden;
+  overflow-y: auto;
 }
