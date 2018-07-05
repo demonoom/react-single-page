@@ -187,7 +187,7 @@ export default class wxBindIndex extends React.Component {
                         result:'绑定成功',
                     })
                 } else {
-                    Toast.info('绑定失败');
+                    Toast.info('绑定失败'+ result.msg);
                     this.setState({
                         result:'绑定失败:'+ result.msg,
                     })
