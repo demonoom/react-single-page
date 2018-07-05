@@ -80,3 +80,10 @@
 #addARTextbook .add_title {
   background-color: #f4f4f4;
 }
+#addARTextbook .fileBack {
+  width: 68px;
+  height: 68px;
+  background: url("../imgs/UpdateART.png") no-repeat;
+  background-size: 100%;
+  margin-right: 10px;
+}

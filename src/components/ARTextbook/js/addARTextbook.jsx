@@ -345,7 +345,7 @@ export default class addARTextbook extends React.Component {
                             {
                                 teacherV.state.fileNewArr.map((v, i) => {
                                     console.log("附件", v)
-                                    var imgStr = "附件";
+                                    //var imgStr = "附件";
                                     // if (v.fileExtra == "pdf") {
                                     //     imgStr = "pdf 图片"
                                     // } else if (v.fileExtra == "ppt") {
@@ -356,8 +356,7 @@ export default class addARTextbook extends React.Component {
                                     //     imgStr = "默认图标"
                                     // }
                                     return (
-                                        <div>
-                                            <div>{imgStr}</div>
+                                        <div className="fileBack">
                                             {/* <div>{v.fileName}</div> */}
                                         </div>
                                     )
