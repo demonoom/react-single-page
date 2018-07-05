@@ -56,3 +56,6 @@
 #UpdateARTextbook .div68 {
   height: 68px;
 }
+#UpdateARTextbook .am-list-item:not(:last-child) .am-list-line {
+  border-bottom: none;
+}

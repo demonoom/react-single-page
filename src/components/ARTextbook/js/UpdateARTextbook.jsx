@@ -339,24 +339,23 @@ export default class addARTextbook extends React.Component {
                             <img className="imgDiv" src={teacherV.state.picNewObj} />
                         }<div>修改</div></button></div>
                     </div>
-
+                    <div className="am-list-item item_list20" >
+                        <div className="am-input-label am-input-label-5">视频</div>
+                        <div className="div68">
                     {
                         teacherV.state.videoNewObj.map((v,i)=>{
                             return (
-                            <div className="am-list-item item_list20" >
-                                <div className="am-input-label am-input-label-5">视频</div>
-                                <div className="div68">
+
                                      <div className="uploadAttech i_uploadAttech">
                                          <video onClick={_this.theVideoPlay.bind(this, i)} className="videoDiv" src={v}></video>
                                          <div onClick={teacherV.uploadVideo}>修改</div>
                                      </div>
-                                     {/* <span >播放</span> */}
-                                </div>
-                            </div>
-                               
+
                             )
                         })
                     }
+                        </div>
+                    </div>
 
                 </div>
                 <div className='submitBtn'>
