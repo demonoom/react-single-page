@@ -74,9 +74,8 @@ export default class ARTextbookList extends React.Component {
 
                 <div className="am-list-item am-list-item-middle" onClick={this.toUpdateARTextbook.bind(this,k)}>
                     <div className="am-list-line">
-                        <div className="am-list-content">第{Number(k)+1}组</div>
-                        <img src={item[k].pic} />
-                        <span>第{item[k].page}页</span>
+                        <div className="am-list-content">第{Number(k)+1}组<img src={item[k].pic} /></div>
+                        <span className="gray_page">第{item[k].page}页</span>
                         <div className="am-list-arrow am-list-arrow-horizontal"></div>
                     </div>
                 </div>
