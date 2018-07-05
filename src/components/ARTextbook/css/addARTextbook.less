@@ -1,10 +1,36 @@
 #addARTextbook {
     overflow: auto;
+    .sameBack{
+        background-color: #fff;
+        padding: 15px;
+        font-size: 17px;
+        color: #666;
+    }
+    .my_flex{
+        -webkit-box-align: center;
+        -webkit-align-items: center;
+        -ms-flex-align: center;
+        align-items: center;
+    }
+    .am-list-item .am-input-label{
+        color: #666 !important;
+    }
+    .am-list-line{
+        border: 0 !important;
+    }
+    .am-list-line::after{
+        display: none;
+    }
     .imgTag {
-        width: 50px;
+        width: 5rem;
+        height: 5rem;
+        margin-right: 10px;
+
     }
     .videoDiv {
-        width: 100px;
+        width: 5rem;
+        height: 5rem;
+        margin-right: 10px;
     }
     .uploadAttech {
         width: 100px;
@@ -13,6 +39,36 @@
     }
     .add_element {
         width: 100%;
-        margin: 10px auto;
+    }
+    .uploadBtn{
+        background: url("../imgs/addPic.png") no-repeat;
+        font-size: 0;
+        width: 5rem;
+        height: 5rem;
+        margin-left: 24px;
+        background-size: 100%;
+        border: 0;
+    }
+    .addARTextbookTable{
+        text-align: center;
+        font-size: 17px;
+        color: #638bb7;
+        line-height: 30px;
+        padding: 7px 15px;
+        .addBtn{
+            margin: 0 auto;
+            position: relative;
+            width: 96px;
+        }
+        .icon{
+            font-size: 30px;
+            padding-right: 5px;
+            position: absolute;
+            left: 0;
+            top:-1px;
+        }
+    }
+    .add_title{
+        background-color: #f4f4f4;
     }
 }
