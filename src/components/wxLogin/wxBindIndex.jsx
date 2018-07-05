@@ -250,8 +250,8 @@ export default class wxBindIndex extends React.Component {
                     </div>
 
 
-                    <div>测试保存接口返回:{this.state.result}</div>
-                    <div>openId:{this.state.openid}</div>
+                    {/*<div>测试保存接口返回:{this.state.result}</div>*/}
+                    {/*<div>openId:{this.state.openid}</div>*/}
                 </div>
             </div>
         );
