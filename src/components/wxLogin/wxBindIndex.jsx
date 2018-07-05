@@ -22,6 +22,7 @@ export default class wxBindIndex extends React.Component {
             sendButtonText:'发送验证码',
             result:'未请求',
             telSuccess: 'none',
+            textFlag: true,
             // pending:true
         };
 
@@ -127,7 +128,7 @@ export default class wxBindIndex extends React.Component {
 
     // 发送验证码
     sendCode = () => {
-        var number = 60;
+        var number = 30;
         timer = setInterval(function(){
             console.log(number);
             if(number < 0){
@@ -185,9 +186,10 @@ export default class wxBindIndex extends React.Component {
                     Toast.info('绑定成功');
                     this.setState({
                         result:'绑定成功',
+                        textFlag:false,
                     })
                 } else {
-                    Toast.info('绑定失败'+ result.msg);
+                    Toast.info(''+ result.msg);
                     this.setState({
                         result:'绑定失败:'+ result.msg,
                     })
@@ -210,7 +212,9 @@ export default class wxBindIndex extends React.Component {
         const { value } = this.state;
         return (
             <div id="wxBindIndex">
-                <div className="isDangerArea">
+                <div style={{
+                    display:this.state.textFlag?'block':'none'
+                }} className="isDangerArea">
                     <List renderHeader={() => '选择角色'}>
                         {data.map(i => (
                             <RadioItem key={i.value} checked={value === i.value} onChange={() => this.onChange(i.value)}>
@@ -253,6 +257,9 @@ export default class wxBindIndex extends React.Component {
                     {/*<div>测试保存接口返回:{this.state.result}</div>*/}
                     {/*<div>openId:{this.state.openid}</div>*/}
                 </div>
+                <div style={{
+                    display:this.state.textFlag?'none':'block'
+                }}>绑定成功</div>
             </div>
         );
     }

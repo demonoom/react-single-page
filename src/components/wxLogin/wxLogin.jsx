@@ -27,9 +27,6 @@ export default class wxLogin extends React.Component {
         this.setState({
             local: this.state.local+local,
         }, () => {
-            this.setState({
-                info: '微信授权发起,正在跳转至授权链接...',
-            })
             window.location.href = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=" + this.state.appId + "&redirect_uri=" + encodeURIComponent(this.state.jsp) + "&response_type=code&scope=" + this.state.scope + "&state=" + encodeURIComponent(this.state.local) + "#wechat_redirect";
         })
     }
@@ -37,7 +34,6 @@ export default class wxLogin extends React.Component {
     render() {
         return (
             <div id="wxLogin">
-                <div style={{color: 'red'}}>info : {this.state.info}</div>
             </div>
         );
     }

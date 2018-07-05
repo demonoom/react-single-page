@@ -760,7 +760,7 @@ class Index extends React.Component {
                         to="/wxLogin?local=wxBindIndex"
                         style={{ fontSize: '24px' }}>授权登录至微信绑定页面</Link></li>
                     <li><Link
-                        to="/wxBindIndex"
+                        to="/wxBindIndex"wxLogin
                         style={{fontSize: '24px'}}>微信绑定</Link></li>
                     {/*<li><Link*/}
                     {/*to="/answerListFormTeacher?teacherId=23836&topicId=8888"*/}
