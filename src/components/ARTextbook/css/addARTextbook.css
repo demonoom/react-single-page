@@ -1,5 +1,9 @@
 #addARTextbook {
-  overflow: auto;
+  height: 100%;
+}
+#addARTextbook .cont {
+  overflow-y: auto;
+  height: calc(100% - 77px);
 }
 #addARTextbook .sameBack {
   background-color: #fff;
@@ -24,29 +28,33 @@
   display: none;
 }
 #addARTextbook .imgTag {
-  width: 5rem;
-  height: 5rem;
+  width: 68px;
+  height: 68px;
   margin-right: 10px;
 }
 #addARTextbook .videoDiv {
-  width: 5rem;
-  height: 5rem;
+  width: 68px;
+  height: 68px;
   margin-right: 10px;
+  margin-bottom: 10px;
+}
+#addARTextbook .textTitle {
+  width: 70px;
+  margin-right: 24px;
+}
+#addARTextbook .videoCont {
+  width: calc(100% - 94px);
 }
 #addARTextbook .uploadAttech {
   width: 100px;
   height: 20px;
   background-color: #fff;
 }
-#addARTextbook .add_element {
-  width: 100%;
-}
 #addARTextbook .uploadBtn {
   background: url("../imgs/addPic.png") no-repeat;
   font-size: 0;
-  width: 5rem;
-  height: 5rem;
-  margin-left: 24px;
+  width: 68px;
+  height: 68px;
   background-size: 100%;
   border: 0;
 }

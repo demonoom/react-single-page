@@ -1,5 +1,10 @@
 #addARTextbook {
-    overflow: auto;
+    height: 100%;
+    .cont{
+        overflow-y: auto;
+        height: calc(~"100% - 77px");
+    }
+
     .sameBack{
         background-color: #fff;
         padding: 15px;
@@ -23,30 +28,34 @@
         display: none;
     }
     .imgTag {
-        width: 5rem;
-        height: 5rem;
+        width: 68px;
+        height: 68px;
         margin-right: 10px;
 
     }
     .videoDiv {
-        width: 5rem;
-        height: 5rem;
+        width: 68px;
+        height: 68px;
         margin-right: 10px;
+        margin-bottom:10px;
+    }
+    .textTitle{
+        width: 70px;
+        margin-right: 24px;
+    }
+    .videoCont{
+        width: calc(~"100% - 94px");
     }
     .uploadAttech {
         width: 100px;
         height: 20px;
         background-color:#fff;
     }
-    .add_element {
-        width: 100%;
-    }
     .uploadBtn{
         background: url("../imgs/addPic.png") no-repeat;
         font-size: 0;
-        width: 5rem;
-        height: 5rem;
-        margin-left: 24px;
+        width: 68px;
+        height: 68px;
         background-size: 100%;
         border: 0;
     }

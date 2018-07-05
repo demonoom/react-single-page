@@ -196,21 +196,22 @@ export default class addARTextbook extends React.Component {
 
                 <WhiteSpace size="lg" />
                 <div className="sameBack my_flex">
-                    <span className="textTitle">上传视频</span>
-                    {
-                        teacherV.state.ARTextbookDataArr[i].videoObj.map((v, i) => {
-                            return (
-                                <div>
-                                    {/* <span >播放</span> */}
-                                    <video onClick={teacherV.theVideoPlay.bind(this, i)} className="videoDiv" src={v.videoPath}></video>
-                                    {/* <span>{v.videoName}</span> */}
-                                </div>
-                            )
-                        })
-                    }
-                    <button className="uploadBtn" onClick={teacherV.uploadVideo.bind(this, i)}>上传视频</button>
+                    <div className="textTitle">上传视频</div>
+                    <div className="videoCont my_flex">
+                        {
+                            teacherV.state.ARTextbookDataArr[i].videoObj.map((v, i) => {
+                                return (
+                                    <div>
+                                        {/* <span >播放</span> */}
+                                        <video onClick={teacherV.theVideoPlay.bind(this, i)} className="videoDiv" src={v.videoPath}></video>
+                                        {/* <span>{v.videoName}</span> */}
+                                    </div>
+                                )
+                            })
+                        }
+                        <button className="uploadBtn" onClick={teacherV.uploadVideo.bind(this, i)}>上传视频</button>
+                    </div>
                 </div>
-
             </div>)
             _this.setState({ ARTextbookArr })
         })
@@ -327,58 +328,61 @@ export default class addARTextbook extends React.Component {
     render() {
         return (
             <div id="addARTextbook" style={{ height: this.state.clientHeight }}>
-                <div className="search_bg" style={{ display: this.state.search_bg ? 'block' : 'none' }}></div>
-                <div className="addCurriculum_cont">
-                    <WhiteSpace size="lg" />
-                    <InputItem
-                        placeholder="请输入教材名称"
-                        ref={el => this.labelFocusInst = el}
-                        onChange={v => teacherV.setState({
-                            ARTextbookValue: v
-                        })}
-                    ><div onClick={() => this.labelFocusInst.focus()}>AR教材</div></InputItem>
-                    <WhiteSpace size="lg" />
-                    <div className="my_flex sameBack">
-                        <span className="textTitle">上传附件</span>
-                        {
-                            teacherV.state.fileNewArr.map((v, i) => {
-                                console.log("附件", v)
-                                var imgStr = "附件";
-                                // if (v.fileExtra == "pdf") {
-                                //     imgStr = "pdf 图片"
-                                // } else if (v.fileExtra == "ppt") {
-                                //     imgStr = "PPT图片"
-                                // }else if (v.fileExtra == "doc" || v.fileExtra == "docx" ) {
-                                //     imgStr = "word图片"
-                                // }else {
-                                //     imgStr = "默认图标"
-                                // }
-                                return (
-                                    <div>
-                                        <div>{imgStr}</div>
-                                        {/* <div>{v.fileName}</div> */}
-                                    </div>
-                                )
-                            })
-                        }
-                        <button className="uploadBtn" onClick={teacherV.uploadFile}>上传附件</button>
-
-                    </div>
-
-                    <div className='CourseTableArea'>
-                        {
-                            this.state.ARTextbookArr.map((v) => {
-                                return <div>{v}</div>
-                            })
-                        }
+                <div className="cont">
+                    <div className="search_bg" style={{ display: this.state.search_bg ? 'block' : 'none' }}></div>
+                    <div className="addCurriculum_cont">
                         <WhiteSpace size="lg" />
-                        <div onClick={this.addARTextbookTable} className='addARTextbookTable sameBack'>
-                            <div className="addBtn"><span className="icon">+</span><span>添加组</span></div>
+                        <InputItem
+                            placeholder="请输入教材名称"
+                            ref={el => this.labelFocusInst = el}
+                            onChange={v => teacherV.setState({
+                                ARTextbookValue: v
+                            })}
+                        ><div onClick={() => this.labelFocusInst.focus()}>AR教材</div></InputItem>
+                        <WhiteSpace size="lg" />
+                        <div className="my_flex sameBack">
+                            <span className="textTitle">上传附件</span>
+                            {
+                                teacherV.state.fileNewArr.map((v, i) => {
+                                    console.log("附件", v)
+                                    var imgStr = "附件";
+                                    // if (v.fileExtra == "pdf") {
+                                    //     imgStr = "pdf 图片"
+                                    // } else if (v.fileExtra == "ppt") {
+                                    //     imgStr = "PPT图片"
+                                    // }else if (v.fileExtra == "doc" || v.fileExtra == "docx" ) {
+                                    //     imgStr = "word图片"
+                                    // }else {
+                                    //     imgStr = "默认图标"
+                                    // }
+                                    return (
+                                        <div>
+                                            <div>{imgStr}</div>
+                                            {/* <div>{v.fileName}</div> */}
+                                        </div>
+                                    )
+                                })
+                            }
+                            <button className="uploadBtn" onClick={teacherV.uploadFile}>上传附件</button>
+
+                        </div>
+
+                        <div className='CourseTableArea'>
+                            {
+                                this.state.ARTextbookArr.map((v) => {
+                                    return <div>{v}</div>
+                                })
+                            }
+                            <WhiteSpace size="lg" />
+                            <div onClick={this.addARTextbookTable} className='addARTextbookTable sameBack'>
+                                <div className="addBtn"><span className="icon">+</span><span>添加组</span></div>
+                            </div>
+
                         </div>
 
                     </div>
-
                 </div>
+
                 <div className='submitBtn'>
                     <Button type="warning" onClick={this.addARBook}>提交</Button>
                 </div>
