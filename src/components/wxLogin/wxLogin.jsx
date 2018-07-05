@@ -8,7 +8,7 @@ export default class wxLogin extends React.Component {
         this.state = {
             appId: 'wx181574f3ea687daf',
             // appId: 'wx9d076742b77044dd',
-            local:'http://192.168.50.29:8091/#/',
+            local:'http://192.168.50.186:8091/#/',
             // local:'http://jiaoxue.maaee.com:8091/#/',
             info: '###',
             jsp: 'http://www.maaee.com/elearning/common/weChatLoginOpenId.jsp',

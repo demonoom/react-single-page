@@ -757,7 +757,7 @@ class Index extends React.Component {
                     {/*to="/particlePath"*/}
                     {/*style={{fontSize: '24px'}}>运动轨迹</Link></li>*/}
                     <li><Link
-                        to="/wxLogin?local=contactsList"
+                        to="/wxLogin?local=wxBindIndex"
                         style={{ fontSize: '24px' }}>授权登录至微信绑定页面</Link></li>
                     <li><Link
                         to="/wxBindIndex"
