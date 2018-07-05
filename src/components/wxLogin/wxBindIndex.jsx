@@ -21,6 +21,7 @@ export default class wxBindIndex extends React.Component {
             code:'',
             sendButtonText:'发送验证码',
             result:'未请求',
+            telSuccess: 'none',
         };
 
     }
@@ -54,11 +55,13 @@ export default class wxBindIndex extends React.Component {
         this.setState({
             tel:value,
             sendButton:true,
+            telSuccess:'error',
         });
         if(value.length == 11){
             console.log('手机号码输入完成');
             this.setState({
                 sendButton: false,
+                telSuccess: 'success',
             })
         }
     }
@@ -70,8 +73,6 @@ export default class wxBindIndex extends React.Component {
             code:value,
         });
     }
-
-
     // 验证验证码
     validationCode = (code) =>{
         // var param = {
@@ -149,14 +150,14 @@ export default class wxBindIndex extends React.Component {
             onResponse: (result) => {
                 console.log(result, 'access');
                 if (result.success) {
-                    Toast.info('成功');
+                    Toast.info('绑定成功');
                     this.setState({
-                        result:'成功',
+                        result:'绑定成功',
                     })
                 } else {
-                    Toast.info('保存失败');
+                    Toast.info('绑定失败');
                     this.setState({
-                        result:'保存失败:'+ result.msg,
+                        result:'绑定失败:'+ result.msg,
                     })
                 }
             },
@@ -177,6 +178,7 @@ export default class wxBindIndex extends React.Component {
         const { value } = this.state;
         return (
             <div id="wxBindIndex">
+<<<<<<< HEAD
                 <div className="isDangerArea">
                     <List renderHeader={() => '选择角色'}>
                         {data.map(i => (
@@ -186,6 +188,29 @@ export default class wxBindIndex extends React.Component {
                         ))}
                     </List>
                     <WhiteSpace size="lg"/>
+=======
+                <List renderHeader={() => '请选择您的用户角色'}>
+                    {data.map(i => (
+                        <RadioItem key={i.value} checked={value === i.value} onChange={() => this.onChange(i.value)}>
+                            {i.label}
+                        </RadioItem>
+                    ))}
+                </List>
+                <div className="tel_element">
+                    <InputItem
+                        maxLength={11}
+                        placeholder="请输入手机号码"
+                        value={this.state.tel}
+                        onChange={this.inputOnChange}
+                    >
+                    </InputItem>
+                    <img style={{
+                        display:this.state.telSuccess == 'success' || this.state.telSuccess == 'error'?'block':'none'
+                    }} id="telImg" src={this.state.telSuccess == 'success'?require("./imgs/success1.png"):require('./imgs/error.png')} alt=""/>
+                </div>
+
+                <div>
+>>>>>>> 793966c752635c8f27b14cda764406c893778669
                     <InputItem
                         // className="add_element"
                         maxLength={100}
