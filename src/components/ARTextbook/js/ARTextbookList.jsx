@@ -316,7 +316,7 @@ export default class ARTextbookList extends React.Component {
                             <Button type="primary" size="small" className="btn_del deleteBtn_common" onClick={this.showAlert.bind(this, rowData)}></Button>
                         </div>
                             :
-                            "已发布"}
+                            <span className="publishBtn published">已发布</span>}
                         
                     </div>
                 );
@@ -324,16 +324,18 @@ export default class ARTextbookList extends React.Component {
             SwitchExample = createForm()(SwitchExample);
 
             return (
-                <div className="classInfo line_public my_flex">
-                    <div className="textCOnt">
-                        <div className="dataName textOver">
-                            {rowData.name}
+                <div className="classInfo">
+                    <div className="line_public my_flex">
+                        <div className="textCOnt">
+                            <div className="dataName textOver">
+                                {rowData.name}
+                            </div>
+                            <div className="creatTime textOver">
+                                <span className="classroom_span">创建时间：</span>{WebServiceUtil.formatYMD(rowData.createTime)}
+                            </div>
                         </div>
-                        <div className="creatTime textOver">
-                            <span className="classroom_span">创建时间：</span>{WebServiceUtil.formatYMD(rowData.createTime)}
-                        </div>
+                        <SwitchExample />
                     </div>
-                    <SwitchExample />
                 </div>
             )
         };
