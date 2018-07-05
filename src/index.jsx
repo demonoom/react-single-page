@@ -743,21 +743,18 @@ class Index extends React.Component {
                     {/*<li><Link*/}
                         {/*to="/wxLogin?local=http://jiaoxue.maaee.com:8091/#/wxBindIndex"*/}
                         {/*style={{ fontSize: '24px' }}>授权登录至微信绑定页面</Link></li>*/}
-
                     <li><Link
-                        to="/wxLogin?local=http://192.168.50.186:8091/#/wxBindIndex"
+                        to="/wxLogin?local=wxBindIndex"
                         style={{ fontSize: '24px' }}>授权登录至微信绑定页面</Link></li>
-                    {/* <li><Link
+                    <li><Link
                         to="/wxBindIndex"
-                        style={{fontSize: '24px'}}>微信绑定</Link></li> */}
+                        style={{fontSize: '24px'}}>微信绑定</Link></li>
                     {/*<li><Link*/}
                     {/*to="/answerListFormTeacher?teacherId=23836&topicId=8888"*/}
                     {/*style={{fontSize: '24px'}}>查看学生作答情况(老师)</Link></li>*/}
                     {/*<li><Link*/}
                     {/*to="/answerFormStudent?studentId=23991&topicId=8888"*/}
                     {/*style={{fontSize: '24px'}}>查看作答答案(学生)</Link></li>*/}
-                    {/*to="/wxLogin"*/}
-                    {/*style={{fontSize: '24px'}}>授权登录</Link></li>*/}
                     <li><Link
                         to="/lookAtTheAnswer?tpId=1285598&access_user=23836"
                         style={{ fontSize: '24px' }}>查看作答</Link></li>

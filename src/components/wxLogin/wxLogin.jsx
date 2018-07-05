@@ -8,7 +8,8 @@ export default class wxLogin extends React.Component {
         this.state = {
             appId: 'wx181574f3ea687daf',
             // appId: 'wx9d076742b77044dd',
-            // local:'http://192.168.50.186:8091/#/wxBindIndex',
+            local:'http://192.168.50.186:8091/#/',
+            // local:'http://jiaoxue.maaee.com:8091/#/',
             info: '###',
             jsp: 'http://www.maaee.com/elearning/common/weChatLoginOpenId.jsp',
             // jsp:'http://192.168.50.15:8080/elearning/common/weChatLoginOpenId.jsp',
@@ -24,7 +25,7 @@ export default class wxLogin extends React.Component {
         var locationSearch = locationHref.substr(locationHref.indexOf("?") + 1);
         var local = locationSearch.split("&")[0].split('=')[1];
         this.setState({
-            local: local,
+            local: this.state.local+local,
         }, () => {
             this.setState({
                 info: '微信授权发起,正在跳转至授权链接...',

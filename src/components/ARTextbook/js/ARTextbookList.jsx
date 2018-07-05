@@ -312,7 +312,7 @@ export default class ARTextbookList extends React.Component {
                     <div className="amList_cont">
                         <Button className="modifyBtn_common" type="primary" size="small" onClick={this.toUpdateARTextbook.bind(this, rowData)}></Button>
                         <Button type="primary" size="small" className="btn_del deleteBtn_common" onClick={this.showAlert.bind(this, rowData)}></Button>
-                        <Button size="small" className="publishBtn" onClick={_this.showPublishAlert.bind(this, rowData)}>{rowData.status == -1 ? "未发布":"已发布"}</Button>
+                        <Button size="small" className="publishBtn" onClick={_this.showPublishAlert.bind(this, rowData)}>{rowData.status == -1 ? "发布":"已发布"}</Button>
                     </div>
                 );
             };

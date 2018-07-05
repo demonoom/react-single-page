@@ -1,6 +1,6 @@
 import React from 'react';
 import './css/wxBindIndex.less'
-import {List, Toast, ListView, Button, InputItem,Radio} from 'antd-mobile';
+import {List, Toast, ListView, Button, InputItem,Radio, WhiteSpace} from 'antd-mobile';
 
 const RadioItem = Radio.RadioItem;
 const data = [
@@ -127,8 +127,7 @@ export default class wxBindIndex extends React.Component {
 
     // 发送验证码
     sendCode = () => {
-        console.log('发送验证码');
-        var number = 6;
+        var number = 60;
         timer = setInterval(function(){
             console.log(number);
             if(number < 0){
@@ -211,43 +210,49 @@ export default class wxBindIndex extends React.Component {
         const { value } = this.state;
         return (
             <div id="wxBindIndex">
-                <List renderHeader={() => '请选择您的用户角色'}>
-                    {data.map(i => (
-                        <RadioItem key={i.value} checked={value === i.value} onChange={() => this.onChange(i.value)}>
-                            {i.label}
-                        </RadioItem>
-                    ))}
-                </List>
-                <div className="tel_element">
-                    <InputItem
-                        maxLength={11}
-                        placeholder="请输入手机号码"
-                        value={this.state.tel}
-                        onChange={this.inputOnChange}
-                    >
-                    </InputItem>
-                    <img style={{
-                        display:this.state.telSuccess == 'success' || this.state.telSuccess == 'error'?'block':'none'
-                    }} id="telImg" src={this.state.telSuccess == 'success'?require("./imgs/success1.png"):require('./imgs/error.png')} alt=""/>
+                <div className="isDangerArea">
+                    <List renderHeader={() => '选择角色'}>
+                        {data.map(i => (
+                            <RadioItem key={i.value} checked={value === i.value} onChange={() => this.onChange(i.value)}>
+                                {i.label}
+                            </RadioItem>
+                        ))}
+                    </List>
+                    <WhiteSpace size="lg"/>
+                    <div className="tel_element">
+                        <InputItem
+                            maxLength={11}
+                            placeholder="请输入手机号码"
+                            value={this.state.tel}
+                            onChange={this.inputOnChange}
+                        >手机号码
+                        </InputItem>
+                        <img style={{
+                            display:this.state.telSuccess == 'success' || this.state.telSuccess == 'error'?'block':'none'
+                        }} id="telImg" src={this.state.telSuccess == 'success'?require("./imgs/success1.png"):require('./imgs/error.png')} alt=""/>
+                    </div>
+
+                    <WhiteSpace size="lg"/>
+                    <div className="Verification">
+                        <InputItem
+                            // className="add_element"
+                            maxLength={100}
+                            placeholder="请输入验证码"
+                            value={this.state.code}
+                            onChange={this.inputOnChangeForCode}
+                        >
+                            <Button type="primary" size="small" disabled={this.state.sendButton} onClick={this.sendCode}>{this.state.sendButtonText}</Button>
+                        </InputItem>
+                    </div>
+                    <div>{this.state.testText}</div>
+                    <div className="submitBtn">
+                        <Button type="primary" onClick={this.bindUser}>提交</Button>
+                    </div>
+
+
+                    <div>测试保存接口返回:{this.state.result}</div>
+                    <div>openId:{this.state.openid}</div>
                 </div>
-
-                <div>
-                    <InputItem
-                        // className="add_element"
-                        maxLength={8}
-                        placeholder="请输入验证码"
-                        value={this.state.code}
-                        onChange={this.inputOnChangeForCode}
-                    >
-                        <Button type="primary" size="small" disabled={this.state.sendButton} onClick={this.sendCode}>{this.state.sendButtonText}</Button>
-                    </InputItem>
-                </div>
-                <div>{this.state.testText}</div>
-                <Button type="primary" onClick={this.bindUser}>提交</Button>
-
-
-                <div>测试保存接口返回:{this.state.result}</div>
-                <div>openId:{this.state.openid}</div>
             </div>
         );
     }
