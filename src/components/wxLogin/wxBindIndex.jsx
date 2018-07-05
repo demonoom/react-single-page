@@ -16,7 +16,7 @@ export default class wxBindIndex extends React.Component {
             openid:'',
             testText:'',
             value: 1,  // 1 教师  2  家长
-            tel:'1769119300',
+            tel:'',
             sendButton:true,
             code:'',
             sendButtonText:'发送验证码',
