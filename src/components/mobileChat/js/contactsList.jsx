@@ -56,11 +56,11 @@ export default class contacts_List extends React.Component {
 
     componentWillMount() {
         document.title = "小蚂蚁聊天";   //设置title
-        Toast.info(window.location.href, 10)
     }
 
     componentDidMount() {
         console.log(province);
+        console.log(genData(this.state.dataSource, province));
         this.setState({
             dataSource: genData(this.state.dataSource, province),
             isLoading: false,
