@@ -757,8 +757,8 @@ class Index extends React.Component {
                     {/*to="/particlePath"*/}
                     {/*style={{fontSize: '24px'}}>运动轨迹</Link></li>*/}
                     <li><Link
-                        to="/wxLogin"
-                        style={{fontSize: '24px'}}>授权登录</Link></li>
+                        to="/wxLogin?local=contactsList"
+                        style={{ fontSize: '24px' }}>授权登录至微信绑定页面</Link></li>
                     <li><Link
                         to="/wxBindIndex"
                         style={{fontSize: '24px'}}>微信绑定</Link></li>
@@ -768,8 +768,6 @@ class Index extends React.Component {
                     {/*<li><Link*/}
                     {/*to="/answerFormStudent?studentId=23991&topicId=8888"*/}
                     {/*style={{fontSize: '24px'}}>查看作答答案(学生)</Link></li>*/}
-                    {/*to="/wxLogin"*/}
-                    {/*style={{fontSize: '24px'}}>授权登录</Link></li>*/}
                     <li><Link
                         to="/lookAtTheAnswer?tpId=1285598&access_user=23836"
                         style={{fontSize: '24px'}}>查看作答</Link></li>

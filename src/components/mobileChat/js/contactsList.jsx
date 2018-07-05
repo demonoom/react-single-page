@@ -1,7 +1,7 @@
 import React from 'react';
 import {province} from 'antd-mobile-demo-data';
 import {StickyContainer, Sticky} from 'react-sticky';
-import {ListView, List} from 'antd-mobile';
+import {ListView, List, Toast} from 'antd-mobile';
 import '../css/contactsList.less'
 
 var contactsList;
@@ -56,6 +56,7 @@ export default class contacts_List extends React.Component {
 
     componentWillMount() {
         document.title = "小蚂蚁聊天";   //设置title
+        Toast.info(window.location.href, 10)
     }
 
     componentDidMount() {
