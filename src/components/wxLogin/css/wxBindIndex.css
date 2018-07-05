@@ -80,13 +80,9 @@
   position: relative;
 }
 #wxBindIndex .Verification .am-list-item .am-input-label.am-input-label-5 {
-  width: 96px;
+  width: 130px;
   position: absolute;
   right: 10px;
-}
-#wxBindIndex .Verification .am-list-item .am-input-label.am-input-label-5 .am-button-primary.am-button-disabled {
-  opacity: 1;
-  color: #ffffff;
 }
 #wxBindIndex .Verification .am-list-item .am-input-label.am-input-label-5 .am-button-primary {
   background: #F56A55;
