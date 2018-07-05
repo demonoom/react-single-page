@@ -25,6 +25,9 @@
   line-height: 30px;
   margin-top: 4px;
 }
+#ARTextbookList .classInfo .am-button {
+  cursor: pointer;
+}
 #ARTextbookList .classInfo .am-button-primary {
   background-color: #fff;
   border: 0;

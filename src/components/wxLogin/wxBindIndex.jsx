@@ -128,7 +128,7 @@ export default class wxBindIndex extends React.Component {
 
     // 发送验证码
     sendCode = () => {
-        var number = 60;
+        var number = 30;
         timer = setInterval(function(){
             console.log(number);
             if(number < 0){
