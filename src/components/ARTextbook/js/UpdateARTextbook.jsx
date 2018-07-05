@@ -299,7 +299,6 @@ export default class addARTextbook extends React.Component {
             <div id="UpdateARTextbook" style={{ height: this.state.clientHeight }}>
                 <div className="search_bg" style={{ display: this.state.search_bg ? 'block' : 'none' }}></div>
                 <div className="addCurriculum_cont">
-                    <WhiteSpace size="lg" />
                     <InputItem
                         placeholder="请输入教材名称"
                         ref={el => this.labelFocusInst = el}
@@ -308,47 +307,60 @@ export default class addARTextbook extends React.Component {
                         })}
                         value={_this.state.ARTextbookValue}
                     ><div onClick={() => this.labelFocusInst.focus()}>AR教材</div></InputItem>
-                    {/* 显示附件 */}
-                    {
-                    //    <div>附件地址：{teacherV.state.attachment}</div>
-                    <div>图标 ------ 附件</div>
-                    }
-                    <button className="uploadAttech" onClick={teacherV.uploadFile}>修改附件</button>
-                    
-                    {
-                        teacherV.state.itemList.map((v,i)=>{
-                            
-                        })
-                    }
-                    {/* <div className="mt3PX">第{Number(teacherV.state.getIndex)+1}组数据</div> */}
                     <InputItem
                         className="add_element"
                         placeholder="请输入页码"
                         value={teacherV.state.pageNoValue}
                         onChange={_this.inputOnChange}
                     ><div>页码</div></InputItem>
+                    <div className="am-list-item item_list20"
+                    >
+                        <div className="am-input-label am-input-label-5">附件</div>
+                        <div className="div68"><button className="uploadAttech i_uploadAttech upload_file" onClick={teacherV.uploadFile}><div>修改</div></button></div>
+                    </div>
+                    {/* 显示附件 */}
                     {
-                        <img className="imgDiv" src={teacherV.state.picNewObj} />
+                        //    <div>附件地址：{teacherV.state.attachment}</div>
+                        <div></div>
                     }
-                    <br /><button className="uploadAttech" onClick={teacherV.uploadImage}>修改图片</button><br/><br/>
+
+
+                    {
+                        teacherV.state.itemList.map((v,i)=>{
+
+                        })
+                    }
+                    {/* <div className="mt3PX">第{Number(teacherV.state.getIndex)+1}组数据</div> */}
+
+                    <div className="am-list-item item_list20"
+                    >
+                        <div className="am-input-label am-input-label-5">图片</div>
+                        <div className="div68"><button className="uploadAttech i_uploadAttech"  onClick={teacherV.uploadImage}>{
+                            <img className="imgDiv" src={teacherV.state.picNewObj} />
+                        }<div>修改</div></button></div>
+                    </div>
+
                     {
                         teacherV.state.videoNewObj.map((v,i)=>{
                             return (
-                                <div>
-                                     <video onClick={_this.theVideoPlay.bind(this, i)} className="videoDiv" src={v}></video>
+                            <div className="am-list-item item_list20" >
+                                <div className="am-input-label am-input-label-5">视频</div>
+                                <div className="div68">
+                                     <div className="uploadAttech i_uploadAttech">
+                                         <video onClick={_this.theVideoPlay.bind(this, i)} className="videoDiv" src={v}></video>
+                                         <div onClick={teacherV.uploadVideo}>修改</div>
+                                     </div>
                                      {/* <span >播放</span> */}
                                 </div>
+                            </div>
                                
                             )
                         })
                     }
-                    <button className="uploadAttech" onClick={teacherV.uploadVideo}>修改视频</button>
+
                 </div>
-                <div className='addCourseButton'>
-                    <WhiteSpace size="lg" />
-                    <WingBlank>
+                <div className='submitBtn'>
                         <Button type="warning" onClick={this.updateARBook}>提交</Button>
-                    </WingBlank>
                 </div>
             </div>
         );
