@@ -8,9 +8,8 @@ import {
     Button
 } from 'antd-mobile';
 import { createForm } from 'rc-form';
+import '../css/ARTextbookList.less';
 
-
-// import '../../css/newCurriculumSche/getClassTableList.less'
 
 var classBinding;
 const prompt = Modal.prompt;
@@ -313,23 +312,20 @@ export default class ARTextbookList extends React.Component {
                     <div className="amList_cont">
                         <Button className="modifyBtn_common" type="primary" size="small" onClick={this.toUpdateARTextbook.bind(this, rowData)}></Button>
                         <Button type="primary" size="small" className="btn_del deleteBtn_common" onClick={this.showAlert.bind(this, rowData)}></Button>
-                        <Button size="small" onClick={_this.showPublishAlert.bind(this, rowData)}>{rowData.status == -1 ? "未发布":"已发布"}</Button>
+                        <Button size="small" className="publishBtn" onClick={_this.showPublishAlert.bind(this, rowData)}>{rowData.status == -1 ? "发布":"已发布"}</Button>
                     </div>
                 );
             };
             SwitchExample = createForm()(SwitchExample);
             
             return (
-                <div className="classInfo line_public">
-                    <div>
-                        <div className="am-list-item am-list-item-middle">
-                            <div className="am-list-line">
-                                <div className="am-list-content">{rowData.name}</div>
-                                <div className="am-list-arrow am-list-arrow-horizontal"></div>
-                            </div>
+                <div className="classInfo line_public my_flex">
+                    <div className="textCOnt">
+                        <div className="dataName textOver">
+                            {rowData.name}
                         </div>
-                        <div className="tableListDate textOver">
-                            <span className="classroom"><span className="classroom_span">创建时间：</span>{WebServiceUtil.formatYMD(rowData.createTime)}</span>
+                        <div className="creatTime textOver">
+                            <span className="classroom_span">创建时间：</span>{WebServiceUtil.formatYMD(rowData.createTime)}
                         </div>
                     </div>
                     <SwitchExample />

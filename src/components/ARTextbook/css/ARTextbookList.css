@@ -1,3 +1,47 @@
 #ARTextbookList {
   overflow: auto;
 }
+#ARTextbookList .am-list-view-scrollview-content {
+  width: 100%;
+}
+#ARTextbookList .classInfo {
+  padding: 15px;
+}
+#ARTextbookList .classInfo .dataName {
+  font-size: 17px;
+  color: #333;
+  line-height: 28px;
+}
+#ARTextbookList .classInfo .creatTime {
+  font-size: 16px;
+  color: #666;
+  padding: 5px 0;
+  line-height: 30px;
+}
+#ARTextbookList .classInfo .am-button-primary {
+  background-color: #fff;
+}
+#ARTextbookList .classInfo .am-button::before {
+  display: none;
+}
+#ARTextbookList .classInfo .publishBtn {
+  position: absolute;
+  right: 15px;
+  top: 16px;
+  color: #fff;
+  background-color: #F56A55;
+  -webkit-border-radius: 2px;
+  -moz-border-radius: 2px;
+  border-radius: 2px;
+  font-size: 14px;
+  height: 26px;
+  line-height: 26px;
+  padding: 0 10px;
+}
+#ARTextbookList .classInfo .textCOnt {
+  width: calc(100% - 64px);
+}
+#ARTextbookList .classInfo .amList_cont {
+  height: 30px;
+  margin-top: 34px;
+}

@@ -21,6 +21,7 @@ export default class wxBindIndex extends React.Component {
             code:'',
             sendButtonText:'发送验证码',
             result:'未请求',
+            telSuccess: 'none',
         };
 
     }
@@ -54,11 +55,13 @@ export default class wxBindIndex extends React.Component {
         this.setState({
             tel:value,
             sendButton:true,
+            telSuccess:'error',
         });
         if(value.length == 11){
             console.log('手机号码输入完成');
             this.setState({
                 sendButton: false,
+                telSuccess: 'success',
             })
         }
     }
@@ -70,8 +73,6 @@ export default class wxBindIndex extends React.Component {
             code:value,
         });
     }
-
-
     // 验证验证码
     validationCode = (code) =>{
         // var param = {
@@ -148,17 +149,23 @@ export default class wxBindIndex extends React.Component {
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
             onResponse: (result) => {
                 console.log(result, 'access');
-                this.setState({
-                    result:result,
-                })
                 if (result.success) {
-                    Toast.info('成功');
+                    Toast.info('绑定成功');
+                    this.setState({
+                        result:'绑定成功',
+                    })
                 } else {
-                    Toast.info('保存失败');
+                    Toast.info('绑定失败');
+                    this.setState({
+                        result:'绑定失败:'+ result.msg,
+                    })
                 }
             },
             onError: function (error) {
                 Toast.info('请求失败');
+                this.setState({
+                    result:'请求失败',
+                })
             }
         });
     }
@@ -178,14 +185,19 @@ export default class wxBindIndex extends React.Component {
                         </RadioItem>
                     ))}
                 </List>
-                <InputItem
-                    // className="add_element"
-                    maxLength={11}
-                    placeholder="请输入手机号码"
-                    value={this.state.tel}
-                    onChange={this.inputOnChange}
-                >
-                </InputItem>
+                <div className="tel_element">
+                    <InputItem
+                        maxLength={11}
+                        placeholder="请输入手机号码"
+                        value={this.state.tel}
+                        onChange={this.inputOnChange}
+                    >
+                    </InputItem>
+                    <img style={{
+                        display:this.state.telSuccess == 'success' || this.state.telSuccess == 'error'?'block':'none'
+                    }} id="telImg" src={this.state.telSuccess == 'success'?require("./imgs/success1.png"):require('./imgs/error.png')} alt=""/>
+                </div>
+
                 <div>
                     <InputItem
                         // className="add_element"

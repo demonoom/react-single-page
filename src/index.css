@@ -76,7 +76,7 @@ hr {
   font-size: 14px;
 }
 .color_red {
-  color: #f46a55;
+  color: #F46A55;
 }
 .line_item {
   height: 8px;
@@ -356,9 +356,9 @@ hr {
 }
 /*删除弹窗*/
 .am-modal-content .am-modal-title {
-  color: #333;
+  color: #333 !important;
   line-height: 22px;
-  font-size: 17px;
+  font-size: 17px!important;
 }
 .am-modal-content .am-modal-input input {
   padding-left: 6px;
@@ -406,7 +406,7 @@ hr {
   transform: scaleY(0.5);
 }
 .noticeMsg_common {
-  background: #eeeeee url("components/classCardSystemBackstage/imgs/noticeIcon.png") no-repeat 30px 9px;
+  background: #eee url("components/classCardSystemBackstage/imgs/noticeIcon.png") no-repeat 30px 9px;
   background-size: 18px;
   font-size: 15px;
   color: #666;
@@ -431,8 +431,8 @@ hr {
   margin: 0 2.22rem;
 }
 .notify_contModal .am-modal-title {
-  color: #191c26;
-  font-size: 0.72rem;
+  color: #191c26!important;
+  font-size: 0.72rem!important;
   font-weight: bold;
 }
 .notify_contModal .am-modal-content .am-modal-body {
