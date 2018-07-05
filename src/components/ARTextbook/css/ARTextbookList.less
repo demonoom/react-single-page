@@ -3,8 +3,14 @@
     .am-list-view-scrollview-content{
         width: 100%;
     }
+    .am-list-body{
+        border: 0 !important;
+    }
     .classInfo{
-        padding: 15px;
+        padding: 0 15px;
+        .line_public{
+            padding: 15px 0 10px;
+        }
         .dataName{
             font-size: 17px;
             color: #333;
@@ -15,19 +21,20 @@
             color: #666;
             padding: 5px 0;
             line-height: 30px;
+            margin-top: 4px;
         }
         .am-button-primary{
             background-color: #fff;
+            border: 0;
         }
         .am-button::before{
             display: none;
         }
         .publishBtn{
             position: absolute;
-            right: 15px;
-            top:16px;
-            color: #fff;
-            background-color: #F56A55;
+            right: 6px;
+            top:15px;
+            color: #F56A55;
             -webkit-border-radius: 2px;
             -moz-border-radius: 2px;
             border-radius: 2px;
@@ -35,13 +42,30 @@
             height: 26px;
             line-height: 26px;
             padding: 0 10px;
+            border: 1px #F56A55 solid;
+            &.published{
+                border: 0;
+                color: #638bb7;
+                padding: 0;
+            }
+            &.am-button-active{
+                background-color: #fff;
+            }
         }
+
         .textCOnt{
             width: calc(~"100% - 64px");
+            box-sizing: border-box;
+            padding-left: 40px;
+            background: url("../imgs/arListIcon.png") no-repeat 0 6px;
+            background-size: 32px auto;
         }
         .amList_cont{
             height: 30px;
-            margin-top: 34px;
+            margin-top: 36px;
+            width: 64px;
         }
+
     }
+
 }
