@@ -97,7 +97,7 @@ export default class ar_Door extends React.Component {
                 <Button type="primary" onClick={this.success}>使用</Button>
 
 
-                <div style={{display: this.state.wIphone ? 'block' : 'none'}}>
+                <div className="openBrowser" style={{display: this.state.wIphone ? 'block' : 'none'}}>
                     <img src={require('../img/abc.png')} alt=""/>
                 </div>
             </div>

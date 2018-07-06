@@ -37,9 +37,7 @@ export default class ARTextbookList extends React.Component {
         var locationHref = window.location.href;
         var locationSearch = locationHref.substr(locationHref.indexOf("?") + 1);
         var uid = locationSearch.split("&")[0].split("=")[1];
-        console.log(uid)
         this.setState({ "uid": uid });
-        console.log(uid);
         this.viewARBookPage(uid, true);
         //添加对视窗大小的监听,在屏幕转换以及键盘弹起时重设各项高度
         window.addEventListener('resize', classBinding.onWindowResize)
@@ -77,11 +75,10 @@ export default class ARTextbookList extends React.Component {
         var param = {
             "method": 'viewARBookPage',
             "adminId": uid,
-            "pn": -1
+            "pn": PageNo
         };
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
             onResponse: function (result) {
-                console.log(result, "result");
                 if (result.msg == '调用成功' || result.success == true) {
                     var arr = result.response;
                     var pager = result.pager;
@@ -91,7 +88,7 @@ export default class ARTextbookList extends React.Component {
                     }
                     var isLoading = false;
                     if (arr.length > 0) {
-                        if (pager.pageCount == 1 && pager.rsCount < 30) {
+                        if (pager.pageCount == 1 && pager.rsCount < 10) {
                             isLoading = false;
                         } else {
                             isLoading = true;
@@ -117,6 +114,8 @@ export default class ARTextbookList extends React.Component {
     *  ListView数据全部渲染完毕的回调
     */
     onEndReached = (event) => {
+        console.log("number")
+
         var _this = this;
         var currentPageNo = this.state.defaultPageNo;
         if (!this.state.isLoadingLeft && !this.state.hasMore) {
@@ -159,11 +158,7 @@ export default class ARTextbookList extends React.Component {
      * toUpdateARTextbook
      */
     toUpdateARTextbook(data) {
-        if (data.status == 1) {
-            Toast.info("已发布，不能修改");
-            return;
-        }
-        var url = encodeURI(WebServiceUtil.mobileServiceURL + "groupList?bId=" + data.id + "&uid=" + classBinding.state.uid);
+        var url = encodeURI(WebServiceUtil.mobileServiceURL + "groupList?bId=" + data.id + "&uid=" + classBinding.state.uid + "&ArName=" + data.name);
         var data = {
             method: 'openNewPage',
             url: url
@@ -179,7 +174,6 @@ export default class ARTextbookList extends React.Component {
      * @throws Exception
      */
     changeARBookStatus(data) {
-
         var _this = this;
         var param = {
             "method": 'changeARBookStatus',
@@ -188,7 +182,6 @@ export default class ARTextbookList extends React.Component {
         };
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
             onResponse: (result) => {
-                console.log(result, "delete")
                 if (result.msg == '调用成功' || result.success == true) {
                     Toast.success('删除成功', 1)
                     _this.state.dataSource = [];
@@ -215,10 +208,6 @@ export default class ARTextbookList extends React.Component {
      * 删除弹出框
      */
     showAlert = (data, event) => {
-        if (data.status == 1) {
-            Toast.info("已发布，不能删除");
-            return;
-        }
         event.stopPropagation();
         var phoneType = navigator.userAgent;
         var phone;
@@ -239,20 +228,16 @@ export default class ARTextbookList extends React.Component {
      * 点击发布
      */
     publish(data) {
-        console.log(data, "publishData");
         var _this = this;
         var param = {
             "method": 'changeARBookStatus',
             "condition": 1,
             "bId": data.id,
         };
-        console.log(param);
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
             onResponse: (result) => {
-                console.log(result)
                 if (result.msg == '调用成功' || result.success == true) {
                     Toast.success("发布成功", 1)
-                    Toast.success('修改成功')
                     _this.state.dataSource = [];
                     _this.state.dataSource = new ListView.DataSource({
                         rowHasChanged: (row1, row2) => row1 !== row2,
@@ -279,7 +264,6 @@ export default class ARTextbookList extends React.Component {
      * 发布弹出框
      */
     showPublishAlert = (data, event) => {
-        console.log(data, "calmmmm")
         if (data.status == 1) {
             Toast.info("已发布");
             return;
@@ -293,7 +277,7 @@ export default class ARTextbookList extends React.Component {
             phone = 'android'
         }
         var _this = this;
-        const alertInstance = alert('发布后将不能修改和删除，确定发布？', '', [
+        const alertInstance = alert('将不能修改和删除，确定发布？', '', [
             { text: '取消', onPress: () => console.log('cancel'), style: 'default' },
             { text: '确定', onPress: () => _this.publish(data) },
         ], phone);
@@ -302,10 +286,8 @@ export default class ARTextbookList extends React.Component {
 
 
     render() {
-        console.log("执行render")
         var _this = this;
         const row = (rowData, sectionID, rowID) => {
-            console.log(rowData, "rowData")
             let SwitchExample = (props) => {
                 const { getFieldProps } = props.form;
                 return (
@@ -317,7 +299,7 @@ export default class ARTextbookList extends React.Component {
                         </div>
                             :
                             <span className="publishBtn published">已发布</span>}
-                        
+
                     </div>
                 );
             };
