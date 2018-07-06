@@ -1,6 +1,12 @@
 #wxBindIndex{
+  background: #f0eff5;
+  height: 100%;
   .am-list-item .am-input-label.am-input-label-5{
     width: 85px;
+  }
+  .am-whitespace.am-whitespace-lg{
+    background: #f0eff5;
+    height: 12px;
   }
   .isDangerArea{
     .am-list{
@@ -8,7 +14,7 @@
       background: #fff;
     }
     .am-list-header{
-      color: #333;
+      color: #0c0c0c;
       font-size: 17px;
       float: left;
       width: 100px;
@@ -46,14 +52,24 @@
       -webkit-border-radius: 50%;
       -moz-border-radius: 50%;
       border-radius: 50%;
-      background-color: #F56A55;
+      background-color: #1aad19;
       top:50%;
       left: 50%;
       margin-top: -4px;
       margin-left: -4px;
     }
+    .am-radio-checked .am-radio-inner{
+      border: 1px #1aad19 solid;
+      width: 16px;
+      height: 16px;
+      -webkit-border-radius: 50%;
+      -moz-border-radius: 50%;
+      border-radius: 50%;
+      background-color: #fff;
+      left: 0 !important;
+    }
     .am-radio-inner{
-      border: 1px #F56A55 solid;
+      border: 1px #888 solid;
       width: 16px;
       height: 16px;
       -webkit-border-radius: 50%;
@@ -79,25 +95,55 @@
   }
   .Verification{
     position: relative;
-    .am-list-item .am-input-label.am-input-label-5{
-      width: 130px;
+    .am-button-primary{
+      background: #fff;
+      border-color: #1aad19;
+      color: #1aad19;
+      right: 15px;
       position: absolute;
-      right: 10px;
-      .am-button-primary{
-        background: #F56A55;
-        border-color: #F56A55;
-      }
+      top: 9px;
+      font-size: 13px;
+      height: 26px;
+      line-height: 27px;
+      padding: 0 8px;
+      z-index: 10;
+
     }
-    .am-input-control {
-      margin-left: 0;
-      margin-right: 10px;
-      position: absolute;
-      left: 0;
+    .am-list-item .am-input-label.am-input-label-5{
+
+
+    }
+    .am-button::before{
+      border-color: #1aad19 !important;
+    }
+    .am-input-control input{
+      width: 120px;
     }
 
   }
   .tel_element{
     position: relative;
+    .am-list-line{
+      position: relative;
+    }
+    .am-list-line:after{
+      content: '';
+      position: absolute;
+      border-bottom: 1px solid #d9d9d9;
+      display: block;
+      z-index: 1;
+      top: auto;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 1PX;
+      -webkit-transform-origin: 50% 100%;
+      -ms-transform-origin: 50% 100%;
+      transform-origin: 50% 100%;
+      -webkit-transform: scaleY(0.5);
+      -ms-transform: scaleY(0.5);
+      transform: scaleY(0.5);
+    }
   }
   #telImg{
     position: absolute;
@@ -132,32 +178,66 @@
   }
   .bindingNumber{
     display: block;
-    background: #fff;
+    color: #57595f;
     padding: 0 15px 20px 15px;
-    font-size: 14px;
+    font-size: 15px;
     div{
-      color: #888;
-      line-height: 44px;
+      color: #57595f;
     }
     span{
-      margin-right: 10px;
       line-height: 44px;
+      width: 50%;
+      display: inline-block;
     }
     .am-button{
       padding: 0;
-      background: #F56A55;
-      height: 30px;
-      line-height: 30px;
+      border:1px solid #1AAD18;
+      color: #1AAD18;
+      height: 37px;
+      line-height: 37px;
       text-align: center;
-      display: inline-block;
-      color: #fff;
+      display: block;
       font-size: 14px;
-      padding: 0 15px;
-      float: right;
+      margin: 80px 90px 0 90px;
+      background: transparent;
       span{
-        line-height: 30px;
+        line-height: 37px;
         margin-right: 0;
+        font-size: 16px;
+        color: #1AAD18;
       }
     }
+    .am-button::before{
+      border-color:#f0eff5 !important;;
+      border-radius: 2px !important;
+    }
+  }
+  .submitBtn_green{
+    margin-top: 50px;
+    padding: 0 15px;
+    .am-button-primary{
+      background: #1AAD18;
+      border: 1px solid #1AAD18;
+    }
+    .am-button-primary::before{
+      border: 1px solid #1AAD18 !important;
+    }
+  }
+  .i-icon{
+    width: 20px;
+    height: 20px;
+    position: relative;
+    top: 4px;
+    margin-right: 6px;
+  }
+  .i-tel{
+    background: url("../imgs/i-tel.png") no-repeat;
+    display: inline-block;
+    background-size: 100%;
+  }
+  .i-phone{
+    background: url("../imgs/i-user.png") no-repeat;
+    display: inline-block;
+    background-size: 100%;
   }
 }

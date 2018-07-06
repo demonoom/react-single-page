@@ -1,6 +1,7 @@
 import React from 'react';
 import {List, InputItem, Button, Toast} from 'antd-mobile';
 import "../css/ArDoor.less";
+
 var arDoor;
 
 export default class ar_Door extends React.Component {
@@ -25,7 +26,7 @@ export default class ar_Door extends React.Component {
     }
 
     componentDidMount() {
-
+        document.title = '小蚂蚁AR'
     }
 
     success = () => {
@@ -91,13 +92,14 @@ export default class ar_Door extends React.Component {
                         onChange={this.mimaInput}
                         placeholder="请输入密码"
                         value={this.state.mimaInputValue}
+                        type='password'
                     >密码</InputItem>
                 </List>
 
                 <Button type="primary" onClick={this.success}>使用</Button>
 
 
-                <div style={{display: this.state.wIphone ? 'block' : 'none'}}>
+                <div className="openBrowser" style={{display: this.state.wIphone ? 'block' : 'none'}}>
                     <img src={require('../img/abc.png')} alt=""/>
                 </div>
             </div>
