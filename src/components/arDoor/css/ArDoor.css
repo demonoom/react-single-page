@@ -27,6 +27,7 @@
 }
 #arDoor .am-list {
   margin-bottom: 50px;
+  margin-top: 15px;
 }
 #arDoor .am-list-body::before {
   display: none;
