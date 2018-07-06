@@ -128,3 +128,33 @@
   height: 64px;
   display: inline-block;
 }
+#wxBindIndex .bindingNumber {
+  display: block;
+  background: #fff;
+  padding: 0 15px 20px 15px;
+  font-size: 14px;
+}
+#wxBindIndex .bindingNumber div {
+  color: #888;
+  line-height: 44px;
+}
+#wxBindIndex .bindingNumber span {
+  margin-right: 10px;
+  line-height: 44px;
+}
+#wxBindIndex .bindingNumber .am-button {
+  padding: 0;
+  background: #F56A55;
+  height: 30px;
+  line-height: 30px;
+  text-align: center;
+  display: inline-block;
+  color: #fff;
+  font-size: 14px;
+  padding: 0 15px;
+  float: right;
+}
+#wxBindIndex .bindingNumber .am-button span {
+  line-height: 30px;
+  margin-right: 0;
+}

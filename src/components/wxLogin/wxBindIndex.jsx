@@ -3,6 +3,7 @@ import './css/wxBindIndex.less'
 import {List, Toast, ListView, Button, InputItem,Radio, WhiteSpace} from 'antd-mobile';
 
 const RadioItem = Radio.RadioItem;
+const Item = List.Item;
 const data = [
     { value: 1, label: '教师' },
     { value: 2, label: '家长' },
@@ -25,7 +26,7 @@ export default class wxBindIndex extends React.Component {
             textFlag: true,
             // pending:true\
             openIdDisable: true, //判断有无绑定控制input disable状态
-            openidFlag: false,//判断openid是否有效 true已绑定  false 未绑定
+            openidFlag: true,//判断openid是否有效 true已绑定  false 未绑定
             colAccount:'TE_123',
             phoneNumber:'13500000000',
         };
@@ -314,17 +315,21 @@ export default class wxBindIndex extends React.Component {
                     {/*<div>openId:{this.state.openid}</div>*/}
                 </div>
                 {/*解绑标签块*/}
-                <div style={{
+                <WhiteSpace size="lg"/>
+                <div className="bindingNumber" style={{
                     display:this.state.openidFlag?'block':'none'
                 }}>
-                    <div>您的微信已绑定以下账号</div>
-                    <div>账号:{this.state.colAccount}</div>
-                    <div>手机号:{this.state.phoneNumber}</div>
-                    <Button onClick={this.unBindAccount}>解绑</Button>
+                        <div>
+                            <div>您的微信已绑定以下账号</div>
+                            <span>{this.state.colAccount}</span>
+                            <span>{this.state.phoneNumber}</span>
+                            <Button onClick={this.unBindAccount}>解绑</Button>
+                        </div>
+
                 </div>
                 {/*解绑标签块 end*/}
                 <div className="empty_center success3" style={{
-                    display:this.state.textFlag?'none':'block'
+                    display:this.state.textFlag?'none':'inline-block'
                 }}><i></i><div>绑定成功</div></div>
             </div>
         );
