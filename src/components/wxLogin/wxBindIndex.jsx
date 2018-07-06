@@ -35,6 +35,8 @@ export default class wxBindIndex extends React.Component {
         this.setState({
             openid:openid,
         })
+        console.log(WebServiceUtil.mobileServiceURL);
+
 
     }
 
@@ -58,15 +60,15 @@ export default class wxBindIndex extends React.Component {
         this.setState({
             tel:value,
             sendButton:true,
-            telSuccess:'error',
+            telSuccess:'',
         },()=>{
             if(value.length == 11){
-                // this.setState({
-                //     pending:true,
-                // },()=>{
+                this.setState({
+                    pending:true,
+                },()=>{
                 //验证手机号码
                 this.validationTel();
-                // })
+                })
             }
         });
 
@@ -93,10 +95,12 @@ export default class wxBindIndex extends React.Component {
                     this.setState({
                         telSuccess:'success',
                         sendButton: false,
+                        pending: false,
                     })
                 }else{
                     this.setState({
                         telSuccess:'error',
+                        pending:false,
                     })
                 }
             },
@@ -232,8 +236,11 @@ export default class wxBindIndex extends React.Component {
                         >手机号码
                         </InputItem>
                         <img style={{
-                            display:this.state.telSuccess == 'success' || this.state.telSuccess == 'error'?'block':'none'
+                            display:(this.state.telSuccess == 'success' || this.state.telSuccess == 'error') && (!this.state.pending)?'block':'none'
                         }} id="telImg" src={this.state.telSuccess == 'success'?require("./imgs/success1.png"):require('./imgs/error.png')} alt=""/>
+                        <div style={{
+                            display:(this.state.pending)?'block':'none'
+                        }} className="telLoad">验证中...</div>
                     </div>
 
                     <WhiteSpace size="lg"/>
