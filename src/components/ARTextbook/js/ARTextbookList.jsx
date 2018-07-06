@@ -75,7 +75,7 @@ export default class ARTextbookList extends React.Component {
         var param = {
             "method": 'viewARBookPage',
             "adminId": uid,
-            "pn": -1
+            "pn": PageNo
         };
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
             onResponse: function (result) {
@@ -88,7 +88,7 @@ export default class ARTextbookList extends React.Component {
                     }
                     var isLoading = false;
                     if (arr.length > 0) {
-                        if (pager.pageCount == 1 && pager.rsCount < 30) {
+                        if (pager.pageCount == 1 && pager.rsCount < 10) {
                             isLoading = false;
                         } else {
                             isLoading = true;
@@ -114,6 +114,8 @@ export default class ARTextbookList extends React.Component {
     *  ListView数据全部渲染完毕的回调
     */
     onEndReached = (event) => {
+        console.log("number")
+
         var _this = this;
         var currentPageNo = this.state.defaultPageNo;
         if (!this.state.isLoadingLeft && !this.state.hasMore) {
