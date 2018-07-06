@@ -22,7 +22,7 @@ export default class wxBindIndex extends React.Component {
             sendButtonText:'发送验证码',
             result:'未请求',
             telSuccess: 'none',
-            textFlag: true,
+            textFlag: false,
             // pending:true
         };
 
@@ -264,9 +264,9 @@ export default class wxBindIndex extends React.Component {
                     {/*<div>测试保存接口返回:{this.state.result}</div>*/}
                     {/*<div>openId:{this.state.openid}</div>*/}
                 </div>
-                <div style={{
+                <div className="empty_center success3" style={{
                     display:this.state.textFlag?'none':'block'
-                }}>绑定成功</div>
+                }}><i></i><div>绑定成功</div></div>
             </div>
         );
     }
