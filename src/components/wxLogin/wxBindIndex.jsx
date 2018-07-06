@@ -25,7 +25,7 @@ export default class wxBindIndex extends React.Component {
             textFlag: true,
             // pending:true\
             openIdDisable: true, //判断有无绑定控制input disable状态
-            openidFlag: false,//判断openid是否有效
+            openidFlag: false,//判断openid是否有效 true已绑定  false 未绑定
             colAccount:'TE_123',
             phoneNumber:'13500000000',
         };
@@ -157,15 +157,10 @@ export default class wxBindIndex extends React.Component {
         };
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
             onResponse: (result) => {
-                console.log(result, 'access');
-                if (result.success) {
 
-                } else {
-                    Toast.info('验证码发送失败')
-                }
             },
             onError: function (error) {
-                Toast.info('请求发送模板消息失败');
+
             }
         });
     }
@@ -249,10 +244,7 @@ export default class wxBindIndex extends React.Component {
             onResponse: (result) => {
                 if (result.success && result.response) {
                     Toast.info('解绑成功');
-                    var data = {'method':'setRefreshAble','refreshAble':refreshAble+''};
-                    Bridge.callHandler(data,null,function(err){
-                        console.log(err);
-                    });
+                    location.reload();
                 } else {
                     Toast.info('解绑失败');
                 }
@@ -331,9 +323,9 @@ export default class wxBindIndex extends React.Component {
                     <Button onClick={this.unBindAccount}>解绑</Button>
                 </div>
                 {/*解绑标签块 end*/}
-                <div style={{
+                <div className="empty_center success3" style={{
                     display:this.state.textFlag?'none':'block'
-                }}>绑定成功</div>
+                }}><i></i><div>绑定成功</div></div>
             </div>
         );
     }
