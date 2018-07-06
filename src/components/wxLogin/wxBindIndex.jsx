@@ -23,7 +23,9 @@ export default class wxBindIndex extends React.Component {
             result:'未请求',
             telSuccess: 'none',
             textFlag: true,
-            // pending:true
+            // pending:true\
+            openIdDisable: true, //判断有无绑定控制input disable状态
+            openidFlag: true,//判断openid是否有效
         };
 
     }
@@ -34,10 +36,40 @@ export default class wxBindIndex extends React.Component {
         var openid = locationSearch.split("&")[0].split('=')[1];
         this.setState({
             openid:openid,
-        })
-        console.log(WebServiceUtil.mobileServiceURL);
+        },()=>{
+            this.getUserOpenIdInfoByOpenId();
+        });
+        Toast.info(openid);
 
+    }
 
+    getUserOpenIdInfoByOpenId(){
+        var param = {
+            "method": 'getUserOpenIdInfoByOpenId',
+            "openId": this.state.openid,
+            "userType":this.state.value == 1?'TEAC':'PAREN'
+            "weixinType":'1',
+        };
+        WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
+            onResponse: (result) => {
+                console.log(result, 'tel');
+                if(result.success){
+                    this.setState({
+                        telSuccess:'success',
+                        sendButton: false,
+                        pending: false,
+                    })
+                }else{
+                    this.setState({
+                        telSuccess:'error',
+                        pending:false,
+                    })
+                }
+            },
+            onError: function (error) {
+                Toast.info('验证手机号码请求失败');
+            },
+        });
     }
 
 
@@ -229,6 +261,7 @@ export default class wxBindIndex extends React.Component {
                     <WhiteSpace size="lg"/>
                     <div className="tel_element">
                         <InputItem
+                            disabled={this.state.openIdDisable}
                             maxLength={11}
                             placeholder="请输入手机号码"
                             value={this.state.tel}
@@ -246,6 +279,7 @@ export default class wxBindIndex extends React.Component {
                     <WhiteSpace size="lg"/>
                     <div className="Verification">
                         <InputItem
+                            disabled={this.state.openIdDisable}
                             // className="add_element"
                             maxLength={100}
                             placeholder="请输入验证码"
@@ -257,12 +291,17 @@ export default class wxBindIndex extends React.Component {
                     </div>
                     <div>{this.state.testText}</div>
                     <div className="submitBtn">
-                        <Button type="primary" onClick={this.bindUser}>提交</Button>
+                        <Button disabled={this.state.openIdDisable} type="primary" onClick={this.bindUser}>提交</Button>
                     </div>
 
 
                     {/*<div>测试保存接口返回:{this.state.result}</div>*/}
                     {/*<div>openId:{this.state.openid}</div>*/}
+                </div>
+                <div style={{
+                    display:this.state.openIdDisable?'block':'none'
+                }}>
+                    <button>解绑</button>
                 </div>
                 <div style={{
                     display:this.state.textFlag?'none':'block'
