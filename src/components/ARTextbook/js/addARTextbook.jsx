@@ -1,22 +1,15 @@
 import React from 'react';
 import {
     Toast,
-    Picker,
-    List,
     WhiteSpace,
     Button,
-    WingBlank,
     InputItem,
-    DatePicker,
-    TextareaItem,
-    Radio,
     Icon
 } from 'antd-mobile';
 import "../css/addARTextbook.less"
 
 var teacherV;
 
-const RadioItem = Radio.RadioItem;
 export default class addARTextbook extends React.Component {
     constructor(props) {
         super(props);
@@ -61,12 +54,6 @@ export default class addARTextbook extends React.Component {
      * 新增AR教材
      */
     addARBook = () => {
-
-
-
-
-
-
         if (teacherV.state.ARTextbookValue == undefined) {
             Toast.info("请输入AR教材名称")
             return
@@ -119,7 +106,6 @@ export default class addARTextbook extends React.Component {
             })
         })
         param.bookData.itemList = classArray;
-        console.log(param, "param")
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
             onResponse: function (result) {
                 if (result.msg == '调用成功' || result.success == true) {
@@ -159,10 +145,8 @@ export default class addARTextbook extends React.Component {
      *播放视频 
      */
     theVideoPlay(i) {
-        // console.log("dianji", i)
         var videoDiv = $(".videoDiv")
         videoDiv[i].play();
-
     }
     /**
      * 根据数据构建,完成数据的动态绑定
@@ -171,7 +155,6 @@ export default class addARTextbook extends React.Component {
         var _this = this;
         var ARTextbookArr = [];
         this.state.ARTextbookDataArr.forEach(function (v, i) {
-            console.log(teacherV.state.ARTextbookDataArr[i].picPath,"calmcalm")
             ARTextbookArr.push(<div>
                 <div className="cont_communal add_title font_gray">第{i + 1}组</div>
                 <div className="flex_addElement calm">
@@ -182,9 +165,7 @@ export default class addARTextbook extends React.Component {
                         onChange={_this.inputOnChange.bind(this, i)}
                     ><div>页码</div></InputItem>
                 </div>
-
                 {/*<span>{teacherV.state.ARTextbookDataArr[i].picName}</span>*/}
-
                 <WhiteSpace size="lg" />
                 <div className="sameBack my_flex">
                     <span className="textTitle">上传图片</span>
@@ -284,10 +265,6 @@ export default class addARTextbook extends React.Component {
                     picPath: item[0],
                     picName: item[1].split("=")[1]
                 })
-
-
-                // teacherV.state.ARTextbookDataArr[index].picPath.push(newArr[i].picPath);
-                // teacherV.state.ARTextbookDataArr[index].picName.push(newArr[i].picName);
                 teacherV.state.ARTextbookDataArr[index].picPath = newArr[i].picPath
                 teacherV.state.ARTextbookDataArr[index].picName = newArr[i].picName;
             })
@@ -345,7 +322,6 @@ export default class addARTextbook extends React.Component {
                             <span className="textTitle">上传附件</span>
                             {
                                 teacherV.state.fileNewArr.map((v, i) => {
-                                    console.log("附件", v)
                                     //var imgStr = "附件";
                                     // if (v.fileExtra == "pdf") {
                                     //     imgStr = "pdf 图片"
