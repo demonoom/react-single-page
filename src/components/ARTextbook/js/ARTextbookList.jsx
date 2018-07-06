@@ -156,10 +156,6 @@ export default class ARTextbookList extends React.Component {
      * toUpdateARTextbook
      */
     toUpdateARTextbook(data) {
-        if (data.status == 1) {
-            Toast.info("已发布，不能修改");
-            return;
-        }
         var url = encodeURI(WebServiceUtil.mobileServiceURL + "groupList?bId=" + data.id + "&uid=" + classBinding.state.uid + "&ArName=" + data.name);
         var data = {
             method: 'openNewPage',
@@ -210,10 +206,6 @@ export default class ARTextbookList extends React.Component {
      * 删除弹出框
      */
     showAlert = (data, event) => {
-        if (data.status == 1) {
-            Toast.info("已发布，不能删除");
-            return;
-        }
         event.stopPropagation();
         var phoneType = navigator.userAgent;
         var phone;
@@ -283,7 +275,7 @@ export default class ARTextbookList extends React.Component {
             phone = 'android'
         }
         var _this = this;
-        const alertInstance = alert('发布后将不能修改和删除，确定发布？', '', [
+        const alertInstance = alert('将不能修改和删除，确定发布？', '', [
             { text: '取消', onPress: () => console.log('cancel'), style: 'default' },
             { text: '确定', onPress: () => _this.publish(data) },
         ], phone);

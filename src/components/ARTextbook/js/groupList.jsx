@@ -18,6 +18,7 @@ export default class ARTextbookList extends React.Component {
     }
     componentDidMount() {
         document.title = decodeURI(this.state.ArName) + '教材组列表';
+        Bridge.setShareAble("false");
     }
     /**
        * 查看单独的AR教材
