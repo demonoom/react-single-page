@@ -51,6 +51,7 @@ export default class addARTextbook extends React.Component {
 
         Bridge.setShareAble("false");
     }
+    
     componentWillUnmount() {
         window.removeEventListener('resize', this.onWindwoResize);
     }
@@ -251,6 +252,7 @@ export default class addARTextbook extends React.Component {
             method: 'selectVideo',
         };
         Bridge.callHandler(data, function (res) {
+            console.log(res,"将相和")
             // 拿到视频地址,显示在页面等待上传
             var arr = res.split(',');
             let newArr = [];
@@ -333,6 +335,7 @@ export default class addARTextbook extends React.Component {
                     <br /><button className="uploadAttech" onClick={teacherV.uploadImage}>修改图片</button><br/><br/>
                     {
                         teacherV.state.videoNewObj.map((v,i)=>{
+                            console.log(v,"calm")
                             return (
                                 <div>
                                      <video onClick={_this.theVideoPlay.bind(this, i)} className="videoDiv" src={v}></video>
