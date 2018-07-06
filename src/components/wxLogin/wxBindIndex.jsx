@@ -1,12 +1,12 @@
 import React from 'react';
 import './css/wxBindIndex.less'
-import {List, Toast, ListView, Button, InputItem,Radio, WhiteSpace} from 'antd-mobile';
+import {List, Toast, ListView, Button, InputItem, Radio, WhiteSpace} from 'antd-mobile';
 
 const RadioItem = Radio.RadioItem;
 const Item = List.Item;
 const data = [
-    { value: 1, label: '教师' },
-    { value: 2, label: '家长' },
+    {value: 1, label: '教师'},
+    {value: 2, label: '家长'},
 ];
 var timer = null;
 export default class wxBindIndex extends React.Component {
@@ -14,21 +14,20 @@ export default class wxBindIndex extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            openid:'',
-            testText:'',
+            openid: '',
+            testText: '',
             value: 1,  // 1 教师  2  家长
-            tel:'',
-            sendButton:true,
-            code:'',
-            sendButtonText:'发送验证码',
-            result:'未请求',
+            tel: '',
+            sendButton: true,
+            code: '',
+            sendButtonText: '发送验证码',
+            result: '未请求',
             telSuccess: 'none',
             textFlag: true,
             // pending:true\
-            openIdDisable: true, //判断有无绑定控制input disable状态
-            openidFlag: true,//判断openid是否有效 true已绑定  false 未绑定
-            colAccount:'TE_123',
-            phoneNumber:'13500000000',
+            openidFlag: false,//判断openid是否有效 true已绑定  false 未绑定
+            colAccount: 'TE_123',
+            phoneNumber: '13500000000',
         };
 
     }
@@ -38,40 +37,38 @@ export default class wxBindIndex extends React.Component {
         var locationSearch = locationHref.substr(locationHref.indexOf("?") + 1);
         var openid = locationSearch.split("&")[0].split('=')[1];
         this.setState({
-            openid:openid,
-        },()=>{
+            openid: openid,
+        }, () => {
             this.getUserOpenIdInfoByOpenId();
         });
 
     }
 
-    getUserOpenIdInfoByOpenId(){
+    getUserOpenIdInfoByOpenId() {
         var param = {
             "method": 'getUserOpenIdInfoByOpenId',
             "openId": this.state.openid,
-            "userType":this.state.value == 1?'TEAC':'PAREN',
-            "weixinType":'1',
+            "userType": this.state.value == 1 ? 'TEAC' : 'PAREN',
+            "weixinType": '1',
         };
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
             onResponse: (result) => {
                 // Toast.info(result.msg);
-                if(result.success){
-                    if(result.response){
+                if (result.success) {
+                    if (result.response) {
                         this.setState({
-                            openIdDisable: true,
-                            openidFlag:true,
+                            openidFlag: true,
                             phoneNumber: result.response.users.phoneNumber,
                             colAccount: result.response.users.colAccount,
-                            col_id:result.response.col_id,
+                            col_id: result.response.col_id,
 
                         })
-                    }else{   //openid 未绑定
+                    } else {   //openid 未绑定
                         this.setState({
-                            openIdDisable: false,
-                            openidFlag:false,
+                            openidFlag: false,
                         })
                     }
-                }else{
+                } else {
 
                 }
             },
@@ -82,33 +79,31 @@ export default class wxBindIndex extends React.Component {
     }
 
 
-
     //单选框change事件
     onChange = (value) => {
         this.setState({
-            value:value,
-            tel:'',//清空手机号
-        },() =>{
+            value: value,
+            tel: '',//清空手机号
+        }, () => {
             this.getUserOpenIdInfoByOpenId();
         });
     };
 
 
-
     // 手机号码change事件
-    inputOnChange = (value) =>{
+    inputOnChange = (value) => {
         console.log(value);
         this.setState({
-            tel:value,
-            sendButton:true,
-            telSuccess:'',
-        },()=>{
-            if(value.length == 11){
+            tel: value,
+            sendButton: true,
+            telSuccess: '',
+        }, () => {
+            if (value.length == 11) {
                 this.setState({
-                    pending:true,
-                },()=>{
-                //验证手机号码
-                this.validationTel();
+                    pending: true,
+                }, () => {
+                    //验证手机号码
+                    this.validationTel();
                 })
             }
         });
@@ -116,32 +111,32 @@ export default class wxBindIndex extends React.Component {
     }
 
     // 验证码输入框change事件
-    inputOnChangeForCode = (value) =>{
+    inputOnChangeForCode = (value) => {
         console.log(value);
         this.setState({
-            code:value,
+            code: value,
         });
     }
 
-    validationTel(){
+    validationTel() {
         var param = {
             "method": 'verifyUserPhoneNumber',
             "phoneNumber": this.state.tel,
-            "type":this.state.value == 1?'TEAC':'PAREN'
+            "type": this.state.value == 1 ? 'TEAC' : 'PAREN'
         };
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
             onResponse: (result) => {
                 console.log(result, 'tel');
-                if(result.success){
+                if (result.success) {
                     this.setState({
-                        telSuccess:'success',
+                        telSuccess: 'success',
                         sendButton: false,
                         pending: false,
                     })
-                }else{
+                } else {
                     this.setState({
-                        telSuccess:'error',
-                        pending:false,
+                        telSuccess: 'error',
+                        pending: false,
                     })
                 }
             },
@@ -150,8 +145,9 @@ export default class wxBindIndex extends React.Component {
             },
         });
     }
+
     // 发送
-    getVerifyCodeForWeixinBinded = (code) =>{
+    getVerifyCodeForWeixinBinded = (code) => {
         var param = {
             "method": 'getVerifyCodeForWeixinBinded',
             "phoneNumber": this.state.tel,
@@ -169,74 +165,72 @@ export default class wxBindIndex extends React.Component {
     // 发送验证码
     sendCode = () => {
         var number = 30;
-        timer = setInterval(function(){
+        timer = setInterval(function () {
             console.log(number);
-            if(number < 0){
+            if (number < 0) {
                 this.setState({
-                    sendButton:false,
-                    sendButtonText:'重新发送',
+                    sendButton: false,
+                    sendButtonText: '重新发送',
                 })
                 clearInterval(timer);
-            }else{
+            } else {
                 this.setState({
-                    sendButtonText:'重新发送('+number+')'
+                    sendButtonText: '重新发送(' + number + ')'
                 })
                 number--;
             }
-        }.bind(this),1000)
+        }.bind(this), 1000)
         this.setState({
-            sendButton:true,
+            sendButton: true,
         });
         //在此发送验证码
         this.getVerifyCodeForWeixinBinded();
 
     }
 
-    bindUser = () =>{
+    bindUser = () => {
         var warn = "";
-        if(this.state.tel == ''){
+        if (this.state.tel == '') {
             warn = '请输入手机号码';
-        }else if(this.state.code == ''){
+        } else if (this.state.code == '') {
             warn = '请输入验证码';
         }
-        if(warn !== ""){
-            Toast.info(warn,1);
+        if (warn !== "") {
+            Toast.info(warn, 1);
             return;
         }
         var param = {
             "method": 'saveUserOpenId',
             "phoneNumber": this.state.tel,
-            "openId":this.state.openid,
-            "userType":this.state.value,
-            "weiXinType":1,
-            "verifyMessage":this.state.code
+            "openId": this.state.openid,
+            "userType": this.state.value,
+            "weiXinType": 1,
+            "verifyMessage": this.state.code
         };
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
             onResponse: (result) => {
-                console.log(result, 'access');
                 if (result.success) {
-                    Toast.info('绑定成功');
                     this.setState({
-                        result:'绑定成功',
-                        textFlag:false,
+                        result: '绑定成功',
+                        textFlag: false,
                     })
                 } else {
-                    Toast.info(''+ result.msg);
+                    Toast.info('' + result.msg);
                     this.setState({
-                        result:'绑定失败:'+ result.msg,
+                        result: '绑定失败:' + result.msg,
                     })
                 }
             },
             onError: function (error) {
                 Toast.info('请求失败');
                 this.setState({
-                    result:'请求失败',
+                    result: '请求失败',
                 })
             }
         });
     }
 
-    unBindAccount = () =>{
+    unBindAccount = () => {
         var param = {
             "method": 'unbindUserOpenId',
             "id": this.state.col_id,
@@ -257,57 +251,61 @@ export default class wxBindIndex extends React.Component {
     }
 
 
-
-
-
     render() {
-        const { value } = this.state;
+        const {value} = this.state;
         return (
             <div id="wxBindIndex">
                 <div style={{
-                    display:this.state.textFlag?'block':'none'
+                    display: this.state.textFlag ? 'block' : 'none'
                 }} className="isDangerArea">
                     <List renderHeader={() => '选择角色'}>
                         {data.map(i => (
-                            <RadioItem key={i.value} checked={value === i.value} onChange={() => this.onChange(i.value)}>
+                            <RadioItem key={i.value} checked={value === i.value}
+                                       onChange={() => this.onChange(i.value)}>
                                 {i.label}
                             </RadioItem>
                         ))}
                     </List>
                     <WhiteSpace size="lg"/>
-                    <div className="tel_element">
-                        <InputItem
-                            disabled={this.state.openIdDisable}
-                            maxLength={11}
-                            placeholder="请输入手机号码"
-                            value={this.state.tel}
-                            onChange={this.inputOnChange}
-                        >手机号码
-                        </InputItem>
-                        <img style={{
-                            display:(this.state.telSuccess == 'success' || this.state.telSuccess == 'error') && (!this.state.pending)?'block':'none'
-                        }} id="telImg" src={this.state.telSuccess == 'success'?require("./imgs/success1.png"):require('./imgs/error.png')} alt=""/>
-                        <div style={{
-                            display:(this.state.pending)?'block':'none'
-                        }} className="telLoad">验证中...</div>
-                    </div>
+                    <div style={{
+                        display: !this.state.openidFlag ? 'block' : 'none'
+                    }}>
+                        <div className="tel_element">
+                            <InputItem
+                                maxLength={11}
+                                placeholder="请输入手机号码"
+                                value={this.state.tel}
+                                onChange={this.inputOnChange}
+                            >手机号码
+                            </InputItem>
+                            <img style={{
+                                display: (this.state.telSuccess == 'success' || this.state.telSuccess == 'error') && (!this.state.pending) ? 'block' : 'none'
+                            }} id="telImg"
+                                 src={this.state.telSuccess == 'success' ? require("./imgs/success1.png") : require('./imgs/error.png')}
+                                 alt=""/>
+                            <div style={{
+                                display: (this.state.pending) ? 'block' : 'none'
+                            }} className="telLoad">验证中...
+                            </div>
+                        </div>
 
-                    <WhiteSpace size="lg"/>
-                    <div className="Verification">
-                        <InputItem
-                            disabled={this.state.openIdDisable}
-                            // className="add_element"
-                            maxLength={100}
-                            placeholder="请输入验证码"
-                            value={this.state.code}
-                            onChange={this.inputOnChangeForCode}
-                        >
-                            <Button type="primary" size="small" disabled={this.state.sendButton} onClick={this.sendCode}>{this.state.sendButtonText}</Button>
-                        </InputItem>
-                    </div>
-                    <div>{this.state.testText}</div>
-                    <div className="submitBtn">
-                        <Button disabled={this.state.openIdDisable} type="primary" onClick={this.bindUser}>提交</Button>
+                        <WhiteSpace size="lg"/>
+                        <div className="Verification">
+                            <InputItem
+                                // className="add_element"
+                                maxLength={100}
+                                placeholder="请输入验证码"
+                                value={this.state.code}
+                                onChange={this.inputOnChangeForCode}
+                            >
+                                <Button type="primary" size="small" disabled={this.state.sendButton}
+                                        onClick={this.sendCode}>{this.state.sendButtonText}</Button>
+                            </InputItem>
+                        </div>
+                        <div>{this.state.testText}</div>
+                        <div className="submitBtn">
+                            <Button type="primary" onClick={this.bindUser}>提交</Button>
+                        </div>
                     </div>
 
 
@@ -317,20 +315,22 @@ export default class wxBindIndex extends React.Component {
                 {/*解绑标签块*/}
                 <WhiteSpace size="lg"/>
                 <div className="bindingNumber" style={{
-                    display:this.state.openidFlag?'block':'none'
+                    display: this.state.openidFlag ? 'block' : 'none'
                 }}>
-                        <div>
-                            <div>您的微信已绑定以下账号</div>
-                            <span>{this.state.colAccount}</span>
-                            <span>{this.state.phoneNumber}</span>
-                            <Button onClick={this.unBindAccount}>解绑</Button>
-                        </div>
+                    <div>
+                        <div>您的微信已绑定以下账号</div>
+                        <span>{this.state.colAccount}</span>
+                        <span>{this.state.phoneNumber}</span>
+                        <Button onClick={this.unBindAccount}>解绑</Button>
+                    </div>
 
                 </div>
                 {/*解绑标签块 end*/}
                 <div className="empty_center success3" style={{
-                    display:this.state.textFlag?'none':'inline-block'
-                }}><i></i><div>绑定成功</div></div>
+                    display: this.state.textFlag ? 'none' : 'inline-block'
+                }}><i></i>
+                    <div>绑定成功</div>
+                </div>
             </div>
         );
     }
