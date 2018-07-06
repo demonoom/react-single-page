@@ -16,12 +16,14 @@ export default class wxBindIndex extends React.Component {
             openid:'',
             testText:'',
             value: 1,  // 1 教师  2  家长
-            tel:'1769119300',
+            tel:'',
             sendButton:true,
             code:'',
             sendButtonText:'发送验证码',
             result:'未请求',
             telSuccess: 'none',
+            textFlag: true,
+            // pending:true
         };
 
     }
@@ -42,7 +44,8 @@ export default class wxBindIndex extends React.Component {
     onChange = (value) => {
         console.log(value);
         this.setState({
-            value,
+            value:value,
+            tel:'',//清空手机号
         });
 
     };
@@ -56,14 +59,17 @@ export default class wxBindIndex extends React.Component {
             tel:value,
             sendButton:true,
             telSuccess:'error',
+        },()=>{
+            if(value.length == 11){
+                // this.setState({
+                //     pending:true,
+                // },()=>{
+                //验证手机号码
+                this.validationTel();
+                // })
+            }
         });
-        if(value.length == 11){
-            console.log('手机号码输入完成');
-            this.setState({
-                sendButton: false,
-                telSuccess: 'success',
-            })
-        }
+
     }
 
     // 验证码输入框change事件
@@ -73,32 +79,56 @@ export default class wxBindIndex extends React.Component {
             code:value,
         });
     }
-    // 验证验证码
-    validationCode = (code) =>{
-        // var param = {
-        //     "method": 'postTemplateMessageForPublicWx',
-        //     "accessToken": this.state.access,
-        // };
-        // WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
-        //     onResponse: (result) => {
-        //         console.log(result, 'access');
-        //         if (result.success) {
-        //
-        //         } else {
-        //             Toast.info('发送失败');
-        //         }
-        //     },
-        //     onError: function (error) {
-        //         Toast.info('请求发送模板消息失败');
-        //     }
-        // });
-        return true;  //true为验证成功  反之失败
+
+    validationTel(){
+        var param = {
+            "method": 'verifyUserPhoneNumber',
+            "phoneNumber": this.state.tel,
+            "type":this.state.value == 1?'TEAC':'PAREN'
+        };
+        WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
+            onResponse: (result) => {
+                console.log(result, 'tel');
+                if(result.success){
+                    this.setState({
+                        telSuccess:'success',
+                        sendButton: false,
+                    })
+                }else{
+                    this.setState({
+                        telSuccess:'error',
+                    })
+                }
+            },
+            onError: function (error) {
+                Toast.info('验证手机号码请求失败');
+            },
+        });
+    }
+    // 发送
+    getVerifyCodeForWeixinBinded = (code) =>{
+        var param = {
+            "method": 'getVerifyCodeForWeixinBinded',
+            "phoneNumber": this.state.tel,
+        };
+        WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
+            onResponse: (result) => {
+                console.log(result, 'access');
+                if (result.success) {
+
+                } else {
+                    Toast.info('验证码发送失败')
+                }
+            },
+            onError: function (error) {
+                Toast.info('请求发送模板消息失败');
+            }
+        });
     }
 
     // 发送验证码
     sendCode = () => {
-        console.log('发送验证码');
-        var number = 6;
+        var number = 30;
         timer = setInterval(function(){
             console.log(number);
             if(number < 0){
@@ -118,6 +148,8 @@ export default class wxBindIndex extends React.Component {
             sendButton:true,
         });
         //在此发送验证码
+        this.getVerifyCodeForWeixinBinded();
+
     }
 
     bindUser = () =>{
@@ -126,25 +158,26 @@ export default class wxBindIndex extends React.Component {
         console.log('用户类型:'+this.state.value);
         console.log('手机号码:'+this.state.tel);
         console.log('验证码:'+this.state.code);
-        // var warn = "";
-        // if(this.state.tel == ''){
-        //     warn = '请输入手机号码';
-        // }else if(this.state.code == ''){
-        //     warn = '请输入验证码';
-        // }else if (!this.validationCode(this.state.code)){
+        var warn = "";
+        if(this.state.tel == ''){
+            warn = '请输入手机号码';
+        }else if(this.state.code == ''){
+            warn = '请输入验证码';
+        }
+        // else if (!this.validationCode(this.state.code)){
         //     warn = '验证码验证失败';
         // }
-        // if(warn !== ""){
-        //     Toast.info(warn,1);
-        //     return;
-        // }
-        // Toast.info('绑定成功');
+        if(warn !== ""){
+            Toast.info(warn,1);
+            return;
+        }
         var param = {
             "method": 'saveUserOpenId',
             "phoneNumber": this.state.tel,
             "openId":this.state.openid,
             "userType":this.state.value,
             "weiXinType":1,
+            "verifyMessage":this.state.code
         };
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
             onResponse: (result) => {
@@ -153,9 +186,10 @@ export default class wxBindIndex extends React.Component {
                     Toast.info('绑定成功');
                     this.setState({
                         result:'绑定成功',
+                        textFlag:false,
                     })
                 } else {
-                    Toast.info('绑定失败');
+                    Toast.info(''+ result.msg);
                     this.setState({
                         result:'绑定失败:'+ result.msg,
                     })
@@ -178,7 +212,9 @@ export default class wxBindIndex extends React.Component {
         const { value } = this.state;
         return (
             <div id="wxBindIndex">
-                <div className="isDangerArea">
+                <div style={{
+                    display:this.state.textFlag?'block':'none'
+                }} className="isDangerArea">
                     <List renderHeader={() => '选择角色'}>
                         {data.map(i => (
                             <RadioItem key={i.value} checked={value === i.value} onChange={() => this.onChange(i.value)}>
@@ -218,9 +254,12 @@ export default class wxBindIndex extends React.Component {
                     </div>
 
 
-                    <div>测试保存接口返回:{this.state.result}</div>
-                    <div>openId:{this.state.openid}</div>
+                    {/*<div>测试保存接口返回:{this.state.result}</div>*/}
+                    {/*<div>openId:{this.state.openid}</div>*/}
                 </div>
+                <div style={{
+                    display:this.state.textFlag?'none':'block'
+                }}>绑定成功</div>
             </div>
         );
     }

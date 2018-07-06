@@ -37,9 +37,7 @@ export default class ARTextbookList extends React.Component {
         var locationHref = window.location.href;
         var locationSearch = locationHref.substr(locationHref.indexOf("?") + 1);
         var uid = locationSearch.split("&")[0].split("=")[1];
-        console.log(uid)
         this.setState({ "uid": uid });
-        console.log(uid);
         this.viewARBookPage(uid, true);
         //添加对视窗大小的监听,在屏幕转换以及键盘弹起时重设各项高度
         window.addEventListener('resize', classBinding.onWindowResize)
@@ -81,7 +79,6 @@ export default class ARTextbookList extends React.Component {
         };
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
             onResponse: function (result) {
-                console.log(result, "result");
                 if (result.msg == '调用成功' || result.success == true) {
                     var arr = result.response;
                     var pager = result.pager;
@@ -163,7 +160,7 @@ export default class ARTextbookList extends React.Component {
             Toast.info("已发布，不能修改");
             return;
         }
-        var url = encodeURI(WebServiceUtil.mobileServiceURL + "groupList?bId=" + data.id + "&uid=" + classBinding.state.uid);
+        var url = encodeURI(WebServiceUtil.mobileServiceURL + "groupList?bId=" + data.id + "&uid=" + classBinding.state.uid + "&ArName=" + data.name);
         var data = {
             method: 'openNewPage',
             url: url
@@ -179,7 +176,6 @@ export default class ARTextbookList extends React.Component {
      * @throws Exception
      */
     changeARBookStatus(data) {
-
         var _this = this;
         var param = {
             "method": 'changeARBookStatus',
@@ -188,7 +184,6 @@ export default class ARTextbookList extends React.Component {
         };
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
             onResponse: (result) => {
-                console.log(result, "delete")
                 if (result.msg == '调用成功' || result.success == true) {
                     Toast.success('删除成功', 1)
                     _this.state.dataSource = [];
@@ -239,20 +234,16 @@ export default class ARTextbookList extends React.Component {
      * 点击发布
      */
     publish(data) {
-        console.log(data, "publishData");
         var _this = this;
         var param = {
             "method": 'changeARBookStatus',
             "condition": 1,
             "bId": data.id,
         };
-        console.log(param);
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
             onResponse: (result) => {
-                console.log(result)
                 if (result.msg == '调用成功' || result.success == true) {
                     Toast.success("发布成功", 1)
-                    Toast.success('修改成功')
                     _this.state.dataSource = [];
                     _this.state.dataSource = new ListView.DataSource({
                         rowHasChanged: (row1, row2) => row1 !== row2,
@@ -279,7 +270,6 @@ export default class ARTextbookList extends React.Component {
      * 发布弹出框
      */
     showPublishAlert = (data, event) => {
-        console.log(data, "calmmmm")
         if (data.status == 1) {
             Toast.info("已发布");
             return;
@@ -302,10 +292,8 @@ export default class ARTextbookList extends React.Component {
 
 
     render() {
-        console.log("执行render")
         var _this = this;
         const row = (rowData, sectionID, rowID) => {
-            console.log(rowData, "rowData")
             let SwitchExample = (props) => {
                 const { getFieldProps } = props.form;
                 return (
@@ -316,24 +304,26 @@ export default class ARTextbookList extends React.Component {
                             <Button type="primary" size="small" className="btn_del deleteBtn_common" onClick={this.showAlert.bind(this, rowData)}></Button>
                         </div>
                             :
-                            "已发布"}
-                        
+                            <span className="publishBtn published">已发布</span>}
+
                     </div>
                 );
             };
             SwitchExample = createForm()(SwitchExample);
 
             return (
-                <div className="classInfo line_public my_flex">
-                    <div className="textCOnt">
-                        <div className="dataName textOver">
-                            {rowData.name}
+                <div className="classInfo">
+                    <div className="line_public my_flex">
+                        <div className="textCOnt">
+                            <div className="dataName textOver">
+                                {rowData.name}
+                            </div>
+                            <div className="creatTime textOver">
+                                <span className="classroom_span">创建时间：</span>{WebServiceUtil.formatYMD(rowData.createTime)}
+                            </div>
                         </div>
-                        <div className="creatTime textOver">
-                            <span className="classroom_span">创建时间：</span>{WebServiceUtil.formatYMD(rowData.createTime)}
-                        </div>
+                        <SwitchExample />
                     </div>
-                    <SwitchExample />
                 </div>
             )
         };

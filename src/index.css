@@ -250,6 +250,7 @@ hr {
   width: 100%;
   box-sizing: border-box;
   z-index: 99;
+  border-radius: 2px;
 }
 .submitBtn .am-button-primary {
   background-color: #F56A55;

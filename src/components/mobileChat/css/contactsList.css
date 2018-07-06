@@ -1,0 +1,17 @@
+#contactsList .am-list-footer {
+  text-align: center;
+}
+#contactsList .sticky-list .sticky-container .am-list-item {
+  padding-left: 0;
+}
+#contactsList .sticky-list .sticky-container .am-list-line {
+  padding-right: 0;
+}
+#contactsList .sticky-list .sticky-container .am-list-line .am-list-content {
+  padding-top: 0;
+  padding-bottom: 0;
+}
+#contactsList .sticky-list .sticky-container .sticky {
+  padding: 7px 15px;
+  transform: none;
+}
