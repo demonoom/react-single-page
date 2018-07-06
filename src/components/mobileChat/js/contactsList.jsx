@@ -56,14 +56,34 @@ export default class contacts_List extends React.Component {
 
     componentWillMount() {
         document.title = "小蚂蚁聊天";   //设置title
-        Toast.info(window.location.href, 10)
     }
 
     componentDidMount() {
         console.log(province);
+        console.log(genData(this.state.dataSource, province));
         this.setState({
             dataSource: genData(this.state.dataSource, province),
             isLoading: false,
+        });
+
+        var param = {
+            "method": 'getUserContacts',
+            "ident": 23836,
+        };
+
+        WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
+            onResponse: function (result) {
+                console.log(result);
+                var response = result.response;
+                if (result.success == true && result.msg == '调用成功') {
+
+                } else {
+                    Toast.fail(result.msg, 3);
+                }
+            },
+            onError: function (error) {
+                // message.error(error);
+            }
         });
     }
 
