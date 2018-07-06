@@ -1,6 +1,6 @@
 import React from 'react';
 import {List, InputItem, Button, Toast} from 'antd-mobile';
-
+import "../css/ArDoor.less";
 var arDoor;
 
 export default class ar_Door extends React.Component {

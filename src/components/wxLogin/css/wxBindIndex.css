@@ -1,13 +1,20 @@
-(node) util.print is deprecated. Use console.log instead.
+#wxBindIndex {
+  background: #f0eff5;
+  height: 100%;
+}
 #wxBindIndex .am-list-item .am-input-label.am-input-label-5 {
   width: 85px;
+}
+#wxBindIndex .am-whitespace.am-whitespace-lg {
+  background: #f0eff5;
+  height: 12px;
 }
 #wxBindIndex .isDangerArea .am-list {
   overflow: hidden;
   background: #fff;
 }
 #wxBindIndex .isDangerArea .am-list-header {
-  color: #333;
+  color: #0c0c0c;
   font-size: 17px;
   float: left;
   width: 100px;
@@ -47,14 +54,24 @@
   -webkit-border-radius: 50%;
   -moz-border-radius: 50%;
   border-radius: 50%;
-  background-color: #F56A55;
+  background-color: #1aad19;
   top: 50%;
   left: 50%;
   margin-top: -4px;
   margin-left: -4px;
 }
+#wxBindIndex .isDangerArea .am-radio-checked .am-radio-inner {
+  border: 1px #1aad19 solid;
+  width: 16px;
+  height: 16px;
+  -webkit-border-radius: 50%;
+  -moz-border-radius: 50%;
+  border-radius: 50%;
+  background-color: #fff;
+  left: 0 !important;
+}
 #wxBindIndex .isDangerArea .am-radio-inner {
-  border: 1px #F56A55 solid;
+  border: 1px #888 solid;
   width: 16px;
   height: 16px;
   -webkit-border-radius: 50%;
@@ -80,23 +97,48 @@
 #wxBindIndex .Verification {
   position: relative;
 }
-#wxBindIndex .Verification .am-list-item .am-input-label.am-input-label-5 {
-  width: 130px;
+#wxBindIndex .Verification .am-button-primary {
+  background: #fff;
+  border-color: #1aad19;
+  color: #1aad19;
+  right: 15px;
   position: absolute;
-  right: 10px;
+  top: 9px;
+  font-size: 13px;
+  height: 26px;
+  line-height: 27px;
+  padding: 0 8px;
+  z-index: 10;
 }
-#wxBindIndex .Verification .am-list-item .am-input-label.am-input-label-5 .am-button-primary {
-  background: #F56A55;
-  border-color: #F56A55;
+#wxBindIndex .Verification .am-button::before {
+  border-color: #1aad19 !important;
 }
-#wxBindIndex .Verification .am-input-control {
-  margin-left: 0;
-  margin-right: 10px;
-  position: absolute;
-  left: 0;
+#wxBindIndex .Verification .am-input-control input {
+  width: 120px;
 }
 #wxBindIndex .tel_element {
   position: relative;
+}
+#wxBindIndex .tel_element .am-list-line {
+  position: relative;
+}
+#wxBindIndex .tel_element .am-list-line:after {
+  content: '';
+  position: absolute;
+  border-bottom: 1px solid #d9d9d9;
+  display: block;
+  z-index: 1;
+  top: auto;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 1PX;
+  -webkit-transform-origin: 50% 100%;
+  -ms-transform-origin: 50% 100%;
+  transform-origin: 50% 100%;
+  -webkit-transform: scaleY(0.5);
+  -ms-transform: scaleY(0.5);
+  transform: scaleY(0.5);
 }
 #wxBindIndex #telImg {
   position: absolute;
@@ -158,4 +200,15 @@
 #wxBindIndex .bindingNumber .am-button span {
   line-height: 30px;
   margin-right: 0;
+}
+#wxBindIndex .submitBtn_green {
+  margin-top: 50px;
+  padding: 0 15px;
+}
+#wxBindIndex .submitBtn_green .am-button-primary {
+  background: #1AAD18;
+  border: 1px solid #1AAD18;
+}
+#wxBindIndex .submitBtn_green .am-button-primary::before {
+  border: 1px solid #1AAD18 !important;
 }
