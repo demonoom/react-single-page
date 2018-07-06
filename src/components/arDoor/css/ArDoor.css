@@ -1,5 +1,9 @@
 #arDoor {
   height: 100%;
+  background-color: #f0eff5;
+}
+#arDoor .am-list-item {
+  padding-right: 15px;
 }
 #arDoor .am-list-body {
   border: 0;
