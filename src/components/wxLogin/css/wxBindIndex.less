@@ -178,32 +178,38 @@
   }
   .bindingNumber{
     display: block;
-    background: #fff;
+    color: #57595f;
     padding: 0 15px 20px 15px;
-    font-size: 14px;
+    font-size: 15px;
     div{
-      color: #888;
-      line-height: 44px;
+      color: #57595f;
     }
     span{
-      margin-right: 10px;
       line-height: 44px;
+      width: 50%;
+      display: inline-block;
     }
     .am-button{
       padding: 0;
-      background: #F56A55;
-      height: 30px;
-      line-height: 30px;
+      border:1px solid #1AAD18;
+      color: #1AAD18;
+      height: 37px;
+      line-height: 37px;
       text-align: center;
-      display: inline-block;
-      color: #fff;
+      display: block;
       font-size: 14px;
-      padding: 0 15px;
-      float: right;
+      margin: 80px 90px 0 90px;
+      background: transparent;
       span{
-        line-height: 30px;
+        line-height: 37px;
         margin-right: 0;
+        font-size: 16px;
+        color: #1AAD18;
       }
+    }
+    .am-button::before{
+      border-color:#f0eff5 !important;;
+      border-radius: 2px !important;
     }
   }
   .submitBtn_green{
@@ -216,5 +222,22 @@
     .am-button-primary::before{
       border: 1px solid #1AAD18 !important;
     }
+  }
+  .i-icon{
+    width: 20px;
+    height: 20px;
+    position: relative;
+    top: 4px;
+    margin-right: 6px;
+  }
+  .i-tel{
+    background: url("../imgs/i-tel.png") no-repeat;
+    display: inline-block;
+    background-size: 100%;
+  }
+  .i-phone{
+    background: url("../imgs/i-user.png") no-repeat;
+    display: inline-block;
+    background-size: 100%;
   }
 }
