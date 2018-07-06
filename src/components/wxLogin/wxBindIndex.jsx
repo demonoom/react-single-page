@@ -25,9 +25,9 @@ export default class wxBindIndex extends React.Component {
             telSuccess: 'none',
             textFlag: true,
             // pending:true\
-            openidFlag: true,//判断openid是否有效 true已绑定  false 未绑定
-            colAccount: 'TE_123',
-            phoneNumber: '13500000000',
+            openidFlag: false,//判断openid是否有效 true已绑定  false 未绑定
+            colAccount: '',
+            phoneNumber: '',
         };
 
     }
