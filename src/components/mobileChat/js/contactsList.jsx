@@ -65,6 +65,26 @@ export default class contacts_List extends React.Component {
             dataSource: genData(this.state.dataSource, province),
             isLoading: false,
         });
+
+        var param = {
+            "method": 'getUserContacts',
+            "ident": 23836,
+        };
+
+        WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
+            onResponse: function (result) {
+                console.log(result);
+                var response = result.response;
+                if (result.success == true && result.msg == '调用成功') {
+
+                } else {
+                    Toast.fail(result.msg, 3);
+                }
+            },
+            onError: function (error) {
+                // message.error(error);
+            }
+        });
     }
 
     /**

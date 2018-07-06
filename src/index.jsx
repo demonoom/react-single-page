@@ -634,7 +634,7 @@ const wxBindIndex = (location, cb) => {
 //微信绑定页面
 const contactsList = (location, cb) => {
     require.ensure([], require => {
-            cb(null, require("./components/mobileChat/js/contactsList").default)
+            cb(null, require("./components/mobileChat/js/contactsListSimple").default)
         }
     )
 }

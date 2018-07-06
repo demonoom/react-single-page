@@ -1,0 +1,8 @@
+(node) util.print is deprecated. Use console.log instead.
+#contactsListSimple .userImg {
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  vertical-align: middle;
+  margin-right: 13px;
+}
