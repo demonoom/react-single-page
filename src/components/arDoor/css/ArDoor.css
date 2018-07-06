@@ -24,3 +24,7 @@
 #arDoor .am-button-primary::before {
   display: none;
 }
+#arDoor .am-list-item .am-input-label,
+#arDoor .am-list-item .am-input-control input {
+  color: #0c0c0c !important;
+}
