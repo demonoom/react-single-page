@@ -648,6 +648,14 @@ const chatDetil = (location, cb) => {
     )
 }
 
+//微信绑定页面
+const arDoor = (location, cb) => {
+    require.ensure([], require => {
+            cb(null, require("./components/arDoor/js/arDoor").default)
+        }
+    )
+}
+
 import './index.less';
 
 class Index extends React.Component {
@@ -758,9 +766,9 @@ class Index extends React.Component {
                     {/*style={{fontSize: '24px'}}>运动轨迹</Link></li>*/}
                     <li><Link
                         to="/wxLogin?local=wxBindIndex"
-                        style={{ fontSize: '24px' }}>授权登录至微信绑定页面</Link></li>
+                        style={{fontSize: '24px'}}>授权登录至微信绑定页面</Link></li>
                     <li><Link
-                        to="/wxBindIndex"wxLogin
+                        to="/wxBindIndex" wxLogin
                         style={{fontSize: '24px'}}>微信绑定</Link></li>
                     {/*<li><Link*/}
                     {/*to="/answerListFormTeacher?teacherId=23836&topicId=8888"*/}
@@ -810,6 +818,11 @@ class Index extends React.Component {
                     <li>
                         <Link
                             to="/contactsList" style={{fontSize: '24px'}}>聊天</Link>
+                    </li>
+
+                    <li>
+                        <Link
+                            to="/arDoor" style={{fontSize: '24px'}}>arDoor</Link>
                     </li>
                 </ul>
             </div>
@@ -930,6 +943,7 @@ ReactDOM.render(
             <Route path="wxBindIndex" getComponent={wxBindIndex}/>
             <Route path="contactsList" getComponent={contactsList}/>
             <Route path="chatDetil" getComponent={chatDetil}/>
+            <Route path="arDoor" getComponent={arDoor}/>
         </Route>
     </Router>
     ,
