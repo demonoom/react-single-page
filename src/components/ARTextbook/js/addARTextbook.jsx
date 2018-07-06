@@ -4,6 +4,7 @@ import {
     WhiteSpace,
     Button,
     InputItem,
+    Icon
 } from 'antd-mobile';
 import "../css/addARTextbook.less"
 
@@ -350,7 +351,9 @@ export default class addARTextbook extends React.Component {
                             }
                             <WhiteSpace size="lg" />
                             <div onClick={this.addARTextbookTable} className='addARTextbookTable sameBack'>
-                                <div className="addBtn"><span className="icon">+</span><span>添加组</span></div>
+                                <div className="addBtn">
+                                <Icon type="plus" />
+                                <span>添加组</span></div>
                             </div>
 
                         </div>
