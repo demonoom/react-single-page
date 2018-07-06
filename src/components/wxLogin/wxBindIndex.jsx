@@ -164,7 +164,7 @@ export default class wxBindIndex extends React.Component {
 
     // 发送验证码
     sendCode = () => {
-        var number = 30;
+        var number = 60;
         timer = setInterval(function () {
             console.log(number);
             if (number < 0) {
@@ -288,8 +288,6 @@ export default class wxBindIndex extends React.Component {
                             }} className="telLoad">验证中...
                             </div>
                         </div>
-
-                        <WhiteSpace size="lg"/>
                         <div className="Verification">
                             <InputItem
                                 // className="add_element"
@@ -297,13 +295,13 @@ export default class wxBindIndex extends React.Component {
                                 placeholder="请输入验证码"
                                 value={this.state.code}
                                 onChange={this.inputOnChangeForCode}
-                            >
-                                <Button type="primary" size="small" disabled={this.state.sendButton}
-                                        onClick={this.sendCode}>{this.state.sendButtonText}</Button>
+                            >验证码
                             </InputItem>
+                            <Button type="primary" size="small" disabled={this.state.sendButton}
+                                    onClick={this.sendCode}>{this.state.sendButtonText}</Button>
                         </div>
                         <div>{this.state.testText}</div>
-                        <div className="submitBtn">
+                        <div className="submitBtn_green">
                             <Button type="primary" onClick={this.bindUser}>提交</Button>
                         </div>
                     </div>
