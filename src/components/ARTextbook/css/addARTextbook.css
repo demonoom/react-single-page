@@ -40,8 +40,8 @@
   margin-bottom: 10px;
 }
 #addARTextbook .textTitle {
-  width: 70px;
-  margin-right: 24px;
+  width: 85px;
+  margin-right: 4px;
 }
 #addARTextbook .videoCont {
   width: calc(100% - 94px);
@@ -76,7 +76,7 @@
   padding-right: 5px;
   position: absolute;
   left: 0;
-  top: -1px;
+  top: 0;
 }
 #addARTextbook .add_title {
   background-color: #f4f4f4;
