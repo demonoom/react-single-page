@@ -68,7 +68,8 @@
 #addARTextbook .addARTextbookTable .addBtn {
   margin: 0 auto;
   position: relative;
-  width: 96px;
+  width: 60px;
+  padding-left: 20px;
 }
 #addARTextbook .addARTextbookTable .icon {
   font-size: 30px;
@@ -81,6 +82,9 @@
   width: 18px;
   height: 18px;
   margin-right: 3px;
+  position: absolute;
+  left: 0;
+  top: 5px;
 }
 #addARTextbook .add_title {
   background-color: #f4f4f4;
