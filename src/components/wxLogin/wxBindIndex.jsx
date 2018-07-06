@@ -25,7 +25,9 @@ export default class wxBindIndex extends React.Component {
             textFlag: true,
             // pending:true\
             openIdDisable: true, //判断有无绑定控制input disable状态
-            openidFlag: true,//判断openid是否有效
+            openidFlag: false,//判断openid是否有效
+            colAccount:'TE_123',
+            phoneNumber:'13500000000',
         };
 
     }
@@ -39,7 +41,6 @@ export default class wxBindIndex extends React.Component {
         },()=>{
             this.getUserOpenIdInfoByOpenId();
         });
-        Toast.info(openid);
 
     }
 
@@ -47,27 +48,34 @@ export default class wxBindIndex extends React.Component {
         var param = {
             "method": 'getUserOpenIdInfoByOpenId',
             "openId": this.state.openid,
-            "userType":this.state.value == 1?'TEAC':'PAREN'
+            "userType":this.state.value == 1?'TEAC':'PAREN',
             "weixinType":'1',
         };
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
             onResponse: (result) => {
-                console.log(result, 'tel');
+                // Toast.info(result.msg);
                 if(result.success){
-                    this.setState({
-                        telSuccess:'success',
-                        sendButton: false,
-                        pending: false,
-                    })
+                    if(result.response){
+                        this.setState({
+                            openIdDisable: true,
+                            openidFlag:true,
+                            phoneNumber: result.response.users.phoneNumber,
+                            colAccount: result.response.users.colAccount,
+                            col_id:result.response.col_id,
+
+                        })
+                    }else{   //openid 未绑定
+                        this.setState({
+                            openIdDisable: false,
+                            openidFlag:false,
+                        })
+                    }
                 }else{
-                    this.setState({
-                        telSuccess:'error',
-                        pending:false,
-                    })
+
                 }
             },
             onError: function (error) {
-                Toast.info('验证手机号码请求失败');
+                Toast.info('验证用户类型请求失败');
             },
         });
     }
@@ -76,12 +84,12 @@ export default class wxBindIndex extends React.Component {
 
     //单选框change事件
     onChange = (value) => {
-        console.log(value);
         this.setState({
             value:value,
             tel:'',//清空手机号
+        },() =>{
+            this.getUserOpenIdInfoByOpenId();
         });
-
     };
 
 
@@ -189,20 +197,12 @@ export default class wxBindIndex extends React.Component {
     }
 
     bindUser = () =>{
-        console.log('开始绑定');
-        console.log('openId:'+this.state.openid);
-        console.log('用户类型:'+this.state.value);
-        console.log('手机号码:'+this.state.tel);
-        console.log('验证码:'+this.state.code);
         var warn = "";
         if(this.state.tel == ''){
             warn = '请输入手机号码';
         }else if(this.state.code == ''){
             warn = '请输入验证码';
         }
-        // else if (!this.validationCode(this.state.code)){
-        //     warn = '验证码验证失败';
-        // }
         if(warn !== ""){
             Toast.info(warn,1);
             return;
@@ -236,6 +236,29 @@ export default class wxBindIndex extends React.Component {
                 this.setState({
                     result:'请求失败',
                 })
+            }
+        });
+    }
+
+    unBindAccount = () =>{
+        var param = {
+            "method": 'unbindUserOpenId',
+            "id": this.state.col_id,
+        };
+        WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
+            onResponse: (result) => {
+                if (result.success && result.response) {
+                    Toast.info('解绑成功');
+                    var data = {'method':'setRefreshAble','refreshAble':refreshAble+''};
+                    Bridge.callHandler(data,null,function(err){
+                        console.log(err);
+                    });
+                } else {
+                    Toast.info('解绑失败');
+                }
+            },
+            onError: function (error) {
+                Toast.info('请求失败');
             }
         });
     }
@@ -298,11 +321,16 @@ export default class wxBindIndex extends React.Component {
                     {/*<div>测试保存接口返回:{this.state.result}</div>*/}
                     {/*<div>openId:{this.state.openid}</div>*/}
                 </div>
+                {/*解绑标签块*/}
                 <div style={{
-                    display:this.state.openIdDisable?'block':'none'
+                    display:this.state.openidFlag?'block':'none'
                 }}>
-                    <button>解绑</button>
+                    <div>您的微信已绑定以下账号</div>
+                    <div>账号:{this.state.colAccount}</div>
+                    <div>手机号:{this.state.phoneNumber}</div>
+                    <Button onClick={this.unBindAccount}>解绑</Button>
                 </div>
+                {/*解绑标签块 end*/}
                 <div style={{
                     display:this.state.textFlag?'none':'block'
                 }}>绑定成功</div>
