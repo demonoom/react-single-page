@@ -1,0 +1,30 @@
+#arDoor {
+  height: 100%;
+}
+#arDoor .am-list-body {
+  border: 0;
+}
+#arDoor .am-list {
+  margin-bottom: 50px;
+}
+#arDoor .am-list-body::before {
+  display: none;
+}
+#arDoor .am-list-line::after {
+  background-color: #d9d9d9;
+}
+#arDoor .am-button-primary {
+  background-color: #1aad19;
+  border: 0;
+  margin: 0 15px;
+  -webkit-border-radius: 5px !important;
+  -moz-border-radius: 5px !important;
+  border-radius: 5px !important;
+}
+#arDoor .am-button-primary::before {
+  display: none;
+}
+#arDoor .am-list-item .am-input-label,
+#arDoor .am-list-item .am-input-control input {
+  color: #0c0c0c !important;
+}
