@@ -73,7 +73,7 @@ export default class contacts_ListS extends React.Component {
     itemOnClick(rowData) {
         return () => {
             console.log(rowData);
-            window.location.href = '//172.16.2.128:8091/#/chatDetil';
+            window.location.href = '//192.168.50.29:8091/#/chatDetil?fromId=' + this.state.userId + '&toId=' + rowData.colUid;
         }
     }
 
