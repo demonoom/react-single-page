@@ -1,7 +1,97 @@
 #chatDetil {
-  .userAvatar {
-    height: 45px;
-    width: 45px;
-    border-radius: 50%
+  .messageWrap{
+    padding: 10px;
+  }
+  .message {
+    margin-bottom: 16px;
+    float: left;
+    line-height: 1.6;
+    width: 100%;
+  }
+  .message .userAvatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 2px;
+    -moz-border-radius: 2px;
+    -webkit-border-radius: 2px;
+    float: left;
+    cursor: pointer;
+  }
+  .message.me{
+    float: right;
+    text-align: right;
+    clear: right;
+  }
+  .message.me .userAvatar {
+    float: right;
+  }
+  .message.me .content {
+    overflow: hidden;
+  }
+  .message .content {
+    overflow: hidden;
+  }
+  .bubble.bubble_primary {
+    background-color: #b2e281;
+  }
+  .bubble {
+    max-width: 75%;
+    min-height: 40px;
+    display: inline-block;
+    vertical-align: top;
+    position: relative;
+    text-align: left;
+    font-size: 14px;
+    border-radius: 3px;
+    -moz-border-radius: 3px;
+    -webkit-border-radius: 3px;
+    margin: 0 10px;
+  }
+  .bubble.bubble_default {
+    background-color: #fff;
+  }
+  .bubble.right:after, .bubble.right:before {
+    left: 100%;
+  }
+  .bubble:after, .bubble:before {
+    position: absolute;
+    top: 14px;
+    border: 6px solid transparent;
+    content: " ";
+  }
+  .bubble.bubble_primary.right.arrow_primary:before, .bubble.bubble_primary.right:after {
+    border-left-color: #b2e281;
+    border-left-width: 4px;
+  }
+  .bubble:after, .bubble:before {
+    position: absolute;
+    top: 14px;
+    border: 6px solid transparent;
+    content: " ";
+  }
+  .bubble.right:after, .bubble.right:before {
+    left: 100%;
+  }
+  .bubble.left:after, .bubble.left:before {
+    right: 100%;
+  }
+  .bubble.left:after {
+    border-right-color: #fff;
+    border-right-width: 4px;
+  }
+  .bubble_cont {
+    word-wrap: break-word;
+    word-break: break-all;
+    min-height: 40px;
+  }
+  .bubble_cont .plain {
+    padding: 9px 13px;
+  }
+  pre {
+    margin: 0;
+    font-family: inherit;
+    font-size: inherit;
+    white-space: pre-wrap;
+    word-break: normal;
   }
 }
