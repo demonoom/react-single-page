@@ -51,18 +51,23 @@ export default class chat_Detil extends React.Component {
     }
 
     componentDidMount() {
-        var _this = this;
         const hei = this.state.height - ReactDOM.findDOMNode(this.ptr).offsetTop;
         setTimeout(() => this.setState({
             height: hei,
             data: genData(),
         }), 0)
 
+        this.getUser2UserMessages()
+    }
+
+    getUser2UserMessages(timeNode) {
+        var _this = this;
+        var timeNode = timeNode || (new Date()).valueOf()
         var param = {
             "method": 'getUser2UserMessages',
             "user1Id": this.state.fromId,
             "user2Id": this.state.toId,
-            "timeNode": (new Date()).valueOf()
+            "timeNode": timeNode
         };
 
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
@@ -70,6 +75,7 @@ export default class chat_Detil extends React.Component {
                 if (result.success == true && result.msg == '调用成功') {
                     console.log(result.response);
                     _this.buildChatObj(result.response)
+                    _this.setState({refreshing: false});
                 } else {
                     Toast.fail(result.msg, 3);
                 }
@@ -338,6 +344,14 @@ export default class chat_Detil extends React.Component {
         this.setState({mesConList: array})
     }
 
+    pullToFresh() {
+        this.setState({refreshing: true});
+        // setTimeout(() => {
+        //     this.setState({refreshing: false});
+        // }, 1000);
+        this.getUser2UserMessages(this.state.firstMessageCreateTime)
+    }
+
 
     render() {
 
@@ -352,10 +366,7 @@ export default class chat_Detil extends React.Component {
                 direction='down'
                 refreshing={this.state.refreshing}  //是否显示刷新状态
                 onRefresh={() => {
-                    this.setState({refreshing: true});
-                    setTimeout(() => {
-                        this.setState({refreshing: false});
-                    }, 1000);
+                    this.pullToFresh()
                 }}
             >
                 {this.state.mesConList}
