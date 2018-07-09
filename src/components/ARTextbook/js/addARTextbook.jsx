@@ -178,17 +178,26 @@ export default class addARTextbook extends React.Component {
 
                 <WhiteSpace size="lg" />
                 <div className="sameBack my_flex">
-                    <div className="textTitle">上传视频</div>
+                    <div className="textTitle">上传(支持视频和pdf文件)</div>
                     <div className="videoCont my_flex">
                         {
                             teacherV.state.ARTextbookDataArr[i].videoObj.map((v, i) => {
-                                return (
-                                    <div>
-                                        {/* <span >播放</span> */}
-                                        <video onClick={teacherV.theVideoPlay.bind(this, i)} className="videoDiv" src={v.videoPath}></video>
-                                        {/* <span>{v.videoName}</span> */}
-                                    </div>
-                                )
+                                if (v.videoExtra == "pdf") {
+                                    return (
+                                        <div className="fileBack">
+                                            {/* <div>{v.fileName}</div> */}
+                                        </div>
+                                    )
+                                } else {
+                                    return (
+                                        <div>
+                                            {/* <span >播放</span> */}
+                                            <video onClick={teacherV.theVideoPlay.bind(this, i)} className="videoDiv" src={v.videoPath}></video>
+                                            {/* <span>{v.videoName}</span> */}
+                                        </div>
+                                    )
+                                }
+
                             })
                         }
                         <button className="uploadBtn" onClick={teacherV.uploadVideo.bind(this, i)}>上传视频</button>
@@ -290,7 +299,8 @@ export default class addARTextbook extends React.Component {
                 let item = v.split("?");
                 newArr.push({
                     videoPath: item[0],
-                    videoName: item[1].split("=")[1]
+                    videoName: item[1].split("=")[1],
+                    videoExtra: (item[1].split("=")[1]).split(".")[1]
                 })
                 teacherV.state.ARTextbookDataArr[index].videoObj.push(newArr[i]);
                 teacherV.state.ARTextbookDataArr[index].videoPath.push(newArr[i].videoPath);
@@ -352,8 +362,8 @@ export default class addARTextbook extends React.Component {
                             <WhiteSpace size="lg" />
                             <div onClick={this.addARTextbookTable} className='addARTextbookTable sameBack'>
                                 <div className="addBtn">
-                                <Icon type="plus" />
-                                <span>添加组</span></div>
+                                    <Icon type="plus" />
+                                    <span>添加组</span></div>
                             </div>
 
                         </div>

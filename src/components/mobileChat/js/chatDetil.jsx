@@ -1,5 +1,5 @@
 import React from 'react';
-import '../css/contactsList.less'
+import '../css/chatDetil.less'
 import {PullToRefresh, List, TextareaItem, Toast} from 'antd-mobile';
 
 var chatDetil;
@@ -35,34 +35,47 @@ export default class chat_Detil extends React.Component {
             refreshing: false,
             height: document.documentElement.clientHeight,
             data: [],
+            mesConList: [],
+            messageList: [],
         };
     }
 
     componentWillMount() {
         document.title = "小蚂蚁聊天窗口";   //设置title
         // http://192.168.0.105:8091/#/chatDetil
+        var locationHref = window.location.href;
+        var locationSearch = locationHref.substr(locationHref.indexOf("?") + 1);
+        var searchArray = locationSearch.split("&");
+        var fromId = searchArray[0].split('=')[1];
+        var toId = searchArray[1].split('=')[1];
+        this.setState({fromId, toId})
     }
 
     componentDidMount() {
-        var _this = this;
         const hei = this.state.height - ReactDOM.findDOMNode(this.ptr).offsetTop;
         setTimeout(() => this.setState({
             height: hei,
             data: genData(),
         }), 0)
 
+        this.getUser2UserMessages()
+    }
+
+    getUser2UserMessages(timeNode) {
+        var _this = this;
+        var timeNode = timeNode || (new Date()).valueOf()
         var param = {
             "method": 'getUser2UserMessages',
-            "user1Id": 6075,
-            "user2Id": 24491,
-            "timeNode": (new Date()).valueOf()
+            "user1Id": this.state.fromId,
+            "user2Id": this.state.toId,
+            "timeNode": timeNode
         };
 
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
             onResponse: function (result) {
                 if (result.success == true && result.msg == '调用成功') {
-                    console.log(result.response);
-                    // _this.buildChatContent(result.response)
+                    _this.buildChatObj(result.response)
+                    _this.setState({refreshing: false});
                 } else {
                     Toast.fail(result.msg, 3);
                 }
@@ -73,13 +86,12 @@ export default class chat_Detil extends React.Component {
         });
     }
 
-    buildChatContent(data) {
+    buildChatObj(data) {
         var _this = this;
         if (WebServiceUtil.isEmpty(data) == false) {
 
-
             var i = 0;
-            var messageList = [];
+            var arr = [];
             var timeSign = 0;   //起始时间标记
             data.forEach(function (e) {
 
@@ -196,11 +208,13 @@ export default class chat_Detil extends React.Component {
                             "toId": toId,
                             "toName": toName,
                         };
-                        messageList.push(messageShow);
+                        arr.push(messageShow);
                     }
                 }
 
             })
+            this.setState({messageList: this.state.messageList.concat(arr)})
+            this.buildChatsContent()
         }
     }
 
@@ -210,6 +224,7 @@ export default class chat_Detil extends React.Component {
      * @returns {{}}
      */
     getImgTag(messageOfSingle) {
+        var messageReturnJson;
         if (WebServiceUtil.isEmpty(messageOfSingle.content.trim()) == false) {
 
             if (WebServiceUtil.isEmpty(messageOfSingle.attachment) == false) {
@@ -267,6 +282,90 @@ export default class chat_Detil extends React.Component {
         return messageReturnJson;
     }
 
+    /**
+     * 根据messageList渲染聊天内容列表
+     * 收发消息后将新内容push到数组中再调用这个函数
+     */
+    buildChatsContent() {
+        var arr = this.state.messageList
+        var array = []
+        if (WebServiceUtil.isEmpty(arr) == false) {
+            arr.forEach(function (v, i) {
+                if (v.fromUser.colUid == chatDetil.state.fromId) {
+                    //我发出的
+                    if (WebServiceUtil.isEmpty(v.attachment) == false) {
+                        //有内容的链接
+
+                    } else if (WebServiceUtil.isEmpty(v.expressionItem) == false) {
+                        //来自安卓的动态表情（安卓的动态表情的content里有“表情”两个字）
+
+                    } else if (WebServiceUtil.isEmpty(v.fileName) == false) {
+                        //发送的文件（content里带有文件名字）
+
+                    } else {
+                        //文字消息
+                        if (v.biumes == true) {
+
+                        } else {
+                            //普通文字消息
+                            var contentItem = <li className="message me">
+                                <img className='userAvatar' src={v.fromUser.avatar}/>
+                                <div className="content">
+                                    <div className="bubble bubble_primary right">
+                                        <div className="bubble_cont">
+                                            <div className="plain">
+                                                <pre>{v.content}</pre>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
+                        }
+                    }
+                } else {
+                    //我收到的
+                    if (WebServiceUtil.isEmpty(v.attachment) == false) {
+                        //有内容的链接
+
+                    } else if (WebServiceUtil.isEmpty(v.expressionItem) == false) {
+                        //来自安卓的动态表情（安卓的动态表情的content里有“表情”两个字）
+
+                    } else if (WebServiceUtil.isEmpty(v.fileName) == false) {
+                        //发送的文件（content里带有文件名字）
+
+                    } else {
+                        //文字消息
+                        if (v.biumes == true) {
+
+                        } else {
+                            //普通文字消息
+                            var contentItem = <li className="message">
+                                <img className='userAvatar' src={v.fromUser.avatar}/>
+                                <div className="bubble bubble_default left">
+                                    <div className="bubble_cont">
+                                        <div className="plain">
+                                            <pre>{v.content}</pre>
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
+                        }
+                    }
+                }
+                array.unshift(contentItem);
+            })
+        }
+        this.setState({mesConList: array})
+    }
+
+    pullToFresh() {
+        this.setState({refreshing: true});
+        // setTimeout(() => {
+        //     this.setState({refreshing: false});
+        // }, 1000);
+        this.getUser2UserMessages(this.state.firstMessageCreateTime)
+    }
+
 
     render() {
 
@@ -281,17 +380,10 @@ export default class chat_Detil extends React.Component {
                 direction='down'
                 refreshing={this.state.refreshing}  //是否显示刷新状态
                 onRefresh={() => {
-                    this.setState({refreshing: true});
-                    setTimeout(() => {
-                        this.setState({refreshing: false});
-                    }, 1000);
+                    this.pullToFresh()
                 }}
             >
-                {this.state.data.map(i => (
-                    <div key={i} style={{textAlign: 'center', padding: 20}}>
-                        {'pull up'} {i}
-                    </div>
-                ))}
+                <div className="messageWrap">{this.state.mesConList}</div>
             </PullToRefresh>
 
             <List

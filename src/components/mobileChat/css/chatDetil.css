@@ -1,0 +1,105 @@
+#chatDetil {
+  background: #f0eff5;
+}
+#chatDetil .messageWrap {
+  padding: 10px;
+}
+#chatDetil .message {
+  margin-bottom: 16px;
+  float: left;
+  line-height: 1.6;
+  width: 100%;
+}
+#chatDetil .message .userAvatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 2px;
+  -moz-border-radius: 2px;
+  -webkit-border-radius: 2px;
+  float: left;
+  cursor: pointer;
+}
+#chatDetil .message.me {
+  float: right;
+  text-align: right;
+  clear: right;
+}
+#chatDetil .message.me .userAvatar {
+  float: right;
+}
+#chatDetil .message.me .content {
+  overflow: hidden;
+}
+#chatDetil .message .content {
+  overflow: hidden;
+}
+#chatDetil .bubble.bubble_primary {
+  background-color: #a2e65b;
+}
+#chatDetil .bubble {
+  max-width: 75%;
+  min-height: 40px;
+  display: inline-block;
+  vertical-align: top;
+  position: relative;
+  text-align: left;
+  font-size: 14px;
+  border-radius: 3px;
+  -moz-border-radius: 3px;
+  -webkit-border-radius: 3px;
+  margin: 0 10px;
+}
+#chatDetil .bubble.bubble_default {
+  background-color: #fff;
+}
+#chatDetil .bubble.right:after,
+#chatDetil .bubble.right:before {
+  left: 100%;
+}
+#chatDetil .bubble:after,
+#chatDetil .bubble:before {
+  position: absolute;
+  top: 14px;
+  border: 6px solid transparent;
+  content: " ";
+}
+#chatDetil .bubble.bubble_primary.right.arrow_primary:before,
+#chatDetil .bubble.bubble_primary.right:after {
+  border-left-color: #a2e65b;
+  border-left-width: 4px;
+}
+#chatDetil .bubble:after,
+#chatDetil .bubble:before {
+  position: absolute;
+  top: 14px;
+  border: 6px solid transparent;
+  content: " ";
+}
+#chatDetil .bubble.right:after,
+#chatDetil .bubble.right:before {
+  left: 100%;
+}
+#chatDetil .bubble.left:after,
+#chatDetil .bubble.left:before {
+  right: 100%;
+}
+#chatDetil .bubble.left:after {
+  border-right-color: #fff;
+  border-right-width: 4px;
+}
+#chatDetil .bubble_cont {
+  word-wrap: break-word;
+  word-break: break-all;
+  min-height: 40px;
+}
+#chatDetil .bubble_cont .plain {
+  padding: 9px 13px;
+}
+#chatDetil pre {
+  margin: 0;
+  font-family: inherit;
+  font-size: inherit;
+  white-space: pre-wrap;
+  word-break: normal;
+  font-size: 16px;
+}
