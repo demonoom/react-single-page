@@ -28,6 +28,10 @@
   overflow: hidden;
   margin-bottom: 15px;
 }
+#UpdateARTextbook .i_uploadAttech.pdfDiv {
+  background: url("../imgs/pdfIcon.png");
+  background-size: 100%;
+}
 #UpdateARTextbook .i_uploadAttech div {
   background: rgba(0, 0, 0, 0.4);
   color: #fff;

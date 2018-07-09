@@ -120,3 +120,8 @@
   background-size: 100%;
   margin-right: 15px;
 }
+#addARTextbook .fileBack.pdfBack {
+  background: url("../imgs/pdfIcon.png") no-repeat;
+  background-size: 100%;
+  margin-bottom: 15px;
+}

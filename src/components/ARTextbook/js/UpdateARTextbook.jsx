@@ -281,10 +281,8 @@ export default class addARTextbook extends React.Component {
                                     var item = v.split(".");
                                     if (item[item.length - 1] == "pdf") {
                                         return (
-                                            <div className="uploadAttech i_uploadAttech">
-                                                <div className="videoDiv">
+                                            <div className="uploadAttech i_uploadAttech pdfDiv">
                                                     {/* <div>{v.fileName}</div> */}
-                                                </div>
                                                 <div onClick={teacherV.uploadVideo}>修改</div>
                                             </div>
                                         )

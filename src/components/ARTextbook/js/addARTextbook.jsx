@@ -178,13 +178,13 @@ export default class addARTextbook extends React.Component {
 
                 <WhiteSpace size="lg" />
                 <div className="sameBack my_flex">
-                    <div className="textTitle">上传<br/><span className="uploadSupport">(支持视频和pdf文件)</span></div>
+                    <div className="textTitle">上传文件<p style={{margin:0,height:5}}></p><span className="uploadSupport">(支持视频、pdf文件)</span></div>
                     <div className="videoCont my_flex">
                         {
                             teacherV.state.ARTextbookDataArr[i].videoObj.map((v, i) => {
                                 if (v.videoExtra == "pdf") {
                                     return (
-                                        <div className="fileBack">
+                                        <div className="pdfBack fileBack">
                                             {/* <div>{v.fileName}</div> */}
                                         </div>
                                     )
