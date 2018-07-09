@@ -1,5 +1,8 @@
+(node) util.print is deprecated. Use console.log instead.
 #arDoor {
   height: 100%;
+  width: 100%;
+  overflow: hidden;
   background-color: #f0eff5;
   position: relative;
 }
@@ -19,6 +22,9 @@
 #arDoor .openBrowser img {
   width: 200px;
 }
+#arDoor .am-list-body::after {
+  display: none !important;
+}
 #arDoor .am-list-item {
   padding-right: 15px;
 }
@@ -27,6 +33,7 @@
 }
 #arDoor .am-list {
   margin-bottom: 50px;
+  padding-top: 15px;
 }
 #arDoor .am-list-body::before {
   display: none;
