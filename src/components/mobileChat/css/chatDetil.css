@@ -1,3 +1,6 @@
+#chatDetil {
+  background: #f0eff5;
+}
 #chatDetil .messageWrap {
   padding: 10px;
 }
@@ -31,7 +34,7 @@
   overflow: hidden;
 }
 #chatDetil .bubble.bubble_primary {
-  background-color: #b2e281;
+  background-color: #a2e65b;
 }
 #chatDetil .bubble {
   max-width: 75%;
@@ -62,7 +65,7 @@
 }
 #chatDetil .bubble.bubble_primary.right.arrow_primary:before,
 #chatDetil .bubble.bubble_primary.right:after {
-  border-left-color: #b2e281;
+  border-left-color: #a2e65b;
   border-left-width: 4px;
 }
 #chatDetil .bubble:after,
@@ -98,4 +101,5 @@
   font-size: inherit;
   white-space: pre-wrap;
   word-break: normal;
+  font-size: 16px;
 }
