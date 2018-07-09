@@ -208,11 +208,11 @@ export default class addARTextbook extends React.Component {
                     videoName: item[1].split("=")[1],
                     videoExtra: (item[1].split("=")[1]).split(".")[1]
                 })
+                teacherV.setState({videoExtra:(item[1].split("=")[1]).split(".")[1]})
             })
             teacherV.state.videoNewObj = []
             var calmVideo = teacherV.state.videoNewObj.concat(pathArr);
             teacherV.setState({ videoNewObj: calmVideo });
-            teacherV.setState({videoExtra})
         }, function (error) {
             console.log(error);
         });
