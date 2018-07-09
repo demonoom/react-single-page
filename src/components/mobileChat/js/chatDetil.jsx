@@ -1,5 +1,5 @@
 import React from 'react';
-import '../css/contactsList.less'
+import '../css/chatDetil.less'
 import {PullToRefresh, List, TextareaItem, Toast} from 'antd-mobile';
 
 var chatDetil;
@@ -35,12 +35,19 @@ export default class chat_Detil extends React.Component {
             refreshing: false,
             height: document.documentElement.clientHeight,
             data: [],
+            mesConList: [],
         };
     }
 
     componentWillMount() {
         document.title = "小蚂蚁聊天窗口";   //设置title
         // http://192.168.0.105:8091/#/chatDetil
+        var locationHref = window.location.href;
+        var locationSearch = locationHref.substr(locationHref.indexOf("?") + 1);
+        var searchArray = locationSearch.split("&");
+        var fromId = searchArray[0].split('=')[1];
+        var toId = searchArray[1].split('=')[1];
+        this.setState({fromId, toId})
     }
 
     componentDidMount() {
@@ -53,8 +60,8 @@ export default class chat_Detil extends React.Component {
 
         var param = {
             "method": 'getUser2UserMessages',
-            "user1Id": 6075,
-            "user2Id": 24491,
+            "user1Id": this.state.fromId,
+            "user2Id": this.state.toId,
             "timeNode": (new Date()).valueOf()
         };
 
@@ -62,7 +69,7 @@ export default class chat_Detil extends React.Component {
             onResponse: function (result) {
                 if (result.success == true && result.msg == '调用成功') {
                     console.log(result.response);
-                    // _this.buildChatContent(result.response)
+                    _this.buildChatObj(result.response)
                 } else {
                     Toast.fail(result.msg, 3);
                 }
@@ -73,10 +80,9 @@ export default class chat_Detil extends React.Component {
         });
     }
 
-    buildChatContent(data) {
+    buildChatObj(data) {
         var _this = this;
         if (WebServiceUtil.isEmpty(data) == false) {
-
 
             var i = 0;
             var messageList = [];
@@ -201,6 +207,8 @@ export default class chat_Detil extends React.Component {
                 }
 
             })
+            this.setState({messageList})
+            this.buildChatsContent()
         }
     }
 
@@ -210,6 +218,7 @@ export default class chat_Detil extends React.Component {
      * @returns {{}}
      */
     getImgTag(messageOfSingle) {
+        var messageReturnJson;
         if (WebServiceUtil.isEmpty(messageOfSingle.content.trim()) == false) {
 
             if (WebServiceUtil.isEmpty(messageOfSingle.attachment) == false) {
@@ -267,6 +276,68 @@ export default class chat_Detil extends React.Component {
         return messageReturnJson;
     }
 
+    /**
+     * 根据messageList渲染聊天内容列表
+     * 收发消息后将新内容push到数组中再调用这个函数
+     */
+    buildChatsContent() {
+        var arr = this.state.messageList
+        var array = []
+        if (WebServiceUtil.isEmpty(arr) == false) {
+            arr.forEach(function (v, i) {
+                if (v.fromUser.colUid == chatDetil.state.fromId) {
+                    //我发出的
+                    if (WebServiceUtil.isEmpty(v.attachment) == false) {
+                        //有内容的链接
+
+                    } else if (WebServiceUtil.isEmpty(v.expressionItem) == false) {
+                        //来自安卓的动态表情（安卓的动态表情的content里有“表情”两个字）
+
+                    } else if (WebServiceUtil.isEmpty(v.fileName) == false) {
+                        //发送的文件（content里带有文件名字）
+
+                    } else {
+                        //文字消息
+                        if (v.biumes == true) {
+
+                        } else {
+                            //普通文字消息
+                            var contentItem = <li>
+                                <img className='userAvatar' src={v.fromUser.avatar}/>
+                                <span>{v.content}</span>
+                            </li>
+                        }
+                    }
+                } else {
+                    //我收到的
+                    if (WebServiceUtil.isEmpty(v.attachment) == false) {
+                        //有内容的链接
+
+                    } else if (WebServiceUtil.isEmpty(v.expressionItem) == false) {
+                        //来自安卓的动态表情（安卓的动态表情的content里有“表情”两个字）
+
+                    } else if (WebServiceUtil.isEmpty(v.fileName) == false) {
+                        //发送的文件（content里带有文件名字）
+
+                    } else {
+                        //文字消息
+                        if (v.biumes == true) {
+
+                        } else {
+                            //普通文字消息
+                            var contentItem = <li>
+                                <img className='userAvatar' src={v.fromUser.avatar}/>
+                                <span>{v.content}</span>
+                            </li>
+                        }
+                    }
+                }
+                array.unshift(contentItem);
+            })
+        }
+        this.setState({mesConList: array})
+    }
+
 
     render() {
 
@@ -287,11 +358,7 @@ export default class chat_Detil extends React.Component {
                     }, 1000);
                 }}
             >
-                {this.state.data.map(i => (
-                    <div key={i} style={{textAlign: 'center', padding: 20}}>
-                        {'pull up'} {i}
-                    </div>
-                ))}
+                {this.state.mesConList}
             </PullToRefresh>
 
             <List
