@@ -58,6 +58,10 @@
   width: 85px;
   margin-right: 4px;
 }
+#addARTextbook .textTitle .uploadSupport {
+  font-size: 14px;
+  color: #888;
+}
 #addARTextbook .videoCont {
   width: calc(100% - 89px);
   -webkit-box-align: flex-start;
