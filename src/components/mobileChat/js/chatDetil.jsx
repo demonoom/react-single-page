@@ -36,6 +36,7 @@ export default class chat_Detil extends React.Component {
             height: document.documentElement.clientHeight,
             data: [],
             mesConList: [],
+            messageList: [],
         };
     }
 
@@ -73,7 +74,6 @@ export default class chat_Detil extends React.Component {
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
             onResponse: function (result) {
                 if (result.success == true && result.msg == '调用成功') {
-                    console.log(result.response);
                     _this.buildChatObj(result.response)
                     _this.setState({refreshing: false});
                 } else {
@@ -91,7 +91,7 @@ export default class chat_Detil extends React.Component {
         if (WebServiceUtil.isEmpty(data) == false) {
 
             var i = 0;
-            var messageList = [];
+            var arr = [];
             var timeSign = 0;   //起始时间标记
             data.forEach(function (e) {
 
@@ -208,12 +208,12 @@ export default class chat_Detil extends React.Component {
                             "toId": toId,
                             "toName": toName,
                         };
-                        messageList.push(messageShow);
+                        arr.push(messageShow);
                     }
                 }
 
             })
-            this.setState({messageList})
+            this.setState({messageList: this.state.messageList.concat(arr)})
             this.buildChatsContent()
         }
     }
