@@ -1,8 +1,12 @@
 import React from 'react';
 import '../css/chatDetil.less'
+import {MsgConnection} from '../../../helpers/chat_websocket_connection';
 import {PullToRefresh, List, TextareaItem, Toast} from 'antd-mobile';
 
 var chatDetil;
+
+//消息通信js
+window.ms = null;
 
 function genData() {
     const dataArr = [];
@@ -37,18 +41,31 @@ export default class chat_Detil extends React.Component {
             data: [],
             mesConList: [],
             messageList: [],
+            TextareaValue: ''
         };
     }
 
     componentWillMount() {
         document.title = "小蚂蚁聊天窗口";   //设置title
-        // http://192.168.0.105:8091/#/chatDetil
         var locationHref = window.location.href;
         var locationSearch = locationHref.substr(locationHref.indexOf("?") + 1);
         var searchArray = locationSearch.split("&");
         var fromId = searchArray[0].split('=')[1];
         var toId = searchArray[1].split('=')[1];
         this.setState({fromId, toId})
+
+        var pro = {
+            "command": "messagerConnect",
+            "data": {
+                "machineType": "web",
+                "userId": fromId,
+                "machine": WebServiceUtil.createUUID(),
+                "password": 'd33b31a0b0836649e7ee3d2c142cf4ae',
+                "version": 0.1
+            }
+        };
+        ms = new MsgConnection();
+        ms.connect(pro);
     }
 
     componentDidMount() {
@@ -59,6 +76,19 @@ export default class chat_Detil extends React.Component {
         }), 0)
 
         this.getUser2UserMessages()
+        this.msListener()
+    }
+
+    msListener() {
+        ms.msgWsListener = {
+            onError: function (errorMsg) {
+                // Toast.fail(errorMsg)
+            }, onWarn: function (warnMsg) {
+                // Toast.fail(warnMsg)
+            }, onMessage: function (info) {
+                demeanor.setState({messageInfo: info});
+            }
+        }
     }
 
     getUser2UserMessages(timeNode) {
@@ -346,10 +376,34 @@ export default class chat_Detil extends React.Component {
 
     pullToFresh() {
         this.setState({refreshing: true});
-        // setTimeout(() => {
-        //     this.setState({refreshing: false});
-        // }, 1000);
         this.getUser2UserMessages(this.state.firstMessageCreateTime)
+    }
+
+    TextareaOnKeyUp(e) {
+        if (e.keyCode == 13) {
+            console.log(1);
+            chatDetil.setState({TextareaValue: ''})
+            console.log(chatDetil.state.messageList);
+
+            // this.setState({messageList: this.state.messageList.concat(arr)})
+            // this.buildChatsContent()
+
+            var loginUser = this.state.fromId;
+            var uuid = WebServiceUtil.createUUID();
+            var createTime = (new Date()).valueOf();
+            var messageJson = {
+                'content': messageContent, "createTime": createTime, 'fromUser': loginUser,
+                "toId": antGroup.state.userIdOfCurrentTalk, "command": "message", "hostId": loginUser.colUid,
+                "uuid": uuid, "toType": 1
+            };
+
+            var commandJson = {"command": "message", "data": {"message": messageJson}};
+            ms.send(commandJson);
+        }
+    }
+
+    TextareaOnKeyChange(value) {
+        chatDetil.setState({TextareaValue: value})
     }
 
 
@@ -379,8 +433,12 @@ export default class chat_Detil extends React.Component {
                     width: document.body.clientWidth
                 }}>
                 <TextareaItem
+                    value={this.state.TextareaValue}
                     autoHeight
                     labelNumber={3}
+                    onKeyUp={this.TextareaOnKeyUp}
+                    onChange={this.TextareaOnKeyChange}
+                    count={60}
                 />
             </List>
         </div>);
