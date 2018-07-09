@@ -1,214 +1,273 @@
-#wxBindIndex {
-  background: #f0eff5;
-  height: 100%;
-}
 #wxBindIndex .am-list-item .am-input-label.am-input-label-5 {
-  width: 85px;
+    width: 85px;
+    background: #f0eff5;
+    height: 100%;
 }
+
 #wxBindIndex .am-whitespace.am-whitespace-lg {
-  background: #f0eff5;
-  height: 12px;
+    background: #f0eff5;
+    height: 12px;
 }
+
 #wxBindIndex .isDangerArea .am-list {
-  overflow: hidden;
-  background: #fff;
+    overflow: hidden;
+    background: #fff;
 }
+
 #wxBindIndex .isDangerArea .am-list-header {
-  color: #0c0c0c;
-  font-size: 17px;
-  float: left;
-  width: 100px;
-  padding-right: 5px;
+    color: #0c0c0c;
+    font-size: 17px;
+    float: left;
+    width: 100px;
+    padding-right: 5px;
 }
+
 #wxBindIndex .isDangerArea .am-list-content {
-  color: #666 !important;
-  font-size: 16px;
-  padding-left: 24px;
-  line-height: 32px;
-  vertical-align: bottom;
+    color: #666 !important;
+    font-size: 16px;
+    padding-left: 24px;
+    line-height: 32px;
+    vertical-align: bottom;
 }
+
 #wxBindIndex .isDangerArea .am-list-body {
-  float: left;
-  border: 0;
-  background: none !important;
+    float: left;
+    border: 0;
+    background: none !important;
 }
+
 #wxBindIndex .isDangerArea .am-list-body::before,
 #wxBindIndex .isDangerArea .am-list-body:after,
 #wxBindIndex .isDangerArea .am-list-body .am-list-line::after {
-  display: none;
-  border: 0;
+    display: none;
+    border: 0;
 }
+
 #wxBindIndex .isDangerArea .am-list-body .am-list-line {
-  border: 0;
+    border: 0;
 }
+
 #wxBindIndex .isDangerArea .am-radio-item {
-  display: inline-block;
-  background: none;
-  width: 75px;
-  padding-left: 20px;
+    display: inline-block;
+    background: none;
+    width: 75px;
+    padding-left: 20px;
 }
+
 #wxBindIndex .isDangerArea .am-radio-inner:after {
-  border: 0;
-  width: 8px;
-  height: 8px;
-  -webkit-border-radius: 50%;
-  -moz-border-radius: 50%;
-  border-radius: 50%;
-  background-color: #1aad19;
-  top: 50%;
-  left: 50%;
-  margin-top: -4px;
-  margin-left: -4px;
+    border: 0;
+    width: 8px;
+    height: 8px;
+    -webkit-border-radius: 50%;
+    -moz-border-radius: 50%;
+    border-radius: 50%;
+    background-color: #1aad19;
+    top: 50%;
+    left: 50%;
+    margin-top: -4px;
+    margin-left: -4px;
 }
+
 #wxBindIndex .isDangerArea .am-radio-checked .am-radio-inner {
-  border: 1px #1aad19 solid;
-  width: 16px;
-  height: 16px;
-  -webkit-border-radius: 50%;
-  -moz-border-radius: 50%;
-  border-radius: 50%;
-  background-color: #fff;
-  left: 0 !important;
+    border: 1px #1aad19 solid;
+    width: 16px;
+    height: 16px;
+    -webkit-border-radius: 50%;
+    -moz-border-radius: 50%;
+    border-radius: 50%;
+    background-color: #fff;
+    left: 0 !important;
 }
+
 #wxBindIndex .isDangerArea .am-radio-inner {
-  border: 1px #888 solid;
-  width: 16px;
-  height: 16px;
-  -webkit-border-radius: 50%;
-  -moz-border-radius: 50%;
-  border-radius: 50%;
-  background-color: #fff;
-  left: 0 !important;
+    border: 1px #888 solid;
+    width: 16px;
+    height: 16px;
+    -webkit-border-radius: 50%;
+    -moz-border-radius: 50%;
+    border-radius: 50%;
+    background-color: #fff;
+    left: 0 !important;
 }
+
 #wxBindIndex .am-input-control {
-  margin-left: 20px;
-  margin-right: 10px;
+    margin-left: 20px;
+    margin-right: 10px;
 }
+
 #wxBindIndex .am-input-control input {
-  font-size: 16px;
-  color: #333 !important;
+    font-size: 16px;
+    color: #333 !important;
 }
+
 #wxBindIndex .am-list-line::after {
-  background: none;
+    background: none;
 }
+
 #wxBindIndex .am-list-line {
-  border-bottom: 0;
+    border-bottom: 0;
 }
+
 #wxBindIndex .Verification {
-  position: relative;
+    position: relative;
 }
+
 #wxBindIndex .Verification .am-button-primary {
-  background: #fff;
-  border-color: #1aad19;
-  color: #1aad19;
-  right: 15px;
-  position: absolute;
-  top: 9px;
-  font-size: 13px;
-  height: 26px;
-  line-height: 27px;
-  padding: 0 8px;
-  z-index: 10;
+    background: #fff;
+    border-color: #1aad19;
+    color: #1aad19;
+    right: 15px;
+    position: absolute;
+    top: 9px;
+    font-size: 13px;
+    height: 26px;
+    line-height: 27px;
+    padding: 0 8px;
+    z-index: 10;
 }
+
 #wxBindIndex .Verification .am-button::before {
-  border-color: #1aad19 !important;
+    border-color: #1aad19 !important;
 }
+
 #wxBindIndex .Verification .am-input-control input {
-  width: 120px;
+    width: 120px;
 }
+
 #wxBindIndex .tel_element {
-  position: relative;
+    position: relative;
 }
+
 #wxBindIndex .tel_element .am-list-line {
-  position: relative;
+    position: relative;
 }
+
 #wxBindIndex .tel_element .am-list-line:after {
-  content: '';
-  position: absolute;
-  border-bottom: 1px solid #d9d9d9;
-  display: block;
-  z-index: 1;
-  top: auto;
-  bottom: 0;
-  left: 0;
-  width: 100%;
-  height: 1PX;
-  -webkit-transform-origin: 50% 100%;
-  -ms-transform-origin: 50% 100%;
-  transform-origin: 50% 100%;
-  -webkit-transform: scaleY(0.5);
-  -ms-transform: scaleY(0.5);
-  transform: scaleY(0.5);
+    content: '';
+    position: absolute;
+    border-bottom: 1px solid #d9d9d9;
+    display: block;
+    z-index: 1;
+    top: auto;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 1PX;
+    -webkit-transform-origin: 50% 100%;
+    -ms-transform-origin: 50% 100%;
+    transform-origin: 50% 100%;
+    -webkit-transform: scaleY(0.5);
+    -ms-transform: scaleY(0.5);
+    transform: scaleY(0.5);
 }
+
 #wxBindIndex #telImg {
-  position: absolute;
-  top: 50%;
-  right: 15px;
-  width: 22px;
-  height: 22px;
-  transform: translateY(-50%);
-  z-index: 99;
+    position: absolute;
+    top: 50%;
+    right: 15px;
+    width: 22px;
+    height: 22px;
+    transform: translateY(-50%);
+    z-index: 99;
 }
+
 #wxBindIndex .telLoad {
-  position: absolute;
-  top: 50%;
-  right: 10px;
-  width: 60px;
-  transform: translateY(-50%);
-  z-index: 99;
-  color: #ccc;
+    position: absolute;
+    top: 50%;
+    right: 10px;
+    width: 60px;
+    transform: translateY(-50%);
+    z-index: 99;
+    color: #ccc;
 }
+
 #wxBindIndex .success3 {
-  line-height: 40px;
-  font-size: 17px;
-  text-align: center;
-  margin-top: -30px;
+    line-height: 40px;
+    font-size: 17px;
+    text-align: center;
+    margin-top: -30px;
 }
+
 #wxBindIndex .success3 i {
-  background: url("../imgs/success3.png") no-repeat;
-  background-size: 100%;
-  width: 64px;
-  height: 64px;
-  display: inline-block;
+    background: url("../imgs/success3.png") no-repeat;
+    background-size: 100%;
+    width: 64px;
+    height: 64px;
+    display: inline-block;
 }
+
 #wxBindIndex .bindingNumber {
-  display: block;
-  background: #fff;
-  padding: 0 15px 20px 15px;
-  font-size: 14px;
+    display: block;
+    color: #57595f;
+    padding: 0 15px 20px 15px;
+    font-size: 15px;
 }
+
 #wxBindIndex .bindingNumber div {
-  color: #888;
-  line-height: 44px;
+    color: #57595f;
 }
+
 #wxBindIndex .bindingNumber span {
-  margin-right: 10px;
-  line-height: 44px;
+    line-height: 44px;
+    width: 50%;
+    display: inline-block;
 }
+
 #wxBindIndex .bindingNumber .am-button {
-  padding: 0;
-  background: #F56A55;
-  height: 30px;
-  line-height: 30px;
-  text-align: center;
-  display: inline-block;
-  color: #fff;
-  font-size: 14px;
-  padding: 0 15px;
-  float: right;
+    padding: 0;
+    border: 1px solid #1AAD18;
+    color: #1AAD18;
+    height: 37px;
+    line-height: 37px;
+    text-align: center;
+    display: block;
+    font-size: 14px;
+    margin: 80px 90px 0 90px;
+    background: transparent;
 }
+
 #wxBindIndex .bindingNumber .am-button span {
-  line-height: 30px;
-  margin-right: 0;
+    line-height: 37px;
+    margin-right: 0;
+    font-size: 16px;
+    color: #1AAD18;
 }
+
+#wxBindIndex .bindingNumber .am-button::before {
+    border-color: #f0eff5 !important;
+    border-radius: 2px !important;
+}
+
 #wxBindIndex .submitBtn_green {
-  margin-top: 50px;
-  padding: 0 15px;
+    margin-top: 50px;
+    padding: 0 15px;
 }
+
 #wxBindIndex .submitBtn_green .am-button-primary {
-  background: #1AAD18;
-  border: 1px solid #1AAD18;
+    background: #1AAD18;
+    border: 1px solid #1AAD18;
 }
+
 #wxBindIndex .submitBtn_green .am-button-primary::before {
-  border: 1px solid #1AAD18 !important;
+    border: 1px solid #1AAD18 !important;
+}
+
+#wxBindIndex .i-icon {
+    width: 20px;
+    height: 20px;
+    position: relative;
+    top: 4px;
+    margin-right: 6px;
+}
+
+#wxBindIndex .i-tel {
+    background: url("../imgs/i-tel.png") no-repeat;
+    display: inline-block;
+    background-size: 100%;
+}
+
+#wxBindIndex .i-phone {
+    background: url("../imgs/i-user.png") no-repeat;
+    display: inline-block;
+    background-size: 100%;
 }

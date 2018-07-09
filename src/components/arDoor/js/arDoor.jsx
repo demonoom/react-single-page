@@ -1,6 +1,7 @@
 import React from 'react';
 import {List, InputItem, Button, Toast} from 'antd-mobile';
 import "../css/ArDoor.less";
+
 var arDoor;
 
 export default class ar_Door extends React.Component {
@@ -25,7 +26,7 @@ export default class ar_Door extends React.Component {
     }
 
     componentDidMount() {
-
+        document.title = '小蚂蚁AR'
     }
 
     success = () => {
@@ -51,7 +52,7 @@ export default class ar_Door extends React.Component {
                 if (result.success == true && result.msg == '调用成功') {
                     if (result.response) {
                         // window.location.href = 'https://172.16.2.128:6443/arBook/'
-                        window.location.href = 'https://www.maaee.com:6443/arBook/'
+                        window.location.href = 'https://www.maaee.com:6443/arBook/';
                         localStorage.setItem('loginAr', 'success');
                     } else {
                         Toast.info('您还未购买,无法使用', 2)
@@ -91,13 +92,14 @@ export default class ar_Door extends React.Component {
                         onChange={this.mimaInput}
                         placeholder="请输入密码"
                         value={this.state.mimaInputValue}
+                        type='password'
                     >密码</InputItem>
                 </List>
 
                 <Button type="primary" onClick={this.success}>使用</Button>
 
 
-                <div style={{display: this.state.wIphone ? 'block' : 'none'}}>
+                <div className="openBrowser" style={{display: this.state.wIphone ? 'block' : 'none'}}>
                     <img src={require('../img/abc.png')} alt=""/>
                 </div>
             </div>

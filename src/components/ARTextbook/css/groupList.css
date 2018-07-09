@@ -1,3 +1,11 @@
+<<<<<<< HEAD
+=======
+#groupList {
+  height: 100%;
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+>>>>>>> 468847c402f2d1816c7d265cd1f9044be10b9588
 #groupList .am-list-item .am-list-line .am-list-content {
   padding: 15px 0;
 }

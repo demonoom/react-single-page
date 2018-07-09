@@ -26,8 +26,8 @@ export default class wxBindIndex extends React.Component {
             textFlag: true,
             // pending:true\
             openidFlag: false,//判断openid是否有效 true已绑定  false 未绑定
-            colAccount: 'TE_123',
-            phoneNumber: '13500000000',
+            colAccount: '',
+            phoneNumber: '',
         };
 
     }
@@ -317,8 +317,10 @@ export default class wxBindIndex extends React.Component {
                 }}>
                     <div>
                         <div>您的微信已绑定以下账号</div>
-                        <span>{this.state.colAccount}</span>
-                        <span>{this.state.phoneNumber}</span>
+                        <div>
+                            <span><i className="i-icon i-tel"></i>{this.state.colAccount}</span>
+                            <span><i className="i-icon i-phone"></i>{this.state.phoneNumber}</span>
+                        </div>
                         <Button onClick={this.unBindAccount}>解绑</Button>
                     </div>
 
