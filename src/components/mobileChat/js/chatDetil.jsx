@@ -338,9 +338,17 @@ export default class chat_Detil extends React.Component {
 
                         } else {
                             //普通文字消息
-                            var contentItem = <li>
+                            var contentItem = <li className="message me">
                                 <img className='userAvatar' src={v.fromUser.avatar}/>
-                                <span>{v.content}</span>
+                                <div className="content">
+                                    <div className="bubble bubble_primary right">
+                                        <div className="bubble_cont">
+                                            <div className="plain">
+                                                <pre>{v.content}</pre>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             </li>
                         }
                     }
@@ -361,9 +369,15 @@ export default class chat_Detil extends React.Component {
 
                         } else {
                             //普通文字消息
-                            var contentItem = <li>
+                            var contentItem = <li className="message">
                                 <img className='userAvatar' src={v.fromUser.avatar}/>
-                                <span>{v.content}</span>
+                                <div className="bubble bubble_default left">
+                                    <div className="bubble_cont">
+                                        <div className="plain">
+                                            <pre>{v.content}</pre>
+                                        </div>
+                                    </div>
+                                </div>
                             </li>
                         }
                     }
@@ -423,7 +437,7 @@ export default class chat_Detil extends React.Component {
                     this.pullToFresh()
                 }}
             >
-                {this.state.mesConList}
+                <div className="messageWrap">{this.state.mesConList}</div>
             </PullToRefresh>
 
             <List
