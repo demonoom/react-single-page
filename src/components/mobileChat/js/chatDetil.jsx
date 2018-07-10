@@ -313,6 +313,7 @@ export default class chat_Detil extends React.Component {
                                 <div className="content">
                                     <div className="bubble bubble_primary right">
                                         <div className="bubble_cont">
+                                            <div className="border border_color"></div>
                                             <div className="plain">
                                                 <pre>{v.content}</pre>
                                             </div>
