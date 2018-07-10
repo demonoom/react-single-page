@@ -58,7 +58,7 @@ export default class chat_Detil extends React.Component {
             "command": "messagerConnect",
             "data": {
                 "machineType": "web",
-                "userId": fromId,
+                "userId": Number(fromId),
                 "machine": WebServiceUtil.createUUID(),
                 "password": 'd33b31a0b0836649e7ee3d2c142cf4ae',
                 "version": 0.1
@@ -82,13 +82,223 @@ export default class chat_Detil extends React.Component {
     msListener() {
         ms.msgWsListener = {
             onError: function (errorMsg) {
-                // Toast.fail(errorMsg)
+                console.log(errorMsg);
             }, onWarn: function (warnMsg) {
-                // Toast.fail(warnMsg)
+                console.log(warnMsg);
             }, onMessage: function (info) {
-                demeanor.setState({messageInfo: info});
+                chatDetil.onMessageListener(info)
             }
         }
+    }
+
+    onMessageListener(info) {
+        var command = info.command;
+
+        if (command == "message") {
+
+            var data = info.data;
+            if (data.message.command == "biu_message") {
+
+            } else if (data.message.command == "message") {
+                if (data.message.fromUser.colUid !== chatDetil.state.fromId && data.message.showType == 0) {
+                    //收到普通消息
+                    // console.log('收到消息', info)
+                } else {
+                    //普通消息是我发出的
+                    // console.log('发出消息', info)
+                }
+            } else if (data.message.command == "retractMessage") {
+
+            } else if (data.message.command == "message_read") {
+                //消息已读之后来自蚂蚁君的message_read,没用直接return
+                return false
+            } else if (data.message.command == "dissolutionChatGroup") {
+                //组织架构删除子部门后来自群通知着的消息
+                return false
+            } else if (data.message.command == "COMMAND_DELETE_RECORD_MESSAGE") {
+                //删除消息的commend,没用直接return
+                return false
+            } else if (data.message.command == "COMMAND_DELETE_RECENT_MESSAGE") {
+                return false
+            }
+
+
+            var mesArr = [];
+            var messageOfSinge = data.message;
+            var fromUser = messageOfSinge.fromUser;
+            var colUtype = fromUser.colUtype;
+            // var loginUser = JSON.parse(sessionStorage.getItem("loginUser"));
+            var content = messageOfSinge.content;
+
+            var isSend = false;
+
+            // if (colUtype == 'SGZH_WEB' && loginUser.colUid == 119665) {
+            //     content = JSON.parse(messageOfSinge.content).messageTip;
+            //     var flowTypeObj = JSON.parse(messageOfSinge.content);
+            //     delete flowTypeObj.messageTip;
+            //     antGroup.setState({FlowType: flowTypeObj});
+            // }
+
+            // var uuidsArray = [];
+            var uuid = messageOfSinge.uuid;
+            var toId = messageOfSinge.toId;
+
+            if (WebServiceUtil.isEmpty(messageOfSinge.toUser) == false) {
+                var toName = messageOfSinge.toUser.userName;
+            }
+            var showType = messageOfSinge.showType;  //showType为0正常显示 1通知形式
+            var readState = messageOfSinge.readState;  //0为未读，1为已读
+            // //判断是否是叮消息
+            //判断这条消息是我发出的，处理别的手机发送消息不同步的问题
+            if (messageOfSinge.fromUser.colUid == chatDetil.state.fromId) {
+                isSend = true;
+            }
+
+            var biumes = null;
+            if (messageOfSinge.command == 'message') {
+                biumes = false;
+            }
+            if (messageOfSinge.command == 'biu_message') {
+                biumes = true;
+            }
+
+            //附件，图片路径或者音频路径
+            if (WebServiceUtil.isEmpty(messageOfSinge.attachment) == false) {
+                var attachment = messageOfSinge.attachment.address;
+                var attachmentType = messageOfSinge.attachment.type;
+            }
+            //动态表情
+            if (WebServiceUtil.isEmpty(messageOfSinge.expressionItem) == false) {
+                var expressionItem = messageOfSinge.expressionItem.address;
+            }
+            //文件
+            if (WebServiceUtil.isEmpty(messageOfSinge.cloudFile) == false) {
+                //文件名
+                var fileName = messageOfSinge.cloudFile.name;
+                //路径
+                var filePath = messageOfSinge.cloudFile.path;
+                //大小
+                var fileLength = messageOfSinge.cloudFile.length;
+                //uuid
+                var fileUid = messageOfSinge.cloudFile.uuid;
+                //文件CreateUid
+                var fileCreateUid = messageOfSinge.cloudFile.createUid;
+            }
+
+            // uuidsArray.push(uuid);
+            // var isExist = antGroup.checkSameMessageIsExist(uuid);
+            // if (isExist) {
+            //     return;
+            // } else {
+            //     receiveMessageArray.push(uuid);
+            // }
+
+            // if (uuidsArray.length != 0) {
+            //     var receivedCommand = {
+            //         "command": "messageRecievedResponse",
+            //         "data": {"uuids": uuidsArray}
+            //     };
+            //     ms.send(receivedCommand);
+            // }
+
+            // var isCurrentDay = isToday(messageOfSinge.createTime);
+            // var createTime;
+            // var mesTime;
+            // if (isCurrentDay) {
+            //     //如果是当天的消息，只显示时间
+            //     createTime = formatHM(messageOfSinge.createTime);
+            //     mesTime = formatHM(messageOfSinge.createTime);
+            // } else {
+            //     //非当天时间，显示的是月-日
+            //     createTime = formatMD(messageOfSinge.createTime);
+            //     mesTime = formatMD(messageOfSinge.createTime) + ' ' + formatHM(messageOfSinge.createTime);
+            // }
+
+            // var contentJson = {"content": content};
+            // var contentArray = [contentJson];
+
+            if (messageOfSinge.toType == 1 && typeof (content) != 'undefined' && messageOfSinge.command != "retractMessage") {
+                //个人单条消息
+                // imgTagArray.splice(0);
+                var imgTagArrayReturn = [];
+                var messageReturnJson = chatDetil.getImgTag(messageOfSinge);
+                if (WebServiceUtil.isEmpty(messageReturnJson) == false && WebServiceUtil.isEmpty(messageReturnJson.messageType) == false) {
+                    if (messageReturnJson.messageType == "text") {
+                        content = messageReturnJson.textMessage;
+                    } else if (messageReturnJson.messageType == "imgTag") {
+                        imgTagArrayReturn = messageReturnJson.imgMessage;
+                    }
+                }
+
+                if (isSend == false) {
+                    //收到的
+                    if (data.message.command != "message_read" && data.message.command != "biu_message") {
+                        if (chatDetil.state.toId == data.message.fromUser.colUid) {
+                            //处理在停留在别人聊天窗口时另一人新消息会显示的问题，其中chatDetil.state.toId是点击的那个人的信息，
+                            //data.message.fromUser是新消息来的那个人的信息
+                            var messageShow = {
+                                'fromUser': fromUser,
+                                'content': content,
+                                "messageType": "getMessage",
+                                "imgTagArray": imgTagArrayReturn,
+                                "messageReturnJson": messageReturnJson,
+                                "attachment": attachment,
+                                "attachmentType": attachmentType,
+                                "expressionItem": expressionItem,
+                                "fileName": fileName,
+                                "filePath": filePath,
+                                "fileLength": fileLength,
+                                "fileUid": fileUid,
+                                "fileCreateUid": fileCreateUid,
+                                "biumes": biumes,
+                                "uuid": uuid,
+                                "showType": showType,
+                                "readState": readState,
+                                "mesTimeForDetil": messageOfSinge.createTime,
+                            };
+                            mesArr.push(messageShow);
+                        }
+                    }
+                } else {
+                    //我发出的
+                    if (WebServiceUtil.isEmpty(messageOfSinge.toUser) == false) {
+                        if (data.message.command != "message_read") {
+                            var messageShow = {
+                                'fromUser': fromUser,
+                                'content': content,
+                                "messageType": "getMessage",
+                                "imgTagArray": imgTagArrayReturn,
+                                "messageReturnJson": messageReturnJson,
+                                "attachment": attachment,
+                                "attachmentType": attachmentType,
+                                "expressionItem": expressionItem,
+                                "fileName": fileName,
+                                "filePath": filePath,
+                                "fileLength": fileLength,
+                                "fileUid": fileUid,
+                                "fileCreateUid": fileCreateUid,
+                                "uuid": uuid,
+                                "showType": showType,
+                                "readState": readState,
+                                "readStateStr": '未读',
+                                "mesTimeForDetil": messageOfSinge.createTime,
+                                "toId": toId,
+                                "toName": toName,
+                            };
+                            //如果发送的消息=当前点击人的id，才push
+                            if (messageOfSinge.toUser.colUid == chatDetil.state.toId) {
+                                mesArr.push(messageShow);
+                            }
+
+                        }
+                    }
+                }
+            }
+
+            this.setState({messageList: mesArr.concat(this.state.messageList)})
+            this.buildChatsContent()
+        }
+
     }
 
     getUser2UserMessages(timeNode) {
@@ -124,7 +334,7 @@ export default class chat_Detil extends React.Component {
             var arr = [];
             var timeSign = 0;   //起始时间标记
             data.forEach(function (e) {
-
+                
                 if (e.command == "message") {
                     var messageOfSinge = e;
                     if (i == data.length - 1) {
@@ -395,31 +605,40 @@ export default class chat_Detil extends React.Component {
 
     TextareaOnKeyUp(e) {
         if (e.keyCode == 13) {
-            console.log(1);
             chatDetil.setState({TextareaValue: ''})
-            console.log(chatDetil.state.messageList);
 
-            // this.setState({messageList: this.state.messageList.concat(arr)})
-            // this.buildChatsContent()
-
-            var loginUser = this.state.fromId;
+            var fromUser = {
+                avatar: "http://60.205.86.217/upload6/2018-02-09/19/805eee4a-b707-49a2-9c75-d5b14ed9227b.jpg",
+                colAccount: "TE6075",
+                colPasswd: "d33b31a0b0836649e7ee3d2c142cf4ae",
+                colUid: 6075,
+                colUtype: "TEAC",
+                colValid: 1,
+                phoneNumber: "15596626061",
+                schoolId: 9,
+                schoolName: "恒坐标集团",
+                userName: "牛旭东"
+            }
             var uuid = WebServiceUtil.createUUID();
             var createTime = (new Date()).valueOf();
             var messageJson = {
-                'content': messageContent, "createTime": createTime, 'fromUser': loginUser,
-                "toId": antGroup.state.userIdOfCurrentTalk, "command": "message", "hostId": loginUser.colUid,
+                'content': chatDetil.state.TextareaValue, "createTime": createTime, 'fromUser': fromUser,
+                "toId": chatDetil.state.toId, "command": "message", "hostId": chatDetil.state.fromId,
                 "uuid": uuid, "toType": 1
             };
 
             var commandJson = {"command": "message", "data": {"message": messageJson}};
+
             ms.send(commandJson);
+
+            // this.setState({messageList: this.state.messageList.concat(arr)})
+            // this.buildChatsContent()
         }
     }
 
     TextareaOnKeyChange(value) {
         chatDetil.setState({TextareaValue: value})
     }
-
 
     render() {
 
