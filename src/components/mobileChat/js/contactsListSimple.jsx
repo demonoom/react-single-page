@@ -83,7 +83,7 @@ export default class contacts_ListS extends React.Component {
             return (
                 <Item onClick={this.itemOnClick(rowData)}>
                     <img className='userImg' src={rowData.avatar}/>
-                    <span>{rowData.userName}</span>
+                    <span className="text_hidden">{rowData.userName}</span>
                 </Item>
             )
         }
