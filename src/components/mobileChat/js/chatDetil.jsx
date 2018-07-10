@@ -553,7 +553,6 @@ export default class chat_Detil extends React.Component {
                                 <div className="content">
                                     <div className="bubble bubble_primary right">
                                         <div className="bubble_cont">
-                                            <div className="border border_color"></div>
                                             <div className="plain">
                                                 <pre>{v.content}</pre>
                                             </div>
@@ -645,10 +644,11 @@ export default class chat_Detil extends React.Component {
 
         return (<div id='chatDetil'>
             <PullToRefresh
+                className=""
                 damping={60}   //拉动距离限制, 建议小于 200
                 ref={el => this.ptr = el}
                 style={{
-                    height: this.state.height,
+                    height: this.state.height - 66,
                     overflow: 'auto',
                 }}
                 direction='down'
@@ -660,11 +660,11 @@ export default class chat_Detil extends React.Component {
                 <div className="messageWrap">{this.state.mesConList}</div>
             </PullToRefresh>
 
-            <List
+            <List className="input_message lineTop_public"
                 style={{
                     position: 'absolute',
                     bottom: '0px',
-                    width: document.body.clientWidth
+                    width: document.body.clientWidth - 24
                 }}>
                 <TextareaItem
                     value={this.state.TextareaValue}

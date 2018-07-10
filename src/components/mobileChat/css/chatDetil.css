@@ -1,6 +1,5 @@
-(node) util.print is deprecated. Use console.log instead.
 #chatDetil {
-  background: #f0eff5;
+  background: #ebebeb;
 }
 #chatDetil .messageWrap {
   padding: 10px;
@@ -108,7 +107,7 @@
   border-width: 1px;
 }
 #chatDetil .border_color {
-  border-color: red green blue #000;
+  border-color: #d7d7d7;
 }
 #chatDetil .bubble_cont .plain {
   padding: 9px 13px;
@@ -120,4 +119,25 @@
   white-space: pre-wrap;
   word-break: normal;
   font-size: 16px;
+}
+#chatDetil .PullList {
+  height: calc(100% - 66px) !important;
+  overflow-x: hidden;
+}
+#chatDetil .input_message {
+  background: #f5f5f7;
+  height: 46px;
+  padding: 10px 12px;
+  border-radius: 4px;
+}
+#chatDetil .input_message .am-textarea-item {
+  border: 1px solid #d7d7d7 ;
+  border-radius: 4px;
+  padding: 0 5px;
+  max-height: 46px;
+  overflow-y: auto;
+}
+#chatDetil .input_message .am-textarea-control textarea {
+  font-size: 16px;
+  line-height: 20px;
 }
