@@ -20,7 +20,7 @@ export default class contacts_ListS extends React.Component {
         this.state = {
             dataSource: dataSource.cloneWithRows(this.initData),
             footStr: '',
-            userId: 23836
+            userId: 6075
         };
     }
 
@@ -72,8 +72,7 @@ export default class contacts_ListS extends React.Component {
      */
     itemOnClick(rowData) {
         return () => {
-            console.log(rowData);
-            window.location.href = '//192.168.50.163:8091/#/chatDetil?fromId=' + this.state.userId + '&toId=' + rowData.colUid;
+            window.location.href = WebServiceUtil.mobileServiceURL + 'chatDetil?fromId=' + this.state.userId + '&toId=' + rowData.colUid;
         }
     }
 
