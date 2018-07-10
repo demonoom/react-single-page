@@ -77,6 +77,13 @@ export default class chat_Detil extends React.Component {
 
         this.getUser2UserMessages()
         this.msListener()
+        $('#pullContent')[0].addEventListener('scroll', chatDetil.onScroll)
+    }
+
+    onScroll() {
+        var gtScrollHeight = $('#pullContent')[0].scrollHeight;
+        var gtScrollTop = $('#pullContent')[0].scrollTop;
+        console.log(gtScrollHeight + '==============' + gtScrollTop);
     }
 
     msListener() {
@@ -334,7 +341,7 @@ export default class chat_Detil extends React.Component {
             var arr = [];
             var timeSign = 0;   //起始时间标记
             data.forEach(function (e) {
-                
+
                 if (e.command == "message") {
                     var messageOfSinge = e;
                     if (i == data.length - 1) {
@@ -644,6 +651,7 @@ export default class chat_Detil extends React.Component {
 
         return (<div id='chatDetil'>
             <PullToRefresh
+                id='pullContent'
                 damping={60}   //拉动距离限制, 建议小于 200
                 ref={el => this.ptr = el}
                 style={{
