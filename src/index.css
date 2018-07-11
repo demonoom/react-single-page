@@ -1,6 +1,4 @@
-(node) util.print is deprecated. Use console.log instead.
-html,
-body {
+html, body {
   height: 100%;
   font-size: 14px;
   font-family: "Helvetica Neue", "Hiragino Sans GB", Helvetica, "Microsoft YaHei", Arial;
