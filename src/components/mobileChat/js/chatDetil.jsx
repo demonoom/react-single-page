@@ -4,6 +4,7 @@ import {MsgConnection} from '../../../helpers/chat_websocket_connection';
 import {PullToRefresh, List, TextareaItem, Toast} from 'antd-mobile';
 
 var chatDetil;
+var scrollNum = 0;
 
 //消息通信js
 window.ms = null;
@@ -46,13 +47,44 @@ export default class chat_Detil extends React.Component {
     }
 
     componentWillMount() {
+        Toast.loading('正在读取', 0);
         document.title = "小蚂蚁聊天窗口";   //设置title
         var locationHref = window.location.href;
         var locationSearch = locationHref.substr(locationHref.indexOf("?") + 1);
         var searchArray = locationSearch.split("&");
         var fromId = searchArray[0].split('=')[1];
         var toId = searchArray[1].split('=')[1];
+        var choosePos = searchArray[2].split('=')[1];
+        var unionid = searchArray[3].split('=')[1];
+        var colPasswd = searchArray[4].split('=')[1];
         this.setState({fromId, toId})
+
+
+        /**
+         * 根据unionid获取绑定的小蚂蚁用户信息
+         * @type {{method: string, openId: (string|string)}}
+         */
+        var param = {
+            "method": 'getUsersByOpenId',
+            "openId": unionid,
+        };
+
+        WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
+            onResponse: function (result) {
+                if (result.success == true && result.msg == '调用成功') {
+                    if (choosePos == 'te') {
+                        chatDetil.setState({loginUser: result.response[0]})
+                    } else {
+                        chatDetil.setState({loginUser: result.response[1]})
+                    }
+                } else {
+                    Toast.fail(result.msg, 3);
+                }
+            },
+            onError: function (error) {
+                // message.error(error);
+            }
+        });
 
         var pro = {
             "command": "messagerConnect",
@@ -60,7 +92,7 @@ export default class chat_Detil extends React.Component {
                 "machineType": "web",
                 "userId": Number(fromId),
                 "machine": WebServiceUtil.createUUID(),
-                "password": 'd33b31a0b0836649e7ee3d2c142cf4ae',
+                "password": colPasswd,
                 "version": 0.1
             }
         };
@@ -75,15 +107,8 @@ export default class chat_Detil extends React.Component {
             data: genData(),
         }), 0)
 
-        this.getUser2UserMessages()
+        this.getUser2UserMessages(false, true)
         this.msListener()
-        $('#pullContent')[0].addEventListener('scroll', chatDetil.onScroll)
-    }
-
-    onScroll() {
-        var gtScrollHeight = $('#pullContent')[0].scrollHeight;
-        var gtScrollTop = $('#pullContent')[0].scrollTop;
-        console.log(gtScrollHeight + '==============' + gtScrollTop);
     }
 
     msListener() {
@@ -301,14 +326,19 @@ export default class chat_Detil extends React.Component {
                     }
                 }
             }
-
             this.setState({messageList: mesArr.concat(this.state.messageList)})
-            this.buildChatsContent()
+            if (data.message.toId == this.state.toId) {
+                //我发出的,拉到最底
+                this.buildChatsContent(true)
+            } else {
+                this.buildChatsContent(true)
+                // this.buildChatsContent('nothing')
+            }
         }
 
     }
 
-    getUser2UserMessages(timeNode) {
+    getUser2UserMessages(timeNode, posFlag) {
         var _this = this;
         var timeNode = timeNode || (new Date()).valueOf()
         var param = {
@@ -321,8 +351,9 @@ export default class chat_Detil extends React.Component {
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
             onResponse: function (result) {
                 if (result.success == true && result.msg == '调用成功') {
-                    _this.buildChatObj(result.response)
+                    _this.buildChatObj(result.response, posFlag)
                     _this.setState({refreshing: false});
+                    Toast.hide()
                 } else {
                     Toast.fail(result.msg, 3);
                 }
@@ -333,7 +364,7 @@ export default class chat_Detil extends React.Component {
         });
     }
 
-    buildChatObj(data) {
+    buildChatObj(data, posFlag) {
         var _this = this;
         if (WebServiceUtil.isEmpty(data) == false) {
 
@@ -461,7 +492,7 @@ export default class chat_Detil extends React.Component {
 
             })
             this.setState({messageList: this.state.messageList.concat(arr)})
-            this.buildChatsContent()
+            this.buildChatsContent(posFlag)
         }
     }
 
@@ -533,7 +564,7 @@ export default class chat_Detil extends React.Component {
      * 根据messageList渲染聊天内容列表
      * 收发消息后将新内容push到数组中再调用这个函数
      */
-    buildChatsContent() {
+    buildChatsContent(posFlag) {
         var arr = this.state.messageList
         var array = []
         if (WebServiceUtil.isEmpty(arr) == false) {
@@ -603,29 +634,45 @@ export default class chat_Detil extends React.Component {
             })
         }
         this.setState({mesConList: array})
+
+
+        if (posFlag != 'nothing') {
+            if (posFlag) {
+                //滚动到底
+                this.goToBottom()
+            } else {
+                //滚动到中间位置
+                this.goToRememberPos()
+            }
+        }
+    }
+
+    /**
+     * 回到底部
+     */
+    goToBottom() {
+        $('#pullContent')[0].scrollTop = $('#pullContent')[0].scrollHeight - (this.state.height - 66)
+        scrollNum = $('#pullContent')[0].scrollHeight
+    }
+
+    /**
+     * 回到记忆位置
+     */
+    goToRememberPos() {
+        $('#pullContent')[0].scrollTop = $('#pullContent')[0].scrollHeight - scrollNum
+        scrollNum = $('#pullContent')[0].scrollHeight
     }
 
     pullToFresh() {
         this.setState({refreshing: true});
-        this.getUser2UserMessages(this.state.firstMessageCreateTime)
+        this.getUser2UserMessages(this.state.firstMessageCreateTime, false)
     }
 
     TextareaOnKeyUp(e) {
         if (e.keyCode == 13) {
             chatDetil.setState({TextareaValue: ''})
 
-            var fromUser = {
-                avatar: "http://60.205.86.217/upload6/2018-02-09/19/805eee4a-b707-49a2-9c75-d5b14ed9227b.jpg",
-                colAccount: "TE6075",
-                colPasswd: "d33b31a0b0836649e7ee3d2c142cf4ae",
-                colUid: 6075,
-                colUtype: "TEAC",
-                colValid: 1,
-                phoneNumber: "15596626061",
-                schoolId: 9,
-                schoolName: "恒坐标集团",
-                userName: "牛旭东"
-            }
+            var fromUser = chatDetil.state.loginUser
             var uuid = WebServiceUtil.createUUID();
             var createTime = (new Date()).valueOf();
             var messageJson = {
@@ -637,14 +684,15 @@ export default class chat_Detil extends React.Component {
             var commandJson = {"command": "message", "data": {"message": messageJson}};
 
             ms.send(commandJson);
-
-            // this.setState({messageList: this.state.messageList.concat(arr)})
-            // this.buildChatsContent()
         }
     }
 
     TextareaOnKeyChange(value) {
         chatDetil.setState({TextareaValue: value})
+    }
+
+    TextareaOnFocus() {
+        $('#pullContent')[0].scrollTop = $('#pullContent')[0].scrollHeight - (chatDetil.state.height - 66)
     }
 
     render() {
@@ -655,7 +703,7 @@ export default class chat_Detil extends React.Component {
                 damping={60}   //拉动距离限制, 建议小于 200
                 ref={el => this.ptr = el}
                 style={{
-                    height: this.state.height,
+                    height: this.state.height - 66,
                     overflow: 'auto',
                 }}
                 direction='down'
@@ -667,12 +715,12 @@ export default class chat_Detil extends React.Component {
                 <div className="messageWrap">{this.state.mesConList}</div>
             </PullToRefresh>
 
-            <List
-                style={{
-                    position: 'absolute',
-                    bottom: '0px',
-                    width: document.body.clientWidth
-                }}>
+            <List className="input_message lineTop_public"
+                  style={{
+                      position: 'absolute',
+                      bottom: '0px',
+                      width: document.body.clientWidth - 24
+                  }}>
                 <TextareaItem
                     value={this.state.TextareaValue}
                     autoHeight
@@ -680,6 +728,7 @@ export default class chat_Detil extends React.Component {
                     onKeyUp={this.TextareaOnKeyUp}
                     onChange={this.TextareaOnKeyChange}
                     count={60}
+                    onFocus={this.TextareaOnFocus}
                 />
             </List>
         </div>);
