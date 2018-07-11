@@ -1,4 +1,9 @@
+<<<<<<< HEAD
 html, body {
+=======
+html,
+body {
+>>>>>>> ed90c5d7931fcd722d5dba3f83b6e3828e38a84d
   height: 100%;
   font-size: 14px;
   font-family: "Helvetica Neue", "Hiragino Sans GB", Helvetica, "Microsoft YaHei", Arial;
@@ -75,7 +80,7 @@ hr {
   font-size: 14px;
 }
 .color_red {
-  color: #f46a55;
+  color: #F46A55;
 }
 .line_item {
   height: 8px;
@@ -428,7 +433,7 @@ hr {
   transform: scaleY(0.5);
 }
 .noticeMsg_common {
-  background: #eeeeee url("components/classCardSystemBackstage/imgs/noticeIcon.png") no-repeat 30px 9px;
+  background: #eee url("components/classCardSystemBackstage/imgs/noticeIcon.png") no-repeat 30px 9px;
   background-size: 18px;
   font-size: 15px;
   color: #666;
