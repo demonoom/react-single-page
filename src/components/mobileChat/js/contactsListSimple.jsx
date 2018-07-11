@@ -188,11 +188,15 @@ export default class contacts_ListS extends React.Component {
 
         return (
             <div id='contactsListSimple'>
+                <div className="address_header" style={{display: this.state.butFoot ? 'block' : 'none'}}>
+                    <span className="select" onClick={this.turnToTercher}>老师</span>
+                    <span onClick={this.turnTojiaZhang}>家长</span>
+                </div>
                 <ListView
                     ref={el => this.lv = el}
                     dataSource={this.state.dataSource}    //数据类型是 ListViewDataSource
                     renderFooter={() => (
-                        <div style={{paddingTop: 5, paddingBottom: 40, textAlign: 'center'}}>
+                        <div style={{paddingTop: 5, paddingBottom: 0, textAlign: 'center'}}>
                             {this.state.footStr}
                         </div>)}
                     renderRow={row}   //需要的参数包括一行数据等,会返回一个可渲染的组件为这行数据渲染  返回renderable
@@ -202,13 +206,10 @@ export default class contacts_ListS extends React.Component {
                     initialListSize={30}   //指定在组件刚挂载的时候渲染多少行数据，用这个属性来确保首屏显示合适数量的数据
                     scrollEventThrottle={20}     //控制在滚动过程中，scroll事件被调用的频率
                     style={{
-                        height: document.body.clientHeight - 60,
+                        height: document.body.clientHeight - 44,
                     }}
                 />
-                <div style={{display: this.state.butFoot ? 'block' : 'none'}}>
-                    <span onClick={this.turnToTercher}>老师</span>
-                    <span onClick={this.turnTojiaZhang}>家长</span>
-                </div>
+
             </div>
         );
     }
