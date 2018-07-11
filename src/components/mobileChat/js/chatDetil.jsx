@@ -96,8 +96,10 @@ export default class chat_Detil extends React.Component {
                 "version": 0.1
             }
         };
-        ms = new MsgConnection();
-        ms.connect(pro);
+        if (WebServiceUtil.isEmpty(ms)) {
+            ms = new MsgConnection();
+            ms.connect(pro);
+        }
     }
 
     componentDidMount() {
