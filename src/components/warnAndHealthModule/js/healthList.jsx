@@ -68,7 +68,8 @@ export default class healthList extends React.Component {
 
     render() {
         return (
-            <div id="healthList" className="home_content" style={{height: this.state.clientHeight}}>
+            <div id="skin_primarySchool">
+                <div id="healthList" className="home_content" style={{height: this.state.clientHeight}}>
                 <div className="inner_bg">
                     <div className="navBar">
                         <span onClick={this.historyGoBack}>首页</span>
@@ -86,6 +87,7 @@ export default class healthList extends React.Component {
                         borderBottom:'1px solid #ccc'
                     }} onClick={this.toRanking.bind(this,'calories')}>卡路里</div>
                 </div>
+            </div>
             </div>
         );
     }

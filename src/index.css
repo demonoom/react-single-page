@@ -1,9 +1,5 @@
-<<<<<<< HEAD
-html, body {
-=======
 html,
 body {
->>>>>>> ed90c5d7931fcd722d5dba3f83b6e3828e38a84d
   height: 100%;
   font-size: 14px;
   font-family: "Helvetica Neue", "Hiragino Sans GB", Helvetica, "Microsoft YaHei", Arial;
@@ -294,8 +290,6 @@ hr {
   padding: 0.83rem;
   height: calc(100% - 1.66rem) !important;
   clear: both;
-  background: url("components/classCardSystem/imgs/bg_web.jpg") no-repeat;
-  background-size: 100% 100%;
   position: relative;
 }
 .home_content .inner_bg {

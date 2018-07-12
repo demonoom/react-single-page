@@ -1,6 +1,6 @@
 import React from 'react';
 import {} from 'antd-mobile';
-import "../../css/homePage/currentAttendanceList.less"
+import "../../css/homePage/currentAttendanceList.less";
 
 var demeanor;
 var timer;
@@ -166,7 +166,8 @@ export default class currentAttendanceList extends React.Component {
 
     render() {
         return (
-            <div id="currentAttendanceList" className="home_content">
+            <div id="skin_primarySchool">
+                <div id="currentAttendanceList" className="home_content">
                 <div className="inner_bg">
                     <div className="navBar">
                         <span onClick={this.turnToHomePage}>首页</span>
@@ -187,6 +188,7 @@ export default class currentAttendanceList extends React.Component {
                         {this.state.studentHeaderTagList}
                     </div>
                 </div>
+            </div>
             </div>
         );
     }
