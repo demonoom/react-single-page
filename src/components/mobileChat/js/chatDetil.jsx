@@ -48,8 +48,7 @@ export default class chat_Detil extends React.Component {
 
     componentWillMount() {
         Toast.loading('正在读取', 0);
-        document.title = "小蚂蚁聊天窗口";   //设置title
-        var locationHref = window.location.href;
+        var locationHref = decodeURI(window.location.href);
         var locationSearch = locationHref.substr(locationHref.indexOf("?") + 1);
         var searchArray = locationSearch.split("&");
         var fromId = searchArray[0].split('=')[1];
@@ -57,8 +56,10 @@ export default class chat_Detil extends React.Component {
         var choosePos = searchArray[2].split('=')[1];
         var unionid = searchArray[3].split('=')[1];
         var colPasswd = searchArray[4].split('=')[1];
+        var toName = searchArray[5].split('=')[1];
         this.setState({fromId, toId})
 
+        document.title = toName;   //设置title
 
         /**
          * 根据unionid获取绑定的小蚂蚁用户信息
@@ -89,7 +90,7 @@ export default class chat_Detil extends React.Component {
         var pro = {
             "command": "messagerConnect",
             "data": {
-                "machineType": "web",
+                "machineType": "mobile-web",
                 "userId": Number(fromId),
                 "machine": WebServiceUtil.createUUID(),
                 "password": colPasswd,
@@ -672,8 +673,13 @@ export default class chat_Detil extends React.Component {
 
     TextareaOnKeyUp(e) {
         if (e.keyCode == 13) {
-            chatDetil.setState({TextareaValue: ''})
 
+            if (chatDetil.state.TextareaValue.trim() == '') {
+                Toast.fail('请输入内容发送', 1)
+                return
+            }
+
+            chatDetil.setState({TextareaValue: ''})
             var fromUser = chatDetil.state.loginUser
             var uuid = WebServiceUtil.createUUID();
             var createTime = (new Date()).valueOf();

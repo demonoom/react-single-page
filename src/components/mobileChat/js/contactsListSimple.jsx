@@ -33,8 +33,8 @@ export default class contacts_ListS extends React.Component {
         var locationSearch = locationHref.substr(locationHref.indexOf("?") + 1);
         var searchArray = locationSearch.split("&");
         var unionid = searchArray[0].split('=')[1];
-        // this.setState({unionid});
-        this.setState({unionid: 'o-w611I9nKqTHcT3P34srzwIrf6U'});
+        this.setState({unionid});
+        // this.setState({unionid: 'o-w611I9nKqTHcT3P34srzwIrf6U'});
     }
 
     componentDidMount() {
@@ -53,10 +53,13 @@ export default class contacts_ListS extends React.Component {
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
             onResponse: function (result) {
                 if (result.success == true && result.msg == '调用成功') {
+                    console.log(result.response);
                     if (result.response.length == 1) {
                         // butFoot控制下面的老师,家长的显示隐藏
                         _this.setState({butFoot: false})
                         _this.getUserContacts(result.response[0].colUid)
+                    } else if (result.response.length == 0) {
+                        Toast.fail('未找到用户', 2)
                     } else {
                         _this.setState({butFoot: true})
                         result.response.forEach(function (v, i) {
@@ -133,7 +136,8 @@ export default class contacts_ListS extends React.Component {
             } else {
                 var colPasswd = this.state.userData[0].colPasswd
             }
-            window.location.href = WebServiceUtil.mobileServiceURL + 'chatDetil?fromId=' + this.state.userId + '&toId=' + rowData.colUid + '&choosePos=' + this.state.choosePos + '&unionid=' + this.state.unionid + '&colPasswd=' + colPasswd;
+
+            window.location.href = encodeURI(WebServiceUtil.mobileServiceURL + 'chatDetil?fromId=' + this.state.userId + '&toId=' + rowData.colUid + '&choosePos=' + this.state.choosePos + '&unionid=' + this.state.unionid + '&colPasswd=' + colPasswd + '&toName=' + rowData.userName)
         }
     }
 
@@ -142,6 +146,9 @@ export default class contacts_ListS extends React.Component {
      * 更换choosePos,向下一页传递属于他的用户信息
      */
     turnToTercher() {
+
+        document.getElementById('selectR').className = ''
+        document.getElementById('selectL').className = 'select'
         contactsList.initData.splice(0);
         contactsList.state.dataSource = [];
         contactsList.state.dataSource = new ListView.DataSource({
@@ -161,6 +168,9 @@ export default class contacts_ListS extends React.Component {
      * 更换choosePos,向下一页传递属于他的用户信息
      */
     turnTojiaZhang() {
+
+        document.getElementById('selectR').className = 'select'
+        document.getElementById('selectL').className = ''
         contactsList.initData.splice(0);
         contactsList.state.dataSource = [];
         contactsList.state.dataSource = new ListView.DataSource({
@@ -173,6 +183,7 @@ export default class contacts_ListS extends React.Component {
                 contactsList.getUserContacts(v.colUid)
             }
         })
+
     }
 
     render() {
@@ -189,8 +200,8 @@ export default class contacts_ListS extends React.Component {
         return (
             <div id='contactsListSimple'>
                 <div className="address_header" style={{display: this.state.butFoot ? 'block' : 'none'}}>
-                    <span className="select" onClick={this.turnToTercher}>老师</span>
-                    <span onClick={this.turnTojiaZhang}>家长</span>
+                    <span id='selectL' className="select" onClick={this.turnToTercher}>老师</span>
+                    <span id='selectR' onClick={this.turnTojiaZhang}>家长</span>
                 </div>
                 <ListView
                     ref={el => this.lv = el}
