@@ -656,6 +656,17 @@ const arDoor = (location, cb) => {
     )
 }
 
+
+/**
+ * 皮肤管理
+ */
+
+const classBrandTemplateList = (location, cb) => {
+    require.ensure([], require => {
+            cb(null, require("./components/classBrandTemplate/js/classBrandTemplateList").default)
+        }
+    )
+}
 import './index.less';
 
 class Index extends React.Component {
@@ -824,6 +835,11 @@ class Index extends React.Component {
                         <Link
                             to="/arDoor" style={{fontSize: '24px'}}>arDoor</Link>
                     </li>
+                    <li>
+                        <Link
+                            to="/classBrandTemplateList" style={{fontSize: '24px'}}>皮肤管理</Link>
+                    </li>
+                    
                 </ul>
             </div>
         );
@@ -944,6 +960,7 @@ ReactDOM.render(
             <Route path="contactsList" getComponent={contactsList}/>
             <Route path="chatDetil" getComponent={chatDetil}/>
             <Route path="arDoor" getComponent={arDoor}/>
+            <Route path="classBrandTemplateList" getComponent={classBrandTemplateList} />
         </Route>
     </Router>
     ,
