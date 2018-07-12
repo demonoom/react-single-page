@@ -1,5 +1,5 @@
 import React from "react";
-import '../css/tableItemDetil.less'
+import '../css/tableItemDetil.less';
 
 export default class tableItemDetil extends React.Component {
     constructor(props) {
@@ -75,31 +75,33 @@ export default class tableItemDetil extends React.Component {
 
     render() {
         return (
-            <div id="tableItemDetil" className="home_content" style={{height: document.body.clientHeight}}>
-                <div className="inner_bg">
-                    <div className="navBar">
-                        <span onClick={this.historyGoBack}>首页</span>
-                        <span className="icon"></span>
-                        <span>课程表</span>
-                    </div>
-                    <div className="black_bg">
-                        <table className='tableItem'>
-                            <thead>
-                            <tr>
-                                <td>节次</td>
-                                <td>星期一</td>
-                                <td>星期二</td>
-                                <td>星期三</td>
-                                <td>星期四</td>
-                                <td>星期五</td>
-                                <td>星期六</td>
-                                <td>星期日</td>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            {this.state.tbody}
-                            </tbody>
-                        </table>
+            <div  id="skin_primarySchool">
+                <div id="tableItemDetil" className="home_content" style={{height: document.body.clientHeight}}>
+                    <div className="inner_bg">
+                        <div className="navBar">
+                            <span onClick={this.historyGoBack}>首页</span>
+                            <span className="icon"></span>
+                            <span>课程表</span>
+                        </div>
+                        <div className="black_bg">
+                            <table className='tableItem'>
+                                <thead>
+                                <tr>
+                                    <td>节次</td>
+                                    <td>星期一</td>
+                                    <td>星期二</td>
+                                    <td>星期三</td>
+                                    <td>星期四</td>
+                                    <td>星期五</td>
+                                    <td>星期六</td>
+                                    <td>星期日</td>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                {this.state.tbody}
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
                 </div>
             </div>

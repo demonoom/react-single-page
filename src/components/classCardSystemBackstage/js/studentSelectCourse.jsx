@@ -86,7 +86,8 @@ export default class studentSelectCourse extends React.Component {
 
     render() {
         return (
-            <div id="studentSelectCourse" className="home_content" style={{height: document.body.clientHeight}}>
+            <div id="skin_primarySchool">
+                <div id="studentSelectCourse" className="home_content" style={{height: document.body.clientHeight}}>
                 <div className="inner_bg">
                     <div className="navBar">
                         <span onClick={this.historyGoBack}>首页</span>
@@ -113,6 +114,7 @@ export default class studentSelectCourse extends React.Component {
                         </table>
                     </div>
                 </div>
+            </div>
             </div>
         )
     }
