@@ -797,7 +797,7 @@ class Index extends React.Component {
                     </li>
                     <li>
                         <Link
-                            to="/wxTemplate?uid=23836" style={{fontSize: '24px'}}>微信模板消息</Link>
+                            to="/wxTemplate" style={{fontSize: '24px'}}>微信SDK</Link>
                     </li>
                     <li>
                         <Link
