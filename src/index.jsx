@@ -656,6 +656,14 @@ const arDoor = (location, cb) => {
     )
 }
 
+
+const excellentStu = (location, cb) => {
+    require.ensure([], require => {
+            cb(null, require("./components/classCardSystemBackstage/js/excellentStu").default)
+        }
+    )
+}
+
 import './index.less';
 
 class Index extends React.Component {
@@ -723,7 +731,7 @@ class Index extends React.Component {
                     {/*to="/moralEducation?ident=23836"*/}
                     {/*style={{fontSize: '24px'}}>德育评价</Link></li>*/}
                     <li><Link
-                        to="/classCardHomePage?clazzId=819&roomId=1&mac=14:1f:78:73:1e:c3"
+                        to="/classCardHomePage?clazzId=819&roomId=1&mac=14:1f:78:73:1e:c3&schoolId=9"
                         style={{fontSize: '24px'}}>班牌首页</Link></li>
                     {/*<li><Link*/}
                     {/*to="/publicClassCardHomePage?roomId=2&mac=02:00:00:00:00:00"*/}
@@ -944,6 +952,7 @@ ReactDOM.render(
             <Route path="contactsList" getComponent={contactsList}/>
             <Route path="chatDetil" getComponent={chatDetil}/>
             <Route path="arDoor" getComponent={arDoor}/>
+            <Route path="excellentStu" getComponent={excellentStu}/>
         </Route>
     </Router>
     ,

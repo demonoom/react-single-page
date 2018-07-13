@@ -20,7 +20,9 @@ export default class currentAttendanceList extends React.Component {
         var locationSearch = locationHref.substr(locationHref.indexOf("?") + 1);
         var searchArray = locationSearch.split("&");
         var classTableId = searchArray[0].split('=')[1];
-        this.setState({classTableId})
+
+        var defaultId = searchArray[1].split('=')[1];
+        this.setState({classTableId, defaultId})
     }
 
     componentWillReceiveProps(nextProps) {
@@ -166,14 +168,14 @@ export default class currentAttendanceList extends React.Component {
 
     render() {
         return (
-            <div id="skin_primarySchool">
+            <div id={this.state.defaultId}>
                 <div id="currentAttendanceList" className="home_content">
-                <div className="inner_bg">
-                    <div className="navBar">
-                        <span onClick={this.turnToHomePage}>首页</span>
-                        <span className="icon"></span>
-                        <span>考勤详情</span>
-                        <div className="right">
+                    <div className="inner_bg">
+                        <div className="navBar">
+                            <span onClick={this.turnToHomePage}>首页</span>
+                            <span className="icon"></span>
+                            <span>考勤详情</span>
+                            <div className="right">
                             <span style={{marginLeft: '20px'}}>
                                 <span className="item">应到：<span className="blue">{this.state.peopleNum}</span></span>
                                 <span className="item">实到：<span
@@ -181,14 +183,14 @@ export default class currentAttendanceList extends React.Component {
                                 <span className="noSign"><span className="white btn">未签到</span><span
                                     className="text">{parseInt(this.state.peopleNum) - parseInt(this.state.currentPeopleNum)}</span></span>
                             </span>
+                            </div>
+                        </div>
+
+                        <div className="content">
+                            {this.state.studentHeaderTagList}
                         </div>
                     </div>
-
-                    <div className="content">
-                        {this.state.studentHeaderTagList}
-                    </div>
                 </div>
-            </div>
             </div>
         );
     }
