@@ -45,3 +45,21 @@
   -o-transform: translateY(-50%);
   transform: translateY(-50%);
 }
+#classBrandTemplateSkin .am-radio-inner {
+  border: 1px #F56A55 solid;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background-color: #fff;
+}
+#classBrandTemplateSkin .am-radio-inner:after {
+  border: 0;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background-color: #F56A55;
+  top: 50%;
+  left: 50%;
+  margin-top: -4px;
+  margin-left: -4px;
+}
