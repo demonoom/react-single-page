@@ -31,7 +31,7 @@ export default class classBrandTemplateList extends React.Component {
 
     componentDidMount() {
         Bridge.setShareAble("false");
-        document.title = '考勤时段列表';
+        document.title = '皮肤列表管理';
         var locationHref = window.location.href;
         var locationSearch = locationHref.substr(locationHref.indexOf("?") + 1);
         var uid = locationSearch.split("&")[0].split("=")[1];
@@ -96,7 +96,7 @@ export default class classBrandTemplateList extends React.Component {
      * 去课表列表
      **/
     turnToNewAttendanceTime(rowData) {
-        var url = WebServiceUtil.mobileServiceURL + "newAttendanceTime?uid="+AttenT.state.uid;
+        var url = WebServiceUtil.mobileServiceURL + "addClassBrandTemplate?uid="+AttenT.state.uid;
             var data = {
                 method: 'openNewPage',
                 url: url,
@@ -112,7 +112,7 @@ export default class classBrandTemplateList extends React.Component {
      */
     updateAttendanceTime(data, event) {
         
-        var url = WebServiceUtil.mobileServiceURL + "updateAttendanceTime?uid="+AttenT.state.uid +"&id="+data.id;
+        var url = WebServiceUtil.mobileServiceURL + "updateClassBrandTemplate?uid="+AttenT.state.uid +"&id="+data.id;
         var data = {
             method: 'openNewPage',
             url: url,
@@ -245,7 +245,7 @@ export default class classBrandTemplateList extends React.Component {
             let SwitchExample = (props) => {
                 const {getFieldProps} = props.form;
                 return (
-                    <div className="amList_cont">
+                    <div className="amList_cont" >
                         <List className="amList">
                             <List.Item
                                 extra={<Switch
@@ -271,13 +271,13 @@ export default class classBrandTemplateList extends React.Component {
 
             return (
                 <div className="classInfo line_public attendanceCont">
-                    <div>
+                    <div style={{marginTop:'50px'}}>
                         <div className="title textOver">
                             {rowData.name}
                         </div>
                         <div className="tableListDate textOver">
-                            <div className="classroom time"><span className="classroom_span">入校时间：</span>{rowData.itemList[0].checkIn}</div>
-                            <div className="classroom time"><span className="classroom_span">离校时间：</span>{rowData.itemList[0].checkOut}</div>
+                            <div className="classroom time"><span className="classroom_span">皮肤类名：</span>{rowData.itemList[0].checkIn}</div>
+                            {/* <div className="classroom time"><span className="classroom_span">离校时间：</span>{rowData.itemList[0].checkOut}</div> */}
                         </div>
                     </div>
                     <SwitchExample/>

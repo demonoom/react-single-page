@@ -10,25 +10,22 @@ import {
 
 var UpdateAT;
 
-export default class newAttendanceTime extends React.Component {
+export default class updateClassBrandTemplate extends React.Component {
     constructor(props) {
         super(props);
         UpdateAT = this;
         this.state = {
             teachBuildValue: "",
+            skinClassName:"",
             cols: 1,
             initData:[],
-            attendanceTimeArr: [],  //时间结构
-            attendanceTimeDataArr: [],  //时间数据
             search_bg: false,
             clientHeight: document.body.clientHeight,
-            comeExtra:"请选择",
-            leaveExtra:"请选择",
         };
     }
 
     componentWillMount() {
-        document.title = '编辑考勤时段';
+        document.title = '皮肤编辑管理';
         var locationHref = window.location.href;
         var locationSearch = locationHref.substr(locationHref.indexOf("?") + 1);
         var uid = locationSearch.split("&")[0].split("=")[1];
@@ -71,9 +68,7 @@ export default class newAttendanceTime extends React.Component {
                     UpdateAT.setState({
                         initData:result.response,
                         teachBuildValue:result.response.name,
-                        comeExtra:result.response.itemList[0].checkIn,
-                        leaveExtra:result.response.itemList[0].checkOut,
-                        initStatus:result.response.status
+                        skinClassName:result.response.cName,
 
                     })
                 } else {
@@ -91,108 +86,19 @@ export default class newAttendanceTime extends React.Component {
      */
     updateSchoolAttendance = () => {
         var _this = this;
-        if (UpdateAT.state.teachBuildValue == "") {
-            Toast.info("考勤时段名不能为空")
+        if (UpdateAT.state.teachBuildValue == "" || UpdateAT.state.teachBuildValue == undefined) {
+            Toast.info("皮肤名称不能为空")
         }
-       
-        var param;
-        if(UpdateAT.state.comeTimeValue == undefined ){
-            if(UpdateAT.state.leaveTimeValue == undefined){
-                param = {
-                    "method": 'updateSchoolAttendance',
-                    "schoolAttendance": {
-                        "id": UpdateAT.state.classId,
-                        "creatorId": UpdateAT.state.uid,
-                        "name": UpdateAT.state.teachBuildValue,
-                        "status": UpdateAT.state.initStatus,
-                        "itemList": [
-                            {
-                                "index": 0,
-                                "checkIn": UpdateAT.state.comeExtra,
-                                "checkOut":UpdateAT.state.leaveExtra,
-                            }
-                        ]
-                    }
-        
-                }
-            }else {
-                param = {
-                    "method": 'updateSchoolAttendance',
-                    "schoolAttendance": {
-                        "id": UpdateAT.state.classId,
-                        "creatorId": UpdateAT.state.uid,
-                        "name": UpdateAT.state.teachBuildValue,
-                        "status": UpdateAT.state.initStatus,
-                        "itemList": [
-                            {
-                                "index": 0,
-                                "checkIn": UpdateAT.state.comeExtra,
-                                "checkOut":WebServiceUtil.formatHM(UpdateAT.state.leaveTimeValue.getTime()),
-                            }
-                        ]
-                    }
-        
-                }
-            }
-        }else if(UpdateAT.state.leaveTimeValue == undefined){
-            if(UpdateAT.state.comeTimeValue == undefined){
-                param = {
-                    "method": 'updateSchoolAttendance',
-                    "schoolAttendance": {
-                        "id": UpdateAT.state.classId,
-                        "creatorId": UpdateAT.state.uid,
-                        "name": UpdateAT.state.teachBuildValue,
-                        "status": UpdateAT.state.initStatus,
-                        "itemList": [
-                            {
-                                "index": 0,
-                                "checkIn": UpdateAT.state.comeExtra,
-                                "checkOut":UpdateAT.state.leaveExtra,
-                            }
-                        ]
-                    }
-        
-                }
-            }else {
-                param = {
-                    "method": 'updateSchoolAttendance',
-                    "schoolAttendance": {
-                        "id": UpdateAT.state.classId,
-                        "creatorId": UpdateAT.state.uid,
-                        "name": UpdateAT.state.teachBuildValue,
-                        "status": UpdateAT.state.initStatus,
-                        "itemList": [
-                            {
-                                "index": 0,
-                                "checkIn": WebServiceUtil.formatHM(UpdateAT.state.comeTimeValue.getTime()),
-                                "checkOut":UpdateAT.state.leaveExtra,
-                            }
-                        ]
-                    }
-        
-                }
-            }
-        }else  {
-            let comeTime = UpdateAT.state.comeTimeValue.getTime()
-            let leaveTime = UpdateAT.state.leaveTimeValue.getTime()
-            param = {
-                "method": 'updateSchoolAttendance',
-                "schoolAttendance": {
-                    "id": UpdateAT.state.classId,
-                    "creatorId": UpdateAT.state.uid,
-                    "name": UpdateAT.state.teachBuildValue,
-                    "status": UpdateAT.state.initStatus,
-                    "itemList": [
-                        {
-                            "index": 0,
-                            "checkIn": WebServiceUtil.formatHM(comeTime),
-                            "checkOut": WebServiceUtil.formatHM(leaveTime),
-                        }
-                    ]
-                }
-    
-            }
+        if (UpdateAT.state.skinClassName == "" || UpdateAT.state.skinClassName == undefined) {
+            Toast.info("皮肤类名不能为空")
         }
+        var param = {
+            "method": 'updateSchoolAttendance',
+            "name": UpdateAT.state.teachBuildValue,
+            "cName":UpdateAT.state.skinClassName
+        }
+        console.log(param)
+        return
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
             onResponse: function (result) {
                 if (result.msg == '调用成功' || result.success == true) {
@@ -236,13 +142,13 @@ export default class newAttendanceTime extends React.Component {
             </div>
         );
         return (
-            <div id="newAttendanceTime" style={{ height: this.state.clientHeight }}>
+            <div id="updateClassBrandTemplate" style={{ height: this.state.clientHeight }}>
                 <div className="search_bg" style={{ display: this.state.search_bg ? 'block' : 'none' }}></div>
                 <div className="addCurriculum_cont">
                     <WhiteSpace size="lg" />
                     <div className='teachBuild'>
                         <InputItem
-                            placeholder="请选择教学楼"
+                            placeholder="请输入名称"
                             data-seed="logId"
                             onChange={v => {
                                 UpdateAT.setState({
@@ -250,30 +156,22 @@ export default class newAttendanceTime extends React.Component {
                                 })
                             }}
                             value={this.state.teachBuildValue}
-                        >考勤时段名称<i className='redStar'>*</i></InputItem>
+                        >皮肤名称<i className='redStar'>*</i></InputItem>
                     </div>
                     <WhiteSpace size="lg" />
-                    <DatePicker
-                        mode="time"
-                        format="HH:mm"
-                        title="入校时间"
-                        value={this.state.comeTimeValue}
-                        onChange={v => this.setState({ comeTimeValue: v })}
-                        extra={UpdateAT.state.comeExtra}
-                    >
-                        <ComeChildren>入校时间</ComeChildren>
-                    </DatePicker>
-                    <WhiteSpace size="lg" />
-                    <DatePicker
-                        mode="time"
-                        format="HH:mm"
-                        title="离校时间"
-                        value={this.state.leaveTimeValue}
-                        onChange={v => this.setState({ leaveTimeValue: v })}
-                        extra={UpdateAT.state.leaveExtra}
-                    >
-                        <LeaveChildren>离校时间</LeaveChildren>
-                    </DatePicker>
+                    <div className='teachBuild'>
+                        <InputItem
+                            placeholder="请输入类名"
+                            data-seed="logId"
+                            onChange={v => {
+                                UpdateAT.setState({
+                                    "skinClassName": v
+                                })
+                            }}
+                            value={this.state.skinClassName}
+                        >皮肤类名<i className='redStar'>*</i></InputItem>
+                    </div>
+                   
                 </div>
                 <div className='addCourseButton'>
                     <WhiteSpace size="lg" />
