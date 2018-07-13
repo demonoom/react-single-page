@@ -1,0 +1,35 @@
+#skin_middleSchool {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background: -webkit-linear-gradient(#1053a4, #049adc);
+  /* Safari 5.1 - 6.0 */
+  background: -o-linear-gradient(#1053a4, #049adc);
+  /* Opera 11.1 - 12.0 */
+  background: -moz-linear-gradient(#1053a4, #049adc);
+  /* Firefox 3.6 - 15 */
+  background: linear-gradient(#1053a4, #049adc);
+  /* 标准的语法 */
+}
+#skin_middleSchool #header {
+  background: none;
+}
+#skin_middleSchool #header .headTitle {
+  background: url("../../imgs/headTittle_bg.png") no-repeat;
+  background-size: 100% 100%;
+}
+#skin_middleSchool #header .headTitleT {
+  color: #fff;
+}
+#skin_middleSchool .home_content {
+  background: none;
+}
+#skin_middleSchool .home_card,
+#skin_middleSchool .home_title,
+#skin_middleSchool .studentOnDuty_today,
+#skin_middleSchool .home_contfont,
+#skin_middleSchool .font_title2,
+#skin_middleSchool .blue_text,
+#skin_middleSchool .blue_big {
+  color: #fff;
+}
