@@ -48,6 +48,7 @@ export default class currentAttendance extends React.Component {
                 }
             }
         }
+        this.setState({defaultId: nextProps.defaultId})
 
     }
 
@@ -114,10 +115,11 @@ export default class currentAttendance extends React.Component {
      */
     turnToAttendanceList() {
         if (!this.state.openClass) {
-            Toast.fail('暂未开课',2)
+            Toast.fail('暂未开课', 2)
             return
         }
-        var currentAttendanceListUrl = WebServiceUtil.mobileServiceURL + "currentAttendanceList?clazzId=" + this.state.clazzId;
+
+        var currentAttendanceListUrl = WebServiceUtil.mobileServiceURL + "currentAttendanceList?clazzId=" + this.state.clazzId + "&defaultId=" + demeanor.state.defaultId;
         // var currentAttendanceListUrl = WebServiceUtil.mobileServiceURL + "currentAttendanceList?clazzId=" + localStorage.getItem('clazzId');
         // window.location.href = currentAttendanceListUrl;
 

@@ -19,8 +19,12 @@ export default class application extends React.Component {
 
     }
 
+    componentWillReceiveProps(nextProps) {
+        this.setState({defaultId: nextProps.defaultId})
+    }
+
     intoApplication() {
-        var url = WebServiceUtil.mobileServiceURL + "homeworkModule?classId=" + localStorage.getItem('clazzId');
+        var url = WebServiceUtil.mobileServiceURL + "homeworkModule?classId=" + localStorage.getItem('clazzId') + "&defaultId=" + demeanor.state.defaultId;
         var data = {
             method: 'openNewPage',
             url: url
@@ -42,7 +46,7 @@ export default class application extends React.Component {
     }
 
     toStep() {
-        var url = WebServiceUtil.mobileServiceURL + "health?classId=" + localStorage.getItem('clazzId') + "&healthType=step";
+        var url = WebServiceUtil.mobileServiceURL + "health?classId=" + localStorage.getItem('clazzId') + "&healthType=step" + "&defaultId=" + demeanor.state.defaultId;
         var data = {
             method: 'openNewPage',
             url: url
@@ -54,7 +58,7 @@ export default class application extends React.Component {
     }
 
     toCalories() {
-        var url = WebServiceUtil.mobileServiceURL + "health?classId=" + localStorage.getItem('clazzId') + "&healthType=calories";
+        var url = WebServiceUtil.mobileServiceURL + "health?classId=" + localStorage.getItem('clazzId') + "&healthType=calories" + "&defaultId=" + demeanor.state.defaultId;
         var data = {
             method: 'openNewPage',
             url: url
@@ -66,7 +70,7 @@ export default class application extends React.Component {
     }
 
     excellentStu() {
-        var url = WebServiceUtil.mobileServiceURL + "excellentStu?classId=" + localStorage.getItem('clazzId');
+        var url = WebServiceUtil.mobileServiceURL + "excellentStu?classId=" + localStorage.getItem('clazzId') + "&defaultId=" + demeanor.state.defaultId;
         var data = {
             method: 'openNewPage',
             url: url

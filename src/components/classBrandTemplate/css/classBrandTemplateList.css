@@ -1,3 +1,4 @@
+(node) util.print is deprecated. Use console.log instead.
 #classBrandTemplateList .am-list-body::before,
 #classBrandTemplateList .am-list-body::after,
 #classBrandTemplateList .am-list-line::after {
