@@ -860,7 +860,7 @@ class Index extends React.Component {
                     </li>
                     <li>
                         <Link
-                            to="/classBrandTemplateSkin?uid=23836" style={{fontSize: '24px'}}>皮肤列表</Link>
+                            to="/classBrandTemplateSkin?uid=9" style={{fontSize: '24px'}}>皮肤列表</Link>
                     </li>
                     
                 </ul>

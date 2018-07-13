@@ -5,7 +5,6 @@ import {
     Button,
     WingBlank,
     InputItem,
-    DatePicker,
 } from 'antd-mobile';
 
 var UpdateAT;
@@ -29,9 +28,9 @@ export default class updateClassBrandTemplate extends React.Component {
         var locationHref = window.location.href;
         var locationSearch = locationHref.substr(locationHref.indexOf("?") + 1);
         var uid = locationSearch.split("&")[0].split("=")[1];
-        var classId = locationSearch.split("&")[1].split("=")[1];
-        this.setState({ uid, "classId":classId });
-        this.viewSchoolAttendance(classId);
+        var skinId = locationSearch.split("&")[1].split("=")[1];
+        this.setState({ uid, "skinId":skinId });
+        this.getBraceletBoxSkinById(skinId);
         window.addEventListener('resize', this.onWindwoResize);
     }
     componentDidMount() {
@@ -53,22 +52,20 @@ export default class updateClassBrandTemplate extends React.Component {
 
     /**
      * 数据回显
-     * aId  班级ID
+     * id  皮肤ID
      */
-    viewSchoolAttendance = (classId) => {
+    getBraceletBoxSkinById = (skinId) => {
         var param = {
-            "method":"viewSchoolAttendance",
-            "aId":classId
+            "method":"getBraceletBoxSkinById",
+            "id":skinId
         }
-        console.log(param)
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
             onResponse: function (result) {
-                console.log("resutl",result)
                 if (result.msg == '调用成功' || result.success == true) {
                     UpdateAT.setState({
                         initData:result.response,
-                        teachBuildValue:result.response.name,
-                        skinClassName:result.response.cName,
+                        teachBuildValue:result.response.skinName,
+                        skinClassName:result.response.skinAttr,
 
                     })
                 } else {
@@ -84,7 +81,7 @@ export default class updateClassBrandTemplate extends React.Component {
     /**
      * 更新提交
      */
-    updateSchoolAttendance = () => {
+    updateBraceletBoxSkinStatusInfo = () => {
         var _this = this;
         if (UpdateAT.state.teachBuildValue == "" || UpdateAT.state.teachBuildValue == undefined) {
             Toast.info("皮肤名称不能为空")
@@ -93,16 +90,14 @@ export default class updateClassBrandTemplate extends React.Component {
             Toast.info("皮肤类名不能为空")
         }
         var param = {
-            "method": 'updateSchoolAttendance',
-            "name": UpdateAT.state.teachBuildValue,
-            "cName":UpdateAT.state.skinClassName
+            "method": 'updateBraceletBoxSkinStatusInfo',
+            "id":_this.state.skinId,
+            "skinName": UpdateAT.state.teachBuildValue,
+            "skinAttr":UpdateAT.state.skinClassName
         }
-        console.log(param)
-        return
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
             onResponse: function (result) {
                 if (result.msg == '调用成功' || result.success == true) {
-                    console.log(result)
                     Toast.success('成功');
                     //关闭当前窗口，并刷新上一个页面
                     var data = {
@@ -123,24 +118,6 @@ export default class updateClassBrandTemplate extends React.Component {
     }
 
     render() {
-        const ComeChildren = ({ extra, onClick, children }) => (
-            <div className="am-list-item am-list-item-middle">
-                <div className="am-list-line">
-                    <div className="am-list-content">{children}<i className="redStar">*</i></div>
-                    <div className="am-list-extra" onClick={onClick}>{extra}</div>
-                    <div className="am-list-arrow am-list-arrow-horizontal"></div>
-                </div>
-            </div>
-        );
-        const LeaveChildren = ({ extra, onClick, children }) => (
-            <div className="am-list-item am-list-item-middle">
-                <div className="am-list-line">
-                    <div className="am-list-content">{children}<i className="redStar">*</i></div>
-                    <div className="am-list-extra" onClick={onClick}>{extra}</div>
-                    <div className="am-list-arrow am-list-arrow-horizontal"></div>
-                </div>
-            </div>
-        );
         return (
             <div id="updateClassBrandTemplate" style={{ height: this.state.clientHeight }}>
                 <div className="search_bg" style={{ display: this.state.search_bg ? 'block' : 'none' }}></div>
@@ -176,7 +153,7 @@ export default class updateClassBrandTemplate extends React.Component {
                 <div className='addCourseButton'>
                     <WhiteSpace size="lg" />
                     <WingBlank>
-                        <Button type="warning" onClick={this.updateSchoolAttendance}>提交</Button>
+                        <Button type="warning" onClick={this.updateBraceletBoxSkinStatusInfo}>提交</Button>
                     </WingBlank>
                 </div>
 

@@ -1,7 +1,7 @@
 import React from 'react';
 import {
     ListView,
-    List, Radio, Flex, WhiteSpace, Button
+    List, Radio, Flex, Toast, Button
 } from 'antd-mobile';
 
 const RadioItem = Radio.RadioItem;
@@ -31,6 +31,7 @@ export default class classBrandTemplateSkin extends React.Component {
         var uid = locationSearch.split("&")[0].split("=")[1];
         this.setState({ "uid": uid });
         this.getBraceletBoxSkinBySchoolId(uid);
+        
         //添加对视窗大小的监听,在屏幕转换以及键盘弹起时重设各项高度
         window.addEventListener('resize', AttenT.onWindowResize)
     }
@@ -65,37 +66,50 @@ export default class classBrandTemplateSkin extends React.Component {
             "method": 'getBraceletBoxSkinBySchoolId',
             "schoolId": uid,
         };
-
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
             onResponse: function (result) {
                 if (result.msg == '调用成功' && result.success == true) {
-                    result.response = [
-                        { value: 0, label: 'doctor', extra: 'details' },
-                        { value: 1, label: 'bachelor', extra: 'details' },
-                        { value: 2, label: 'we', extra: 'details' },
-                        { value: 3, label: 'er', extra: 'details' },
-                        { value: 4, label: 'tr', extra: 'details' },
-                        { value: 5, label: 'y', extra: 'details' },
-                        { value: 6, label: 'h', extra: 'details' },
-                        { value: 7, label: 'b', extra: 'details' },
-                    ]
+                    _this.setState({
+                        value:result.response.id
+                    },()=>{
+                        _this.getBraceletBoxSkinList(uid);
+
+                    })
+                }
+            },
+            onError: function (error) {
+            }
+        });
+    }
+
+
+
+     /**
+     * 查看教室的所有课表
+     */
+    getBraceletBoxSkinList(uid) {
+        var _this = this;
+        _this.initData.splice(0);
+        _this.state.dataSource = [];
+        _this.state.dataSource = new ListView.DataSource({
+            rowHasChanged: (row1, row2) => row1 !== row2,
+        });
+        const dataBlob = {};
+        var param = {
+            "method": 'getBraceletBoxSkinList',
+            "pageNo": -1,
+        };
+        
+        WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
+            onResponse: function (result) {
+                if (result.msg == '调用成功' && result.success == true) {
+                    // var arr = result.response;
                     var arr = [];
                     result.response.forEach(function (v, i) {
-                        console.log(v, "v")
                         arr.push({
-                            value: v.value, label: v.label, extra: v.extra
+                            value: v.id, label: v.skinName, extra: v.skinAttr
                         })
                     })
-                    // var arr = [
-                    //     { value: 0, label: 'doctor',extra: 'details'},
-                    //     { value: 1, label: 'bachelor',extra: 'details' },
-                    //     { value: 2, label: 'we',extra: 'details' },
-                    //     { value: 3, label: 'er',extra: 'details' },
-                    //     { value: 4, label: 'tr' ,extra: 'details'},
-                    //     { value: 5, label: 'y' ,extra: 'details'},
-                    //     { value: 6, label: 'h',extra: 'details' },
-                    //     { value: 7, label: 'b',extra: 'details' },
-                    // ]
                     for (let i = 0; i < arr.length; i++) {
                         var topic = arr[i];
                         dataBlob[`${i}`] = topic;
@@ -112,34 +126,36 @@ export default class classBrandTemplateSkin extends React.Component {
             }
         });
     }
-
     onChange = (value) => {
-        console.log(value, 'checkbox');
         this.setState({
             value,
         });
     };
 
 
-    submitValue = () => {
-        console.log(AttenT.state.value)
-
-        /**
-	 * 添加班牌皮肤到对应的学校　
-	 * @param skinId
-	 * @param schoolId
-	 * @return
-	 * @throws Exception
-	 */
-        addBraceletBoxSkinToSchoolId=(skinId, schoolId)=>{
-
+    /**
+     * 修改当前学校的皮肤
+     */
+    updateBraceletBoxSkinToSchoolId = () => {
+        var param = {
+            "method":"updateBraceletBoxSkinToSchoolId",
+            "skinId":AttenT.state.value,
+            "schoolId":AttenT.state.uid
         }
+        WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
+            onResponse: function (result) {
+                if (result.msg == '调用成功' && result.success == true) {
+                   Toast.info("修改成功")
+                }
+            },
+            onError: function (error) {
+            }
+        });
+     
     }
     render() {
         const { value } = this.state;
-        // var data = AttenT.initData;
         const row = (rowData, sectionID, rowID) => {
-            console.log(rowData, "calm")
             return (
                 <div className="classInfo line_public attendanceCont">
                     <List>
@@ -175,7 +191,7 @@ export default class classBrandTemplateSkin extends React.Component {
                             height: AttenT.state.clientHeight - 50,
                         }}
                     />
-                    <Button type="warning" onClick={this.submitValue}>提交</Button>
+                    <Button type="warning" onClick={this.updateBraceletBoxSkinToSchoolId}>提交</Button>
                     {/* <div onClick={AttenT.}>提交</div> */}
                 </div>
             </div>

@@ -1,7 +1,7 @@
 import React from 'react';
 import '../css/chatDetil.less'
 import {MsgConnection} from '../../../helpers/chat_websocket_connection';
-import {PullToRefresh, List, TextareaItem, Toast} from 'antd-mobile';
+import {PullToRefresh, List, TextareaItem, Toast, Button} from 'antd-mobile';
 
 var chatDetil;
 var scrollNum = 0;
@@ -48,8 +48,7 @@ export default class chat_Detil extends React.Component {
 
     componentWillMount() {
         Toast.loading('正在读取', 0);
-        document.title = "小蚂蚁聊天窗口";   //设置title
-        var locationHref = window.location.href;
+        var locationHref = decodeURI(window.location.href);
         var locationSearch = locationHref.substr(locationHref.indexOf("?") + 1);
         var searchArray = locationSearch.split("&");
         var fromId = searchArray[0].split('=')[1];
@@ -57,8 +56,10 @@ export default class chat_Detil extends React.Component {
         var choosePos = searchArray[2].split('=')[1];
         var unionid = searchArray[3].split('=')[1];
         var colPasswd = searchArray[4].split('=')[1];
+        var toName = searchArray[5].split('=')[1];
         this.setState({fromId, toId})
 
+        document.title = toName;   //设置title
 
         /**
          * 根据unionid获取绑定的小蚂蚁用户信息
@@ -89,15 +90,17 @@ export default class chat_Detil extends React.Component {
         var pro = {
             "command": "messagerConnect",
             "data": {
-                "machineType": "web",
+                "machineType": "mobile-web",
                 "userId": Number(fromId),
                 "machine": WebServiceUtil.createUUID(),
                 "password": colPasswd,
                 "version": 0.1
             }
         };
-        ms = new MsgConnection();
-        ms.connect(pro);
+        if (WebServiceUtil.isEmpty(ms)) {
+            ms = new MsgConnection();
+            ms.connect(pro);
+        }
     }
 
     componentDidMount() {
@@ -668,10 +671,36 @@ export default class chat_Detil extends React.Component {
         this.getUser2UserMessages(this.state.firstMessageCreateTime, false)
     }
 
+    sendMessage() {
+        if (chatDetil.state.TextareaValue.trim() == '') {
+            Toast.fail('请输入内容发送', 1)
+            return
+        }
+
+        chatDetil.setState({TextareaValue: ''})
+        var fromUser = chatDetil.state.loginUser
+        var uuid = WebServiceUtil.createUUID();
+        var createTime = (new Date()).valueOf();
+        var messageJson = {
+            'content': chatDetil.state.TextareaValue, "createTime": createTime, 'fromUser': fromUser,
+            "toId": chatDetil.state.toId, "command": "message", "hostId": chatDetil.state.fromId,
+            "uuid": uuid, "toType": 1
+        };
+
+        var commandJson = {"command": "message", "data": {"message": messageJson}};
+
+        ms.send(commandJson);
+    }
+
     TextareaOnKeyUp(e) {
         if (e.keyCode == 13) {
-            chatDetil.setState({TextareaValue: ''})
 
+            if (chatDetil.state.TextareaValue.trim() == '') {
+                Toast.fail('请输入内容发送', 1)
+                return
+            }
+
+            chatDetil.setState({TextareaValue: ''})
             var fromUser = chatDetil.state.loginUser
             var uuid = WebServiceUtil.createUUID();
             var createTime = (new Date()).valueOf();
@@ -725,11 +754,13 @@ export default class chat_Detil extends React.Component {
                     value={this.state.TextareaValue}
                     autoHeight
                     labelNumber={3}
-                    onKeyUp={this.TextareaOnKeyUp}
+                    // onKeyUp={this.TextareaOnKeyUp}
                     onChange={this.TextareaOnKeyChange}
                     count={60}
                     onFocus={this.TextareaOnFocus}
                 />
+
+                <button className="submit" onClick={this.sendMessage}>发送</button>
             </List>
         </div>);
     }

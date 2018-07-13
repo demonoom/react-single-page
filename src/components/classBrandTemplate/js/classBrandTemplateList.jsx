@@ -36,7 +36,7 @@ export default class classBrandTemplateList extends React.Component {
         var locationSearch = locationHref.substr(locationHref.indexOf("?") + 1);
         var uid = locationSearch.split("&")[0].split("=")[1];
         this.setState({"uid": uid});
-        this.viewSchoolAttendancePage(uid);
+        this.getBraceletBoxSkinList();
         //添加对视窗大小的监听,在屏幕转换以及键盘弹起时重设各项高度
         window.addEventListener('resize', AttenT.onWindowResize)
     }
@@ -56,9 +56,9 @@ export default class classBrandTemplateList extends React.Component {
     }
 
     /**
-     * 查看教室的所有课表
+     * 查看班牌的皮肤列表
      */
-    viewSchoolAttendancePage(uid) {
+    getBraceletBoxSkinList() {
         var _this = this;
         _this.initData.splice(0);
         _this.state.dataSource = [];
@@ -67,8 +67,8 @@ export default class classBrandTemplateList extends React.Component {
         });
         const dataBlob = {};
         var param = {
-            "method": 'viewSchoolAttendancePage',
-            "adminId": uid,
+            "method": 'getBraceletBoxSkinList',
+            "pageNo": -1,
         };
         
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
@@ -93,9 +93,9 @@ export default class classBrandTemplateList extends React.Component {
     }
 
     /**
-     * 去课表列表
+     * 去添加页面
      **/
-    turnToNewAttendanceTime(rowData) {
+    turnAddClassBrandTemplate(rowData) {
         var url = WebServiceUtil.mobileServiceURL + "addClassBrandTemplate?uid="+AttenT.state.uid;
             var data = {
                 method: 'openNewPage',
@@ -107,7 +107,7 @@ export default class classBrandTemplateList extends React.Component {
     }
 
     /**
-     * 
+     * 跳转编辑页面
      * @param name
      */
     updateAttendanceTime(data, event) {
@@ -125,17 +125,15 @@ export default class classBrandTemplateList extends React.Component {
     }
 
     /**
-     *　更新班级
-     * @param aId   班级ID
-     * @param condition 课表状态 0 = 删除, 1 =　启用, 3 = 停用
+     *　删除一个班牌皮肤
+     * @param id   班牌皮肤ID
      * @throws Exception
      */
-    delAttendanceTime(data) {
+    deleteBraceletBoxSkin(data) {
         var _this = this;
         var param = {
-            "method": 'changeSchoolAttendanceStatus',
-            "condition": 0,
-            "aId": data.id,
+            "method": 'deleteBraceletBoxSkin',
+            "id": data.id,
         };
 
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
@@ -174,9 +172,9 @@ export default class classBrandTemplateList extends React.Component {
         } else {
             phone = 'android'
         }
-        const alertInstance = alert('您确定要删除该考勤吗?', '', [
+        const alertInstance = alert('您确定要删除该皮肤吗?', '', [
             {text: '取消', onPress: () => console.log('cancel'), style: 'default'},
-            {text: '确定', onPress: () => AttenT.delAttendanceTime(data)},
+            {text: '确定', onPress: () => AttenT.deleteBraceletBoxSkin(data)},
         ], phone);
     };
 
@@ -184,21 +182,21 @@ export default class classBrandTemplateList extends React.Component {
     /**
      * 改变启用停用状态
      */
-    changeSchoolAttendanceStatus(checked, rowData) {
+    updateBraceletBoxSkinStatus(checked, rowData) {
         var _this = this;
         var param = {
-            "method": 'changeSchoolAttendanceStatus',
-            "aId": rowData.id,
+            "method": 'updateBraceletBoxSkinStatus',
+            "id": rowData.id,
         };
         var status,
             str;
         if (checked) {
-            param.condition = 1
-            status = 1
+            param.status = 2
+            status = 2
             str = '启用成功'
         } else {
-            param.condition = 3
-            status = 3
+            param.status = 1
+            status = 1
             str = '停用成功'
         }
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
@@ -211,7 +209,7 @@ export default class classBrandTemplateList extends React.Component {
                     });
                     _this.initData.forEach(function (v, i) {
                         if (rowData.id == v.id) {
-                            v.status = status;
+                            v.valid = status;
                         }
                     });
                     _this.setState({
@@ -250,14 +248,14 @@ export default class classBrandTemplateList extends React.Component {
                             <List.Item
                                 extra={<Switch
                                     {...getFieldProps('Switch8', {
-                                        initialValue: rowData.status == 3 ? false : true,
+                                        initialValue: rowData.valid == 1 ? false : true,
                                         valuePropName: 'checked',
                                     })}
                                     platform="ios"
                                     color="#4dd865"
                                     text-align="left"
                                     onClick={(checked) => {
-                                        AttenT.changeSchoolAttendanceStatus(checked, rowData)
+                                        AttenT.updateBraceletBoxSkinStatus(checked, rowData)
                                     }}
                                 />}
                             ><span className="open_text">开启状态：</span></List.Item>
@@ -273,10 +271,10 @@ export default class classBrandTemplateList extends React.Component {
                 <div className="classInfo line_public attendanceCont">
                     <div style={{marginTop:'50px'}}>
                         <div className="title textOver">
-                            {rowData.name}
+                            皮肤名称：{rowData.skinName}
                         </div>
                         <div className="tableListDate textOver">
-                            <div className="classroom time"><span className="classroom_span">皮肤类名：</span>{rowData.itemList[0].checkIn}</div>
+                            <div className="classroom time"><span className="classroom_span">皮肤类名：</span>{rowData.skinAttr}</div>
                             {/* <div className="classroom time"><span className="classroom_span">离校时间：</span>{rowData.itemList[0].checkOut}</div> */}
                         </div>
                     </div>
@@ -287,7 +285,7 @@ export default class classBrandTemplateList extends React.Component {
         return (
             <div id="classBrandTemplateList" style={{height: AttenT.state.clientHeight}}>
                 <div className='tableDiv' style={{height: AttenT.state.clientHeight}}>
-                    <div className='addBunton' onClick={this.turnToNewAttendanceTime}>
+                    <div className='addBunton' onClick={this.turnAddClassBrandTemplate}>
                         <img src={require("../imgs/addBtn.png")} />
                     </div>
                     {/*这是列表数据,包括添加按钮*/}
