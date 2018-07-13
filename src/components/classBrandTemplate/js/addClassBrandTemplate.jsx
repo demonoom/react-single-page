@@ -21,6 +21,7 @@ export default class addClassBrandTemplate extends React.Component {
             cols: 1,
             search_bg: false,
             clientHeight: document.body.clientHeight,
+            imgPath:""
         };
     }
 
@@ -60,8 +61,10 @@ export default class addClassBrandTemplate extends React.Component {
         
         if (phoneType.indexOf('iPhone') > -1 || phoneType.indexOf('iPad') > -1) {
             phone = 'ios'
-        } else if(!(phoneType.indexOf('iPhone') > -1) || !(phoneType.indexOf('iPad') > -1)) {
+        } else if(phoneType.indexOf('Android') > -1 ) {
             phone = 'android'
+        }else {
+            phone = ""
         }
         if (phone == 'ios' || phone == 'android'){
             data = {
@@ -163,11 +166,9 @@ export default class addClassBrandTemplate extends React.Component {
                         <div className="title">上传图片</div>
                         <div className="my_flex">
                             {
-                                addAT.state.imgPath == "undefined" ?  <img src={addAT.state.imgPath} alt=""/>
-                                    :
-                                    ""
+                                addAT.state.imgPath == "" ?  "" :<img src={addAT.state.imgPath}/>
                             }
-
+                            {/* {<img src={addAT.state.imgPath} />} */}
                             <div className="uploadBtn" onClick={this.uploadImage}></div>
                         </div>
                     </div>

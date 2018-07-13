@@ -123,13 +123,16 @@ export default class updateClassBrandTemplate extends React.Component {
              */
     uploadImage() {
         var phoneType = navigator.userAgent;
+
         var phone;
         var data;
         
         if (phoneType.indexOf('iPhone') > -1 || phoneType.indexOf('iPad') > -1) {
             phone = 'ios'
-        } else if(!(phoneType.indexOf('iPhone') > -1) || !(phoneType.indexOf('iPad') > -1)) {
+        } else if(phoneType.indexOf('Android') > -1 ) {
             phone = 'android'
+        }else {
+            phone = ""
         }
         if (phone == 'ios' || phone == 'android'){
             data = {
