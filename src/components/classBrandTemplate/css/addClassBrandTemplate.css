@@ -1,3 +1,7 @@
+#addClassBrandTemplate {
+  /*上传图片*/
+  /*修改图片*/
+}
 #addClassBrandTemplate .redStar {
   color: red;
   font-size: 22px;
@@ -9,4 +13,28 @@
   position: absolute !important;
   width: calc(100% - 30px);
   left: 15px;
+}
+#addClassBrandTemplate .uploadDiv {
+  padding: 15px;
+  background-color: #fff;
+}
+#addClassBrandTemplate .uploadDiv .title {
+  font-size: 17px;
+  color: #333;
+  line-height: 44px;
+}
+#addClassBrandTemplate .uploadDiv .uploadBtn {
+  background: url("../imgs/addPic.png") no-repeat;
+  width: 7.5rem;
+  height: 7.5rem;
+  background-size: 100%;
+}
+#addClassBrandTemplate .modifyDiv {
+  padding: 15px;
+  background-color: #fff;
+}
+#addClassBrandTemplate .modifyDiv .title {
+  font-size: 17px;
+  color: #333;
+  line-height: 44px;
 }

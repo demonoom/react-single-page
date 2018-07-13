@@ -2,16 +2,25 @@
   .am-list-body::before,.am-list-body::after,.am-list-line::after{
     display: none;;
   }
+  .am-list-view-scrollview-content{
+    width: 100%;
+  }
   .classInfo{
     position: relative;
     padding: 10px 0;
     line-height: 24px;
     .cont{
       padding: 0 15px;
+      .titleText{
+        width: calc(~"100% - 40px");
+      }
       .title{
         font-size: 17px;
         color: #333;
         padding-top: 10px;
+      }
+      img{
+        width: 40px;
       }
 
       #getClassTableList .amList .am-list-item .am-list-line .am-list-extra{

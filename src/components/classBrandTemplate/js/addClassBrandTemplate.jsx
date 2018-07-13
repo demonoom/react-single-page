@@ -144,7 +144,11 @@ export default class addClassBrandTemplate extends React.Component {
                     {
                         <img src={addAT.state.imgPath} alt=""/>
                     }
-                    <button className="uploadBtn" onClick={this.uploadImage}>上传图片</button>
+                    <div className="uploadDiv">
+                        <div className="title">上传图片</div>
+                        <div className="uploadBtn" onClick={this.uploadImage}></div>
+                    </div>
+
                 </div>
                 <Button type="warning" className="submitBtn" onClick={this.subAttendanceTime}>提交</Button>
             </div>

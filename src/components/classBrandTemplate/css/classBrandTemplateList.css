@@ -3,6 +3,9 @@
 #classBrandTemplateList .am-list-line::after {
   display: none;
 }
+#classBrandTemplateList .am-list-view-scrollview-content {
+  width: 100%;
+}
 #classBrandTemplateList .classInfo {
   position: relative;
   padding: 10px 0;
@@ -11,10 +14,16 @@
 #classBrandTemplateList .classInfo .cont {
   padding: 0 15px;
 }
+#classBrandTemplateList .classInfo .cont .titleText {
+  width: calc(100% - 40px);
+}
 #classBrandTemplateList .classInfo .cont .title {
   font-size: 17px;
   color: #333;
   padding-top: 10px;
+}
+#classBrandTemplateList .classInfo .cont img {
+  width: 40px;
 }
 #classBrandTemplateList .classInfo .cont #getClassTableList .amList .am-list-item .am-list-line .am-list-extra {
   text-align: left;

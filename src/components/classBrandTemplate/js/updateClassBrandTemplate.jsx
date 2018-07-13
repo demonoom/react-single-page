@@ -168,10 +168,14 @@ export default class updateClassBrandTemplate extends React.Component {
                             value={this.state.skinClassName}
                         >皮肤类名<i className='redStar'>*</i></InputItem>
                     </div>
-                    {
-                        <img src={this.state.imgPath} alt="" />
-                    }
-                    <button className="uploadBtn" onClick={this.uploadImage}>修改图片</button>
+                    <WhiteSpace size="lg" />
+                    <div className="modifyDiv">
+                        <div className="title">修改图片</div>
+                        <div className="modifyBtn" onClick={this.uploadImage}></div>
+                        {
+                            <img src={this.state.imgPath} alt="" />
+                        }
+                    </div>
 
                 </div>
                 <div className='addCourseButton'>
