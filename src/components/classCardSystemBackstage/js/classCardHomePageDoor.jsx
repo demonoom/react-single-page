@@ -222,6 +222,20 @@ export default class classCardHomePageDoor extends React.Component {
         });
     
     }
+    /**
+     * 半拍皮肤设置
+     */
+    turnToSetSkin = () => {
+        var url = WebServiceUtil.mobileServiceURL + "classBrandTemplateSkin?uid="+ this.state.schoolId;
+        var data = {
+            method: 'openNewPage',
+            url: url
+        };
+        Bridge.callHandler(data, null, function (error) {
+            window.location.href = url;
+        });
+    
+    }
 
     render() {
         return (
@@ -243,6 +257,7 @@ export default class classCardHomePageDoor extends React.Component {
                     <li onClick={this.turnToAttendanceTime}><i className="icon icon_attendanceTime"></i><div>考勤时段设置</div></li>
                     {/*<li onClick={this.toAttendanceStatistical}><i className="icon icon_moralEducationScore"></i><div>出勤率统计(饼图)</div></li>
                     <li onClick={this.toAttendanceSatisticaForClass}><i className="icon icon_moralEducationScore"></i><div>出勤率统计(柱状图)</div></li>*/}
+                    <li onClick={this.turnToSetSkin}><i className="icon icon_attendanceTime"></i><div>班牌皮肤设置</div></li>
                 </ul>
             </div>
         );

@@ -95,7 +95,7 @@ export default class updateClassBrandTemplate extends React.Component {
             "id": _this.state.skinId,
             "skinName": UpdateAT.state.teachBuildValue,
             "skinAttr": UpdateAT.state.skinClassName,
-            "image":UpdateAT.state.imgPath
+            "image": UpdateAT.state.imgPath
         }
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
             onResponse: function (result) {
@@ -122,9 +122,24 @@ export default class updateClassBrandTemplate extends React.Component {
              * 上传照片
              */
     uploadImage() {
-        var data = {
-            method: 'selectImages',
-        };
+        var phoneType = navigator.userAgent;
+        var phone;
+        var data;
+        
+        if (phoneType.indexOf('iPhone') > -1 || phoneType.indexOf('iPad') > -1) {
+            phone = 'ios'
+        } else if(!(phoneType.indexOf('iPhone') > -1) || !(phoneType.indexOf('iPad') > -1)) {
+            phone = 'android'
+        }
+        if (phone == 'ios' || phone == 'android'){
+            data = {
+                method: 'uploadClassDemeanor',
+            };
+        }else {
+            data = {
+                method: 'selectImages',
+            };
+        }
         Bridge.callHandler(data, function (res) {
             // 拿到照片地址,显示在页面等待上传
             var imgPath = res.split("?");
