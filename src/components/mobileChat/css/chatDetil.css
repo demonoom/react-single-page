@@ -141,3 +141,13 @@
   font-size: 16px;
   line-height: 20px;
 }
+#chatDetil .input_message .submit {
+  background: #73B6F5;
+  color: #fff;
+  padding: 5px 22px;
+  border: none;
+  line-height: 22px;
+  border-radius: 4px;
+  margin-left: 15px;
+  max-width: 72px;
+}

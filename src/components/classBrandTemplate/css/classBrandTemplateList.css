@@ -1,0 +1,56 @@
+#classBrandTemplateList .am-list-body::before,
+#classBrandTemplateList .am-list-body::after,
+#classBrandTemplateList .am-list-line::after {
+  display: none;
+}
+#classBrandTemplateList .classInfo {
+  position: relative;
+  padding: 10px 0;
+  line-height: 24px;
+}
+#classBrandTemplateList .classInfo .cont {
+  padding: 0 15px;
+}
+#classBrandTemplateList .classInfo .cont .title {
+  font-size: 17px;
+  color: #333;
+  padding-top: 10px;
+}
+#classBrandTemplateList .classInfo .cont #getClassTableList .amList .am-list-item .am-list-line .am-list-extra {
+  text-align: left;
+}
+#classBrandTemplateList .classInfo .am-list.amList {
+  width: 170px;
+  display: inline-block;
+}
+#classBrandTemplateList .classInfo .am-button-primary {
+  background-color: #fff;
+}
+#classBrandTemplateList .classInfo .am-button-primary::before {
+  display: none;
+}
+#classBrandTemplateList .classInfo .am-switch .checkbox {
+  height: 23px;
+  width: 46px;
+}
+#classBrandTemplateList .classInfo .am-switch .checkbox:after {
+  width: 21px;
+  height: 21px;
+  top: 1px;
+}
+#classBrandTemplateList .classInfo .am-switch .checkbox:before {
+  background: #e5e5e5;
+  height: 23px;
+  width: 44px;
+  top: 0;
+}
+#classBrandTemplateList .classInfo .open_text {
+  color: #666;
+  font-size: 16px;
+}
+#classBrandTemplateList .classInfo .am-button-small {
+  height: 44px;
+}
+#classBrandTemplateList .classInfo .amList_cont {
+  padding-right: 15px;
+}

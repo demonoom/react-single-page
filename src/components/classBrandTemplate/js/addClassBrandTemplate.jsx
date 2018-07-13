@@ -7,7 +7,7 @@ import {
     InputItem,
     DatePicker,
 } from 'antd-mobile';
-// import '../css/newAttendanceTime.less'
+import '../css/addClassBrandTemplate.less'
 
 var addAT;
 
@@ -122,12 +122,7 @@ export default class addClassBrandTemplate extends React.Component {
                     </div>
 
                 </div>
-                <div className='addCourseButton'>
-                    <WhiteSpace size="lg" />
-                    <WingBlank>
-                        <Button type="warning" onClick={this.subAttendanceTime}>提交</Button>
-                    </WingBlank>
-                </div>
+                <Button type="warning" className="submitBtn" onClick={this.subAttendanceTime}>提交</Button>
             </div>
         );
     }

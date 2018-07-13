@@ -119,7 +119,7 @@ export default class updateClassBrandTemplate extends React.Component {
 
     render() {
         return (
-            <div id="updateClassBrandTemplate" style={{ height: this.state.clientHeight }}>
+            <div id="addClassBrandTemplate" style={{ height: this.state.clientHeight }}>
                 <div className="search_bg" style={{ display: this.state.search_bg ? 'block' : 'none' }}></div>
                 <div className="addCurriculum_cont">
                     <WhiteSpace size="lg" />
@@ -151,10 +151,7 @@ export default class updateClassBrandTemplate extends React.Component {
                    
                 </div>
                 <div className='addCourseButton'>
-                    <WhiteSpace size="lg" />
-                    <WingBlank>
-                        <Button type="warning" onClick={this.updateBraceletBoxSkinStatusInfo}>提交</Button>
-                    </WingBlank>
+                    <Button type="warning" className="submitBtn" onClick={this.updateBraceletBoxSkinStatusInfo}>提交</Button>
                 </div>
 
             </div>

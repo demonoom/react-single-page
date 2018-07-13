@@ -1,0 +1,12 @@
+#addClassBrandTemplate .redStar {
+  color: red;
+  font-size: 22px;
+  position: absolute;
+  left: 72px;
+  top: 12px;
+}
+#addClassBrandTemplate .submitBtn {
+  position: absolute !important;
+  width: calc(100% - 30px);
+  left: 15px;
+}

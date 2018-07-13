@@ -8,7 +8,7 @@ import {
     Button
 } from 'antd-mobile';
 import {createForm} from 'rc-form';
-
+import '../css/classBrandTemplateList.less';
 
 var AttenT;
 const prompt = Modal.prompt;
@@ -31,7 +31,7 @@ export default class classBrandTemplateList extends React.Component {
 
     componentDidMount() {
         Bridge.setShareAble("false");
-        document.title = '皮肤列表管理';
+        document.title = '模板管理';
         var locationHref = window.location.href;
         var locationSearch = locationHref.substr(locationHref.indexOf("?") + 1);
         var uid = locationSearch.split("&")[0].split("=")[1];
@@ -258,7 +258,7 @@ export default class classBrandTemplateList extends React.Component {
                                         AttenT.updateBraceletBoxSkinStatus(checked, rowData)
                                     }}
                                 />}
-                            ><span className="open_text">开启状态：</span></List.Item>
+                            ><span className="open_text">默认模板：</span></List.Item>
                         </List>
                         <Button className="modifyBtn_common" type="primary" size="small" onClick={this.updateAttendanceTime.bind(this, rowData)}></Button>
                         <Button type="primary" size="small" className="btn_del deleteBtn_common"  onClick={this.showAlert.bind(this, rowData)}></Button>
@@ -268,14 +268,13 @@ export default class classBrandTemplateList extends React.Component {
             SwitchExample = createForm()(SwitchExample);
 
             return (
-                <div className="classInfo line_public attendanceCont">
-                    <div style={{marginTop:'50px'}}>
+                <div className="classInfo line_public">
+                    <div className="cont">
                         <div className="title textOver">
-                            皮肤名称：{rowData.skinName}
+                            模板名称：{rowData.skinName}
                         </div>
-                        <div className="tableListDate textOver">
-                            <div className="classroom time"><span className="classroom_span">皮肤类名：</span>{rowData.skinAttr}</div>
-                            {/* <div className="classroom time"><span className="classroom_span">离校时间：</span>{rowData.itemList[0].checkOut}</div> */}
+                        <div className="title textOver">
+                            模板类名：{rowData.skinAttr}
                         </div>
                     </div>
                     <SwitchExample/>
