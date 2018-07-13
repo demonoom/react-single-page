@@ -13,17 +13,25 @@
 }
 #classBrandTemplateList .classInfo .cont {
   padding: 0 15px;
+  -webkit-align-items: center;
+  -moz-align-items: center;
+  -ms-align-items: center;
+  -o-align-items: center;
+  -khtml-align-items: center;
+  align-items: center;
 }
 #classBrandTemplateList .classInfo .cont .titleText {
-  width: calc(100% - 40px);
+  width: calc(100% - 89px);
 }
 #classBrandTemplateList .classInfo .cont .title {
   font-size: 17px;
   color: #333;
-  padding-top: 10px;
+  padding-top: 5px;
 }
 #classBrandTemplateList .classInfo .cont img {
-  width: 40px;
+  width: 84px;
+  height: 47px;
+  padding-left: 5px;
 }
 #classBrandTemplateList .classInfo .cont #getClassTableList .amList .am-list-item .am-list-line .am-list-extra {
   text-align: left;
@@ -62,4 +70,5 @@
 }
 #classBrandTemplateList .classInfo .amList_cont {
   padding-right: 15px;
+  padding-top: 5px;
 }

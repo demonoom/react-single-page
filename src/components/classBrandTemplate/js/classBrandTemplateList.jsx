@@ -272,6 +272,7 @@ export default class classBrandTemplateList extends React.Component {
             return (
                 <div className="classInfo line_public">
                     <div className="cont my_flex">
+
                         <div className="titleText">
                             <div className="title textOver">
                                 皮肤名称：{rowData.skinName}
@@ -280,7 +281,6 @@ export default class classBrandTemplateList extends React.Component {
                                 皮肤类名：{rowData.skinAttr}
                             </div>
                         </div>
-
                         <img src={rowData.image} />
                     </div>
                     <SwitchExample />

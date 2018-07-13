@@ -192,9 +192,7 @@ export default class classBrandTemplateSkin extends React.Component {
                             height: AttenT.state.clientHeight - 77,
                         }}
                     />
-                    <div className="btnDiv">
-                        <Button type="warning" className="submitBtn" onClick={this.updateBraceletBoxSkinToSchoolId}>提交</Button>
-                    </div>
+                    <Button type="warning" className="submitBtn" onClick={this.updateBraceletBoxSkinToSchoolId}>提交</Button>
                 </div>
             </div>
         );

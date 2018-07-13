@@ -29,6 +29,11 @@
   height: 7.5rem;
   background-size: 100%;
 }
+#addClassBrandTemplate .uploadDiv img {
+  width: 7.5rem;
+  height: 7.5rem;
+  margin-right: 15px;
+}
 #addClassBrandTemplate .modifyDiv {
   padding: 15px;
   background-color: #fff;

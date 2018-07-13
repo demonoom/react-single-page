@@ -118,7 +118,7 @@ export default class addClassBrandTemplate extends React.Component {
                     <WhiteSpace size="lg" />
                     <div className='teachBuild'>
                         <InputItem
-                            placeholder="请输入皮肤名称"
+                            placeholder="请输入名称"
                             data-seed="logId"
                             onChange={v => {
                                 addAT.setState({
@@ -131,7 +131,7 @@ export default class addClassBrandTemplate extends React.Component {
                     <WhiteSpace size="lg" />
                     <div className='teachBuild'>
                         <InputItem
-                            placeholder="请输入皮类名"
+                            placeholder="请输入类名"
                             data-seed="logId"
                             onChange={v => {
                                 addAT.setState({
@@ -141,12 +141,18 @@ export default class addClassBrandTemplate extends React.Component {
                             value={this.state.skinClassName}
                         >皮肤类名<i className='redStar'>*</i></InputItem>
                     </div>
-                    {
-                        <img src={addAT.state.imgPath} alt=""/>
-                    }
+                    <WhiteSpace size="lg" />
                     <div className="uploadDiv">
                         <div className="title">上传图片</div>
-                        <div className="uploadBtn" onClick={this.uploadImage}></div>
+                        <div className="my_flex">
+                            {
+                                addAT.state.imgPath == "undefined" ?  <img src={addAT.state.imgPath} alt=""/>
+                                    :
+                                    ""
+                            }
+
+                            <div className="uploadBtn" onClick={this.uploadImage}></div>
+                        </div>
                     </div>
 
                 </div>

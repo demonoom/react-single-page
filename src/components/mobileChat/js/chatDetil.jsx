@@ -732,7 +732,7 @@ export default class chat_Detil extends React.Component {
                 damping={60}   //拉动距离限制, 建议小于 200
                 ref={el => this.ptr = el}
                 style={{
-                    height: this.state.height - 66,
+                    height: this.state.height - 54,
                     overflow: 'auto',
                 }}
                 direction='down'

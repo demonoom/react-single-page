@@ -119,30 +119,48 @@
   }
   .input_message{
     background: #f5f5f7;
-    height: 46px;
-    padding: 10px 12px;
+    height: 38px;
+    padding: 8px 12px;
     border-radius: 4px;
     .am-textarea-item{
-      border:1px solid #d7d7d7 ;
+      border: 1px solid #ddd;
       border-radius: 4px;
       padding: 0 5px;
-      max-height: 46px;
+      max-height: 38px;
+      min-height: 38px;
       overflow-y: auto;
+      width: calc(~"100% - 72px");
+      display: inline-block;
+    }
+    .am-textarea-control{
+      padding-top: 6px;
+      padding-bottom: 6px;
     }
     .am-textarea-control textarea{
-      font-size: 16px;
-      line-height: 20px;
+      font-size: 15px;
+      line-height: 1.4;
     }
     .submit {
-      background: #73B6F5;
+      background: #1aad1a;
       color: #fff;
-      padding: 5px 22px;
+      padding: 0;
       border: none;
-      line-height: 22px;
+      line-height: 34px;
       border-radius: 4px;
-      margin-left: 15px;
-      max-width: 72px;
+      margin-left: 10px;
+      width: 62px;
+      font-size: 14px;
+      display: inline-block;
+      position: relative;
+      top:1px;
     }
+  }
+  .lineTop_public:after, .am-list-body::before, .am-list .am-list-item.am-textarea-item::after, .am-list-body::after{
+    background-color: transparent;
+  }
+  .am-list-body{
+    border-color: transparent;
+    background: transparent;
   }
 
 }
