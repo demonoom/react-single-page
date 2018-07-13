@@ -11,8 +11,9 @@
 #classBrandTemplateSkin .am-list-body {
   border: 0;
 }
-#classBrandTemplateSkin .classInfo {
-  padding: 5px 0;
+#classBrandTemplateSkin .classInfo .am-list-item {
+  padding-top: 5px;
+  padding-bottom: 5px;
 }
 #classBrandTemplateSkin .classInfo .my_flex {
   -webkit-align-items: center;
