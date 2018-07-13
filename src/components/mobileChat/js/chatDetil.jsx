@@ -1,7 +1,7 @@
 import React from 'react';
 import '../css/chatDetil.less'
 import {MsgConnection} from '../../../helpers/chat_websocket_connection';
-import {PullToRefresh, List, TextareaItem, Toast} from 'antd-mobile';
+import {PullToRefresh, List, TextareaItem, Toast, Button} from 'antd-mobile';
 
 var chatDetil;
 var scrollNum = 0;
@@ -671,6 +671,27 @@ export default class chat_Detil extends React.Component {
         this.getUser2UserMessages(this.state.firstMessageCreateTime, false)
     }
 
+    sendMessage() {
+        if (chatDetil.state.TextareaValue.trim() == '') {
+            Toast.fail('请输入内容发送', 1)
+            return
+        }
+
+        chatDetil.setState({TextareaValue: ''})
+        var fromUser = chatDetil.state.loginUser
+        var uuid = WebServiceUtil.createUUID();
+        var createTime = (new Date()).valueOf();
+        var messageJson = {
+            'content': chatDetil.state.TextareaValue, "createTime": createTime, 'fromUser': fromUser,
+            "toId": chatDetil.state.toId, "command": "message", "hostId": chatDetil.state.fromId,
+            "uuid": uuid, "toType": 1
+        };
+
+        var commandJson = {"command": "message", "data": {"message": messageJson}};
+
+        ms.send(commandJson);
+    }
+
     TextareaOnKeyUp(e) {
         if (e.keyCode == 13) {
 
@@ -733,11 +754,13 @@ export default class chat_Detil extends React.Component {
                     value={this.state.TextareaValue}
                     autoHeight
                     labelNumber={3}
-                    onKeyUp={this.TextareaOnKeyUp}
+                    // onKeyUp={this.TextareaOnKeyUp}
                     onChange={this.TextareaOnKeyChange}
                     count={60}
                     onFocus={this.TextareaOnFocus}
                 />
+
+                <button className="submit" onClick={this.sendMessage}>发送</button>
             </List>
         </div>);
     }
