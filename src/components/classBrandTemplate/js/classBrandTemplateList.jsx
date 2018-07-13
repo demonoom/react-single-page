@@ -10,6 +10,7 @@ import {
 import {createForm} from 'rc-form';
 import '../css/classBrandTemplateList.less';
 
+
 var AttenT;
 const prompt = Modal.prompt;
 const alert = Modal.alert;
@@ -31,11 +32,11 @@ export default class classBrandTemplateList extends React.Component {
 
     componentDidMount() {
         Bridge.setShareAble("false");
-        document.title = '模板管理';
+        document.title = '皮肤列表管理';
         var locationHref = window.location.href;
         var locationSearch = locationHref.substr(locationHref.indexOf("?") + 1);
         var uid = locationSearch.split("&")[0].split("=")[1];
-        this.setState({"uid": uid});
+        this.setState({ "uid": uid });
         this.getBraceletBoxSkinList();
         //添加对视窗大小的监听,在屏幕转换以及键盘弹起时重设各项高度
         window.addEventListener('resize', AttenT.onWindowResize)
@@ -51,7 +52,7 @@ export default class classBrandTemplateList extends React.Component {
      */
     onWindowResize() {
         setTimeout(function () {
-            AttenT.setState({clientHeight: document.body.clientHeight});
+            AttenT.setState({ clientHeight: document.body.clientHeight });
         }, 100)
     }
 
@@ -70,9 +71,10 @@ export default class classBrandTemplateList extends React.Component {
             "method": 'getBraceletBoxSkinList',
             "pageNo": -1,
         };
-        
+
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
             onResponse: function (result) {
+                console.log(result, "new")
                 if (result.msg == '调用成功' && result.success == true) {
                     var arr = result.response;
                     for (let i = 0; i < arr.length; i++) {
@@ -96,23 +98,7 @@ export default class classBrandTemplateList extends React.Component {
      * 去添加页面
      **/
     turnAddClassBrandTemplate(rowData) {
-        var url = WebServiceUtil.mobileServiceURL + "addClassBrandTemplate?uid="+AttenT.state.uid;
-            var data = {
-                method: 'openNewPage',
-                url: url,
-            };
-            Bridge.callHandler(data, null, function (error) {
-                window.location.href = url;
-            });
-    }
-
-    /**
-     * 跳转编辑页面
-     * @param name
-     */
-    updateAttendanceTime(data, event) {
-        
-        var url = WebServiceUtil.mobileServiceURL + "updateClassBrandTemplate?uid="+AttenT.state.uid +"&id="+data.id;
+        var url = WebServiceUtil.mobileServiceURL + "addClassBrandTemplate?uid=" + AttenT.state.uid;
         var data = {
             method: 'openNewPage',
             url: url,
@@ -120,8 +106,24 @@ export default class classBrandTemplateList extends React.Component {
         Bridge.callHandler(data, null, function (error) {
             window.location.href = url;
         });
-        
-        
+    }
+
+    /**
+     * 跳转编辑页面
+     * @param name
+     */
+    updateAttendanceTime(data, event) {
+
+        var url = WebServiceUtil.mobileServiceURL + "updateClassBrandTemplate?uid=" + AttenT.state.uid + "&id=" + data.id;
+        var data = {
+            method: 'openNewPage',
+            url: url,
+        };
+        Bridge.callHandler(data, null, function (error) {
+            window.location.href = url;
+        });
+
+
     }
 
     /**
@@ -173,12 +175,12 @@ export default class classBrandTemplateList extends React.Component {
             phone = 'android'
         }
         const alertInstance = alert('您确定要删除该皮肤吗?', '', [
-            {text: '取消', onPress: () => console.log('cancel'), style: 'default'},
-            {text: '确定', onPress: () => AttenT.deleteBraceletBoxSkin(data)},
+            { text: '取消', onPress: () => console.log('cancel'), style: 'default' },
+            { text: '确定', onPress: () => AttenT.deleteBraceletBoxSkin(data) },
         ], phone);
     };
 
-   
+
     /**
      * 改变启用停用状态
      */
@@ -236,12 +238,12 @@ export default class classBrandTemplateList extends React.Component {
             }
         });
     }
-
+    
     render() {
-     
+
         const row = (rowData, sectionID, rowID) => {
             let SwitchExample = (props) => {
-                const {getFieldProps} = props.form;
+                const { getFieldProps } = props.form;
                 return (
                     <div className="amList_cont" >
                         <List className="amList">
@@ -258,10 +260,10 @@ export default class classBrandTemplateList extends React.Component {
                                         AttenT.updateBraceletBoxSkinStatus(checked, rowData)
                                     }}
                                 />}
-                            ><span className="open_text">默认模板：</span></List.Item>
+                            ><span className="open_text">默认皮肤：</span></List.Item>
                         </List>
                         <Button className="modifyBtn_common" type="primary" size="small" onClick={this.updateAttendanceTime.bind(this, rowData)}></Button>
-                        <Button type="primary" size="small" className="btn_del deleteBtn_common"  onClick={this.showAlert.bind(this, rowData)}></Button>
+                        <Button type="primary" size="small" className="btn_del deleteBtn_common" onClick={this.showAlert.bind(this, rowData)}></Button>
                     </div>
                 );
             };
@@ -271,19 +273,20 @@ export default class classBrandTemplateList extends React.Component {
                 <div className="classInfo line_public">
                     <div className="cont">
                         <div className="title textOver">
-                            模板名称：{rowData.skinName}
+                            皮肤名称：{rowData.skinName}
                         </div>
                         <div className="title textOver">
-                            模板类名：{rowData.skinAttr}
+                            皮肤类名：{rowData.skinAttr}
                         </div>
+                        <img src={rowData.image} />
                     </div>
-                    <SwitchExample/>
+                    <SwitchExample />
                 </div>
             )
         };
         return (
-            <div id="classBrandTemplateList" style={{height: AttenT.state.clientHeight}}>
-                <div className='tableDiv' style={{height: AttenT.state.clientHeight}}>
+            <div id="classBrandTemplateList" style={{ height: AttenT.state.clientHeight }}>
+                <div className='tableDiv' style={{ height: AttenT.state.clientHeight }}>
                     <div className='addBunton' onClick={this.turnAddClassBrandTemplate}>
                         <img src={require("../imgs/addBtn.png")} />
                     </div>
@@ -292,7 +295,7 @@ export default class classBrandTemplateList extends React.Component {
                         ref={el => this.lv = el}
                         dataSource={this.state.dataSource}    //数据类型是 ListViewDataSource
                         renderFooter={() => (
-                            <div style={{paddingTop: 5, paddingBottom: 40, textAlign: 'center'}}>
+                            <div style={{ paddingTop: 5, paddingBottom: 40, textAlign: 'center' }}>
                                 {this.state.isLoadingLeft ? '正在加载' : '已经全部加载完毕'}
                             </div>)}
                         renderRow={row}   //需要的参数包括一行数据等,会返回一个可渲染的组件为这行数据渲染  返回renderable

@@ -15,9 +15,9 @@ export default class updateClassBrandTemplate extends React.Component {
         UpdateAT = this;
         this.state = {
             teachBuildValue: "",
-            skinClassName:"",
+            skinClassName: "",
             cols: 1,
-            initData:[],
+            initData: [],
             search_bg: false,
             clientHeight: document.body.clientHeight,
         };
@@ -29,7 +29,7 @@ export default class updateClassBrandTemplate extends React.Component {
         var locationSearch = locationHref.substr(locationHref.indexOf("?") + 1);
         var uid = locationSearch.split("&")[0].split("=")[1];
         var skinId = locationSearch.split("&")[1].split("=")[1];
-        this.setState({ uid, "skinId":skinId });
+        this.setState({ uid, "skinId": skinId });
         this.getBraceletBoxSkinById(skinId);
         window.addEventListener('resize', this.onWindwoResize);
     }
@@ -56,17 +56,18 @@ export default class updateClassBrandTemplate extends React.Component {
      */
     getBraceletBoxSkinById = (skinId) => {
         var param = {
-            "method":"getBraceletBoxSkinById",
-            "id":skinId
+            "method": "getBraceletBoxSkinById",
+            "id": skinId
         }
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
             onResponse: function (result) {
+                console.log(result, "shuju")
                 if (result.msg == '调用成功' || result.success == true) {
                     UpdateAT.setState({
-                        initData:result.response,
-                        teachBuildValue:result.response.skinName,
-                        skinClassName:result.response.skinAttr,
-
+                        initData: result.response,
+                        teachBuildValue: result.response.skinName,
+                        skinClassName: result.response.skinAttr,
+                        imgPath: result.response.image
                     })
                 } else {
                     Toast.fail(result.msg, 5);
@@ -91,9 +92,10 @@ export default class updateClassBrandTemplate extends React.Component {
         }
         var param = {
             "method": 'updateBraceletBoxSkinStatusInfo',
-            "id":_this.state.skinId,
+            "id": _this.state.skinId,
             "skinName": UpdateAT.state.teachBuildValue,
-            "skinAttr":UpdateAT.state.skinClassName
+            "skinAttr": UpdateAT.state.skinClassName,
+            "image":UpdateAT.state.imgPath
         }
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
             onResponse: function (result) {
@@ -116,7 +118,25 @@ export default class updateClassBrandTemplate extends React.Component {
             }
         });
     }
-
+    /**
+             * 上传照片
+             */
+    uploadImage() {
+        var data = {
+            method: 'selectImages',
+        };
+        Bridge.callHandler(data, function (res) {
+            // 拿到照片地址,显示在页面等待上传
+            var imgPath = res.split("?");
+            var usePath = imgPath[0];
+            UpdateAT.setState({
+                imgPath: usePath
+            })
+            console.log(res, "sddsds")
+        }, function (error) {
+            console.log(error);
+        });
+    }
     render() {
         return (
             <div id="addClassBrandTemplate" style={{ height: this.state.clientHeight }}>
@@ -148,7 +168,11 @@ export default class updateClassBrandTemplate extends React.Component {
                             value={this.state.skinClassName}
                         >皮肤类名<i className='redStar'>*</i></InputItem>
                     </div>
-                   
+                    {
+                        <img src={this.state.imgPath} alt="" />
+                    }
+                    <button className="uploadBtn" onClick={this.uploadImage}>修改图片</button>
+
                 </div>
                 <div className='addCourseButton'>
                     <Button type="warning" className="submitBtn" onClick={this.updateBraceletBoxSkinStatusInfo}>提交</Button>
