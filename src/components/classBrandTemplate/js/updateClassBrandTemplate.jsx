@@ -169,12 +169,13 @@ export default class updateClassBrandTemplate extends React.Component {
                         >皮肤类名<i className='redStar'>*</i></InputItem>
                     </div>
                     <WhiteSpace size="lg" />
-                    <div className="modifyDiv">
-                        <div className="title">修改图片</div>
-                        <div className="modifyBtn" onClick={this.uploadImage}></div>
-                        {
-                            <img src={this.state.imgPath} alt="" />
-                        }
+                    <div className="modifyDiv my_flex">
+                        <div className="imgDiv">
+                            {
+                                <img src={this.state.imgPath} alt="" />
+                            }
+                        </div>
+                        <div className="modifyBtn" onClick={this.uploadImage}>修改图片</div>
                     </div>
 
                 </div>

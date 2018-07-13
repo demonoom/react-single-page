@@ -3,6 +3,11 @@
 #classBrandTemplateList .am-list-line::after {
   display: none;
 }
+#classBrandTemplateList .am-list-body,
+#classBrandTemplateList .am-list-line,
+#classBrandTemplateList .am-button-primary {
+  border: 0;
+}
 #classBrandTemplateList .am-list-view-scrollview-content {
   width: 100%;
 }

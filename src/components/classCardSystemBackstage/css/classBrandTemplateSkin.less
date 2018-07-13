@@ -4,5 +4,44 @@
     width: calc(~"100% - 30px");
     left: 15px;
   }
+  .am-list-body::before,.am-list-body::after,.am-list-line::after{
+    display: none;
+  }
+  .am-list-body{
+    border: 0;
+  }
+  .classInfo{
+    padding: 5px 0;
+    .my_flex{
+      -webkit-align-items: center;
+      -moz-align-items: center;
+      -ms-align-items: center;
+      -o-align-items: center;
+      -khtml-align-items: center;
+      align-items: center;
+    }
+    .titleText{
+      width: calc(~"100% - 89px");
+      .textName{
+        width: calc(~"100% - 25px");
+      }
+    }
+    img{
+      width: 84px;
+      height: 47px;
+      padding-right: 10px;
+    }
+    .am-list .am-list-item.am-radio-item .am-list-line .am-list-extra .am-radio{
+      height: 60px;
+    }
+    .am-list .am-list-item.am-radio-item .am-list-line .am-list-extra .am-radio-inner{
+      top:50%;
+      -webkit-transform: translateY(-50%);
+      -moz-transform: translateY(-50%);
+      -ms-transform: translateY(-50%);
+      -o-transform: translateY(-50%);
+      transform: translateY(-50%);
+    }
+  }
 
 }

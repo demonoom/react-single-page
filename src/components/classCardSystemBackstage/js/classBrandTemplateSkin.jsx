@@ -157,12 +157,17 @@ export default class classBrandTemplateSkin extends React.Component {
         const { value } = this.state;
         const row = (rowData, sectionID, rowID) => {
             return (
-                <div className="classInfo line_public attendanceCont">
+                <div className="classInfo line_public">
                     <List>
                         <RadioItem key={rowData.value} checked={value === rowData.value} onChange={() => this.onChange(rowData.value)}>
-                            皮肤名称：{rowData.label}
-                            <List.Item.Brief>皮肤类名：{rowData.extra}</List.Item.Brief>
-                            <img src={rowData.img} />
+                            <div className="my_flex">
+                                <img src={rowData.img} />
+                                <div className="titleText">
+                                    <div className="textOver textName">{rowData.label}</div>
+                                    {/*<List.Item.Brief>皮肤类名：{rowData.extra}</List.Item.Brief>*/}
+                                </div>
+
+                            </div>
                         </RadioItem>
                     </List>
                 </div>

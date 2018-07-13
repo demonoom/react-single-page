@@ -37,9 +37,34 @@
 #addClassBrandTemplate .modifyDiv {
   padding: 15px;
   background-color: #fff;
+  -webkit-align-items: center;
+  -moz-align-items: center;
+  -ms-align-items: center;
+  -o-align-items: center;
+  -khtml-align-items: center;
+  align-items: center;
 }
 #addClassBrandTemplate .modifyDiv .title {
   font-size: 17px;
   color: #333;
   line-height: 44px;
+}
+#addClassBrandTemplate .modifyDiv .imgDiv {
+  width: calc(100% - 85px);
+}
+#addClassBrandTemplate .modifyDiv .imgDiv img {
+  width: 84px;
+  height: 47px;
+}
+#addClassBrandTemplate .modifyDiv .modifyBtn {
+  font-size: 16px;
+  color: #F56A55;
+  border: 1px #F56A55 solid;
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  border-radius: 3px;
+  height: 30px;
+  line-height: 30px;
+  width: 85px;
+  text-align: center;
 }
