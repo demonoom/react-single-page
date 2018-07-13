@@ -95,7 +95,7 @@ export default class updateClassBrandTemplate extends React.Component {
             "id": _this.state.skinId,
             "skinName": UpdateAT.state.teachBuildValue,
             "skinAttr": UpdateAT.state.skinClassName,
-            "image":UpdateAT.state.imgPath
+            "image": UpdateAT.state.imgPath
         }
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
             onResponse: function (result) {
@@ -122,9 +122,27 @@ export default class updateClassBrandTemplate extends React.Component {
              * 上传照片
              */
     uploadImage() {
-        var data = {
-            method: 'selectImages',
-        };
+        var phoneType = navigator.userAgent;
+
+        var phone;
+        var data;
+        
+        if (phoneType.indexOf('iPhone') > -1 || phoneType.indexOf('iPad') > -1) {
+            phone = 'ios'
+        } else if(phoneType.indexOf('Android') > -1 ) {
+            phone = 'android'
+        }else {
+            phone = ""
+        }
+        if (phone == 'ios' || phone == 'android'){
+            data = {
+                method: 'uploadClassDemeanor',
+            };
+        }else {
+            data = {
+                method: 'selectImages',
+            };
+        }
         Bridge.callHandler(data, function (res) {
             // 拿到照片地址,显示在页面等待上传
             var imgPath = res.split("?");
@@ -139,7 +157,7 @@ export default class updateClassBrandTemplate extends React.Component {
     }
     render() {
         return (
-            <div id="updateClassBrandTemplate" style={{ height: this.state.clientHeight }}>
+            <div id="addClassBrandTemplate" style={{ height: this.state.clientHeight }}>
                 <div className="search_bg" style={{ display: this.state.search_bg ? 'block' : 'none' }}></div>
                 <div className="addCurriculum_cont">
                     <WhiteSpace size="lg" />
@@ -168,17 +186,19 @@ export default class updateClassBrandTemplate extends React.Component {
                             value={this.state.skinClassName}
                         >皮肤类名<i className='redStar'>*</i></InputItem>
                     </div>
-                    {
-                        <img src={this.state.imgPath} alt="" />
-                    }
-                    <button className="uploadBtn" onClick={this.uploadImage}>修改图片</button>
+                    <WhiteSpace size="lg" />
+                    <div className="modifyDiv my_flex">
+                        <div className="imgDiv">
+                            {
+                                <img src={this.state.imgPath} alt="" />
+                            }
+                        </div>
+                        <div className="modifyBtn" onClick={this.uploadImage}>修改图片</div>
+                    </div>
 
                 </div>
                 <div className='addCourseButton'>
-                    <WhiteSpace size="lg" />
-                    <WingBlank>
-                        <Button type="warning" onClick={this.updateBraceletBoxSkinStatusInfo}>提交</Button>
-                    </WingBlank>
+                    <Button type="warning" className="submitBtn" onClick={this.updateBraceletBoxSkinStatusInfo}>提交</Button>
                 </div>
 
             </div>
