@@ -49,23 +49,44 @@ export default class addClassBrandTemplate extends React.Component {
             })
         }, 100)
     }
-
+     /**
+     * 上传照片
+     */
+    uploadImage() {
+        var data = {
+            method: 'selectImages',
+        };
+        Bridge.callHandler(data, function (res) {
+            // 拿到照片地址,显示在页面等待上传
+            var imgPath = res.split("?");
+            var usePath = imgPath[0];
+            addAT.setState({
+                imgPath:usePath
+            })
+            console.log(res,"sddsds")
+        }, function (error) {
+            console.log(error);
+        });
+    }
     /**
      * 提交
      */
     subAttendanceTime = () => {
         if (addAT.state.teachBuildValue == "") {
             Toast.info("皮肤名称不能为空")
+            return
         }
 
         if (addAT.state.skinClassName == "") {
             Toast.info("皮肤类名不能为空")
+            return
         }
        
         var param = {
             "method": 'addBraceletBoxSkin',
             "skinName":addAT.state.teachBuildValue,
-            "skinAttr":addAT.state.skinClassName
+            "skinAttr":addAT.state.skinClassName,
+            "image":addAT.state.imgPath
         }
         console.log(param)
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
@@ -73,12 +94,12 @@ export default class addClassBrandTemplate extends React.Component {
                 if (result.msg == '调用成功' || result.success == true) {
                     Toast.success('成功');
                     //关闭当前窗口，并刷新上一个页面
-                    // var data = {
-                    //     method: 'finishForRefresh',
-                    // };
-                    // Bridge.callHandler(data, null, function (error) {
-                    //     console.log(error);
-                    // });
+                    var data = {
+                        method: 'finishForRefresh',
+                    };
+                    Bridge.callHandler(data, null, function (error) {
+                        console.log(error);
+                    });
                 } else {
                     Toast.fail(result.msg, 5);
                 }
@@ -120,7 +141,10 @@ export default class addClassBrandTemplate extends React.Component {
                             value={this.state.skinClassName}
                         >皮肤类名<i className='redStar'>*</i></InputItem>
                     </div>
-
+                    {
+                        <img src={addAT.state.imgPath} alt=""/>
+                    }
+                    <button className="uploadBtn" onClick={this.uploadImage}>上传图片</button>
                 </div>
                 <div className='addCourseButton'>
                     <WhiteSpace size="lg" />

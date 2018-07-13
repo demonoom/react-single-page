@@ -1,7 +1,7 @@
 import React from 'react';
 import {
     ListView,
-    List, Radio, Flex, Toast, Button
+    List, Radio, Toast, Button
 } from 'antd-mobile';
 
 const RadioItem = Radio.RadioItem;
@@ -107,7 +107,7 @@ export default class classBrandTemplateSkin extends React.Component {
                     var arr = [];
                     result.response.forEach(function (v, i) {
                         arr.push({
-                            value: v.id, label: v.skinName, extra: v.skinAttr
+                            value: v.id, label: v.skinName, extra: v.skinAttr,img:v.image
                         })
                     })
                     for (let i = 0; i < arr.length; i++) {
@@ -140,7 +140,7 @@ export default class classBrandTemplateSkin extends React.Component {
         var param = {
             "method":"updateBraceletBoxSkinToSchoolId",
             "skinId":AttenT.state.value,
-            "schoolId":AttenT.state.uid
+            "schoolId":AttenT.state.uid,
         }
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
             onResponse: function (result) {
@@ -162,6 +162,7 @@ export default class classBrandTemplateSkin extends React.Component {
                         <RadioItem key={rowData.value} checked={value === rowData.value} onChange={() => this.onChange(rowData.value)}>
                             皮肤名称：{rowData.label}
                             <List.Item.Brief>皮肤类名：{rowData.extra}</List.Item.Brief>
+                            <img src={rowData.img} />
                         </RadioItem>
                     </List>
                 </div>
@@ -192,7 +193,6 @@ export default class classBrandTemplateSkin extends React.Component {
                         }}
                     />
                     <Button type="warning" onClick={this.updateBraceletBoxSkinToSchoolId}>提交</Button>
-                    {/* <div onClick={AttenT.}>提交</div> */}
                 </div>
             </div>
         );
