@@ -7,7 +7,7 @@ import {
     InputItem,
     DatePicker,
 } from 'antd-mobile';
-// import '../css/newAttendanceTime.less'
+import '../css/addClassBrandTemplate.less'
 
 var addAT;
 
@@ -135,7 +135,7 @@ export default class addClassBrandTemplate extends React.Component {
                     <WhiteSpace size="lg" />
                     <div className='teachBuild'>
                         <InputItem
-                            placeholder="请输入皮肤名称"
+                            placeholder="请输入名称"
                             data-seed="logId"
                             onChange={v => {
                                 addAT.setState({
@@ -148,7 +148,7 @@ export default class addClassBrandTemplate extends React.Component {
                     <WhiteSpace size="lg" />
                     <div className='teachBuild'>
                         <InputItem
-                            placeholder="请输入皮类名"
+                            placeholder="请输入类名"
                             data-seed="logId"
                             onChange={v => {
                                 addAT.setState({
@@ -158,17 +158,22 @@ export default class addClassBrandTemplate extends React.Component {
                             value={this.state.skinClassName}
                         >皮肤类名<i className='redStar'>*</i></InputItem>
                     </div>
-                    {
-                        <img src={addAT.state.imgPath} alt=""/>
-                    }
-                    <button className="uploadBtn" onClick={this.uploadImage}>上传图片</button>
-                </div>
-                <div className='addCourseButton'>
                     <WhiteSpace size="lg" />
-                    <WingBlank>
-                        <Button type="warning" onClick={this.subAttendanceTime}>提交</Button>
-                    </WingBlank>
+                    <div className="uploadDiv">
+                        <div className="title">上传图片</div>
+                        <div className="my_flex">
+                            {
+                                addAT.state.imgPath == "undefined" ?  <img src={addAT.state.imgPath} alt=""/>
+                                    :
+                                    ""
+                            }
+
+                            <div className="uploadBtn" onClick={this.uploadImage}></div>
+                        </div>
+                    </div>
+
                 </div>
+                <Button type="warning" className="submitBtn" onClick={this.subAttendanceTime}>提交</Button>
             </div>
         );
     }

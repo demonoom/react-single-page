@@ -154,7 +154,7 @@ export default class updateClassBrandTemplate extends React.Component {
     }
     render() {
         return (
-            <div id="updateClassBrandTemplate" style={{ height: this.state.clientHeight }}>
+            <div id="addClassBrandTemplate" style={{ height: this.state.clientHeight }}>
                 <div className="search_bg" style={{ display: this.state.search_bg ? 'block' : 'none' }}></div>
                 <div className="addCurriculum_cont">
                     <WhiteSpace size="lg" />
@@ -183,17 +183,19 @@ export default class updateClassBrandTemplate extends React.Component {
                             value={this.state.skinClassName}
                         >皮肤类名<i className='redStar'>*</i></InputItem>
                     </div>
-                    {
-                        <img src={this.state.imgPath} alt="" />
-                    }
-                    <button className="uploadBtn" onClick={this.uploadImage}>修改图片</button>
+                    <WhiteSpace size="lg" />
+                    <div className="modifyDiv my_flex">
+                        <div className="imgDiv">
+                            {
+                                <img src={this.state.imgPath} alt="" />
+                            }
+                        </div>
+                        <div className="modifyBtn" onClick={this.uploadImage}>修改图片</div>
+                    </div>
 
                 </div>
                 <div className='addCourseButton'>
-                    <WhiteSpace size="lg" />
-                    <WingBlank>
-                        <Button type="warning" onClick={this.updateBraceletBoxSkinStatusInfo}>提交</Button>
-                    </WingBlank>
+                    <Button type="warning" className="submitBtn" onClick={this.updateBraceletBoxSkinStatusInfo}>提交</Button>
                 </div>
 
             </div>

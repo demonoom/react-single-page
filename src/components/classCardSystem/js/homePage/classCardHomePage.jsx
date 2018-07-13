@@ -94,7 +94,7 @@ export default class classCardHomePage extends React.Component {
 
     render() {
         return (
-            <div id="skin_default">
+            <div id="skin_middleSchool">
                 <div id="classCardHomePage" style={{height: document.body.clientHeight}}>
                     <Header
                         timeOut={this.timeOut}

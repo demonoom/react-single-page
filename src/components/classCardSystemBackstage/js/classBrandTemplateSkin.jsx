@@ -3,7 +3,7 @@ import {
     ListView,
     List, Radio, Toast, Button
 } from 'antd-mobile';
-
+import '../css/classBrandTemplateSkin.less'
 const RadioItem = Radio.RadioItem;
 var AttenT;
 
@@ -157,12 +157,17 @@ export default class classBrandTemplateSkin extends React.Component {
         const { value } = this.state;
         const row = (rowData, sectionID, rowID) => {
             return (
-                <div className="classInfo line_public attendanceCont">
+                <div className="classInfo line_public">
                     <List>
                         <RadioItem key={rowData.value} checked={value === rowData.value} onChange={() => this.onChange(rowData.value)}>
-                            皮肤名称：{rowData.label}
-                            <List.Item.Brief>皮肤类名：{rowData.extra}</List.Item.Brief>
-                            <img src={rowData.img} />
+                            <div className="my_flex">
+                                <img src={rowData.img} />
+                                <div className="titleText">
+                                    <div className="textOver textName">{rowData.label}</div>
+                                    {/*<List.Item.Brief>皮肤类名：{rowData.extra}</List.Item.Brief>*/}
+                                </div>
+
+                            </div>
                         </RadioItem>
                     </List>
                 </div>
@@ -189,10 +194,10 @@ export default class classBrandTemplateSkin extends React.Component {
                         initialListSize={30}   //指定在组件刚挂载的时候渲染多少行数据，用这个属性来确保首屏显示合适数量的数据
                         scrollEventThrottle={20}     //控制在滚动过程中，scroll事件被调用的频率
                         style={{
-                            height: AttenT.state.clientHeight - 50,
+                            height: AttenT.state.clientHeight - 77,
                         }}
                     />
-                    <Button type="warning" onClick={this.updateBraceletBoxSkinToSchoolId}>提交</Button>
+                    <Button type="warning" className="submitBtn" onClick={this.updateBraceletBoxSkinToSchoolId}>提交</Button>
                 </div>
             </div>
         );
