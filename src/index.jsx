@@ -656,6 +656,36 @@ const arDoor = (location, cb) => {
     )
 }
 
+
+/**
+ * 皮肤管理
+ */
+
+const classBrandTemplateList = (location, cb) => {
+    require.ensure([], require => {
+            cb(null, require("./components/classBrandTemplate/js/classBrandTemplateList").default)
+        }
+    )
+}
+const addClassBrandTemplate = (location, cb) => {
+    require.ensure([], require => {
+            cb(null, require("./components/classBrandTemplate/js/addClassBrandTemplate").default)
+        }
+    )
+}
+const updateClassBrandTemplate = (location, cb) => {
+    require.ensure([], require => {
+            cb(null, require("./components/classBrandTemplate/js/updateClassBrandTemplate").default)
+        }
+    )
+}
+
+const classBrandTemplateSkin = (location, cb) => {
+    require.ensure([], require => {
+            cb(null, require("./components/classCardSystemBackstage/js/classBrandTemplateSkin").default)
+        }
+    )
+}
 import './index.less';
 
 class Index extends React.Component {
@@ -824,6 +854,15 @@ class Index extends React.Component {
                         <Link
                             to="/arDoor" style={{fontSize: '24px'}}>arDoor</Link>
                     </li>
+                    <li>
+                        <Link
+                            to="/classBrandTemplateList?uid=23836" style={{fontSize: '24px'}}>皮肤管理</Link>
+                    </li>
+                    <li>
+                        <Link
+                            to="/classBrandTemplateSkin?uid=9" style={{fontSize: '24px'}}>皮肤列表</Link>
+                    </li>
+                    
                 </ul>
             </div>
         );
@@ -944,6 +983,10 @@ ReactDOM.render(
             <Route path="contactsList" getComponent={contactsList}/>
             <Route path="chatDetil" getComponent={chatDetil}/>
             <Route path="arDoor" getComponent={arDoor}/>
+            <Route path="classBrandTemplateList" getComponent={classBrandTemplateList} />
+            <Route path="addClassBrandTemplate" getComponent={addClassBrandTemplate} />
+            <Route path="updateClassBrandTemplate" getComponent={updateClassBrandTemplate} />
+            <Route path="classBrandTemplateSkin" getComponent={classBrandTemplateSkin} />
         </Route>
     </Router>
     ,
