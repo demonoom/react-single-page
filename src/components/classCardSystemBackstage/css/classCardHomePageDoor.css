@@ -1,4 +1,3 @@
-(node) util.print is deprecated. Use console.log instead.
 #classCardHomePageDoor {
   background: #fff;
 }
@@ -93,5 +92,9 @@
 }
 #classCardHomePageDoor .icon_attendanceTime {
   background: url("../imgs/icon_attendanceTime.png") no-repeat center center;
+  background-size: contain;
+}
+#classCardHomePageDoor .icon_skin {
+  background: url("../imgs/icon_skin.png") no-repeat center center;
   background-size: contain;
 }
