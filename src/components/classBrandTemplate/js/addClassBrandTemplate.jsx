@@ -164,9 +164,9 @@ export default class addClassBrandTemplate extends React.Component {
                     <WhiteSpace size="lg" />
                     <div className="uploadDiv">
                         <div className="title">上传图片</div>
-                        <div className="my_flex">
+                        <div className="my_flex photoCont">
                             {
-                                addAT.state.imgPath == "" ?  "" :<img src={addAT.state.imgPath}/>
+                                addAT.state.imgPath == "" ?  "" :<div className="imgDiv"><img src={addAT.state.imgPath}/></div>
                             }
                             {/* {<img src={addAT.state.imgPath} />} */}
                             <div className="uploadBtn" onClick={this.uploadImage}></div>
