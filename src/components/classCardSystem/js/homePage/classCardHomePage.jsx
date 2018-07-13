@@ -3,6 +3,7 @@ import {Toast} from 'antd-mobile';
 import '../../css/classCardHomePage.less';
 import '../../css/skin/skin_default.less';
 import '../../css/skin/skin_primarySchool.less';
+import '../../css/skin/skin_middleSchool.less';
 import {MsgConnection} from '../../../../helpers/msg_websocket_connection';
 import {SimpleWebsocketConnection} from '../../../../helpers/simple_websocket_connection';
 import CurrentAttendance from './currentAttendance'
