@@ -1,69 +1,68 @@
 (node) util.print is deprecated. Use console.log instead.
-#contactsListSimple {
-  /*.maaee_group_face,
-  .maaee_group_face1,
-  .maaee_group_face2,
-  .maaee_group_face3 {
-    background: #eee;
-    margin: 20px auto;
-    width: 80px !important;
-    height: 80px !important;
-    border-radius: 50%;
-    cursor: pointer;
-    padding: 15px;
-    background: #eee
-  }
-  // 一个人
-  .maaee_group_face1 {
-    padding: 0;
-    img {
-      border-radius: 50%;
-      width: 100%;
-      height: 100%;
-    }
-  }
-  // 两个人
-  .maaee_group_face2 {
-    padding: 0;
-    img {
-      margin: 20px 2px 0px 2px;
-      border-radius: 50%;
-      width: 45%;
-      height: 45%;
-    }
-  }
-  // 三个人
-  .maaee_group_face3 {
-    padding: 8px;
-    img {
-      border-radius: 50%;
-      width: 45%;
-      height: 45%;
-    }
-    img:first-child {
-      margin: auto 20px;
-    }
-    img:nth-child(2) {
-      margin-right: 3px;
-      margin-left: 2px;
-    }
-  }
-  // 四个人
-  .maaee_group_face {
-    padding: 8px;
-    img {
-      margin: 3px;
-      border-radius: 50%;
-      width: 40%;
-      height: 40%;
-    }
-    img:first-child {
-      margin-left: 5px;
-    }
-    img:nth-child(3) {
-      margin-left: 5px;
-    }
-  }*/
+#contactsListSimple .maaee_group_face,
+#contactsListSimple .maaee_group_face1,
+#contactsListSimple .maaee_group_face2,
+#contactsListSimple .maaee_group_face3 {
+  width: 40px !important;
+  height: 40px !important;
+  cursor: pointer;
+  padding: 0;
+  background: #eee;
+  display: inline-block;
+  margin-right: 15px;
+  vertical-align: middle;
+}
+#contactsListSimple .maaee_group_face1 {
+  padding: 0;
+}
+#contactsListSimple .maaee_group_face1 img {
+  width: 100%;
+  height: 100%;
+  background: #fff;
+}
+#contactsListSimple .maaee_group_face2 {
+  padding: 0;
+}
+#contactsListSimple .maaee_group_face2 img {
+  margin: 10px 0 0px 1px;
+  width: 19px;
+  height: 19px;
+  background: #fff;
+}
+#contactsListSimple .maaee_group_face3 {
+  padding: 0px;
+}
+#contactsListSimple .maaee_group_face3 img {
+  width: 19px;
+  height: 19px;
+  float: left;
+  background: #fff;
+}
+#contactsListSimple .maaee_group_face3 img:first-child {
+  margin: 1px 10px 0 10px;
+}
+#contactsListSimple .maaee_group_face3 img:nth-child(2),
+#contactsListSimple .maaee_group_face3 img:nth-child(3) {
+  margin-top: 1px;
+  margin-left: 1px;
+}
+#contactsListSimple .maaee_group_face {
+  padding: 0px;
+}
+#contactsListSimple .maaee_group_face img {
+  margin: 0;
+  width: 19px;
+  height: 19px;
+  float: left;
+  padding-top: 1px;
+  padding-left: 1px;
+  background: #fff;
+}
+#contactsListSimple .maaee_group_face img:first-child {
+  margin-left: 0;
+}
+#contactsListSimple .maaee_group_face img:nth-child(3) {
+  margin-left: 0;
 }
 #contactsListSimple .userImg {
   width: 40px;
@@ -134,4 +133,7 @@
   -webkit-transform: scaleY(0.5);
   -ms-transform: scaleY(0.5);
   transform: scaleY(0.5);
+}
+#contactsListSimple .am-list-header {
+  padding: 9px 15px 9px 15px;
 }

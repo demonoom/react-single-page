@@ -194,6 +194,11 @@ export default class chat_Detil extends React.Component {
             if (WebServiceUtil.isEmpty(messageOfSinge.toUser) == false) {
                 var toName = messageOfSinge.toUser.userName;
             }
+
+            if (WebServiceUtil.isEmpty(messageOfSinge.toChatGroup) == false) {
+                var toName = messageOfSinge.toChatGroup.name;
+            }
+
             var showType = messageOfSinge.showType;  //showType为0正常显示 1通知形式
             var readState = messageOfSinge.readState;  //0为未读，1为已读
             // //判断是否是叮消息
@@ -264,7 +269,6 @@ export default class chat_Detil extends React.Component {
 
             // var contentJson = {"content": content};
             // var contentArray = [contentJson];
-
             if (messageOfSinge.toType == 1 && typeof (content) != 'undefined' && messageOfSinge.command != "retractMessage") {
                 //个人单条消息
                 // imgTagArray.splice(0);
@@ -342,13 +346,14 @@ export default class chat_Detil extends React.Component {
                     }
                 }
             } else if (messageOfSinge.toType == 4 && typeof (content) != 'undefined' && messageOfSinge.command != "retractMessage") {
+                debugger
                 //群组单条消息
-                /*if (isEmpty(antGroup.state.currentGroupObj) == false && antGroup.state.currentGroupObj.chatGroupId == messageOfSinge.toChatGroup.chatGroupId) {
+                if (chatDetil.state.toId == messageOfSinge.toChatGroup.chatGroupId) {
                     //判断选中的群组就是要发送的群组
                     // imgTagArray.splice(0);
                     var imgTagArrayReturn = [];
                     var messageReturnJson = chatDetil.getImgTag(messageOfSinge);
-                    if (isEmpty(messageReturnJson) == false && isEmpty(messageReturnJson.messageType) == false) {
+                    if (WebServiceUtil.isEmpty(messageReturnJson) == false && WebServiceUtil.isEmpty(messageReturnJson.messageType) == false) {
                         if (messageReturnJson.messageType == "text") {
                             content = messageReturnJson.textMessage;
                         } else if (messageReturnJson.messageType == "imgTag") {
@@ -374,37 +379,12 @@ export default class chat_Detil extends React.Component {
                         "readState": readState,
                         "readStateStr": '全部未读',
                         "groupReadState": readState,
-                        "mesTime": mesTime,
                         "mesTimeForDetil": messageOfSinge.createTime,
                     };
-                    //messageList.splice(0, 0, messageShow);
-                    messageList.push(messageShow);
-                    var userJson = {
-                        key: messageOfSinge.toChatGroup.chatGroupId,
-                        // key: _this.state.loginUser.colUid,
-                        "fromUser": fromUser,
-                        "toChatGroup": messageOfSinge.toChatGroup,
-                        contentArray: contentArray,
-                        "messageToType": 4,
-                        "uuid": messageOfSinge.uuid
-                    };
-                    // if (isEmpty(isTurnPage)) {
-                    // }
-                    antGroup.props.onNewMessage(userJson);
+                    mesArr.push(messageShow);
                 } else {
-                    var userJson = {
-                        key: messageOfSinge.toChatGroup.chatGroupId,
-                        // key: _this.state.loginUser.colUid,
-                        "fromUser": fromUser,
-                        "toChatGroup": messageOfSinge.toChatGroup,
-                        contentArray: contentArray,
-                        "messageToType": 4,
-                        "uuid": messageOfSinge.uuid
-                    };
-                    // if (isEmpty(isTurnPage)) {
-                    // }
-                    antGroup.props.onNewMessage(userJson);
-                }*/
+
+                }
             }
             this.setState({messageList: mesArr.concat(this.state.messageList)})
             if (data.message.toId == this.state.toId) {
@@ -846,6 +826,8 @@ export default class chat_Detil extends React.Component {
                         } else {
                             //普通文字消息
                             var contentItem = <li className="message me">
+                                <span
+                                    style={{display: chatDetil.state.mesToType == 0 ? "none" : "inlineBlock"}}>{v.fromUser.userName}</span>
                                 <img className='userAvatar' src={v.fromUser.avatar}/>
                                 <div className="content">
                                     <div className="bubble bubble_primary right">
@@ -877,6 +859,8 @@ export default class chat_Detil extends React.Component {
                         } else {
                             //普通文字消息
                             var contentItem = <li className="message">
+                                <span
+                                    style={{display: chatDetil.state.mesToType == 0 ? "none" : "inlineBlock"}}>{v.fromUser.userName}</span>
                                 <img className='userAvatar' src={v.fromUser.avatar}/>
                                 <div className="bubble bubble_default left">
                                     <div className="bubble_cont">

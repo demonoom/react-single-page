@@ -304,7 +304,7 @@ export default class contacts_ListS extends React.Component {
                     ref={el => this.lv = el}
                     dataSource={this.state.dataSource}    //数据类型是 ListViewDataSource
                     renderHeader={() => (
-                        <div style={{paddingTop: 5, paddingBottom: 0, textAlign: 'left'}}>
+                        <div style={{paddingTop: 0, paddingBottom: 0, textAlign: 'left'}}>
                             常用联系人
                         </div>)}
                     renderRow={row}   //需要的参数包括一行数据等,会返回一个可渲染的组件为这行数据渲染  返回renderable
@@ -314,7 +314,7 @@ export default class contacts_ListS extends React.Component {
                     initialListSize={30}   //指定在组件刚挂载的时候渲染多少行数据，用这个属性来确保首屏显示合适数量的数据
                     scrollEventThrottle={20}     //控制在滚动过程中，scroll事件被调用的频率
                     style={{
-                        height: document.body.clientHeight - 44,
+                        height: document.body.clientHeight - 176,
                     }}
                 />
 
