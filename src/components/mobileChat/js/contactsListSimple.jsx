@@ -23,10 +23,22 @@ export default class contacts_ListS extends React.Component {
             unionid: '',        //微信登录的unionid
             userData: [],   //unionid绑定的用户身份数组
             choosePos: '',   //控制选择的是左还是右
-            headItem: [<Item onClick={this.turnToGroup}>我的群组</Item>,
-                <Item onClick={this.turnToOrgrination}>组织架构</Item>,
-                <Item onClick={this.turnToClass}>我的班级</Item>,
-                <Item onClick={this.turnToFriend}>我的好友</Item>]
+            headItem: [<Item onClick={this.turnToGroup}>
+                    <i className='userImg message_group' ></i>
+                    <span>我的群组</span>
+                </Item>,
+                <Item onClick={this.turnToOrgrination}>
+                    <i className='userImg message_tissue' ></i>
+                    <span>组织架构</span>
+                </Item>,
+                <Item onClick={this.turnToClass}>
+                    <i className='userImg message_class'></i>
+                    <span>我的班级</span>
+                </Item>,
+                <Item onClick={this.turnToFriend}>
+                    <i className='userImg message_friend' ></i>
+                    <span>我的好友</span>
+                </Item>]
         };
     }
 
@@ -318,7 +330,7 @@ export default class contacts_ListS extends React.Component {
                     initialListSize={30}   //指定在组件刚挂载的时候渲染多少行数据，用这个属性来确保首屏显示合适数量的数据
                     scrollEventThrottle={20}     //控制在滚动过程中，scroll事件被调用的频率
                     style={{
-                        height: document.body.clientHeight - 176,
+                        height: document.body.clientHeight - 240,
                     }}
                 />
 
