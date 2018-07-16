@@ -7,7 +7,6 @@
 #chatDetil .message {
   margin-bottom: 16px;
   float: left;
-  line-height: 1.6;
   width: 100%;
 }
 #chatDetil .message .userAvatar {
@@ -48,6 +47,7 @@
   -moz-border-radius: 3px;
   -webkit-border-radius: 3px;
   margin: 0 10px;
+  line-height: 1.6;
 }
 #chatDetil .bubble.bubble_default {
   background-color: #fff;
@@ -118,7 +118,7 @@
   font-size: inherit;
   white-space: pre-wrap;
   word-break: normal;
-  font-size: 16px;
+  font-size: 15px;
 }
 #chatDetil .PullList {
   height: calc(100% - 66px) !important;
@@ -171,4 +171,18 @@
 #chatDetil .am-list-body {
   border-color: transparent;
   background: transparent;
+}
+#chatDetil .message_userR,
+#chatDetil .message_userL {
+  color: #888;
+  font-size: 12px;
+  position: relative;
+  top: -2px;
+  line-height: 1.3;
+}
+#chatDetil .message_userR {
+  margin-right: 10px;
+}
+#chatDetil .message_userL {
+  margin-left: 10px;
 }

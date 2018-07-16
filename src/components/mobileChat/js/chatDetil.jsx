@@ -826,7 +826,7 @@ export default class chat_Detil extends React.Component {
                         } else {
                             //普通文字消息
                             var contentItem = <li className="message me">
-                                <span
+                                <span className="message_userR"
                                     style={{display: chatDetil.state.mesToType == 0 ? "none" : "inlineBlock"}}>{v.fromUser.userName}</span>
                                 <img className='userAvatar' src={v.fromUser.avatar}/>
                                 <div className="content">
@@ -859,13 +859,15 @@ export default class chat_Detil extends React.Component {
                         } else {
                             //普通文字消息
                             var contentItem = <li className="message">
-                                <span
+                                <span className="message_userL"
                                     style={{display: chatDetil.state.mesToType == 0 ? "none" : "inlineBlock"}}>{v.fromUser.userName}</span>
                                 <img className='userAvatar' src={v.fromUser.avatar}/>
-                                <div className="bubble bubble_default left">
-                                    <div className="bubble_cont">
-                                        <div className="plain">
-                                            <pre>{v.content}</pre>
+                                <div className="content">
+                                    <div className="bubble bubble_default left">
+                                        <div className="bubble_cont">
+                                            <div className="plain">
+                                                <pre>{v.content}</pre>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
