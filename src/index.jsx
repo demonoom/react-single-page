@@ -693,6 +693,34 @@ const classBrandTemplateSkin = (location, cb) => {
     )
 }
 
+const friendList = (location, cb) => {
+    require.ensure([], require => {
+            cb(null, require("./components/mobileChat/js/friendList").default)
+        }
+    )
+}
+
+const classList = (location, cb) => {
+    require.ensure([], require => {
+            cb(null, require("./components/mobileChat/js/classList").default)
+        }
+    )
+}
+
+const groupChatList = (location, cb) => {
+    require.ensure([], require => {
+            cb(null, require("./components/mobileChat/js/groupList").default)
+        }
+    )
+}
+
+const originationList = (location, cb) => {
+    require.ensure([], require => {
+            cb(null, require("./components/mobileChat/js/originationList").default)
+        }
+    )
+}
+
 import './index.less';
 
 class Index extends React.Component {
@@ -995,6 +1023,10 @@ ReactDOM.render(
             <Route path="addClassBrandTemplate" getComponent={addClassBrandTemplate}/>
             <Route path="updateClassBrandTemplate" getComponent={updateClassBrandTemplate}/>
             <Route path="classBrandTemplateSkin" getComponent={classBrandTemplateSkin}/>
+            <Route path="friendList" getComponent={friendList}/>
+            <Route path="classList" getComponent={classList}/>
+            <Route path="groupChatList" getComponent={groupChatList}/>
+            <Route path="originationList" getComponent={originationList}/>
         </Route>
     </Router>
     ,
