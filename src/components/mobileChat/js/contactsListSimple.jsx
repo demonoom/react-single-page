@@ -133,21 +133,21 @@ export default class contacts_ListS extends React.Component {
      * 去我的群组
      */
     turnToGroup() {
-        console.log('turnToGroup');
+        window.location.href = encodeURI(WebServiceUtil.mobileServiceURL + 'groupChatList?fromId=' + contactsList.state.userId)
     }
 
     /**
      * 去组织架构
      */
     turnToOrgrination() {
-        console.log('turnToOrgrination');
+        window.location.href = encodeURI(WebServiceUtil.mobileServiceURL + 'originationList?fromId=' + contactsList.state.userId)
     }
 
     /**
      * 去我的班级
      */
     turnToClass() {
-        console.log('turnToClass');
+        window.location.href = encodeURI(WebServiceUtil.mobileServiceURL + 'classList?fromId=' + contactsList.state.userId)
     }
 
     /**
