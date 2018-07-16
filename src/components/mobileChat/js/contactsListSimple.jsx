@@ -154,7 +154,7 @@ export default class contacts_ListS extends React.Component {
      * 去我的好友
      */
     turnToFriend() {
-        console.log('turnToFriend');
+        window.location.href = encodeURI(WebServiceUtil.mobileServiceURL + 'friendList?fromId=' + contactsList.state.userId)
     }
 
     /**
