@@ -26,14 +26,26 @@
 }
 #addClassBrandTemplate .uploadDiv .uploadBtn {
   background: url("../imgs/addPic.png") no-repeat;
-  width: 7.5rem;
-  height: 7.5rem;
+  width: 84px;
+  height: 84px;
   background-size: 100%;
 }
-#addClassBrandTemplate .uploadDiv img {
-  width: 7.5rem;
-  height: 7.5rem;
+#addClassBrandTemplate .uploadDiv .imgDiv {
+  width: 84px;
+  height: 84px;
   margin-right: 15px;
+  background-color: #eee;
+  text-align: center;
+  position: relative;
+}
+#addClassBrandTemplate .uploadDiv img {
+  width: 84px;
+  height: 47px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  margin-left: -42px;
+  margin-top: -23.5px;
 }
 #addClassBrandTemplate .modifyDiv {
   padding: 15px;
