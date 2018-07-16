@@ -1,4 +1,70 @@
 (node) util.print is deprecated. Use console.log instead.
+#contactsListSimple {
+  /*.maaee_group_face,
+  .maaee_group_face1,
+  .maaee_group_face2,
+  .maaee_group_face3 {
+    background: #eee;
+    margin: 20px auto;
+    width: 80px !important;
+    height: 80px !important;
+    border-radius: 50%;
+    cursor: pointer;
+    padding: 15px;
+    background: #eee
+  }
+  // 一个人
+  .maaee_group_face1 {
+    padding: 0;
+    img {
+      border-radius: 50%;
+      width: 100%;
+      height: 100%;
+    }
+  }
+  // 两个人
+  .maaee_group_face2 {
+    padding: 0;
+    img {
+      margin: 20px 2px 0px 2px;
+      border-radius: 50%;
+      width: 45%;
+      height: 45%;
+    }
+  }
+  // 三个人
+  .maaee_group_face3 {
+    padding: 8px;
+    img {
+      border-radius: 50%;
+      width: 45%;
+      height: 45%;
+    }
+    img:first-child {
+      margin: auto 20px;
+    }
+    img:nth-child(2) {
+      margin-right: 3px;
+      margin-left: 2px;
+    }
+  }
+  // 四个人
+  .maaee_group_face {
+    padding: 8px;
+    img {
+      margin: 3px;
+      border-radius: 50%;
+      width: 40%;
+      height: 40%;
+    }
+    img:first-child {
+      margin-left: 5px;
+    }
+    img:nth-child(3) {
+      margin-left: 5px;
+    }
+  }*/
+}
 #contactsListSimple .userImg {
   width: 40px;
   height: 40px;
