@@ -57,7 +57,8 @@ export default class chat_Detil extends React.Component {
         var unionid = searchArray[3].split('=')[1];
         var colPasswd = searchArray[4].split('=')[1];
         var toName = searchArray[5].split('=')[1];
-        this.setState({fromId, toId})
+        var mesToType = searchArray[6].split('=')[1];   //0个人  1群聊
+        this.setState({fromId, toId, mesToType})
 
         document.title = toName;   //设置title
 
@@ -110,10 +111,17 @@ export default class chat_Detil extends React.Component {
             data: genData(),
         }), 0)
 
-        this.getUser2UserMessages(false, true)
+        if (this.state.mesToType == 0) {
+            this.getUser2UserMessages(false, true)
+        } else if (this.state.mesToType == 1) {
+            this.getChatGroupMessages(false, true)
+        }
         this.msListener()
     }
 
+    /**
+     * 消息连通回调
+     */
     msListener() {
         ms.msgWsListener = {
             onError: function (errorMsg) {
@@ -126,6 +134,11 @@ export default class chat_Detil extends React.Component {
         }
     }
 
+    /**
+     * websocket成功收到消息的回调
+     * @param info
+     * @returns {boolean}
+     */
     onMessageListener(info) {
         var command = info.command;
 
@@ -328,6 +341,70 @@ export default class chat_Detil extends React.Component {
                         }
                     }
                 }
+            } else if (messageOfSinge.toType == 4 && typeof (content) != 'undefined' && messageOfSinge.command != "retractMessage") {
+                //群组单条消息
+                /*if (isEmpty(antGroup.state.currentGroupObj) == false && antGroup.state.currentGroupObj.chatGroupId == messageOfSinge.toChatGroup.chatGroupId) {
+                    //判断选中的群组就是要发送的群组
+                    // imgTagArray.splice(0);
+                    var imgTagArrayReturn = [];
+                    var messageReturnJson = chatDetil.getImgTag(messageOfSinge);
+                    if (isEmpty(messageReturnJson) == false && isEmpty(messageReturnJson.messageType) == false) {
+                        if (messageReturnJson.messageType == "text") {
+                            content = messageReturnJson.textMessage;
+                        } else if (messageReturnJson.messageType == "imgTag") {
+                            imgTagArrayReturn = messageReturnJson.imgMessage;
+                        }
+                    }
+                    var messageShow = {
+                        'fromUser': fromUser,
+                        'content': content,
+                        "messageType": "getMessage",
+                        "imgTagArray": imgTagArrayReturn,
+                        "messageReturnJson": messageReturnJson,
+                        "attachment": attachment,
+                        "attachmentType": attachmentType,
+                        "expressionItem": expressionItem,
+                        "fileName": fileName,
+                        "filePath": filePath,
+                        "fileLength": fileLength,
+                        "fileUid": fileUid,
+                        "fileCreateUid": fileCreateUid,
+                        "uuid": uuid,
+                        "showType": showType,
+                        "readState": readState,
+                        "readStateStr": '全部未读',
+                        "groupReadState": readState,
+                        "mesTime": mesTime,
+                        "mesTimeForDetil": messageOfSinge.createTime,
+                    };
+                    //messageList.splice(0, 0, messageShow);
+                    messageList.push(messageShow);
+                    var userJson = {
+                        key: messageOfSinge.toChatGroup.chatGroupId,
+                        // key: _this.state.loginUser.colUid,
+                        "fromUser": fromUser,
+                        "toChatGroup": messageOfSinge.toChatGroup,
+                        contentArray: contentArray,
+                        "messageToType": 4,
+                        "uuid": messageOfSinge.uuid
+                    };
+                    // if (isEmpty(isTurnPage)) {
+                    // }
+                    antGroup.props.onNewMessage(userJson);
+                } else {
+                    var userJson = {
+                        key: messageOfSinge.toChatGroup.chatGroupId,
+                        // key: _this.state.loginUser.colUid,
+                        "fromUser": fromUser,
+                        "toChatGroup": messageOfSinge.toChatGroup,
+                        contentArray: contentArray,
+                        "messageToType": 4,
+                        "uuid": messageOfSinge.uuid
+                    };
+                    // if (isEmpty(isTurnPage)) {
+                    // }
+                    antGroup.props.onNewMessage(userJson);
+                }*/
             }
             this.setState({messageList: mesArr.concat(this.state.messageList)})
             if (data.message.toId == this.state.toId) {
@@ -341,6 +418,11 @@ export default class chat_Detil extends React.Component {
 
     }
 
+    /**
+     * 获取个人历史消息
+     * @param timeNode
+     * @param posFlag
+     */
     getUser2UserMessages(timeNode, posFlag) {
         var _this = this;
         var timeNode = timeNode || (new Date()).valueOf()
@@ -354,7 +436,7 @@ export default class chat_Detil extends React.Component {
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
             onResponse: function (result) {
                 if (result.success == true && result.msg == '调用成功') {
-                    _this.buildChatObj(result.response, posFlag)
+                    _this.buildPerChatObj(result.response, posFlag)
                     _this.setState({refreshing: false});
                     Toast.hide()
                 } else {
@@ -367,7 +449,181 @@ export default class chat_Detil extends React.Component {
         });
     }
 
-    buildChatObj(data, posFlag) {
+    getChatGroupMessages(timeNode, posFlag) {
+        var _this = this;
+        var timeNode = timeNode || (new Date()).valueOf()
+        var param = {
+            "method": 'getChatGroupMessages',
+            "chatGroupId": Number(this.state.toId),
+            "timeNode": timeNode
+        };
+
+        var headerObj = {
+            "accessUser": this.state.fromId,
+            "machine": WebServiceUtil.createUUID(),
+            "machineType": "mobile-web",
+            "version": "1.01"
+        };
+
+        WebServiceUtil.requestLittleAntApiWithHead(JSON.stringify(param), JSON.stringify(headerObj), {
+            onResponse: function (result) {
+                if (result.success == true && result.msg == '调用成功') {
+                    _this.buildGroChatObj(result.response, posFlag)
+                    _this.setState({refreshing: false});
+                    Toast.hide()
+                } else {
+                    Toast.fail(result.msg, 3);
+                }
+            },
+            onError: function (error) {
+                // message.error(error);
+            }
+        });
+    }
+
+    /**
+     * 构建本地消息对象数组(群组)
+     * @param data
+     * @param posFlag
+     */
+    buildGroChatObj(data, posFlag) {
+        var _this = this;
+        if (WebServiceUtil.isEmpty(data) == false) {
+
+            var i = 0;
+            var arr = [];
+            var timeSign = 0;   //起始时间标记
+            data.forEach(function (e) {
+
+                if (e.command == "message") {
+                    var messageOfSinge = e;
+                    if (i == data.length - 1) {
+                        chatDetil.setState({"firstMessageCreateTime": messageOfSinge.createTime});
+                    }
+                    i++;
+                    var uuidsArray = [];
+                    if (WebServiceUtil.isEmpty(messageOfSinge.attachment) == false) {
+                        var attachment = messageOfSinge.attachment.address;
+                        var attachmentType = messageOfSinge.attachment.type;
+                    }
+                    if (WebServiceUtil.isEmpty(messageOfSinge.expressionItem) == false) {
+                        var expressionItem = messageOfSinge.expressionItem.address;
+                    }
+                    if (WebServiceUtil.isEmpty(messageOfSinge.cloudFile) == false) {
+                        //文件名
+                        var fileName = messageOfSinge.cloudFile.name;
+                        //路径
+                        var filePath = messageOfSinge.cloudFile.path;
+                        //大小
+                        var fileLength = messageOfSinge.cloudFile.length;
+                        //uuid
+                        var fileUid = messageOfSinge.cloudFile.uuid;
+                        //文件CreateUid
+                        var fileCreateUid = messageOfSinge.cloudFile.createUid;
+                    }
+                    var biumes = null;
+                    if (e.biuId != 0) {
+                        //这是biumessage
+                        biumes = true;
+                    } else {
+                        biumes = false;
+                    }
+                    var fromUser = messageOfSinge.fromUser;
+                    var toId = messageOfSinge.toId;
+                    var toName = messageOfSinge.toChatGroup.name;
+                    var isCurrentDay = isToday(messageOfSinge.createTime);
+                    var mesTime;
+                    var timeSignForTime;
+                    // if (isCurrentDay) {
+                    //     //如果是当天的消息，只显示时间
+                    //     mesTime = WebServiceUtil.formatHM(messageOfSinge.createTime);
+                    //     timeSignForTime = WebServiceUtil.formatHM(timeSign);
+                    // } else {
+                    //     //非当天时间，显示的是月-日
+                    //     mesTime = WebServiceUtil.formatMD(messageOfSinge.createTime) + ' ' + WebServiceUtil.formatHM(messageOfSinge.createTime);
+                    //     timeSignForTime = WebServiceUtil.formatMD(timeSign) + ' ' + WebServiceUtil.formatHM(timeSign);
+                    // }
+                    var colUtype = fromUser.colUtype;
+                    var loginUser = _this.state.userId;
+                    // if (messageOfSinge.createTime - timeSign != messageOfSinge.createTime && timeSign - messageOfSinge.createTime > 300000) {
+                    //     var messageShow = {
+                    //         'fromUser': {
+                    //             "avatar": "http://www.maaee.com:80/Excoord_For_Education/userPhoto/default_avatar.png",
+                    //             "colUid": 120024,
+                    //             "userName": "群通知者",
+                    //         },
+                    //         'content': timeSignForTime,
+                    //         "messageType": "getMessage",
+                    //         "showType": 1,
+                    //         "messageReturnJson": {
+                    //             messageType: "text",
+                    //         },
+                    //     };
+                    //     messageList.push(messageShow);
+                    // }
+                    // ;
+                    timeSign = messageOfSinge.createTime;
+                    if (messageOfSinge.toType == 4) {
+                        var uuid = messageOfSinge.uuid;
+                        var showType = messageOfSinge.showType;
+                        uuidsArray.push(uuid);
+                        var content = messageOfSinge.content;
+                        if (messageOfSinge.readUserCount == 0) {
+                            var readStateStr = '未读',
+                                readState = 0;
+                        } else {
+                            var readStateStr = '已读',
+                                readState = messageOfSinge.readUserCount;
+                        }
+                        var imgTagArrayReturn = [];
+                        var messageReturnJson = _this.getImgTag(messageOfSinge);
+                        if (WebServiceUtil.isEmpty(messageReturnJson) == false && WebServiceUtil.isEmpty(messageReturnJson.messageType) == false) {
+                            if (messageReturnJson.messageType == "text") {
+                                content = messageReturnJson.textMessage;
+                            } else if (messageReturnJson.messageType == "imgTag") {
+                                imgTagArrayReturn = messageReturnJson.imgMessage;
+                            }
+                        }
+                        var messageShow = {
+                            'fromUser': fromUser,
+                            'content': content,
+                            "messageType": "getMessage",
+                            "imgTagArray": imgTagArrayReturn,
+                            "messageReturnJson": messageReturnJson,
+                            "attachment": attachment,
+                            "attachmentType": attachmentType,
+                            "expressionItem": expressionItem,
+                            "fileName": fileName,
+                            "filePath": filePath,
+                            "fileLength": fileLength,
+                            "fileUid": fileUid,
+                            "fileCreateUid": fileCreateUid,
+                            "biumes": biumes,
+                            "uuid": uuid,
+                            "showType": showType,
+                            "readState": readState,
+                            "readStateStr": readStateStr,
+                            "mesTime": mesTime,
+                            "mesTimeForDetil": messageOfSinge.createTime,
+                            "toId": toId,
+                            "toName": toName,
+                        };
+                        arr.push(messageShow);
+                    }
+                }
+
+            })
+            this.setState({messageList: this.state.messageList.concat(arr)})
+            this.buildChatsContent(posFlag)
+        }
+    }
+
+    /**
+     * 构建本地消息对象数组(个人)
+     * @param data
+     * @param posFlag
+     */
+    buildPerChatObj(data, posFlag) {
         var _this = this;
         if (WebServiceUtil.isEmpty(data) == false) {
 
@@ -666,11 +922,22 @@ export default class chat_Detil extends React.Component {
         scrollNum = $('#pullContent')[0].scrollHeight
     }
 
+    /**
+     * 上拉加载之前消息
+     */
     pullToFresh() {
         this.setState({refreshing: true});
-        this.getUser2UserMessages(this.state.firstMessageCreateTime, false)
+
+        if (this.state.mesToType == 0) {
+            this.getUser2UserMessages(this.state.firstMessageCreateTime, false)
+        } else if (this.state.mesToType == 1) {
+            this.getChatGroupMessages(this.state.firstMessageCreateTime, false)
+        }
     }
 
+    /**
+     * 发送消息
+     */
     sendMessage() {
         if (chatDetil.state.TextareaValue.trim() == '') {
             Toast.fail('请输入内容发送', 1)
@@ -681,11 +948,20 @@ export default class chat_Detil extends React.Component {
         var fromUser = chatDetil.state.loginUser
         var uuid = WebServiceUtil.createUUID();
         var createTime = (new Date()).valueOf();
-        var messageJson = {
-            'content': chatDetil.state.TextareaValue, "createTime": createTime, 'fromUser': fromUser,
-            "toId": chatDetil.state.toId, "command": "message", "hostId": chatDetil.state.fromId,
-            "uuid": uuid, "toType": 1
-        };
+
+        if (chatDetil.state.mesToType == 0) {
+            var messageJson = {
+                'content': chatDetil.state.TextareaValue, "createTime": createTime, 'fromUser': fromUser,
+                "toId": chatDetil.state.toId, "command": "message", "hostId": chatDetil.state.fromId,
+                "uuid": uuid, "toType": 1
+            };
+        } else if (chatDetil.state.mesToType == 1) {
+            var messageJson = {
+                'content': chatDetil.state.TextareaValue, "createTime": createTime, 'fromUser': fromUser,
+                "toId": chatDetil.state.toId, "command": "message", "hostId": chatDetil.state.fromId,
+                "uuid": uuid, "toType": 4
+            };
+        }
 
         var commandJson = {"command": "message", "data": {"message": messageJson}};
 
@@ -716,10 +992,19 @@ export default class chat_Detil extends React.Component {
         }
     }
 
+    /**
+     * 输入信息数据绑定
+     * @param value
+     * @constructor
+     */
     TextareaOnKeyChange(value) {
         chatDetil.setState({TextareaValue: value})
     }
 
+    /**
+     * 输入聚焦回到最低端
+     * @constructor
+     */
     TextareaOnFocus() {
         $('#pullContent')[0].scrollTop = $('#pullContent')[0].scrollHeight - (chatDetil.state.height - 66)
     }
