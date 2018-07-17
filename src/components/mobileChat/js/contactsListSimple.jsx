@@ -24,11 +24,11 @@ export default class contacts_ListS extends React.Component {
             userData: [],   //unionid绑定的用户身份数组
             choosePos: '',   //控制选择的是左还是右
             headItem: [<Item onClick={this.turnToGroup}>
-                    <i className='userImg message_group' ></i>
-                    <span>我的群组</span>
-                </Item>,
+                <i className='userImg message_group'></i>
+                <span>我的群组</span>
+            </Item>,
                 <Item onClick={this.turnToOrgrination}>
-                    <i className='userImg message_tissue' ></i>
+                    <i className='userImg message_tissue'></i>
                     <span>组织架构</span>
                 </Item>,
                 <Item onClick={this.turnToClass}>
@@ -36,7 +36,7 @@ export default class contacts_ListS extends React.Component {
                     <span>我的班级</span>
                 </Item>,
                 <Item onClick={this.turnToFriend}>
-                    <i className='userImg message_friend' ></i>
+                    <i className='userImg message_friend'></i>
                     <span>我的好友</span>
                 </Item>]
         };
@@ -145,7 +145,10 @@ export default class contacts_ListS extends React.Component {
      * 去我的群组
      */
     turnToGroup() {
-        window.location.href = encodeURI(WebServiceUtil.mobileServiceURL + 'groupChatList?fromId=' + contactsList.state.userId)
+        var colPasswd = contactsList.state.userData[0].colPasswd
+        var unionid = contactsList.state.unionid
+
+        window.location.href = encodeURI(WebServiceUtil.mobileServiceURL + 'groupChatList?fromId=' + contactsList.state.userId + '&colPasswd=' + colPasswd + '&unionid=' + unionid)
     }
 
     /**
