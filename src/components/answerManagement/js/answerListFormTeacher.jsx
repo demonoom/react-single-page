@@ -57,7 +57,24 @@ export default class answerListFormTeacher extends React.Component {
                     //开始位置的百分比，0 - 100
                     start: 0,
                     //结束位置的百分比，0 - 100
-                    end: 100
+                    end: 15,
+                    minSpan:0,
+                    //maxSpan:10,
+                    //zoomLock:true,
+                },
+                {
+                    show: true,
+                    type: 'inside',
+                    xAxisIndex: [0],
+                    start:0,
+                    end:15,
+                    minSpan:0,
+                    //maxSpan:10,
+                    //zoomLock:true,
+                    /*//开始位置的百分比，0 - 100
+                    start: 0,
+                    //结束位置的百分比，0 - 100
+                    end: 100*/
                 }
             ],
             xAxis: {
