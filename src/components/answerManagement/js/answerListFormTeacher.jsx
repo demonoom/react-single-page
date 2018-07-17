@@ -34,6 +34,7 @@ export default class answerListFormTeacher extends React.Component {
 
 
     buildChartOption = (category, barData, lineData) => {
+        // debugger
         var _this = this;
         var text = this.state.type == 0 ? '理解度' : '时长';
         return {
@@ -138,8 +139,9 @@ export default class answerListFormTeacher extends React.Component {
     }
 
     getData(data) {   //设置数据结构
+        // debugger
         var domArray = [];
-        // debugger;
+        console.log(data, 'getData')
         for (var k in data) {  //todo 循环生成题目
             var reactDom = [];
             var reactEchartsArray = [];   //要渲染的图表数组
@@ -147,7 +149,8 @@ export default class answerListFormTeacher extends React.Component {
             for (var v in classArray) {  //todo 循环生成图表
                 var category = [], barData = [], lineData = [], sum = 0, idArray = [];
                 var studentArray = classArray[v].fuzzyHomeworkAnswerEmotions;
-                for (var s in studentArray) {  //todo 循环添加x轴数字及柱状数据
+                console.log(studentArray, 'studentArray');
+                for (var s in studentArray) {  //todo 循环添加x轴数字及柱状数据    4
                     category.push(studentArray[s].users.userName);
                     if (this.state.type == 0) {
                         barData.push((studentArray[s].understand).toFixed(2));
@@ -163,20 +166,32 @@ export default class answerListFormTeacher extends React.Component {
                 for (var s in studentArray) {   //循环添加平均值
                     lineData.push((sum / studentArray.length).toFixed(2));
                 }
+                console.log(category, '111');
+                console.log(barData, '111');
+                console.log(lineData, '最终数据')
+                if (category.length == 0 || barData.length == 0 || lineData.length == 0) {
+                    console.log('拒接');
 
-                var columnarChartOption = this.buildChartOption(category, barData, lineData);
-                let onEvents = {
-                    'click': this.onChartClick.bind(this, idArray),
+                } else {
+                    var columnarChartOption = this.buildChartOption(category, barData, lineData);
+
+                    console.log(columnarChartOption);
+
+                    let onEvents = {
+                        'click': this.onChartClick.bind(this, idArray),
+                    }
+                    reactDom =
+                        <ReactEcharts
+                            option={columnarChartOption}
+                            style={{height: '100%', width: '100%'}}
+                            onEvents={onEvents}
+                            theme='macarons'
+                        />
+                    // console.log(reactDom);
+                    // reactEchartsArray.push(reactDom);
                 }
-                reactDom =
-                    <ReactEcharts
-                        option={columnarChartOption}
-                        style={{height: '100%', width: '100%'}}
-                        onEvents={onEvents}
-                        theme='macarons'
-                    />
-                console.log(reactDom);
-                // reactEchartsArray.push(reactDom);
+
+
             }
             var rem = <div className="canvasBox_cont">
                 <div className="title">题目{data[k].questionCount}</div>
@@ -191,7 +206,6 @@ export default class answerListFormTeacher extends React.Component {
             domArray: domArray,
         });
     }
-
 
     getFuzzyHomeworkEmotionByTopicId() {
         var param = {
