@@ -48,8 +48,8 @@ export default class contacts_ListS extends React.Component {
         var locationSearch = locationHref.substr(locationHref.indexOf("?") + 1);
         var searchArray = locationSearch.split("&");
         var unionid = searchArray[0].split('=')[1];
-        // this.setState({unionid});
-        this.setState({unionid: 'o-w611FMw4s8WtiCwNqD1Ltr9w2w'});
+        this.setState({unionid});
+        // this.setState({unionid: 'o-w611FMw4s8WtiCwNqD1Ltr9w2w'});
     }
 
     componentDidMount() {
@@ -155,8 +155,14 @@ export default class contacts_ListS extends React.Component {
      * 去组织架构
      */
     turnToOrgrination() {
+
         Toast.info('暂未开通', 2)
-        // window.location.href = encodeURI(WebServiceUtil.mobileServiceURL + 'originationList?fromId=' + contactsList.state.userId)
+        return
+
+        var colPasswd = contactsList.state.userData[0].colPasswd;
+        var unionid = contactsList.state.unionid;
+
+        window.location.href = encodeURI(WebServiceUtil.mobileServiceURL + 'originationList?fromId=' + contactsList.state.userId + '&colPasswd=' + colPasswd + '&unionid=' + unionid + '&structureId=-1')
     }
 
     /**
