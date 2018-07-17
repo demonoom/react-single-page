@@ -97,6 +97,7 @@ export default class classList extends React.Component {
             return (
                 <Item onClick={this.itemOnClick(rowData)}>
                     {/*<img className='userImg' src={rowData.avatar}/>*/}
+                    <i className="userImg message_class2"></i>
                     <span className="text_hidden">{rowData.grade.name + rowData.name}</span>
                 </Item>
             )
