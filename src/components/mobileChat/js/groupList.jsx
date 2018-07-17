@@ -119,28 +119,31 @@ export default class groupChatList extends React.Component {
             return (
                 <Item onClick={this.itemOnClick(rowData)}>
                     {imgTag}
-                    <span className="text_hidden">{rowData.name}</span>
-                    <span className="text_hidden">群主:{rowData.owner.userName}</span>
-                    <span>{rowData.members.length}人</span>
+                    <div className="group_userCont">
+                        <div className="group_user">
+                            <span className="text_hidden group_name">{rowData.name}</span><br /><span className="text_hidden group_name2"><span>群主：</span>{rowData.owner.userName}</span>
+                        </div>
+                        <span className="group_number">{rowData.members.length}人</span>
+                    </div>
                 </Item>
             )
         }
 
         return (
             <div id="groupChatList">
-                <ListView
-                    ref={el => this.lv = el}
-                    dataSource={this.state.dataSource}    //数据类型是 ListViewDataSource
-                    renderRow={row}   //需要的参数包括一行数据等,会返回一个可渲染的组件为这行数据渲染  返回renderable
-                    className="am-list"
-                    pageSize={30}    //每次事件循环（每帧）渲染的行数
-                    scrollRenderAheadDistance={200}   //当一个行接近屏幕范围多少像素之内的时候，就开始渲染这一行
-                    initialListSize={30}   //指定在组件刚挂载的时候渲染多少行数据，用这个属性来确保首屏显示合适数量的数据
-                    scrollEventThrottle={20}     //控制在滚动过程中，scroll事件被调用的频率
-                    style={{
-                        height: document.body.clientHeight,
-                    }}
-                />
+                    <ListView
+                        ref={el => this.lv = el}
+                        dataSource={this.state.dataSource}    //数据类型是 ListViewDataSource
+                        renderRow={row}   //需要的参数包括一行数据等,会返回一个可渲染的组件为这行数据渲染  返回renderable
+                        className="am-list"
+                        pageSize={30}    //每次事件循环（每帧）渲染的行数
+                        scrollRenderAheadDistance={200}   //当一个行接近屏幕范围多少像素之内的时候，就开始渲染这一行
+                        initialListSize={30}   //指定在组件刚挂载的时候渲染多少行数据，用这个属性来确保首屏显示合适数量的数据
+                        scrollEventThrottle={20}     //控制在滚动过程中，scroll事件被调用的频率
+                        style={{
+                            height: document.body.clientHeight,
+                        }}
+                    />
             </div>
         );
     }

@@ -1,172 +1,143 @@
 import React from 'react';
-import {List, Toast, ListView, Tabs, InputItem} from 'antd-mobile';
+import {List, Toast, Button, Tabs, InputItem} from 'antd-mobile';
 
 export default class wxTempalte extends React.Component {
 
     constructor(props) {
         super(props);
-        this.state = {
-            access: '不存在',
-            template: '未发送'
-        };
-        var param = {
-            "method": 'postTemplateMessageForPublicWx',
-            "accessToken": this.state.access,
-            "messageJson": {
-                "touser": "oHVXv0TFo3DMoDAsjIWPduYtG3x4",
-                "template_id": "MUPNO6Kk_Skoe8R28xnCcNjq6L2XSMA3ZmvSUHKSArE",
-                "data": {
-                    "first": {
-                        "value":"",
-                        "color":"#173177"
-                    },
-                    "keyword1":{
-                        "value":"张三",
-                        "color":"#173177"
-                    },
-                    "keyword2": {
-                        "value":"2018-06-08 8:00:00",
-                        "color":"#173177"
-                    },
-                    "remark":{
-                        "value":"您好,您的孩子张三已出校门!",
-                        "color":"#173177"
-                    }
-                }
-            }
-        };
+        this.state = {};
 
     }
 
     componentDidMount() {
-        var appId = "";
-        var sercret = "";
-        var openId = "";
+        // navigator.mediaDevices.enumerateDevices;
+        // navigator.mediaDevices.getUserMedia
+        // this.getWeChatSignature();
+        this.getimage();
+    }
+
+
+    getImage () {
+        var cmr = plus.camera.getCamera();
+        cmr.captureImage(function(p) {
+            plus.io.resolveLocalFileSystemURL(p, function(entry) {
+                compressImage(entry.toLocalURL(),entry.name);
+            }, function(e) {
+                plus.nativeUI.toast("读取拍照文件错误：" + e.message);
+            });
+        }, function(e) {
+        }, {
+            filter: 'image'
+        });
+    }
+
+    getimage() {
+        // var video = document.getElementById('video');
+        // var videoObj = {
+        //     "video" : true
+        // };
+        // var errBack = function(error) {
+        //     console.log("Video capture error: ", error.code);
+        // };
+        // if (navigator.getUserMedia) { // Standard
+        //     navigator.getUserMedia(videoObj, function(stream) {
+        //         video.src = stream;
+        //         video.play();
+        //     }, errBack);
+        // } else if (navigator.webkitGetUserMedia) { // WebKit-prefixed
+        //     navigator.webkitGetUserMedia(videoObj, function(stream) {
+        //         video.src = window.webkitURL.createObjectURL(stream);
+        //         video.play();
+        //     }, errBack);
+        // } else if (navigator.mozGetUserMedia) { // Firefox-prefixed
+        //     navigator.mozGetUserMedia(videoObj, function(stream) {
+        //         video.src = window.URL.createObjectURL(stream);
+        //         video.play();
+        //     }, errBack);
+        // }
 
     }
 
-    getAccess = () => {
+    getWeChatSignature() {
         var param = {
-            "method": 'getAccessTokenForPublicWx',
+            "method": 'getWeChatSignature',
         };
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
             onResponse: (result) => {
-                console.log(result, 'access');
-                if (result.success) {
-                    console.log(result.response.access_token);
-                    this.setState({
-                        access: result.response,
-                    })
-                } else {
-                    Toast.info('获取token失败');
-                }
+                console.log(result.response);
+                let res = result.response;
+                wx.config({
+                    debug: true,
+                    appId: 'wx9d076742b77044dd',
+                    timestamp: res.timestamp,
+                    nonceStr: res.noncestr,
+                    signature: res.signature,
+                    jsApiList: [
+                        'checkJsApi',
+                        'chooseImage',
+                        'scanQRCode'
+                    ]
+                });
+                wx.ready(function () {
+                    wx.checkJsApi({
+                        jsApiList: [
+                            'chooseImage',
+                            'previewImage',
+                            'scanQRCode'
+                        ],
+                        success: function (res) {
+
+                        }
+                    });
+                })
+                wx.error(function (res) {
+                    // Toast.info(res);
+                    // config信息验证失败会执行error函数，如签名过期导致验证失败，具体错误信息可以打开config的debug模式查看，也可以在返回的res参数中查看，对于SPA可以在这里更新签名。
+                });
+
             },
             onError: function (error) {
-                Toast.info('请求access_token失败');
+
+            },
+        });
+    }
+
+    chooseVideo() {
+        wx.chooseImage({
+            count: 1, // 默认9
+            sizeType: ['original', 'compressed'], // 可以指定是原图还是压缩图，默认二者都有
+            sourceType: ['camera'], // 可以指定来源是相册还是相机，默认二者都有
+            success: function (res) {
+                var localIds = res.localIds; // 返回选定照片的本地ID列表，localId可以作为img标签的src属性显示图片
             }
         });
     }
 
-    sendTemplate = () => {
-        var param = {
-            "method": 'postTemplateMessageForPublicWx',
-            "accessToken": this.state.access,
-            "messageJson": {
-                "touser": "o-w611I9nKqTHcT3P34srzwIrf6U",
-                "template_id": "i2POFltLLGjGhgMp0elwcGWlOU2IIFZE4lA8yWiabPA",
-                //"url": "http://weixin.qq.com/download",
-                /*"miniprogram": {
-                    // "appid":"xiaochengxuappid12345",
-                    // "pagepath":"index?foo=bar"
-                },*/
-                "data": {
-                    "first": {
-                        "value":"~~~~~~",
-                        "color":"#173177"
-                    },
-                    "keyword1":{
-                        "value":"学生张三心率超出100",
-                        "color":"#173177"
-                    },
-                    "keyword2": {
-                        "value":"2018-06-08",
-                        "color":"#173177"
-                    },
-                    //    "keyword3": {
-                    //        "value":"2014年9月22日",
-                    //        "color":"#173177"
-                    //    },
-                    "remark":{
-                        "value":"",
-                        "color":"#173177"
-                    }
-                }
-            }
-        };
-        WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
-            onResponse: (result) => {
-                console.log(result, 'access');
-                if (result.success) {
-
-                } else {
-                    Toast.info('发送失败');
-                }
-            },
-            onError: function (error) {
-                Toast.info('请求发送模板消息失败');
+    scanQRCode() {
+        wx.scanQRCode({
+            needResult: 0, // 默认为0，扫描结果由微信处理，1则直接返回扫描结果，
+            scanType: ["qrCode", "barCode"], // 可以指定扫二维码还是一维码，默认二者都有
+            success: function (res) {
+                var result = res.resultStr; // 当needResult 为 1 时，扫码返回的结果
             }
         });
-        // console.log('开始发送template');
-        // var url = "https://api.weixin.qq.com/cgi-bin/message/template/send?access_token=11_V5wlcn7QXlLtl9zEvM86Rc8Z28BbztQHZrIH-LdS3VAXiR_3S6egRSffWMpLGuMjM7hJt4AQykas1b9Q31muX0yOmCOXCR1-LNUbkiZt-eRqRQImYGplTHSXSDMXz4QAFgbFStBYs-8ysycBTJReAAAWMU"
-        // $.ajax(url,{
-        //     data:{
-        //         "touser":"oAYBW0kTVTiqF4t0yVQYXqrZetvI",
-        //         "template_id":"arw6Po189Sx_CrwavyNjfvvW8wKwpMpiw_oshpLj4C4",
-        //         "url":"http://weixin.qq.com/download",
-        //         "miniprogram":{
-        //             // "appid":"xiaochengxuappid12345",
-        //             // "pagepath":"index?foo=bar"
-        //         },
-        //         "data":{
-        //             "first": {
-        //                 "value":"恭喜你购买成功！",
-        //                 "color":"#173177"
-        //             },
-        //             "keyword1":{
-        //                 "value":"巧克力",
-        //                 "color":"#173177"
-        //             },
-        //             "keyword2": {
-        //                 "value":"39.8元",
-        //                 "color":"#173177"
-        //             },
-        //             "keyword3": {
-        //                 "value":"2014年9月22日",
-        //                 "color":"#173177"
-        //             },
-        //             "remark":{
-        //                 "value":"欢迎再次购买！",
-        //                 "color":"#173177"
-        //             }
-        //         }
-        //     },
-        //     function(res){
-        //         console.log(res);
-        //     },
-        //     function(res){
-        //         console.log(res);
-        //     }
-        // })
     }
+
 
     render() {
         return (
             <div id="wxTemplate">
-                <button onClick={this.getAccess}>请求access_token</button>
-                <div>access_token:{this.state.access}</div>
-                <button onClick={this.sendTemplate}>发送模板</button>
-                <div>发送结果:{this.state.template}</div>
-                {/*<iframe id="ifame" src="https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=wx9d076742b77044dd&secret=1381cd42ea0584ec81ab44c9b41593ec"></iframe>*/}
+                <div>测试</div>
+                <Button onClick={this.chooseVideo}>调用摄像头</Button>
+                <input type="file" accept="video/*" capture="camera" />
+                <Button onClick={this.scanQRCode}>调用微信扫一扫</Button>
+                <video style={{
+                    border: '1px solid #ccc',
+                    display: 'block',
+                    margin: '0 0 20px 0',
+                    float:'left',
+
+                }} id="video" width="500" height="400" autoplay></video>
             </div>
         );
     }
