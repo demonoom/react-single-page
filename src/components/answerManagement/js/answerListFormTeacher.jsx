@@ -144,55 +144,54 @@ export default class answerListFormTeacher extends React.Component {
         console.log(data, 'getData')
         for (var k in data) {  //todo 循环生成题目
             var reactDom = [];
-            var reactEchartsArray = [];   //要渲染的图表数组
-            var classArray = data[k].clazzArray;   //获取到班级数组
+            // var classArray = data[k].clazzArray;   //获取到班级数组
             var category = [], barData = [], lineData = [], sum = 0, idArray = [];
-            for (var v in classArray) {  //todo 循环生成图表
-                var studentArray = classArray[v].fuzzyHomeworkAnswerEmotions;
-                for (var s in studentArray) {  //todo 循环添加x轴数字及柱状数据    4
-                    if (this.state.type == 0) {
-                        console.log(studentArray[s].understand,'underStand');
-                        console.log(studentArray[s].users.userName,'userName');
-                        category.push(studentArray[s].users.userName+'('+classArray[v].pbClazz.name+")");
-                        barData.push((studentArray[s].understand).toFixed(2));
-                        sum += studentArray[s].understand;
-                        // console.log('理解度')
-                    } else {
-                        category.push(studentArray[s].users.userName+'('+classArray[v].pbClazz.name+")");
-                        barData.push((studentArray[s].elapsedTime).toFixed(2));
-                        sum += studentArray[s].elapsedTime;
-                        console.log('时长')
-                    }
-                    idArray.push(studentArray[s].studentId)
-                }
-                for (var s in studentArray) {   //循环添加平均值
-                    // lineData.push((sum / studentArray.length).toFixed(2));
-                    lineData.push((this.state.type == 0?data[k].avgUnderstand:data[k].avgTime).toFixed(2));
-                }
-                // console.log(category,'category');
-                // console.log(barData);
-                // console.log(lineData);
-                if (category.length == 0 && barData.length == 0 && lineData.length == 0) {
-                    console.log('拒接');
+            // for (var v in classArray) {  //todo 循环生成图表
+            var studentArray = data[k].fuzzyHomeworkAnswerEmotions;
+            for (var s in studentArray) {  //todo 循环添加x轴数字及柱状数据    4
+                if (this.state.type == 0) {
+                    console.log(studentArray[s].understand, 'underStand');
+                    console.log(studentArray[s].users.userName, 'userName');
+                    category.push(studentArray[s].users.userName);
+                    barData.push((studentArray[s].understand).toFixed(2));
+                    sum += studentArray[s].understand;
+                    // console.log('理解度')
                 } else {
-                    var columnarChartOption = this.buildChartOption(category, barData, lineData);
-
-                    console.log(columnarChartOption,'columnarChartOption');
-
-                    let onEvents = {
-                        'click': this.onChartClick.bind(this, idArray),
-                    }
-                    reactDom =
-                        <ReactEcharts
-                            option={columnarChartOption}
-                            style={{height: '100%', width: '100%'}}
-                            onEvents={onEvents}
-                            theme='macarons'
-                        />
-                    // console.log(reactDom);
-                    // reactEchartsArray.push(reactDom);
+                    category.push(studentArray[s].users.userName)
+                    barData.push((studentArray[s].elapsedTime).toFixed(2));
+                    sum += studentArray[s].elapsedTime;
+                    console.log('时长')
                 }
+                idArray.push(studentArray[s].studentId)
             }
+            for (var s in studentArray) {   //循环添加平均值
+                // lineData.push((sum / studentArray.length).toFixed(2));
+                lineData.push((this.state.type == 0 ? data[k].avgUnderstand : data[k].avgTime).toFixed(2));
+            }
+            // console.log(category,'category');
+            // console.log(barData);
+            // console.log(lineData);
+            if (category.length == 0 && barData.length == 0 && lineData.length == 0) {
+                console.log('拒接');
+            } else {
+                var columnarChartOption = this.buildChartOption(category, barData, lineData);
+
+                console.log(columnarChartOption, 'columnarChartOption');
+
+                let onEvents = {
+                    'click': this.onChartClick.bind(this, idArray),
+                }
+                reactDom =
+                    <ReactEcharts
+                        option={columnarChartOption}
+                        style={{height: '100%', width: '100%'}}
+                        onEvents={onEvents}
+                        theme='macarons'
+                    />
+                // console.log(reactDom);
+                // reactEchartsArray.push(reactDom);
+            }
+            // }
             var rem = <div className="canvasBox_cont">
                 <div className="title">题目{data[k].questionCount}</div>
                 <div className="sort">{this.state.type == 0 ? '本题耗时排名' : '本题理解度排名'}:{data[k].sort}</div>
