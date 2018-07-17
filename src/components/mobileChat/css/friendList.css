@@ -4,3 +4,12 @@
   vertical-align: middle;
   margin-right: 15px;
 }
+#friendList .am-list-item .am-list-line .am-list-content {
+  padding: 10px 0;
+  font-size: 15px;
+}
+#friendList .am-list-item .am-list-line .am-list-content span {
+  vertical-align: middle;
+  width: calc(100% - 56px);
+  line-height: 1;
+}
