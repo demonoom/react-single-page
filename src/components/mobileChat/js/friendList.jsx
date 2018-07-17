@@ -24,7 +24,6 @@ export default class friendList extends React.Component {
     }
 
     componentWillMount() {
-        document.title = "我的好友";   //设置title
 
         var locationHref = decodeURI(window.location.href);
         var locationSearch = locationHref.substr(locationHref.indexOf("?") + 1);
@@ -34,8 +33,13 @@ export default class friendList extends React.Component {
         var unionid = searchArray[2].split('=')[1];
         if (WebServiceUtil.isEmpty(searchArray[3]) == false) {
             var clazzId = searchArray[3].split('=')[1];
+            var clazzName = searchArray[4].split('=')[1];
+            document.title = clazzName;   //设置title
             this.setState({clazzId})
+        } else {
+            document.title = "我的好友";   //设置title
         }
+
         this.setState({userId, colPasswd, unionid});
     }
 
