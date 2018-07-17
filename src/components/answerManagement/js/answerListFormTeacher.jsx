@@ -52,7 +52,7 @@ export default class answerListFormTeacher extends React.Component {
                 }
             },
             dataZoom: [
-                {
+                /*{
                     show: true,
                     //开始位置的百分比，0 - 100
                     start: 0,
@@ -61,7 +61,7 @@ export default class answerListFormTeacher extends React.Component {
                     minSpan:0,
                     //maxSpan:10,
                     //zoomLock:true,
-                },
+                },*/
                 {
                     show: true,
                     type: 'inside',
@@ -83,6 +83,10 @@ export default class answerListFormTeacher extends React.Component {
                     lineStyle: {
                         // color: '#5793f3'
                     }
+                },
+                axisLabel: {
+                    interval:0,
+                    rotate:40
                 }
             },
             yAxis: {
