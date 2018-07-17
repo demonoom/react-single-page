@@ -9,8 +9,8 @@ export default class wxLogin extends React.Component {
         this.state = {
             appId: 'wx181574f3ea687daf',
             // appId: 'wx9d076742b77044dd',
-            // local:'http://192.168.50.186:8091/#/',
-            local:'http://jiaoxue.maaee.com:8091/#/',
+            // local: 'http://192.168.50.29:8091/#/',
+            local: 'http://jiaoxue.maaee.com:8091/#/',
             // local:WebServiceUtil.mobileServiceURL,
             info: '###',
             jsp: 'http://www.maaee.com/elearning/common/weChatLoginOpenId.jsp',
@@ -27,7 +27,7 @@ export default class wxLogin extends React.Component {
         var locationSearch = locationHref.substr(locationHref.indexOf("?") + 1);
         var local = locationSearch.split("&")[0].split('=')[1];
         this.setState({
-            local: this.state.local+local,
+            local: this.state.local + local,
         }, () => {
             window.location.href = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=" + this.state.appId + "&redirect_uri=" + encodeURIComponent(this.state.jsp) + "&response_type=code&scope=" + this.state.scope + "&state=" + encodeURIComponent(this.state.local) + "#wechat_redirect";
         })

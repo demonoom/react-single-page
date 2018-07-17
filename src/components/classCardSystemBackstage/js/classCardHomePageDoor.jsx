@@ -226,36 +226,23 @@ export default class classCardHomePageDoor extends React.Component {
     render() {
         return (
             <div id="classCardHomePageDoor" style={{height: document.body.clientHeight , overflow: 'auto'}}>
-                <ul className="classCardHomePageDoor">
-                    <li onClick={this.turnToClassroomManage}><i className="icon icon_ClassroomManagement"></i>教室管理<i
-                        className="arrow_right"></i></li>
-                    <li onClick={this.turnToRingBinding}><i className="icon icon_bracelet"></i>手环/班牌绑定管理<i
-                        className="arrow_right"></i></li>
+                <ul className="classCardHomePageDoor my_flex">
+                    <li onClick={this.turnToClassroomManage}><i className="icon icon_ClassroomManagement"></i><div>教室管理</div></li>
+                    <li onClick={this.turnToRingBinding}><i className="icon icon_bracelet"></i><div>手环/班牌绑定管理</div></li>
                     <li onClick={this.turnToCurriculumSchedule.bind(this, 1)}><i
-                        className="icon icon_course"></i>课程表管理<i className="arrow_right"></i></li>
-                    <li onClick={this.turnToNotifyBack}><i className="icon icon_notify"></i>通知管理<i
-                        className="arrow_right"></i></li>
-                    {/*<li onClick={this.turnToCurriculumSchedule.bind(this, 2)}><i className="icon icon_publiCourse"></i>公共教室课程表<i className="arrow_right"></i></li>*/}
-                    <li onClick={this.turnToClassDemeanor.bind(this, 1)}><i className="icon icon_classDemeanor"></i>班级风采管理<i
-                        className="arrow_right"></i></li>
-                    <li onClick={this.turnToClassDemeanor.bind(this, 2)}><i className="icon icon_honor"></i>班级荣誉管理<i
-                        className="arrow_right"></i></li>
-                    <li onClick={this.turnToStudentDutyList}><i className="icon icon_studentOnDuty"></i>班级值日表管理<i
-                        className="arrow_right"></i></li>
-                    <li onClick={this.turnToMoralEducation}><i className="icon icon_moralEducationScore"></i>德育评价管理<i
-                        className="arrow_right"></i></li>
-                    {/*<li onClick={this.turnToWarnList}><i className="icon icon_earlyWarning"></i>课堂预警<i
-                        className="arrow_right"></i></li>
-                    <li onClick={this.turnToStudentMovement}><i className="icon icon_exercise"></i>学生运动轨迹<i
-                        className="arrow_right"></i></li>*/}
-                    <li onClick={this.turnWarningAdminList}><i className="icon icon_moralEducationScore"></i>预警人员管理<i
-                        className="arrow_right"></i></li>
-                    <li onClick={this.turnToAttendanceTime}><i className="icon icon_moralEducationScore"></i>考勤时段设置<i
-                       className="arrow_right"></i></li>
-                    {/*<li onClick={this.toAttendanceStatistical}><i className="icon icon_moralEducationScore"></i>出勤率统计(饼图)<i
-                        className="arrow_right"></i></li>
-                    <li onClick={this.toAttendanceSatisticaForClass}><i className="icon icon_moralEducationScore"></i>出勤率统计(柱状图)<i
-                        className="arrow_right"></i></li>*/}
+                        className="icon icon_course"></i><div>课程表管理</div></li>
+                    <li onClick={this.turnToNotifyBack}><i className="icon icon_notify"></i><div>通知管理</div></li>
+                    {/*<li onClick={this.turnToCurriculumSchedule.bind(this, 2)}><i className="icon icon_publiCourse"></i><div>公共教室课程表</div></li>*/}
+                    <li onClick={this.turnToClassDemeanor.bind(this, 1)}><i className="icon icon_classDemeanor"></i><div>班级风采管理</div></li>
+                    <li onClick={this.turnToClassDemeanor.bind(this, 2)}><i className="icon icon_honor"></i><div>班级荣誉管理</div></li>
+                    <li onClick={this.turnToStudentDutyList}><i className="icon icon_studentOnDuty"></i><div>班级值日表管理</div></li>
+                    <li onClick={this.turnToMoralEducation}><i className="icon icon_moralEducationScore"></i><div>德育评价管理</div></li>
+                    {/*<li onClick={this.turnToWarnList}><i className="icon icon_earlyWarning"></i><div>课堂预警</div></li>
+                    <li onClick={this.turnToStudentMovement}><i className="icon icon_exercise"></i><div>学生运动轨迹</div></li>*/}
+                    <li onClick={this.turnWarningAdminList}><i className="icon icon_warning"></i><div>预警人员管理</div></li>
+                    <li onClick={this.turnToAttendanceTime}><i className="icon icon_attendanceTime"></i><div>考勤时段设置</div></li>
+                    {/*<li onClick={this.toAttendanceStatistical}><i className="icon icon_moralEducationScore"></i><div>出勤率统计(饼图)</div></li>
+                    <li onClick={this.toAttendanceSatisticaForClass}><i className="icon icon_moralEducationScore"></i><div>出勤率统计(柱状图)</div></li>*/}
                 </ul>
             </div>
         );

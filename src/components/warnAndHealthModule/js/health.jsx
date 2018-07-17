@@ -135,7 +135,8 @@ export default class health extends React.Component {
         }
 
         return (
-            <div id="health" className="home_content" style={{ height: this.state.clientHeight }}>
+            <div id="skin_primarySchool">
+                <div id="health" className="home_content" style={{ height: this.state.clientHeight }}>
                 <div className="inner_bg">
                     <div className="navBar">
                         <span onClick={this.historyGoBack}>首页</span>
@@ -184,6 +185,7 @@ export default class health extends React.Component {
                     {/*</ListView>*/}
                     {/*</List>*/}
                 </div>
+            </div>
             </div>
         );
     }

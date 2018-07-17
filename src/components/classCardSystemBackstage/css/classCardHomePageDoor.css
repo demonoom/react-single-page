@@ -1,38 +1,30 @@
+(node) util.print is deprecated. Use console.log instead.
 #classCardHomePageDoor {
   background: #fff;
 }
 #classCardHomePageDoor .classCardHomePageDoor {
-  margin: 0 15px;
+  padding: 15px;
+  webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+  -webkit-flex-flow: row wrap;
+  -ms-flex-flow: row wrap;
+  flex-flow: row wrap;
+  -webkit-box-pack: start;
+  -webkit-justify-content: flex-start;
+  -ms-flex-pack: start;
+  justify-content: flex-start;
 }
 #classCardHomePageDoor .classCardHomePageDoor li {
-  color: #333;
-  position: relative;
-  padding: 8px 0 8px 32px;
-  height: 44px;
-  line-height: 46px;
-  font-size: 17px;
+  text-align: center;
+  vertical-align: middle;
+  margin-bottom: 10px;
+  width: 33.33%;
+  font-size: 14px;
 }
-#classCardHomePageDoor .classCardHomePageDoor li:after {
-  content: '';
-  position: absolute;
-  background-color: #eeeeee;
-  display: block;
-  z-index: 1;
-  top: auto;
-  right: 15px;
-  bottom: 0;
-  left: 0;
-  width: 100%;
-  height: 1PX;
-  -webkit-transform-origin: 50% 100%;
-  -ms-transform-origin: 50% 100%;
-  transform-origin: 50% 100%;
-  -webkit-transform: scaleY(0.5);
-  -ms-transform: scaleY(0.5);
-  transform: scaleY(0.5);
-}
-#classCardHomePageDoor .classCardHomePageDoor li:last-child:after {
-  background-color: transparent;
+#classCardHomePageDoor .classCardHomePageDoor li div {
+  margin: 0 auto;
+  color: #424242;
+  padding: 10px 5px 15px 5px;
 }
 #classCardHomePageDoor .arrow_right {
   width: 15px;
@@ -46,42 +38,37 @@
   background-size: contain;
 }
 #classCardHomePageDoor .icon {
-  width: 22px;
-  height: 22px;
-  position: absolute;
-  top: 50%;
-  left: 0;
-  transform: translateY(-50%);
-  background-size: 100% 100%;
-  text-align: center ;
+  width: 40px;
+  height: 40px;
   display: inline-block;
+  text-align: center;
 }
 #classCardHomePageDoor .icon_bracelet {
-  background: url("../imgs/i_bracelet.png") no-repeat center center;
+  background: url("../imgs/icon_bracelet.png") no-repeat center center;
   background-size: contain;
 }
 #classCardHomePageDoor .icon_classDemeanor {
-  background: url("../imgs/i_classDemeanor.png") no-repeat center center;
+  background: url("../imgs/icon_classDemeanor.png") no-repeat center center;
   background-size: contain;
 }
 #classCardHomePageDoor .icon_ClassroomManagement {
-  background: url("../imgs/i_ClassroomManagement.png") no-repeat center center;
-  background-size: 100% 100%;
+  background: url("../imgs/icon_ClassroomManagement.png") no-repeat center center;
+  background-size: contain;
 }
 #classCardHomePageDoor .icon_course {
-  background: url("../imgs/i_course.png") no-repeat center center;
+  background: url("../imgs/icon_course.png") no-repeat center center;
   background-size: contain;
 }
 #classCardHomePageDoor .icon_honor {
-  background: url("../imgs/i_honor.png") no-repeat center center;
+  background: url("../imgs/icon_honor.png") no-repeat center center;
   background-size: contain;
 }
 #classCardHomePageDoor .icon_moralEducationScore {
-  background: url("../imgs/i_moralEducationScore.png") no-repeat center center;
+  background: url("../imgs/icon_moralEducationScore.png") no-repeat center center;
   background-size: contain;
 }
 #classCardHomePageDoor .icon_notify {
-  background: url("../imgs/i_notify.png") no-repeat center center;
+  background: url("../imgs/icon_notify.png") no-repeat center center;
   background-size: contain;
 }
 #classCardHomePageDoor .icon_publiCourse {
@@ -89,7 +76,7 @@
   background-size: contain;
 }
 #classCardHomePageDoor .icon_studentOnDuty {
-  background: url("../imgs/i_studentOnDuty.png") no-repeat center center;
+  background: url("../imgs/icon_studentOnDuty.png") no-repeat center center;
   background-size: contain;
 }
 #classCardHomePageDoor .icon_earlyWarning {
@@ -98,5 +85,13 @@
 }
 #classCardHomePageDoor .icon_exercise {
   background: url("../imgs/i_exercise.png") no-repeat center center;
+  background-size: contain;
+}
+#classCardHomePageDoor .icon_warning {
+  background: url("../imgs/icon_warning.png") no-repeat center center;
+  background-size: contain;
+}
+#classCardHomePageDoor .icon_attendanceTime {
+  background: url("../imgs/icon_attendanceTime.png") no-repeat center center;
   background-size: contain;
 }

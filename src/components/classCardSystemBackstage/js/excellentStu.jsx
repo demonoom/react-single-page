@@ -1,6 +1,6 @@
 import React from "react";
 import {Toast} from "antd-mobile"
-import "../css/excellentStu.less"
+import "../css/excellentStu.less";
 var topStu;
 export default class excellentStu  extends React.Component{
     constructor(props){
@@ -62,7 +62,8 @@ export default class excellentStu  extends React.Component{
     }
     render(){
         return (
-            <div id="excellentStu" className="home_content">
+            <div className="skin_primarySchool">
+                <div id="excellentStu" className="home_content">
                 <div className="inner_bg">
                     <div className="navBar">
                         <span onClick={this.historyGoBack}>首页</span>
@@ -97,6 +98,7 @@ export default class excellentStu  extends React.Component{
                     </div>
                 </div>
 
+            </div>
             </div>
         )
     }

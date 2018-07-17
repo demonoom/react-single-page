@@ -1,6 +1,9 @@
 import React from 'react';
 import {Toast} from 'antd-mobile';
-import '../../css/classCardHomePage.less'
+import '../../css/classCardHomePage.less';
+import '../../css/skin/skin_default.less';
+import '../../css/skin/skin_primarySchool.less';
+import '../../css/skin/skin_middleSchool.less';
 import {MsgConnection} from '../../../../helpers/msg_websocket_connection';
 import {SimpleWebsocketConnection} from '../../../../helpers/simple_websocket_connection';
 import CurrentAttendance from './currentAttendance'
@@ -91,50 +94,52 @@ export default class classCardHomePage extends React.Component {
 
     render() {
         return (
-            <div id="classCardHomePage" style={{height: document.body.clientHeight}}>
-                <Header
-                    timeOut={this.timeOut}
-                />
-                <div className="home_content home_content_index">
-                    <div className="">
-                        {/*班牌首页*/}
-                        <div className="home_right">
-                            <Course
-                                messageUtilObj={this.state.messageInfo}
-                            />
-                            <CurrentAttendance
-                                messageUtilObj={this.state.messageInfo}
-                            />
-                        </div>
-                        <div className="home_left">
-                            <StudentOnDuty
-                                classCommand={this.state.classCommand}
-                            />
-                            <MoralEducationScore
-                                classCommand={this.state.classCommand}
-                            />
-                        </div>
-                        <div className="home_center">
-                            <ClassDemeanor
-                                classCommand={this.state.classCommand}
-                            />
-                            <div>
-                                <Notify
+            <div id="skin_default">
+                <div id="classCardHomePage" style={{height: document.body.clientHeight}}>
+                    <Header
+                        timeOut={this.timeOut}
+                    />
+                    <div className="home_content home_content_index">
+                        <div className="">
+                            {/*班牌首页*/}
+                            <div className="home_right">
+                                <Course
+                                    messageUtilObj={this.state.messageInfo}
+                                />
+                                <CurrentAttendance
+                                    messageUtilObj={this.state.messageInfo}
+                                />
+                            </div>
+                            <div className="home_left">
+                                <StudentOnDuty
                                     classCommand={this.state.classCommand}
                                 />
-                                <Application/>
+                                <MoralEducationScore
+                                    classCommand={this.state.classCommand}
+                                />
                             </div>
+                            <div className="home_center">
+                                <ClassDemeanor
+                                    classCommand={this.state.classCommand}
+                                />
+                                <div>
+                                    <Notify
+                                        classCommand={this.state.classCommand}
+                                    />
+                                    <Application/>
+                                </div>
+                            </div>
+                            {/*<div>*/}
+                            {/*<Health*/}
+                            {/*ref="health"*/}
+                            {/*typeFromNoom='step'*/}
+                            {/*/>*/}
+                            {/*<Health*/}
+                            {/*ref="health"*/}
+                            {/*typeFromNoom='calories'*/}
+                            {/*/>*/}
+                            {/*</div>*/}
                         </div>
-                        {/*<div>*/}
-                        {/*<Health*/}
-                        {/*ref="health"*/}
-                        {/*typeFromNoom='step'*/}
-                        {/*/>*/}
-                        {/*<Health*/}
-                        {/*ref="health"*/}
-                        {/*typeFromNoom='calories'*/}
-                        {/*/>*/}
-                        {/*</div>*/}
                     </div>
                 </div>
             </div>

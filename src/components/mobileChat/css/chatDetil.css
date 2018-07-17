@@ -1,0 +1,143 @@
+#chatDetil {
+  background: #ebebeb;
+}
+#chatDetil .messageWrap {
+  padding: 10px;
+}
+#chatDetil .message {
+  margin-bottom: 16px;
+  float: left;
+  line-height: 1.6;
+  width: 100%;
+}
+#chatDetil .message .userAvatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 2px;
+  -moz-border-radius: 2px;
+  -webkit-border-radius: 2px;
+  float: left;
+  cursor: pointer;
+}
+#chatDetil .message.me {
+  float: right;
+  text-align: right;
+  clear: right;
+}
+#chatDetil .message.me .userAvatar {
+  float: right;
+}
+#chatDetil .message.me .content {
+  overflow: hidden;
+}
+#chatDetil .message .content {
+  overflow: hidden;
+}
+#chatDetil .bubble.bubble_primary {
+  background-color: #a2e65b;
+}
+#chatDetil .bubble {
+  max-width: 75%;
+  min-height: 40px;
+  display: inline-block;
+  vertical-align: top;
+  position: relative;
+  text-align: left;
+  font-size: 14px;
+  border-radius: 3px;
+  -moz-border-radius: 3px;
+  -webkit-border-radius: 3px;
+  margin: 0 10px;
+}
+#chatDetil .bubble.bubble_default {
+  background-color: #fff;
+}
+#chatDetil .bubble.right:after,
+#chatDetil .bubble.right:before {
+  left: 100%;
+}
+#chatDetil .bubble:after,
+#chatDetil .bubble:before {
+  position: absolute;
+  top: 14px;
+  border: 6px solid transparent;
+  content: " ";
+}
+#chatDetil .bubble.bubble_primary.right.arrow_primary:before,
+#chatDetil .bubble.bubble_primary.right:after {
+  border-left-color: #a2e65b;
+  border-left-width: 4px;
+}
+#chatDetil .bubble:after,
+#chatDetil .bubble:before {
+  position: absolute;
+  top: 14px;
+  border: 6px solid transparent;
+  content: " ";
+}
+#chatDetil .bubble.right:after,
+#chatDetil .bubble.right:before {
+  left: 100%;
+}
+#chatDetil .bubble.left:after,
+#chatDetil .bubble.left:before {
+  right: 100%;
+}
+#chatDetil .bubble.left:after {
+  border-right-color: #fff;
+  border-right-width: 4px;
+}
+#chatDetil .bubble_cont {
+  word-wrap: break-word;
+  word-break: break-all;
+  min-height: 40px;
+  position: relative;
+}
+#chatDetil .border {
+  -webkit-transform: scale(0.5);
+  transform: scale(0.5);
+  position: absolute;
+  top: -50%;
+  right: -50%;
+  bottom: -50%;
+  left: -50%;
+  border-radius: 3px;
+  background-color: transparent;
+  border-style: solid;
+  border-width: 1px;
+}
+#chatDetil .border_color {
+  border-color: #d7d7d7;
+}
+#chatDetil .bubble_cont .plain {
+  padding: 9px 13px;
+}
+#chatDetil pre {
+  margin: 0;
+  font-family: inherit;
+  font-size: inherit;
+  white-space: pre-wrap;
+  word-break: normal;
+  font-size: 16px;
+}
+#chatDetil .PullList {
+  height: calc(100% - 66px) !important;
+  overflow-x: hidden;
+}
+#chatDetil .input_message {
+  background: #f5f5f7;
+  height: 46px;
+  padding: 10px 12px;
+  border-radius: 4px;
+}
+#chatDetil .input_message .am-textarea-item {
+  border: 1px solid #d7d7d7 ;
+  border-radius: 4px;
+  padding: 0 5px;
+  max-height: 46px;
+  overflow-y: auto;
+}
+#chatDetil .input_message .am-textarea-control textarea {
+  font-size: 16px;
+  line-height: 20px;
+}
