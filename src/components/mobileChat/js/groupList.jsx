@@ -76,7 +76,10 @@ export default class groupChatList extends React.Component {
 
     itemOnClick(rowData) {
         return () => {
-            console.log(rowData);
+
+            var colPasswd = this.state.colPasswd
+
+            window.location.href = encodeURI(WebServiceUtil.mobileServiceURL + 'chatDetil?fromId=' + this.state.userId + '&toId=' + rowData.chatGroupId + '&choosePos=te&unionid=' + this.state.unionid + '&colPasswd=' + colPasswd + '&toName=' + rowData.name + '&mesType=1')
         }
     }
 
@@ -85,7 +88,7 @@ export default class groupChatList extends React.Component {
         var _this = this;
 
         const row = (rowData, sectionID, rowID) => {
-            
+
             var groupMemebersPhoto = [];
             var currentMemberArray = rowData.avatar.split('#');
             for (var i = 0; i < currentMemberArray.length; i++) {
