@@ -1,7 +1,7 @@
 var isDebug = false;
-var localDomain = "192.168.50.15";   //请求地址
+var localDomain = "192.168.50.230";   //请求地址
 var isDebugLocal = false;
-var localUrl = "192.168.50.29";    //跳转地址http:
+var localUrl = "192.168.50.72";    //跳转地址http:
 
 
 // //云校本地测试webService地址
@@ -10,8 +10,9 @@ var localUrl = "192.168.50.29";    //跳转地址http:
 // var elearningWebserviceURLOfRemote = "http://www.maaee.com/elearning/elearningControl/";
 // var elearningWebserviceURL = isDebug ? elearningWebserviceURLOfLocal : elearningWebserviceURLOfRemote;
 
-//小蚂蚁webService地址
-const apiWebServiceURLOfLocals = "http://" + localDomain + ":9006/Excoord_ApiServer/webservice";
+// //小蚂蚁webService地址
+// const apiWebServiceURLOfLocals = "http://" + localDomain + ":9006/Excoord_ApiServer/webservice";
+const apiWebServiceURLOfLocals = "http://" + localDomain + ":9010/Excoord_OldManBracelet/webservice";
 const apiWebServiceURLOfRemote = "https://www.maaee.com/Excoord_For_Education/webservice";
 var apiWebServiceURL = isDebug ? apiWebServiceURLOfLocals : apiWebServiceURLOfRemote;
 //小蚂蚁mobile地址

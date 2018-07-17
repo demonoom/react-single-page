@@ -699,7 +699,6 @@ const friendList = (location, cb) => {
         }
     )
 }
-
 const classList = (location, cb) => {
     require.ensure([], require => {
             cb(null, require("./components/mobileChat/js/classList").default)
@@ -717,6 +716,36 @@ const groupChatList = (location, cb) => {
 const originationList = (location, cb) => {
     require.ensure([], require => {
             cb(null, require("./components/mobileChat/js/originationList").default)
+        }
+    )
+}
+
+
+/**
+ * 老人健康手环绑定
+ * bindPeopleList---列表页
+ * addOldPeople---添加绑定页
+ * healthDetail--健康数据页
+ */
+const bindPeopleList = (location, cb) => {
+    require.ensure([], require => {
+            cb(null, require("./components/oldPeopleHealthRing/js/bindPeopleList").default)
+        }
+    )
+}
+
+
+
+const addOldPeople = (location, cb) => {
+    require.ensure([], require => {
+            cb(null, require("./components/oldPeopleHealthRing/js/addOldPeople").default)
+        }
+    )
+}
+
+const healthDetail =  (location, cb) => {
+    require.ensure([], require => {
+            cb(null, require("./components/oldPeopleHealthRing/js/healthDetail").default)
         }
     )
 }
@@ -897,6 +926,14 @@ class Index extends React.Component {
                         <Link
                             to="/classBrandTemplateSkin?uid=9" style={{fontSize: '24px'}}>皮肤列表</Link>
                     </li>
+                    <li>
+                        <Link
+                            to="/wxLogin?local=bindPeopleList" style={{fontSize: '24px'}}>健康手环绑定</Link>
+                    </li>
+                    <li>
+                        <Link
+                            to="/healthDetail?uid=23836" style={{fontSize: '24px'}}>健康手环绑定</Link>
+                    </li>
 
                 </ul>
             </div>
@@ -1023,6 +1060,9 @@ ReactDOM.render(
             <Route path="addClassBrandTemplate" getComponent={addClassBrandTemplate}/>
             <Route path="updateClassBrandTemplate" getComponent={updateClassBrandTemplate}/>
             <Route path="classBrandTemplateSkin" getComponent={classBrandTemplateSkin}/>
+            <Route path="bindPeopleList" getComponent={bindPeopleList}/>
+            <Route path="addOldPeople" getComponent={addOldPeople}/>
+            <Route path="healthDetail" getComponent={healthDetail}/>
             <Route path="friendList" getComponent={friendList}/>
             <Route path="classList" getComponent={classList}/>
             <Route path="groupChatList" getComponent={groupChatList}/>
