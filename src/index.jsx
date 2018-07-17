@@ -693,6 +693,34 @@ const classBrandTemplateSkin = (location, cb) => {
     )
 }
 
+
+/**
+ * 老人健康手环绑定
+ * bindPeopleList---列表页
+ * addOldPeople---添加绑定页
+ * healthDetail--健康数据页
+ */
+const bindPeopleList = (location, cb) => {
+    require.ensure([], require => {
+            cb(null, require("./components/oldPeopleHealthRing/js/bindPeopleList").default)
+        }
+    )
+}
+
+
+const addOldPeople = (location, cb) => {
+    require.ensure([], require => {
+            cb(null, require("./components/oldPeopleHealthRing/js/addOldPeople").default)
+        }
+    )
+}
+
+const healthDetail =  (location, cb) => {
+    require.ensure([], require => {
+            cb(null, require("./components/oldPeopleHealthRing/js/healthDetail").default)
+        }
+    )
+}
 import './index.less';
 
 class Index extends React.Component {
@@ -869,6 +897,14 @@ class Index extends React.Component {
                         <Link
                             to="/classBrandTemplateSkin?uid=9" style={{fontSize: '24px'}}>皮肤列表</Link>
                     </li>
+                    <li>
+                        <Link
+                            to="/wxLogin?local=bindPeopleList" style={{fontSize: '24px'}}>健康手环绑定</Link>
+                    </li>
+                    <li>
+                        <Link
+                            to="/healthDetail?uid=23836" style={{fontSize: '24px'}}>健康手环绑定</Link>
+                    </li>
 
                 </ul>
             </div>
@@ -995,6 +1031,9 @@ ReactDOM.render(
             <Route path="addClassBrandTemplate" getComponent={addClassBrandTemplate}/>
             <Route path="updateClassBrandTemplate" getComponent={updateClassBrandTemplate}/>
             <Route path="classBrandTemplateSkin" getComponent={classBrandTemplateSkin}/>
+            <Route path="bindPeopleList" getComponent={bindPeopleList}/>
+            <Route path="addOldPeople" getComponent={addOldPeople}/>
+            <Route path="healthDetail" getComponent={healthDetail}/>
         </Route>
     </Router>
     ,
