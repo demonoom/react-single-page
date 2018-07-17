@@ -101,7 +101,7 @@ export default class addARTextbook extends React.Component {
             classArray.push({
                 "page": v.pageNoValue,
                 "index": i,
-                "pic": v.picPath+'?size=500x500',
+                "pic": v.picPath+'?size=300x300',
                 "video": v.videoPath.join(",")
             })
         })
