@@ -48,8 +48,8 @@ export default class contacts_ListS extends React.Component {
         var locationSearch = locationHref.substr(locationHref.indexOf("?") + 1);
         var searchArray = locationSearch.split("&");
         var unionid = searchArray[0].split('=')[1];
-        this.setState({unionid});
-        // this.setState({unionid: 'o-w611FMw4s8WtiCwNqD1Ltr9w2w'});
+        // this.setState({unionid});
+        this.setState({unionid: 'o-w611FMw4s8WtiCwNqD1Ltr9w2w'});
     }
 
     componentDidMount() {
