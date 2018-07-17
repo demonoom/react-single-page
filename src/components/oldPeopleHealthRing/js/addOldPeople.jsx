@@ -1,6 +1,6 @@
 import React from "react";
 import {
-    
+    Toast,
     InputItem,
     List,
 } from 'antd-mobile';
@@ -13,7 +13,7 @@ export default class addOldPeople extends React.Component {
             stNameValue: '',
         }
     }
-
+   
     componentDidMount() {
         Bridge.setShareAble("false");
         document.title = '老人健康手环绑定';
@@ -23,6 +23,8 @@ export default class addOldPeople extends React.Component {
         this.setState({ "uid": uid });
         //添加对视窗大小的监听,在屏幕转换以及键盘弹起时重设各项高度
         window.addEventListener('resize', this.onWindowResize)
+        this.wxchatConfig();
+
     }
 
 
@@ -35,16 +37,17 @@ export default class addOldPeople extends React.Component {
         }, 100)
     }
 
-     /**
-     * 调用客户端扫码
+
+    /**
+     *微信配置
      */
-    scanMac() {
+    wxchatConfig(){
         var param = {
             "method": 'getWeChatSignature',
         };
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
             onResponse: (result) => {
-                console.log(result.response);
+                // Toast.info(result.response);
                 let res = result.response;
                 wx.config({
                     debug: true,
@@ -80,7 +83,23 @@ export default class addOldPeople extends React.Component {
 
             },
         });
-    };
+    }
+     /**
+     * 调用微信扫描
+     */
+
+    scanQRCode() {
+        wx.scanQRCode({
+            needResult: 0, // 默认为0，扫描结果由微信处理，1则直接返回扫描结果，
+            scanType: ["qrCode", "barCode"], // 可以指定扫二维码还是一维码，默认二者都有
+            success: function (res) {
+                var result = res.resultStr; // 当needResult 为 1 时，扫码返回的结果
+            }
+        });
+    }
+    // scanMac() {
+        
+    // };
 
      /**
      * 输入框改变的回调
@@ -145,7 +164,7 @@ export default class addOldPeople extends React.Component {
                             value={this.state.macId}
                             editable={false}
                         >手环：</InputItem>
-                        <span onClick={this.scanMac}>扫描</span>
+                        <span onClick={this.scanQRCode}>扫描</span>
                     </div>
                 </List>
                 <div className="bottomBox">

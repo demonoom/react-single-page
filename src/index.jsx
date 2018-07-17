@@ -693,6 +693,33 @@ const classBrandTemplateSkin = (location, cb) => {
     )
 }
 
+const friendList = (location, cb) => {
+    require.ensure([], require => {
+            cb(null, require("./components/mobileChat/js/friendList").default)
+        }
+    )
+}
+const classList = (location, cb) => {
+    require.ensure([], require => {
+            cb(null, require("./components/mobileChat/js/classList").default)
+        }
+    )
+}
+
+const groupChatList = (location, cb) => {
+    require.ensure([], require => {
+            cb(null, require("./components/mobileChat/js/groupList").default)
+        }
+    )
+}
+
+const originationList = (location, cb) => {
+    require.ensure([], require => {
+            cb(null, require("./components/mobileChat/js/originationList").default)
+        }
+    )
+}
+
 
 /**
  * 老人健康手环绑定
@@ -708,6 +735,7 @@ const bindPeopleList = (location, cb) => {
 }
 
 
+
 const addOldPeople = (location, cb) => {
     require.ensure([], require => {
             cb(null, require("./components/oldPeopleHealthRing/js/addOldPeople").default)
@@ -721,6 +749,7 @@ const healthDetail =  (location, cb) => {
         }
     )
 }
+
 import './index.less';
 
 class Index extends React.Component {
@@ -862,7 +891,7 @@ class Index extends React.Component {
                     </li>
                     <li>
                         <Link
-                            to="/wxTemplate?uid=23836" style={{fontSize: '24px'}}>微信模板消息</Link>
+                            to="/wxTemplate" style={{fontSize: '24px'}}>微信SDK</Link>
                     </li>
                     <li>
                         <Link
@@ -1034,6 +1063,10 @@ ReactDOM.render(
             <Route path="bindPeopleList" getComponent={bindPeopleList}/>
             <Route path="addOldPeople" getComponent={addOldPeople}/>
             <Route path="healthDetail" getComponent={healthDetail}/>
+            <Route path="friendList" getComponent={friendList}/>
+            <Route path="classList" getComponent={classList}/>
+            <Route path="groupChatList" getComponent={groupChatList}/>
+            <Route path="originationList" getComponent={originationList}/>
         </Route>
     </Router>
     ,

@@ -101,11 +101,12 @@ export default class addARTextbook extends React.Component {
             classArray.push({
                 "page": v.pageNoValue,
                 "index": i,
-                "pic": v.picPath,
+                "pic": v.picPath+'?size=500x500',
                 "video": v.videoPath.join(",")
             })
         })
         param.bookData.itemList = classArray;
+        
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
             onResponse: function (result) {
                 if (result.msg == '调用成功' || result.success == true) {

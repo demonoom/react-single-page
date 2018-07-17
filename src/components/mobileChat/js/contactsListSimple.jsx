@@ -23,10 +23,22 @@ export default class contacts_ListS extends React.Component {
             unionid: '',        //微信登录的unionid
             userData: [],   //unionid绑定的用户身份数组
             choosePos: '',   //控制选择的是左还是右
-            headItem: [<Item onClick={this.turnToGroup}>我的群组</Item>,
-                <Item onClick={this.turnToOrgrination}>组织架构</Item>,
-                <Item onClick={this.turnToClass}>我的班级</Item>,
-                <Item onClick={this.turnToFriend}>我的好友</Item>]
+            headItem: [<Item onClick={this.turnToGroup}>
+                <i className='userImg message_group'></i>
+                <span>我的群组</span>
+            </Item>,
+                <Item onClick={this.turnToOrgrination}>
+                    <i className='userImg message_tissue'></i>
+                    <span>组织架构</span>
+                </Item>,
+                <Item onClick={this.turnToClass}>
+                    <i className='userImg message_class'></i>
+                    <span>我的班级</span>
+                </Item>,
+                <Item onClick={this.turnToFriend}>
+                    <i className='userImg message_friend'></i>
+                    <span>我的好友</span>
+                </Item>]
         };
     }
 
@@ -133,28 +145,35 @@ export default class contacts_ListS extends React.Component {
      * 去我的群组
      */
     turnToGroup() {
-        console.log('turnToGroup');
+        var colPasswd = contactsList.state.userData[0].colPasswd
+        var unionid = contactsList.state.unionid
+
+        window.location.href = encodeURI(WebServiceUtil.mobileServiceURL + 'groupChatList?fromId=' + contactsList.state.userId + '&colPasswd=' + colPasswd + '&unionid=' + unionid)
     }
 
     /**
      * 去组织架构
      */
     turnToOrgrination() {
-        console.log('turnToOrgrination');
+        window.location.href = encodeURI(WebServiceUtil.mobileServiceURL + 'originationList?fromId=' + contactsList.state.userId)
     }
 
     /**
      * 去我的班级
      */
     turnToClass() {
-        console.log('turnToClass');
+        var colPasswd = contactsList.state.userData[0].colPasswd
+        var unionid = contactsList.state.unionid
+        window.location.href = encodeURI(WebServiceUtil.mobileServiceURL + 'classList?fromId=' + contactsList.state.userId + '&colPasswd=' + colPasswd + '&unionid=' + unionid)
     }
 
     /**
      * 去我的好友
      */
     turnToFriend() {
-        console.log('turnToFriend');
+        var colPasswd = contactsList.state.userData[0].colPasswd
+        var unionid = contactsList.state.unionid
+        window.location.href = encodeURI(WebServiceUtil.mobileServiceURL + 'friendList?fromId=' + contactsList.state.userId + '&colPasswd=' + colPasswd + '&unionid=' + unionid)
     }
 
     /**
@@ -180,10 +199,10 @@ export default class contacts_ListS extends React.Component {
 
             if (rowData.type == 0) {
                 //个人
-                window.location.href = encodeURI(WebServiceUtil.mobileServiceURL + 'chatDetil?fromId=' + this.state.userId + '&toId=' + rowData.user.colUid + '&choosePos=' + this.state.choosePos + '&unionid=' + this.state.unionid + '&colPasswd=' + colPasswd + '&toName=' + rowData.user.userName)
+                window.location.href = encodeURI(WebServiceUtil.mobileServiceURL + 'chatDetil?fromId=' + this.state.userId + '&toId=' + rowData.user.colUid + '&choosePos=' + this.state.choosePos + '&unionid=' + this.state.unionid + '&colPasswd=' + colPasswd + '&toName=' + rowData.user.userName + '&mesType=0')
             } else {
                 //群
-                console.log(rowData.chatGroup);
+                window.location.href = encodeURI(WebServiceUtil.mobileServiceURL + 'chatDetil?fromId=' + this.state.userId + '&toId=' + rowData.chatGroup.chatGroupId + '&choosePos=' + this.state.choosePos + '&unionid=' + this.state.unionid + '&colPasswd=' + colPasswd + '&toName=' + rowData.chatGroup.name + '&mesType=1')
             }
         }
     }
@@ -304,7 +323,7 @@ export default class contacts_ListS extends React.Component {
                     ref={el => this.lv = el}
                     dataSource={this.state.dataSource}    //数据类型是 ListViewDataSource
                     renderHeader={() => (
-                        <div style={{paddingTop: 5, paddingBottom: 0, textAlign: 'left'}}>
+                        <div style={{paddingTop: 0, paddingBottom: 0, textAlign: 'left'}}>
                             常用联系人
                         </div>)}
                     renderRow={row}   //需要的参数包括一行数据等,会返回一个可渲染的组件为这行数据渲染  返回renderable
@@ -314,7 +333,7 @@ export default class contacts_ListS extends React.Component {
                     initialListSize={30}   //指定在组件刚挂载的时候渲染多少行数据，用这个属性来确保首屏显示合适数量的数据
                     scrollEventThrottle={20}     //控制在滚动过程中，scroll事件被调用的频率
                     style={{
-                        height: document.body.clientHeight - 44,
+                        height: document.body.clientHeight - 240,
                     }}
                 />
 
