@@ -19,11 +19,26 @@ export default class contacts_ListS extends React.Component {
 
         this.state = {
             dataSource: dataSource.cloneWithRows(this.initData),
-            footStr: '',
             userId: '',
             unionid: '',        //微信登录的unionid
             userData: [],   //unionid绑定的用户身份数组
             choosePos: '',   //控制选择的是左还是右
+            headItem: [<Item onClick={this.turnToGroup}>
+                <i className='userImg message_group'></i>
+                <span>我的群组</span>
+            </Item>,
+                <Item onClick={this.turnToOrgrination}>
+                    <i className='userImg message_tissue'></i>
+                    <span>组织架构</span>
+                </Item>,
+                <Item onClick={this.turnToClass}>
+                    <i className='userImg message_class'></i>
+                    <span>我的班级</span>
+                </Item>,
+                <Item onClick={this.turnToFriend}>
+                    <i className='userImg message_friend'></i>
+                    <span>我的好友</span>
+                </Item>]
         };
     }
 
@@ -34,7 +49,7 @@ export default class contacts_ListS extends React.Component {
         var searchArray = locationSearch.split("&");
         var unionid = searchArray[0].split('=')[1];
         // this.setState({unionid});
-        this.setState({unionid: 'o-w611I9nKqTHcT3P34srzwIrf6U'});
+        this.setState({unionid: 'o-w611FMw4s8WtiCwNqD1Ltr9w2w'});
     }
 
     componentDidMount() {
@@ -53,18 +68,17 @@ export default class contacts_ListS extends React.Component {
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
             onResponse: function (result) {
                 if (result.success == true && result.msg == '调用成功') {
-                    console.log(result.response);
                     if (result.response.length == 1) {
                         // butFoot控制下面的老师,家长的显示隐藏
                         _this.setState({butFoot: false})
-                        _this.getUserContacts(result.response[0].colUid)
+                        _this.getRecentShareUsers(result.response[0].colUid)
                     } else if (result.response.length == 0) {
                         Toast.fail('未找到用户', 2)
                     } else {
                         _this.setState({butFoot: true})
                         result.response.forEach(function (v, i) {
                             if (v.colUtype == "TEAC") {
-                                _this.getUserContacts(v.colUid)
+                                _this.getRecentShareUsers(v.colUid)
                             }
                         })
                     }
@@ -82,17 +96,18 @@ export default class contacts_ListS extends React.Component {
     /**
      * 获取用户联系人
      * 切换身份之后再调一下
+     * params:{"method":"getRecentShareUsers","userId":"6075"}
      * @param data
      */
-    getUserContacts(id) {
+    getRecentShareUsers(id) {
 
         this.setState({userId: id})
 
         var _this = this;
         const dataBlob = {};
         var param = {
-            "method": 'getUserContacts',
-            "ident": id,
+            "method": 'getRecentShareUsers',
+            "userId": id,
         };
 
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
@@ -100,7 +115,11 @@ export default class contacts_ListS extends React.Component {
                 if (result.success == true && result.msg == '调用成功') {
 
                     let response = result.response.filter(function (item) {
-                        return (item.colUtype != 'SGZH' && item.colUtype != "SGZH_NATIVE" && item.colUtype != "SGZH_WEB" && item.colUid != _this.state.userId);
+                        if (item.type == 0) {
+                            return (item.user.colUtype != 'CHAT_GROUP_INFORMER' );
+                        } else {
+                            return item
+                        }
                     })
 
                     for (let i = 0; i < response.length; i++) {
@@ -110,7 +129,6 @@ export default class contacts_ListS extends React.Component {
                     _this.initData = _this.initData.concat(response);
                     _this.setState({
                         dataSource: _this.state.dataSource.cloneWithRows(_this.initData),
-                        footStr: response.length + '位联系人'
                     })
 
                 } else {
@@ -124,6 +142,48 @@ export default class contacts_ListS extends React.Component {
     }
 
     /**
+     * 去我的群组
+     */
+    turnToGroup() {
+        var colPasswd = contactsList.state.userData[0].colPasswd
+        var unionid = contactsList.state.unionid
+
+        window.location.href = encodeURI(WebServiceUtil.mobileServiceURL + 'groupChatList?fromId=' + contactsList.state.userId + '&colPasswd=' + colPasswd + '&unionid=' + unionid)
+    }
+
+    /**
+     * 去组织架构
+     */
+    turnToOrgrination() {
+        window.location.href = encodeURI(WebServiceUtil.mobileServiceURL + 'originationList?fromId=' + contactsList.state.userId)
+    }
+
+    /**
+     * 去我的班级
+     */
+    turnToClass() {
+        var colPasswd = contactsList.state.userData[0].colPasswd
+        var unionid = contactsList.state.unionid
+        window.location.href = encodeURI(WebServiceUtil.mobileServiceURL + 'classList?fromId=' + contactsList.state.userId + '&colPasswd=' + colPasswd + '&unionid=' + unionid)
+    }
+
+    /**
+     * 去我的好友
+     */
+    turnToFriend() {
+        var colPasswd = contactsList.state.userData[0].colPasswd
+        var unionid = contactsList.state.unionid
+        window.location.href = encodeURI(WebServiceUtil.mobileServiceURL + 'friendList?fromId=' + contactsList.state.userId + '&colPasswd=' + colPasswd + '&unionid=' + unionid)
+    }
+
+    /**
+     * 去学生班级
+     */
+    turnToStuClass() {
+        console.log('turnToStuClass');
+    }
+
+    /**
      * 联系人被点击
      * 跳转至聊天详情界面
      * @param rowData
@@ -134,10 +194,16 @@ export default class contacts_ListS extends React.Component {
             if (this.state.choosePos == 'te') {
                 var colPasswd = this.state.userData[0].colPasswd
             } else {
-                var colPasswd = this.state.userData[0].colPasswd
+                var colPasswd = this.state.userData[1].colPasswd
             }
 
-            window.location.href = encodeURI(WebServiceUtil.mobileServiceURL + 'chatDetil?fromId=' + this.state.userId + '&toId=' + rowData.colUid + '&choosePos=' + this.state.choosePos + '&unionid=' + this.state.unionid + '&colPasswd=' + colPasswd + '&toName=' + rowData.userName)
+            if (rowData.type == 0) {
+                //个人
+                window.location.href = encodeURI(WebServiceUtil.mobileServiceURL + 'chatDetil?fromId=' + this.state.userId + '&toId=' + rowData.user.colUid + '&choosePos=' + this.state.choosePos + '&unionid=' + this.state.unionid + '&colPasswd=' + colPasswd + '&toName=' + rowData.user.userName + '&mesType=0')
+            } else {
+                //群
+                window.location.href = encodeURI(WebServiceUtil.mobileServiceURL + 'chatDetil?fromId=' + this.state.userId + '&toId=' + rowData.chatGroup.chatGroupId + '&choosePos=' + this.state.choosePos + '&unionid=' + this.state.unionid + '&colPasswd=' + colPasswd + '&toName=' + rowData.chatGroup.name + '&mesType=1')
+            }
         }
     }
 
@@ -155,10 +221,15 @@ export default class contacts_ListS extends React.Component {
             rowHasChanged: (row1, row2) => row1 !== row2,
         });
 
-        contactsList.setState({choosePos: 'te'})
+        contactsList.setState({
+            choosePos: 'te', headItem: [<Item onClick={contactsList.turnToGroup}>我的群组</Item>,
+                <Item onClick={contactsList.turnToOrgrination}>组织架构</Item>,
+                <Item onClick={contactsList.turnToClass}>我的班级</Item>,
+                <Item onClick={contactsList.turnToFriend}>我的好友</Item>]
+        })
         contactsList.state.userData.forEach(function (v, i) {
             if (v.colUtype == "TEAC") {
-                contactsList.getUserContacts(v.colUid)
+                contactsList.getRecentShareUsers(v.colUid)
             }
         })
     }
@@ -177,10 +248,10 @@ export default class contacts_ListS extends React.Component {
             rowHasChanged: (row1, row2) => row1 !== row2,
         });
 
-        contactsList.setState({choosePos: 'pe'})
+        contactsList.setState({choosePos: 'pe', headItem: [<Item onClick={contactsList.turnToStuClass}>学生班级</Item>]})
         contactsList.state.userData.forEach(function (v, i) {
             if (v.colUtype == 'PAREN') {
-                contactsList.getUserContacts(v.colUid)
+                contactsList.getRecentShareUsers(v.colUid)
             }
         })
 
@@ -189,12 +260,52 @@ export default class contacts_ListS extends React.Component {
     render() {
 
         const row = (rowData, sectionID, rowID) => {
-            return (
-                <Item onClick={this.itemOnClick(rowData)}>
-                    <img className='userImg' src={rowData.avatar}/>
-                    <span className="text_hidden">{rowData.userName}</span>
-                </Item>
-            )
+
+            if (rowData.type == 1) {
+                //群
+
+                var groupMemebersPhoto = [];
+                var currentMemberArray = rowData.chatGroup.avatar.split('#');
+                for (var i = 0; i < currentMemberArray.length; i++) {
+                    var member = currentMemberArray[i];
+                    var memberAvatarTag = <img src={member}></img>;
+                    groupMemebersPhoto.push(memberAvatarTag);
+                    if (i >= 3) {
+                        break;
+                    }
+                }
+
+                var imgTag = <div className="maaee_group_face">{groupMemebersPhoto}</div>;
+                switch (groupMemebersPhoto.length) {
+                    case 1:
+                        imgTag = <div className="maaee_group_face1">{groupMemebersPhoto}</div>;
+                        break;
+                    case 2:
+                        imgTag = <div className="maaee_group_face2">{groupMemebersPhoto}</div>;
+                        break;
+                    case 3:
+                        imgTag = <div className="maaee_group_face3">{groupMemebersPhoto}</div>;
+                        break;
+                    case 4:
+                        imgTag = <div className="maaee_group_face">{groupMemebersPhoto}</div>;
+                        break;
+                }
+
+                return (
+                    <Item onClick={this.itemOnClick(rowData)}>
+                        {imgTag}
+                        <span className="text_hidden">{rowData.chatGroup.name}</span>
+                    </Item>
+                )
+            } else if (rowData.type == 0) {
+                //个人
+                return (
+                    <Item onClick={this.itemOnClick(rowData)}>
+                        <img className='userImg' src={rowData.user.avatar}/>
+                        <span className="text_hidden">{rowData.user.userName}</span>
+                    </Item>
+                )
+            }
         }
 
         return (
@@ -203,12 +314,17 @@ export default class contacts_ListS extends React.Component {
                     <span id='selectL' className="select" onClick={this.turnToTercher}>老师</span>
                     <span id='selectR' onClick={this.turnTojiaZhang}>家长</span>
                 </div>
+
+                <div>
+                    {this.state.headItem}
+                </div>
+
                 <ListView
                     ref={el => this.lv = el}
                     dataSource={this.state.dataSource}    //数据类型是 ListViewDataSource
-                    renderFooter={() => (
-                        <div style={{paddingTop: 5, paddingBottom: 0, textAlign: 'center'}}>
-                            {this.state.footStr}
+                    renderHeader={() => (
+                        <div style={{paddingTop: 0, paddingBottom: 0, textAlign: 'left'}}>
+                            常用联系人
                         </div>)}
                     renderRow={row}   //需要的参数包括一行数据等,会返回一个可渲染的组件为这行数据渲染  返回renderable
                     className="am-list"
@@ -217,7 +333,7 @@ export default class contacts_ListS extends React.Component {
                     initialListSize={30}   //指定在组件刚挂载的时候渲染多少行数据，用这个属性来确保首屏显示合适数量的数据
                     scrollEventThrottle={20}     //控制在滚动过程中，scroll事件被调用的频率
                     style={{
-                        height: document.body.clientHeight - 44,
+                        height: document.body.clientHeight - 240,
                     }}
                 />
 

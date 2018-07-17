@@ -29,6 +29,7 @@ export default class classCardHomePage extends React.Component {
         this.state = {
             messageInfo: '1',
             classCommand: '',
+            defaultId: 'skin_default'
         };
     }
 
@@ -39,6 +40,10 @@ export default class classCardHomePage extends React.Component {
         var clazzId = searchArray[0].split('=')[1];
         var roomId = searchArray[1].split('=')[1];
         var mac = searchArray[2].split('=')[1];
+        if (WebServiceUtil.isEmpty(searchArray[3]) == false) {
+            var schoolId = searchArray[3].split('=')[1];
+            this.getBraceletBoxSkinBySchoolId(schoolId)
+        }
         var pro = {
             "command": "braceletBoxConnect",
             "data": {
@@ -54,6 +59,32 @@ export default class classCardHomePage extends React.Component {
         localStorage.setItem("roomId", roomId);
         simpleMS = new SimpleWebsocketConnection();
         simpleMS.connect();
+    }
+
+    /**
+     * 根据学校查询当前的皮肤
+     * @param schoolId
+     */
+    getBraceletBoxSkinBySchoolId(schoolId) {
+        var _this = this;
+
+        var param = {
+            "method": 'getBraceletBoxSkinBySchoolId',
+            "schoolId": schoolId,
+        };
+        WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
+            onResponse: function (result) {
+                if (result.msg == '调用成功' || result.success == true) {
+                    if (WebServiceUtil.isEmpty(result.response) == false) {
+                        _this.setState({defaultId: result.response.skinAttr});
+                    }
+                }
+            },
+            onError: function (error) {
+                // message.error(error);
+            }
+        });
+
     }
 
     componentDidMount() {
@@ -94,7 +125,7 @@ export default class classCardHomePage extends React.Component {
 
     render() {
         return (
-            <div id="skin_default">
+            <div id={this.state.defaultId}>
                 <div id="classCardHomePage" style={{height: document.body.clientHeight}}>
                     <Header
                         timeOut={this.timeOut}
@@ -105,9 +136,11 @@ export default class classCardHomePage extends React.Component {
                             <div className="home_right">
                                 <Course
                                     messageUtilObj={this.state.messageInfo}
+                                    defaultId={this.state.defaultId}
                                 />
                                 <CurrentAttendance
                                     messageUtilObj={this.state.messageInfo}
+                                    defaultId={this.state.defaultId}
                                 />
                             </div>
                             <div className="home_left">
@@ -125,8 +158,11 @@ export default class classCardHomePage extends React.Component {
                                 <div>
                                     <Notify
                                         classCommand={this.state.classCommand}
+                                        defaultId={this.state.defaultId}
                                     />
-                                    <Application/>
+                                    <Application
+                                        defaultId={this.state.defaultId}
+                                    />
                                 </div>
                             </div>
                             {/*<div>*/}

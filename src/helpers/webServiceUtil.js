@@ -1,4 +1,4 @@
-var isDebug = true;
+var isDebug = false;
 var localDomain = "192.168.50.15";   //请求地址
 var isDebugLocal =  true;
 var localUrl = "192.168.50.186";    //跳转地址http:
@@ -25,13 +25,39 @@ function WebServiceUtil() {
 
 WebServiceUtil.mobileServiceURL = isDebugLocal ? mobileURLOfLocal : mobileURLOfRemote;
 
+/**
+ * 不带请求头的ajax
+ * @param data
+ * @param listener
+ */
 WebServiceUtil.requestLittleAntApi = function (data, listener) {
     $.ajax({
         type: "post",
         url: apiWebServiceURL,
         data: {params: data},
         dataType: "json",
-        success: function (result) {  
+        success: function (result) {
+            listener.onResponse(result);
+        }, error: function (error) {
+            listener.onError(error);
+        }
+    });
+}
+
+/**
+ * 带有请求头的ajax
+ * @param data
+ * @param headObj
+ * @param listener
+ */
+WebServiceUtil.requestLittleAntApiWithHead = function (data, headObj, listener) {
+    $.ajax({
+        type: "post",
+        url: apiWebServiceURL,
+        data: {params: data},
+        dataType: "json",
+        headers: JSON.parse(headObj),
+        success: function (result) {
             listener.onResponse(result);
         }, error: function (error) {
             listener.onError(error);

@@ -10,6 +10,14 @@ export default class tableItemDetil extends React.Component {
 
     }
 
+    componentWillMount() {
+        var locationHref = window.location.href;
+        var locationSearch = locationHref.substr(locationHref.indexOf("?") + 1);
+        var searchArray = locationSearch.split("&");
+        var defaultId = searchArray[0].split('=')[1];
+        this.setState({defaultId})
+    }
+
     componentDidMount() {
         this.viewCourseTable()
     }
@@ -75,7 +83,7 @@ export default class tableItemDetil extends React.Component {
 
     render() {
         return (
-            <div  id="skin_primarySchool">
+            <div id={this.state.defaultId}>
                 <div id="tableItemDetil" className="home_content" style={{height: document.body.clientHeight}}>
                     <div className="inner_bg">
                         <div className="navBar">

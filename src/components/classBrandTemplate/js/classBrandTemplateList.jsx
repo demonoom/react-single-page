@@ -7,7 +7,8 @@ import {
     List,
     Button
 } from 'antd-mobile';
-import { createForm } from 'rc-form';
+import {createForm} from 'rc-form';
+import '../css/classBrandTemplateList.less';
 
 
 var AttenT;
@@ -259,7 +260,7 @@ export default class classBrandTemplateList extends React.Component {
                                         AttenT.updateBraceletBoxSkinStatus(checked, rowData)
                                     }}
                                 />}
-                            ><span className="open_text">开启状态：</span></List.Item>
+                            ><span className="open_text">默认皮肤：</span></List.Item>
                         </List>
                         <Button className="modifyBtn_common" type="primary" size="small" onClick={this.updateAttendanceTime.bind(this, rowData)}></Button>
                         <Button type="primary" size="small" className="btn_del deleteBtn_common" onClick={this.showAlert.bind(this, rowData)}></Button>
@@ -269,14 +270,16 @@ export default class classBrandTemplateList extends React.Component {
             SwitchExample = createForm()(SwitchExample);
 
             return (
-                <div className="classInfo line_public attendanceCont">
-                    <div style={{ marginTop: '50px' }}>
-                        <div className="title textOver">
-                            皮肤名称：{rowData.skinName}
-                        </div>
-                        <div className="tableListDate textOver">
-                            <div className="classroom time"><span className="classroom_span">皮肤类名：</span>{rowData.skinAttr}</div>
-                            {/* <div className="classroom time"><span className="classroom_span">离校时间：</span>{rowData.itemList[0].checkOut}</div> */}
+                <div className="classInfo line_public">
+                    <div className="cont my_flex">
+
+                        <div className="titleText">
+                            <div className="title textOver">
+                                皮肤名称：{rowData.skinName}
+                            </div>
+                            <div className="title textOver">
+                                皮肤类名：{rowData.skinAttr}
+                            </div>
                         </div>
                         <img src={rowData.image} />
                     </div>

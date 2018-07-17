@@ -35,6 +35,7 @@ export default class course extends React.Component {
                 this.viewCourseTableItem(nextProps.messageUtilObj.data)
             }
         }
+        this.setState({defaultId: nextProps.defaultId})
 
 
     }
@@ -67,7 +68,7 @@ export default class course extends React.Component {
     }
 
     turnToDetil() {
-        var url = WebServiceUtil.mobileServiceURL + "tableItemDetil";
+        var url = WebServiceUtil.mobileServiceURL + "tableItemDetil?defaultId=" + demeanor.state.defaultId;
         // window.location.href = url;
         var data = {
             method: 'openNewPage',

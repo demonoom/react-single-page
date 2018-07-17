@@ -7,7 +7,7 @@ import {
     InputItem,
     DatePicker,
 } from 'antd-mobile';
-// import '../css/newAttendanceTime.less'
+import '../css/addClassBrandTemplate.less'
 
 var addAT;
 
@@ -21,6 +21,7 @@ export default class addClassBrandTemplate extends React.Component {
             cols: 1,
             search_bg: false,
             clientHeight: document.body.clientHeight,
+            imgPath:""
         };
     }
 
@@ -51,11 +52,30 @@ export default class addClassBrandTemplate extends React.Component {
     }
      /**
      * 上传照片
+     * uploadImages
      */
     uploadImage() {
-        var data = {
-            method: 'selectImages',
-        };
+        var phoneType = navigator.userAgent;
+        var phone;
+        var data;
+        
+        if (phoneType.indexOf('iPhone') > -1 || phoneType.indexOf('iPad') > -1) {
+            phone = 'ios'
+        } else if(phoneType.indexOf('Android') > -1 ) {
+            phone = 'android'
+        }else {
+            phone = ""
+        }
+        if (phone == 'ios' || phone == 'android'){
+            data = {
+                method: 'uploadClassDemeanor',
+            };
+        }else {
+            data = {
+                method: 'selectImages',
+            };
+        }
+       
         Bridge.callHandler(data, function (res) {
             // 拿到照片地址,显示在页面等待上传
             var imgPath = res.split("?");
@@ -118,7 +138,7 @@ export default class addClassBrandTemplate extends React.Component {
                     <WhiteSpace size="lg" />
                     <div className='teachBuild'>
                         <InputItem
-                            placeholder="请输入皮肤名称"
+                            placeholder="请输入名称"
                             data-seed="logId"
                             onChange={v => {
                                 addAT.setState({
@@ -131,7 +151,7 @@ export default class addClassBrandTemplate extends React.Component {
                     <WhiteSpace size="lg" />
                     <div className='teachBuild'>
                         <InputItem
-                            placeholder="请输入皮类名"
+                            placeholder="请输入类名"
                             data-seed="logId"
                             onChange={v => {
                                 addAT.setState({
@@ -141,17 +161,20 @@ export default class addClassBrandTemplate extends React.Component {
                             value={this.state.skinClassName}
                         >皮肤类名<i className='redStar'>*</i></InputItem>
                     </div>
-                    {
-                        <img src={addAT.state.imgPath} alt=""/>
-                    }
-                    <button className="uploadBtn" onClick={this.uploadImage}>上传图片</button>
-                </div>
-                <div className='addCourseButton'>
                     <WhiteSpace size="lg" />
-                    <WingBlank>
-                        <Button type="warning" onClick={this.subAttendanceTime}>提交</Button>
-                    </WingBlank>
+                    <div className="uploadDiv">
+                        <div className="title">上传图片</div>
+                        <div className="my_flex photoCont">
+                            {
+                                addAT.state.imgPath == "" ?  "" :<div className="imgDiv"><img src={addAT.state.imgPath}/></div>
+                            }
+                            {/* {<img src={addAT.state.imgPath} />} */}
+                            <div className="uploadBtn" onClick={this.uploadImage}></div>
+                        </div>
+                    </div>
+
                 </div>
+                <Button type="warning" className="submitBtn" onClick={this.subAttendanceTime}>提交</Button>
             </div>
         );
     }

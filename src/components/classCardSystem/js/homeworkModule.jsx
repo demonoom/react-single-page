@@ -1,5 +1,5 @@
 import React from 'react';
-import { Toast, ListView } from 'antd-mobile';
+import {Toast, ListView} from 'antd-mobile';
 import '../css/homeworkModule.less';
 
 export default class homeworkModule extends React.Component {
@@ -29,13 +29,14 @@ export default class homeworkModule extends React.Component {
         var locationSearch = locationHref.substr(locationHref.indexOf("?") + 1);
         var searchArray = locationSearch.split("&");
         var classId = searchArray[0].split("=")[1];
-        this.setState({ "classId": classId })
+        var defaultId = searchArray[1].split("=")[1];
+        this.setState({"classId": classId, defaultId})
         this.getHomeworkData(classId);
     }
 
     /**
      * 根据班级ID获取作业列表
-     * @param {} classId 
+     * @param {} classId
      */
     getHomeworkData(classId) {
         var _this = this;
@@ -52,7 +53,7 @@ export default class homeworkModule extends React.Component {
                 if (result.success == true && result.msg == "调用成功") {
                     _this.state.initArrData = result.response;
                     if (result.response.length === 0) {
-                        _this.setState({ "isLoadingLeft": false })
+                        _this.setState({"isLoadingLeft": false})
                     } else {
                         _this.setState({
                             homeworkData: result.response
@@ -102,7 +103,7 @@ export default class homeworkModule extends React.Component {
             return;
         }
         currentPageNo += 1;
-        this.setState({ isLoadingLeft: true, defaultPageNo: currentPageNo });
+        this.setState({isLoadingLeft: true, defaultPageNo: currentPageNo});
         this.getHomeworkData(this.state.classId);
         this.setState({
             dataSource: this.state.dataSource.cloneWithRows(this.initData),
@@ -130,7 +131,7 @@ export default class homeworkModule extends React.Component {
                     <div className="homeworkInfo">
                         <div className="homeworkL">
                             <div className="imgInfo">
-                                <img src={rowData.fromUser.avatar} />
+                                <img src={rowData.fromUser.avatar}/>
                                 <span className="textOver">{rowData.fromUser.userName}</span>
                             </div>
                         </div>
@@ -140,8 +141,8 @@ export default class homeworkModule extends React.Component {
                         </div>
                         <div className="homeworkR">
                             <p>{WebServiceUtil.formatYMD(rowData.createTime)}</p>
-                            {rowData.attachMents.length == 0 ? '' : <img src={rowData.attachMents[0].address} />}
-                            <img />
+                            {rowData.attachMents.length == 0 ? '' : <img src={rowData.attachMents[0].address}/>}
+                            <img/>
                         </div>
                     </div>
                 </div>
@@ -149,8 +150,8 @@ export default class homeworkModule extends React.Component {
         };
 
         return (
-            <div id="skin_primarySchool">
-                <div id="homeworkModule" className="home_content" style={{ height: document.body.clientHeight }}>
+            <div id={this.state.defaultId}>
+                <div id="homeworkModule" className="home_content" style={{height: document.body.clientHeight}}>
                     <div className="inner_bg">
                         <div className="navBar">
                             <span onClick={this.historyGoBack}>首页</span>
@@ -164,13 +165,13 @@ export default class homeworkModule extends React.Component {
                                         <div className="emptyPage_icon emptyPage_publicImg"></div>
                                         <div className="emptyPage_text">暂无数据</div>
                                     </div>
-                                </div> : <div ></div>
+                                </div> : <div></div>
                                 :
                                 <ListView
                                     ref={el => this.lv = el}
                                     dataSource={this.state.dataSource}    //数据类型是 ListViewDataSource
                                     renderFooter={() => (
-                                        <div style={{ paddingTop: 5, paddingBottom: 40, textAlign: 'center' }}>
+                                        <div style={{paddingTop: 5, paddingBottom: 40, textAlign: 'center'}}>
                                             {this.state.isLoadingLeft ? '正在加载' : '已经全部加载完毕'}
                                         </div>)}
                                     renderRow={row}   //需要的参数包括一行数据等,会返回一个可渲染的组件为这行数据渲染  返回renderable

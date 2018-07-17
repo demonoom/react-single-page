@@ -43,6 +43,7 @@ export default class notify extends React.Component {
         if (nextProps.classCommand.command == "classBrandNotice" && nextProps.classCommand.data.classroomid == roomId) {
             this.getClassBrandNoticeListByClassId(roomId, 1);
         }
+        this.setState({defaultId: nextProps.defaultId})
     }
 
     /**
@@ -106,7 +107,7 @@ export default class notify extends React.Component {
     }
 
     notifySeeMore() {
-        var currentAttendanceListUrl = WebServiceUtil.mobileServiceURL + "noticeReadMore";
+        var currentAttendanceListUrl = WebServiceUtil.mobileServiceURL + "noticeReadMore?defaultId=" + demeanor.state.defaultId;
         var data = {
             method: 'openNewPage',
             url: currentAttendanceListUrl
