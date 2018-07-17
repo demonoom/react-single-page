@@ -159,14 +159,18 @@ export default class contacts_ListS extends React.Component {
      * 去我的班级
      */
     turnToClass() {
-        window.location.href = encodeURI(WebServiceUtil.mobileServiceURL + 'classList?fromId=' + contactsList.state.userId)
+        var colPasswd = contactsList.state.userData[0].colPasswd
+        var unionid = contactsList.state.unionid
+        window.location.href = encodeURI(WebServiceUtil.mobileServiceURL + 'classList?fromId=' + contactsList.state.userId + '&colPasswd=' + colPasswd + '&unionid=' + unionid)
     }
 
     /**
      * 去我的好友
      */
     turnToFriend() {
-        window.location.href = encodeURI(WebServiceUtil.mobileServiceURL + 'friendList?fromId=' + contactsList.state.userId)
+        var colPasswd = contactsList.state.userData[0].colPasswd
+        var unionid = contactsList.state.unionid
+        window.location.href = encodeURI(WebServiceUtil.mobileServiceURL + 'friendList?fromId=' + contactsList.state.userId + '&colPasswd=' + colPasswd + '&unionid=' + unionid)
     }
 
     /**
