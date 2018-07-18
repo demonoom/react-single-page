@@ -4,7 +4,6 @@ var isDebugLocal = true;
 var localUrl = "192.168.50.163";    //跳转地址http:
 
 
-
 // //云校本地测试webService地址
 // var elearningWebserviceURLOfLocal = "http://" + localDomain + ":8888/elearning/elearningControl/";
 // //云校的远程服务器地址
@@ -12,7 +11,8 @@ var localUrl = "192.168.50.163";    //跳转地址http:
 // var elearningWebserviceURL = isDebug ? elearningWebserviceURLOfLocal : elearningWebserviceURLOfRemote;
 
 // //小蚂蚁webService地址
- const apiWebServiceURLOfLocals = "http://" + localDomain + ":9006/Excoord_ApiServer/webservice";
+const apiWebServiceURLOfLocals = "http://" + localDomain + ":9006/Excoord_ApiServer/webservice";
+const apiWebServiceURLOfLocalsOldManBracelet = "http://192.168.50.230:9010/Excoord_OldManBracelet/webservice";
 //const apiWebServiceURLOfLocals = "http://" + localDomain + ":9010/Excoord_OldManBracelet/webservice";
 const apiWebServiceURLOfRemote = "https://www.maaee.com/Excoord_For_Education/webservice";
 var apiWebServiceURL = isDebug ? apiWebServiceURLOfLocals : apiWebServiceURLOfRemote;
@@ -36,6 +36,26 @@ WebServiceUtil.requestLittleAntApi = function (data, listener) {
     $.ajax({
         type: "post",
         url: apiWebServiceURL,
+        data: {params: data},
+        dataType: "json",
+        success: function (result) {
+            listener.onResponse(result);
+        }, error: function (error) {
+            listener.onError(error);
+        }
+    });
+}
+
+
+/**
+ * 请求头的ajax
+ * @param data
+ * @param listener
+ */
+WebServiceUtil.requestLittleAntApiOldManBracelet = function (data, listener) {
+    $.ajax({
+        type: "post",
+        url: apiWebServiceURLOfLocalsOldManBracelet,
         data: {params: data},
         dataType: "json",
         success: function (result) {

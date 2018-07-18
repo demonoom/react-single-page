@@ -12,10 +12,19 @@ const tabs = [
     { title: '步数' },
     { title: '心率' },
 ];
+var str = <span>月</span>;
 
 
-
+var cccalm;
 export default class healthDetail extends React.Component {
+    constructor(props) {
+        super(props);
+        cccalm = this;
+        this.state = {
+
+        }
+
+    }
     componentDidMount() {
         Bridge.setShareAble("false");
         document.title = '健康数据';
@@ -25,22 +34,23 @@ export default class healthDetail extends React.Component {
         this.setState({ "uid": uid });
         //添加对视窗大小的监听,在屏幕转换以及键盘弹起时重设各项高度
         window.addEventListener('resize', this.onWindowResize)
+        this.viewWatchPage(uid);
     }
 
 
     /**
         * 查看绑定的设备
         */
-    viewWatchPage(loginUser) {
+    viewWatchPage(uid) {
         var _this = this;
         var param = {
-            "method": 'viewWatchPage',
-            "aid": loginUser.ident,
-            "cid": -1,
-            "pn": PageNo,
+            "method": 'getOldManBraceletSportStepByOpenId',
+            "openId": uid,
+            "dataType": "week",
         };
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
             onResponse: function (result) {
+                console.log(result);
                 if (result.msg == '调用成功' && result.success == true) {
 
                 }
@@ -50,8 +60,19 @@ export default class healthDetail extends React.Component {
             }
         });
     }
-    saveChecked(){
-        
+
+    saveChecked(checked) {
+        console.log(checked);
+        if (checked) {
+            str = <span>月</span>;
+            console.log(str,"1")
+        } else {    
+            str = <span>周</span>;
+            console.log(str,"2")
+        }
+
+
+
     }
     render() {
         let datas = [
@@ -64,26 +85,30 @@ export default class healthDetail extends React.Component {
                 time: "2019-1-1"
             }
         ]
-        
+
         let SwitchExample = (props) => {
             const { getFieldProps } = props.form;
             return (
                 <div><List.Item
-                extra={<Switch
-                  {...getFieldProps('Switch1', {
-                    initialValue: true,
-                    valuePropName: 'checked',
-                  })}
-                  onClick={(checked) => { console.log(checked); }}
-                />}
-              ></List.Item>
-              <span>周</span><span>月</span></div>
+                    extra={<Switch
+                        {...getFieldProps('Switch1', {
+                            initialValue: true,
+                            valuePropName: 'checked',
+                        })}
+                        name="123"
+                        //   onChange={(checked)=>this.setState({
+                        //       theStatus:checked
+                        //   })}
+                        onClick={cccalm.saveChecked}
+                    />}
+                ></List.Item>
+                    {str}</div>
             );
-          };
-          
-          SwitchExample = createForm()(SwitchExample);
+        };
+
+        SwitchExample = createForm()(SwitchExample);
         return (
-            
+
             <div>
                 <span>手环名称：</span>
                 <span>手环：</span>

@@ -83,8 +83,9 @@ export default class originationList extends React.Component {
                     if (WebServiceUtil.isEmpty(result.response.parent) == false) {
                         // 倒退部门,构建数组对象
                         _this.getStructureById(false, result.response.parent.id)
+                    } else {
+                        _this.buildStructureArr()
                     }
-                    _this.buildStructureArr()
 
                 } else {
                     Toast.fail(result.msg, 3);
@@ -225,7 +226,11 @@ export default class originationList extends React.Component {
      * 搜索被点击,跳转至搜索界面
      */
     searchBarOnClick() {
-        console.log(origination_List.state.structureArr);
+
+        var colPasswd = origination_List.state.colPasswd;
+        var unionid = origination_List.state.unionid;
+
+        window.location.href = encodeURI(WebServiceUtil.mobileServiceURL + 'searchFromOrigination?fromId=' + origination_List.state.userId + '&colPasswd=' + colPasswd + '&unionid=' + unionid)
     }
 
     /**
@@ -247,9 +252,21 @@ export default class originationList extends React.Component {
         origination_List.setState({structureSpanArr: arr})
     }
 
+    /**
+     * 部门条被点击,跳转
+     * 如果点击的部门id==目前的id,return
+     * @param data
+     * @returns {function()}
+     */
     structureSpanArrOnClick(data) {
         return () => {
-            console.log(data);
+            if (data.id != origination_List.state.structureId && origination_List.state.structureArr.length != 1) {
+
+                var colPasswd = origination_List.state.colPasswd;
+                var unionid = origination_List.state.unionid;
+
+                window.location.href = encodeURI(WebServiceUtil.mobileServiceURL + 'originationList?fromId=' + origination_List.state.userId + '&colPasswd=' + colPasswd + '&unionid=' + unionid + '&structureId=' + data.id)
+            }
         }
     }
 
