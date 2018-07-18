@@ -34,8 +34,9 @@ export default class originationList extends React.Component {
         var colPasswd = searchArray[1].split('=')[1];
         var unionid = searchArray[2].split('=')[1];
         var structureId = searchArray[3].split('=')[1];
+        var schoolId = searchArray[4].split('=')[1];
 
-        this.setState({userId, colPasswd, unionid, structureId});
+        this.setState({userId, colPasswd, unionid, structureId, schoolId});
     }
 
     componentDidMount() {
@@ -229,8 +230,9 @@ export default class originationList extends React.Component {
 
         var colPasswd = origination_List.state.colPasswd;
         var unionid = origination_List.state.unionid;
+        var schoolId = origination_List.state.schoolId;
 
-        window.location.href = encodeURI(WebServiceUtil.mobileServiceURL + 'searchFromOrigination?fromId=' + origination_List.state.userId + '&colPasswd=' + colPasswd + '&unionid=' + unionid)
+        window.location.href = encodeURI(WebServiceUtil.mobileServiceURL + 'searchFromOrigination?fromId=' + origination_List.state.userId + '&colPasswd=' + colPasswd + '&unionid=' + unionid + '&schoolId=' + schoolId)
     }
 
     /**
