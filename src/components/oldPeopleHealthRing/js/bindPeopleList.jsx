@@ -1,13 +1,10 @@
 import React from 'react';
 import {
     Toast,
-    Radio,
-    ListView,
     Card,
     WingBlank,
     WhiteSpace,
     Modal,
-    PullToRefresh
 } from 'antd-mobile';
 
 var bindDing;
@@ -32,7 +29,8 @@ export default class bindPeopleList extends React.Component {
         document.title = '老人健康手环绑定列表';
         var locationHref = window.location.href;
         var locationSearch = locationHref.substr(locationHref.indexOf("?") + 1);
-        var uid = locationSearch.split("&")[0].split("=")[1];
+        // var uid = locationSearch.split("&")[0].split("=")[1];
+        var uid = 'o-w611NdfSQpr6WWypLbVV1c5aLQ'
         this.setState({ "uid": uid });
         this.listWeChatBindingOldManBracelet(uid);
         //添加对视窗大小的监听,在屏幕转换以及键盘弹起时重设各项高度
@@ -62,7 +60,6 @@ export default class bindPeopleList extends React.Component {
             "method": 'listWeChatBindingOldManBracelet',
             "openId": uid,
         };
-        console.log(param);
         WebServiceUtil.requestLittleAntApiOldManBracelet(JSON.stringify(param), {
             onResponse: function (result) {
                 if (result.msg == '调用成功' && result.success == true) {
@@ -117,7 +114,7 @@ export default class bindPeopleList extends React.Component {
                         }
                     });
                     bindDing.setState({
-                        initData:arr
+                        initData: arr
                     })
                 } else {
                     Toast.fail(result.msg, 3);
@@ -149,7 +146,7 @@ export default class bindPeopleList extends React.Component {
      * 跳转健康详情页面
      */
     toHealthDetail = (v) => {
-        var url = encodeURI(WebServiceUtil.mobileServiceURL + "healthDetail?uid=" + bindDing.state.uid+"&id="+v.id);
+        var url = encodeURI(WebServiceUtil.mobileServiceURL + "healthDetail?uid=" + bindDing.state.uid + "&id=" + v.id+"&name="+v.name+"&macAddress="+v.macAddress);
         var data = {
             method: 'openNewPage',
             url: url
@@ -160,13 +157,26 @@ export default class bindPeopleList extends React.Component {
     }
 
     render() {
-
         var _this = this;
-
         return (
             <div id="bindPeopleList" style={{ height: bindDing.state.clientHeight }}>
                 <div className='tableDiv' style={{ height: bindDing.state.clientHeight }}>
                     <div>
+
+                        <WingBlank size="lg">
+                            <WhiteSpace size="lg" />
+                            <Card>
+                                <div className="student_list2 text_hidden"><span>手环名称：</span><span>123123</span></div>
+                                <Card.Body>
+                                    <div className="student_contList">
+                                        <div className="student_list text_hidden"><span>手环：</span><span>er:ere:erer:Erer</span></div>
+                                    </div>
+                                    <div><span>解绑</span>
+                                        <span>健康详情</span>
+                                    </div>
+                                </Card.Body>
+                            </Card>
+                        </WingBlank>
                         {
                             bindDing.state.initData.map((v, i) => {
                                 return (
@@ -178,8 +188,8 @@ export default class bindPeopleList extends React.Component {
                                                 <div className="student_contList">
                                                     <div className="student_list text_hidden"><span>手环：</span><span>{v.macAddress}</span></div>
                                                 </div>
-                                                <div><span onClick={_this.showAlert.bind(this,v)}>解绑</span>
-                                                    <span onClick={_this.toHealthDetail.bind(this,v)}>健康详情</span>
+                                                <div><span onClick={_this.showAlert.bind(this, v)}>解绑</span>
+                                                    <span onClick={_this.toHealthDetail.bind(this, v)}>健康详情</span>
                                                 </div>
                                             </Card.Body>
                                         </Card>
