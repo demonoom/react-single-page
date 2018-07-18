@@ -318,8 +318,8 @@ export default class wxBindIndex extends React.Component {
                     <div>
                         <div>您的微信已绑定以下账号</div>
                         <div>
-                            <span><i className="i-icon i-tel"></i>{this.state.colAccount}</span>
-                            <span><i className="i-icon i-phone"></i>{this.state.phoneNumber}</span>
+                            <span><i className="i-icon i-phone"></i>{this.state.colAccount}</span>
+                            <span><i className="i-icon i-tel"></i>{this.state.phoneNumber}</span>
                         </div>
                         <Button onClick={this.unBindAccount}>解绑</Button>
                     </div>
