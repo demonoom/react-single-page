@@ -1,3 +1,36 @@
 #originationList {
+  height: 100%;
+  overflow: hidden;
+  #friendList{
+    height: 100%;
+  }
+  .origination_top{
+    height: 106px;
+  }
+  .origination_cont{
+    height: calc(~"100% - 106px");
+    overflow-y: auto;
+    overflow-x: hidden;
+  }
+  .group_number{
+    line-height: 40px !important;
+    width: 56px !important;
+    text-align: right;
+    display: inline-block;
+    height: 40px;
+    color: #666;
+    font-size: 14px;
+  }
+  .am-list-item .am-list-line .am-list-content span.origination_name{
+    width: calc(~"100% - 79px");
+  }
+  .am-list-item .am-list-line .am-list-arrow{
+    display: inline-block;
+    position: relative;
+    top: 3px;
+  }
+  .originationName .am-list-line::after{
+    background-color: #fff;
 
+  }
 }
