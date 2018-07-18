@@ -13,7 +13,7 @@ export default class searchFromOrigination extends React.Component {
     }
 
     componentWillMount() {
-        document.title = "小蚂蚁直播";   //设置title
+        document.title = "小蚂蚁聊天";   //设置title
     }
 
     componentDidMount() {
