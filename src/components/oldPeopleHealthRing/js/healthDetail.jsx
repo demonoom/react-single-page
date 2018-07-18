@@ -1,5 +1,5 @@
 import React from "react";
-import { Tabs, List, Switch } from 'antd-mobile';
+import { Tabs, List, Switch, Icon } from 'antd-mobile';
 import { StickyContainer, Sticky } from 'react-sticky';
 import { createForm } from 'rc-form';
 import '../css/healthDetail.less'
@@ -118,6 +118,7 @@ export default class healthDetail extends React.Component {
                     <div className="titleItem textOver">
                         <span className="title">手环ID：</span>
                         <span></span>
+                        <Icon type="left" />
                     </div>
                 </div>
 

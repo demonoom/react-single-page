@@ -32,6 +32,7 @@
       width: 46px;
       height: 23px;
       position: relative;
+      overflow: hidden;
       .month{
         position: absolute;
         left: 6px;
@@ -39,18 +40,24 @@
       }
       .week{
         position: absolute;
-        right: 6px;
+        right: 7px;
         top: 4px;
+      }
+      .am-list-line{
+        border: none;
+      }
+      .am-switch{
+       display: block;
       }
       .am-list-item{
         background: none;
-        height: 23px;
         min-height: auto;
       }
       .am-list-item .am-list-line .am-list-extra {
-      -webkit-flex-basis: auto;
-      -ms-flex-preferred-size: auto;
-      flex-basis: auto;
+        -webkit-flex-basis: auto;
+        -ms-flex-preferred-size: auto;
+        flex-basis: auto;
+        padding: 0;
     }
       .am-switch .checkbox{
         height: 23px;
@@ -60,9 +67,10 @@
         width: 21px;
         height: 21px;
         top: 1px;
+        background-color: #8AFFF7;
       }
       .am-switch .checkbox:before{
-        background: #e5e5e5;
+        background:#029C71 ;
         height: 23px;
         width: 44px;
         top: 0;

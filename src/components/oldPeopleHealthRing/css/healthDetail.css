@@ -37,6 +37,7 @@
   width: 46px;
   height: 23px;
   position: relative;
+  overflow: hidden;
 }
 #healthDetail .step .switchBtn .month {
   position: absolute;
@@ -45,18 +46,24 @@
 }
 #healthDetail .step .switchBtn .week {
   position: absolute;
-  right: 6px;
+  right: 7px;
   top: 4px;
+}
+#healthDetail .step .switchBtn .am-list-line {
+  border: none;
+}
+#healthDetail .step .switchBtn .am-switch {
+  display: block;
 }
 #healthDetail .step .switchBtn .am-list-item {
   background: none;
-  height: 23px;
   min-height: auto;
 }
 #healthDetail .step .switchBtn .am-list-item .am-list-line .am-list-extra {
   -webkit-flex-basis: auto;
   -ms-flex-preferred-size: auto;
   flex-basis: auto;
+  padding: 0;
 }
 #healthDetail .step .switchBtn .am-switch .checkbox {
   height: 23px;
@@ -66,9 +73,10 @@
   width: 21px;
   height: 21px;
   top: 1px;
+  background-color: #8AFFF7;
 }
 #healthDetail .step .switchBtn .am-switch .checkbox:before {
-  background: #e5e5e5;
+  background: #029C71 ;
   height: 23px;
   width: 44px;
   top: 0;
