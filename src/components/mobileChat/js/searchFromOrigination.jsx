@@ -101,7 +101,7 @@ export default class searchFromOrigination extends React.Component {
         return (
             <div id="searchFromOrigination">
                 <WhiteSpace/>
-                <div>
+                <div className="search-input">
                     <input
                         type="text"
                         placeholder="请输入账号/姓名"
@@ -110,8 +110,8 @@ export default class searchFromOrigination extends React.Component {
                     />
                     <Button type="warning" onClick={this.searchStructureUsers}>查找</Button>
                 </div>
-
-                <div>
+                <WhiteSpace/>
+                <div className="searchOrigination_cont">
                     {this.state.memberList}
                 </div>
 
