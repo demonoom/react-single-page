@@ -4,6 +4,7 @@ import {
     InputItem,
     List,
 } from 'antd-mobile';
+import '../css/addOldPeople.less';
 
 var calm;
 export default class addOldPeople extends React.Component {
@@ -15,7 +16,7 @@ export default class addOldPeople extends React.Component {
             stNameValue: '',
         }
     }
-   
+
     componentDidMount() {
         Bridge.setShareAble("false");
         document.title = '老人健康手环绑定';
@@ -35,7 +36,7 @@ export default class addOldPeople extends React.Component {
      */
     onWindowResize() {
         setTimeout(function () {
-            bindDing.setState({clientHeight: document.body.clientHeight, calmHeight: document.body.clientHeight - 296});
+            bindDing.setState({ clientHeight: document.body.clientHeight, calmHeight: document.body.clientHeight - 296 });
         }, 100)
     }
 
@@ -43,10 +44,10 @@ export default class addOldPeople extends React.Component {
     /**
      *微信配置
      */
-    wxchatConfig(locationHref){
+    wxchatConfig(locationHref) {
         var param = {
             "method": 'getWeChatSignature',
-            "url":locationHref
+            "url": locationHref
         };
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
             onResponse: (result) => {
@@ -54,7 +55,7 @@ export default class addOldPeople extends React.Component {
                 // Toast.info(result.response);
                 let res = result.response;
                 wx.config({
-                    debug: false,
+                    debug: true,
                     appId: 'wx9d076742b77044dd',
                     timestamp: res.timestamp,
                     nonceStr: res.noncestr,
@@ -70,7 +71,7 @@ export default class addOldPeople extends React.Component {
                             'scanQRCode'
                         ],
                         success: function (res) {
-                            
+
                         }
                     });
                 })
@@ -85,9 +86,9 @@ export default class addOldPeople extends React.Component {
             },
         });
     }
-     /**
-     * 调用微信扫描
-     */
+    /**
+    * 调用微信扫描
+    */
 
     scanQRCode() {
         wx.scanQRCode({
@@ -95,55 +96,39 @@ export default class addOldPeople extends React.Component {
             scanType: ["qrCode", "barCode"], // 可以指定扫二维码还是一维码，默认二者都有
             success: function (res) {
                 alert(res.resultStr);
-                // calm.state.macId = res.resultStr;
                 calm.setState({
-                    macId:res.resultStr
+                    macId: res.resultStr
                 })
-                //alert(JSON.stringify(res))
                 // var result = res.resultStr; // 当needResult 为 1 时，扫码返回的结果
             }
         });
     }
-    // scanMac() {
-        
-    // };
 
-     /**
-     * 输入框改变的回调
-     */
+    /**
+    * 输入框改变的回调
+    */
     inputOnChange(e) {
-        this.setState({stNameValue: e});
+        this.setState({ stNameValue: e });
     }
 
     /**
      * 绑定
      */
     binding = () => {
-        // var _this = this;
-        // if (this.state.searchCheckValue == '' || this.state.macId == '') {
-        //     Toast.fail('未选择学生或手环',3)
-        //     return
-        // }
         var param = {
             "method": 'bindOldManBraceletToWeChat',
-            "bracelet":{
-                "weChatOpenId":calm.state.uid,
-                "macAddress":calm.state.macId,
-                "braceletName":calm.state.stNameValue
+            "bracelet": {
+                "weChatOpenId": calm.state.uid,
+                "macAddress": calm.state.macId,
+                "braceletName": calm.state.stNameValue
             }
         };
-       
         WebServiceUtil.requestLittleAntApiOldManBracelet(JSON.stringify(param), {
             onResponse: function (result) {
                 alert(JSON.stringify(result));
                 if (result.msg == '调用成功' && result.success == true) {
                     alert("ok");
                     Toast.success('绑定成功', 1);
-                    $('.tableDiv').show("fast");
-                    // _this.state.macId = '';
-                    // _this.state.stNameValue = '';
-                    // _this.setState({chooseResultDiv: 'none'});
-                    // _this.viewWatchPage(_this.state.loginUser);
                 } else {
                     Toast.fail(result.msg, 3);
                 }
@@ -155,13 +140,12 @@ export default class addOldPeople extends React.Component {
     }
     render() {
         return (
-            <div style={{ height: this.state.clientHeight }}>
-
+            <div id="addOldPeople" style={{ height: this.state.clientHeight }}>
                 <List>
-                    
+
                     <div className='stName'>
                         <InputItem
-                            placeholder="请输入学生姓名并搜索"
+                            placeholder="请输入名称"
                             data-seed="logId"
                             onChange={this.inputOnChange.bind(this)}
                             value={this.state.stNameValue}
@@ -169,14 +153,15 @@ export default class addOldPeople extends React.Component {
                     </div>
                     <div className='macAddress'>
                         <InputItem
+                            placeholder="请扫码获取"
                             value={this.state.macId}
                             editable={false}
-                        >手环：</InputItem>
-                        <span onClick={this.scanQRCode}>扫描</span>
+                        >手环ID：</InputItem>
+                        <span className="scanBtn" onClick={this.scanQRCode}>扫描</span>
                     </div>
                 </List>
-                <div className="bottomBox">
-                    <span className="bind" onClick={this.binding}>提交</span>
+                <div className="binding">
+                    <span className="bindingBtn" onClick={this.binding}>提交</span>
                 </div>
 
             </div>

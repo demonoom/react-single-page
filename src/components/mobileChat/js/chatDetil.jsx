@@ -827,7 +827,7 @@ export default class chat_Detil extends React.Component {
                             //普通文字消息
                             var contentItem = <li className="message me">
                                 <span className="message_userR"
-                                    style={{display: chatDetil.state.mesToType == 0 ? "none" : "inlineBlock"}}>{v.fromUser.userName}</span>
+                                      style={{display: chatDetil.state.mesToType == 0 ? "none" : "inlineBlock"}}>{v.fromUser.userName}</span>
                                 <img className='userAvatar' src={v.fromUser.avatar}/>
                                 <div className="content">
                                     <div className="bubble bubble_primary right">
@@ -860,7 +860,7 @@ export default class chat_Detil extends React.Component {
                             //普通文字消息
                             var contentItem = <li className="message">
                                 <span className="message_userL"
-                                    style={{display: chatDetil.state.mesToType == 0 ? "none" : "inlineBlock"}}>{v.fromUser.userName}</span>
+                                      style={{display: chatDetil.state.mesToType == 0 ? "none" : "inlineBlock"}}>{v.fromUser.userName}</span>
                                 <img className='userAvatar' src={v.fromUser.avatar}/>
                                 <div className="content">
                                     <div className="bubble bubble_default left">
@@ -993,6 +993,11 @@ export default class chat_Detil extends React.Component {
      */
     TextareaOnFocus() {
         $('#pullContent')[0].scrollTop = $('#pullContent')[0].scrollHeight - (chatDetil.state.height - 66)
+
+
+        setTimeout(function () {
+            document.body.scrollTop = document.body.scrollHeight;
+        }, 400);
     }
 
     render() {

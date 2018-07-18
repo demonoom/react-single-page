@@ -1,0 +1,74 @@
+#addOldPeople{
+  .am-list{
+    margin-top: 15px;
+    margin-bottom: 56px;
+  }
+  .am-list-body::before,.am-list-body::after,.am-list-line::after{
+    display: none;
+  }
+  .am-list-line,.am-list-body{
+    border:0;
+  }
+  .am-list-item .am-input-label{
+    font-size: 16px;
+  }
+  .am-list-item{
+    min-height: 53px;
+  }
+  .am-list-item .am-input-control input{
+    color: #666;
+  }
+  .stName{
+    .am-list-line{
+      border-bottom: 1px #eee solid;
+      padding-right: 0;
+      margin-right: 15px;
+    }
+  }
+
+  .item{
+    padding-bottom:10px;
+    &:last-child{
+      padding-bottom: 40px;
+    }
+  }
+  .am-card{
+    -webkit-border-radius: 2px;
+    -moz-border-radius: 2px;
+    border-radius: 2px;
+    padding: 0;
+    border: 0;
+  }
+  .macAddress{
+    position: relative;
+    .scanBtn{
+      position: absolute;
+      right: 15px;
+      top:50%;
+      background: url("../img/weixin_scan.png") no-repeat center right;
+      font-size: 0;
+      background-size: 20px;
+      display: block;
+      width: 30px;
+      height: 30px;
+      margin-top: -15px;
+    }
+  }
+  .binding{
+    padding: 0 15px;
+  }
+  .bindingBtn{
+    height: 48px;
+    line-height: 48px;
+    background-color: #1CAC1B;
+    color: #fff;
+    font-size: 16px;
+    text-align: center;
+    -webkit-border-radius: 2px;
+    -moz-border-radius: 2px;
+    border-radius: 2px;
+    margin-bottom: 15px;
+    width: 100%;
+    display: block;
+  }
+}

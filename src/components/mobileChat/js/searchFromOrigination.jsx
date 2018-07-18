@@ -40,6 +40,11 @@ export default class searchFromOrigination extends React.Component {
 
     searchStructureUsers() {
 
+        if (search_FromOrigination.state.searchValue.length == 0) {
+            Toast.fail('还未输入查找信息', 2)
+            return
+        }
+
         var _this = this;
         var param = {
             "method": 'searchStructureUsers',
@@ -58,8 +63,12 @@ export default class searchFromOrigination extends React.Component {
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
             onResponse: function (result) {
                 if (result.success == true && result.msg == '调用成功') {
-                    search_FromOrigination.buildMembers(result.response)
 
+                    var data = result.response.filter(function (v) {
+                        return (v.teacher.user.colUid != search_FromOrigination.state.userId)
+                    })
+
+                    search_FromOrigination.buildMembers(data)
                 } else {
                     Toast.fail(result.msg, 3);
                 }
@@ -73,7 +82,7 @@ export default class searchFromOrigination extends React.Component {
     buildMembers(data) {
 
         if (WebServiceUtil.isEmpty(data) == false) {
-            var arr = []
+            var arr = [];
             data.forEach(function (v, i) {
                 var item = <Item onClick={search_FromOrigination.membersOnClick(v)}>
                     <img className='userImg' src={v.teacher.user.avatar} alt=""/>
@@ -90,7 +99,10 @@ export default class searchFromOrigination extends React.Component {
 
     membersOnClick(v) {
         return () => {
-            console.log(v.teacher.user);
+
+            var colPasswd = search_FromOrigination.state.colPasswd
+
+            window.location.href = encodeURI(WebServiceUtil.mobileServiceURL + 'chatDetil?fromId=' + search_FromOrigination.state.userId + '&toId=' + v.teacher.user.colUid + '&choosePos=te&unionid=' + search_FromOrigination.state.unionid + '&colPasswd=' + colPasswd + '&toName=' + v.teacher.user.userName + '&mesType=0')
         }
     }
 

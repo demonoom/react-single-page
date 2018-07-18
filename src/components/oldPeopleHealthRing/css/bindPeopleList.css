@@ -1,0 +1,83 @@
+#bindPeopleList .tableDiv {
+  padding: 15px 15px 0;
+  box-sizing: border-box;
+  overflow-y: auto;
+}
+#bindPeopleList .am-card::before,
+#bindPeopleList .am-card-body::before {
+  display: none;
+}
+#bindPeopleList .am-card-body {
+  padding: 0;
+  border: 0;
+}
+#bindPeopleList .item {
+  padding-bottom: 10px;
+}
+#bindPeopleList .item:last-child {
+  padding-bottom: 56px;
+}
+#bindPeopleList .am-card {
+  -webkit-border-radius: 2px;
+  -moz-border-radius: 2px;
+  border-radius: 2px;
+  padding: 0;
+  border: 0;
+}
+#bindPeopleList .student_list {
+  font-size: 16px;
+  color: #666;
+  padding: 10px 15px;
+  border-bottom: 1px #eee solid;
+  line-height: 32px;
+  box-sizing: border-box;
+}
+#bindPeopleList .student_list.list1 {
+  position: relative;
+  width: 100%;
+  padding-right: 96px;
+}
+#bindPeopleList .student_list.list1 .untiedBtn {
+  width: 68px;
+  height: 32px;
+  line-height: 32px;
+  border: 1px #DD4F43 solid;
+  color: #DD4F43;
+  text-align: center;
+  -webkit-border-radius: 2px;
+  -moz-border-radius: 2px;
+  border-radius: 2px;
+  display: block;
+  position: absolute;
+  right: 15px;
+  top: 50%;
+  margin-top: -17px;
+  font-size: 15px;
+}
+#bindPeopleList .student_list .title {
+  color: #333;
+}
+#bindPeopleList .healthDetail {
+  padding: 18px;
+}
+#bindPeopleList .healthDetail span {
+  font-size: 16px;
+  color: #1CAC1B;
+  background: url("../img/weixin_arrow.png") no-repeat right center;
+  display: block;
+  background-size: 11px 15px;
+  width: 85px;
+  margin: 0 auto;
+}
+#bindPeopleList .bindingBtn {
+  height: 48px;
+  line-height: 48px;
+  background-color: #1CAC1B;
+  color: #fff;
+  font-size: 16px;
+  text-align: center;
+  -webkit-border-radius: 2px;
+  -moz-border-radius: 2px;
+  border-radius: 2px;
+  margin-bottom: 15px;
+}

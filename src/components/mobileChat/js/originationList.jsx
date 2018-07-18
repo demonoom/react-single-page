@@ -205,7 +205,7 @@ export default class originationList extends React.Component {
             var colPasswd = origination_List.state.colPasswd;
             var unionid = origination_List.state.unionid;
 
-            window.location.href = encodeURI(WebServiceUtil.mobileServiceURL + 'originationList?fromId=' + origination_List.state.userId + '&colPasswd=' + colPasswd + '&unionid=' + unionid + '&structureId=' + v.id)
+            window.location.href = encodeURI(WebServiceUtil.mobileServiceURL + 'originationList?fromId=' + origination_List.state.userId + '&colPasswd=' + colPasswd + '&unionid=' + unionid + '&structureId=' + v.id + '&schoolId=' + origination_List.state.schoolId)
         }
     }
 
@@ -267,7 +267,7 @@ export default class originationList extends React.Component {
                 var colPasswd = origination_List.state.colPasswd;
                 var unionid = origination_List.state.unionid;
 
-                window.location.href = encodeURI(WebServiceUtil.mobileServiceURL + 'originationList?fromId=' + origination_List.state.userId + '&colPasswd=' + colPasswd + '&unionid=' + unionid + '&structureId=' + data.id)
+                window.location.href = encodeURI(WebServiceUtil.mobileServiceURL + 'originationList?fromId=' + origination_List.state.userId + '&colPasswd=' + colPasswd + '&unionid=' + unionid + '&structureId=' + data.id + '&schoolId=' + origination_List.state.schoolId)
             }
         }
     }

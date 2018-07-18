@@ -1,0 +1,105 @@
+#healthDetail {
+  background-color: #fff;
+  padding: 0 10px;
+  overflow-y: auto;
+  /*步数*/
+}
+#healthDetail .titleItem {
+  font-size: 16px;
+  color: #666;
+  width: 50%;
+  padding: 15px 0;
+  border-bottom: 1px #eee solid;
+  margin-bottom: 15px;
+}
+#healthDetail .titleItem .title {
+  color: #333;
+}
+#healthDetail .chartItem {
+  -webkit-border-radius: 4px;
+  -moz-border-radius: 4px;
+  border-radius: 4px;
+  min-height: 216px;
+  margin-bottom: 30px;
+  color: #fff;
+}
+#healthDetail .step {
+  background: -webkit-linear-gradient(left top, #07E29A, #1A929B);
+  /* Safari 5.1 - 6.0 */
+  background: -o-linear-gradient(bottom right, #07E29A, #1A929B);
+  /* Opera 11.1 - 12.0 */
+  background: -moz-linear-gradient(bottom right, #07E29A, #1A929B);
+  /* Firefox 3.6 - 15 */
+  background: linear-gradient(to bottom right, #07E29A, #1A929B);
+  /* 标准的语法 */
+}
+#healthDetail .step .switchBtn {
+  width: 46px;
+  height: 23px;
+  position: relative;
+}
+#healthDetail .step .switchBtn .month {
+  position: absolute;
+  left: 6px;
+  top: 4px;
+}
+#healthDetail .step .switchBtn .week {
+  position: absolute;
+  right: 6px;
+  top: 4px;
+}
+#healthDetail .step .switchBtn .am-list-item {
+  background: none;
+  height: 23px;
+  min-height: auto;
+}
+#healthDetail .step .switchBtn .am-list-item .am-list-line .am-list-extra {
+  -webkit-flex-basis: auto;
+  -ms-flex-preferred-size: auto;
+  flex-basis: auto;
+}
+#healthDetail .step .switchBtn .am-switch .checkbox {
+  height: 23px;
+  width: 46px;
+}
+#healthDetail .step .switchBtn .am-switch .checkbox:after {
+  width: 21px;
+  height: 21px;
+  top: 1px;
+}
+#healthDetail .step .switchBtn .am-switch .checkbox:before {
+  background: #e5e5e5;
+  height: 23px;
+  width: 44px;
+  top: 0;
+}
+#healthDetail .step .switchBtn .am-list-line,
+#healthDetail .step .switchBtn .am-list-item {
+  padding: 0;
+}
+#healthDetail .heartRate {
+  background: -webkit-linear-gradient(#F8B542, #FF8162);
+  /* Safari 5.1 - 6.0 */
+  background: -o-linear-gradient(#F8B542, #FF8162);
+  /* Opera 11.1 - 12.0 */
+  background: -moz-linear-gradient(#F8B542, #FF8162);
+  /* Firefox 3.6 - 15 */
+  background: linear-gradient(#F8B542, #FF8162);
+  /* 标准的语法 */
+}
+#healthDetail .unusualHeartRate .title {
+  background: -webkit-linear-gradient(#68CFF9, #4B99F0);
+  /* Safari 5.1 - 6.0 */
+  background: -o-linear-gradient(#68CFF9, #4B99F0);
+  /* Opera 11.1 - 12.0 */
+  background: -moz-linear-gradient(#68CFF9, #4B99F0);
+  /* Firefox 3.6 - 15 */
+  background: linear-gradient(#68CFF9, #4B99F0);
+  /* 标准的语法 */
+  height: 42px;
+  line-height: 42px;
+}
+#healthDetail .unusualHeartRate .title span {
+  color: #fff;
+  font-size: 16px;
+}
