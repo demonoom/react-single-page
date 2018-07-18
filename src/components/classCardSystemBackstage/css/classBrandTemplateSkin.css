@@ -1,4 +1,3 @@
-(node) util.print is deprecated. Use console.log instead.
 #classBrandTemplateSkin .submitBtn {
   position: absolute !important;
   width: calc(100% - 30px);
@@ -47,11 +46,14 @@
   transform: translateY(-50%);
 }
 #classBrandTemplateSkin .am-radio-inner {
-  border: 1px #F56A55 solid;
+  border: 1px #b4b4b4 solid;
   width: 16px;
   height: 16px;
   border-radius: 50%;
   background-color: #fff;
+}
+#classBrandTemplateSkin .am-radio-checked .am-radio-inner {
+  border: 1px #F56A55 solid;
 }
 #classBrandTemplateSkin .am-radio-inner:after {
   border: 0;

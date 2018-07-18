@@ -2,7 +2,7 @@ import React from "react";
 import { Tabs, List, Switch } from 'antd-mobile';
 import { StickyContainer, Sticky } from 'react-sticky';
 import { createForm } from 'rc-form';
-
+import '../css/healthDetail.less'
 function renderTabBar(props) {
     return (<Sticky>
         {({ style }) => <div style={{ ...style, zIndex: 1 }}><Tabs.DefaultTabBar {...props} /></div>}
@@ -12,7 +12,7 @@ const tabs = [
     { title: '步数' },
     { title: '心率' },
 ];
-var str = <span>月</span>;
+var str = <span className="month">月</span>;
 
 
 var cccalm;
@@ -21,7 +21,7 @@ export default class healthDetail extends React.Component {
         super(props);
         cccalm = this;
         this.state = {
-
+            clientHeight: document.body.clientHeight,
         }
 
     }
@@ -64,10 +64,10 @@ export default class healthDetail extends React.Component {
     saveChecked(checked) {
         console.log(checked);
         if (checked) {
-            str = <span>月</span>;
+            str = <span className="month">月</span>;
             console.log(str,"1")
         } else {    
-            str = <span>周</span>;
+            str = <span className="week">周</span>;
             console.log(str,"2")
         }
 
@@ -89,7 +89,7 @@ export default class healthDetail extends React.Component {
         let SwitchExample = (props) => {
             const { getFieldProps } = props.form;
             return (
-                <div><List.Item
+                <div className="switchBtn"><List.Item
                     extra={<Switch
                         {...getFieldProps('Switch1', {
                             initialValue: true,
@@ -109,18 +109,31 @@ export default class healthDetail extends React.Component {
         SwitchExample = createForm()(SwitchExample);
         return (
 
-            <div>
-                <span>手环名称：</span>
-                <span>手环：</span>
-                <div className="step">
+            <div id="healthDetail" style={{ height: this.state.clientHeight }}>
+                <div className="my_flex">
+                    <div className="titleItem textOver">
+                        <span className="title">手环名称：</span>
+                        <span></span>
+                    </div>
+                    <div className="titleItem textOver">
+                        <span className="title">手环ID：</span>
+                        <span></span>
+                    </div>
+                </div>
+
+
+                <div className="step chartItem">
                     步数图柱形（月和周切换）
                     <SwitchExample />
                 </div>
-                <div className="step">
+                <div className="heartRate chartItem">
                     心率折线图（切换前一天）
                </div>
-                <div>
-                    异常心率
+                <div className="unusualHeartRate chartItem">
+                    <div className="title">
+                        <span>时间</span>
+                        <span>异常心率</span>
+                    </div>
                </div>
             </div>
         )

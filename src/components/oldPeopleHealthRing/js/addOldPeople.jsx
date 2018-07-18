@@ -4,6 +4,7 @@ import {
     InputItem,
     List,
 } from 'antd-mobile';
+import '../css/addOldPeople.less';
 
 var calm;
 export default class addOldPeople extends React.Component {
@@ -155,13 +156,13 @@ export default class addOldPeople extends React.Component {
     }
     render() {
         return (
-            <div style={{ height: this.state.clientHeight }}>
+            <div id="addOldPeople" style={{ height: this.state.clientHeight }}>
 
                 <List>
                     
                     <div className='stName'>
                         <InputItem
-                            placeholder="请输入学生姓名并搜索"
+                            placeholder="请输入名称"
                             data-seed="logId"
                             onChange={this.inputOnChange.bind(this)}
                             value={this.state.stNameValue}
@@ -169,14 +170,15 @@ export default class addOldPeople extends React.Component {
                     </div>
                     <div className='macAddress'>
                         <InputItem
+                            placeholder="请扫码获取"
                             value={this.state.macId}
                             editable={false}
-                        >手环：</InputItem>
-                        <span onClick={this.scanQRCode}>扫描</span>
+                        >手环ID：</InputItem>
+                        <span className="scanBtn" onClick={this.scanQRCode}>扫描</span>
                     </div>
                 </List>
-                <div className="bottomBox">
-                    <span className="bind" onClick={this.binding}>提交</span>
+                <div className="binding">
+                    <span className="bindingBtn" onClick={this.binding}>提交</span>
                 </div>
 
             </div>
