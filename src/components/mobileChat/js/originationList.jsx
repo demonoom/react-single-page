@@ -224,7 +224,7 @@ export default class originationList extends React.Component {
      * 搜索被点击,跳转至搜索界面
      */
     searchBarOnClick() {
-        
+
         var colPasswd = origination_List.state.colPasswd;
         var unionid = origination_List.state.unionid;
 
@@ -258,7 +258,13 @@ export default class originationList extends React.Component {
      */
     structureSpanArrOnClick(data) {
         return () => {
-            console.log(data);
+            if (data.id != origination_List.state.structureId && origination_List.state.structureArr.length != 1) {
+
+                var colPasswd = origination_List.state.colPasswd;
+                var unionid = origination_List.state.unionid;
+
+                window.location.href = encodeURI(WebServiceUtil.mobileServiceURL + 'originationList?fromId=' + origination_List.state.userId + '&colPasswd=' + colPasswd + '&unionid=' + unionid + '&structureId=' + data.id)
+            }
         }
     }
 
