@@ -735,7 +735,6 @@ const bindPeopleList = (location, cb) => {
 }
 
 
-
 const addOldPeople = (location, cb) => {
     require.ensure([], require => {
             cb(null, require("./components/oldPeopleHealthRing/js/addOldPeople").default)
@@ -743,9 +742,16 @@ const addOldPeople = (location, cb) => {
     )
 }
 
-const healthDetail =  (location, cb) => {
+const healthDetail = (location, cb) => {
     require.ensure([], require => {
             cb(null, require("./components/oldPeopleHealthRing/js/healthDetail").default)
+        }
+    )
+}
+
+const searchFromOrigination = (location, cb) => {
+    require.ensure([], require => {
+            cb(null, require("./components/mobileChat/js/searchFromOrigination").default)
         }
     )
 }
@@ -1067,6 +1073,7 @@ ReactDOM.render(
             <Route path="classList" getComponent={classList}/>
             <Route path="groupChatList" getComponent={groupChatList}/>
             <Route path="originationList" getComponent={originationList}/>
+            <Route path="searchFromOrigination" getComponent={searchFromOrigination}/>
         </Route>
     </Router>
     ,

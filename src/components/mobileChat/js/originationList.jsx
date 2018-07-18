@@ -224,7 +224,11 @@ export default class originationList extends React.Component {
      * 搜索被点击,跳转至搜索界面
      */
     searchBarOnClick() {
-        console.log(origination_List.state.structureArr);
+        
+        var colPasswd = origination_List.state.colPasswd;
+        var unionid = origination_List.state.unionid;
+
+        window.location.href = encodeURI(WebServiceUtil.mobileServiceURL + 'searchFromOrigination?fromId=' + origination_List.state.userId + '&colPasswd=' + colPasswd + '&unionid=' + unionid)
     }
 
     /**
@@ -246,6 +250,12 @@ export default class originationList extends React.Component {
         origination_List.setState({structureSpanArr: arr})
     }
 
+    /**
+     * 部门条被点击,跳转
+     * 如果点击的部门id==目前的id,return
+     * @param data
+     * @returns {function()}
+     */
     structureSpanArrOnClick(data) {
         return () => {
             console.log(data);
