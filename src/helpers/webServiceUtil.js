@@ -1,4 +1,4 @@
-var isDebug = false;
+var isDebug = true;
 var localDomain = "192.168.50.15";   //请求地址
 var isDebugLocal = true;
 var localUrl = "192.168.50.39";    //跳转地址http:
@@ -12,7 +12,7 @@ var localUrl = "192.168.50.39";    //跳转地址http:
 
 // //小蚂蚁webService地址
 const apiWebServiceURLOfLocals = "http://" + localDomain + ":9006/Excoord_ApiServer/webservice";
-const apiWebServiceURLOfLocalsOldManBracelet = "http://192.168.50.230:9010/Excoord_OldManBracelet/webservice";
+const apiWebServiceURLOfLocalsOldManBracelet = "http://192.168.50.15:9010/Excoord_OldManBracelet/webservice";
 //const apiWebServiceURLOfLocals = "http://" + localDomain + ":9010/Excoord_OldManBracelet/webservice";
 const apiWebServiceURLOfRemote = "https://www.maaee.com/Excoord_For_Education/webservice";
 var apiWebServiceURL = isDebug ? apiWebServiceURLOfLocals : apiWebServiceURLOfRemote;
@@ -114,6 +114,20 @@ WebServiceUtil.formatYMD = function (nS) {
     return ymdStr;
 };
 
+
+/**
+ * 时间戳转月日
+ * @param nS
+ * @returns {string}
+ */
+WebServiceUtil.formatMD = function (nS) {
+    var da = new Date(parseInt(nS));
+    var year = da.getFullYear();
+    var month = da.getMonth() + 1;
+    var date = da.getDate();
+    var ymdStr = [month, date].join('-');
+    return ymdStr;
+};
 /**
  * 时间戳转年月日时分秒，完整时间显示
  * @param nS
