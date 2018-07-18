@@ -8,7 +8,7 @@ export default class wxLogin extends React.Component {
         console.log(apiWebServiceURL);
         this.state = {
             appId: 'wx181574f3ea687daf',
-            // appId: 'wx9d076742b77044dd',
+            // appId: 'wx9d076742b77044dd',    
             local: 'http://192.168.50.72:8091/#/',
             // local: 'http://jiaoxue.maaee.com:8091/#/',
             // local:WebServiceUtil.mobileServiceURL,
