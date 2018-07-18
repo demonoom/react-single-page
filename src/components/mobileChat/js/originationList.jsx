@@ -34,8 +34,9 @@ export default class originationList extends React.Component {
         var colPasswd = searchArray[1].split('=')[1];
         var unionid = searchArray[2].split('=')[1];
         var structureId = searchArray[3].split('=')[1];
+        var schoolId = searchArray[4].split('=')[1];
 
-        this.setState({userId, colPasswd, unionid, structureId});
+        this.setState({userId, colPasswd, unionid, structureId, schoolId});
     }
 
     componentDidMount() {
@@ -165,8 +166,9 @@ export default class originationList extends React.Component {
             var arr = []
             data.forEach(function (v, i) {
                 var item = <Item onClick={origination_List.structuresOnClick(v)}>
-                    <span className="text_hidden">{v.name}</span>
-                    <span>{v.memberCount}人</span>
+                    <span className="text_hidden origination_name">{v.name}</span>
+                    <span className="group_number">{v.memberCount}人</span>
+                    <div className="am-list-arrow am-list-arrow-horizontal"></div>
                 </Item>
                 arr.push(item)
             })
@@ -203,7 +205,7 @@ export default class originationList extends React.Component {
             var colPasswd = origination_List.state.colPasswd;
             var unionid = origination_List.state.unionid;
 
-            window.location.href = encodeURI(WebServiceUtil.mobileServiceURL + 'originationList?fromId=' + origination_List.state.userId + '&colPasswd=' + colPasswd + '&unionid=' + unionid + '&structureId=' + v.id)
+            window.location.href = encodeURI(WebServiceUtil.mobileServiceURL + 'originationList?fromId=' + origination_List.state.userId + '&colPasswd=' + colPasswd + '&unionid=' + unionid + '&structureId=' + v.id + '&schoolId=' + origination_List.state.schoolId)
         }
     }
 
@@ -228,8 +230,9 @@ export default class originationList extends React.Component {
 
         var colPasswd = origination_List.state.colPasswd;
         var unionid = origination_List.state.unionid;
+        var schoolId = origination_List.state.schoolId;
 
-        window.location.href = encodeURI(WebServiceUtil.mobileServiceURL + 'searchFromOrigination?fromId=' + origination_List.state.userId + '&colPasswd=' + colPasswd + '&unionid=' + unionid)
+        window.location.href = encodeURI(WebServiceUtil.mobileServiceURL + 'searchFromOrigination?fromId=' + origination_List.state.userId + '&colPasswd=' + colPasswd + '&unionid=' + unionid + '&schoolId=' + schoolId)
     }
 
     /**
@@ -264,7 +267,7 @@ export default class originationList extends React.Component {
                 var colPasswd = origination_List.state.colPasswd;
                 var unionid = origination_List.state.unionid;
 
-                window.location.href = encodeURI(WebServiceUtil.mobileServiceURL + 'originationList?fromId=' + origination_List.state.userId + '&colPasswd=' + colPasswd + '&unionid=' + unionid + '&structureId=' + data.id)
+                window.location.href = encodeURI(WebServiceUtil.mobileServiceURL + 'originationList?fromId=' + origination_List.state.userId + '&colPasswd=' + colPasswd + '&unionid=' + unionid + '&structureId=' + data.id + '&schoolId=' + origination_List.state.schoolId)
             }
         }
     }
@@ -275,30 +278,32 @@ export default class originationList extends React.Component {
 
         return (
             <div id="originationList">
-                <div onClick={this.searchBarOnClick}>
-                    <SearchBar
-                        value={this.state.value}
-                        placeholder="请输入账号/姓名"
-                        disabled={true}
-                    />
-                </div>
+                <div id="friendList">
+                    <div className="origination_top">
+                        <div onClick={this.searchBarOnClick}>
+                            <SearchBar
+                                value={this.state.value}
+                                placeholder="请输入账号/姓名"
+                                disabled={true}
+                            />
+                        </div>
+                        <WhiteSpace/>
+                        <Item className="originationName">
+                            {this.state.structureSpanArr}
+                        </Item>
+                        <WhiteSpace/>
+                    </div>
+                    <div className="origination_cont">
+                        <div>
+                            {this.state.structuresItem}
+                        </div>
 
-                <WhiteSpace/>
+                        <WhiteSpace/>
 
-                <div>
-                    {this.state.structureSpanArr}
-                </div>
-
-                <WhiteSpace/>
-
-                <div>
-                    {this.state.structuresItem}
-                </div>
-
-                <WhiteSpace/>
-
-                <div>
-                    {this.state.membersItem}
+                        <div>
+                            {this.state.membersItem}
+                        </div>
+                    </div>
                 </div>
             </div>
         );

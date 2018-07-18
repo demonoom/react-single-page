@@ -3,14 +3,13 @@ import { Tabs, List, Switch } from 'antd-mobile';
 import ReactEcharts from 'echarts-for-react';
 import { Sticky } from 'react-sticky';
 import { createForm } from 'rc-form';
-
+import '../css/healthDetail.less'
 function renderTabBar(props) {
     return (<Sticky>
         {({ style }) => <div style={{ ...style, zIndex: 1 }}><Tabs.DefaultTabBar {...props} /></div>}
     </Sticky>);
 }
-
-var str = <span>月</span>;
+var str = <span className="month">月</span>;
 var wOrM = "month";
 var date = Date.parse(new Date());
 var cccalm;
@@ -23,7 +22,8 @@ export default class healthDetail extends React.Component {
             heartChartDiv:[],
             clickDate:Date.parse(new Date()),
             highHeart:[],
-            flag:true
+            flag:true,
+            clientHeight: document.body.clientHeight,
         }
 
     }
@@ -48,14 +48,14 @@ export default class healthDetail extends React.Component {
      */
     saveChecked() {
         if (cccalm.state.flag) {
-            str = <span>月</span>;
+            str = <span className="month">月</span>;
             wOrM = "month";
             cccalm.setState({
                 flag:false
             })
             cccalm.getDashBoardDataByArea(cccalm.state.uid, wOrM)
         } else {
-            str = <span>周</span>;
+            str = <span className="week">周</span>;
             wOrM = "week";
             cccalm.setState({
                 flag:true
@@ -227,7 +227,6 @@ export default class healthDetail extends React.Component {
             }
         });
     }
-
 
      /**
      * 心率情况统计
@@ -408,7 +407,7 @@ export default class healthDetail extends React.Component {
         let SwitchExample = (props) => {
             const { getFieldProps } = props.form;
             return (
-                <div><List.Item
+                <div className="switchBtn"><List.Item
                     extra={<Switch
                         {...getFieldProps('Switch1', {
                             initialValue: cccalm.state.flag,
@@ -424,29 +423,42 @@ export default class healthDetail extends React.Component {
         };
         SwitchExample = createForm()(SwitchExample);
         return (
-            <div style={{overflow:"auto"}}>
-                <span>手环名称：{cccalm.state.name}</span>
-                <span>手环：{cccalm.state.macAddress}</span>
-                <div className="step">
-                    步数
-                    <span>今日步数：{this.state.todatSteps}</span>
+
+
+            <div id="healthDetail" style={{ height: this.state.clientHeight }}>
+                <div className="my_flex">
+                    <div className="titleItem textOver">
+                        <span className="title">手环名称：</span>
+                        <span>{cccalm.state.name}</span>
+                    </div>
+                    <div className="titleItem textOver">
+                        <span className="title">手环ID：</span>
+                        <span>{cccalm.state.macAddress}</span>
+                    </div>
+                </div>
+
+
+                <div className="step chartItem">
+                <span>今日步数：{this.state.todatSteps}</span>
                     <SwitchExample />
                     {this.state.stepChartDiv}
                 </div>
-                <div className="step">
-                    <span onClick={this.toYesterday}>前一天</span>
+
+                <div className="heartRate chartItem">
+                <span onClick={this.toYesterday}>前一天</span>
                     <div>心率统计<span>{WebServiceUtil.formatMD(Date.parse(new Date()))}</span></div>
                     {
                         cccalm.state.clickDate === date ? "":<span onClick={this.toTomorray}>后一天</span>
                     }
                     
                     {this.state.heartChartDiv}
-                </div>
-                <div>
-                    异常心率
-                    <div>
-                        
+               </div>
+                <div className="unusualHeartRate chartItem">
+                    <div className="title">
+                        <span>时间</span>
+                        <span>异常心率</span>
                         {cccalm.state.highHeart}
+
                     </div>
                </div>
             </div>

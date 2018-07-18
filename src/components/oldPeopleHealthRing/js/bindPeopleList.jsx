@@ -6,6 +6,7 @@ import {
     WhiteSpace,
     Modal,
 } from 'antd-mobile';
+import '../css/bindPeopleList.less';
 
 var bindDing;
 const alert = Modal.alert;
@@ -146,7 +147,7 @@ export default class bindPeopleList extends React.Component {
      * 跳转健康详情页面
      */
     toHealthDetail = (v) => {
-        var url = encodeURI(WebServiceUtil.mobileServiceURL + "healthDetail?uid=" + bindDing.state.uid + "&id=" + v.id+"&name="+v.name+"&macAddress="+v.macAddress);
+        var url = encodeURI(WebServiceUtil.mobileServiceURL + "healthDetail?uid=" + bindDing.state.uid + "&id=" + v.id + "&name=" + v.name + "&macAddress=" + v.macAddress);
         var data = {
             method: 'openNewPage',
             url: url
@@ -161,48 +162,40 @@ export default class bindPeopleList extends React.Component {
         return (
             <div id="bindPeopleList" style={{ height: bindDing.state.clientHeight }}>
                 <div className='tableDiv' style={{ height: bindDing.state.clientHeight }}>
-                    <div>
-
-                        <WingBlank size="lg">
-                            <WhiteSpace size="lg" />
+                    <div className="listCont">
+                        {/*<div className="item">
                             <Card>
-                                <div className="student_list2 text_hidden"><span>手环名称：</span><span>123123</span></div>
+                                <div className="student_list list1 textOver">
+                                    <span className="title">手环名称：</span><span>fhfgh</span>
+                                    <span className="untiedBtn" >解绑</span>
+                                </div>
                                 <Card.Body>
-                                    <div className="student_contList">
-                                        <div className="student_list text_hidden"><span>手环：</span><span>er:ere:erer:Erer</span></div>
-                                    </div>
-                                    <div><span>解绑</span>
-                                        <span>健康详情</span>
-                                    </div>
+                                    <div className="student_list textOver"><span className="title">手环ID：</span><span>fdfdg</span></div>
+                                    <div className="healthDetail"><span>健康详情</span></div>
                                 </Card.Body>
                             </Card>
-                        </WingBlank>
+                        </div>*/}
                         {
                             bindDing.state.initData.map((v, i) => {
                                 return (
-                                    <WingBlank size="lg">
-                                        <WhiteSpace size="lg" />
+                                    <div className="item">
                                         <Card>
-                                            <div className="student_list2 text_hidden"><span>手环名称：</span><span>{v.name}</span></div>
+                                            <div className="student_list list1 textOver">
+                                                <span className="title">手环名称：</span><span>{v.name}</span>
+                                                <span className="untiedBtn" onClick={_this.showAlert.bind(this, v)}>解绑</span>
+                                            </div>
                                             <Card.Body>
-                                                <div className="student_contList">
-                                                    <div className="student_list text_hidden"><span>手环：</span><span>{v.macAddress}</span></div>
-                                                </div>
-                                                <div><span onClick={_this.showAlert.bind(this, v)}>解绑</span>
-                                                    <span onClick={_this.toHealthDetail.bind(this, v)}>健康详情</span>
-                                                </div>
+                                                <div className="student_list textOver"><span className="title">手环ID：</span><span>{v.macAddress}</span></div>
+                                                <div className="healthDetail" onClick={_this.toHealthDetail.bind(this, v)}><span>健康详情</span></div>
                                             </Card.Body>
                                         </Card>
-                                    </WingBlank>
+                                    </div>
                                 )
                             })
                         }
-
-
-
                     </div>
-                    <div className='addBunton' onClick={this.toaddRing}>
-                        绑定
+                    <div className='bindingBtn' onClick={this.toaddRing}>
+                        绑定新用户
                         {/* <img src={require("../imgs/addBtn.png")}/> */}
                     </div>
                 </div>
