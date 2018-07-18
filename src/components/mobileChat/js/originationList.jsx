@@ -1,7 +1,5 @@
 import React from 'react';
-import {
-    ListView, Toast, List, WhiteSpace,
-} from 'antd-mobile';
+import {ListView, Toast, List, WhiteSpace, SearchBar} from 'antd-mobile';
 import '../css/originationList.less'
 
 var origination_List;
@@ -22,6 +20,8 @@ export default class originationList extends React.Component {
             dataSource: dataSource.cloneWithRows(this.initData),
             userId: '',
             unionid: '',        //微信登录的unionid
+            structureArr: [],
+            structureSpanArr: []
         };
     }
 
@@ -39,7 +39,7 @@ export default class originationList extends React.Component {
     }
 
     componentDidMount() {
-        this.getStructureById()
+        this.getStructureById(true, false)
         window.addEventListener('hashchange', this.onhashchange)
     }
 
@@ -60,21 +60,31 @@ export default class originationList extends React.Component {
      * id
      * name
      */
-    getStructureById() {
+    getStructureById(flag, structureId) {
 
         var _this = this;
         var param = {
             "method": 'getStructureById',
             "operateUserId": this.state.userId,
-            "structureId": this.state.structureId,
+            "structureId": structureId || this.state.structureId,
         };
 
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
             onResponse: function (result) {
                 if (result.success == true && result.msg == '调用成功') {
-                    document.title = result.response.name;   //设置title
-                    _this.listStructures(result.response.id)
-                    _this.getStrcutureMembers(result.response.id)
+                    _this.state.structureArr.unshift(result.response);
+
+                    if (flag) {
+                        document.title = result.response.name;   //设置title
+                        _this.listStructures(result.response.id)
+                        _this.getStrcutureMembers(result.response.id)
+                    }
+
+                    if (WebServiceUtil.isEmpty(result.response.parent) == false) {
+                        // 倒退部门,构建数组对象
+                        _this.getStructureById(false, result.response.parent.id)
+                    }
+                    _this.buildStructureArr()
 
                 } else {
                     Toast.fail(result.msg, 3);
@@ -154,8 +164,9 @@ export default class originationList extends React.Component {
             var arr = []
             data.forEach(function (v, i) {
                 var item = <Item onClick={origination_List.structuresOnClick(v)}>
-                    <span className="text_hidden">{v.name}</span>
-                    <span>{v.memberCount}人</span>
+                    <span className="text_hidden origination_name">{v.name}</span>
+                    <span className="group_number">{v.memberCount}人</span>
+                    <div className="am-list-arrow am-list-arrow-horizontal"></div>
                 </Item>
                 arr.push(item)
             })
@@ -163,6 +174,10 @@ export default class originationList extends React.Component {
         }
     }
 
+    /**
+     * 构建部门成员
+     * @param data
+     */
     buildStrcutureMembers(data) {
         if (WebServiceUtil.isEmpty(data) == false) {
             var arr = []
@@ -206,24 +221,70 @@ export default class originationList extends React.Component {
         }
     }
 
+    /**
+     * 搜索被点击,跳转至搜索界面
+     */
+    searchBarOnClick() {
+        console.log(origination_List.state.structureArr);
+    }
+
+    /**
+     * 构建部门条
+     */
+    buildStructureArr() {
+        var arr = []
+        origination_List.state.structureArr.forEach(function (v, i) {
+            if (i == origination_List.state.structureArr.length - 1) {
+                arr.push(
+                    <span onClick={origination_List.structureSpanArrOnClick(v)}>{v.name}</span>
+                )
+            } else {
+                arr.push(
+                    <span onClick={origination_List.structureSpanArrOnClick(v)}>{v.name}></span>
+                )
+            }
+        })
+        origination_List.setState({structureSpanArr: arr})
+    }
+
+    structureSpanArrOnClick(data) {
+        return () => {
+            console.log(data);
+        }
+    }
+
     render() {
 
         var _this = this;
 
         return (
             <div id="originationList">
-                <div></div>
+                <div id="friendList">
+                    <div className="origination_top">
+                        <div onClick={this.searchBarOnClick}>
+                            <SearchBar
+                                value={this.state.value}
+                                placeholder="请输入账号/姓名"
+                                disabled={true}
+                            />
+                        </div>
+                        <WhiteSpace/>
+                        <Item className="originationName">
+                            {this.state.structureSpanArr}
+                        </Item>
+                        <WhiteSpace/>
+                    </div>
+                    <div className="origination_cont">
+                        <div>
+                            {this.state.structuresItem}
+                        </div>
 
-                <WhiteSpace/>
+                        <WhiteSpace/>
 
-                <div>
-                    {this.state.structuresItem}
-                </div>
-
-                <WhiteSpace/>
-
-                <div>
-                    {this.state.membersItem}
+                        <div>
+                            {this.state.membersItem}
+                        </div>
+                    </div>
                 </div>
             </div>
         );

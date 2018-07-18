@@ -125,6 +125,7 @@ export default class groupChatList extends React.Component {
                         </div>
                         <span className="group_number">{rowData.members.length}人</span>
                     </div>
+                    <div className="am-list-arrow am-list-arrow-horizontal"></div>
                 </Item>
             )
         }
