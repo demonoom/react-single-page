@@ -83,8 +83,9 @@ export default class originationList extends React.Component {
                     if (WebServiceUtil.isEmpty(result.response.parent) == false) {
                         // 倒退部门,构建数组对象
                         _this.getStructureById(false, result.response.parent.id)
+                    } else {
+                        _this.buildStructureArr()
                     }
-                    _this.buildStructureArr()
 
                 } else {
                     Toast.fail(result.msg, 3);
