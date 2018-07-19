@@ -27,7 +27,6 @@ export default class addOldPeople extends React.Component {
         //添加对视窗大小的监听,在屏幕转换以及键盘弹起时重设各项高度
         window.addEventListener('resize', this.onWindowResize)
         this.wxchatConfig(locationHref);
-        console.log(uid)
     }
 
 
@@ -55,7 +54,7 @@ export default class addOldPeople extends React.Component {
                 // Toast.info(result.response);
                 let res = result.response;
                 wx.config({
-                    debug: true,
+                    debug: false,
                     appId: 'wx181574f3ea687daf',
                     timestamp: res.timestamp,
                     nonceStr: res.noncestr,
