@@ -162,6 +162,7 @@
 #healthDetail .unusualHeartRate {
   color: #333333;
   font-size: 14px;
+  margin-bottom: 15px;
 }
 #healthDetail .unusualHeartRate .title {
   background: -webkit-linear-gradient(#68CFF9, #4B99F0);
