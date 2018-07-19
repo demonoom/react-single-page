@@ -30,6 +30,9 @@
   position: relative;
   top: 3px;
 }
+#originationList .originationName {
+  overflow: hidden;
+}
 #originationList .originationName .am-list-line::after {
   background-color: #fff;
 }
@@ -43,4 +46,11 @@
 #originationList .am-search {
   background-color: #f5f5f9;
   height: 40px;
+}
+#originationList .originationName_arrow {
+  margin: 0 6px;
+  position: relative;
+  top: -3px;
+  color: #999;
+  font-size: 16px;
 }
