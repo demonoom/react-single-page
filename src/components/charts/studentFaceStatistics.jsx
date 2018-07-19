@@ -9,7 +9,7 @@ export default class studentFaceStatistics extends React.Component {
     classOpenSend = 1;
     closeCollectData=0;
     isClassOver=false;
-
+    lastData;
     constructor(props) {
         super(props);
         this.state = {
@@ -32,10 +32,10 @@ export default class studentFaceStatistics extends React.Component {
         //setInterval(this.fetchNewDate, 4000);
         window.addEventListener( "message",
             function(e){
-            console.log(e.data);
-            if(e.data=='classOver') {
-                _this.classOver();
-            }
+                console.log(e.data);
+                if(e.data=='classOver') {
+                    _this.classOver();
+                }
             },false);
 
     }
@@ -133,16 +133,16 @@ export default class studentFaceStatistics extends React.Component {
         var avgUnderstand=0;
         var number=0;
         //if (!this.isEmptyObject(dataMap)) {
-            for (var key in dataMap) {
-                var faceEmotionData = dataMap[key];
-                (columnarChartOption.xAxis)[0].data.push(faceEmotionData.users.userName);
-                (columnarChartOption.series)[0].data.push(Math.abs(parseInt(faceEmotionData.understand/faceEmotionData.count)));
-                avgUnderstand+=faceEmotionData.understand;
-                number++;
+        for (var key in dataMap) {
+            var faceEmotionData = dataMap[key];
+            (columnarChartOption.xAxis)[0].data.push(faceEmotionData.users.userName);
+            (columnarChartOption.series)[0].data.push(Math.abs(parseInt(faceEmotionData.understand/faceEmotionData.count)));
+            avgUnderstand+=faceEmotionData.understand;
+            number++;
 
-            }
+        }
 
-       // }
+        // }
         for (var key in dataMap) {
             (columnarChartOption.series)[1].data.push(Math.abs(parseInt((faceEmotionData.understand / faceEmotionData.count) / number)));
         }
@@ -403,14 +403,104 @@ export default class studentFaceStatistics extends React.Component {
             (lineChartOption.series)[3].data.push(0);
             (lineChartOption.series)[4].data.push(0);
             (lineChartOption.series)[5].data.push(0);
+            this.showUserHandleByScreenWidth({});
             this.setState({lineChartOption: lineChartOption});
             this.setState({lastPoint: lastPoint});
         }
 
     }
-    showUserHandleByScreenWidth = (data) => {
 
-        this.setState({currentFaceEmotion: data});
+    showUserHandleByScreenWidth = (data) => {
+        var oldData=this.lastData;
+        var noUnderstandUserList = data.noUnderstandUserList;
+        var understandUserList = data.understandUserList;
+        var aliveUserList =data.aliveUserList;
+        var attentionUserList =data.attentionUserList;
+        var confuseUserList = data.confuseUserList;
+        var thinkUserList =data.thinkUserList;
+        var newData={noUnderstandUserList:noUnderstandUserList,understandUserList:understandUserList,aliveUserList:aliveUserList,attentionUserList:attentionUserList,confuseUserList:confuseUserList,thinkUserList:thinkUserList}
+        debugger
+        if(oldData!=undefined){
+            var _noUnderstandUserList = oldData.noUnderstandUserList;
+            var _understandUserList = oldData.understandUserList;
+            if(_understandUserList!=undefined){
+                for(var i=0;i<_understandUserList.length;i++){
+                    var user=_understandUserList[i];
+                    var userId1=user.colUid;//上一次的数据
+                    var noUndersFlag1=false;
+                    var underFlag2=false;
+                    if(noUnderstandUserList!=undefined){
+                        for(var j=0;j<noUnderstandUserList.length;j++){
+                            var userId2=noUnderstandUserList[j].colUid;
+                            if(userId1==userId2){
+                                noUndersFlag1=true;//表示在下一次有
+                            }
+                        }
+                    }
+                    if(understandUserList!=undefined){
+                        for(var k=0;k<understandUserList.length;k++){
+                            var userId3=understandUserList[k].colUid;
+                            if(userId1==userId3){
+                                underFlag2=true;//表示在下一次有
+                            }
+                        }
+                    }
+                    if(noUndersFlag1){
+                        return
+                    }
+                    if(underFlag2){
+                        return
+                    }
+                    if(!noUndersFlag1&&!underFlag2){
+                        if( newData.understandUserList==undefined){
+                            newData.understandUserList=new Array();
+                        }
+                        newData.understandUserList.push(user);
+                    }
+
+                }
+            }
+            ///////
+            if(_noUnderstandUserList!=undefined) {
+                for (var i = 0; i < _noUnderstandUserList.length; i++) {
+                    var user = _noUnderstandUserList[i];
+                    var userId1 = user.colUid;//上一次的数据
+                    var noUndersFlag1 = false;
+                    var underFlag2 = false;
+                    if(noUnderstandUserList!=undefined){
+                        for (var h = 0; h < noUnderstandUserList.length; h++) {
+                            var userId2 = noUnderstandUserList[h].colUid;
+                            if (userId1 == userId2) {
+                                noUndersFlag1 = true;//表示在下一次有
+                            }
+                        }
+                    }
+                    if(noUnderstandUserList!=undefined) {
+                        for (var m = 0; k < understandUserList.length; m++) {
+                            var userId3 = understandUserList[m].colUid;
+                            if (userId1 == userId3) {
+                                underFlag2 = true;//表示在下一次有
+                            }
+                        }
+                    }
+                    if (noUndersFlag1) {
+                        return
+                    }
+                    if (underFlag2) {
+                        return
+                    }
+                    if (!noUndersFlag1 && !underFlag2) {
+                        if( newData.noUnderstandUserList==undefined){
+                            newData.noUnderstandUserList=new Array();
+                        }
+                        newData.noUnderstandUserList.push(user);
+                    }
+
+                }
+            }
+        }
+        this.setState({currentFaceEmotion: newData});
+        this.lastData=data;
     }
     formateNumer = (number, i) => {
         if (!number) {
@@ -593,7 +683,7 @@ export default class studentFaceStatistics extends React.Component {
         var understandRecord;
         if (understandUserList != null && typeof (understandUserList) != undefined) {
             if (understandUserList.length == 0) {
-                understandRecord = "";
+                // understandRecord = "";
             } else {
                 understandRecord = understandUserList.map(function (item, index) {
                     if (index < showConutByScreenHeight) {
@@ -632,7 +722,7 @@ export default class studentFaceStatistics extends React.Component {
         var noUnderstandRecord;
         if (noUnderstandUserList != null && typeof (noUnderstandUserList) != undefined) {
             if (noUnderstandUserList.length == 0) {
-                noUnderstandRecord = "";
+                //   noUnderstandRecord = "";
             } else {
                 noUnderstandRecord = noUnderstandUserList.map(function (item, index) {
                     if (index < showConutByScreenHeight) {
@@ -727,25 +817,25 @@ export default class studentFaceStatistics extends React.Component {
                         <div className="concentration_user_cont">{thinkRecord}</div>
                     </div>
                 </div>
-                    <div className={_this.state.faceCont2}>
-                        <span className="student_f_left">占比/％</span>
-                        <span className="student_f_right">时间/M</span>
-                        <div className="face_cont_wrap">
-                            <div className="face_cont_2_1">
-                                <ReactEcharts
-                                    option={lineChartOption}
-                                    style={{height: '100%', width: '100%'}}
-                                    // loadingOption={this.getLoadingOption()}
-                                    // showLoading={true}
-                                    // onChartReady={this.onChartReady}
-                                    className=''/>
-                                <pre></pre>
-                            </div>
+                <div className={_this.state.faceCont2}>
+                    <span className="student_f_left">占比/％</span>
+                    <span className="student_f_right">时间/M</span>
+                    <div className="face_cont_wrap">
+                        <div className="face_cont_2_1">
+                            <ReactEcharts
+                                option={lineChartOption}
+                                style={{height: '100%', width: '100%'}}
+                                // loadingOption={this.getLoadingOption()}
+                                // showLoading={true}
+                                // onChartReady={this.onChartReady}
+                                className=''/>
+                            <pre></pre>
                         </div>
                     </div>
-                    <div className="list_wrap_padding face_cont_wrap3 face_cont_wrap3_a">
-                        {this.state.divContentArray}
-                    </div>
+                </div>
+                <div className="list_wrap_padding face_cont_wrap3 face_cont_wrap3_a">
+                    {this.state.divContentArray}
+                </div>
             </div>
         );
     }
