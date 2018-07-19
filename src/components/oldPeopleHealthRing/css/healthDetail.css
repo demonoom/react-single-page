@@ -1,3 +1,4 @@
+(node) util.print is deprecated. Use console.log instead.
 #healthDetail {
   background-color: #fff;
   padding: 0 10px;
@@ -24,13 +25,13 @@
   color: #fff;
 }
 #healthDetail .step {
-  background: -webkit-linear-gradient(left top, #07E29A, #1A929B);
+  background: -webkit-linear-gradient(left top, #07e29a, #1a929b);
   /* Safari 5.1 - 6.0 */
-  background: -o-linear-gradient(bottom right, #07E29A, #1A929B);
+  background: -o-linear-gradient(bottom right, #07e29a, #1a929b);
   /* Opera 11.1 - 12.0 */
-  background: -moz-linear-gradient(bottom right, #07E29A, #1A929B);
+  background: -moz-linear-gradient(bottom right, #07e29a, #1a929b);
   /* Firefox 3.6 - 15 */
-  background: linear-gradient(to bottom right, #07E29A, #1A929B);
+  background: linear-gradient(to bottom right, #07e29a, #1a929b);
   /* 标准的语法 */
 }
 #healthDetail .step .switchBtn {
@@ -78,23 +79,23 @@
   padding: 0;
 }
 #healthDetail .heartRate {
-  background: -webkit-linear-gradient(#F8B542, #FF8162);
+  background: -webkit-linear-gradient(#f8b542, #ff8162);
   /* Safari 5.1 - 6.0 */
-  background: -o-linear-gradient(#F8B542, #FF8162);
+  background: -o-linear-gradient(#f8b542, #ff8162);
   /* Opera 11.1 - 12.0 */
-  background: -moz-linear-gradient(#F8B542, #FF8162);
+  background: -moz-linear-gradient(#f8b542, #ff8162);
   /* Firefox 3.6 - 15 */
-  background: linear-gradient(#F8B542, #FF8162);
+  background: linear-gradient(#f8b542, #ff8162);
   /* 标准的语法 */
 }
 #healthDetail .unusualHeartRate .title {
-  background: -webkit-linear-gradient(#68CFF9, #4B99F0);
+  background: -webkit-linear-gradient(#68cff9, #4b99f0);
   /* Safari 5.1 - 6.0 */
-  background: -o-linear-gradient(#68CFF9, #4B99F0);
+  background: -o-linear-gradient(#68cff9, #4b99f0);
   /* Opera 11.1 - 12.0 */
-  background: -moz-linear-gradient(#68CFF9, #4B99F0);
+  background: -moz-linear-gradient(#68cff9, #4b99f0);
   /* Firefox 3.6 - 15 */
-  background: linear-gradient(#68CFF9, #4B99F0);
+  background: linear-gradient(#68cff9, #4b99f0);
   /* 标准的语法 */
   height: 42px;
   line-height: 42px;
