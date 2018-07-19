@@ -26,8 +26,8 @@ export default class bindPeopleList extends React.Component {
         document.title = '老人健康手环绑定列表';
         var locationHref = window.location.href;
         var locationSearch = locationHref.substr(locationHref.indexOf("?") + 1);
-        // var uid = locationSearch.split("&")[0].split("=")[1];
-        var uid = 'o-w611NdfSQpr6WWypLbVV1c5aLQ'
+        var uid = locationSearch.split("&")[0].split("=")[1];
+        // var uid = 'o-w611NdfSQpr6WWypLbVV1c5aLQ'
         this.setState({ "uid": uid });
         this.listWeChatBindingOldManBracelet(uid);
         //添加对视窗大小的监听,在屏幕转换以及键盘弹起时重设各项高度
