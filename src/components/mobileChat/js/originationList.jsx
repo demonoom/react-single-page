@@ -280,6 +280,7 @@ export default class originationList extends React.Component {
             <div id="originationList">
                 <div id="friendList">
                     <div className="origination_top">
+                        <WhiteSpace/>
                         <div onClick={this.searchBarOnClick}>
                             <SearchBar
                                 value={this.state.value}
