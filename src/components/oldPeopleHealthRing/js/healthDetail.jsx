@@ -312,11 +312,11 @@ export default class healthDetail extends React.Component {
                 name: '心率',
                 type: 'line',
                 data: seriesDataArray,
-                markLine: {
-                    data: [
-                        {type: 'average', name: '平均值'}
-                    ]
-                },
+                // markLine: {
+                //     data: [
+                //         {type: 'average', name: '平均值'}
+                //     ]
+                // },
                 markLine: {
                     silent: true,
                     data: [{
