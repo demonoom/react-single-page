@@ -116,6 +116,7 @@
   background: linear-gradient(#F8B542, #FF8162);
   /* 标准的语法 */
   font-size: 12px;
+  padding: 0 10px;
 }
 #healthDetail .heartRate .title {
   padding: 5px 0;
@@ -139,20 +140,20 @@
   top: 0;
 }
 #healthDetail .heartRate .title .arrow.left {
-  padding-left: 22px;
+  padding-left: 15px;
 }
 #healthDetail .heartRate .title .arrow.left svg {
-  left: 0;
+  left: -7px;
 }
 #healthDetail .heartRate .title .arrow.right {
-  padding-right: 12px;
+  padding-right: 6px;
 }
 #healthDetail .heartRate .title .arrow.right svg {
-  right: 0;
+  right: -6px;
 }
 #healthDetail .heartRate .title .text {
   font-size: 16px;
-  width: calc(100% - 128px);
+  width: calc(100% - 111px);
   text-align: center;
 }
 #healthDetail .heartRate .title .text p {
