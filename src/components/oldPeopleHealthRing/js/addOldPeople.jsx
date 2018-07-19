@@ -56,7 +56,7 @@ export default class addOldPeople extends React.Component {
                 let res = result.response;
                 wx.config({
                     debug: true,
-                    appId: 'wx9d076742b77044dd',
+                    appId: 'wx181574f3ea687daf',
                     timestamp: res.timestamp,
                     nonceStr: res.noncestr,
                     signature: res.signature,
