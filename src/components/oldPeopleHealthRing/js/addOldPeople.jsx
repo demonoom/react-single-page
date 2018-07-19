@@ -55,7 +55,7 @@ export default class addOldPeople extends React.Component {
                 // Toast.info(result.response);
                 let res = result.response;
                 wx.config({
-                    debug: false,
+                    debug: true,
                     appId: 'wx9d076742b77044dd',
                     timestamp: res.timestamp,
                     nonceStr: res.noncestr,
