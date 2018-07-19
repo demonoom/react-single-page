@@ -101,7 +101,6 @@ export default class bindPeopleList extends React.Component {
         };
         WebServiceUtil.requestLittleAntApiOldManBracelet(JSON.stringify(param), {
             onResponse: function (result) {
-                alert(JSON.stringify(result))
                 if (result.msg == '调用成功' && result.success == true) {
                     Toast.success('解绑成功', 1);
                     var arr = bindDing.state.initData;

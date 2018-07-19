@@ -247,7 +247,7 @@ export default class originationList extends React.Component {
                 )
             } else {
                 arr.push(
-                    <span onClick={origination_List.structureSpanArrOnClick(v)}>{v.name}></span>
+                    <span onClick={origination_List.structureSpanArrOnClick(v)}>{v.name}<span className="originationName_arrow">></span></span>
                 )
             }
         })

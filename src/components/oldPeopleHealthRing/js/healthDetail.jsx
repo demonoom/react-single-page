@@ -35,7 +35,6 @@ export default class healthDetail extends React.Component {
         // var uid = 'o-w611NdfSQpr6WWypLbVV1c5aLQ';
         var name = decodeURI(locationSearch.split("&")[2].split("=")[1]);
         var macAddress = locationSearch.split("&")[3].split("=")[1];
-        console.log(macAddress)
         this.setState({ "uid": uid, "name": name, "macAddress": macAddress }, () => {
             this.getOldManBraceletSportStepByOpenId(uid, wOrM);
             this.getOldManBraceletHeartRateByOpenId(uid, date);

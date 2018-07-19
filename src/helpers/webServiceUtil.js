@@ -1,6 +1,6 @@
 var isDebug = false;
 var localDomain = "192.168.50.15";   //请求地址
-var isDebugLocal = true;
+var isDebugLocal = false;
 var localUrl = "192.168.50.72";    //跳转地址http:
 
 
@@ -21,8 +21,8 @@ const mobileURLOfRemote = "http://jiaoxue.maaee.com:8091/#/";
 
 
 //老人健康手环地址
-// const OldManBraceletURLOfLocals = "http://" + localDomain + ":9010/Excoord_OldManBracelet/webservice";
-const OldManBraceletURLOfLocals = "http://192.168.50.230:9010/Excoord_OldManBracelet/webservice";
+const OldManBraceletURLOfLocals = "http://" + localDomain + ":9010/Excoord_OldManBracelet/webservice";
+// const OldManBraceletURLOfLocals = "http://192.168.50.15:9010/Excoord_OldManBracelet/webservice";
 const OldManBraceletURLOfRemote = "http://www.maaee.com:9010/Excoord_OldManBracelet/webservice";
 var OldManBraceletURL = isDebug ? OldManBraceletURLOfLocals : OldManBraceletURLOfRemote;
 
@@ -60,7 +60,7 @@ WebServiceUtil.requestLittleAntApi = function (data, listener) {
 WebServiceUtil.requestLittleAntApiOldManBracelet = function (data, listener) {
     $.ajax({
         type: "post",
-        url: OldManBraceletURLOfLocals,
+        url: OldManBraceletURL,
         data: { params: data },
         dataType: "json",
         success: function (result) {
