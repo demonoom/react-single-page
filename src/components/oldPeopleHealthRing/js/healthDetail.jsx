@@ -124,17 +124,17 @@ export default class healthDetail extends React.Component {
     buildStepOption = (xClazzNameArray, seriesDataArray) => {
         return {
 
-            tooltip: {
-                trigger: 'axis',
-                axisPointer : {            // 坐标轴指示器，坐标轴触发有效
-                    type : 'line',         // 默认为直线，可选为：'line' | 'shadow'
-                    lineStyle : {          // 直线指示器样式设置
-                        color: '#8AFFF7',
-                        width: 1,
-                        type: 'solid'
-                    },
-                },
-            },
+            // tooltip: {
+            //     trigger: 'axis',
+            //     axisPointer : {            // 坐标轴指示器，坐标轴触发有效
+            //         type : 'line',         // 默认为直线，可选为：'line' | 'shadow'
+            //         lineStyle : {          // 直线指示器样式设置
+            //             color: '#8AFFF7',
+            //             width: 1,
+            //             type: 'solid'
+            //         },
+            //     },
+            // },
             legend: {
                 data: ['步数1'],
                 bottom: 0,
@@ -333,7 +333,6 @@ export default class healthDetail extends React.Component {
                 axisLabel: {
                     textStyle: {
                         color: '#fff',
-                        fontSize:38
                     },
                     //这个是倾斜角度，也是考虑到文字过多的时候，方式覆盖采用倾斜
                     rotate: 0,
