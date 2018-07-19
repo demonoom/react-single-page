@@ -722,7 +722,7 @@ const originationList = (location, cb) => {
 
 
 /**
- * 老人健康手环绑定
+ * 老人健康手环绑定---start
  * bindPeopleList---列表页
  * addOldPeople---添加绑定页
  * healthDetail--健康数据页
@@ -733,7 +733,6 @@ const bindPeopleList = (location, cb) => {
         }
     )
 }
-
 
 const addOldPeople = (location, cb) => {
     require.ensure([], require => {
@@ -748,7 +747,9 @@ const healthDetail = (location, cb) => {
         }
     )
 }
-
+/**
+ * 老人健康手环绑定---end
+ */
 const searchFromOrigination = (location, cb) => {
     require.ensure([], require => {
             cb(null, require("./components/mobileChat/js/searchFromOrigination").default)
@@ -883,10 +884,10 @@ class Index extends React.Component {
                         <Link
                             to="/waterWork?tid=8888&stuId=23993" style={{fontSize: '24px'}}>水滴作业</Link>
                     </li>
-                    <li>
+                    {/* <li>
                         <Link
                             to="/attendanceTime?uid=23836" style={{fontSize: '24px'}}>考勤考勤</Link>
-                    </li>
+                    </li> */}
                     <li>
                         <Link
                             to="/inAndOutSchool?uid=23836" style={{fontSize: '24px'}}>出入校园考勤</Link>
@@ -899,14 +900,14 @@ class Index extends React.Component {
                         <Link
                             to="/wxTemplate" style={{fontSize: '24px'}}>微信SDK</Link>
                     </li>
-                    <li>
+                    {/* <li>
                         <Link
                             to="/ARTextbookList?uid=23836" style={{fontSize: '24px'}}>AR教材</Link>
-                    </li>
-                    <li>
+                    </li> */}
+                    {/* <li>
                         <Link
                             to="/ArIndex?uid=23836" style={{fontSize: '24px'}}>AR首页</Link>
-                    </li>
+                    </li> */}
 
                     {/*<li><Link*/}
                     {/*to="/attendanceStatistical?schoolId=9"*/}
@@ -936,10 +937,10 @@ class Index extends React.Component {
                         <Link
                             to="/wxLogin?local=bindPeopleList" style={{fontSize: '24px'}}>健康手环绑定</Link>
                     </li>
-                    <li>
+                    {/* <li>
                         <Link
                             to="/healthDetail?uid=23836" style={{fontSize: '24px'}}>健康手环绑定</Link>
-                    </li>
+                    </li> */}
 
                 </ul>
             </div>

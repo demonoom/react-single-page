@@ -55,7 +55,7 @@ export default class addOldPeople extends React.Component {
                 // Toast.info(result.response);
                 let res = result.response;
                 wx.config({
-                    debug: true,
+                    debug: false,
                     appId: 'wx9d076742b77044dd',
                     timestamp: res.timestamp,
                     nonceStr: res.noncestr,
@@ -95,7 +95,6 @@ export default class addOldPeople extends React.Component {
             needResult: 1, // 默认为0，扫描结果由微信处理，1则直接返回扫描结果，
             scanType: ["qrCode", "barCode"], // 可以指定扫二维码还是一维码，默认二者都有
             success: function (res) {
-                alert(res.resultStr);
                 calm.setState({
                     macId: res.resultStr
                 })
@@ -115,7 +114,7 @@ export default class addOldPeople extends React.Component {
      * 绑定
      */
     binding = () => {
-        if(calm.state.stNameValue == ""){
+        if (calm.state.stNameValue == "") {
             Toast.info("请输入手环名称")
             return
         }
@@ -129,10 +128,25 @@ export default class addOldPeople extends React.Component {
         };
         WebServiceUtil.requestLittleAntApiOldManBracelet(JSON.stringify(param), {
             onResponse: function (result) {
-                alert(JSON.stringify(result));
                 if (result.msg == '调用成功' && result.success == true) {
-                    alert("ok");
                     Toast.success('绑定成功', 1);
+                   
+                    // $(function () {
+                    //     pushHistory();
+                    //     window.addEventListener("popstate", function (e) {
+                    //         window.location.href = encodeURI(WebServiceUtil.mobileServiceURL + "bindPeopleList?uid=" + calm.state.uid);
+                    //     }, false);
+                    //     function pushHistory() {
+                    //         var state = {
+                    //             title: "title",
+                    //             url: "#"
+                    //         };
+                    //         window.history.pushState(state, "title", "#");
+                    //     }
+                    // });
+
+                    location.replace(encodeURI(WebServiceUtil.mobileServiceURL + "bindPeopleList?uid=" + calm.state.uid))
+
                 } else {
                     Toast.fail(result.msg, 3);
                 }
@@ -146,7 +160,6 @@ export default class addOldPeople extends React.Component {
         return (
             <div id="addOldPeople" style={{ height: this.state.clientHeight }}>
                 <List>
-
                     <div className='stName'>
                         <InputItem
                             placeholder="请输入名称"

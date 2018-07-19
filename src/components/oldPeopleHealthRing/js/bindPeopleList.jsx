@@ -2,8 +2,6 @@ import React from 'react';
 import {
     Toast,
     Card,
-    WingBlank,
-    WhiteSpace,
     Modal,
 } from 'antd-mobile';
 import '../css/bindPeopleList.less';
@@ -11,11 +9,9 @@ import '../css/bindPeopleList.less';
 var bindDing;
 const alert = Modal.alert;
 export default class bindPeopleList extends React.Component {
-
     constructor(props) {
         super(props);
         bindDing = this;
-
         this.state = {
             clientHeight: document.body.clientHeight,
             calmHeight: document.body.clientHeight - 296,
@@ -30,8 +26,8 @@ export default class bindPeopleList extends React.Component {
         document.title = '老人健康手环绑定列表';
         var locationHref = window.location.href;
         var locationSearch = locationHref.substr(locationHref.indexOf("?") + 1);
-        // var uid = locationSearch.split("&")[0].split("=")[1];
-        var uid = 'o-w611NdfSQpr6WWypLbVV1c5aLQ'
+        var uid = locationSearch.split("&")[0].split("=")[1];
+        // var uid = 'o-w611NdfSQpr6WWypLbVV1c5aLQ'
         this.setState({ "uid": uid });
         this.listWeChatBindingOldManBracelet(uid);
         //添加对视窗大小的监听,在屏幕转换以及键盘弹起时重设各项高度
@@ -133,28 +129,14 @@ export default class bindPeopleList extends React.Component {
      * 跳转绑定页面
      */
     toaddRing = () => {
-        var url = encodeURI(WebServiceUtil.mobileServiceURL + "addOldPeople?uid=" + bindDing.state.uid);
-        var data = {
-            method: 'openNewPage',
-            url: url
-        };
-        Bridge.callHandler(data, null, function (error) {
-            window.location.href = url;
-        });
+        window.location.href = encodeURI(WebServiceUtil.mobileServiceURL + "addOldPeople?uid=" + bindDing.state.uid)
     };
 
     /**
      * 跳转健康详情页面
      */
     toHealthDetail = (v) => {
-        var url = encodeURI(WebServiceUtil.mobileServiceURL + "healthDetail?uid=" + bindDing.state.uid + "&id=" + v.id + "&name=" + v.name + "&macAddress=" + v.macAddress);
-        var data = {
-            method: 'openNewPage',
-            url: url
-        };
-        Bridge.callHandler(data, null, function (error) {
-            window.location.href = url;
-        });
+        window.location.href = encodeURI(WebServiceUtil.mobileServiceURL + "healthDetail?uid=" + bindDing.state.uid + "&id=" + v.id + "&name=" + v.name + "&macAddress=" + v.macAddress);;
     }
 
     render() {
@@ -163,18 +145,6 @@ export default class bindPeopleList extends React.Component {
             <div id="bindPeopleList" style={{ height: bindDing.state.clientHeight }}>
                 <div className='tableDiv' style={{ height: bindDing.state.clientHeight }}>
                     <div className="listCont">
-                        {/*<div className="item">
-                            <Card>
-                                <div className="student_list list1 textOver">
-                                    <span className="title">手环名称：</span><span>fhfgh</span>
-                                    <span className="untiedBtn" >解绑</span>
-                                </div>
-                                <Card.Body>
-                                    <div className="student_list textOver"><span className="title">手环ID：</span><span>fdfdg</span></div>
-                                    <div className="healthDetail"><span>健康详情</span></div>
-                                </Card.Body>
-                            </Card>
-                        </div>*/}
                         {
                             bindDing.state.initData.map((v, i) => {
                                 return (
@@ -196,7 +166,6 @@ export default class bindPeopleList extends React.Component {
                     </div>
                     <div className='bindingBtn' onClick={this.toaddRing}>
                         绑定新用户
-                        {/* <img src={require("../imgs/addBtn.png")}/> */}
                     </div>
                 </div>
 

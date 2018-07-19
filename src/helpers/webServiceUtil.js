@@ -4,6 +4,7 @@ var isDebugLocal = true;
 var localUrl = "192.168.50.72";    //跳转地址http:
 
 
+
 // //云校本地测试webService地址
 // var elearningWebserviceURLOfLocal = "http://" + localDomain + ":8888/elearning/elearningControl/";
 // //云校的远程服务器地址
@@ -12,14 +13,18 @@ var localUrl = "192.168.50.72";    //跳转地址http:
 
 // //小蚂蚁webService地址
 const apiWebServiceURLOfLocals = "http://" + localDomain + ":9006/Excoord_ApiServer/webservice";
-const apiWebServiceURLOfLocalsOldManBracelet = "http://192.168.50.15:9010/Excoord_OldManBracelet/webservice";
-//const apiWebServiceURLOfLocals = "http://" + localDomain + ":9010/Excoord_OldManBracelet/webservice";
 const apiWebServiceURLOfRemote = "https://www.maaee.com/Excoord_For_Education/webservice";
 var apiWebServiceURL = isDebug ? apiWebServiceURLOfLocals : apiWebServiceURLOfRemote;
 //小蚂蚁mobile地址
 const mobileURLOfLocal = "http://" + localUrl + ":8091/#/";
 const mobileURLOfRemote = "http://jiaoxue.maaee.com:8091/#/";
 
+
+//老人健康手环地址
+// const OldManBraceletURLOfLocals = "http://" + localDomain + ":9010/Excoord_OldManBracelet/webservice";
+const OldManBraceletURLOfLocals = "http://192.168.50.230:9010/Excoord_OldManBracelet/webservice";
+const OldManBraceletURLOfRemote = "http://www.maaee.com:9010/Excoord_OldManBracelet/webservice";
+var OldManBraceletURL = isDebug ? OldManBraceletURLOfLocals : OldManBraceletURLOfRemote;
 
 function WebServiceUtil() {
 
@@ -36,7 +41,7 @@ WebServiceUtil.requestLittleAntApi = function (data, listener) {
     $.ajax({
         type: "post",
         url: apiWebServiceURL,
-        data: {params: data},
+        data: { params: data },
         dataType: "json",
         success: function (result) {
             listener.onResponse(result);
@@ -55,8 +60,8 @@ WebServiceUtil.requestLittleAntApi = function (data, listener) {
 WebServiceUtil.requestLittleAntApiOldManBracelet = function (data, listener) {
     $.ajax({
         type: "post",
-        url: apiWebServiceURLOfLocalsOldManBracelet,
-        data: {params: data},
+        url: OldManBraceletURLOfLocals,
+        data: { params: data },
         dataType: "json",
         success: function (result) {
             listener.onResponse(result);
@@ -76,7 +81,7 @@ WebServiceUtil.requestLittleAntApiWithHead = function (data, headObj, listener) 
     $.ajax({
         type: "post",
         url: apiWebServiceURL,
-        data: {params: data},
+        data: { params: data },
         dataType: "json",
         headers: JSON.parse(headObj),
         success: function (result) {
@@ -93,7 +98,7 @@ WebServiceUtil.requestLittleAntApiWithHead = function (data, headObj, listener) 
  * @returns {boolean}
  */
 WebServiceUtil.isEmpty = function (content) {
-    if (content == null || content == "null" || content == "" || typeof(content) == "undefined") {
+    if (content == null || content == "null" || content == "" || typeof (content) == "undefined") {
         return true;
     } else {
         return false;
