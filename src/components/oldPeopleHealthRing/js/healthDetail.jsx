@@ -24,6 +24,7 @@ export default class healthDetail extends React.Component {
             highHeart:[],
             flag:true,
             clientHeight: document.body.clientHeight,
+            macAddress:"hahah",
         }
 
     }
@@ -32,10 +33,12 @@ export default class healthDetail extends React.Component {
         document.title = '健康数据';
         var locationHref = window.location.href;
         var locationSearch = locationHref.substr(locationHref.indexOf("?") + 1);
-        var uid = locationSearch.split("&")[0].split("=")[1];
-        var name = decodeURI(locationSearch.split("&")[2].split("=")[1]);
-        var macAddress = locationSearch.split("&")[3].split("=")[1];
-        this.setState({ "uid": uid,name,macAddress });
+        // var uid = locationSearch.split("&")[0].split("=")[1];
+        var uid = 'o-w611NdfSQpr6WWypLbVV1c5aLQ';
+        // var name = decodeURI(locationSearch.split("&")[2].split("=")[1]);
+        // var macAddress = locationSearch.split("&")[3].split("=")[1];
+        // this.setState({ "uid": uid,name,macAddress });
+        this.setState({ "uid": uid});
         //添加对视窗大小的监听,在屏幕转换以及键盘弹起时重设各项高度
         window.addEventListener('resize', this.onWindowResize);
         this.getDashBoardDataByArea(uid, wOrM);
@@ -48,14 +51,14 @@ export default class healthDetail extends React.Component {
      */
     saveChecked() {
         if (cccalm.state.flag) {
-            str = <span className="month">月</span>;
+            str = <span className="week">周</span>;
             wOrM = "month";
             cccalm.setState({
                 flag:false
             })
             cccalm.getDashBoardDataByArea(cccalm.state.uid, wOrM)
         } else {
-            str = <span className="week">周</span>;
+            str = <span className="month">月</span>;
             wOrM = "week";
             cccalm.setState({
                 flag:true
@@ -104,7 +107,7 @@ export default class healthDetail extends React.Component {
         });
         var stepOption = _this.buildStepOption(xClazzNameArray, seriesDataArray)
         var stepChartDiv = <div>
-            <div style={{ width: '100%', height: '270px' }} className="echarts_wrap">
+            <div style={{ width: '100%', height: '170px' }} className="echarts_wrap">
                 <ReactEcharts
                     option={stepOption}
                     style={{ height: '100%', width: '100%' }}
@@ -122,7 +125,15 @@ export default class healthDetail extends React.Component {
         return {
 
             tooltip: {
-                trigger: 'axis'
+                trigger: 'axis',
+                axisPointer : {            // 坐标轴指示器，坐标轴触发有效
+                    type : 'line',         // 默认为直线，可选为：'line' | 'shadow'
+                    lineStyle : {          // 直线指示器样式设置
+                        color: '#8AFFF7',
+                        width: 1,
+                        type: 'solid'
+                    },
+                },
             },
             legend: {
                 data: ['步数1'],
@@ -144,6 +155,14 @@ export default class healthDetail extends React.Component {
                 {
                     type: 'category',
                     data: xClazzNameArray,
+                    axisLine:{
+                        lineStyle:{
+                            color:'#8AFFF7',
+                        }
+                    },
+                    axisTick: {
+                        show: false
+                    },
                     axisLabel: {
                         //这个是倾斜角度，也是考虑到文字过多的时候，方式覆盖采用倾斜
                         rotate: 0,
@@ -155,6 +174,7 @@ export default class healthDetail extends React.Component {
             yAxis: [
                 {
                     type: 'value',
+                    show:false
                 }
             ],
             // toolbox: {
@@ -171,6 +191,8 @@ export default class healthDetail extends React.Component {
                 {
                     name: '步数2',
                     type: 'bar',
+                    left:0,
+                    bottom:0,
                     data: seriesDataArray,
                     // markLine: {
                     //     data: [
@@ -180,9 +202,10 @@ export default class healthDetail extends React.Component {
                     itemStyle: {
                         //通常情况下：
                         normal: {
+                            // barBorderRadius:[14, 14, 0, 0],
                             //每个柱子的颜色即为colorList数组里的每一项，如果柱子数目多于colorList的长度，则柱子颜色循环使用该数组
                             color: function (params) {
-                                var colorList = ['#00a8ff', '#00fdd8'];
+                                var colorList = ['#8BF6D3 ', '#33EE76'];
                                 if ((params.dataIndex + 1) % 2 == 0) {//为偶数的数据使用第一个颜色，其他使用第二个颜色
                                     return colorList[0];//1,3,5,7
                                 } else {
@@ -196,6 +219,9 @@ export default class healthDetail extends React.Component {
                         normal: {
                             show: true,
                             position: 'top',
+                            textStyle:{
+                                color:'#8AFFF7'
+                            }
                         }
                     }
                 }
@@ -244,7 +270,7 @@ export default class healthDetail extends React.Component {
         });
         var stepOption = _this.buildHeartOption(xClazzNameArray, seriesDataArray)
         var heartChartDiv = <div>
-            <div style={{ width: '100%', height: '270px' }} className="echarts_wrap">
+            <div style={{ width: '100%', height: '170px' }} className="echarts_wrap">
                 <ReactEcharts
                     option={stepOption}
                     style={{ height: '100%', width: '100%' }}
@@ -262,9 +288,18 @@ export default class healthDetail extends React.Component {
   buildHeartOption = (xClazzNameArray, seriesDataArray) => {
     return {
         tooltip: {
-            trigger: 'axis'
+            trigger: 'axis',
+            axisPointer : {            // 坐标轴指示器，坐标轴触发有效
+                type : 'line',         // 默认为直线，可选为：'line' | 'shadow'
+                lineStyle : {          // 直线指示器样式设置
+                    color: '#FFE298',
+                    width: 1,
+                    type: 'solid'
+                },
+            },
         },
         legend: {
+            show:false,
             data: ['心率'],
             bottom: 0,
             right: '5',
@@ -284,17 +319,33 @@ export default class healthDetail extends React.Component {
             {
                 type: 'category',
                 data: xClazzNameArray,
+                axisTick: {
+                    show: false
+                },
+                axisLine:{
+                    show: true,
+                    lineStyle:{
+                        color:'#F8E71C',
+                        width: 1,
+                        type: 'solid'
+                    },
+                },
                 axisLabel: {
+                    textStyle: {
+                        color: '#fff',
+                        fontSize:38
+                    },
                     //这个是倾斜角度，也是考虑到文字过多的时候，方式覆盖采用倾斜
                     rotate: 0,
                     //这里是考虑到x轴文件过多的时候设置的，如果文字太多，默认是间隔显示，设置为0，标示全部显示，当然，如果x轴都不显示，那也就没有意义了
-                    interval: 0
-                }
+                    interval: 'auto',
+                },
             }
         ],
         yAxis: [
             {
                 type: 'value',
+                show:false
             }
         ],
         // toolbox: {
@@ -311,7 +362,11 @@ export default class healthDetail extends React.Component {
             {
                 name: '心率',
                 type: 'line',
+                smooth: true,
                 data: seriesDataArray,
+                left:0,
+                bottom:0,
+                symbolSize:6,
                 markLine: {
                     data: [
                         {type: 'average', name: '平均值'}
@@ -321,15 +376,7 @@ export default class healthDetail extends React.Component {
                     //通常情况下：
                     normal: {
                         //每个柱子的颜色即为colorList数组里的每一项，如果柱子数目多于colorList的长度，则柱子颜色循环使用该数组
-                        color: function (params) {
-                            var colorList = ['#00a8ff', '#00fdd8'];
-                            if ((params.dataIndex + 1) % 2 == 0) {//为偶数的数据使用第一个颜色，其他使用第二个颜色
-                                return colorList[0];//1,3,5,7
-                            } else {
-                                return colorList[1];//2,4,6,8
-                            }
-
-                        }
+                        color: '#FFE298'
                     }
                 },
                 label: {
@@ -358,13 +405,15 @@ export default class healthDetail extends React.Component {
             onResponse: function (result) {
                 var response = result.response;
                 var arr = [
-                    <div><span>时间</span>
-                    <span>心律值</span></div>
+                    <div className="title my_flex">
+                        <span className="first">时间</span>
+                         <span className="second">心律值</span>
+                    </div>
                 ];
                 response.forEach((v,i)=>{
-                        var item = <div>
-                            <span>{WebServiceUtil.formatAllTime(v.heartTime)}</span>
-                            <span>{v.heartRate}</span>
+                        var item = <div className="item my_flex">
+                            <span className="first">{WebServiceUtil.formatAllTime(v.heartTime)}</span>
+                            <span className="second">{v.heartRate}</span>
                         </div>
                     
                     arr.push(item)
@@ -439,27 +488,30 @@ export default class healthDetail extends React.Component {
 
 
                 <div className="step chartItem">
-                <span>今日步数：{this.state.todatSteps}</span>
-                    <SwitchExample />
+                    <div className="my_flex title">
+                        <SwitchExample />
+                        <span className="stepNum">今日步数：{this.state.todatSteps}</span>
+                    </div>
                     {this.state.stepChartDiv}
                 </div>
 
                 <div className="heartRate chartItem">
-                <span onClick={this.toYesterday}> <Icon type="left" />前一天</span>
-                    <div>心率统计<span>{WebServiceUtil.formatMD(Date.parse(new Date()))}</span></div>
-                    {
-                        cccalm.state.clickDate === date ? "":<span onClick={this.toTomorray}>后一天<Icon type="right" /></span>
-                    }
+                    <div className="my_flex title">
+                        <div className="arrow left" onClick={this.toYesterday}> <Icon type="left" />前一天</div>
+                        <div className="text"><span>心率统计</span><p>{WebServiceUtil.formatMD(Date.parse(new Date()))}</p></div>
+                        <div className="arrow right">
+                            {
+                                cccalm.state.clickDate === date ? "":<span onClick={this.toTomorray}>后一天<Icon type="right" /></span>
+                            }
+                        </div>
+
+                    </div>
+
                     
                     {this.state.heartChartDiv}
                </div>
-                <div className="unusualHeartRate chartItem">
-                    <div className="title">
-                        <span>时间</span>
-                        <span>异常心率</span>
+                <div className="unusualHeartRate">
                         {cccalm.state.highHeart}
-
-                    </div>
                </div>
             </div>
         )
