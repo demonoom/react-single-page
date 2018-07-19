@@ -317,6 +317,12 @@ export default class healthDetail extends React.Component {
                         {type: 'average', name: '平均值'}
                     ]
                 },
+                markLine: {
+                    silent: true,
+                    data: [{
+                        yAxis: 90
+                    }]
+                },
                 itemStyle: {
                     //通常情况下：
                     normal: {

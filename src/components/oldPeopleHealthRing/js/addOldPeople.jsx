@@ -115,6 +115,10 @@ export default class addOldPeople extends React.Component {
      * 绑定
      */
     binding = () => {
+        if(calm.state.stNameValue == ""){
+            Toast.info("请输入手环名称")
+            return
+        }
         var param = {
             "method": 'bindOldManBraceletToWeChat',
             "bracelet": {
