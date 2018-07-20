@@ -32,6 +32,18 @@
   background: url("../imgs/pdfIcon.png");
   background-size: 100%;
 }
+#UpdateARTextbook .i_uploadAttech.docDiv {
+  background: url("../imgs/docIcon.png");
+  background-size: 100%;
+}
+#UpdateARTextbook .i_uploadAttech.xlsDiv {
+  background: url("../imgs/xlsIcon.png");
+  background-size: 100%;
+}
+#UpdateARTextbook .i_uploadAttech.pptDiv {
+  background: url("../imgs/pptIcon.png");
+  background-size: 100%;
+}
 #UpdateARTextbook .i_uploadAttech div {
   background: rgba(0, 0, 0, 0.4);
   color: #fff;
