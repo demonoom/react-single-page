@@ -1,4 +1,3 @@
-(node) util.print is deprecated. Use console.log instead.
 ::-webkit-scrollbar {
   width: 8px;
   height: 12px;
@@ -123,6 +122,21 @@
 }
 #addARTextbook .fileBack.pdfBack {
   background: url("../imgs/pdfIcon.png") no-repeat;
+  background-size: 100%;
+  margin-bottom: 15px;
+}
+#addARTextbook .fileBack.docBack {
+  background: url("../imgs/docIcon.png") no-repeat;
+  background-size: 100%;
+  margin-bottom: 15px;
+}
+#addARTextbook .fileBack.xlsBack {
+  background: url("../imgs/xlsIcon.png") no-repeat;
+  background-size: 100%;
+  margin-bottom: 15px;
+}
+#addARTextbook .fileBack.pptBack {
+  background: url("../imgs/pptIcon.png") no-repeat;
   background-size: 100%;
   margin-bottom: 15px;
 }
