@@ -189,7 +189,28 @@ export default class addARTextbook extends React.Component {
                                             {/* <div>{v.fileName}</div> */}
                                         </div>
                                     )
-                                } else {
+                                }else if (v.videoExtra == "docx" || v.videoExtra == "doc" ){
+                                    return (
+                                        <div className="pdfBack fileBack">
+                                        word
+                                            {/* <div>{v.fileName}</div> */}
+                                        </div>
+                                    )
+                                } else if (v.videoExtra == "xls" || v.videoExtra == "xlsx" ){
+                                    return (
+                                        <div className="pdfBack fileBack">
+                                            excel
+                                            {/* <div>{v.fileName}</div> */}
+                                        </div>
+                                    )
+                                }else if (v.videoExtra == "pptx" || v.videoExtra == "ppt"){
+                                    return (
+                                        <div className="pdfBack fileBack">
+                                        ppt
+                                            {/* <div>{v.fileName}</div> */}
+                                        </div>
+                                    )
+                                }else {
                                     return (
                                         <div>
                                             {/* <span >播放</span> */}
