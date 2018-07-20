@@ -298,7 +298,7 @@ export default class addARTextbook extends React.Component {
                                         return (
                                             <div className="uploadAttech i_uploadAttech pdfDiv">
                                                     {/* <div>{v.fileName}</div> */}
-                                                    ppt
+                                                    xls
                                                 <div onClick={teacherV.uploadVideo}>修改</div>
                                             </div>
                                         )
@@ -306,7 +306,7 @@ export default class addARTextbook extends React.Component {
                                         return (
                                             <div className="uploadAttech i_uploadAttech pdfDiv">
                                                     {/* <div>{v.fileName}</div> */}
-                                                    ppt
+                                                    doc
                                                 <div onClick={teacherV.uploadVideo}>修改</div>
                                             </div>
                                         )
