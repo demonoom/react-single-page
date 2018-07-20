@@ -288,25 +288,22 @@ export default class addARTextbook extends React.Component {
                                         )
                                     } else if(item[item.length - 1] == "pptx" || item[item.length - 1] == "ppt"){
                                         return (
-                                            <div className="uploadAttech i_uploadAttech pdfDiv">
+                                            <div className="uploadAttech i_uploadAttech pptDiv">
                                                     {/* <div>{v.fileName}</div> */}
-                                                    ppt
                                                 <div onClick={teacherV.uploadVideo}>修改</div>
                                             </div>
                                         )
                                     }else if(item[item.length - 1] == "xls" || item[item.length - 1] == "xlsx"){
                                         return (
-                                            <div className="uploadAttech i_uploadAttech pdfDiv">
+                                            <div className="uploadAttech i_uploadAttech xlsDiv">
                                                     {/* <div>{v.fileName}</div> */}
-                                                    xls
                                                 <div onClick={teacherV.uploadVideo}>修改</div>
                                             </div>
                                         )
                                     }else if(item[item.length - 1] == "docx" || item[item.length - 1] == "doc"){
                                         return (
-                                            <div className="uploadAttech i_uploadAttech pdfDiv">
+                                            <div className="uploadAttech i_uploadAttech docDiv">
                                                     {/* <div>{v.fileName}</div> */}
-                                                    doc
                                                 <div onClick={teacherV.uploadVideo}>修改</div>
                                             </div>
                                         )
