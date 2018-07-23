@@ -54,7 +54,7 @@ export default class addOldPeople extends React.Component {
     wxchatConfig(locationHref) {
 
         var param = {
-            "method": 'getWeChatSignature',
+            "method": 'getWeChatSignature', 
             "url": locationHref
         };
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
