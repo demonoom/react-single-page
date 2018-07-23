@@ -900,10 +900,10 @@ class Index extends React.Component {
                         <Link
                             to="/wxTemplate" style={{fontSize: '24px'}}>微信SDK</Link>
                     </li>
-                    {/* <li>
+                     <li>
                         <Link
                             to="/ARTextbookList?uid=23836" style={{fontSize: '24px'}}>AR教材</Link>
-                    </li> */}
+                    </li>
                     {/* <li>
                         <Link
                             to="/ArIndex?uid=23836" style={{fontSize: '24px'}}>AR首页</Link>

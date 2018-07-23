@@ -286,7 +286,28 @@ export default class addARTextbook extends React.Component {
                                                 <div onClick={teacherV.uploadVideo}>修改</div>
                                             </div>
                                         )
-                                    } else {
+                                    } else if(item[item.length - 1] == "pptx" || item[item.length - 1] == "ppt"){
+                                        return (
+                                            <div className="uploadAttech i_uploadAttech pptDiv">
+                                                    {/* <div>{v.fileName}</div> */}
+                                                <div onClick={teacherV.uploadVideo}>修改</div>
+                                            </div>
+                                        )
+                                    }else if(item[item.length - 1] == "xls" || item[item.length - 1] == "xlsx"){
+                                        return (
+                                            <div className="uploadAttech i_uploadAttech xlsDiv">
+                                                    {/* <div>{v.fileName}</div> */}
+                                                <div onClick={teacherV.uploadVideo}>修改</div>
+                                            </div>
+                                        )
+                                    }else if(item[item.length - 1] == "docx" || item[item.length - 1] == "doc"){
+                                        return (
+                                            <div className="uploadAttech i_uploadAttech docDiv">
+                                                    {/* <div>{v.fileName}</div> */}
+                                                <div onClick={teacherV.uploadVideo}>修改</div>
+                                            </div>
+                                        )
+                                    }else {
                                         return (
                                             <div className="uploadAttech i_uploadAttech">
                                                 <video onClick={_this.theVideoPlay.bind(this, i)} className="videoDiv" src={v}></video>

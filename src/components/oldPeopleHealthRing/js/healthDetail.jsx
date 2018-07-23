@@ -13,6 +13,12 @@ var str = <span className="month">月</span>;
 var wOrM = "month";
 var date = Date.parse(new Date());
 var cccalm;
+
+
+window.addEventListener("popstate", function (e) {  //回调函数中实现需要的功能
+    location.reload();
+}, false);
+
 export default class healthDetail extends React.Component {
     constructor(props) {
         super(props);
@@ -51,7 +57,6 @@ export default class healthDetail extends React.Component {
     componentDidMount() {
         Bridge.setShareAble("false");
         document.title = this.state.name + '的健康数据';
-
     }
 
     /**
@@ -74,6 +79,7 @@ export default class healthDetail extends React.Component {
             cccalm.getOldManBraceletSportStepByOpenId(cccalm.state.uid, wOrM)
         }
     }
+
 
     /**
      * 获取步数数据

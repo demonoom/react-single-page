@@ -179,7 +179,10 @@ export default class addARTextbook extends React.Component {
 
                 <WhiteSpace size="lg" />
                 <div className="sameBack my_flex">
-                    <div className="textTitle">上传文件<p style={{margin:0,height:5}}></p><span className="uploadSupport">(支持视频、pdf文件)</span></div>
+                    <div className="textTitle">上传文件
+                        <p style={{margin:0,height:5}}></p>
+                        <span className="uploadSupport">(支持视频、office文件)</span>
+                    </div>
                     <div className="videoCont my_flex">
                         {
                             teacherV.state.ARTextbookDataArr[i].videoObj.map((v, i) => {
@@ -189,7 +192,25 @@ export default class addARTextbook extends React.Component {
                                             {/* <div>{v.fileName}</div> */}
                                         </div>
                                     )
-                                } else {
+                                }else if (v.videoExtra == "docx" || v.videoExtra == "doc" ){
+                                    return (
+                                        <div className="docBack fileBack">
+                                            {/* <div>{v.fileName}</div> */}
+                                        </div>
+                                    )
+                                } else if (v.videoExtra == "xls" || v.videoExtra == "xlsx" ){
+                                    return (
+                                        <div className="xlsBack fileBack">
+                                            {/* <div>{v.fileName}</div> */}
+                                        </div>
+                                    )
+                                }else if (v.videoExtra == "pptx" || v.videoExtra == "ppt"){
+                                    return (
+                                        <div className="pptBack fileBack">
+                                            {/* <div>{v.fileName}</div> */}
+                                        </div>
+                                    )
+                                }else {
                                     return (
                                         <div>
                                             {/* <span >播放</span> */}
