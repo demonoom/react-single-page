@@ -62,7 +62,7 @@ export default class addARTextbook extends React.Component {
             if (k == teacherV.state.getIndex) {
                 arr[k].index = k;
                 arr[k].page = teacherV.state.pageNoValue;
-                arr[k].pic = teacherV.state.picNewObj;
+                arr[k].pic = teacherV.state.picNewObj+'?size=300x300';
                 arr[k].video = teacherV.state.videoNewObj.join(",")
             }
         }
