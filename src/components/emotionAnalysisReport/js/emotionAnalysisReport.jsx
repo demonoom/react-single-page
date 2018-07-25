@@ -16,7 +16,7 @@ export default class emotionAnalysisReport extends React.Component {
     componentDidMount() {
         this.getVirtualClassByVid();
         this.getHardUnderstandStudnetClassFaceEmotionByVid();
-        var type = 1;
+        var type = 2;
         calm.setState({
             type
         })
@@ -684,10 +684,10 @@ export default class emotionAnalysisReport extends React.Component {
         return (
             <div>
                 <div>
-                    <span>教师：</span>
-                    <span>课程：</span>
-                    <span>班级：</span>
-                    <span>日期：</span>
+                    <span>教师：xxx</span>
+                    <span>课程：xxx</span>
+                    <span>班级：xxx</span>
+                    <span>日期：xxx</span>
                 </div>
 
                 {
