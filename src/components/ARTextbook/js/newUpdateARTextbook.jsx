@@ -328,7 +328,7 @@ export default class newUpdateARTextbook extends React.Component {
                         </button>
                     </div>
                 </div>
-
+                <div className="line_public"></div>
                 <div className="am-list-item item_list20">
                     {
                         v.video.substr(v.video.length - 3, 3) !== "mp4" ?
@@ -389,7 +389,7 @@ export default class newUpdateARTextbook extends React.Component {
                         }
                     </div>
                 </div>
-
+                <WhiteSpace size="lg"/>
             </div>
 
             tabItem.push(imgDiv)
@@ -444,7 +444,7 @@ export default class newUpdateARTextbook extends React.Component {
                 >
                     <div onClick={() => this.labelFocusInst.focus()}>AR教材</div>
                 </InputItem>
-
+                <div className="line_public"></div>
                 {/*附件*/}
                 <div className="am-list-item item_list20"
                 >
@@ -456,7 +456,7 @@ export default class newUpdateARTextbook extends React.Component {
                     </div>
                 </div>
 
-                <WhiteSpace/>
+                <WhiteSpace size="lg"/>
                 <Tabs
                     tabs={this.state.tagArr}
                     renderTabBar={props => <Tabs.DefaultTabBar {...props} page={3}/>}
@@ -470,7 +470,6 @@ export default class newUpdateARTextbook extends React.Component {
                         {this.state.tabItem}
                     </div>
                 </Tabs>
-                <WhiteSpace/>
 
                 <div className='submitBtn'>
                     <Button type="warning" onClick={this.updateARBook}>提交</Button>
