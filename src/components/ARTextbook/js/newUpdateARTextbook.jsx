@@ -136,6 +136,7 @@ export default class newUpdateARTextbook extends React.Component {
                     });
 
                     //去重
+                    teacherV.makeArr(tagArr);
 
                     teacherV.setState({
                         ARTextbookValue: teacherV.state.initData.name,
@@ -147,11 +148,10 @@ export default class newUpdateARTextbook extends React.Component {
                         // picNewObj: teacherV.state.initData.itemList[index].pic,
                         // itemList: teacherV.state.initData.itemList
                     }, () => {
-
-                        // var tempArr = teacherV.state.videoNewObj[0].split(".");
-                        // teacherV.setState({
-                        //     videoExtra: tempArr[tempArr.length - 1]
-                        // })
+                        /**
+                         * 初始化点击
+                         */
+                        teacherV.tabsOnChange(tagArr[0])
                     })
                 } else {
                     Toast.fail(result.msg, 5);
@@ -162,6 +162,23 @@ export default class newUpdateARTextbook extends React.Component {
             }
         });
 
+    }
+
+    /**
+     * 去重
+     * @param arr
+     * @returns {*}
+     */
+    makeArr(arr) {
+        for (var i = 0; i < arr.length - 1; i++) {
+            for (var j = i + 1; j < arr.length; j++) {
+                if (arr[i].index == arr[j].index) {
+                    arr.splice(j, 1);
+                    j--;
+                }
+            }
+        }
+        return arr
     }
 
     /**
@@ -245,6 +262,7 @@ export default class newUpdateARTextbook extends React.Component {
     }
 
     tabsOnChange(index, key) {
+
         var arr = []
         teacherV.state.initData.itemList.forEach(function (v, i) {
             if (index.index == v.page) {
@@ -255,7 +273,6 @@ export default class newUpdateARTextbook extends React.Component {
         var tabItem = []
 
         arr.forEach(function (v, i) {
-            console.log(v.video.split(','));
 
             var imgDiv = <div>
                 <div className="am-list-item item_list20">
