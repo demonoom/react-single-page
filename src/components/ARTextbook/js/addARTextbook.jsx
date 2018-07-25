@@ -30,12 +30,14 @@ export default class addARTextbook extends React.Component {
         var locationHref = window.location.href;
         var locationSearch = locationHref.substr(locationHref.indexOf("?") + 1);
         var uid = locationSearch.split("&")[0].split("=")[1];
-        this.setState({ "uid": uid });
+        this.setState({"uid": uid});
         window.addEventListener('resize', this.onWindwoResize);
     }
+
     componentDidMount() {
         Bridge.setShareAble("false");
     }
+
     componentWillUnmount() {
         window.removeEventListener('resize', this.onWindwoResize);
     }
@@ -101,12 +103,12 @@ export default class addARTextbook extends React.Component {
             classArray.push({
                 "page": v.pageNoValue,
                 "index": i,
-                "pic": v.picPath+'?size=300x300',
+                "pic": v.picPath + '?size=300x300',
                 "video": v.videoPath.join(",")
             })
         })
         param.bookData.itemList = classArray;
-        
+
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
             onResponse: function (result) {
                 if (result.msg == '调用成功' || result.success == true) {
@@ -143,12 +145,34 @@ export default class addARTextbook extends React.Component {
     }
 
     /**
-     *播放视频 
+     *播放视频
      */
     theVideoPlay(i) {
         var videoDiv = $(".videoDiv")
         videoDiv[i].play();
     }
+
+    /**
+     * 图片预览
+     */
+    imgPreview(data) {
+        var dataObj = {};
+        dataObj.method = 'showImage';
+        dataObj.url = data.picPath;
+        dataObj.currentUrl = data.picPath;
+        Bridge.callHandler(dataObj, null, function (error) {
+            console.log(error);
+        })
+    }
+
+    /**
+     * 附件预览
+     * @param data
+     */
+    pdfPreview(data) {
+        console.log(data.filePath);
+    }
+
     /**
      * 根据数据构建,完成数据的动态绑定
      */
@@ -164,57 +188,62 @@ export default class addARTextbook extends React.Component {
                         placeholder="请输入页码"
                         value={v.pageNoValue}
                         onChange={_this.inputOnChange.bind(this, i)}
-                    ><div>页码</div></InputItem>
+                    >
+                        <div>页码</div>
+                    </InputItem>
                 </div>
                 {/*<span>{teacherV.state.ARTextbookDataArr[i].picName}</span>*/}
-                <WhiteSpace size="lg" />
+                <WhiteSpace size="lg"/>
                 <div className="sameBack my_flex">
                     <span className="textTitle">上传图片</span>
                     {teacherV.state.ARTextbookDataArr[i].picPath.length == 0 ? ""
                         :
-                        <img className="imgTag" src={teacherV.state.ARTextbookDataArr[i].picPath} />
+                        <img onClick={teacherV.imgPreview.bind(this, teacherV.state.ARTextbookDataArr[i])}
+                             className="imgTag" src={teacherV.state.ARTextbookDataArr[i].picPath}/>
                     }
                     <button className="uploadBtn" onClick={teacherV.uploadImage.bind(this, i)}>上传图片</button>
                 </div>
 
-                <WhiteSpace size="lg" />
+                <WhiteSpace size="lg"/>
                 <div className="sameBack my_flex">
                     <div className="textTitle">上传文件
-                        <p style={{margin:0,height:5}}></p>
+                        <p style={{margin: 0, height: 5}}></p>
                         <span className="uploadSupport">(支持视频、office文件)</span>
                     </div>
                     <div className="videoCont my_flex">
                         {
                             teacherV.state.ARTextbookDataArr[i].videoObj.map((v, i) => {
+                                console.log(v);
                                 if (v.videoExtra == "pdf") {
                                     return (
                                         <div className="pdfBack fileBack">
                                             {/* <div>{v.fileName}</div> */}
                                         </div>
                                     )
-                                }else if (v.videoExtra == "docx" || v.videoExtra == "doc" ){
+                                } else if (v.videoExtra == "docx" || v.videoExtra == "doc") {
                                     return (
                                         <div className="docBack fileBack">
                                             {/* <div>{v.fileName}</div> */}
                                         </div>
                                     )
-                                } else if (v.videoExtra == "xls" || v.videoExtra == "xlsx" ){
+                                } else if (v.videoExtra == "xls" || v.videoExtra == "xlsx") {
                                     return (
                                         <div className="xlsBack fileBack">
                                             {/* <div>{v.fileName}</div> */}
                                         </div>
                                     )
-                                }else if (v.videoExtra == "pptx" || v.videoExtra == "ppt"){
+                                } else if (v.videoExtra == "pptx" || v.videoExtra == "ppt") {
                                     return (
                                         <div className="pptBack fileBack">
                                             {/* <div>{v.fileName}</div> */}
                                         </div>
                                     )
-                                }else {
+                                } else {
                                     return (
                                         <div>
                                             {/* <span >播放</span> */}
-                                            <video onClick={teacherV.theVideoPlay.bind(this, i)} className="videoDiv" src={v.videoPath}></video>
+                                            <video onClick={teacherV.theVideoPlay.bind(this, i)} className="videoDiv"
+                                                   src={v.videoPath}></video>
                                             {/* <span>{v.videoName}</span> */}
                                         </div>
                                     )
@@ -226,7 +255,7 @@ export default class addARTextbook extends React.Component {
                     </div>
                 </div>
             </div>)
-            _this.setState({ ARTextbookArr })
+            _this.setState({ARTextbookArr})
         })
     };
 
@@ -267,6 +296,7 @@ export default class addARTextbook extends React.Component {
             var arr = res.split(',');
             let newArr = [];
             arr.forEach((v, i) => {
+                console.log(v);
                 let item = v.split("?");
                 newArr.push({
                     filePath: item[0],
@@ -274,11 +304,12 @@ export default class addARTextbook extends React.Component {
                     fileExtra: (item[1].split("=")[1]).split(".")[1],
                 })
             })
-            teacherV.setState({ fileNewArr: newArr });
+            teacherV.setState({fileNewArr: newArr});
         }, function (error) {
             console.log(error);
         });
     }
+
     /**
      * 上传照片
      */
@@ -299,7 +330,7 @@ export default class addARTextbook extends React.Component {
                 teacherV.state.ARTextbookDataArr[index].picPath = newArr[i].picPath
                 teacherV.state.ARTextbookDataArr[index].picName = newArr[i].picName;
             })
-            teacherV.setState({ picNewArr: newArr });
+            teacherV.setState({picNewArr: newArr});
             teacherV.buildARTextbook();
         }, function (error) {
             console.log(error);
@@ -307,8 +338,8 @@ export default class addARTextbook extends React.Component {
     }
 
     /**
-    * 上传视频
-    */
+     * 上传视频
+     */
     uploadVideo(index) {
         var data = {
             method: 'selectVideo',
@@ -329,27 +360,30 @@ export default class addARTextbook extends React.Component {
                 teacherV.state.ARTextbookDataArr[index].videoName.push(newArr[i].videoName);
             })
             var calmArr = teacherV.state.videoNewArr.concat(newArr);
-            teacherV.setState({ videoNewArr: calmArr });
+            teacherV.setState({videoNewArr: calmArr});
             teacherV.buildARTextbook();
         }, function (error) {
             console.log(error);
         });
     }
+
     render() {
         return (
-            <div id="addARTextbook" style={{ height: this.state.clientHeight }}>
+            <div id="addARTextbook" style={{height: this.state.clientHeight}}>
                 <div className="cont">
-                    <div className="search_bg" style={{ display: this.state.search_bg ? 'block' : 'none' }}></div>
+                    <div className="search_bg" style={{display: this.state.search_bg ? 'block' : 'none'}}></div>
                     <div className="addCurriculum_cont">
-                        <WhiteSpace size="lg" />
+                        <WhiteSpace size="lg"/>
                         <InputItem
                             placeholder="请输入教材名称"
                             ref={el => this.labelFocusInst = el}
                             onChange={v => teacherV.setState({
                                 ARTextbookValue: v
                             })}
-                        ><div onClick={() => this.labelFocusInst.focus()}>AR教材</div></InputItem>
-                        <WhiteSpace size="lg" />
+                        >
+                            <div onClick={() => this.labelFocusInst.focus()}>AR教材</div>
+                        </InputItem>
+                        <WhiteSpace size="lg"/>
                         <div className="my_flex sameBack">
                             <span className="textTitle">上传附件</span>
                             {
@@ -365,7 +399,7 @@ export default class addARTextbook extends React.Component {
                                     //     imgStr = "默认图标"
                                     // }
                                     return (
-                                        <div className="fileBack">
+                                        <div className="fileBack" onClick={teacherV.pdfPreview.bind(this, v)}>
                                             {/* <div>{v.fileName}</div> */}
                                         </div>
                                     )
@@ -381,10 +415,10 @@ export default class addARTextbook extends React.Component {
                                     return <div>{v}</div>
                                 })
                             }
-                            <WhiteSpace size="lg" />
+                            <WhiteSpace size="lg"/>
                             <div onClick={this.addARTextbookTable} className='addARTextbookTable sameBack'>
                                 <div className="addBtn">
-                                    <Icon type="plus" />
+                                    <Icon type="plus"/>
                                     <span>添加组</span></div>
                             </div>
 
