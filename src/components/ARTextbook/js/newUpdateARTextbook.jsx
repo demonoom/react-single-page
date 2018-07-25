@@ -341,7 +341,7 @@ export default class newUpdateARTextbook extends React.Component {
                         }
                     </div>
                 </div>
-
+                <div className="line_public"></div>
             </div>
 
             tabItem.push(imgDiv)
@@ -367,7 +367,7 @@ export default class newUpdateARTextbook extends React.Component {
                 >
                     <div onClick={() => this.labelFocusInst.focus()}>AR教材</div>
                 </InputItem>
-
+                <div className="line_public"></div>
                 {/*附件*/}
                 <div className="am-list-item item_list20"
                 >
@@ -392,7 +392,6 @@ export default class newUpdateARTextbook extends React.Component {
                         {this.state.tabItem}
                     </div>
                 </Tabs>
-                <WhiteSpace/>
 
                 <div className='submitBtn'>
                     <Button type="warning" onClick={this.updateARBook}>提交</Button>

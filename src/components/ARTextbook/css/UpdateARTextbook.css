@@ -1,5 +1,5 @@
 #UpdateARTextbook {
-  overflow: auto;
+  overflow: hidden;
   position: relative;
 }
 #UpdateARTextbook .imgDiv {
