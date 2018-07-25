@@ -157,7 +157,8 @@ export default class ARTextbookList extends React.Component {
      * toUpdateARTextbook
      */
     toUpdateARTextbook(data) {
-        var url = encodeURI(WebServiceUtil.mobileServiceURL + "groupList?bId=" + data.id + "&uid=" + classBinding.state.uid + "&ArName=" + data.name);
+        // var url = encodeURI(WebServiceUtil.mobileServiceURL + "groupList?bId=" + data.id + "&uid=" + classBinding.state.uid + "&ArName=" + data.name);
+        var url = encodeURI(WebServiceUtil.mobileServiceURL + "newUpdateARTextbook?bId=" + data.id + "&uid=" + classBinding.state.uid + "&ArName=" + data.name);
         var data = {
             method: 'openNewPage',
             url: url

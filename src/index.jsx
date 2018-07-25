@@ -758,8 +758,6 @@ const searchFromOrigination = (location, cb) => {
 }
 
 
-
-
 /**
  * 表情分析报告
  */
@@ -769,6 +767,14 @@ const emotionAnalysisReport = (location, cb) => {
         }
     )
 }
+
+const newUpdateARTextbook = (location, cb) => {
+    require.ensure([], require => {
+            cb(null, require("./components/ARTextbook/js/newUpdateARTextbook").default)
+        }
+    )
+}
+
 import './index.less';
 
 class Index extends React.Component {
@@ -912,7 +918,7 @@ class Index extends React.Component {
                         <Link
                             to="/wxTemplate" style={{fontSize: '24px'}}>微信SDK</Link>
                     </li>
-                     <li>
+                    <li>
                         <Link
                             to="/ARTextbookList?uid=23836" style={{fontSize: '24px'}}>AR教材</Link>
                     </li>
@@ -952,7 +958,7 @@ class Index extends React.Component {
                     <li>
                         <Link
                             to="/emotionAnalysisReport" style={{fontSize: '24px'}}>表情分析报告</Link>
-                    </li> 
+                    </li>
 
                 </ul>
             </div>
@@ -1087,7 +1093,8 @@ ReactDOM.render(
             <Route path="groupChatList" getComponent={groupChatList}/>
             <Route path="originationList" getComponent={originationList}/>
             <Route path="searchFromOrigination" getComponent={searchFromOrigination}/>
-            <Route path="emotionAnalysisReport" getComponent={emotionAnalysisReport} />
+            <Route path="emotionAnalysisReport" getComponent={emotionAnalysisReport}/>
+            <Route path="newUpdateARTextbook" getComponent={newUpdateARTextbook}/>
         </Route>
     </Router>
     ,
