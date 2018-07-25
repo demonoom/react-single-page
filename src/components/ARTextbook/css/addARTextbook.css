@@ -23,7 +23,7 @@
 #addARTextbook .sameBack {
   background-color: #fff;
   padding: 15px;
-  font-size: 17px;
+  font-size: 16px;
   color: #666;
 }
 #addARTextbook .my_flex {
@@ -35,6 +35,7 @@
 }
 #addARTextbook .am-list-item .am-input-label {
   color: #666 !important;
+  font-size: 16px;
 }
 #addARTextbook .am-list-line {
   border: 0 !important;
@@ -85,7 +86,7 @@
 }
 #addARTextbook .addARTextbookTable {
   text-align: center;
-  font-size: 17px;
+  font-size: 16px;
   color: #638bb7;
   line-height: 30px;
   padding: 7px 15px;
@@ -113,6 +114,7 @@
 }
 #addARTextbook .add_title {
   background-color: #f4f4f4;
+  font-size: 16px;
 }
 #addARTextbook .fileBack {
   width: 68px;
@@ -140,4 +142,7 @@
   background: url("../imgs/pptIcon.png") no-repeat;
   background-size: 100%;
   margin-bottom: 15px;
+}
+#addARTextbook .am-list-item .am-input-control input {
+  font-size: 16px;
 }
