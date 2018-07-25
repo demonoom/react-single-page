@@ -60,15 +60,7 @@ export default class newUpdateARTextbook extends React.Component {
      * 更新AR教材
      */
     updateARBook = () => {
-        var arr = teacherV.state.itemList;
-        for (var k in arr) {
-            if (k == teacherV.state.getIndex) {
-                arr[k].index = k;
-                arr[k].page = teacherV.state.pageNoValue;
-                arr[k].pic = teacherV.state.picNewObj + '?size=300x300';
-                arr[k].video = teacherV.state.videoNewObj.join(",")
-            }
-        }
+        var arr = teacherV.state.initData.itemList;
         var param = {
             "method": 'updateARBook',
             "bookData": {
@@ -142,7 +134,7 @@ export default class newUpdateARTextbook extends React.Component {
                         ARTextbookValue: teacherV.state.initData.name,
                         tagArr,
                         attachment: teacherV.state.initData.attachment,
-                        // status: teacherV.state.initData.status,
+                        status: teacherV.state.initData.status,
                         // index: teacherV.state.initData.itemList[index].index,
                         // videoNewObj: teacherV.state.initData.itemList[0].video.split(","),
                         // picNewObj: teacherV.state.initData.itemList[index].pic,
@@ -152,6 +144,7 @@ export default class newUpdateARTextbook extends React.Component {
                          * 初始化点击
                          */
                         teacherV.tabsOnChange(tagArr[0])
+                        teacherV.setState({clickTab: tagArr[0]})
                     })
                 } else {
                     Toast.fail(result.msg, 5);
@@ -186,7 +179,8 @@ export default class newUpdateARTextbook extends React.Component {
      *
      * @memberof addARTextbook
      */
-    uploadFile() {
+    uploadFile(event) {
+        event.stopPropagation()
         var data = {
             method: 'selectPictures',
         };
@@ -198,6 +192,7 @@ export default class newUpdateARTextbook extends React.Component {
                 newArr.fileName = item[1].split("=")[1],
                 newArr.fileExtra = (item[1].split("=")[1]).split(".")[1],
                 teacherV.setState({attachment: newArr.filePath});
+            teacherV.tabsOnChange(teacherV.state.clickTab)
         }, function (error) {
             console.log(error);
         });
@@ -206,7 +201,7 @@ export default class newUpdateARTextbook extends React.Component {
     /**
      * 上传照片
      */
-    uploadImage() {
+    uploadImage(id) {
         var data = {
             method: 'selectImages',
         };
@@ -215,8 +210,15 @@ export default class newUpdateARTextbook extends React.Component {
             let newArr = {};
             let item = res.split("?");
             newArr.picPath = item[0],
-                newArr.picName = item[1].split("=")[1],
-                teacherV.setState({picNewObj: newArr.picPath});
+                newArr.picName = item[1].split("=")[1]
+
+            teacherV.state.initData.itemList.forEach(function (v, i) {
+                if (v.id == id) {
+                    v.pic = newArr.picPath
+                }
+            })
+            teacherV.tabsOnChange(teacherV.state.clickTab)
+
         }, function (error) {
             console.log(error);
         });
@@ -225,28 +227,23 @@ export default class newUpdateARTextbook extends React.Component {
     /**
      * 上传视频
      */
-    uploadVideo() {
+    uploadVideo(src, id) {
         var data = {
             method: 'selectVideo',
         };
         Bridge.callHandler(data, function (res) {
             // 拿到视频地址,显示在页面等待上传
             var arr = res.split(',');
-            let newArr = [];
-            let pathArr = [];
-            arr.forEach((v, i) => {
-                let item = v.split("?");
-                pathArr.push(item[0])
-                newArr.push({
-                    videoPath: item[0],
-                    videoName: item[1].split("=")[1],
-                    videoExtra: (item[1].split("=")[1]).split(".")[1]
-                })
-                teacherV.setState({videoExtra: (item[1].split("=")[1]).split(".")[1]})
+
+            let item = arr[0].split("?")[0];
+
+            teacherV.state.initData.itemList.forEach(function (v, i) {
+                if (v.id == id) {
+                    v.video = v.video.replace(src, item);
+                }
             })
-            teacherV.state.videoNewObj = []
-            var calmVideo = teacherV.state.videoNewObj.concat(pathArr);
-            teacherV.setState({videoNewObj: calmVideo});
+            teacherV.tabsOnChange(teacherV.state.clickTab)
+
         }, function (error) {
             console.log(error);
         });
@@ -256,9 +253,13 @@ export default class newUpdateARTextbook extends React.Component {
      *播放视频
      */
     theVideoPlay(i) {
-        var videoDiv = $(".videoDiv")
-        videoDiv[i].play();
+        // var videoDiv = $(".videoDiv")
+        // videoDiv[i].play();
 
+    }
+
+    tabsOnClick(index, key) {
+        teacherV.setState({clickTab: index})
     }
 
     tabsOnChange(index, key) {
@@ -277,15 +278,15 @@ export default class newUpdateARTextbook extends React.Component {
             var imgDiv = <div>
                 <div className="am-list-item item_list20">
                     <div className="am-input-label am-input-label-5">图片</div>
-                    <div className="div68">
-                        <button className="uploadAttech i_uploadAttech" onClick={teacherV.uploadImage}>{
+                    <div className="div68" onClick={teacherV.imgPreview.bind(this, v.pic)}>
+                        <button className="uploadAttech i_uploadAttech">{
                             <img className="imgDiv" src={v.pic}/>
                         }
-                            <div>修改</div>
+                            <div onClick={teacherV.uploadImage.bind(this, v.id)}>修改</div>
                         </button>
                     </div>
                 </div>
-
+                <div className="line_public"></div>
                 <div className="am-list-item item_list20">
                     {
                         v.video.substr(v.video.length - 3, 3) !== "mp4" ?
@@ -297,42 +298,42 @@ export default class newUpdateARTextbook extends React.Component {
 
                     <div className="div68">
                         {
-                            v.video.split(',').map((v, i) => {
-                                var item = v.split(".");
+                            v.video.split(',').map((vtem, index) => {
+                                var item = vtem.split(".");
                                 if (item[item.length - 1] == "pdf") {
                                     return (
                                         <div className="uploadAttech i_uploadAttech pdfDiv">
                                             {/* <div>{v.fileName}</div> */}
-                                            <div onClick={teacherV.uploadVideo}>修改</div>
+                                            <div onClick={teacherV.uploadVideo.bind(this, vtem, v.id)}>修改</div>
                                         </div>
                                     )
                                 } else if (item[item.length - 1] == "pptx" || item[item.length - 1] == "ppt") {
                                     return (
                                         <div className="uploadAttech i_uploadAttech pptDiv">
                                             {/* <div>{v.fileName}</div> */}
-                                            <div onClick={teacherV.uploadVideo}>修改</div>
+                                            <div onClick={teacherV.uploadVideo.bind(this, vtem, v.id)}>修改</div>
                                         </div>
                                     )
                                 } else if (item[item.length - 1] == "xls" || item[item.length - 1] == "xlsx") {
                                     return (
                                         <div className="uploadAttech i_uploadAttech xlsDiv">
                                             {/* <div>{v.fileName}</div> */}
-                                            <div onClick={teacherV.uploadVideo}>修改</div>
+                                            <div onClick={teacherV.uploadVideo.bind(this, vtem, v.id)}>修改</div>
                                         </div>
                                     )
                                 } else if (item[item.length - 1] == "docx" || item[item.length - 1] == "doc") {
                                     return (
                                         <div className="uploadAttech i_uploadAttech docDiv">
                                             {/* <div>{v.fileName}</div> */}
-                                            <div onClick={teacherV.uploadVideo}>修改</div>
+                                            <div onClick={teacherV.uploadVideo.bind(this, vtem, v.id)}>修改</div>
                                         </div>
                                     )
                                 } else {
                                     return (
                                         <div className="uploadAttech i_uploadAttech">
                                             <video onClick={teacherV.theVideoPlay.bind(this, i)} className="videoDiv"
-                                                   src={v}></video>
-                                            <div onClick={teacherV.uploadVideo}>修改</div>
+                                                   src={vtem}></video>
+                                            <div onClick={teacherV.uploadVideo.bind(this, vtem, v.id)}>修改</div>
                                         </div>
                                     )
                                 }
@@ -341,13 +342,42 @@ export default class newUpdateARTextbook extends React.Component {
                         }
                     </div>
                 </div>
-                <div className="line_public"></div>
+                <WhiteSpace size="lg"/>
             </div>
 
             tabItem.push(imgDiv)
 
         })
         teacherV.setState({tabItem})
+    }
+
+    /**
+     * 附件预览
+     * @param data
+     */
+    pdfPreview() {
+
+        var content2 = teacherV.state.attachment.replace("60.205.111.227", "www.maaee.com");
+        var content3 = content2.replace("60.205.86.217", "www.maaee.com");
+        var data = {};
+        data.method = 'openNewPage';
+        data.url = "http://www.maaee.com/Excoord_For_Education/js/pdfjs/web/viewer.html?file=" + content3;
+        Bridge.callHandler(data, null, function (error) {
+            window.location.href = url;
+        });
+    }
+
+    /**
+     * 图片预览
+     */
+    imgPreview(src) {
+        var dataObj = {};
+        dataObj.method = 'showImage';
+        dataObj.url = src;
+        dataObj.currentUrl = src;
+        Bridge.callHandler(dataObj, null, function (error) {
+            console.log(error);
+        })
     }
 
     render() {
@@ -372,14 +402,14 @@ export default class newUpdateARTextbook extends React.Component {
                 <div className="am-list-item item_list20"
                 >
                     <div className="am-input-label am-input-label-5">附件</div>
-                    <div className="div68">
-                        <button className="uploadAttech i_uploadAttech upload_file" onClick={teacherV.uploadFile}>
-                            <div>修改</div>
+                    <div className="div68" onClick={teacherV.pdfPreview}>
+                        <button className="uploadAttech i_uploadAttech upload_file">
+                            <div onClick={teacherV.uploadFile}>修改</div>
                         </button>
                     </div>
                 </div>
 
-                <WhiteSpace/>
+                <WhiteSpace size="lg"/>
                 <Tabs
                     tabs={this.state.tagArr}
                     renderTabBar={props => <Tabs.DefaultTabBar {...props} page={3}/>}
@@ -387,6 +417,7 @@ export default class newUpdateARTextbook extends React.Component {
                     animated={false}
                     useOnPan={false}
                     onChange={this.tabsOnChange}
+                    onTabClick={this.tabsOnClick}
                 >
                     <div>
                         {this.state.tabItem}
