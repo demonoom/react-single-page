@@ -957,7 +957,7 @@ class Index extends React.Component {
                     </li>
                     <li>
                         <Link
-                            to="/emotionAnalysisReport" style={{fontSize: '24px'}}>表情分析报告</Link>
+                            to="/emotionAnalysisReport?stuId=23991&vId=1111" style={{fontSize: '24px'}}>表情分析报告</Link>
                     </li>
 
                 </ul>

@@ -9,50 +9,78 @@ export default class emotionAnalysisReport extends React.Component {
             initData: {},
             faceChartDiv: [],
             faceByPeosonChartDiv: [],
-            understandScore: []
+            understandScore: [],
         }
     }
-
-    componentDidMount() {
-        this.getVirtualClassByVid();
-        this.getHardUnderstandStudnetClassFaceEmotionByVid();
-        var type = 2;
+    componentWillMount() {
+        var locationHref = window.location.href;
+        var locationSearch = locationHref.substr(locationHref.indexOf("?") + 1);
+        var stuId = locationSearch.split("&")[0].split("=")[1];
+        var vId = locationSearch.split("&")[1].split("=")[1];
         calm.setState({
-            type
+            stuId, vId
+        }, () => {
+            this.getUserById(stuId);
+            this.getVirtualClassByVid();
+            this.getHardUnderstandStudnetClassFaceEmotionByVid();
         })
-        if (type == 1) {
-            this.getFaceEmotionVclassHistoryAnalysis();
-            this.getClassFaceEmotionByVidLineChart();
-            this.getStudentUnderstandTopVid();
-
-           
-
-        } else if (type == 2) {
-            this.getHardUnderstandStudnetFaceEmotionByVid();
-            this.getClassStudnetFaceEmotionByVidLineChart();
-        }
 
 
 
+
+
+    }
+    componentDidMount() {
+        document.title = "表情分析报告"
 
     }
 
     /**
-     * 获取课堂信息
+     * 根据userid获取类型
      */
-    getVirtualClassByVid() {
+    getUserById(uId) {
         var param = {
-            "method": "getVirtualClassByVid",
-            "vid": "1111"
+            "method": "getUserById",
+            "ident": uId
         }
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
             onResponse: function (result) {
-                console.log(result, "ketang")
+                console.log(result.response.colUtype)
+                // result.response.colUtype = "Teach"
+                if (result.response.colUtype == "STUD") {
+                    calm.getHardUnderstandStudnetFaceEmotionByVid();
+                    calm.getClassStudnetFaceEmotionByVidLineChart();
+                } else {
+                    calm.getFaceEmotionVclassHistoryAnalysis();
+                    calm.getClassFaceEmotionByVidLineChart();
+                    calm.getStudentUnderstandTopVid();
+
+                }
                 calm.setState({
-                    // tName:,
-                    // courseName:result.response.cname,
-                    // className:result,response.clazzName,
-                    // date:result.response.colStartTimePrettyFormat,
+                    type: result.response.colUtype
+                })
+            },
+            onError: function (error) {
+                // message.error(error);
+            }
+        });
+    }
+    /**
+     * 获取课堂信息
+     */
+    getVirtualClassByVid() {
+        console.log(calm.state.vId, "he")
+        var param = {
+            "method": "getVirtualClassByVid",
+            "vid": calm.state.vId
+        }
+        WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
+            onResponse: function (result) {
+                calm.setState({
+                    tName: result.user.userName,
+                    courseName: result.response.cname,
+                    className: result.response.clazzName,
+                    date: result.response.colStartTime
                 })
 
             },
@@ -65,14 +93,13 @@ export default class emotionAnalysisReport extends React.Component {
     /**
      * 表情分析图
      */
-    getFaceEmotionVclassHistoryAnalysis() {
+    getFaceEmotionVclassHistoryAnalysis(vId) {
         var param = {
             "method": "getFaceEmotionVclassHistoryAnalysis",
-            "vid": "1111"
+            "vid": calm.state.vId
         }
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
             onResponse: function (result) {
-                console.log(result)
                 if (result.msg == '调用成功' || result.success == true) {
                     calm.setState({
                         autonomousLearn: result.response.autonomousLearn,
@@ -100,15 +127,14 @@ export default class emotionAnalysisReport extends React.Component {
     /**
      * 获取表情数据折线图
      */
-    getClassFaceEmotionByVidLineChart() {
+    getClassFaceEmotionByVidLineChart(vId) {
         var _this = this;
         var param = {
             "method": "getClassFaceEmotionByVidLineChart",
-            "vid": "1111"
+            "vid": calm.state.vId
         }
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
             onResponse: function (result) {
-                console.log(result)
                 var response = result.response;
                 _this.buildFaceLineChart(response);
             },
@@ -270,33 +296,33 @@ export default class emotionAnalysisReport extends React.Component {
                     }
                 },
                 {
-                    name: '邮件营销',
+                    // name: '邮件营销',
                     type: 'line',
-                    stack: '总量',
+                    // stack: '总量',
                     data: ConfuseArr
                 },
                 {
-                    name: '联盟广告',
+                    // name: '联盟广告',
                     type: 'line',
-                    stack: '总量',
+                    // stack: '总量',
                     data: ThinkArr
                 },
                 {
-                    name: '视频广告',
+                    // name: '视频广告',
                     type: 'line',
-                    stack: '总量',
+                    // stack: '总量',
                     data: JoyArr
                 },
                 {
-                    name: '直接访问',
+                    // name: '直接访问',
                     type: 'line',
-                    stack: '总量',
+                    // stack: '总量',
                     data: UnderstandArr
                 },
                 {
-                    name: '直接访问',
+                    // name: '直接访问',
                     type: 'line',
-                    stack: '总量',
+                    // stack: '总量',
                     data: SupersizeArr
                 },
             ]
@@ -311,7 +337,7 @@ export default class emotionAnalysisReport extends React.Component {
     getHardUnderstandStudnetClassFaceEmotionByVid() {
         var param = {
             "method": "getHardUnderstandStudnetClassFaceEmotionByVid",
-            "vid": "1111"
+            "vid": calm.state.vId
         }
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
             onResponse: function (result) {
@@ -324,7 +350,6 @@ export default class emotionAnalysisReport extends React.Component {
 
                     ];
                     result.response.forEach((v, i) => {
-                        console.log(v.users,"calm")
                         var tempStr = "";
                         var classStr = "";
                         v.users.forEach(function (item, index) {
@@ -339,8 +364,8 @@ export default class emotionAnalysisReport extends React.Component {
                             <div>
                                 <span>{v.faceEmotionClassFile.file.name}第{v.faceEmotionClassFile.filePage}页</span>
                                 <span>{v.users.map((v, i) => {
-                                     var stuName = "";
-                                     stuName += v;
+                                    var stuName = "";
+                                    stuName += v;
                                     return (
                                         <div>
                                             <span>
@@ -348,7 +373,6 @@ export default class emotionAnalysisReport extends React.Component {
                                             </span>
                                         </div>
                                     )
-                                    console.log(v, "ccc")
                                 })}</span>
                                 {/* <span>{}</span> */}
                             </div>
@@ -375,7 +399,7 @@ export default class emotionAnalysisReport extends React.Component {
     getStudentUnderstandTopVid() {
         var param = {
             "method": "getStudentUnderstandTopVid",
-            "vid": "1111"
+            "vid": calm.state.vId
         }
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
             onResponse: function (result) {
@@ -414,22 +438,23 @@ export default class emotionAnalysisReport extends React.Component {
      * 自己本节课中的难点
      */
     getHardUnderstandStudnetFaceEmotionByVid() {
+        console.log(calm.state.vId)
         var param = {
             "method": "getHardUnderstandStudnetFaceEmotionByVid",
-            "vid": "35211",
-            "userId": 23993,
+            "vid": calm.state.vId,
+            "userId": calm.state.stuId,
         }
-
-
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
             onResponse: function (result) {
-                console.log(result, "学生本节课的难点")
+                console.log(result, "re")
                 if (result.msg == '调用成功' || result.success == true) {
+                    calm.setState({
+                        sName: result.user.userName
+                    })
                     var arr = [<div>
                         <span>课件位置</span>
                         <span>理解度</span>
                     </div>
-
                     ];
                     result.response.forEach((v, i) => {
                         arr.push(
@@ -438,7 +463,6 @@ export default class emotionAnalysisReport extends React.Component {
                                 <span>{v.understand}%</span>
                             </div>
                         )
-
                     })
                     calm.setState({
                         underPersonDiv: arr,
@@ -457,17 +481,15 @@ export default class emotionAnalysisReport extends React.Component {
     /**
      * 单人课堂表情折线图
      */
-
     getClassStudnetFaceEmotionByVidLineChart() {
         var _this = this;
         var param = {
             "method": "getClassStudnetFaceEmotionByVidLineChart",
-            "vid": "35211",
-            "userId": 23993,
+            "vid": calm.state.vId,
+            "userId": calm.state.stuId,
         }
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
             onResponse: function (result) {
-                console.log(result, "yu")
                 var response = result.response;
 
 
@@ -488,7 +510,7 @@ export default class emotionAnalysisReport extends React.Component {
     }
 
     /**
-     * 情况统计
+     * 单人课堂表情统计
      * @param braceletSportSteps
      */
     buildFaceByPeosonLineChart = (braceletHeartSteps) => {
@@ -535,7 +557,7 @@ export default class emotionAnalysisReport extends React.Component {
 
 
     /**
-  * 创建折线图的option
+  * 创建单人表情折线图的option
   */
     buildFaceByPersonOption = (xClazzNameArray, AttentionArr, ConfuseArr, ThinkArr, JoyArr, UnderstandArr, SupersizeArr) => {
         return {
@@ -640,33 +662,33 @@ export default class emotionAnalysisReport extends React.Component {
                     }
                 },
                 {
-                    name: '邮件营销',
+                    // name: '邮件营销',
                     type: 'line',
-                    stack: '总量',
+                    // stack: '总量',
                     data: ConfuseArr
                 },
                 {
-                    name: '联盟广告',
+                    // name: '联盟广告',
                     type: 'line',
-                    stack: '总量',
+                    // stack: '总量',
                     data: ThinkArr
                 },
                 {
-                    name: '视频广告',
+                    // name: '视频广告',
                     type: 'line',
-                    stack: '总量',
+                    // stack: '总量',
                     data: JoyArr
                 },
                 {
-                    name: '直接访问',
+                    // name: '直接访问',
                     type: 'line',
-                    stack: '总量',
+                    // stack: '总量',
                     data: UnderstandArr
                 },
                 {
-                    name: '直接访问',
+                    // name: '直接访问',
                     type: 'line',
-                    stack: '总量',
+                    // stack: '总量',
                     data: SupersizeArr
                 },
             ]
@@ -679,24 +701,35 @@ export default class emotionAnalysisReport extends React.Component {
             sum += v - 0;
         })
         var svgUnder = sum / calm.state.understandScore.length;
-        console.log(svgUnder,"has")
-
         return (
             <div>
                 <div>
-                    <span>教师：xxx</span>
-                    <span>课程：xxx</span>
-                    <span>班级：xxx</span>
-                    <span>日期：xxx</span>
+                    <span>教师：{calm.state.tName}</span>
+                    <span>课程：{calm.state.courseName}</span>
+                    <span>班级：{calm.state.className}</span>
+                    <span>日期：{WebServiceUtil.formatYMD(calm.state.date)}</span>
                 </div>
 
                 {
-                    calm.state.type == 1 ?
+                    calm.state.type == "STUD" ?
+                        <div>
+                            <div>
+                                <h3>学生理解度综合评价</h3>
+                                <span>{calm.state.sName}:</span>{svgUnder.toFixed(2)}%
+            {calm.state.faceByPeosonChartDiv}
+                            </div>
+                            <div>
+                                <h3>自己的本节课程难点</h3>
+                                {calm.state.underPersonDiv}
+                            </div>
+                        </div>
+                        :
                         <div>
                             <div>
                                 {/* <span>
-                        课堂综合评价{calm.state.totalScore}
-                    </span> */}
+                                课堂综合评价{calm.state.totalScore}
+                                </span> */}
+                                <h3>综合评价</h3>
                                 <span>自主学习度{calm.state.autonomousLearn}</span>
                                 <span>课堂平均理解度{calm.state.avgUnderstand}</span>
                                 <span>课堂愉悦度{calm.state.classJoy}</span>
@@ -711,25 +744,13 @@ export default class emotionAnalysisReport extends React.Component {
                             </div>
                             <div>
                                 <h3>学生理解度排名</h3>
-                                {calm.state.understandDiv}
+                                <span>{calm.state.sName}</span>{calm.state.understandDiv}
                             </div>
                         </div>
-                        :
-                        <div>
-                            <div>
-                                <h3>学生理解度综合评价</h3>
-                                {svgUnder.toFixed(2)}%
-                    {calm.state.faceByPeosonChartDiv}
-                            </div>
-                            <div>
-                                <h3>自己的本节课程难点</h3>
-                                {calm.state.underPersonDiv}
-                            </div>
-                        </div>
+
                 }
 
-
-                <h3>本节课程难点</h3>
+                <h3>本节课程综合难点</h3>
                 {calm.state.diffPointDiv}
             </div>
         )
