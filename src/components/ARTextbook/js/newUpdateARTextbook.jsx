@@ -3,6 +3,7 @@ import {
     Toast,
     Button,
     InputItem,
+    Tabs, WhiteSpace
 } from 'antd-mobile';
 import "../css/UpdateARTextbook.less"
 
@@ -19,7 +20,9 @@ export default class newUpdateARTextbook extends React.Component {
             picNewObj: {},  //存储照片
             videoNewObj: [], //存储视频
             initData: {},
-            itemList: []
+            itemList: [],
+            ARTextbookValue: '',  //教材名称
+            attachment: '',  //附件地址
         };
     }
 
@@ -121,24 +124,35 @@ export default class newUpdateARTextbook extends React.Component {
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
             onResponse: function (result) {
                 if (result.msg == '调用成功' || result.success == true) {
-                    console.log(result.response);
                     teacherV.state.initData = result.response;
-                    // teacherV.setState({
-                    //     ARTextbookValue: teacherV.state.initData.name,
-                    //     pageNoValue: teacherV.state.initData.itemList[index].page,
-                    //     attachment: teacherV.state.initData.attachment,
-                    //     status: teacherV.state.initData.status,
-                    //     index: teacherV.state.initData.itemList[index].index,
-                    //     videoNewObj: teacherV.state.initData.itemList[index].video.split(","),
-                    //     picNewObj: teacherV.state.initData.itemList[index].pic,
-                    //     itemList: teacherV.state.initData.itemList
-                    // },()=>{
-                    //
-                    //     var tempArr = teacherV.state.videoNewObj[0].split(".");
-                    //     teacherV.setState({
-                    //         videoExtra:tempArr[tempArr.length - 1]
-                    //     })
-                    // })
+
+                    var tagArr = []
+                    result.response.itemList.forEach(function (v, i) {
+                        // {title: '1st Tab'}
+                        tagArr.push({
+                            title: '第' + v.page + '页',
+                            index: v.page,
+                        })
+                    });
+
+                    //去重
+
+                    teacherV.setState({
+                        ARTextbookValue: teacherV.state.initData.name,
+                        tagArr,
+                        attachment: teacherV.state.initData.attachment,
+                        // status: teacherV.state.initData.status,
+                        // index: teacherV.state.initData.itemList[index].index,
+                        // videoNewObj: teacherV.state.initData.itemList[0].video.split(","),
+                        // picNewObj: teacherV.state.initData.itemList[index].pic,
+                        // itemList: teacherV.state.initData.itemList
+                    }, () => {
+
+                        // var tempArr = teacherV.state.videoNewObj[0].split(".");
+                        // teacherV.setState({
+                        //     videoExtra: tempArr[tempArr.length - 1]
+                        // })
+                    })
                 } else {
                     Toast.fail(result.msg, 5);
                 }
@@ -230,108 +244,143 @@ export default class newUpdateARTextbook extends React.Component {
 
     }
 
+    tabsOnChange(index, key) {
+        var arr = []
+        teacherV.state.initData.itemList.forEach(function (v, i) {
+            if (index.index == v.page) {
+                arr.push(v)
+            }
+        })
+
+        var tabItem = []
+
+        arr.forEach(function (v, i) {
+            console.log(v.video.split(','));
+
+            var imgDiv = <div>
+                <div className="am-list-item item_list20">
+                    <div className="am-input-label am-input-label-5">图片</div>
+                    <div className="div68">
+                        <button className="uploadAttech i_uploadAttech" onClick={teacherV.uploadImage}>{
+                            <img className="imgDiv" src={v.pic}/>
+                        }
+                            <div>修改</div>
+                        </button>
+                    </div>
+                </div>
+
+                <div className="am-list-item item_list20">
+                    {
+                        v.video.substr(v.video.length - 3, 3) !== "mp4" ?
+                            <div className="am-input-label am-input-label-5">文件</div>
+                            :
+                            <div className="am-input-label am-input-label-5">视频</div>
+
+                    }
+
+                    <div className="div68">
+                        {
+                            v.video.split(',').map((v, i) => {
+                                var item = v.split(".");
+                                if (item[item.length - 1] == "pdf") {
+                                    return (
+                                        <div className="uploadAttech i_uploadAttech pdfDiv">
+                                            {/* <div>{v.fileName}</div> */}
+                                            <div onClick={teacherV.uploadVideo}>修改</div>
+                                        </div>
+                                    )
+                                } else if (item[item.length - 1] == "pptx" || item[item.length - 1] == "ppt") {
+                                    return (
+                                        <div className="uploadAttech i_uploadAttech pptDiv">
+                                            {/* <div>{v.fileName}</div> */}
+                                            <div onClick={teacherV.uploadVideo}>修改</div>
+                                        </div>
+                                    )
+                                } else if (item[item.length - 1] == "xls" || item[item.length - 1] == "xlsx") {
+                                    return (
+                                        <div className="uploadAttech i_uploadAttech xlsDiv">
+                                            {/* <div>{v.fileName}</div> */}
+                                            <div onClick={teacherV.uploadVideo}>修改</div>
+                                        </div>
+                                    )
+                                } else if (item[item.length - 1] == "docx" || item[item.length - 1] == "doc") {
+                                    return (
+                                        <div className="uploadAttech i_uploadAttech docDiv">
+                                            {/* <div>{v.fileName}</div> */}
+                                            <div onClick={teacherV.uploadVideo}>修改</div>
+                                        </div>
+                                    )
+                                } else {
+                                    return (
+                                        <div className="uploadAttech i_uploadAttech">
+                                            <video onClick={teacherV.theVideoPlay.bind(this, i)} className="videoDiv"
+                                                   src={v}></video>
+                                            <div onClick={teacherV.uploadVideo}>修改</div>
+                                        </div>
+                                    )
+                                }
+
+                            })
+                        }
+                    </div>
+                </div>
+
+            </div>
+
+            tabItem.push(imgDiv)
+
+        })
+        teacherV.setState({tabItem})
+    }
+
     render() {
 
         var _this = this;
 
         return (
             <div id="UpdateARTextbook" style={{height: this.state.clientHeight}}>
-                {/*<div className="search_bg" style={{ display: this.state.search_bg ? 'block' : 'none' }}></div>*/}
-                {/*<div className="addCurriculum_cont">*/}
-                {/*<InputItem*/}
-                {/*placeholder="请输入教材名称"*/}
-                {/*ref={el => this.labelFocusInst = el}*/}
-                {/*onChange={v => teacherV.setState({*/}
-                {/*ARTextbookValue: v*/}
-                {/*})}*/}
-                {/*value={_this.state.ARTextbookValue}*/}
-                {/*><div onClick={() => this.labelFocusInst.focus()}>AR教材</div></InputItem>*/}
-                {/*<InputItem*/}
-                {/*className="add_element"*/}
-                {/*placeholder="请输入页码"*/}
-                {/*value={teacherV.state.pageNoValue}*/}
-                {/*onChange={_this.inputOnChange}*/}
-                {/*><div>页码</div></InputItem>*/}
-                {/*<div className="am-list-item item_list20"*/}
-                {/*>*/}
-                {/*<div className="am-input-label am-input-label-5">附件</div>*/}
-                {/*<div className="div68"><button className="uploadAttech i_uploadAttech upload_file" onClick={teacherV.uploadFile}><div>修改</div></button></div>*/}
-                {/*</div>*/}
-                {/*/!* 显示附件 *!/*/}
-                {/*{*/}
-                {/*//    <div>附件地址：{teacherV.state.attachment}</div>*/}
-                {/*<div></div>*/}
-                {/*}*/}
-                {/*/!* <div className="mt3PX">第{Number(teacherV.state.getIndex)+1}组数据</div> *!/*/}
+                {/*教材名*/}
+                <InputItem
+                    placeholder="请输入教材名称"
+                    ref={el => this.labelFocusInst = el}
+                    onChange={v => teacherV.setState({
+                        ARTextbookValue: v
+                    })}
+                    value={_this.state.ARTextbookValue}
+                >
+                    <div onClick={() => this.labelFocusInst.focus()}>AR教材</div>
+                </InputItem>
 
-                {/*<div className="am-list-item item_list20"*/}
-                {/*>*/}
-                {/*<div className="am-input-label am-input-label-5">图片</div>*/}
-                {/*<div className="div68"><button className="uploadAttech i_uploadAttech" onClick={teacherV.uploadImage}>{*/}
-                {/*<img className="imgDiv" src={teacherV.state.picNewObj} />*/}
-                {/*}<div>修改</div></button></div>*/}
-                {/*</div>*/}
-                {/*<div className="am-list-item item_list20" >*/}
-                {/*{*/}
-                {/*teacherV.state.videoExtra == "pdf" ? */}
-                {/*<div className="am-input-label am-input-label-5">文件</div>*/}
-                {/*:*/}
-                {/*<div className="am-input-label am-input-label-5">视频</div>*/}
-                {/**/}
-                {/*// console.log(teacherV.state.videoExtra,"gh")*/}
-                {/**/}
-                {/*}*/}
-                {/*<div className="div68">*/}
-                {/*{*/}
-                {/*teacherV.state.videoNewObj.map((v, i) => {*/}
-                {/*var item = v.split(".");*/}
-                {/*if (item[item.length - 1] == "pdf") {*/}
-                {/*return (*/}
-                {/*<div className="uploadAttech i_uploadAttech pdfDiv">*/}
-                {/*/!* <div>{v.fileName}</div> *!/*/}
-                {/*<div onClick={teacherV.uploadVideo}>修改</div>*/}
-                {/*</div>*/}
-                {/*)*/}
-                {/*} else if(item[item.length - 1] == "pptx" || item[item.length - 1] == "ppt"){*/}
-                {/*return (*/}
-                {/*<div className="uploadAttech i_uploadAttech pptDiv">*/}
-                {/*/!* <div>{v.fileName}</div> *!/*/}
-                {/*<div onClick={teacherV.uploadVideo}>修改</div>*/}
-                {/*</div>*/}
-                {/*)*/}
-                {/*}else if(item[item.length - 1] == "xls" || item[item.length - 1] == "xlsx"){*/}
-                {/*return (*/}
-                {/*<div className="uploadAttech i_uploadAttech xlsDiv">*/}
-                {/*/!* <div>{v.fileName}</div> *!/*/}
-                {/*<div onClick={teacherV.uploadVideo}>修改</div>*/}
-                {/*</div>*/}
-                {/*)*/}
-                {/*}else if(item[item.length - 1] == "docx" || item[item.length - 1] == "doc"){*/}
-                {/*return (*/}
-                {/*<div className="uploadAttech i_uploadAttech docDiv">*/}
-                {/*/!* <div>{v.fileName}</div> *!/*/}
-                {/*<div onClick={teacherV.uploadVideo}>修改</div>*/}
-                {/*</div>*/}
-                {/*)*/}
-                {/*}else {*/}
-                {/*return (*/}
-                {/*<div className="uploadAttech i_uploadAttech">*/}
-                {/*<video onClick={_this.theVideoPlay.bind(this, i)} className="videoDiv" src={v}></video>*/}
-                {/*<div onClick={teacherV.uploadVideo}>修改</div>*/}
-                {/*</div>*/}
-                {/*)*/}
-                {/*}*/}
+                {/*附件*/}
+                <div className="am-list-item item_list20"
+                >
+                    <div className="am-input-label am-input-label-5">附件</div>
+                    <div className="div68">
+                        <button className="uploadAttech i_uploadAttech upload_file" onClick={teacherV.uploadFile}>
+                            <div>修改</div>
+                        </button>
+                    </div>
+                </div>
 
-                {/*})*/}
-                {/*}*/}
-                {/*</div>*/}
-                {/*</div>*/}
+                <WhiteSpace/>
+                <Tabs
+                    tabs={this.state.tagArr}
+                    renderTabBar={props => <Tabs.DefaultTabBar {...props} page={3}/>}
+                    swipeable={false}
+                    animated={false}
+                    useOnPan={false}
+                    onChange={this.tabsOnChange}
+                >
+                    <div>
+                        {this.state.tabItem}
+                    </div>
+                </Tabs>
+                <WhiteSpace/>
 
-                {/*</div>*/}
-                {/*<div className='submitBtn'>*/}
-                {/*<Button type="warning" onClick={this.updateARBook}>提交</Button>*/}
-                {/*</div>*/}
-                12345
+                <div className='submitBtn'>
+                    <Button type="warning" onClick={this.updateARBook}>提交</Button>
+                </div>
+
             </div>
         );
     }
