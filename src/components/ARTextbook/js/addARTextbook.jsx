@@ -170,7 +170,14 @@ export default class addARTextbook extends React.Component {
      * @param data
      */
     pdfPreview(data) {
-        console.log(data.filePath);
+        var content2 = data.filePath.replace("60.205.111.227", "www.maaee.com");
+        var content3 = content2.replace("60.205.86.217", "www.maaee.com");
+        var data = {};
+        data.method = 'openNewPage';
+        data.url = "http://www.maaee.com/Excoord_For_Education/js/pdfjs/web/viewer.html?file=" + content3;
+        Bridge.callHandler(data, null, function (error) {
+            window.location.href = url;
+        });
     }
 
     /**

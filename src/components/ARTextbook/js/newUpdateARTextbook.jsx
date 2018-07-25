@@ -179,7 +179,8 @@ export default class newUpdateARTextbook extends React.Component {
      *
      * @memberof addARTextbook
      */
-    uploadFile() {
+    uploadFile(event) {
+        event.stopPropagation()
         var data = {
             method: 'selectPictures',
         };
@@ -277,12 +278,11 @@ export default class newUpdateARTextbook extends React.Component {
             var imgDiv = <div>
                 <div className="am-list-item item_list20">
                     <div className="am-input-label am-input-label-5">图片</div>
-                    <div className="div68">
-                        <button className="uploadAttech i_uploadAttech"
-                                onClick={teacherV.uploadImage.bind(this, v.id)}>{
+                    <div className="div68" onClick={teacherV.imgPreview.bind(this, v.pic)}>
+                        <button className="uploadAttech i_uploadAttech">{
                             <img className="imgDiv" src={v.pic}/>
                         }
-                            <div>修改</div>
+                            <div onClick={teacherV.uploadImage.bind(this, v.id)}>修改</div>
                         </button>
                     </div>
                 </div>
@@ -332,7 +332,7 @@ export default class newUpdateARTextbook extends React.Component {
                                     return (
                                         <div className="uploadAttech i_uploadAttech">
                                             <video onClick={teacherV.theVideoPlay.bind(this, i)} className="videoDiv"
-                                                   src={v}></video>
+                                                   src={vtem}></video>
                                             <div onClick={teacherV.uploadVideo.bind(this, vtem, v.id)}>修改</div>
                                         </div>
                                     )
@@ -349,6 +349,35 @@ export default class newUpdateARTextbook extends React.Component {
 
         })
         teacherV.setState({tabItem})
+    }
+
+    /**
+     * 附件预览
+     * @param data
+     */
+    pdfPreview() {
+
+        var content2 = teacherV.state.attachment.replace("60.205.111.227", "www.maaee.com");
+        var content3 = content2.replace("60.205.86.217", "www.maaee.com");
+        var data = {};
+        data.method = 'openNewPage';
+        data.url = "http://www.maaee.com/Excoord_For_Education/js/pdfjs/web/viewer.html?file=" + content3;
+        Bridge.callHandler(data, null, function (error) {
+            window.location.href = url;
+        });
+    }
+
+    /**
+     * 图片预览
+     */
+    imgPreview(src) {
+        var dataObj = {};
+        dataObj.method = 'showImage';
+        dataObj.url = src;
+        dataObj.currentUrl = src;
+        Bridge.callHandler(dataObj, null, function (error) {
+            console.log(error);
+        })
     }
 
     render() {
@@ -373,9 +402,9 @@ export default class newUpdateARTextbook extends React.Component {
                 <div className="am-list-item item_list20"
                 >
                     <div className="am-input-label am-input-label-5">附件</div>
-                    <div className="div68">
-                        <button className="uploadAttech i_uploadAttech upload_file" onClick={teacherV.uploadFile}>
-                            <div>修改</div>
+                    <div className="div68" onClick={teacherV.pdfPreview}>
+                        <button className="uploadAttech i_uploadAttech upload_file">
+                            <div onClick={teacherV.uploadFile}>修改</div>
                         </button>
                     </div>
                 </div>
