@@ -193,7 +193,7 @@ export default class addARTextbook extends React.Component {
                     </InputItem>
                 </div>
                 {/*<span>{teacherV.state.ARTextbookDataArr[i].picName}</span>*/}
-                <WhiteSpace size="lg"/>
+                <div className="line_public"></div>
                 <div className="sameBack my_flex">
                     <span className="textTitle">上传图片</span>
                     {teacherV.state.ARTextbookDataArr[i].picPath.length == 0 ? ""
@@ -204,7 +204,7 @@ export default class addARTextbook extends React.Component {
                     <button className="uploadBtn" onClick={teacherV.uploadImage.bind(this, i)}>上传图片</button>
                 </div>
 
-                <WhiteSpace size="lg"/>
+                <div className="line_public"></div>
                 <div className="sameBack my_flex">
                     <div className="textTitle">上传文件
                         <p style={{margin: 0, height: 5}}></p>
@@ -373,7 +373,7 @@ export default class addARTextbook extends React.Component {
                 <div className="cont">
                     <div className="search_bg" style={{display: this.state.search_bg ? 'block' : 'none'}}></div>
                     <div className="addCurriculum_cont">
-                        <WhiteSpace size="lg"/>
+                        <div className="noticeMsg_common">该页面所有项为必填项</div>
                         <InputItem
                             placeholder="请输入教材名称"
                             ref={el => this.labelFocusInst = el}
