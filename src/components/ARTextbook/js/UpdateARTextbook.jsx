@@ -62,7 +62,7 @@ export default class addARTextbook extends React.Component {
             if (k == teacherV.state.getIndex) {
                 arr[k].index = k;
                 arr[k].page = teacherV.state.pageNoValue;
-                arr[k].pic = teacherV.state.picNewObj;
+                arr[k].pic = teacherV.state.picNewObj+'?size=300x300';
                 arr[k].video = teacherV.state.videoNewObj.join(",")
             }
         }
@@ -77,6 +77,7 @@ export default class addARTextbook extends React.Component {
                 "itemList": arr
             }
         }
+        console.log(param);
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
             onResponse: function (result) {
                 if (result.msg == '调用成功' || result.success == true) {
@@ -240,17 +241,20 @@ export default class addARTextbook extends React.Component {
                         })}
                         value={_this.state.ARTextbookValue}
                     ><div onClick={() => this.labelFocusInst.focus()}>AR教材</div></InputItem>
+                    <div className="line_public"></div>
                     <InputItem
                         className="add_element"
                         placeholder="请输入页码"
                         value={teacherV.state.pageNoValue}
                         onChange={_this.inputOnChange}
                     ><div>页码</div></InputItem>
+                    <div className="line_public"></div>
                     <div className="am-list-item item_list20"
                     >
                         <div className="am-input-label am-input-label-5">附件</div>
                         <div className="div68"><button className="uploadAttech i_uploadAttech upload_file" onClick={teacherV.uploadFile}><div>修改</div></button></div>
                     </div>
+                    <div className="line_public"></div>
                     {/* 显示附件 */}
                     {
                         //    <div>附件地址：{teacherV.state.attachment}</div>
@@ -265,6 +269,7 @@ export default class addARTextbook extends React.Component {
                             <img className="imgDiv" src={teacherV.state.picNewObj} />
                         }<div>修改</div></button></div>
                     </div>
+                    <div className="line_public"></div>
                     <div className="am-list-item item_list20" >
                         {
                             teacherV.state.videoExtra == "pdf" ? 
@@ -286,7 +291,28 @@ export default class addARTextbook extends React.Component {
                                                 <div onClick={teacherV.uploadVideo}>修改</div>
                                             </div>
                                         )
-                                    } else {
+                                    } else if(item[item.length - 1] == "pptx" || item[item.length - 1] == "ppt"){
+                                        return (
+                                            <div className="uploadAttech i_uploadAttech pptDiv">
+                                                    {/* <div>{v.fileName}</div> */}
+                                                <div onClick={teacherV.uploadVideo}>修改</div>
+                                            </div>
+                                        )
+                                    }else if(item[item.length - 1] == "xls" || item[item.length - 1] == "xlsx"){
+                                        return (
+                                            <div className="uploadAttech i_uploadAttech xlsDiv">
+                                                    {/* <div>{v.fileName}</div> */}
+                                                <div onClick={teacherV.uploadVideo}>修改</div>
+                                            </div>
+                                        )
+                                    }else if(item[item.length - 1] == "docx" || item[item.length - 1] == "doc"){
+                                        return (
+                                            <div className="uploadAttech i_uploadAttech docDiv">
+                                                    {/* <div>{v.fileName}</div> */}
+                                                <div onClick={teacherV.uploadVideo}>修改</div>
+                                            </div>
+                                        )
+                                    }else {
                                         return (
                                             <div className="uploadAttech i_uploadAttech">
                                                 <video onClick={_this.theVideoPlay.bind(this, i)} className="videoDiv" src={v}></video>

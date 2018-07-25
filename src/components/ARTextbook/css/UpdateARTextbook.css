@@ -1,7 +1,6 @@
 #UpdateARTextbook {
   overflow: auto;
   position: relative;
-  background: #fff;
 }
 #UpdateARTextbook .imgDiv {
   width: 100%;
@@ -32,6 +31,18 @@
   background: url("../imgs/pdfIcon.png");
   background-size: 100%;
 }
+#UpdateARTextbook .i_uploadAttech.docDiv {
+  background: url("../imgs/docIcon.png");
+  background-size: 100%;
+}
+#UpdateARTextbook .i_uploadAttech.xlsDiv {
+  background: url("../imgs/xlsIcon.png");
+  background-size: 100%;
+}
+#UpdateARTextbook .i_uploadAttech.pptDiv {
+  background: url("../imgs/pptIcon.png");
+  background-size: 100%;
+}
 #UpdateARTextbook .i_uploadAttech div {
   background: rgba(0, 0, 0, 0.4);
   color: #fff;
@@ -41,12 +52,13 @@
   padding: 4px 0;
   border-radius: 0 0 2px 2px;
   text-align: center;
+  font-size: 12px;
 }
 #UpdateARTextbook .mt3PX {
   margin: 20px 0;
 }
 #UpdateARTextbook .item_list20 {
-  padding: 5px 15px 0 15px;
+  padding: 15px 15px 0 15px;
 }
 #UpdateARTextbook .am-list-item .am-input-label.am-input-label-5 {
   color: #666 !important;
@@ -79,4 +91,19 @@
   background: url("../imgs/UpdateART.png") no-repeat;
   background-size: 100%;
   margin-right: 15px;
+}
+#UpdateARTextbook .am-list-item {
+  -ms-flex-align: start;
+  align-items: flex-start;
+  -webkit-align-items: flex-start;
+  box-align: flex-start;
+}
+#UpdateARTextbook .am-list-item .am-input-label.am-input-label-5 {
+  width: 70px;
+  padding-right: 15px;
+  text-align: right;
+}
+#UpdateARTextbook .am-list-item .am-input-label,
+#UpdateARTextbook .am-list-item .am-input-control input {
+  font-size: 16px;
 }

@@ -23,9 +23,16 @@ export default class addOldPeople extends React.Component {
         var locationHref = window.location.href;
         var locationSearch = locationHref.substr(locationHref.indexOf("?") + 1);
         var uid = locationSearch.split("&")[0].split("=")[1];
+        var refresh = locationSearch.split("&")[1].split("=")[1];
+        if(refresh=="true"){
+            window.location.href = encodeURI(WebServiceUtil.mobileServiceURL + "addOldPeople?uid=" + uid+"&refresh=false");
+            location.reload();
+        }else{
+            // alert('null')
+        }
         this.setState({ "uid": uid });
         //添加对视窗大小的监听,在屏幕转换以及键盘弹起时重设各项高度
-        window.addEventListener('resize', this.onWindowResize)
+        window.addEventListener('resize', this.onWindowResize);
         this.wxchatConfig(locationHref);
     }
 
@@ -42,10 +49,12 @@ export default class addOldPeople extends React.Component {
 
     /**
      *微信配置
+     获取openID
      */
     wxchatConfig(locationHref) {
+
         var param = {
-            "method": 'getWeChatSignature',
+            "method": 'getWeChatSignature', 
             "url": locationHref
         };
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
@@ -55,7 +64,8 @@ export default class addOldPeople extends React.Component {
                 let res = result.response;
                 wx.config({
                     debug: false,
-                    appId: 'wx181574f3ea687daf',
+                    appId: 'wx181574f3ea687daf',  // 线上用的
+                    // appId: 'wx9d076742b77044dd',   //测试用的
                     timestamp: res.timestamp,
                     nonceStr: res.noncestr,
                     signature: res.signature,
@@ -75,6 +85,7 @@ export default class addOldPeople extends React.Component {
                     });
                 })
                 wx.error(function (res) {
+                    alert(JSON.stringify(res))
                     // Toast.info(res);
                     // config信息验证失败会执行error函数，如签名过期导致验证失败，具体错误信息可以打开config的debug模式查看，也可以在返回的res参数中查看，对于SPA可以在这里更新签名。
                 });
@@ -129,20 +140,6 @@ export default class addOldPeople extends React.Component {
             onResponse: function (result) {
                 if (result.msg == '调用成功' && result.success == true) {
                     Toast.success('绑定成功', 1);
-                   
-                    // $(function () {
-                    //     pushHistory();
-                    //     window.addEventListener("popstate", function (e) {
-                    //         window.location.href = encodeURI(WebServiceUtil.mobileServiceURL + "bindPeopleList?uid=" + calm.state.uid);
-                    //     }, false);
-                    //     function pushHistory() {
-                    //         var state = {
-                    //             title: "title",
-                    //             url: "#"
-                    //         };
-                    //         window.history.pushState(state, "title", "#");
-                    //     }
-                    // });
 
                     location.replace(encodeURI(WebServiceUtil.mobileServiceURL + "bindPeopleList?uid=" + calm.state.uid))
 

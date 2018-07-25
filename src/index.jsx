@@ -757,6 +757,18 @@ const searchFromOrigination = (location, cb) => {
     )
 }
 
+
+
+
+/**
+ * 表情分析报告
+ */
+const emotionAnalysisReport = (location, cb) => {
+    require.ensure([], require => {
+            cb(null, require("./components/emotionAnalysisReport/js/emotionAnalysisReport").default)
+        }
+    )
+}
 import './index.less';
 
 class Index extends React.Component {
@@ -900,10 +912,10 @@ class Index extends React.Component {
                         <Link
                             to="/wxTemplate" style={{fontSize: '24px'}}>微信SDK</Link>
                     </li>
-                    {/* <li>
+                     <li>
                         <Link
                             to="/ARTextbookList?uid=23836" style={{fontSize: '24px'}}>AR教材</Link>
-                    </li> */}
+                    </li>
                     {/* <li>
                         <Link
                             to="/ArIndex?uid=23836" style={{fontSize: '24px'}}>AR首页</Link>
@@ -937,10 +949,10 @@ class Index extends React.Component {
                         <Link
                             to="/wxLogin?local=bindPeopleList" style={{fontSize: '24px'}}>健康手环绑定</Link>
                     </li>
-                    {/* <li>
+                    <li>
                         <Link
-                            to="/healthDetail?uid=23836" style={{fontSize: '24px'}}>健康手环绑定</Link>
-                    </li> */}
+                            to="/emotionAnalysisReport" style={{fontSize: '24px'}}>表情分析报告</Link>
+                    </li> 
 
                 </ul>
             </div>
@@ -1075,6 +1087,7 @@ ReactDOM.render(
             <Route path="groupChatList" getComponent={groupChatList}/>
             <Route path="originationList" getComponent={originationList}/>
             <Route path="searchFromOrigination" getComponent={searchFromOrigination}/>
+            <Route path="emotionAnalysisReport" getComponent={emotionAnalysisReport} />
         </Route>
     </Router>
     ,

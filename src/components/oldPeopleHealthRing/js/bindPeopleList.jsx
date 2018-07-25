@@ -128,7 +128,8 @@ export default class bindPeopleList extends React.Component {
      * 跳转绑定页面
      */
     toaddRing = () => {
-        window.location.href = encodeURI(WebServiceUtil.mobileServiceURL + "addOldPeople?uid=" + bindDing.state.uid)
+
+        window.location.href = encodeURI(WebServiceUtil.mobileServiceURL + "addOldPeople?uid=" + bindDing.state.uid+"&refresh=true")
     };
 
     /**
