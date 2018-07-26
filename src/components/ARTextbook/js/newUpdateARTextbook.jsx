@@ -38,7 +38,7 @@ export default class newUpdateARTextbook extends React.Component {
     }
 
     componentDidMount() {
-        document.title = '教材第';
+        document.title = '编辑教材';
         Bridge.setShareAble("false");
     }
 
@@ -225,54 +225,6 @@ export default class newUpdateARTextbook extends React.Component {
         });
     }
 
-    videoPreview(src, id, event) {
-        event.stopPropagation()
-
-        if (src.substr(src.length - 3, 3) != 'mp4') {
-
-            var param = {
-                "method": 'getOfficeHadleFileBySourcePath',
-                "sourcePath": src
-            }
-            WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
-                onResponse: function (result) {
-                    if (result.msg == '调用成功' || result.success == true) {
-                        var src = result.response.pdfPath || result.response.htmlPath || result.response.path;
-
-                        var pdfURL = src.replace("60.205.111.227", "www.maaee.com");
-                        pdfURL = pdfURL.replace("60.205.86.217", "www.maaee.com");
-                        if (pdfURL.indexOf("https") == -1 && pdfURL.indexOf("http") != -1) {
-                            pdfURL = pdfURL.replace("http", "https");
-                        }
-                        var data = {};
-                        data.method = 'openNewPage';
-                        data.url = pdfURL;
-                        Bridge.callHandler(data, null, function (error) {
-                            window.location.href = url;
-                        });
-
-                    } else {
-                        Toast.fail(result.msg, 5);
-                    }
-                },
-                onError: function (error) {
-                    // message.error(error);
-                }
-            });
-        } else {
-            //视频预览
-
-            var data = {
-                method: 'playVideo',
-                url: src
-            };
-            Bridge.callHandler(data, null, function (error) {
-
-            });
-        }
-
-    }
-
     /**
      * 上传视频
      */
@@ -433,6 +385,57 @@ export default class newUpdateARTextbook extends React.Component {
         Bridge.callHandler(dataObj, null, function (error) {
             console.log(error);
         })
+    }
+
+    /**
+     * 视频,文件预览
+     */
+    videoPreview(src, id, event) {
+        event.stopPropagation()
+
+        if (src.substr(src.length - 3, 3) != 'mp4') {
+
+            var param = {
+                "method": 'getOfficeHadleFileBySourcePath',
+                "sourcePath": src
+            }
+            WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
+                onResponse: function (result) {
+                    if (result.msg == '调用成功' || result.success == true) {
+                        var src = result.response.pdfPath || result.response.htmlPath || result.response.path;
+
+                        var pdfURL = src.replace("60.205.111.227", "www.maaee.com");
+                        pdfURL = pdfURL.replace("60.205.86.217", "www.maaee.com");
+                        if (pdfURL.indexOf("https") == -1 && pdfURL.indexOf("http") != -1) {
+                            pdfURL = pdfURL.replace("http", "https");
+                        }
+                        var data = {};
+                        data.method = 'openNewPage';
+                        data.url = pdfURL;
+                        Bridge.callHandler(data, null, function (error) {
+                            window.location.href = url;
+                        });
+
+                    } else {
+                        Toast.fail(result.msg, 5);
+                    }
+                },
+                onError: function (error) {
+                    // message.error(error);
+                }
+            });
+        } else {
+            //视频预览
+
+            var data = {
+                method: 'playVideo',
+                url: src
+            };
+            Bridge.callHandler(data, null, function (error) {
+
+            });
+        }
+
     }
 
     render() {
