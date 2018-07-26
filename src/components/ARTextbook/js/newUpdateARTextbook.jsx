@@ -261,6 +261,14 @@ export default class newUpdateARTextbook extends React.Component {
             });
         } else {
             //视频预览
+
+            var data = {
+                method: 'playVideo',
+                url: src
+            };
+            Bridge.callHandler(data, null, function (error) {
+
+            });
         }
 
     }
