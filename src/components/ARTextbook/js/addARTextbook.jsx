@@ -148,8 +148,8 @@ export default class addARTextbook extends React.Component {
      *播放视频
      */
     theVideoPlay(i) {
-        var videoDiv = $(".videoDiv")
-        videoDiv[i].play();
+        // var videoDiv = $(".videoDiv")
+        // videoDiv[i].play();
     }
 
     /**
@@ -180,6 +180,9 @@ export default class addARTextbook extends React.Component {
         });
     }
 
+    /**
+     * 视频,文件预览
+     */
     videoPreview(src, event) {
         event.stopPropagation()
         console.log(src);

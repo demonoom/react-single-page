@@ -800,8 +800,8 @@ class Index extends React.Component {
                     {/*style={{fontSize: '24px'}}>蚁盘推题</Link></li>*/}
                     {/*<li><Link to="/arrangementWork?ident=23836&fileId=-1"*/}
                     {/*style={{fontSize: '24px'}}>布置作业</Link></li>*/}
-                    {/*<li><Link to="/fileShareLink?shareId=1971&userId=23836&userType=st"*/}
-                    {/*style={{fontSize: '24px'}}>文件分享</Link></li>*/}
+                    {/*<li><Link to="/fileShareLink?shareId=1971&userId=23836&userType=st"
+                              style={{fontSize: '24px'}}>文件分享</Link></li>*/}
                     {/*{<li><Link to="/ringBinding?ident=23836"*/}
                     {/*style={{fontSize: '24px'}}>手环绑定</Link></li>}*/}
                     {/*<li><Link to="/personalSettings?uid=23836&tid=31837&utype=te"*/}
