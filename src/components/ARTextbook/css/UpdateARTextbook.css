@@ -102,6 +102,7 @@
   width: 70px;
   padding-right: 15px;
   text-align: right;
+  box-sizing: content-box;
 }
 #UpdateARTextbook .am-list-item .am-input-label,
 #UpdateARTextbook .am-list-item .am-input-control input {

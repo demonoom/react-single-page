@@ -180,6 +180,64 @@ export default class addARTextbook extends React.Component {
         });
     }
 
+    videoPreview(src, event) {
+        event.stopPropagation()
+        console.log(src);
+
+        if (src.substr(src.length - 3, 3) != 'mp4') {
+
+            /*var param = {
+                "method": 'getOfficeHadleFileBySourcePath',
+                "sourcePath": src
+            }
+            WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
+                onResponse: function (result) {
+                    console.log(result);
+                    if (result.msg == '调用成功' || result.success == true) {
+                        var src = result.response.pdfPath || result.response.htmlPath || result.response.path;
+
+                        var pdfURL = src.replace("60.205.111.227", "www.maaee.com");
+                        pdfURL = pdfURL.replace("60.205.86.217", "www.maaee.com");
+                        if (pdfURL.indexOf("https") == -1 && pdfURL.indexOf("http") != -1) {
+                            pdfURL = pdfURL.replace("http", "https");
+                        }
+                        var data = {};
+                        data.method = 'openNewPage';
+                        data.url = pdfURL;
+                        Bridge.callHandler(data, null, function (error) {
+                            window.location.href = url;
+                        });
+
+                    } else {
+                        Toast.fail(result.msg, 5);
+                    }
+                },
+                onError: function (error) {
+                    // message.error(error);
+                }
+            });*/
+
+            var content2 = src.replace("60.205.111.227", "www.maaee.com");
+            var content3 = content2.replace("60.205.86.217", "www.maaee.com");
+            var data = {};
+            data.method = 'openNewPage';
+            data.url = "http://www.maaee.com/Excoord_For_Education/js/pdfjs/web/viewer.html?file=" + content3;
+            Bridge.callHandler(data, null, function (error) {
+                window.location.href = url;
+            });
+        } else {
+            //视频预览
+
+            var data = {
+                method: 'playVideo',
+                url: src
+            };
+            Bridge.callHandler(data, null, function (error) {
+
+            });
+        }
+    }
+
     /**
      * 根据数据构建,完成数据的动态绑定
      */
@@ -202,18 +260,18 @@ export default class addARTextbook extends React.Component {
                 {/*<span>{teacherV.state.ARTextbookDataArr[i].picName}</span>*/}
                 <div className="line_public"></div>
                 <div className="sameBack my_flex">
-                    <span className="textTitle">上传图片</span>
+                    <span className="textTitle">教材图片</span>
                     {teacherV.state.ARTextbookDataArr[i].picPath.length == 0 ? ""
                         :
                         <img onClick={teacherV.imgPreview.bind(this, teacherV.state.ARTextbookDataArr[i])}
                              className="imgTag" src={teacherV.state.ARTextbookDataArr[i].picPath}/>
                     }
-                    <button className="uploadBtn" onClick={teacherV.uploadImage.bind(this, i)}>上传图片</button>
+                    <button className="uploadBtn" onClick={teacherV.uploadImage.bind(this, i)}>教材图片</button>
                 </div>
 
                 <div className="line_public"></div>
                 <div className="sameBack my_flex">
-                    <div className="textTitle">上传文件
+                    <div className="textTitle">相关文件
                         <p style={{margin: 0, height: 5}}></p>
                         <span className="uploadSupport">(支持视频、office文件)</span>
                     </div>
@@ -223,31 +281,35 @@ export default class addARTextbook extends React.Component {
                                 console.log(v);
                                 if (v.videoExtra == "pdf") {
                                     return (
-                                        <div className="pdfBack fileBack">
+                                        <div className="pdfBack fileBack"
+                                             onClick={teacherV.videoPreview.bind(this, v.videoPath)}>
                                             {/* <div>{v.fileName}</div> */}
                                         </div>
                                     )
                                 } else if (v.videoExtra == "docx" || v.videoExtra == "doc") {
                                     return (
-                                        <div className="docBack fileBack">
+                                        <div className="docBack fileBack"
+                                             onClick={teacherV.videoPreview.bind(this, v.videoPath)}>
                                             {/* <div>{v.fileName}</div> */}
                                         </div>
                                     )
                                 } else if (v.videoExtra == "xls" || v.videoExtra == "xlsx") {
                                     return (
-                                        <div className="xlsBack fileBack">
+                                        <div className="xlsBack fileBack"
+                                             onClick={teacherV.videoPreview.bind(this, v.videoPath)}>
                                             {/* <div>{v.fileName}</div> */}
                                         </div>
                                     )
                                 } else if (v.videoExtra == "pptx" || v.videoExtra == "ppt") {
                                     return (
-                                        <div className="pptBack fileBack">
+                                        <div className="pptBack fileBack"
+                                             onClick={teacherV.videoPreview.bind(this, v.videoPath)}>
                                             {/* <div>{v.fileName}</div> */}
                                         </div>
                                     )
                                 } else {
                                     return (
-                                        <div>
+                                        <div onClick={teacherV.videoPreview.bind(this, v.videoPath)}>
                                             {/* <span >播放</span> */}
                                             <video onClick={teacherV.theVideoPlay.bind(this, i)} className="videoDiv"
                                                    src={v.videoPath}></video>
@@ -258,7 +320,7 @@ export default class addARTextbook extends React.Component {
 
                             })
                         }
-                        <button className="uploadBtn" onClick={teacherV.uploadVideo.bind(this, i)}>上传视频</button>
+                        <button className="uploadBtn" onClick={teacherV.uploadVideo.bind(this, i)}>相关视频</button>
                     </div>
                 </div>
             </div>)
@@ -390,9 +452,9 @@ export default class addARTextbook extends React.Component {
                         >
                             <div onClick={() => this.labelFocusInst.focus()}>AR教材</div>
                         </InputItem>
-                        <WhiteSpace size="lg"/>
+                        <div className="line_public"></div>
                         <div className="my_flex sameBack">
-                            <span className="textTitle">上传附件</span>
+                            <span className="textTitle">教材附件</span>
                             {
                                 teacherV.state.fileNewArr.map((v, i) => {
                                     //var imgStr = "附件";
@@ -412,7 +474,7 @@ export default class addARTextbook extends React.Component {
                                     )
                                 })
                             }
-                            <button className="uploadBtn" onClick={teacherV.uploadFile}>上传附件</button>
+                            <button className="uploadBtn" onClick={teacherV.uploadFile}>教材附件</button>
 
                         </div>
 

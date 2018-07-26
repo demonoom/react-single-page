@@ -201,7 +201,8 @@ export default class newUpdateARTextbook extends React.Component {
     /**
      * 上传照片
      */
-    uploadImage(id) {
+    uploadImage(id, event) {
+        event.stopPropagation()
         var data = {
             method: 'selectImages',
         };
@@ -224,10 +225,59 @@ export default class newUpdateARTextbook extends React.Component {
         });
     }
 
+    videoPreview(src, id, event) {
+        event.stopPropagation()
+
+        if (src.substr(src.length - 3, 3) != 'mp4') {
+
+            var param = {
+                "method": 'getOfficeHadleFileBySourcePath',
+                "sourcePath": src
+            }
+            WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
+                onResponse: function (result) {
+                    if (result.msg == '调用成功' || result.success == true) {
+                        var src = result.response.pdfPath || result.response.htmlPath || result.response.path;
+
+                        var pdfURL = src.replace("60.205.111.227", "www.maaee.com");
+                        pdfURL = pdfURL.replace("60.205.86.217", "www.maaee.com");
+                        if (pdfURL.indexOf("https") == -1 && pdfURL.indexOf("http") != -1) {
+                            pdfURL = pdfURL.replace("http", "https");
+                        }
+                        var data = {};
+                        data.method = 'openNewPage';
+                        data.url = pdfURL;
+                        Bridge.callHandler(data, null, function (error) {
+                            window.location.href = url;
+                        });
+
+                    } else {
+                        Toast.fail(result.msg, 5);
+                    }
+                },
+                onError: function (error) {
+                    // message.error(error);
+                }
+            });
+        } else {
+            //视频预览
+
+            var data = {
+                method: 'playVideo',
+                url: src
+            };
+            Bridge.callHandler(data, null, function (error) {
+
+            });
+        }
+
+    }
+
     /**
      * 上传视频
      */
-    uploadVideo(src, id) {
+    uploadVideo(src, id, event) {
+        event.stopPropagation()
         var data = {
             method: 'selectVideo',
         };
@@ -277,7 +327,7 @@ export default class newUpdateARTextbook extends React.Component {
 
             var imgDiv = <div>
                 <div className="am-list-item item_list20">
-                    <div className="am-input-label am-input-label-5">图片</div>
+                    <div className="am-input-label am-input-label-5">教材图片</div>
                     <div className="div68" onClick={teacherV.imgPreview.bind(this, v.pic)}>
                         <button className="uploadAttech i_uploadAttech">{
                             <img className="imgDiv" src={v.pic}/>
@@ -290,9 +340,9 @@ export default class newUpdateARTextbook extends React.Component {
                 <div className="am-list-item item_list20">
                     {
                         v.video.substr(v.video.length - 3, 3) !== "mp4" ?
-                            <div className="am-input-label am-input-label-5">文件</div>
+                            <div className="am-input-label am-input-label-5">相关文件</div>
                             :
-                            <div className="am-input-label am-input-label-5">视频</div>
+                            <div className="am-input-label am-input-label-5">相关视频</div>
 
                     }
 
@@ -302,35 +352,40 @@ export default class newUpdateARTextbook extends React.Component {
                                 var item = vtem.split(".");
                                 if (item[item.length - 1] == "pdf") {
                                     return (
-                                        <div className="uploadAttech i_uploadAttech pdfDiv">
+                                        <div className="uploadAttech i_uploadAttech pdfDiv"
+                                             onClick={teacherV.videoPreview.bind(this, vtem, v.id)}>
                                             {/* <div>{v.fileName}</div> */}
                                             <div onClick={teacherV.uploadVideo.bind(this, vtem, v.id)}>修改</div>
                                         </div>
                                     )
                                 } else if (item[item.length - 1] == "pptx" || item[item.length - 1] == "ppt") {
                                     return (
-                                        <div className="uploadAttech i_uploadAttech pptDiv">
+                                        <div className="uploadAttech i_uploadAttech pptDiv"
+                                             onClick={teacherV.videoPreview.bind(this, vtem, v.id)}>
                                             {/* <div>{v.fileName}</div> */}
                                             <div onClick={teacherV.uploadVideo.bind(this, vtem, v.id)}>修改</div>
                                         </div>
                                     )
                                 } else if (item[item.length - 1] == "xls" || item[item.length - 1] == "xlsx") {
                                     return (
-                                        <div className="uploadAttech i_uploadAttech xlsDiv">
+                                        <div className="uploadAttech i_uploadAttech xlsDiv"
+                                             onClick={teacherV.videoPreview.bind(this, vtem, v.id)}>
                                             {/* <div>{v.fileName}</div> */}
                                             <div onClick={teacherV.uploadVideo.bind(this, vtem, v.id)}>修改</div>
                                         </div>
                                     )
                                 } else if (item[item.length - 1] == "docx" || item[item.length - 1] == "doc") {
                                     return (
-                                        <div className="uploadAttech i_uploadAttech docDiv">
+                                        <div className="uploadAttech i_uploadAttech docDiv"
+                                             onClick={teacherV.videoPreview.bind(this, vtem, v.id)}>
                                             {/* <div>{v.fileName}</div> */}
                                             <div onClick={teacherV.uploadVideo.bind(this, vtem, v.id)}>修改</div>
                                         </div>
                                     )
                                 } else {
                                     return (
-                                        <div className="uploadAttech i_uploadAttech">
+                                        <div className="uploadAttech i_uploadAttech"
+                                             onClick={teacherV.videoPreview.bind(this, vtem, v.id)}>
                                             <video onClick={teacherV.theVideoPlay.bind(this, i)} className="videoDiv"
                                                    src={vtem}></video>
                                             <div onClick={teacherV.uploadVideo.bind(this, vtem, v.id)}>修改</div>
@@ -401,7 +456,7 @@ export default class newUpdateARTextbook extends React.Component {
                 {/*附件*/}
                 <div className="am-list-item item_list20"
                 >
-                    <div className="am-input-label am-input-label-5">附件</div>
+                    <div className="am-input-label am-input-label-5">教材附件</div>
                     <div className="div68" onClick={teacherV.pdfPreview}>
                         <button className="uploadAttech i_uploadAttech upload_file">
                             <div onClick={teacherV.uploadFile}>修改</div>
