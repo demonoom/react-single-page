@@ -182,7 +182,7 @@ export default class newUpdateARTextbook extends React.Component {
     uploadFile(event) {
         event.stopPropagation()
         var data = {
-            method: 'selectPictures',
+            method: 'selectAttech',
         };
         Bridge.callHandler(data, function (res) {
             // 拿到附件地址,显示在页面等待上传
