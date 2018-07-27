@@ -297,7 +297,6 @@ export default class addARTextbook extends React.Component {
                     <div className="videoCont my_flex">
                     
                         {
-                            
                             teacherV.state.ARTextbookDataArr[i].videoObj.map((v, i) => {
                                 console.log(i,"ii");
                                 if (v.videoExtra == "pdf") {
