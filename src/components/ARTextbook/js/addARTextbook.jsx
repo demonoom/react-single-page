@@ -304,7 +304,7 @@ export default class addARTextbook extends React.Component {
                                     return (
                                         <div className="pdfBack fileBack"
                                              onClick={teacherV.videoPreview.bind(this, v.videoPath)}>
-                                            <span onClick={teacherV.deleteItem.bind(this,i,useIndex)} >删除</span>
+                                            <span className="del_ar" onClick={teacherV.deleteItem.bind(this,i,useIndex)} ></span>
                                             {/* <div>{v.fileName}</div> */}
                                         </div>
                                     )
@@ -312,7 +312,7 @@ export default class addARTextbook extends React.Component {
                                     return (
                                         <div className="docBack fileBack"
                                              onClick={teacherV.videoPreview.bind(this, v.videoPath)}>
-                                            <span onClick={teacherV.deleteItem.bind(this,i,useIndex)} >删除</span>
+                                            <span className="del_ar" onClick={teacherV.deleteItem.bind(this,i,useIndex)} ></span>
                                             {/* <div>{v.fileName}</div> */}
                                         </div>
                                     )
@@ -320,7 +320,7 @@ export default class addARTextbook extends React.Component {
                                     return (
                                         <div className="xlsBack fileBack"
                                              onClick={teacherV.videoPreview.bind(this, v.videoPath)}>
-                                            <span onClick={teacherV.deleteItem.bind(this,i,useIndex)} >删除</span>
+                                            <span className="del_ar" onClick={teacherV.deleteItem.bind(this,i,useIndex)} ></span>
                                             {/* <div>{v.fileName}</div> */}
                                         </div>
                                     )
@@ -329,7 +329,7 @@ export default class addARTextbook extends React.Component {
                                         <div className="pptBack fileBack"
                                              onClick={teacherV.videoPreview.bind(this, v.videoPath)}>
                                             {/* <div>{v.fileName}</div> */}
-                                            <span onClick={teacherV.deleteItem.bind(this,i,useIndex)} >删除</span>
+                                            <span className="del_ar" onClick={teacherV.deleteItem.bind(this,i,useIndex)} ></span>
                                         </div>
                                     )
                                 } else {
@@ -338,7 +338,7 @@ export default class addARTextbook extends React.Component {
                                             {/* <span >播放</span> */}
                                             <video className="videoDiv"
                                                    src={v.videoPath}></video>
-                                            <span onClick={teacherV.deleteItem.bind(this,i,useIndex)} >删除</span>
+                                            <span className="del_ar" onClick={teacherV.deleteItem.bind(this,i,useIndex)} ></span>
                                             {/* <span>{v.videoName}</span> */}
                                         </div>
                                     )
