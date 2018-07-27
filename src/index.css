@@ -42,6 +42,10 @@ hr {
   height: auto;
   min-height: 100%;
 }
+.am-card,
+.am-list-body {
+  border: 0 !important;
+}
 .am-refresh-control-pull,
 .am-refresh-control-release {
   justify-content: flex-start;

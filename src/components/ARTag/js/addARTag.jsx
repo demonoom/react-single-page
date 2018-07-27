@@ -1,6 +1,6 @@
 import React from "react";
 import {
-    InputItem, Tag
+    InputItem, Tag, Button
 } from 'antd-mobile';
 
 function onChange(selected, e) {
@@ -60,7 +60,7 @@ export default class addARTag extends React.Component {
     }
     render() {
         return (
-            <div>
+            <div id="ARTag">
                 <InputItem
                     placeholder="请输入教材名称"
                     ref={el => this.labelFocusInst = el}
@@ -68,9 +68,12 @@ export default class addARTag extends React.Component {
                         ARTagValue: v
                     })}
                 >
-                    <div onClick={() => this.labelFocusInst.focus()}>AR标签名</div>
+                    <div className="textTitle" onClick={() => this.labelFocusInst.focus()}>AR标签名<i className="redStar">*</i></div>
                 </InputItem>
-                <button onClick={calm.submit}>提交</button>
+                    <div className="submitBtn">
+                        <Button type="warning" onClick={calm.submit}>提交</Button>
+                    </div>
+
 
                 {/* <div className="tag-container">
                     <Tag closable onChange={calm.onChange}
