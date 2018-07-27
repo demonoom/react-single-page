@@ -758,15 +758,6 @@ const searchFromOrigination = (location, cb) => {
 }
 
 
-/**
- * 表情分析报告
- */
-const emotionAnalysisReport = (location, cb) => {
-    require.ensure([], require => {
-            cb(null, require("./components/emotionAnalysisReport/js/emotionAnalysisReport").default)
-        }
-    )
-}
 
 const newUpdateARTextbook = (location, cb) => {
     require.ensure([], require => {
@@ -774,6 +765,38 @@ const newUpdateARTextbook = (location, cb) => {
         }
     )
 }
+
+
+/**
+ * 添加标签
+ */
+const ARTagList = (location, cb) => {
+    require.ensure([], require => {
+            cb(null, require("./components/ARTag/js/ARTagList").default)
+        }
+    )
+}
+
+const updateARTag = (location, cb) => {
+    require.ensure([], require => {
+            cb(null, require("./components/ARTag/js/updateARTag").default)
+        }
+    )
+}
+const addARTag = (location, cb) => {
+    require.ensure([], require => {
+            cb(null, require("./components/ARTag/js/addARTag").default)
+        }
+    )
+}
+
+const New = (location, cb) => {
+    require.ensure([], require => {
+            cb(null, require("./components/ARTextbook/js/New").default)
+        }
+    )
+}
+
 
 import './index.less';
 
@@ -922,6 +945,10 @@ class Index extends React.Component {
                         <Link
                             to="/ARTextbookList?uid=23836" style={{fontSize: '24px'}}>AR教材</Link>
                     </li>
+                    <li>
+                        <Link
+                            to="/ARTagList?uid=23836" style={{fontSize: '24px'}}>AR教材标签</Link>
+                    </li>
                     {/* <li>
                         <Link
                             to="/ArIndex?uid=23836" style={{fontSize: '24px'}}>AR首页</Link>
@@ -955,10 +982,11 @@ class Index extends React.Component {
                         <Link
                             to="/wxLogin?local=bindPeopleList" style={{fontSize: '24px'}}>健康手环绑定</Link>
                     </li>
-                    <li>
+                    {/* <li>
                         <Link
-                            to="/emotionAnalysisReport?stuId=23991&vId=1111" style={{fontSize: '24px'}}>表情分析报告</Link>
-                    </li>
+                            to="/New?" style={{fontSize: '24px'}}>new</Link>
+                    </li> */}
+                    
 
                 </ul>
             </div>
@@ -1093,8 +1121,11 @@ ReactDOM.render(
             <Route path="groupChatList" getComponent={groupChatList}/>
             <Route path="originationList" getComponent={originationList}/>
             <Route path="searchFromOrigination" getComponent={searchFromOrigination}/>
-            <Route path="emotionAnalysisReport" getComponent={emotionAnalysisReport}/>
             <Route path="newUpdateARTextbook" getComponent={newUpdateARTextbook}/>
+            <Route path="ARTagList" getComponent={ARTagList}/>
+            <Route path="updateARTag" getComponent={updateARTag}/>
+            <Route path="addARTag" getComponent={addARTag}/>
+            <Route path="New" getComponent={New}/>
         </Route>
     </Router>
     ,
