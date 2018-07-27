@@ -3,11 +3,12 @@ import {
     Toast,
     Button,
     InputItem,
-    Tabs, WhiteSpace
+    Tabs, WhiteSpace, Modal
 } from 'antd-mobile';
 import "../css/UpdateARTextbook.less"
 
 var teacherV;
+const alert = Modal.alert;
 
 export default class newUpdateARTextbook extends React.Component {
 
@@ -72,7 +73,6 @@ export default class newUpdateARTextbook extends React.Component {
                 "itemList": arr
             }
         }
-        console.log(param);
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
             onResponse: function (result) {
                 if (result.msg == '调用成功' || result.success == true) {
@@ -252,6 +252,81 @@ export default class newUpdateARTextbook extends React.Component {
     }
 
     /**
+     * 增加视频
+     */
+    addUploadVideo(id) {
+        var data = {
+            method: 'selectVideo',
+        };
+        Bridge.callHandler(data, function (res) {
+            // 拿到视频地址,显示在页面等待上传
+            var arr = res.split(',');
+
+            let item = ',' + arr[0].split("?")[0];
+
+            teacherV.state.initData.itemList.forEach(function (v, i) {
+                if (v.id == id) {
+                    v.video += item
+                }
+            })
+            teacherV.tabsOnChange(teacherV.state.clickTab)
+
+        }, function (error) {
+            console.log(error);
+        });
+    }
+
+    /**
+     * 删除文件model
+     * @param src
+     * @param id
+     * @param event
+     */
+    showAlert = (src, id, event) => {
+        event.stopPropagation()
+
+        var phoneType = navigator.userAgent;
+        var phone;
+        if (phoneType.indexOf('iPhone') > -1 || phoneType.indexOf('iPad') > -1) {
+            phone = 'ios'
+        } else {
+            phone = 'android'
+        }
+        var _this = this;
+        const alertInstance = alert('您确定移除吗?', '', [
+            {text: '取消', onPress: () => console.log('cancel'), style: 'default'},
+            {text: '确定', onPress: () => _this.delVideoFile(src, id)},
+
+        ], phone);
+    }
+
+    /**
+     * 删除文件确定
+     * @param src
+     */
+    delVideoFile(src, id) {
+
+        teacherV.state.initData.itemList.forEach(function (v, i) {
+            if (v.id == id) {
+                if (v.video.split(',').length == 1) {
+                    Toast.fail('请至少保留一个视频或文件', 2)
+                    return
+                } else {
+                    var arr = v.video.split(',')
+                    arr.forEach(function (item, index) {
+                        if (src == item) {
+                            arr.splice(index, 1)
+                        }
+                    })
+
+                    v.video = arr.join(',')
+                }
+            }
+        })
+        teacherV.tabsOnChange(teacherV.state.clickTab)
+    }
+
+    /**
      *播放视频
      */
     theVideoPlay(i) {
@@ -308,6 +383,7 @@ export default class newUpdateARTextbook extends React.Component {
                                              onClick={teacherV.videoPreview.bind(this, vtem, v.id)}>
                                             {/* <div>{v.fileName}</div> */}
                                             <div onClick={teacherV.uploadVideo.bind(this, vtem, v.id)}>修改</div>
+                                            <span onClick={teacherV.showAlert.bind(this, vtem, v.id)}>删除</span>
                                         </div>
                                     )
                                 } else if (item[item.length - 1] == "pptx" || item[item.length - 1] == "ppt") {
@@ -316,6 +392,7 @@ export default class newUpdateARTextbook extends React.Component {
                                              onClick={teacherV.videoPreview.bind(this, vtem, v.id)}>
                                             {/* <div>{v.fileName}</div> */}
                                             <div onClick={teacherV.uploadVideo.bind(this, vtem, v.id)}>修改</div>
+                                            <span onClick={teacherV.showAlert.bind(this, vtem, v.id)}>删除</span>
                                         </div>
                                     )
                                 } else if (item[item.length - 1] == "xls" || item[item.length - 1] == "xlsx") {
@@ -324,6 +401,7 @@ export default class newUpdateARTextbook extends React.Component {
                                              onClick={teacherV.videoPreview.bind(this, vtem, v.id)}>
                                             {/* <div>{v.fileName}</div> */}
                                             <div onClick={teacherV.uploadVideo.bind(this, vtem, v.id)}>修改</div>
+                                            <span onClick={teacherV.showAlert.bind(this, vtem, v.id)}>删除</span>
                                         </div>
                                     )
                                 } else if (item[item.length - 1] == "docx" || item[item.length - 1] == "doc") {
@@ -332,12 +410,14 @@ export default class newUpdateARTextbook extends React.Component {
                                              onClick={teacherV.videoPreview.bind(this, vtem, v.id)}>
                                             {/* <div>{v.fileName}</div> */}
                                             <div onClick={teacherV.uploadVideo.bind(this, vtem, v.id)}>修改</div>
+                                            <span onClick={teacherV.showAlert.bind(this, vtem, v.id)}>删除</span>
                                         </div>
                                     )
-                                } else {
+                                } else if (item[item.length - 1] == "mp4") {
                                     return (
                                         <div className="uploadAttech i_uploadAttech"
                                              onClick={teacherV.videoPreview.bind(this, vtem, v.id)}>
+                                            <span onClick={teacherV.showAlert.bind(this, vtem, v.id)}>删除</span>
                                             <video onClick={teacherV.theVideoPlay.bind(this, i)} className="videoDiv"
                                                    src={vtem}></video>
                                             <div onClick={teacherV.uploadVideo.bind(this, vtem, v.id)}>修改</div>
@@ -347,6 +427,12 @@ export default class newUpdateARTextbook extends React.Component {
 
                             })
                         }
+
+                        <div className="uploadAttech"
+                             onClick={teacherV.addUploadVideo.bind(this, v.id)}>
+                            增加
+                        </div>
+
                     </div>
                 </div>
                 <WhiteSpace size="lg"/>
