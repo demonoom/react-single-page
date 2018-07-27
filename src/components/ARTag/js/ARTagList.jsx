@@ -7,6 +7,7 @@ import {
     List,
     Button
 } from 'antd-mobile';
+import '../css/ARTag.less'
 var calmAdd;
 const prompt = Modal.prompt;
 const alert = Modal.alert;
@@ -134,20 +135,22 @@ export default class ARTagList extends React.Component {
     }
     render() {
         return (
-            <div>
+            <div id="ARTag">
                 {
                     calmAdd.state.initData.map((v, i) => {
                         console.log(v, "v")
                         return (
-                            <div>
-                                <span>{v.content}</span>
-                                <span onClick={calmAdd.showAlert.bind(this, v)}>删除</span>
-                                <span onClick={calmAdd.toUpdate.bind(this, v)}>编辑</span>
+                            <div className="tagList line_public">
+                                <span className="content textOver">{v.content}</span>
+                                <span className="modifyBtn_common smallBtn" onClick={calmAdd.toUpdate.bind(this, v)}></span>
+                                <span className="deleteBtn_common smallBtn" onClick={calmAdd.showAlert.bind(this, v)}></span>
                             </div>
                         )
                     })
                 }
-                <button onClick={calmAdd.toAddARTag}>添加</button>
+                <div className="addBunton" onClick={calmAdd.toAddARTag}>
+                    <img src={require("../../ARTextbook/imgs/addBtn.png")}/>
+                </div>
             </div>
         )
     }

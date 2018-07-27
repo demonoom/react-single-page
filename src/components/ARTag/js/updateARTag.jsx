@@ -1,6 +1,6 @@
 import React from "react";
 import {
-    InputItem,
+    InputItem,Button
 } from 'antd-mobile';
 var calm;
 export default class updateARTag extends React.Component {
@@ -93,16 +93,18 @@ export default class updateARTag extends React.Component {
     render() {
         console.log(calm.state.ARTagValue,"2")
         return (
-            <div>
+            <div id="ARTag">
                 <InputItem
                     placeholder="请输入教材名称"
                     ref={el => this.labelFocusInst = el}
                     onChange={calm.inputOnChang}
                     value={calm.state.ARTagValue}
                 >
-                    <div onClick={() => this.labelFocusInst.focus()}>AR标签名</div>
+                    <div className="textTitle" onClick={() => this.labelFocusInst.focus()}>AR标签名<i className="redStar">*</i></div>
                 </InputItem>
-                <button onClick={calm.submit}>提交</button>
+                <div className="submitBtn">
+                    <Button type="warning"  onClick={calm.submit}>提交</Button>
+                </div>
             </div>
         )
     }
