@@ -251,7 +251,7 @@ export default class addARTextbook extends React.Component {
                     <div className="line_public"></div>
                     <div className="am-list-item item_list20"
                     >
-                        <div className="am-input-label am-input-label-5">附件</div>
+                        <div className="am-input-label am-input-label-5">教材附件</div>
                         <div className="div68"><button className="uploadAttech i_uploadAttech upload_file" onClick={teacherV.uploadFile}><div>修改</div></button></div>
                     </div>
                     <div className="line_public"></div>

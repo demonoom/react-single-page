@@ -789,6 +789,15 @@ const addARTag = (location, cb) => {
         }
     )
 }
+
+const New = (location, cb) => {
+    require.ensure([], require => {
+            cb(null, require("./components/ARTextbook/js/New").default)
+        }
+    )
+}
+
+
 import './index.less';
 
 class Index extends React.Component {
@@ -814,8 +823,8 @@ class Index extends React.Component {
                     {/*style={{fontSize: '24px'}}>蚁盘推题</Link></li>*/}
                     {/*<li><Link to="/arrangementWork?ident=23836&fileId=-1"*/}
                     {/*style={{fontSize: '24px'}}>布置作业</Link></li>*/}
-                    {/*<li><Link to="/fileShareLink?shareId=1971&userId=23836&userType=st"*/}
-                    {/*style={{fontSize: '24px'}}>文件分享</Link></li>*/}
+                    {/*<li><Link to="/fileShareLink?shareId=1971&userId=23836&userType=st"
+                              style={{fontSize: '24px'}}>文件分享</Link></li>*/}
                     {/*{<li><Link to="/ringBinding?ident=23836"*/}
                     {/*style={{fontSize: '24px'}}>手环绑定</Link></li>}*/}
                     {/*<li><Link to="/personalSettings?uid=23836&tid=31837&utype=te"*/}
@@ -973,6 +982,10 @@ class Index extends React.Component {
                         <Link
                             to="/wxLogin?local=bindPeopleList" style={{fontSize: '24px'}}>健康手环绑定</Link>
                     </li>
+                    {/* <li>
+                        <Link
+                            to="/New?" style={{fontSize: '24px'}}>new</Link>
+                    </li> */}
                     
 
                 </ul>
@@ -1112,6 +1125,7 @@ ReactDOM.render(
             <Route path="ARTagList" getComponent={ARTagList}/>
             <Route path="updateARTag" getComponent={updateARTag}/>
             <Route path="addARTag" getComponent={addARTag}/>
+            <Route path="New" getComponent={New}/>
         </Route>
     </Router>
     ,
