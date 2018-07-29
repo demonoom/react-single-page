@@ -1,6 +1,7 @@
 #UpdateARTextbook {
   overflow: hidden;
   position: relative;
+  height: 100% !important;
 }
 #UpdateARTextbook .imgDiv {
   width: 100%;
@@ -112,4 +113,26 @@
   height: calc(100% - 220px);
   overflow-y: auto;
   overflow-x: hidden;
+}
+#UpdateARTextbook .del_ar {
+  width: 18px;
+  height: 18px;
+  background: url("../imgs/delPic.png") no-repeat;
+  background-size: 100% 100%;
+  display: inline-block;
+  position: absolute;
+  right: 2px;
+  top: 2px;
+}
+#UpdateARTextbook .uploadBtn {
+  background: url("../imgs/addPic.png") no-repeat;
+  font-size: 0;
+  width: 68px;
+  height: 68px;
+  background-size: 100%;
+  border: 0;
+  margin-right: 15px;
+  overflow: hidden;
+  margin-bottom: 15px;
+  display: inline-block;
 }

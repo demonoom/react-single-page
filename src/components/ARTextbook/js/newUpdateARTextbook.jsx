@@ -383,7 +383,7 @@ export default class newUpdateARTextbook extends React.Component {
                                              onClick={teacherV.videoPreview.bind(this, vtem, v.id)}>
                                             {/* <div>{v.fileName}</div> */}
                                             <div onClick={teacherV.uploadVideo.bind(this, vtem, v.id)}>修改</div>
-                                            <span onClick={teacherV.showAlert.bind(this, vtem, v.id)}>删除</span>
+                                            <span className="del_ar" onClick={teacherV.showAlert.bind(this, vtem, v.id)}></span>
                                         </div>
                                     )
                                 } else if (item[item.length - 1] == "pptx" || item[item.length - 1] == "ppt") {
@@ -392,7 +392,7 @@ export default class newUpdateARTextbook extends React.Component {
                                              onClick={teacherV.videoPreview.bind(this, vtem, v.id)}>
                                             {/* <div>{v.fileName}</div> */}
                                             <div onClick={teacherV.uploadVideo.bind(this, vtem, v.id)}>修改</div>
-                                            <span onClick={teacherV.showAlert.bind(this, vtem, v.id)}>删除</span>
+                                            <span className="del_ar" onClick={teacherV.showAlert.bind(this, vtem, v.id)}></span>
                                         </div>
                                     )
                                 } else if (item[item.length - 1] == "xls" || item[item.length - 1] == "xlsx") {
@@ -401,7 +401,7 @@ export default class newUpdateARTextbook extends React.Component {
                                              onClick={teacherV.videoPreview.bind(this, vtem, v.id)}>
                                             {/* <div>{v.fileName}</div> */}
                                             <div onClick={teacherV.uploadVideo.bind(this, vtem, v.id)}>修改</div>
-                                            <span onClick={teacherV.showAlert.bind(this, vtem, v.id)}>删除</span>
+                                            <span className="del_ar" onClick={teacherV.showAlert.bind(this, vtem, v.id)}></span>
                                         </div>
                                     )
                                 } else if (item[item.length - 1] == "docx" || item[item.length - 1] == "doc") {
@@ -410,14 +410,14 @@ export default class newUpdateARTextbook extends React.Component {
                                              onClick={teacherV.videoPreview.bind(this, vtem, v.id)}>
                                             {/* <div>{v.fileName}</div> */}
                                             <div onClick={teacherV.uploadVideo.bind(this, vtem, v.id)}>修改</div>
-                                            <span onClick={teacherV.showAlert.bind(this, vtem, v.id)}>删除</span>
+                                            <span className="del_ar" onClick={teacherV.showAlert.bind(this, vtem, v.id)}></span>
                                         </div>
                                     )
                                 } else if (item[item.length - 1] == "mp4") {
                                     return (
                                         <div className="uploadAttech i_uploadAttech"
                                              onClick={teacherV.videoPreview.bind(this, vtem, v.id)}>
-                                            <span onClick={teacherV.showAlert.bind(this, vtem, v.id)}>删除</span>
+                                            <span className="del_ar" onClick={teacherV.showAlert.bind(this, vtem, v.id)}></span>
                                             <video onClick={teacherV.theVideoPlay.bind(this, i)} className="videoDiv"
                                                    src={vtem}></video>
                                             <div onClick={teacherV.uploadVideo.bind(this, vtem, v.id)}>修改</div>
@@ -428,7 +428,7 @@ export default class newUpdateARTextbook extends React.Component {
                             })
                         }
 
-                        <div className="uploadAttech"
+                        <div className="uploadBtn"
                              onClick={teacherV.addUploadVideo.bind(this, v.id)}>
                             增加
                         </div>

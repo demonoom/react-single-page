@@ -147,9 +147,24 @@ export default class addARTextbook extends React.Component {
     /**
      *播放视频
      */
-    theVideoPlay(i) {
+    deleteItem(ind,useIndex) {
         // var videoDiv = $(".videoDiv")
         // videoDiv[i].play();
+      
+        teacherV.state.ARTextbookDataArr[useIndex].videoObj.forEach((v,i)=>{
+            if(ind == i){
+                console.log(v,"v")
+                console.log(i,"i")
+                console.log(ind,"ind")
+                teacherV.state.ARTextbookDataArr[useIndex].videoObj.splice(i,1)
+                teacherV.buildARTextbook();
+               
+            }
+          
+           
+           
+        })  
+      
     }
 
     /**
@@ -248,6 +263,7 @@ export default class addARTextbook extends React.Component {
         var _this = this;
         var ARTextbookArr = [];
         this.state.ARTextbookDataArr.forEach(function (v, i) {
+            var useIndex = i;
             ARTextbookArr.push(<div>
                 <div className="cont_communal add_title font_gray">第{i + 1}组</div>
                 <div className="flex_addElement calm">
@@ -279,13 +295,16 @@ export default class addARTextbook extends React.Component {
                         <span className="uploadSupport">(支持视频、office文件)</span>
                     </div>
                     <div className="videoCont my_flex">
+                    
                         {
+                            
                             teacherV.state.ARTextbookDataArr[i].videoObj.map((v, i) => {
-                                console.log(v);
+                                console.log(i,"ii");
                                 if (v.videoExtra == "pdf") {
                                     return (
                                         <div className="pdfBack fileBack"
                                              onClick={teacherV.videoPreview.bind(this, v.videoPath)}>
+                                            <span className="del_ar" onClick={teacherV.deleteItem.bind(this,i,useIndex)} ></span>
                                             {/* <div>{v.fileName}</div> */}
                                         </div>
                                     )
@@ -293,6 +312,7 @@ export default class addARTextbook extends React.Component {
                                     return (
                                         <div className="docBack fileBack"
                                              onClick={teacherV.videoPreview.bind(this, v.videoPath)}>
+                                            <span className="del_ar" onClick={teacherV.deleteItem.bind(this,i,useIndex)} ></span>
                                             {/* <div>{v.fileName}</div> */}
                                         </div>
                                     )
@@ -300,6 +320,7 @@ export default class addARTextbook extends React.Component {
                                     return (
                                         <div className="xlsBack fileBack"
                                              onClick={teacherV.videoPreview.bind(this, v.videoPath)}>
+                                            <span className="del_ar" onClick={teacherV.deleteItem.bind(this,i,useIndex)} ></span>
                                             {/* <div>{v.fileName}</div> */}
                                         </div>
                                     )
@@ -308,14 +329,16 @@ export default class addARTextbook extends React.Component {
                                         <div className="pptBack fileBack"
                                              onClick={teacherV.videoPreview.bind(this, v.videoPath)}>
                                             {/* <div>{v.fileName}</div> */}
+                                            <span className="del_ar" onClick={teacherV.deleteItem.bind(this,i,useIndex)} ></span>
                                         </div>
                                     )
                                 } else {
                                     return (
                                         <div onClick={teacherV.videoPreview.bind(this, v.videoPath)}>
                                             {/* <span >播放</span> */}
-                                            <video onClick={teacherV.theVideoPlay.bind(this, i)} className="videoDiv"
+                                            <video className="videoDiv"
                                                    src={v.videoPath}></video>
+                                            <span className="del_ar" onClick={teacherV.deleteItem.bind(this,i,useIndex)} ></span>
                                             {/* <span>{v.videoName}</span> */}
                                         </div>
                                     )
@@ -349,7 +372,8 @@ export default class addARTextbook extends React.Component {
             picName: [],
             videoPath: [],
             videoObj: [],
-            videoName: []
+            videoName: [],
+            tagName:[]
         });
         this.buildARTextbook();
     };
@@ -440,6 +464,7 @@ export default class addARTextbook extends React.Component {
     }
 
     render() {
+        console.log("renderlw")
         return (
             <div id="addARTextbook" style={{height: this.state.clientHeight}}>
                 <div className="cont">
