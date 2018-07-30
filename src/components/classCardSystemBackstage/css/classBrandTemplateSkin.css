@@ -9,7 +9,8 @@
 #classBrandTemplateSkin .am-list-line::after {
   display: none;
 }
-#classBrandTemplateSkin .am-list-body {
+#classBrandTemplateSkin .am-list-body,
+#classBrandTemplateSkin .am-list-line {
   border: 0;
 }
 #classBrandTemplateSkin .classInfo .am-list-item {

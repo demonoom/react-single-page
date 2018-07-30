@@ -758,7 +758,6 @@ const searchFromOrigination = (location, cb) => {
 }
 
 
-
 const newUpdateARTextbook = (location, cb) => {
     require.ensure([], require => {
             cb(null, require("./components/ARTextbook/js/newUpdateARTextbook").default)
@@ -790,13 +789,19 @@ const addARTag = (location, cb) => {
     )
 }
 
+const weArrPayment = (location, cb) => {
+    require.ensure([], require => {
+            cb(null, require("./components/weArrPayment/js/weArrPayment").default)
+        }
+    )
+}
+
 const New = (location, cb) => {
     require.ensure([], require => {
             cb(null, require("./components/ARTextbook/js/New").default)
         }
     )
 }
-
 
 import './index.less';
 
@@ -891,12 +896,12 @@ class Index extends React.Component {
                     <li><Link
                         to="/classCardHomePageDoor?access_user=23836"
                         style={{fontSize: '24px'}}>后台总入口</Link></li>
-                    <li><Link
-                        to="/dashboard?destId=9&areaType=0"
-                        style={{fontSize: '24px'}}>管理驾驶舱</Link></li>
-                    <li><Link
-                        to="/dashboardByCity?destId=9&areaType=0"
-                        style={{fontSize: '24px'}}>宜昌市教育局管理驾驶舱</Link></li>
+                    {/*<li><Link*/}
+                    {/*to="/dashboard?destId=9&areaType=0"*/}
+                    {/*style={{fontSize: '24px'}}>管理驾驶舱</Link></li>*/}
+                    {/*<li><Link*/}
+                    {/*to="/dashboardByCity?destId=9&areaType=0"*/}
+                    {/*style={{fontSize: '24px'}}>宜昌市教育局管理驾驶舱</Link></li>*/}
                     {/*<li><Link*/}
                     {/*to="/fileAnalysis?aid=590961"*/}
                     {/*style={{fontSize: '24px'}}>文件表情分析</Link></li>*/}
@@ -918,13 +923,13 @@ class Index extends React.Component {
                     {/*<li><Link*/}
                     {/*to="/answerFormStudent?studentId=23991&topicId=8888"*/}
                     {/*style={{fontSize: '24px'}}>查看作答答案(学生)</Link></li>*/}
-                    <li><Link
+                    {/*<li><Link
                         to="/lookAtTheAnswer?tpId=1285598&access_user=23836"
                         style={{fontSize: '24px'}}>查看作答</Link></li>
                     <li>
                         <Link
                             to="/waterWork?tid=8888&stuId=23993" style={{fontSize: '24px'}}>水滴作业</Link>
-                    </li>
+                    </li>*/}
                     {/* <li>
                         <Link
                             to="/attendanceTime?uid=23836" style={{fontSize: '24px'}}>考勤考勤</Link>
@@ -961,10 +966,10 @@ class Index extends React.Component {
                     {/*to="/attendanceSatisticaForClass?schoolId=9"*/}
                     {/*style={{fontSize: '24px'}}>班级出勤率统计(柱状图)</Link></li>*/}
 
-                    <li>
+                    {/*<li>
                         <Link
                             to="/wxLogin?local=contactsList" style={{fontSize: '24px'}}>聊天</Link>
-                    </li>
+                    </li>*/}
 
                     <li>
                         <Link
@@ -986,7 +991,12 @@ class Index extends React.Component {
                         <Link
                             to="/New?" style={{fontSize: '24px'}}>new</Link>
                     </li> */}
-                    
+
+
+                    <li>
+                        <Link
+                            to="/weArrPayment" style={{fontSize: '24px'}}>充值</Link>
+                    </li>
 
                 </ul>
             </div>
@@ -1122,6 +1132,7 @@ ReactDOM.render(
             <Route path="originationList" getComponent={originationList}/>
             <Route path="searchFromOrigination" getComponent={searchFromOrigination}/>
             <Route path="newUpdateARTextbook" getComponent={newUpdateARTextbook}/>
+            <Route path="weArrPayment" getComponent={weArrPayment}/>
             <Route path="ARTagList" getComponent={ARTagList}/>
             <Route path="updateARTag" getComponent={updateARTag}/>
             <Route path="addARTag" getComponent={addARTag}/>
