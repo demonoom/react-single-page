@@ -318,7 +318,7 @@
 }
 #UpdateARTextbook .tagAddPanel {
   width: 100%;
-  background-color: red;
+  background-color: #fff;
   position: absolute;
   top: 0;
   z-index: 999;

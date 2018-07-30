@@ -467,7 +467,7 @@ export default class addARTextbook extends React.Component {
                             <div>标签名称</div>
                         </InputItem>
 
-                        <div className="searchIcon" onClick={teacherV.searchARBookTag.bind(this, useIndex)}></div>
+                        <div className="searchIcon icon_pointer" onClick={teacherV.searchARBookTag.bind(this, useIndex)}></div>
                     </div>
                     <div className="classTags">
                         {
