@@ -144,10 +144,14 @@
         -ms-flex-align: center;
         align-items: center;
         border-bottom: 1PX solid #ddd;
-        overflow-x: auto;
-        display: -webkit-box;
-        width: 90%;
-        overflow-y: hidden;
+        overflow: hidden;
+        position: relative;
+        ul{
+            width: 85%;
+            display: -webkit-box;
+            overflow-y: hidden;
+            overflow-x: auto;
+        }
         li{
             padding: 13px 0;
             width: 80px;
@@ -198,5 +202,34 @@
             left: 0;
             top:5px
         }
+    }
+    .tabItem_cont{
+        height: calc(~"100% - 338px");
+        overflow-y: auto;
+        overflow-x: hidden;
+    }
+    .tabItem_list{
+        position: relative;
+    }
+    .del_group{
+        background: url("../imgs/del_group.png") no-repeat;
+        font-size: 0;
+        width: 34px;
+        height: 34px;
+        background-size: 100%;
+        border: 0;
+        position: absolute;
+        right: 0;
+        top: 0;
+        z-index: 1;
+    }
+    .add_page{
+        display: inline-block;
+        position: absolute;
+        right: 0;
+        line-height: 45px;
+        width: 40px;
+        color: #008eff;
+        top:0;
     }
 }

@@ -498,8 +498,8 @@ export default class newUpdateARTextbook extends React.Component {
                 </div>
             }
 
-            var imgDiv = <div>
-                <span onClick={teacherV.showListAlert.bind(this, v)}>删除</span>
+            var imgDiv = <div className="tabItem_list">
+                <span className="del_group" onClick={teacherV.showListAlert.bind(this, v)}>删除</span>
                 <div className="am-list-item item_list20">
                     <div className="am-input-label am-input-label-5">教材图片</div>
                     {imgDivSon}
@@ -581,7 +581,6 @@ export default class newUpdateARTextbook extends React.Component {
 
                     </div>
                 </div>
-                <WhiteSpace size="lg"/>
             </div>
 
             tabItem.push(imgDiv)
@@ -702,17 +701,20 @@ export default class newUpdateARTextbook extends React.Component {
                 <WhiteSpace size="lg"/>
 
                 <div className="tabCont">
-                    <div onClick={this.showAddPage}>加页</div>
-                    {
-                        this.state.tagArr.map(function (v, i) {
-                            return <li className="active" onClick={teacherV.tabsOnChange.bind(this, v)}>{v.title}</li>
-                        })
-                    }
+                    <ul>
+                        {
+                            this.state.tagArr.map(function (v, i) {
+                                return <li className="active" onClick={teacherV.tabsOnChange.bind(this, v)}>{v.title}</li>
+                            })
+                        }
+                    </ul>
+                    <div className="add_page" onClick={this.showAddPage}>加页</div>
                 </div>
 
-                <div>
+                <div className="tabItem_cont">
                     {this.state.tabItem}
                 </div>
+                <WhiteSpace size="lg"/>
                 <div onClick={this.addList} className='addARTextbookTable'>
                     <div className="addBtn">
                         <Icon type="plus"/>

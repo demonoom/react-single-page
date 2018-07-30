@@ -148,10 +148,14 @@
   -ms-flex-align: center;
   align-items: center;
   border-bottom: 1PX solid #ddd;
-  overflow-x: auto;
+  overflow: hidden;
+  position: relative;
+}
+#UpdateARTextbook .tabCont ul {
+  width: 85%;
   display: -webkit-box;
-  width: 90%;
   overflow-y: hidden;
+  overflow-x: auto;
 }
 #UpdateARTextbook .tabCont li {
   padding: 13px 0;
@@ -199,4 +203,33 @@
   position: absolute;
   left: 0;
   top: 5px;
+}
+#UpdateARTextbook .tabItem_cont {
+  height: calc(100% - 338px);
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+#UpdateARTextbook .tabItem_list {
+  position: relative;
+}
+#UpdateARTextbook .del_group {
+  background: url("../imgs/del_group.png") no-repeat;
+  font-size: 0;
+  width: 34px;
+  height: 34px;
+  background-size: 100%;
+  border: 0;
+  position: absolute;
+  right: 0;
+  top: 0;
+  z-index: 1;
+}
+#UpdateARTextbook .add_page {
+  display: inline-block;
+  position: absolute;
+  right: 0;
+  line-height: 45px;
+  width: 40px;
+  color: #008eff;
+  top: 0;
 }
