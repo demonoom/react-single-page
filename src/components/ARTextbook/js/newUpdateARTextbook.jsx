@@ -66,6 +66,13 @@ export default class newUpdateARTextbook extends React.Component {
      */
     updateARBook = () => {
         var arr = teacherV.state.initData.itemList;
+        for (var i = 0; i < arr.length; i++) {
+            var array = []
+            for (var j = 0; j < arr[i].tagList.length; j++) {
+                array.push(arr[i].tagList[j].id)
+            }
+            arr[i].tagList = array
+        }
         var param = {
             "method": 'updateARBook',
             "bookData": {
@@ -77,6 +84,7 @@ export default class newUpdateARTextbook extends React.Component {
                 "itemList": arr
             }
         }
+        console.log(param);
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
             onResponse: function (result) {
                 if (result.msg == '调用成功' || result.success == true) {
@@ -574,7 +582,6 @@ export default class newUpdateARTextbook extends React.Component {
         var tabItem = []
 
         arr.forEach(function (v, i) {
-            console.log(v.tagList);
 
             //新加的图片,样式是加号
             var imgDivSon = <div className="div68" onClick={teacherV.imgPreview.bind(this, v.pic)}>
@@ -863,8 +870,6 @@ export default class newUpdateARTextbook extends React.Component {
 
                         {/*<input type="text" value={this.state.searchTagValue} onChange={this.searchOnChange}/>*/}
                         {/*<button onClick={this.searchTagByWords}>搜索</button>*/}
-
-
 
 
                         <div className="searchIcon" onClick={this.searchTagByWords}></div>
