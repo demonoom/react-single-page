@@ -606,14 +606,16 @@ export default class newUpdateARTextbook extends React.Component {
                 <div className="line_public flex_container"></div>
                 <div className="am-list-item item_list20">
                     <div className="am-input-label am-input-label-5">相关标签</div>
+                    <div className="div68">
                     {
                         v.tagList.map(function (v, i) {
-                            return <li>{v.content}
-                                <span>删除</span>
+                            return <li className="spanTag">{v.content}
+                                <span className="del_ar icon_pointer"></span>
                             </li>
                         })
                     }
-                    <div onClick={teacherV.addTags}>新加</div>
+                        <span className="tagBtn icon_pointer" onClick={teacherV.addTags}></span>
+                    </div>
                 </div>
 
             </div>
