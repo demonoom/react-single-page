@@ -328,7 +328,7 @@ export default class addARTextbook extends React.Component {
     }
 
     /**
-     *  删除页面标签
+     * sh
      */
     deleteTag(index, ind) {
 

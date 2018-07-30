@@ -66,9 +66,9 @@
     }
     .videoCont{
         width: calc(~"100% - 89px");
-        text-align: center;
         video{
             height: 100%;
+            max-width: 100%;
         }
     }
     .uploadAttech {
@@ -93,7 +93,7 @@
         .addBtn{
             margin: 0 auto;
             position: relative;
-            width: 60px;
+            width: 110px;
             padding-left: 20px;
         }
         .icon{
@@ -113,8 +113,10 @@
         }
     }
     .add_title{
-        background-color: #f4f4f4;
+        background-color: #fff;
         font-size: 16px;
+        position: relative;
+        margin-top: 10px;
     }
     .fileBack{
         width: 68px;
@@ -148,6 +150,7 @@
     }
     .videoCont > div{
         position: relative;
+        text-align: center;
     }
     .del_ar{
         width: 18px;
@@ -158,6 +161,83 @@
         position: absolute;
         right: 2px;
         top: 2px;
+    }
+    .tagCont{
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        top: 0;
+        left: 0;
+        z-index: 1000;
+        background-color: #f4f4f4;
+    }
+    .tagInput{
+        position: relative;
+        margin-bottom: 10px;
+        .searchIcon{
+            width: 15px;
+            height: 19px;
+            position: absolute;
+            right: 15px;
+            top: 50%;
+            -webkit-transform: translateY(-50%);
+            -ms-transform: translateY(-50%);
+            transform: translateY(-50%);
+            background: url("../imgs/icon_search.png") no-repeat;
+            background-size: 100%;
+            font-size: 0;
+        }
+        .am-list-item .am-input-control input{
+            width: 88%;
+        }
+    }
+    .icon_delete{
+        background: url("../imgs/icon_delete.png") no-repeat;
+        background-size:100%;
+        position: absolute;
+        right: 15px;
+        top: 50%;
+        display: block;
+        width: 18px;
+        height: 18px;
+        margin-top: -9px;
+    }
+    .classTags{
+        padding: 0 10px;
+        .am-tag-normal::before,.am-tag-active::before{
+            display: none;
+        }
+        .am-tag{
+            margin-left: 5px;
+            margin-bottom: 5px;
+        }
+        .am-tag-normal {
+            border-radius: 2px;
+            margin-left: 5px;
+        }
+        .am-tag-text {
+            font-size: 13px;
+            padding: 0 5px;
+        }
+        .am-tag-active{
+            background-color: #BEDCFF;
+            color: #2B84EF;
+        }
+    }
+    .spanTag{
+        background-color: #BEDCFF;
+        color: #2B84EF;
+        padding: 0 5px;
+        font-size: 13px;
+        margin-right: 10px;
+        margin-bottom: 10px;
+        height: 25px;
+        line-height: 25px;
+        -webkit-border-radius: 2px;
+        -moz-border-radius: 2px;
+        border-radius: 2px;
+        display: inline-block;
+        vertical-align: top;
     }
 
 }
