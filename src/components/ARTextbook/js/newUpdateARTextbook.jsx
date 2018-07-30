@@ -126,7 +126,8 @@ export default class newUpdateARTextbook extends React.Component {
                         tagArr.push({
                             title: '第' + v.page + '页',
                             index: v.page,
-                            page: v.page
+                            page: v.page,
+                            tagClick: false
                         })
                     });
 
@@ -148,7 +149,6 @@ export default class newUpdateARTextbook extends React.Component {
                          */
                         teacherV.tabsOnChange(tagArr[0])
                         teacherV.setState({clickTab: tagArr[0]})
-                        document.getElementsByClassName('pageNumber')[0].className = 'pageNumber active'
                     })
                 } else {
                     Toast.fail(result.msg, 5);
@@ -205,7 +205,7 @@ export default class newUpdateARTextbook extends React.Component {
     /**
      * 上传照片
      */
-    uploadImage(id, event) {
+    uploadImage(index, event) {
         event.stopPropagation()
         var data = {
             method: 'selectImages',
@@ -218,7 +218,7 @@ export default class newUpdateARTextbook extends React.Component {
                 newArr.picName = item[1].split("=")[1]
 
             teacherV.state.initData.itemList.forEach(function (v, i) {
-                if (v.id == id) {
+                if (v.index == index) {
                     v.pic = newArr.picPath
                 }
             })
@@ -232,7 +232,7 @@ export default class newUpdateARTextbook extends React.Component {
     /**
      * 上传视频
      */
-    uploadVideo(src, id, event) {
+    uploadVideo(src, index, event) {
         event.stopPropagation()
         var data = {
             method: 'selectVideo',
@@ -244,7 +244,7 @@ export default class newUpdateARTextbook extends React.Component {
             let item = arr[0].split("?")[0];
 
             teacherV.state.initData.itemList.forEach(function (v, i) {
-                if (v.id == id) {
+                if (v.index == index) {
                     v.video = v.video.replace(src, item);
                 }
             })
@@ -287,11 +287,6 @@ export default class newUpdateARTextbook extends React.Component {
                     teacherV.state.tagArr.forEach(function (item, index) {
                         if (item.page == value) {
                             teacherV.tabsOnChange(item)
-                            for (var k in teacherV.refs) {
-                                if (item.index == k) {
-                                    teacherV.refs[k].className = 'active pageNumber'
-                                }
-                            }
                         }
                     })
                     flag = false
@@ -394,7 +389,7 @@ export default class newUpdateARTextbook extends React.Component {
     /**
      * 增加视频
      */
-    addUploadVideo(id) {
+    addUploadVideo(index) {
         var data = {
             method: 'selectVideo',
         };
@@ -405,7 +400,7 @@ export default class newUpdateARTextbook extends React.Component {
             let item = ',' + arr[0].split("?")[0];
 
             teacherV.state.initData.itemList.forEach(function (v, i) {
-                if (v.id == id) {
+                if (v.index == index) {
                     v.video += item
                 }
             })
@@ -476,14 +471,13 @@ export default class newUpdateARTextbook extends React.Component {
 
     tabsOnChange(index, event) {
 
-        for (var i = 0; i < document.getElementsByClassName('pageNumber').length; i++) {
-            document.getElementsByClassName('pageNumber')[i].className = 'pageNumber'
-        }
-
-        if (!WebServiceUtil.isEmpty(event)) {
-            event.target.className = 'active pageNumber'
-        }
-        teacherV.setState({clickTab: index})
+        //加点击类名字,只需要改变tagClick为true即可
+        teacherV.state.tagArr.forEach(function (v, i) {
+            v.tagClick = false
+            if (v.index == index.index) {
+                v.tagClick = true
+            }
+        })
 
         var arr = []
         teacherV.state.initData.itemList.forEach(function (v, i) {
@@ -495,11 +489,11 @@ export default class newUpdateARTextbook extends React.Component {
         var tabItem = []
 
         arr.forEach(function (v, i) {
+            console.log(v);
 
             //新加的图片,样式是加号
             var imgDivSon = <div className="div68" onClick={teacherV.imgPreview.bind(this, v.pic)}>
-                {/*<div onClick={teacherV.uploadImage.bind(this, v.id)}>修改</div>*/}
-                <div className="uploadBtn"></div>
+                <div className="uploadBtn" onClick={teacherV.uploadImage.bind(this, v.index)}></div>
             </div>;
 
             if (WebServiceUtil.isEmpty(v.pic) == false) {
@@ -507,7 +501,7 @@ export default class newUpdateARTextbook extends React.Component {
                     <button className="uploadAttech i_uploadAttech">{
                         <img className="imgDiv" src={v.pic}/>
                     }
-                        <div onClick={teacherV.uploadImage.bind(this, v.id)}>修改</div>
+                        <div onClick={teacherV.uploadImage.bind(this, v.index)}>修改</div>
                     </button>
                 </div>
             }
@@ -537,7 +531,7 @@ export default class newUpdateARTextbook extends React.Component {
                                         <div className="uploadAttech i_uploadAttech pdfDiv"
                                              onClick={teacherV.videoPreview.bind(this, vtem, v.id)}>
                                             {/* <div>{v.fileName}</div> */}
-                                            <div onClick={teacherV.uploadVideo.bind(this, vtem, v.id)}>修改</div>
+                                            <div onClick={teacherV.uploadVideo.bind(this, vtem, v.index)}>修改</div>
                                             <span className="del_ar"
                                                   onClick={teacherV.showAlert.bind(this, vtem, v.id)}></span>
                                         </div>
@@ -547,7 +541,7 @@ export default class newUpdateARTextbook extends React.Component {
                                         <div className="uploadAttech i_uploadAttech pptDiv"
                                              onClick={teacherV.videoPreview.bind(this, vtem, v.id)}>
                                             {/* <div>{v.fileName}</div> */}
-                                            <div onClick={teacherV.uploadVideo.bind(this, vtem, v.id)}>修改</div>
+                                            <div onClick={teacherV.uploadVideo.bind(this, vtem, v.index)}>修改</div>
                                             <span className="del_ar"
                                                   onClick={teacherV.showAlert.bind(this, vtem, v.id)}></span>
                                         </div>
@@ -557,7 +551,7 @@ export default class newUpdateARTextbook extends React.Component {
                                         <div className="uploadAttech i_uploadAttech xlsDiv"
                                              onClick={teacherV.videoPreview.bind(this, vtem, v.id)}>
                                             {/* <div>{v.fileName}</div> */}
-                                            <div onClick={teacherV.uploadVideo.bind(this, vtem, v.id)}>修改</div>
+                                            <div onClick={teacherV.uploadVideo.bind(this, vtem, v.index)}>修改</div>
                                             <span className="del_ar"
                                                   onClick={teacherV.showAlert.bind(this, vtem, v.id)}></span>
                                         </div>
@@ -567,7 +561,7 @@ export default class newUpdateARTextbook extends React.Component {
                                         <div className="uploadAttech i_uploadAttech docDiv"
                                              onClick={teacherV.videoPreview.bind(this, vtem, v.id)}>
                                             {/* <div>{v.fileName}</div> */}
-                                            <div onClick={teacherV.uploadVideo.bind(this, vtem, v.id)}>修改</div>
+                                            <div onClick={teacherV.uploadVideo.bind(this, vtem, v.index)}>修改</div>
                                             <span className="del_ar"
                                                   onClick={teacherV.showAlert.bind(this, vtem, v.id)}></span>
                                         </div>
@@ -580,7 +574,7 @@ export default class newUpdateARTextbook extends React.Component {
                                                   onClick={teacherV.showAlert.bind(this, vtem, v.id)}></span>
                                             <video onClick={teacherV.theVideoPlay.bind(this, i)} className="videoDiv"
                                                    src={vtem}></video>
-                                            <div onClick={teacherV.uploadVideo.bind(this, vtem, v.id)}>修改</div>
+                                            <div onClick={teacherV.uploadVideo.bind(this, vtem, v.index)}>修改</div>
                                         </div>
                                     )
                                 }
@@ -589,7 +583,7 @@ export default class newUpdateARTextbook extends React.Component {
                         }
 
                         <div className="uploadBtn"
-                             onClick={teacherV.addUploadVideo.bind(this, v.id)}>
+                             onClick={teacherV.addUploadVideo.bind(this, v.index)}>
                             增加
                         </div>
 
@@ -601,7 +595,7 @@ export default class newUpdateARTextbook extends React.Component {
             tabItem.push(imgDiv)
 
         })
-        teacherV.setState({tabItem})
+        teacherV.setState({tabItem, clickTab: index})
     }
 
     /**
@@ -719,7 +713,7 @@ export default class newUpdateARTextbook extends React.Component {
                     <ul>
                         {
                             this.state.tagArr.map(function (v, i) {
-                                return <li className='pageNumber'
+                                return <li className={v.tagClick ? 'pageNumber active' : 'pageNumber'}
                                            onClick={teacherV.tabsOnChange.bind(this, v)}
                                            ref={v.index}
                                 >{v.title}</li>
