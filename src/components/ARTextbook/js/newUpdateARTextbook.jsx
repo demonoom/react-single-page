@@ -461,6 +461,18 @@ export default class newUpdateARTextbook extends React.Component {
         teacherV.tabsOnChange(teacherV.state.clickTab)
     }
 
+    addTags() {
+        $('.tagAddPanel').show()
+    }
+
+    exitAddTags() {
+        $('.tagAddPanel').hide()
+    }
+
+    addTagsForSure() {
+        console.log(1);
+    }
+
     /**
      *播放视频
      */
@@ -489,6 +501,7 @@ export default class newUpdateARTextbook extends React.Component {
         var tabItem = []
 
         arr.forEach(function (v, i) {
+            console.log(v.tagList);
 
             //新加的图片,样式是加号
             var imgDivSon = <div className="div68" onClick={teacherV.imgPreview.bind(this, v.pic)}>
@@ -587,6 +600,17 @@ export default class newUpdateARTextbook extends React.Component {
                         </div>
 
                     </div>
+                </div>
+                <div>
+                    <div>相关标签</div>
+                    {
+                        v.tagList.map(function (v, i) {
+                            return <li>{v.content}
+                                <span>删除</span>
+                            </li>
+                        })
+                    }
+                    <div onClick={teacherV.addTags}>新加</div>
                 </div>
                 <div className="line_public"></div>
             </div>
@@ -734,6 +758,11 @@ export default class newUpdateARTextbook extends React.Component {
 
                 <div className='submitBtn'>
                     <Button type="warning" onClick={this.updateARBook}>提交</Button>
+                </div>
+
+                <div className='tagAddPanel' style={{height: document.body.clientHeight, display: 'none'}}>
+                    <span onClick={this.exitAddTags}>取消</span>
+                    <span onClick={this.addTagsForSure}>确定</span>
                 </div>
 
             </div>
