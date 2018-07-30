@@ -328,7 +328,7 @@ export default class addARTextbook extends React.Component {
     }
 
     /**
-     * sh
+     * 
      */
     deleteTag(index, ind) {
 
@@ -338,8 +338,9 @@ export default class addARTextbook extends React.Component {
             if (ind == i) {
                 teacherV.state.ARTextbookDataArr[index].tagText.splice(i, 1)
                 teacherV.state.ARTextbookDataArr[index].arrIdDiv.splice(i, 1)
+
                 console.log(teacherV.state.ARTextbookDataArr[index].tagText,"tagTexte")
-                console.log(teacherV.state.ARTextbookDataArr[index].arrIdDiv,"arrIdDive")
+                console.log(teacherV.state.ARTextbookDataArr[index].arrIdDiv,"arrIdDiv")
                 teacherV.buildARTextbook();
 
             }
