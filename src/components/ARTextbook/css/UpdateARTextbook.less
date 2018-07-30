@@ -317,7 +317,7 @@
   }
   .tagAddPanel {
     width: 100%;
-    background-color: red;
+    background-color: #f4f4f4;
     position: absolute;
     top:0;
     z-index: 999;
@@ -352,5 +352,75 @@
     background-size: 100%;
     border: 0;
     display: inline-block;
+  }
+  .tagInput{
+    position: relative;
+    margin-bottom: 10px;
+    .searchIcon{
+      width: 15px;
+      height: 19px;
+      position: absolute;
+      right: 15px;
+      top: 50%;
+      -webkit-transform: translateY(-50%);
+      -ms-transform: translateY(-50%);
+      transform: translateY(-50%);
+      background: url("../imgs/icon_search.png") no-repeat;
+      background-size: 100%;
+      font-size: 0;
+    }
+    .am-list-item .am-input-control input{
+      width: 88%;
+    }
+  }
+  .bottomBox {
+    display: flex;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    span {
+      flex: 1;
+      text-align: center;
+      font-size: 1rem;
+      padding: 1rem;
+      display: inline-block;
+    }
+    .bind {
+      background: #e46a51;
+      color: #fff;
+    }
+
+  }
+  .close {
+    font-size: 1.5em;
+    background: #fff;
+    color: #e46a51;
+  }
+  .classTags{
+    padding: 0 10px;
+    .am-tag-normal::before,.am-tag-active::before{
+      display: none;
+    }
+    .am-tag{
+      margin-left: 5px;
+      margin-bottom: 5px;
+      border: 1px #fff solid;
+      height: 36px;
+      line-height: 36px;
+      cursor: pointer;
+    }
+    .am-tag-normal {
+      border-radius: 2px;
+      margin-left: 5px;
+    }
+    .am-tag-text {
+      font-size: 13px;
+      padding: 0 5px;
+    }
+    .am-tag-active{
+      border: 1px #2B84EF solid;
+      color: #2B84EF;
+    }
   }
 }

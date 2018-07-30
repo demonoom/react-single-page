@@ -3,7 +3,7 @@ import {
     Toast,
     Button,
     InputItem,
-    Tabs, WhiteSpace, Modal, Icon
+    Tabs, WhiteSpace, Modal, Icon, Tag
 } from 'antd-mobile';
 import "../css/UpdateARTextbook.less"
 
@@ -25,7 +25,9 @@ export default class newUpdateARTextbook extends React.Component {
             itemList: [],
             ARTextbookValue: '',  //教材名称
             attachment: '',  //附件地址
-            tagArr: []
+            tagArr: [],
+            searchTagValue: '',
+            tagsBefore: [],
         };
     }
 
@@ -463,16 +465,75 @@ export default class newUpdateARTextbook extends React.Component {
         teacherV.tabsOnChange(teacherV.state.clickTab)
     }
 
-    addTags() {
+    addTags(index) {
+        console.log(index);
         $('.tagAddPanel').show()
     }
 
+    /**
+     * 取消标签搜索面板
+     */
     exitAddTags() {
         $('.tagAddPanel').hide()
+        teacherV.setState({tagsLi: []})
+        teacherV.setState({searchTagValue: ''})
     }
 
     addTagsForSure() {
-        console.log(1);
+        console.log(teacherV.state.tagsBefore);
+        console.log(teacherV.state.initData.itemList);
+
+        $('.tagAddPanel').hide()
+        teacherV.setState({tagsLi: [], tagsBefore: []})
+        teacherV.setState({searchTagValue: ''})
+    }
+
+    searchOnChange(e) {
+        teacherV.setState({searchTagValue: e})
+    }
+
+    tagOnChange(data, v) {
+        if (v) {
+            teacherV.state.tagsBefore.push(data)
+        } else {
+            teacherV.state.tagsBefore.forEach(function (v, i) {
+                if (v.id == data.id) {
+                    teacherV.state.tagsBefore.splice(i, 1)
+                }
+            })
+        }
+    }
+
+    searchTagByWords() {
+        teacherV.setState({tagsLi: []}, () => {
+            var param = {
+                "method": 'searchARBookTag',
+                "adminId": teacherV.state.uId,
+                "keyword": teacherV.state.searchTagValue,
+                "pn": -1
+            }
+            WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
+                onResponse: function (result) {
+                    if (result.msg == '调用成功' || result.success == true) {
+                        if (!WebServiceUtil.isEmpty(result.response)) {
+                            var arr = []
+                            result.response.forEach(function (v, i) {
+                                arr.push(<Tag
+                                    selected={false}
+                                    onChange={teacherV.tagOnChange.bind(this, v)}
+                                >{v.content}</Tag>)
+                            })
+                            teacherV.setState({tagsLi: arr})
+                        }
+                    } else {
+                        Toast.fail(result.msg, 5);
+                    }
+                },
+                onError: function (error) {
+                    // message.error(error);
+                }
+            });
+        })
     }
 
     /**
@@ -545,7 +606,9 @@ export default class newUpdateARTextbook extends React.Component {
                                         <div className="uploadAttech i_uploadAttech pdfDiv"
                                              onClick={teacherV.videoPreview.bind(this, vtem, v.id)}>
                                             {/* <div>{v.fileName}</div> */}
-                                            <div className="icon_pointer" onClick={teacherV.uploadVideo.bind(this, vtem, v.index)}>修改</div>
+                                            <div className="icon_pointer"
+                                                 onClick={teacherV.uploadVideo.bind(this, vtem, v.index)}>修改
+                                            </div>
                                             <span className="del_ar icon_pointer"
                                                   onClick={teacherV.showAlert.bind(this, vtem, v.id)}></span>
                                         </div>
@@ -555,7 +618,9 @@ export default class newUpdateARTextbook extends React.Component {
                                         <div className="uploadAttech i_uploadAttech pptDiv"
                                              onClick={teacherV.videoPreview.bind(this, vtem, v.id)}>
                                             {/* <div>{v.fileName}</div> */}
-                                            <div className="icon_pointer" onClick={teacherV.uploadVideo.bind(this, vtem, v.index)}>修改</div>
+                                            <div className="icon_pointer"
+                                                 onClick={teacherV.uploadVideo.bind(this, vtem, v.index)}>修改
+                                            </div>
                                             <span className="del_ar icon_pointer"
                                                   onClick={teacherV.showAlert.bind(this, vtem, v.id)}></span>
                                         </div>
@@ -565,7 +630,9 @@ export default class newUpdateARTextbook extends React.Component {
                                         <div className="uploadAttech i_uploadAttech xlsDiv"
                                              onClick={teacherV.videoPreview.bind(this, vtem, v.id)}>
                                             {/* <div>{v.fileName}</div> */}
-                                            <div className="icon_pointer" onClick={teacherV.uploadVideo.bind(this, vtem, v.index)}>修改</div>
+                                            <div className="icon_pointer"
+                                                 onClick={teacherV.uploadVideo.bind(this, vtem, v.index)}>修改
+                                            </div>
                                             <span className="del_ar icon_pointer"
                                                   onClick={teacherV.showAlert.bind(this, vtem, v.id)}></span>
                                         </div>
@@ -575,7 +642,9 @@ export default class newUpdateARTextbook extends React.Component {
                                         <div className="uploadAttech i_uploadAttech docDiv"
                                              onClick={teacherV.videoPreview.bind(this, vtem, v.id)}>
                                             {/* <div>{v.fileName}</div> */}
-                                            <div className="icon_pointer" onClick={teacherV.uploadVideo.bind(this, vtem, v.index)}>修改</div>
+                                            <div className="icon_pointer"
+                                                 onClick={teacherV.uploadVideo.bind(this, vtem, v.index)}>修改
+                                            </div>
                                             <span className="del_ar icon_pointer"
                                                   onClick={teacherV.showAlert.bind(this, vtem, v.id)}></span>
                                         </div>
@@ -588,7 +657,9 @@ export default class newUpdateARTextbook extends React.Component {
                                                   onClick={teacherV.showAlert.bind(this, vtem, v.id)}></span>
                                             <video onClick={teacherV.theVideoPlay.bind(this, i)} className="videoDiv"
                                                    src={vtem}></video>
-                                            <div className="icon_pointer" onClick={teacherV.uploadVideo.bind(this, vtem, v.index)}>修改</div>
+                                            <div className="icon_pointer"
+                                                 onClick={teacherV.uploadVideo.bind(this, vtem, v.index)}>修改
+                                            </div>
                                         </div>
                                     )
                                 }
@@ -607,13 +678,14 @@ export default class newUpdateARTextbook extends React.Component {
                 <div className="am-list-item item_list20">
                     <div className="am-input-label am-input-label-5">相关标签</div>
                     <div className="div68">
-                    {
-                        v.tagList.map(function (v, i) {
-                            return <li className="spanTag">{v.content}
-                                <span className="del_ar icon_pointer"></span>
-                            </li>
-                        })
-                    }
+                        {
+                            v.tagList.map(function (v, i) {
+                                return <li className="spanTag">{v.content}
+                                    <span className="del_ar icon_pointer"></span>
+                                </li>
+                            })
+                        }
+
                         <span className="tagBtn icon_pointer" onClick={teacherV.addTags}></span>
                     </div>
                 </div>
@@ -741,14 +813,16 @@ export default class newUpdateARTextbook extends React.Component {
                     <ul>
                         {
                             this.state.tagArr.map(function (v, i) {
-                                return <li className={v.tagClick ? 'icon_pointer pageNumber active' : 'icon_pointer pageNumber'}
-                                           onClick={teacherV.tabsOnChange.bind(this, v)}
-                                           ref={v.index}
+                                return <li
+                                    className={v.tagClick ? 'icon_pointer pageNumber active' : 'icon_pointer pageNumber'}
+                                    onClick={teacherV.tabsOnChange.bind(this, v)}
+                                    ref={v.index}
                                 >{v.title}</li>
                             })
                         }
                     </ul>
-                    <div className="add_page" onClick={this.showAddPage}><Icon className="icon_pointer" type="plus"/></div>
+                    <div className="add_page" onClick={this.showAddPage}><Icon className="icon_pointer" type="plus"/>
+                    </div>
                 </div>
 
                 <div className="tabItem_cont">
@@ -766,8 +840,35 @@ export default class newUpdateARTextbook extends React.Component {
                 </div>
 
                 <div className='tagAddPanel' style={{height: document.body.clientHeight, display: 'none'}}>
-                    <span onClick={this.exitAddTags}>取消</span>
-                    <span onClick={this.addTagsForSure}>确定</span>
+                    <div className="tagInput">
+                        <InputItem
+                            placeholder="请输入关键字"
+                            value={this.state.searchTagValue}
+                            onChange={this.searchOnChange}
+                        >
+                            <div>标签名称</div>
+                        </InputItem>
+
+
+                        {/*<input type="text" value={this.state.searchTagValue} onChange={this.searchOnChange}/>*/}
+                        {/*<button onClick={this.searchTagByWords}>搜索</button>*/}
+
+
+
+
+                        <div className="searchIcon" onClick={this.searchTagByWords}></div>
+                    </div>
+
+
+                    <ul className="classTags">
+                        {this.state.tagsLi}
+                    </ul>
+
+
+                    <div className="bottomBox">
+                        <span className="close" onClick={this.exitAddTags}>取消</span>
+                        <span className="bind" onClick={this.addTagsForSure}>确定</span>
+                    </div>
                 </div>
 
             </div>
