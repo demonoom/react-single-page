@@ -44,6 +44,13 @@
   margin-right: 15px;
   background-color: #eee;
 }
+#addARTextbook .calm {
+  margin-top: 15px;
+  position: relative;
+}
+#addARTextbook .calm .am-list-item .am-input-control input {
+  width: 88%;
+}
 #addARTextbook .videoDiv {
   width: 68px;
   height: 68px;
