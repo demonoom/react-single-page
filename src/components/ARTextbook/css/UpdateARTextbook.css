@@ -156,6 +156,7 @@
   display: -webkit-box;
   overflow-y: hidden;
   overflow-x: auto;
+  height: 44px;
 }
 #UpdateARTextbook .tabCont li {
   padding: 13px 0;
@@ -166,11 +167,11 @@
   color: #108ee9;
   border-bottom: 2px #108ee9 solid;
 }
-#UpdateARTextbook .tabCont::-webkit-scrollbar {
+#UpdateARTextbook .tabCont ul::-webkit-scrollbar {
   width: 8px;
-  height: 0px;
+  height: 6px;
 }
-#UpdateARTextbook .tabCont::-webkit-scrollbar-thumb {
+#UpdateARTextbook .tabCont ul::-webkit-scrollbar-thumb {
   background-color: #ccc;
   border-radius: 4px;
   -webkit-border-radius: 4px;
@@ -216,7 +217,7 @@
   background: url("../imgs/del_group.png") no-repeat;
   font-size: 0;
   width: 34px;
-  height: 34px;
+  height: 32px;
   background-size: 100%;
   border: 0;
   position: absolute;
@@ -225,11 +226,13 @@
   z-index: 1;
 }
 #UpdateARTextbook .add_page {
-  display: inline-block;
   position: absolute;
   right: 0;
-  line-height: 45px;
-  width: 40px;
-  color: #008eff;
-  top: 0;
+  width: 24px;
+  color: #638bb7;
+  top: 13px;
+}
+#UpdateARTextbook .add_page .am-icon-md {
+  width: 16px;
+  height: 16px;
 }

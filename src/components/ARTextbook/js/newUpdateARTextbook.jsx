@@ -589,6 +589,7 @@ export default class newUpdateARTextbook extends React.Component {
 
                     </div>
                 </div>
+                <div className="line_public"></div>
             </div>
 
             tabItem.push(imgDiv)
@@ -719,7 +720,7 @@ export default class newUpdateARTextbook extends React.Component {
                             })
                         }
                     </ul>
-                    <div className="add_page" onClick={this.showAddPage}>加页</div>
+                    <div className="add_page" onClick={this.showAddPage}><Icon type="plus"/></div>
                 </div>
 
                 <div className="tabItem_cont">
