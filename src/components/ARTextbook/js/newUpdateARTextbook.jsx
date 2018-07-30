@@ -605,7 +605,7 @@ export default class newUpdateARTextbook extends React.Component {
                 </div>
                 <div className="line_public flex_container"></div>
                 <div className="am-list-item item_list20">
-                    <div>相关标签</div>
+                    <div className="am-input-label am-input-label-5">相关标签</div>
                     {
                         v.tagList.map(function (v, i) {
                             return <li>{v.content}
