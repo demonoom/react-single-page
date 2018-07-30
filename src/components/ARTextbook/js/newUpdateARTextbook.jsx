@@ -24,6 +24,7 @@ export default class newUpdateARTextbook extends React.Component {
             itemList: [],
             ARTextbookValue: '',  //教材名称
             attachment: '',  //附件地址
+            tagArr: []
         };
     }
 
@@ -332,14 +333,10 @@ export default class newUpdateARTextbook extends React.Component {
     theVideoPlay(i) {
         // var videoDiv = $(".videoDiv")
         // videoDiv[i].play();
-
     }
 
-    tabsOnClick(index, key) {
+    tabsOnChange(index) {
         teacherV.setState({clickTab: index})
-    }
-
-    tabsOnChange(index, key) {
 
         var arr = []
         teacherV.state.initData.itemList.forEach(function (v, i) {
@@ -383,7 +380,8 @@ export default class newUpdateARTextbook extends React.Component {
                                              onClick={teacherV.videoPreview.bind(this, vtem, v.id)}>
                                             {/* <div>{v.fileName}</div> */}
                                             <div onClick={teacherV.uploadVideo.bind(this, vtem, v.id)}>修改</div>
-                                            <span className="del_ar" onClick={teacherV.showAlert.bind(this, vtem, v.id)}></span>
+                                            <span className="del_ar"
+                                                  onClick={teacherV.showAlert.bind(this, vtem, v.id)}></span>
                                         </div>
                                     )
                                 } else if (item[item.length - 1] == "pptx" || item[item.length - 1] == "ppt") {
@@ -392,7 +390,8 @@ export default class newUpdateARTextbook extends React.Component {
                                              onClick={teacherV.videoPreview.bind(this, vtem, v.id)}>
                                             {/* <div>{v.fileName}</div> */}
                                             <div onClick={teacherV.uploadVideo.bind(this, vtem, v.id)}>修改</div>
-                                            <span className="del_ar" onClick={teacherV.showAlert.bind(this, vtem, v.id)}></span>
+                                            <span className="del_ar"
+                                                  onClick={teacherV.showAlert.bind(this, vtem, v.id)}></span>
                                         </div>
                                     )
                                 } else if (item[item.length - 1] == "xls" || item[item.length - 1] == "xlsx") {
@@ -401,7 +400,8 @@ export default class newUpdateARTextbook extends React.Component {
                                              onClick={teacherV.videoPreview.bind(this, vtem, v.id)}>
                                             {/* <div>{v.fileName}</div> */}
                                             <div onClick={teacherV.uploadVideo.bind(this, vtem, v.id)}>修改</div>
-                                            <span className="del_ar" onClick={teacherV.showAlert.bind(this, vtem, v.id)}></span>
+                                            <span className="del_ar"
+                                                  onClick={teacherV.showAlert.bind(this, vtem, v.id)}></span>
                                         </div>
                                     )
                                 } else if (item[item.length - 1] == "docx" || item[item.length - 1] == "doc") {
@@ -410,14 +410,16 @@ export default class newUpdateARTextbook extends React.Component {
                                              onClick={teacherV.videoPreview.bind(this, vtem, v.id)}>
                                             {/* <div>{v.fileName}</div> */}
                                             <div onClick={teacherV.uploadVideo.bind(this, vtem, v.id)}>修改</div>
-                                            <span className="del_ar" onClick={teacherV.showAlert.bind(this, vtem, v.id)}></span>
+                                            <span className="del_ar"
+                                                  onClick={teacherV.showAlert.bind(this, vtem, v.id)}></span>
                                         </div>
                                     )
                                 } else if (item[item.length - 1] == "mp4") {
                                     return (
                                         <div className="uploadAttech i_uploadAttech"
                                              onClick={teacherV.videoPreview.bind(this, vtem, v.id)}>
-                                            <span className="del_ar" onClick={teacherV.showAlert.bind(this, vtem, v.id)}></span>
+                                            <span className="del_ar"
+                                                  onClick={teacherV.showAlert.bind(this, vtem, v.id)}></span>
                                             <video onClick={teacherV.theVideoPlay.bind(this, i)} className="videoDiv"
                                                    src={vtem}></video>
                                             <div onClick={teacherV.uploadVideo.bind(this, vtem, v.id)}>修改</div>
@@ -554,19 +556,19 @@ export default class newUpdateARTextbook extends React.Component {
                 </div>
 
                 <WhiteSpace size="lg"/>
-                <Tabs
-                    tabs={this.state.tagArr}
-                    renderTabBar={props => <Tabs.DefaultTabBar {...props} page={3}/>}
-                    swipeable={false}
-                    animated={false}
-                    useOnPan={false}
-                    onChange={this.tabsOnChange}
-                    onTabClick={this.tabsOnClick}
-                >
-                    <div>
-                        {this.state.tabItem}
-                    </div>
-                </Tabs>
+
+                <div>
+                    {
+                        this.state.tagArr.map(function (v, i) {
+                            return <li style={{float: 'left'}}
+                                       onClick={teacherV.tabsOnChange.bind(this, v)}>{v.title}</li>
+                        })
+                    }
+                </div>
+
+                <div>
+                    {this.state.tabItem}
+                </div>
 
                 <div className='submitBtn'>
                     <Button type="warning" onClick={this.updateARBook}>提交</Button>
