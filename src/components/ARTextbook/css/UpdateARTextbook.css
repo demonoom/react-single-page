@@ -165,11 +165,12 @@
 }
 #UpdateARTextbook .tabCont li.active {
   color: #108ee9;
-  border-bottom: 2px #108ee9 solid;
+  border-top: 2px #108ee9 solid;
+  padding: 11px 0 13px 0;
 }
 #UpdateARTextbook .tabCont ul::-webkit-scrollbar {
   width: 8px;
-  height: 6px;
+  height: 4px;
 }
 #UpdateARTextbook .tabCont ul::-webkit-scrollbar-thumb {
   background-color: #ccc;
