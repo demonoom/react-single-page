@@ -334,9 +334,9 @@ export default class addARTextbook extends React.Component {
                                     )
                                 } else {
                                     return (
-                                        <div onClick={teacherV.videoPreview.bind(this, v.videoPath)}>
+                                        <div className="videoDiv" onClick={teacherV.videoPreview.bind(this, v.videoPath)}>
                                             {/* <span >播放</span> */}
-                                            <video className="videoDiv"
+                                            <video
                                                    src={v.videoPath}></video>
                                             <span className="del_ar" onClick={teacherV.deleteItem.bind(this,i,useIndex)} ></span>
                                             {/* <span>{v.videoName}</span> */}
