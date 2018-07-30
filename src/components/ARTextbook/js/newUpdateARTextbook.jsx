@@ -148,6 +148,7 @@ export default class newUpdateARTextbook extends React.Component {
                          */
                         teacherV.tabsOnChange(tagArr[0])
                         teacherV.setState({clickTab: tagArr[0]})
+                        document.getElementsByClassName('pageNumber')[0].className = 'pageNumber active'
                     })
                 } else {
                     Toast.fail(result.msg, 5);
@@ -286,6 +287,11 @@ export default class newUpdateARTextbook extends React.Component {
                     teacherV.state.tagArr.forEach(function (item, index) {
                         if (item.page == value) {
                             teacherV.tabsOnChange(item)
+                            for (var k in teacherV.refs) {
+                                if (item.index == k) {
+                                    teacherV.refs[k].className = 'active pageNumber'
+                                }
+                            }
                         }
                     })
                     flag = false
@@ -468,7 +474,15 @@ export default class newUpdateARTextbook extends React.Component {
         // videoDiv[i].play();
     }
 
-    tabsOnChange(index) {
+    tabsOnChange(index, event) {
+
+        for (var i = 0; i < document.getElementsByClassName('pageNumber').length; i++) {
+            document.getElementsByClassName('pageNumber')[i].className = 'pageNumber'
+        }
+
+        if (!WebServiceUtil.isEmpty(event)) {
+            event.target.className = 'active pageNumber'
+        }
         teacherV.setState({clickTab: index})
 
         var arr = []
@@ -704,7 +718,10 @@ export default class newUpdateARTextbook extends React.Component {
                     <ul>
                         {
                             this.state.tagArr.map(function (v, i) {
-                                return <li className="active" onClick={teacherV.tabsOnChange.bind(this, v)}>{v.title}</li>
+                                return <li className='pageNumber'
+                                           onClick={teacherV.tabsOnChange.bind(this, v)}
+                                           ref={v.index}
+                                >{v.title}</li>
                             })
                         }
                     </ul>
