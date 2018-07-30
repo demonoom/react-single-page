@@ -489,7 +489,7 @@ export default class newUpdateARTextbook extends React.Component {
     }
 
     searchOnChange(e) {
-        teacherV.setState({searchTagValue: e.target.value})
+        teacherV.setState({searchTagValue: e})
     }
 
     tagOnChange(data, v) {
@@ -840,18 +840,34 @@ export default class newUpdateARTextbook extends React.Component {
                 </div>
 
                 <div className='tagAddPanel' style={{height: document.body.clientHeight, display: 'none'}}>
-                    <div>
-                        <input type="text" value={this.state.searchTagValue} onChange={this.searchOnChange}/>
-                        <button onClick={this.searchTagByWords}>搜索</button>
+                    <div className="tagInput">
+                        <InputItem
+                            placeholder="请输入关键字"
+                            value={this.state.searchTagValue}
+                            onChange={this.searchOnChange}
+                        >
+                            <div>标签名称</div>
+                        </InputItem>
+
+
+                        {/*<input type="text" value={this.state.searchTagValue} onChange={this.searchOnChange}/>*/}
+                        {/*<button onClick={this.searchTagByWords}>搜索</button>*/}
+
+
+
+
+                        <div className="searchIcon" onClick={this.searchTagByWords}></div>
                     </div>
-                    <ul>
+
+
+                    <ul className="classTags">
                         {this.state.tagsLi}
                     </ul>
 
 
-                    <div>
-                        <span onClick={this.exitAddTags}>取消</span>
-                        <span onClick={this.addTagsForSure}>确定</span>
+                    <div className="bottomBox">
+                        <span className="close" onClick={this.exitAddTags}>取消</span>
+                        <span className="bind" onClick={this.addTagsForSure}>确定</span>
                     </div>
                 </div>
 
