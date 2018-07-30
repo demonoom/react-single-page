@@ -3,7 +3,7 @@ import {
     Toast,
     Button,
     InputItem,
-    Tabs, WhiteSpace, Modal
+    Tabs, WhiteSpace, Modal, Icon
 } from 'antd-mobile';
 import "../css/UpdateARTextbook.less"
 
@@ -484,7 +484,8 @@ export default class newUpdateARTextbook extends React.Component {
 
             //新加的图片,样式是加号
             var imgDivSon = <div className="div68" onClick={teacherV.imgPreview.bind(this, v.pic)}>
-                <div onClick={teacherV.uploadImage.bind(this, v.id)}>修改</div>
+                {/*<div onClick={teacherV.uploadImage.bind(this, v.id)}>修改</div>*/}
+                <div className="uploadBtn"></div>
             </div>;
 
             if (WebServiceUtil.isEmpty(v.pic) == false) {
@@ -503,7 +504,7 @@ export default class newUpdateARTextbook extends React.Component {
                     <div className="am-input-label am-input-label-5">教材图片</div>
                     {imgDivSon}
                 </div>
-                <div className="line_public"></div>
+                <div className="line_public flex_container"></div>
                 <div className="am-list-item item_list20">
                     {
                         v.video.substr(v.video.length - 3, 3) !== "mp4" ?
@@ -686,7 +687,7 @@ export default class newUpdateARTextbook extends React.Component {
                 >
                     <div onClick={() => this.labelFocusInst.focus()}>AR教材</div>
                 </InputItem>
-                <div className="line_public"></div>
+                <div className="line_public flex_container"></div>
                 {/*附件*/}
                 <div className="am-list-item item_list20"
                 >
@@ -700,7 +701,7 @@ export default class newUpdateARTextbook extends React.Component {
 
                 <WhiteSpace size="lg"/>
 
-                <div className="tabCont my_flex">
+                <div className="tabCont">
                     <div onClick={this.showAddPage}>加页</div>
                     {
                         this.state.tagArr.map(function (v, i) {
@@ -712,9 +713,10 @@ export default class newUpdateARTextbook extends React.Component {
                 <div>
                     {this.state.tabItem}
                 </div>
-
-                <div onClick={this.addList}>
-                    增加
+                <div onClick={this.addList} className='addARTextbookTable'>
+                    <div className="addBtn">
+                        <Icon type="plus"/>
+                        <span>添加扫描的图片</span></div>
                 </div>
 
                 <div className='submitBtn'>
