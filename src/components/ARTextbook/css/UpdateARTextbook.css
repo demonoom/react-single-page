@@ -2,6 +2,8 @@
   overflow: hidden;
   position: relative;
   height: 100% !important;
+  /* 这是针对缺省样式 (必须的) */
+  /* 滑块颜色 */
 }
 #UpdateARTextbook .imgDiv {
   width: 100%;
@@ -136,4 +138,65 @@
   overflow: hidden;
   margin-bottom: 15px;
   display: inline-block;
+}
+#UpdateARTextbook .tabCont {
+  font-size: 15px;
+  height: 43.5px;
+  background-color: #fff;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+  -ms-flex-align: center;
+  align-items: center;
+  border-bottom: 1PX solid #ddd;
+  overflow-x: auto;
+  display: -webkit-box;
+  width: 90%;
+  overflow-y: hidden;
+}
+#UpdateARTextbook .tabCont li {
+  padding: 13px 0;
+  width: 80px;
+  text-align: center;
+}
+#UpdateARTextbook .tabCont li.active {
+  color: #108ee9;
+  border-bottom: 2px #108ee9 solid;
+}
+#UpdateARTextbook .tabCont::-webkit-scrollbar {
+  width: 8px;
+  height: 0px;
+}
+#UpdateARTextbook .tabCont::-webkit-scrollbar-thumb {
+  background-color: #ccc;
+  border-radius: 4px;
+  -webkit-border-radius: 4px;
+}
+#UpdateARTextbook .addARTextbookTable {
+  text-align: center;
+  font-size: 16px;
+  color: #638bb7;
+  line-height: 30px;
+  padding: 7px 15px;
+  background: #fff;
+}
+#UpdateARTextbook .addARTextbookTable .addBtn {
+  margin: 0 auto;
+  position: relative;
+  width: 125px;
+  padding-left: 20px;
+}
+#UpdateARTextbook .addARTextbookTable .icon {
+  font-size: 30px;
+  padding-right: 5px;
+  position: absolute;
+  left: 0;
+  top: 0;
+}
+#UpdateARTextbook .addARTextbookTable .am-icon-md {
+  width: 18px;
+  height: 18px;
+  margin-right: 3px;
+  position: absolute;
+  left: 0;
+  top: 5px;
 }
