@@ -126,7 +126,8 @@ export default class newUpdateARTextbook extends React.Component {
                         tagArr.push({
                             title: '第' + v.page + '页',
                             index: v.page,
-                            page: v.page
+                            page: v.page,
+                            tagClick: false
                         })
                     });
 
@@ -148,7 +149,6 @@ export default class newUpdateARTextbook extends React.Component {
                          */
                         teacherV.tabsOnChange(tagArr[0])
                         teacherV.setState({clickTab: tagArr[0]})
-                        document.getElementsByClassName('pageNumber')[0].className = 'pageNumber active'
                     })
                 } else {
                     Toast.fail(result.msg, 5);
@@ -287,11 +287,11 @@ export default class newUpdateARTextbook extends React.Component {
                     teacherV.state.tagArr.forEach(function (item, index) {
                         if (item.page == value) {
                             teacherV.tabsOnChange(item)
-                            for (var k in teacherV.refs) {
-                                if (item.index == k) {
-                                    teacherV.refs[k].className = 'active pageNumber'
-                                }
-                            }
+                            // for (var k in teacherV.refs) {
+                            //     if (item.index == k) {
+                            //         teacherV.refs[k].className = 'active pageNumber'
+                            //     }
+                            // }
                         }
                     })
                     flag = false
@@ -476,13 +476,14 @@ export default class newUpdateARTextbook extends React.Component {
 
     tabsOnChange(index, event) {
 
-        for (var i = 0; i < document.getElementsByClassName('pageNumber').length; i++) {
-            document.getElementsByClassName('pageNumber')[i].className = 'pageNumber'
-        }
+        //加点击类名字,只需要改变tagClick为true即可
+        teacherV.state.tagArr.forEach(function (v, i) {
+            v.tagClick = false
+            if (v.index == index.index) {
+                v.tagClick = true
+            }
+        })
 
-        if (!WebServiceUtil.isEmpty(event)) {
-            event.target.className = 'active pageNumber'
-        }
         teacherV.setState({clickTab: index})
 
         var arr = []
@@ -718,7 +719,7 @@ export default class newUpdateARTextbook extends React.Component {
                     <ul>
                         {
                             this.state.tagArr.map(function (v, i) {
-                                return <li className='pageNumber'
+                                return <li className={v.tagClick ? 'pageNumber active' : 'pageNumber'}
                                            onClick={teacherV.tabsOnChange.bind(this, v)}
                                            ref={v.index}
                                 >{v.title}</li>
