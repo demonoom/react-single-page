@@ -329,8 +329,8 @@ export default class addARTextbook extends React.Component {
         this.state.ARTextbookDataArr.forEach(function (v, i) {
             var useIndex = i;
             ARTextbookArr.push(<div>
-                <div className="cont_communal add_title font_gray">{i + 1}<span className="icon_delete" onClick={teacherV.deleteGroup.bind(this, useIndex)}></span></div>
-                <div className="line_public"></div>
+                <div className="cont_communal add_title font_gray">{i + 1}<span className="icon_delete icon_pointer" onClick={teacherV.deleteGroup.bind(this, useIndex)}></span></div>
+                <div className="line_public flex_container"></div>
                 <div className="flex_addElement calm">
                     <InputItem
                         className="add_element"
@@ -342,7 +342,7 @@ export default class addARTextbook extends React.Component {
                     </InputItem>
                 </div>
                 {/*<span>{teacherV.state.ARTextbookDataArr[i].picName}</span>*/}
-                <div className="line_public flex-container"></div>
+                <div className="line_public flex_container"></div>
                 <div className="sameBack my_flex">
                     <span className="textTitle">教材图片</span>
                     {teacherV.state.ARTextbookDataArr[i].picPath.length == 0 ? ""
@@ -353,7 +353,7 @@ export default class addARTextbook extends React.Component {
                     <button className="uploadBtn" onClick={teacherV.uploadImage.bind(this, i)}>教材图片</button>
                 </div>
 
-                <div className="line_public flex-container"></div>
+                <div className="line_public flex_container"></div>
                 <div className="sameBack my_flex">
                     <div className="textTitle">相关文件
                         <p style={{ margin: 0, height: 5 }}></p>
@@ -411,7 +411,7 @@ export default class addARTextbook extends React.Component {
                         <button className="uploadBtn" onClick={teacherV.uploadVideo.bind(this, i)}>相关视频</button>
                     </div>
                 </div>
-                <div className="line_public flex-container"></div>
+                <div className="line_public flex_container"></div>
                 <div className="sameBack my_flex">
                     <div className="textTitle">相关标签
                     </div>
@@ -424,7 +424,7 @@ export default class addARTextbook extends React.Component {
                                 )
                             })
                         }
-                        <button className="tagBtn" onClick={teacherV.addTag.bind(this, useIndex)}></button>
+                        <button className="tagBtn icon_pointer" onClick={teacherV.addTag.bind(this, useIndex)}></button>
                     </div>
 
                 </div>
@@ -719,7 +719,7 @@ export default class addARTextbook extends React.Component {
                         >
                             <div onClick={() => this.labelFocusInst.focus()}>AR教材</div>
                         </InputItem>
-                        <div className="line_public flex-container"></div>
+                        <div className="line_public flex_container"></div>
                         <div className="my_flex sameBack">
                             <span className="textTitle">教材附件</span>
                             {
@@ -743,7 +743,7 @@ export default class addARTextbook extends React.Component {
                             }
                             <WhiteSpace size="lg" />
                             <div onClick={this.addARTextbookTable} className='addARTextbookTable sameBack'>
-                                <div className="addBtn">
+                                <div className="addBtn icon_pointer">
                                     <Icon type="plus" />
                                     <span>添加扫描图片</span></div>
                             </div>
