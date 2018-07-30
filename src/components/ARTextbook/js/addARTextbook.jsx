@@ -102,7 +102,7 @@ export default class addARTextbook extends React.Component {
                 "attachment": filePath[0]
             }
         }
-        console.log(param)
+        console.log(param, "param")
         var classArray = [];
         this.state.ARTextbookDataArr.forEach(function (v, i) {
             console.log(v, "calmv")
@@ -271,15 +271,21 @@ export default class addARTextbook extends React.Component {
     }
 
     /**
-     * 搜索框
+     * 搜索框改变的时候
      */
     searchInputChange = (index, value) => {
         // this.setState({
         //     searchValue: value
         // })
+        teacherV.setState({
+            flag: false
+        }, () => {
+            this.state.ARTextbookDataArr[index].searchValue = value;
+            this.buildARTextbook();
+            teacherV.state.flag = true;
+        })
         // this.state.ARTextbookDataArr[index].searchValue = value;
-        this.state.ARTextbookDataArr[index].searchValue = value;
-        this.buildARTextbook();
+
     }
     /**
      * 添加标签
@@ -319,6 +325,27 @@ export default class addARTextbook extends React.Component {
             }
             // console.log(teacherV.state.ARTextbookDataArr,"deleteAfter")
         })
+    }
+
+    /**
+     *  删除页面标签
+     */
+    deleteTag(index, ind) {
+
+        console.log(teacherV.state.ARTextbookDataArr[index].tagText,"tagTexts")
+        console.log(teacherV.state.ARTextbookDataArr[index].arrIdDiv,"arrIdDivs")
+        teacherV.state.ARTextbookDataArr[index].tagText.forEach((v, i) => {
+            if (ind == i) {
+                teacherV.state.ARTextbookDataArr[index].tagText.splice(i, 1)
+                teacherV.state.ARTextbookDataArr[index].arrIdDiv.splice(i, 1)
+                console.log(teacherV.state.ARTextbookDataArr[index].tagText,"tagTexte")
+                console.log(teacherV.state.ARTextbookDataArr[index].arrIdDiv,"arrIdDive")
+                teacherV.buildARTextbook();
+
+            }
+        })
+        // console.log(index, "index")
+        // console.log(i, "i")
     }
     /**
      * 根据数据构建,完成数据的动态绑定
@@ -364,24 +391,24 @@ export default class addARTextbook extends React.Component {
                                 if (v.videoExtra == "pdf") {
                                     return (
                                         <div className="pdfBack fileBack"
-                                             onClick={teacherV.videoPreview.bind(this, v.videoPath)}>
-                                            <span className="del_ar" onClick={teacherV.deleteItem.bind(this,i,useIndex)} ></span>
+                                            onClick={teacherV.videoPreview.bind(this, v.videoPath)}>
+                                            <span className="del_ar" onClick={teacherV.deleteItem.bind(this, i, useIndex)} ></span>
                                             {/* <div>{v.fileName}</div> */}
                                         </div>
                                     )
                                 } else if (v.videoExtra == "docx" || v.videoExtra == "doc") {
                                     return (
                                         <div className="docBack fileBack"
-                                             onClick={teacherV.videoPreview.bind(this, v.videoPath)}>
-                                            <span className="del_ar" onClick={teacherV.deleteItem.bind(this,i,useIndex)} ></span>
+                                            onClick={teacherV.videoPreview.bind(this, v.videoPath)}>
+                                            <span className="del_ar" onClick={teacherV.deleteItem.bind(this, i, useIndex)} ></span>
                                             {/* <div>{v.fileName}</div> */}
                                         </div>
                                     )
                                 } else if (v.videoExtra == "xls" || v.videoExtra == "xlsx") {
                                     return (
                                         <div className="xlsBack fileBack"
-                                             onClick={teacherV.videoPreview.bind(this, v.videoPath)}>
-                                            <span className="del_ar" onClick={teacherV.deleteItem.bind(this,i,useIndex)} ></span>
+                                            onClick={teacherV.videoPreview.bind(this, v.videoPath)}>
+                                            <span className="del_ar" onClick={teacherV.deleteItem.bind(this, i, useIndex)} ></span>
                                             {/* <div>{v.fileName}</div> */}
                                         </div>
                                     )
@@ -390,7 +417,7 @@ export default class addARTextbook extends React.Component {
                                         <div className="pptBack fileBack"
                                             onClick={teacherV.videoPreview.bind(this, v.videoPath)}>
                                             {/* <div>{v.fileName}</div> */}
-                                            <span className="del_ar" onClick={teacherV.deleteItem.bind(this,i,useIndex)} ></span>
+                                            <span className="del_ar" onClick={teacherV.deleteItem.bind(this, i, useIndex)} ></span>
                                         </div>
                                     )
                                 } else {
@@ -398,8 +425,8 @@ export default class addARTextbook extends React.Component {
                                         <div className="videoDiv" onClick={teacherV.videoPreview.bind(this, v.videoPath)}>
                                             {/* <span >播放</span> */}
                                             <video
-                                                   src={v.videoPath}></video>
-                                            <span className="del_ar" onClick={teacherV.deleteItem.bind(this,i,useIndex)} ></span>
+                                                src={v.videoPath}></video>
+                                            <span className="del_ar" onClick={teacherV.deleteItem.bind(this, i, useIndex)} ></span>
                                             {/* <span>{v.videoName}</span> */}
                                         </div>
                                     )
@@ -447,7 +474,7 @@ export default class addARTextbook extends React.Component {
                         return (
                             <div>
                                 {/* <span>{useIndex}</span> */}
-                                <span>{v}</span>
+                                <span>{v} <span onClick={teacherV.deleteTag.bind(this, useIndex, i)}>删除</span></span>
                             </div>
                         )
                     })
