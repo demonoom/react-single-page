@@ -259,7 +259,7 @@
   border: 0;
   display: inline-block;
 }
-#addARTextbook .del_ar {
+#addARTextbook .del_tag {
   width: 16px;
   height: 16px;
   background: url("../imgs/delPic.png") no-repeat;
