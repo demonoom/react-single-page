@@ -609,8 +609,8 @@ export default class addARTextbook extends React.Component {
     /**
      * 上传照片
      */
-    uploadImage(e, index) {
-        e.stopPropagation();
+    uploadImage(index) {
+        
         var data = {
             method: 'selectImages',
         };

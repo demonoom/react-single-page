@@ -35,6 +35,9 @@ export default class addARTag extends React.Component {
      * 提交
      */
     submit() {
+        
+
+
         var param = {
             "method": 'addARBookTag',
             "tagData":{
@@ -47,7 +50,14 @@ export default class addARTag extends React.Component {
             onResponse: function (result) {
                 console.log(result,"re")
                 if (result.msg == '调用成功' || result.success == true) {
-                    
+                    //关闭当前窗口，并刷新上一个页面
+                    var data = {
+                        method: 'finishForRefresh',
+                    };
+
+                    Bridge.callHandler(data, null, function (error) {
+                        console.log(error);
+                    });
                 } else {
                     // Toast.fail(result.msg, 5);
                 }
