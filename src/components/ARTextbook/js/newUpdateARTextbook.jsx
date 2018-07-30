@@ -601,7 +601,8 @@ export default class newUpdateARTextbook extends React.Component {
 
                     </div>
                 </div>
-                <div>
+                <div className="line_public flex_container"></div>
+                <div className="am-list-item item_list20">
                     <div>相关标签</div>
                     {
                         v.tagList.map(function (v, i) {
@@ -612,7 +613,7 @@ export default class newUpdateARTextbook extends React.Component {
                     }
                     <div onClick={teacherV.addTags}>新加</div>
                 </div>
-                <div className="line_public"></div>
+
             </div>
 
             tabItem.push(imgDiv)
