@@ -3,7 +3,7 @@ import {
     Toast,
     Button,
     InputItem,
-    Tabs, WhiteSpace, Modal, Icon
+    Tabs, WhiteSpace, Modal, Icon, Tag
 } from 'antd-mobile';
 import "../css/UpdateARTextbook.less"
 
@@ -25,7 +25,9 @@ export default class newUpdateARTextbook extends React.Component {
             itemList: [],
             ARTextbookValue: '',  //教材名称
             attachment: '',  //附件地址
-            tagArr: []
+            tagArr: [],
+            searchTagValue: '',
+            tagsBefore: [],
         };
     }
 
@@ -463,16 +465,71 @@ export default class newUpdateARTextbook extends React.Component {
         teacherV.tabsOnChange(teacherV.state.clickTab)
     }
 
-    addTags() {
+    addTags(index) {
+        console.log(index);
         $('.tagAddPanel').show()
     }
 
+    /**
+     * 取消标签搜索面板
+     */
     exitAddTags() {
         $('.tagAddPanel').hide()
+        teacherV.setState({tagsLi: []})
+        teacherV.setState({searchTagValue: ''})
     }
 
     addTagsForSure() {
-        console.log(1);
+        console.log(teacherV.state.tagsBefore);
+    }
+
+    searchOnChange(e) {
+        teacherV.setState({searchTagValue: e.target.value})
+    }
+
+    tagOnChange(data, v, e) {
+        console.log(e);
+        if (v) {
+            teacherV.state.tagsBefore.push(data)
+        } else {
+            teacherV.state.tagsBefore.forEach(function (v, i) {
+                if (v.id == data.id) {
+                    teacherV.state.tagsBefore.splice(i, 1)
+                }
+            })
+        }
+    }
+
+    searchTagByWords() {
+        teacherV.state.tagsLi = []
+        var param = {
+            "method": 'searchARBookTag',
+            "adminId": teacherV.state.uId,
+            "keyword": teacherV.state.searchTagValue,
+            "pn": -1
+        }
+        WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
+            onResponse: function (result) {
+                if (result.msg == '调用成功' || result.success == true) {
+                    if (!WebServiceUtil.isEmpty(result.response)) {
+                        var arr = []
+                        result.response.forEach(function (v, i) {
+                            arr.push(<Tag
+                                selected={false}
+                                onChange={teacherV.tagOnChange.bind(this, v)}
+                            >{v.content}</Tag>)
+                        })
+                        teacherV.setState({tagsLi: arr})
+                    }
+                } else {
+                    Toast.fail(result.msg, 5);
+                }
+            },
+            onError: function (error) {
+                // message.error(error);
+            }
+        });
+
     }
 
     /**
@@ -612,7 +669,7 @@ export default class newUpdateARTextbook extends React.Component {
                             </li>
                         })
                     }
-                    <div onClick={teacherV.addTags}>新加</div>
+                    <div onClick={teacherV.addTags.bind(this, v.index)}>新加</div>
                 </div>
                 <div className="line_public"></div>
             </div>
@@ -763,8 +820,19 @@ export default class newUpdateARTextbook extends React.Component {
                 </div>
 
                 <div className='tagAddPanel' style={{height: document.body.clientHeight, display: 'none'}}>
-                    <span onClick={this.exitAddTags}>取消</span>
-                    <span onClick={this.addTagsForSure}>确定</span>
+                    <div>
+                        <input type="text" value={this.state.searchTagValue} onChange={this.searchOnChange}/>
+                        <button onClick={this.searchTagByWords}>搜索</button>
+                    </div>
+                    <ul>
+                        {this.state.tagsLi}
+                    </ul>
+
+
+                    <div>
+                        <span onClick={this.exitAddTags}>取消</span>
+                        <span onClick={this.addTagsForSure}>确定</span>
+                    </div>
                 </div>
 
             </div>
