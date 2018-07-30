@@ -489,7 +489,6 @@ export default class newUpdateARTextbook extends React.Component {
         var tabItem = []
 
         arr.forEach(function (v, i) {
-            console.log(v);
 
             //新加的图片,样式是加号
             var imgDivSon = <div className="div68" onClick={teacherV.imgPreview.bind(this, v.pic)}>
