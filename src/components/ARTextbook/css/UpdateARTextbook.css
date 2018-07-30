@@ -142,13 +142,14 @@
   height: 43.5px;
   background-color: #fff;
   align-items: center;
+  border-bottom: 1PX solid #ddd;
 }
 #UpdateARTextbook .tabCont li {
   padding: 13px 0;
-  border-bottom: 1PX solid #ddd;
+  width: 80px;
   text-align: center;
 }
 #UpdateARTextbook .tabCont li.active {
   color: #108ee9;
-  border: 1px #108ee9 solid;
+  border-bottom: 1px #108ee9 solid;
 }

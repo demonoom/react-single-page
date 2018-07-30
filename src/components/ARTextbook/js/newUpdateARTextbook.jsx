@@ -630,8 +630,7 @@ export default class newUpdateARTextbook extends React.Component {
                 <div className="tabCont my_flex">
                     {
                         this.state.tagArr.map(function (v, i) {
-                            return <li style={{width:'50%'}}
-                                       onClick={teacherV.tabsOnChange.bind(this, v)}>{v.title}</li>
+                            return <li className="active" onClick={teacherV.tabsOnChange.bind(this, v)}>{v.title}</li>
                         })
                     }
                 </div>
