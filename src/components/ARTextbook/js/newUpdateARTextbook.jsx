@@ -9,6 +9,7 @@ import "../css/UpdateARTextbook.less"
 
 var teacherV;
 const alert = Modal.alert;
+const prompt = Modal.prompt;
 
 export default class newUpdateARTextbook extends React.Component {
 
@@ -251,6 +252,78 @@ export default class newUpdateARTextbook extends React.Component {
         }, function (error) {
             console.log(error);
         });
+    }
+
+    showAddPage() {
+        var phoneType = navigator.userAgent;
+        var phone;
+        if (phoneType.indexOf('iPhone') > -1 || phoneType.indexOf('iPad') > -1) {
+            phone = 'ios'
+        } else {
+            phone = 'android'
+        }
+
+        prompt('请输入页码', '', [
+            {text: '取消'},
+            {text: '确定', onPress: value => teacherV.addPage(value)},
+        ], 'default', '', [], phone)
+        if (phone == 'ios') {
+            document.getElementsByClassName('am-modal-input')[0].getElementsByTagName('input')[0].focus();
+        }
+    }
+
+    /**
+     * 增加页
+     */
+    addPage(value) {
+        if (value.length != 0) {
+
+            var flag = true
+
+            for (var i = 0; i < teacherV.state.initData.itemList.length; i++) {
+                if (value == teacherV.state.initData.itemList[i].page) {
+                    //页码存在,直接指向
+                    teacherV.state.tagArr.forEach(function (item, index) {
+                        if (item.page == value) {
+                            teacherV.tabsOnChange(item)
+                        }
+                    })
+                    flag = false
+                    break
+                }
+            }
+
+            var arr = []
+            teacherV.state.initData.itemList.forEach(function (v, i) {
+                arr.push(v.index)
+            })
+            var max = Math.max.apply(null, arr);
+
+            if (flag) {
+                teacherV.state.initData.itemList.push({
+                    index: max + 1,
+                    page: value,
+                    pic: '',
+                    video: '',
+                })
+
+                /**
+                 * 此处应该有排序
+                 */
+                console.log(teacherV.state.tagArr);
+                teacherV.state.tagArr.push({
+                    index: value,
+                    page: value,
+                    title: '第' + value + "页"
+                })
+
+                teacherV.tabsOnChange({
+                    index: value,
+                    page: value,
+                    title: '第' + value + "页"
+                })
+            }
+        }
     }
 
     /**
@@ -528,7 +601,7 @@ export default class newUpdateARTextbook extends React.Component {
         data.method = 'openNewPage';
         data.url = "http://www.maaee.com/Excoord_For_Education/js/pdfjs/web/viewer.html?file=" + content3;
         Bridge.callHandler(data, null, function (error) {
-            window.location.href = url;
+
         });
     }
 
@@ -628,6 +701,7 @@ export default class newUpdateARTextbook extends React.Component {
                 <WhiteSpace size="lg"/>
 
                 <div className="tabCont my_flex">
+                    <div onClick={this.showAddPage}>加页</div>
                     {
                         this.state.tagArr.map(function (v, i) {
                             return <li className="active" onClick={teacherV.tabsOnChange.bind(this, v)}>{v.title}</li>
