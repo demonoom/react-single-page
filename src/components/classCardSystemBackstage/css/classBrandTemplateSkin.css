@@ -1,4 +1,3 @@
-(node) util.print is deprecated. Use console.log instead.
 #classBrandTemplateSkin .submitBtn {
   position: absolute !important;
   width: calc(100% - 30px);
@@ -9,7 +8,8 @@
 #classBrandTemplateSkin .am-list-line::after {
   display: none;
 }
-#classBrandTemplateSkin .am-list-body {
+#classBrandTemplateSkin .am-list-body,
+#classBrandTemplateSkin .am-list-line {
   border: 0;
 }
 #classBrandTemplateSkin .classInfo .am-list-item {
