@@ -439,7 +439,7 @@ export default class addARTextbook extends React.Component {
                         {
                             teacherV.state.ARTextbookDataArr[useIndex].tagText.map((v, i) => {
                                 return (
-                                    <span className="spanTag">{v}<span onClick={teacherV.deleteTag.bind(this, useIndex, i)}>删除</span></span>
+                                    <span className="spanTag">{v}<span className="del_ar" onClick={teacherV.deleteTag.bind(this, useIndex, i)}></span></span>
                                         // {/* <span>{useIndex}</span> */}
                                 )
                             })
