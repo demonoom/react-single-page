@@ -306,6 +306,7 @@ export default class newUpdateARTextbook extends React.Component {
                     page: value,
                     pic: '',
                     video: '',
+                    tagList: []
                 })
 
                 /**
@@ -343,6 +344,7 @@ export default class newUpdateARTextbook extends React.Component {
                 video: '',
                 page: teacherV.state.clickTab.page,
                 index: max + 1,
+                tagList: []
             }
         )
 
