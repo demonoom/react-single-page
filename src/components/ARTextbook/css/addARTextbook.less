@@ -49,6 +49,13 @@
         background-color: #eee;
 
     }
+    .calm{
+        margin-top: 15px;
+        position: relative;
+        .am-list-item .am-input-control input{
+            width: 88%;
+        }
+    }
     .videoDiv {
         width: 68px;
         height: 68px;
@@ -83,6 +90,7 @@
         height: 68px;
         background-size: 100%;
         border: 0;
+        cursor: pointer;
     }
     .addARTextbookTable{
         text-align: center;
@@ -192,15 +200,16 @@
         }
     }
     .icon_delete{
-        background: url("../imgs/icon_delete.png") no-repeat;
-        background-size:100%;
+        background: url("../imgs/del_group.png") no-repeat;
+        font-size: 0;
+        width: 34px;
+        height: 32px;
+        background-size: 100%;
+        border: 0;
         position: absolute;
-        right: 15px;
-        top: 50%;
-        display: block;
-        width: 18px;
-        height: 18px;
-        margin-top: -9px;
+        right: 0;
+        top: 0;
+        z-index: 1;
     }
     .classTags{
         padding: 0 10px;
@@ -210,6 +219,10 @@
         .am-tag{
             margin-left: 5px;
             margin-bottom: 5px;
+            border: 1px #fff solid;
+            height: 36px;
+            line-height: 36px;
+            cursor: pointer;
         }
         .am-tag-normal {
             border-radius: 2px;
@@ -220,31 +233,44 @@
             padding: 0 5px;
         }
         .am-tag-active{
-            background-color: #BEDCFF;
+            border: 1px #2B84EF solid;
             color: #2B84EF;
         }
     }
     .spanTag{
-        background-color: #BEDCFF;
+        border: 1px #2B84EF solid;
         color: #2B84EF;
-        padding: 0 5px;
+        padding: 0 10px;
         font-size: 13px;
-        margin-right: 10px;
-        margin-bottom: 10px;
-        height: 25px;
-        line-height: 25px;
+        margin-right: 15px;
+        margin-bottom: 15px;
+        height: 36px;
+        line-height: 36px;
         -webkit-border-radius: 2px;
         -moz-border-radius: 2px;
         border-radius: 2px;
         display: inline-block;
         vertical-align: top;
+        box-sizing: border-box;
+        position: relative;
     }
     .tagBtn{
         background: url("../imgs/tagBack.png") no-repeat;
-        width: 90px;
+        width: 36px;
         height: 36px;
         background-size: 100%;
         border: 0;
+        display: inline-block;
     }
-
+    .del_ar {
+        width: 16px;
+        height: 16px;
+        background: url("../imgs/delPic.png") no-repeat;
+        background-size: 100% 100%;
+        display: inline-block;
+        position: absolute;
+        right: -8px;
+        top: -8px;
+        z-index: 9 !important;
+    }
 }

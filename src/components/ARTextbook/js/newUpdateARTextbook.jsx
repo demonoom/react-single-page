@@ -481,14 +481,18 @@ export default class newUpdateARTextbook extends React.Component {
 
     addTagsForSure() {
         console.log(teacherV.state.tagsBefore);
+        console.log(teacherV.state.initData.itemList);
+
+        $('.tagAddPanel').hide()
+        teacherV.setState({tagsLi: [], tagsBefore: []})
+        teacherV.setState({searchTagValue: ''})
     }
 
     searchOnChange(e) {
         teacherV.setState({searchTagValue: e.target.value})
     }
 
-    tagOnChange(data, v, e) {
-        console.log(e);
+    tagOnChange(data, v) {
         if (v) {
             teacherV.state.tagsBefore.push(data)
         } else {
@@ -501,35 +505,35 @@ export default class newUpdateARTextbook extends React.Component {
     }
 
     searchTagByWords() {
-        teacherV.state.tagsLi = []
-        var param = {
-            "method": 'searchARBookTag',
-            "adminId": teacherV.state.uId,
-            "keyword": teacherV.state.searchTagValue,
-            "pn": -1
-        }
-        WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
-            onResponse: function (result) {
-                if (result.msg == '调用成功' || result.success == true) {
-                    if (!WebServiceUtil.isEmpty(result.response)) {
-                        var arr = []
-                        result.response.forEach(function (v, i) {
-                            arr.push(<Tag
-                                selected={false}
-                                onChange={teacherV.tagOnChange.bind(this, v)}
-                            >{v.content}</Tag>)
-                        })
-                        teacherV.setState({tagsLi: arr})
-                    }
-                } else {
-                    Toast.fail(result.msg, 5);
-                }
-            },
-            onError: function (error) {
-                // message.error(error);
+        teacherV.setState({tagsLi: []}, () => {
+            var param = {
+                "method": 'searchARBookTag',
+                "adminId": teacherV.state.uId,
+                "keyword": teacherV.state.searchTagValue,
+                "pn": -1
             }
-        });
-
+            WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
+                onResponse: function (result) {
+                    if (result.msg == '调用成功' || result.success == true) {
+                        if (!WebServiceUtil.isEmpty(result.response)) {
+                            var arr = []
+                            result.response.forEach(function (v, i) {
+                                arr.push(<Tag
+                                    selected={false}
+                                    onChange={teacherV.tagOnChange.bind(this, v)}
+                                >{v.content}</Tag>)
+                            })
+                            teacherV.setState({tagsLi: arr})
+                        }
+                    } else {
+                        Toast.fail(result.msg, 5);
+                    }
+                },
+                onError: function (error) {
+                    // message.error(error);
+                }
+            });
+        })
     }
 
     /**
@@ -564,7 +568,7 @@ export default class newUpdateARTextbook extends React.Component {
 
             //新加的图片,样式是加号
             var imgDivSon = <div className="div68" onClick={teacherV.imgPreview.bind(this, v.pic)}>
-                <div className="uploadBtn" onClick={teacherV.uploadImage.bind(this, v.index)}></div>
+                <div className="uploadBtn icon_pointer" onClick={teacherV.uploadImage.bind(this, v.index)}></div>
             </div>;
 
             if (WebServiceUtil.isEmpty(v.pic) == false) {
@@ -572,13 +576,13 @@ export default class newUpdateARTextbook extends React.Component {
                     <button className="uploadAttech i_uploadAttech">{
                         <img className="imgDiv" src={v.pic}/>
                     }
-                        <div onClick={teacherV.uploadImage.bind(this, v.index)}>修改</div>
+                        <div className="icon_pointer" onClick={teacherV.uploadImage.bind(this, v.index)}>修改</div>
                     </button>
                 </div>
             }
 
             var imgDiv = <div className="tabItem_list">
-                <span className="del_group" onClick={teacherV.showListAlert.bind(this, v)}>删除</span>
+                <span className="del_group icon_pointer" onClick={teacherV.showListAlert.bind(this, v)}>删除</span>
                 <div className="am-list-item item_list20">
                     <div className="am-input-label am-input-label-5">教材图片</div>
                     {imgDivSon}
@@ -602,8 +606,10 @@ export default class newUpdateARTextbook extends React.Component {
                                         <div className="uploadAttech i_uploadAttech pdfDiv"
                                              onClick={teacherV.videoPreview.bind(this, vtem, v.id)}>
                                             {/* <div>{v.fileName}</div> */}
-                                            <div onClick={teacherV.uploadVideo.bind(this, vtem, v.index)}>修改</div>
-                                            <span className="del_ar"
+                                            <div className="icon_pointer"
+                                                 onClick={teacherV.uploadVideo.bind(this, vtem, v.index)}>修改
+                                            </div>
+                                            <span className="del_ar icon_pointer"
                                                   onClick={teacherV.showAlert.bind(this, vtem, v.id)}></span>
                                         </div>
                                     )
@@ -612,8 +618,10 @@ export default class newUpdateARTextbook extends React.Component {
                                         <div className="uploadAttech i_uploadAttech pptDiv"
                                              onClick={teacherV.videoPreview.bind(this, vtem, v.id)}>
                                             {/* <div>{v.fileName}</div> */}
-                                            <div onClick={teacherV.uploadVideo.bind(this, vtem, v.index)}>修改</div>
-                                            <span className="del_ar"
+                                            <div className="icon_pointer"
+                                                 onClick={teacherV.uploadVideo.bind(this, vtem, v.index)}>修改
+                                            </div>
+                                            <span className="del_ar icon_pointer"
                                                   onClick={teacherV.showAlert.bind(this, vtem, v.id)}></span>
                                         </div>
                                     )
@@ -622,8 +630,10 @@ export default class newUpdateARTextbook extends React.Component {
                                         <div className="uploadAttech i_uploadAttech xlsDiv"
                                              onClick={teacherV.videoPreview.bind(this, vtem, v.id)}>
                                             {/* <div>{v.fileName}</div> */}
-                                            <div onClick={teacherV.uploadVideo.bind(this, vtem, v.index)}>修改</div>
-                                            <span className="del_ar"
+                                            <div className="icon_pointer"
+                                                 onClick={teacherV.uploadVideo.bind(this, vtem, v.index)}>修改
+                                            </div>
+                                            <span className="del_ar icon_pointer"
                                                   onClick={teacherV.showAlert.bind(this, vtem, v.id)}></span>
                                         </div>
                                     )
@@ -632,8 +642,10 @@ export default class newUpdateARTextbook extends React.Component {
                                         <div className="uploadAttech i_uploadAttech docDiv"
                                              onClick={teacherV.videoPreview.bind(this, vtem, v.id)}>
                                             {/* <div>{v.fileName}</div> */}
-                                            <div onClick={teacherV.uploadVideo.bind(this, vtem, v.index)}>修改</div>
-                                            <span className="del_ar"
+                                            <div className="icon_pointer"
+                                                 onClick={teacherV.uploadVideo.bind(this, vtem, v.index)}>修改
+                                            </div>
+                                            <span className="del_ar icon_pointer"
                                                   onClick={teacherV.showAlert.bind(this, vtem, v.id)}></span>
                                         </div>
                                     )
@@ -641,11 +653,13 @@ export default class newUpdateARTextbook extends React.Component {
                                     return (
                                         <div className="uploadAttech i_uploadAttech"
                                              onClick={teacherV.videoPreview.bind(this, vtem, v.id)}>
-                                            <span className="del_ar"
+                                            <span className="del_ar icon_pointer"
                                                   onClick={teacherV.showAlert.bind(this, vtem, v.id)}></span>
                                             <video onClick={teacherV.theVideoPlay.bind(this, i)} className="videoDiv"
                                                    src={vtem}></video>
-                                            <div onClick={teacherV.uploadVideo.bind(this, vtem, v.index)}>修改</div>
+                                            <div className="icon_pointer"
+                                                 onClick={teacherV.uploadVideo.bind(this, vtem, v.index)}>修改
+                                            </div>
                                         </div>
                                     )
                                 }
@@ -653,25 +667,29 @@ export default class newUpdateARTextbook extends React.Component {
                             })
                         }
 
-                        <div className="uploadBtn"
+                        <div className="uploadBtn icon_pointer"
                              onClick={teacherV.addUploadVideo.bind(this, v.index)}>
                             增加
                         </div>
 
                     </div>
                 </div>
-                <div>
-                    <div>相关标签</div>
-                    {
-                        v.tagList.map(function (v, i) {
-                            return <li>{v.content}
-                                <span>删除</span>
-                            </li>
-                        })
-                    }
-                    <div onClick={teacherV.addTags.bind(this, v.index)}>新加</div>
+                <div className="line_public flex_container"></div>
+                <div className="am-list-item item_list20">
+                    <div className="am-input-label am-input-label-5">相关标签</div>
+                    <div className="div68">
+                        {
+                            v.tagList.map(function (v, i) {
+                                return <li className="spanTag">{v.content}
+                                    <span className="del_ar icon_pointer"></span>
+                                </li>
+                            })
+                        }
+
+                        <span className="tagBtn icon_pointer" onClick={teacherV.addTags}></span>
+                    </div>
                 </div>
-                <div className="line_public"></div>
+
             </div>
 
             tabItem.push(imgDiv)
@@ -784,7 +802,7 @@ export default class newUpdateARTextbook extends React.Component {
                     <div className="am-input-label am-input-label-5">教材附件</div>
                     <div className="div68" onClick={teacherV.pdfPreview}>
                         <button className="uploadAttech i_uploadAttech upload_file">
-                            <div onClick={teacherV.uploadFile}>修改</div>
+                            <div className="icon_pointer" onClick={teacherV.uploadFile}>修改</div>
                         </button>
                     </div>
                 </div>
@@ -795,14 +813,16 @@ export default class newUpdateARTextbook extends React.Component {
                     <ul>
                         {
                             this.state.tagArr.map(function (v, i) {
-                                return <li className={v.tagClick ? 'pageNumber active' : 'pageNumber'}
-                                           onClick={teacherV.tabsOnChange.bind(this, v)}
-                                           ref={v.index}
+                                return <li
+                                    className={v.tagClick ? 'icon_pointer pageNumber active' : 'icon_pointer pageNumber'}
+                                    onClick={teacherV.tabsOnChange.bind(this, v)}
+                                    ref={v.index}
                                 >{v.title}</li>
                             })
                         }
                     </ul>
-                    <div className="add_page" onClick={this.showAddPage}><Icon type="plus"/></div>
+                    <div className="add_page" onClick={this.showAddPage}><Icon className="icon_pointer" type="plus"/>
+                    </div>
                 </div>
 
                 <div className="tabItem_cont">
@@ -810,12 +830,12 @@ export default class newUpdateARTextbook extends React.Component {
                 </div>
                 <WhiteSpace size="lg"/>
                 <div onClick={this.addList} className='addARTextbookTable'>
-                    <div className="addBtn">
+                    <div className="addBtn icon_pointer">
                         <Icon type="plus"/>
                         <span>添加扫描的图片</span></div>
                 </div>
 
-                <div className='submitBtn'>
+                <div className='submitBtn icon_pointer'>
                     <Button type="warning" onClick={this.updateARBook}>提交</Button>
                 </div>
 

@@ -1,3 +1,4 @@
+(node) util.print is deprecated. Use console.log instead.
 html,
 body {
   height: 100%;
@@ -80,7 +81,7 @@ hr {
   font-size: 14px;
 }
 .color_red {
-  color: #F46A55;
+  color: #f46a55;
 }
 .line_item {
   height: 8px;
@@ -255,6 +256,7 @@ hr {
   box-sizing: border-box;
   z-index: 99;
   border-radius: 2px;
+  cursor: pointer;
 }
 .submitBtn .am-button-primary {
   background-color: #F56A55;
@@ -431,7 +433,7 @@ hr {
   transform: scaleY(0.5);
 }
 .noticeMsg_common {
-  background: #eee url("components/classCardSystemBackstage/imgs/noticeIcon.png") no-repeat 30px 9px;
+  background: #eeeeee url("components/classCardSystemBackstage/imgs/noticeIcon.png") no-repeat 30px 9px;
   background-size: 18px;
   font-size: 15px;
   color: #666;
@@ -540,4 +542,7 @@ hr {
   /* ::-webkit-scrollbar-corner {
         background-color: none;
   } 横向滚动条和纵向滚动条相交处尖角的颜色 */
+}
+.icon_pointer {
+  cursor: pointer;
 }
