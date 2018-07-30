@@ -557,10 +557,10 @@ export default class newUpdateARTextbook extends React.Component {
 
                 <WhiteSpace size="lg"/>
 
-                <div>
+                <div className="tabCont my_flex">
                     {
                         this.state.tagArr.map(function (v, i) {
-                            return <li style={{float: 'left'}}
+                            return <li style={{width:'50%'}}
                                        onClick={teacherV.tabsOnChange.bind(this, v)}>{v.title}</li>
                         })
                     }

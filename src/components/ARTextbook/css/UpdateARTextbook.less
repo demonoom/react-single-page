@@ -121,7 +121,7 @@
         position: absolute;
         right: 2px;
         top: 2px;
-        z-index: 9999 !important;
+        z-index: 88 !important;
     }
     .uploadBtn{
         background: url("../imgs/addPic.png") no-repeat;
@@ -134,5 +134,20 @@
         overflow: hidden;
         margin-bottom: 15px;
         display: inline-block;
+    }
+    .tabCont{
+        font-size: 15px;
+        height: 43.5px;
+        background-color: #fff;
+        align-items: center;
+        li{
+            padding: 13px 0;
+            border-bottom: 1PX solid #ddd;
+            text-align: center;
+            &.active{
+                color: #108ee9;
+                border: 1px #108ee9 solid;
+            }
+        }
     }
 }
