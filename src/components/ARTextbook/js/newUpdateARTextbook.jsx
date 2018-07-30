@@ -125,6 +125,7 @@ export default class newUpdateARTextbook extends React.Component {
                         tagArr.push({
                             title: '第' + v.page + '页',
                             index: v.page,
+                            page: v.page
                         })
                     });
 
@@ -253,6 +254,65 @@ export default class newUpdateARTextbook extends React.Component {
     }
 
     /**
+     * 增加组
+     */
+    addList() {
+        var arr = []
+        teacherV.state.initData.itemList.forEach(function (v, i) {
+            arr.push(v.index)
+        })
+        var max = Math.max.apply(null, arr);
+
+        teacherV.state.initData.itemList.push(
+            {
+                pic: '',
+                video: '',
+                page: teacherV.state.clickTab.page,
+                index: max + 1,
+            }
+        )
+
+        teacherV.tabsOnChange(teacherV.state.clickTab)
+    }
+
+    /**
+     * 删除组model
+     * @param src
+     * @param id
+     * @param event
+     */
+    showListAlert = (v, event) => {
+        event.stopPropagation()
+
+        var phoneType = navigator.userAgent;
+        var phone;
+        if (phoneType.indexOf('iPhone') > -1 || phoneType.indexOf('iPad') > -1) {
+            phone = 'ios'
+        } else {
+            phone = 'android'
+        }
+        var _this = this;
+        const alertInstance = alert('您确定移除吗?', '', [
+            {text: '取消', onPress: () => console.log('cancel'), style: 'default'},
+            {text: '确定', onPress: () => _this.delList(v)},
+
+        ], phone);
+    }
+
+    /**
+     * 删除组
+     * @param v
+     */
+    delList(v) {
+        teacherV.state.initData.itemList.forEach(function (item, index) {
+            if (item.index == v.index) {
+                teacherV.state.initData.itemList.splice(index, 1)
+            }
+        })
+        teacherV.tabsOnChange(teacherV.state.clickTab)
+    }
+
+    /**
      * 增加视频
      */
     addUploadVideo(id) {
@@ -349,16 +409,26 @@ export default class newUpdateARTextbook extends React.Component {
 
         arr.forEach(function (v, i) {
 
+            //新加的图片,样式是加号
+            var imgDivSon = <div className="div68" onClick={teacherV.imgPreview.bind(this, v.pic)}>
+                <div onClick={teacherV.uploadImage.bind(this, v.id)}>修改</div>
+            </div>;
+
+            if (WebServiceUtil.isEmpty(v.pic) == false) {
+                imgDivSon = <div className="div68" onClick={teacherV.imgPreview.bind(this, v.pic)}>
+                    <button className="uploadAttech i_uploadAttech">{
+                        <img className="imgDiv" src={v.pic}/>
+                    }
+                        <div onClick={teacherV.uploadImage.bind(this, v.id)}>修改</div>
+                    </button>
+                </div>
+            }
+
             var imgDiv = <div>
+                <span onClick={teacherV.showListAlert.bind(this, v)}>删除</span>
                 <div className="am-list-item item_list20">
                     <div className="am-input-label am-input-label-5">教材图片</div>
-                    <div className="div68" onClick={teacherV.imgPreview.bind(this, v.pic)}>
-                        <button className="uploadAttech i_uploadAttech">{
-                            <img className="imgDiv" src={v.pic}/>
-                        }
-                            <div onClick={teacherV.uploadImage.bind(this, v.id)}>修改</div>
-                        </button>
-                    </div>
+                    {imgDivSon}
                 </div>
                 <div className="line_public"></div>
                 <div className="am-list-item item_list20">
@@ -568,6 +638,10 @@ export default class newUpdateARTextbook extends React.Component {
 
                 <div>
                     {this.state.tabItem}
+                </div>
+
+                <div onClick={this.addList}>
+                    增加
                 </div>
 
                 <div className='submitBtn'>
