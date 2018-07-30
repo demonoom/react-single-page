@@ -41,6 +41,7 @@ export default class addARTextbook extends React.Component {
 
     componentDidMount() {
         Bridge.setShareAble("false");
+
     }
 
     componentWillUnmount() {
@@ -63,7 +64,7 @@ export default class addARTextbook extends React.Component {
     unique(arr) {
         var newArr = [arr[0]];
         for (var i = 1; i < arr.length; i++) {
-            　　　　if (newArr.indexOf(arr[i]) == -1) {
+            if (newArr.indexOf(arr[i]) == -1) {
                 newArr.push(arr[i]);
             }
         }
@@ -142,7 +143,7 @@ export default class addARTextbook extends React.Component {
                 "index": i,
                 "pic": v.picPath + '?size=300x300',
                 "video": v.videoPath.join(","),
-                "tagList":teacherV.unique(v.arrIdDiv)
+                "tagList": teacherV.unique(v.arrIdDiv)
             })
         })
         param.bookData.itemList = classArray;
@@ -188,7 +189,9 @@ export default class addARTextbook extends React.Component {
     /**
      *播放视频
      */
-    deleteItem(ind, useIndex) {
+    deleteItem = (ind, useIndex, event) => {
+        event.stopPropagation()
+        console.log("delete")
         // var videoDiv = $(".videoDiv")
         // videoDiv[i].play();
 
@@ -301,7 +304,10 @@ export default class addARTextbook extends React.Component {
         teacherV.buildARTextbook();
     }
 
-    /**
+    onKeydown(e) {
+
+    }
+    /** 
      * 搜索框
      */
     searchInputChange = (index, value) => {
@@ -311,17 +317,21 @@ export default class addARTextbook extends React.Component {
 
         // this.state.ARTextbookDataArr[index].searchValue = value;
         // this.buildARTextbook();
-        // if(oEvent.keyCode == 8){
+        // if(event.keyCode == 8){
         //     console.log("333")
         // }
-        teacherV.setState({
-            flag: false
-        }, () => {
-            this.state.ARTextbookDataArr[index].searchValue = value;
-            this.buildARTextbook();
-            teacherV.state.flag = true;
+        teacherV.state.flag = false;
+        this.state.ARTextbookDataArr[index].searchValue = value;
+        this.buildARTextbook();
 
-        })
+        // teacherV.setState({
+        //     flag: false
+        // }, () => {
+        //     this.state.ARTextbookDataArr[index].searchValue = value;
+        //     this.buildARTextbook();
+        //     teacherV.state.flag = true;
+
+        // })
 
     }
 
@@ -373,9 +383,10 @@ export default class addARTextbook extends React.Component {
         this.state.ARTextbookDataArr.forEach(function (v, i) {
             var useIndex = i;
             ARTextbookArr.push(<div>
-                <div className="cont_communal add_title font_gray">{i + 1}<span className="icon_delete" onClick={teacherV.deleteGroup.bind(this, useIndex)}></span></div>
-                <div className="line_public"></div>
+                {/*<div className="cont_communal add_title font_gray">{i + 1}<span className="icon_delete icon_pointer" onClick={teacherV.deleteGroup.bind(this, useIndex)}></span></div>*/}
+                {/*<div className="line_public flex_container"></div>*/}
                 <div className="flex_addElement calm">
+                    <span className="icon_delete icon_pointer" onClick={teacherV.deleteGroup.bind(this, useIndex)}></span>
                     <InputItem
                         className="add_element"
                         placeholder="请输入页码"
@@ -386,7 +397,7 @@ export default class addARTextbook extends React.Component {
                     </InputItem>
                 </div>
                 {/*<span>{teacherV.state.ARTextbookDataArr[i].picName}</span>*/}
-                <div className="line_public flex-container"></div>
+                <div className="line_public flex_container"></div>
                 <div className="sameBack my_flex">
                     <span className="textTitle">教材图片</span>
                     {teacherV.state.ARTextbookDataArr[i].picPath.length == 0 ? ""
@@ -394,10 +405,10 @@ export default class addARTextbook extends React.Component {
                         <img onClick={teacherV.imgPreview.bind(this, teacherV.state.ARTextbookDataArr[i])}
                             className="imgTag" src={teacherV.state.ARTextbookDataArr[i].picPath} />
                     }
-                    <button className="uploadBtn" onClick={teacherV.uploadImage.bind(this, i)}>教材图片</button>
+                    <button className="uploadBtn" onClick={(e) => { teacherV.uploadImage.bind(this, i) }}>教材图片</button>
                 </div>
 
-                <div className="line_public flex-container"></div>
+                <div className="line_public flex_container"></div>
                 <div className="sameBack my_flex">
                     <div className="textTitle">相关文件
                         <p style={{ margin: 0, height: 5 }}></p>
@@ -455,20 +466,24 @@ export default class addARTextbook extends React.Component {
                         <button className="uploadBtn" onClick={teacherV.uploadVideo.bind(this, i)}>相关视频</button>
                     </div>
                 </div>
-                <div className="line_public flex-container"></div>
+                <div className="line_public flex_container"></div>
                 <div className="sameBack my_flex">
                     <div className="textTitle">相关标签
                     </div>
                     <div className="videoCont">
                         {
-                            teacherV.unique(teacherV.state.ARTextbookDataArr[useIndex].tagText).map((v, i) => {
-                                return (
-                                    <span className="spanTag">{v}  <span onClick={teacherV.deleteTag.bind(this, useIndex, i)}>删除</span></span>
-                                    // {/* <span>{useIndex}</span> */}
-                                )
-                            })
+                            teacherV.state.ARTextbookDataArr[useIndex].tagText.length == 0 ?
+                                ""
+                                :
+                                teacherV.unique(teacherV.state.ARTextbookDataArr[useIndex].tagText).map((v, i) => {
+                                    // console.log(v,)
+                                    return (
+                                        <span className="spanTag">{v}<span className="del_tag" onClick={teacherV.deleteTag.bind(this, useIndex, i)}></span></span>
+                                        // {/* <span>{useIndex}</span> */}
+                                    )
+                                })
                         }
-                        <button className="tagBtn" onClick={teacherV.addTag.bind(this, useIndex)}></button>
+                        <button className="tagBtn icon_pointer" onClick={teacherV.addTag.bind(this, useIndex)}></button>
                     </div>
 
                 </div>
@@ -494,7 +509,7 @@ export default class addARTextbook extends React.Component {
                     </div>
                     <div className="classTags">
                         {
-                            teacherV.unique(teacherV.state.ARTextbookDataArr[useIndex].searchData).map((v, i) => {
+                            teacherV.state.ARTextbookDataArr[useIndex].searchData.map((v, i) => {
                                 return (
                                     v
                                 )
@@ -594,7 +609,8 @@ export default class addARTextbook extends React.Component {
     /**
      * 上传照片
      */
-    uploadImage(index) {
+    uploadImage(e, index) {
+        e.stopPropagation();
         var data = {
             method: 'selectImages',
         };
@@ -622,6 +638,7 @@ export default class addARTextbook extends React.Component {
      * 上传视频
      */
     uploadVideo(index) {
+        // event.stopPropagation();
         var data = {
             method: 'selectVideo',
         };
@@ -657,67 +674,71 @@ export default class addARTextbook extends React.Component {
         //     $(`calmTagDiv${useIndex}`).css("display") == "block"
         // }
 
-        if (teacherV.state.ARTextbookDataArr[useIndex].searchValue == "") {
-            Toast.info("请输入搜索的关键词")
-            return;
-        }
-        var param = {
-            "method": 'searchARBookTag',
-            "adminId": 23836,
-            "keyword": teacherV.state.ARTextbookDataArr[useIndex].searchValue,
-            "pn": -1
-        };
-        console.log(param)
-        WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
-            onResponse: (result) => {
-                if (result.msg == '调用成功' || result.success == true) {
-                    teacherV.setState({
-                        searchData: result.response
-                    })
-                    console.log(result, "info")
-                    var arr = []
-                    result.response.forEach((v, i) => {
-                        var searDiv = (
-                            <Tag data-seed={v.id} onChange={teacherV.tagChange.bind(this, v, useIndex)}>{v.content}</Tag>
-                        )
-                        arr.push(searDiv)
-                    })
-                    teacherV.state.ARTextbookDataArr[useIndex].searchData = arr;
-                    // teacherV.state.ARTextbookDataArr[useIndex].searchData.push(result.response)
+        teacherV.setState({
 
-                    // teacherV.setState({
-                    //     searchData: result.response
-                    // })
-                    // $(`calmTagDiv${useIndex}`).css("display") == "block"
-                    teacherV.setState({
-                        flag: false
-                    }, () => {
-                        teacherV.buildARTextbook();
-                        teacherV.state.flag = true;
-                        console.log(teacherV.state.flag, "calmFag")
-                    })
-
-                    // teacherV.state.ARTextbookDataArr[useIndex].tagName = []
-                    // teacherV.state.ARTextbookDataArr[useIndex].tagText.push(result.response.content)
-
-                    // teacherV.setState({
-                    //     // searchValue:"",
-                    //     // searchData:[],
-                    //     // arrIdDiv:[],
-                    //     // arrTextDiv:[]
-                    // }, () => {
-                    //     // teacherV.buildARTextbook();
-                    // })
-                    // teacherV.state.ARTextbookValue = "";
-                    // teacherV.state.searchData = [];
-                    // teacherV.state.arrIdDiv = [];
-                    // teacherV.state.arrTextDiv = [];
-                }
-            },
-            onError: function (error) {
-                Toast.fail('删除失败');
+        }, () => {
+            if (teacherV.state.ARTextbookDataArr[useIndex].searchValue == "") {
+                Toast.info("请输入搜索的关键词")
+                return;
             }
-        });
+            var param = {
+                "method": 'searchARBookTag',
+                "adminId": 23836,
+                "keyword": teacherV.state.ARTextbookDataArr[useIndex].searchValue,
+                "pn": -1
+            };
+            console.log(param)
+            WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
+                onResponse: (result) => {
+                    if (result.msg == '调用成功' || result.success == true) {
+                        teacherV.setState({
+                            searchData: result.response
+                        })
+                        console.log(result, "info")
+                        var arr = []
+                        result.response.forEach((v, i) => {
+                            var searDiv = (
+                                <Tag data-seed={v.id} onChange={teacherV.tagChange.bind(this, v, useIndex)}>{v.content}</Tag>
+                            )
+                            arr.push(searDiv)
+                        })
+                        teacherV.state.ARTextbookDataArr[useIndex].searchData = arr;
+                        // teacherV.state.ARTextbookDataArr[useIndex].searchData.push(result.response)
+
+                        // teacherV.setState({
+                        //     searchData: result.response
+                        // })
+                        // $(`calmTagDiv${useIndex}`).css("display") == "block"
+                        teacherV.setState({
+                            flag: false
+                        }, () => {
+                            teacherV.buildARTextbook();
+                            teacherV.state.flag = true;
+                            console.log(teacherV.state.flag, "calmFag")
+                        })
+
+                        // teacherV.state.ARTextbookDataArr[useIndex].tagName = []
+                        // teacherV.state.ARTextbookDataArr[useIndex].tagText.push(result.response.content)
+
+                        // teacherV.setState({
+                        //     // searchValue:"",
+                        //     // searchData:[],
+                        //     // arrIdDiv:[],
+                        //     // arrTextDiv:[]
+                        // }, () => {
+                        //     // teacherV.buildARTextbook();
+                        // })
+                        // teacherV.state.ARTextbookValue = "";
+                        // teacherV.state.searchData = [];
+                        // teacherV.state.arrIdDiv = [];
+                        // teacherV.state.arrTextDiv = [];
+                    }
+                },
+                onError: function (error) {
+                    Toast.fail('删除失败');
+                }
+            });
+        })
     }
 
     /**
@@ -763,7 +784,7 @@ export default class addARTextbook extends React.Component {
                         >
                             <div onClick={() => this.labelFocusInst.focus()}>AR教材</div>
                         </InputItem>
-                        <div className="line_public flex-container"></div>
+                        <div className="line_public flex_container"></div>
                         <div className="my_flex sameBack">
                             <span className="textTitle">教材附件</span>
                             {
@@ -787,7 +808,7 @@ export default class addARTextbook extends React.Component {
                             }
                             <WhiteSpace size="lg" />
                             <div onClick={this.addARTextbookTable} className='addARTextbookTable sameBack'>
-                                <div className="addBtn">
+                                <div className="addBtn icon_pointer">
                                     <Icon type="plus" />
                                     <span>添加扫描图片</span></div>
                             </div>
