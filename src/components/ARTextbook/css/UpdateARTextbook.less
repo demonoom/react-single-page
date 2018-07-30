@@ -151,6 +151,7 @@
             display: -webkit-box;
             overflow-y: hidden;
             overflow-x: auto;
+            height: 44px;
         }
         li{
             padding: 13px 0;
@@ -163,13 +164,13 @@
         }
 
     }
-    .tabCont::-webkit-scrollbar{
+    .tabCont ul::-webkit-scrollbar{
         width: 8px;
-        height:0px;
+        height:6px;
     } /* 这是针对缺省样式 (必须的) */
 
 
-    .tabCont::-webkit-scrollbar-thumb{
+    .tabCont ul::-webkit-scrollbar-thumb{
         background-color: #ccc;
         border-radius: 4px;
         -webkit-border-radius: 4px;
@@ -215,7 +216,7 @@
         background: url("../imgs/del_group.png") no-repeat;
         font-size: 0;
         width: 34px;
-        height: 34px;
+        height: 32px;
         background-size: 100%;
         border: 0;
         position: absolute;
