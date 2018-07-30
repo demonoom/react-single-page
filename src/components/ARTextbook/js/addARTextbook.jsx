@@ -58,6 +58,26 @@ export default class addARTextbook extends React.Component {
     }
 
     /**
+     * 删除标签
+     */
+    deleteTag(index, ind) {
+        console.log(teacherV.state.ARTextbookDataArr[index].tagText,"tagTexts")
+        console.log(teacherV.state.ARTextbookDataArr[index].arrIdDiv,"arrIdDivs")
+        teacherV.state.ARTextbookDataArr[index].tagText.forEach((v, i) => {
+            if (ind == i) {
+                teacherV.state.ARTextbookDataArr[index].tagText.splice(i, 1)
+                teacherV.state.ARTextbookDataArr[index].arrIdDiv.splice(i, 1)
+
+                console.log(teacherV.state.ARTextbookDataArr[index].tagText,"tagTexte")
+                console.log(teacherV.state.ARTextbookDataArr[index].arrIdDiv,"arrIdDiv")
+                teacherV.buildARTextbook();
+
+            }
+        })
+        // console.log(index, "index")
+        // console.log(i, "i")
+    }
+    /**
      * 新增AR教材
      */
     addARBook = () => {
@@ -285,12 +305,12 @@ export default class addARTextbook extends React.Component {
      * 添加标签
      */
     addTag(tagIndex) {
-        // teacherV.state.ARTextbookDataArr[tagIndex].tagName = [];
-        // teacherV.state.ARTextbookDataArr[tagIndex].tagText = [];
-        // teacherV.state.searchValue = "";
-        // teacherV.state.ARTextbookDataArr[tagIndex].searchData = [];
+        teacherV.state.ARTextbookDataArr[tagIndex].tagName = [];
+        teacherV.state.ARTextbookDataArr[tagIndex].tagText = [];
+        teacherV.state.ARTextbookDataArr[tagIndex].searchValue = "";
+        teacherV.state.ARTextbookDataArr[tagIndex].searchData = [];
         // teacherV.state.searchData = [];
-        // teacherV.buildARTextbook();
+        teacherV.buildARTextbook();
         // teacherV.state.arrIdDiv = [];
         // teacherV.state.arrTextDiv = [];
 
@@ -419,7 +439,7 @@ export default class addARTextbook extends React.Component {
                         {
                             teacherV.state.ARTextbookDataArr[useIndex].tagText.map((v, i) => {
                                 return (
-                                    <span className="spanTag">{v}</span>
+                                    <span className="spanTag">{v}<span onClick={teacherV.deleteTag.bind(this, useIndex, i)}>删除</span></span>
                                         // {/* <span>{useIndex}</span> */}
                                 )
                             })
