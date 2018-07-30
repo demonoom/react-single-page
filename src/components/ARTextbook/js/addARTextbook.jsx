@@ -349,9 +349,10 @@ export default class addARTextbook extends React.Component {
         this.state.ARTextbookDataArr.forEach(function (v, i) {
             var useIndex = i;
             ARTextbookArr.push(<div>
-                <div className="cont_communal add_title font_gray">{i + 1}<span className="icon_delete icon_pointer" onClick={teacherV.deleteGroup.bind(this, useIndex)}></span></div>
-                <div className="line_public flex_container"></div>
+                {/*<div className="cont_communal add_title font_gray">{i + 1}<span className="icon_delete icon_pointer" onClick={teacherV.deleteGroup.bind(this, useIndex)}></span></div>*/}
+                {/*<div className="line_public flex_container"></div>*/}
                 <div className="flex_addElement calm">
+                    <span className="icon_delete icon_pointer" onClick={teacherV.deleteGroup.bind(this, useIndex)}></span>
                     <InputItem
                         className="add_element"
                         placeholder="请输入页码"
