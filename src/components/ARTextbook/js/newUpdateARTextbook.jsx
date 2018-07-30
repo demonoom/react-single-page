@@ -66,6 +66,13 @@ export default class newUpdateARTextbook extends React.Component {
      */
     updateARBook = () => {
         var arr = teacherV.state.initData.itemList;
+        for (var i = 0; i < arr.length; i++) {
+            var array = []
+            for (var j = 0; j < arr[i].tagList.length; j++) {
+                array.push(arr[i].tagList[j].id)
+            }
+            arr[i].tagList = array
+        }
         var param = {
             "method": 'updateARBook',
             "bookData": {
@@ -77,6 +84,7 @@ export default class newUpdateARTextbook extends React.Component {
                 "itemList": arr
             }
         }
+        console.log(param);
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
             onResponse: function (result) {
                 if (result.msg == '调用成功' || result.success == true) {
@@ -466,8 +474,8 @@ export default class newUpdateARTextbook extends React.Component {
     }
 
     addTags(index) {
-        console.log(index);
         $('.tagAddPanel').show()
+        teacherV.setState({tagsIndex: index})
     }
 
     /**
@@ -480,8 +488,9 @@ export default class newUpdateARTextbook extends React.Component {
     }
 
     addTagsForSure() {
-        console.log(teacherV.state.tagsBefore);
-        console.log(teacherV.state.initData.itemList);
+        //去重
+        teacherV.state.initData.itemList[teacherV.state.tagsIndex].tagList = teacherV.state.initData.itemList[teacherV.state.tagsIndex].tagList.concat(teacherV.state.tagsBefore)
+        teacherV.tabsOnChange(teacherV.state.clickTab)
 
         $('.tagAddPanel').hide()
         teacherV.setState({tagsLi: [], tagsBefore: []})
@@ -544,6 +553,15 @@ export default class newUpdateARTextbook extends React.Component {
         // videoDiv[i].play();
     }
 
+    delTags(v, a) {
+        teacherV.state.initData.itemList[a].tagList.forEach(function (item, index) {
+            if (item.id == v.id) {
+                teacherV.state.initData.itemList[a].tagList.splice(index, 1)
+            }
+        })
+        teacherV.tabsOnChange(teacherV.state.clickTab)
+    }
+
     tabsOnChange(index, event) {
 
         //加点击类名字,只需要改变tagClick为true即可
@@ -564,7 +582,6 @@ export default class newUpdateARTextbook extends React.Component {
         var tabItem = []
 
         arr.forEach(function (v, i) {
-            console.log(v.tagList);
 
             //新加的图片,样式是加号
             var imgDivSon = <div className="div68" onClick={teacherV.imgPreview.bind(this, v.pic)}>
@@ -679,14 +696,15 @@ export default class newUpdateARTextbook extends React.Component {
                     <div className="am-input-label am-input-label-5">相关标签</div>
                     <div className="div68">
                         {
-                            v.tagList.map(function (v, i) {
-                                return <li className="spanTag">{v.content}
-                                    <span className="del_ar icon_pointer"></span>
+                            v.tagList.map(function (item, index) {
+                                return <li className="spanTag">{item.content}
+                                    <span className="del_ar icon_pointer"
+                                          onClick={teacherV.delTags.bind(this, item, v.index)}></span>
                                 </li>
                             })
                         }
 
-                        <span className="tagBtn icon_pointer" onClick={teacherV.addTags}></span>
+                        <span className="tagBtn icon_pointer" onClick={teacherV.addTags.bind(this, v.index)}></span>
                     </div>
                 </div>
 
@@ -852,8 +870,6 @@ export default class newUpdateARTextbook extends React.Component {
 
                         {/*<input type="text" value={this.state.searchTagValue} onChange={this.searchOnChange}/>*/}
                         {/*<button onClick={this.searchTagByWords}>搜索</button>*/}
-
-
 
 
                         <div className="searchIcon" onClick={this.searchTagByWords}></div>

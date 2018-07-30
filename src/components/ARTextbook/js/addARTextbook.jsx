@@ -41,6 +41,7 @@ export default class addARTextbook extends React.Component {
 
     componentDidMount() {
         Bridge.setShareAble("false");
+
     }
 
     componentWillUnmount() {
@@ -56,20 +57,31 @@ export default class addARTextbook extends React.Component {
             })
         }, 100)
     }
-
+    /**
+     * 数组
+     * @param {*} arr 
+     */
+    unique(arr) {
+        var newArr = [arr[0]];
+        for (var i = 1; i < arr.length; i++) {
+            if (newArr.indexOf(arr[i]) == -1) {
+                newArr.push(arr[i]);
+            }
+        }
+        return newArr;
+    }
     /**
      * 删除标签
      */
     deleteTag(index, ind) {
-        console.log(teacherV.state.ARTextbookDataArr[index].tagText,"tagTexts")
-        console.log(teacherV.state.ARTextbookDataArr[index].arrIdDiv,"arrIdDivs")
+        console.log(teacherV.state.ARTextbookDataArr[index].tagText, "tagTexts")
+        console.log(teacherV.state.ARTextbookDataArr[index].arrIdDiv, "arrIdDivs")
         teacherV.state.ARTextbookDataArr[index].tagText.forEach((v, i) => {
             if (ind == i) {
                 teacherV.state.ARTextbookDataArr[index].tagText.splice(i, 1)
                 teacherV.state.ARTextbookDataArr[index].arrIdDiv.splice(i, 1)
-
-                console.log(teacherV.state.ARTextbookDataArr[index].tagText,"tagTexte")
-                console.log(teacherV.state.ARTextbookDataArr[index].arrIdDiv,"arrIdDiv")
+                console.log(teacherV.state.ARTextbookDataArr[index].tagText, "tagTexte")
+                console.log(teacherV.state.ARTextbookDataArr[index].arrIdDiv, "arrIdDiv")
                 teacherV.buildARTextbook();
 
             }
@@ -131,7 +143,7 @@ export default class addARTextbook extends React.Component {
                 "index": i,
                 "pic": v.picPath + '?size=300x300',
                 "video": v.videoPath.join(","),
-                "tagList": v.arrIdDiv
+                "tagList": teacherV.unique(v.arrIdDiv)
             })
         })
         param.bookData.itemList = classArray;
@@ -177,7 +189,9 @@ export default class addARTextbook extends React.Component {
     /**
      *播放视频
      */
-    deleteItem(ind, useIndex) {
+    deleteItem = (ind, useIndex, event) => {
+        event.stopPropagation()
+        console.log("delete")
         // var videoDiv = $(".videoDiv")
         // videoDiv[i].play();
 
@@ -290,17 +304,37 @@ export default class addARTextbook extends React.Component {
         teacherV.buildARTextbook();
     }
 
-    /**
+    onKeydown(e) {
+
+    }
+    /** 
      * 搜索框
      */
     searchInputChange = (index, value) => {
         // this.setState({
         //     searchValue: value
         // })
+
         // this.state.ARTextbookDataArr[index].searchValue = value;
+        // this.buildARTextbook();
+        // if(event.keyCode == 8){
+        //     console.log("333")
+        // }
+        teacherV.state.flag = false;
         this.state.ARTextbookDataArr[index].searchValue = value;
         this.buildARTextbook();
+
+        // teacherV.setState({
+        //     flag: false
+        // }, () => {
+        //     this.state.ARTextbookDataArr[index].searchValue = value;
+        //     this.buildARTextbook();
+        //     teacherV.state.flag = true;
+
+        // })
+
     }
+
     /**
      * 添加标签
      */
@@ -309,7 +343,7 @@ export default class addARTextbook extends React.Component {
         teacherV.state.ARTextbookDataArr[tagIndex].tagText = [];
         teacherV.state.ARTextbookDataArr[tagIndex].searchValue = "";
         teacherV.state.ARTextbookDataArr[tagIndex].searchData = [];
-        // teacherV.state.searchData = [];
+        // // teacherV.state.searchData = [];
         teacherV.buildARTextbook();
         // teacherV.state.arrIdDiv = [];
         // teacherV.state.arrTextDiv = [];
@@ -371,7 +405,7 @@ export default class addARTextbook extends React.Component {
                         <img onClick={teacherV.imgPreview.bind(this, teacherV.state.ARTextbookDataArr[i])}
                             className="imgTag" src={teacherV.state.ARTextbookDataArr[i].picPath} />
                     }
-                    <button className="uploadBtn" onClick={teacherV.uploadImage.bind(this, i)}>教材图片</button>
+                    <button className="uploadBtn" onClick={(e) => { teacherV.uploadImage.bind(this, i) }}>教材图片</button>
                 </div>
 
                 <div className="line_public flex_container"></div>
@@ -386,24 +420,24 @@ export default class addARTextbook extends React.Component {
                                 if (v.videoExtra == "pdf") {
                                     return (
                                         <div className="pdfBack fileBack"
-                                             onClick={teacherV.videoPreview.bind(this, v.videoPath)}>
-                                            <span className="del_ar" onClick={teacherV.deleteItem.bind(this,i,useIndex)} ></span>
+                                            onClick={teacherV.videoPreview.bind(this, v.videoPath)}>
+                                            <span className="del_ar" onClick={teacherV.deleteItem.bind(this, i, useIndex)} ></span>
                                             {/* <div>{v.fileName}</div> */}
                                         </div>
                                     )
                                 } else if (v.videoExtra == "docx" || v.videoExtra == "doc") {
                                     return (
                                         <div className="docBack fileBack"
-                                             onClick={teacherV.videoPreview.bind(this, v.videoPath)}>
-                                            <span className="del_ar" onClick={teacherV.deleteItem.bind(this,i,useIndex)} ></span>
+                                            onClick={teacherV.videoPreview.bind(this, v.videoPath)}>
+                                            <span className="del_ar" onClick={teacherV.deleteItem.bind(this, i, useIndex)} ></span>
                                             {/* <div>{v.fileName}</div> */}
                                         </div>
                                     )
                                 } else if (v.videoExtra == "xls" || v.videoExtra == "xlsx") {
                                     return (
                                         <div className="xlsBack fileBack"
-                                             onClick={teacherV.videoPreview.bind(this, v.videoPath)}>
-                                            <span className="del_ar" onClick={teacherV.deleteItem.bind(this,i,useIndex)} ></span>
+                                            onClick={teacherV.videoPreview.bind(this, v.videoPath)}>
+                                            <span className="del_ar" onClick={teacherV.deleteItem.bind(this, i, useIndex)} ></span>
                                             {/* <div>{v.fileName}</div> */}
                                         </div>
                                     )
@@ -412,7 +446,7 @@ export default class addARTextbook extends React.Component {
                                         <div className="pptBack fileBack"
                                             onClick={teacherV.videoPreview.bind(this, v.videoPath)}>
                                             {/* <div>{v.fileName}</div> */}
-                                            <span className="del_ar" onClick={teacherV.deleteItem.bind(this,i,useIndex)} ></span>
+                                            <span className="del_ar" onClick={teacherV.deleteItem.bind(this, i, useIndex)} ></span>
                                         </div>
                                     )
                                 } else {
@@ -420,8 +454,8 @@ export default class addARTextbook extends React.Component {
                                         <div className="videoDiv" onClick={teacherV.videoPreview.bind(this, v.videoPath)}>
                                             {/* <span >播放</span> */}
                                             <video
-                                                   src={v.videoPath}></video>
-                                            <span className="del_ar" onClick={teacherV.deleteItem.bind(this,i,useIndex)} ></span>
+                                                src={v.videoPath}></video>
+                                            <span className="del_ar" onClick={teacherV.deleteItem.bind(this, i, useIndex)} ></span>
                                             {/* <span>{v.videoName}</span> */}
                                         </div>
                                     )
@@ -438,12 +472,16 @@ export default class addARTextbook extends React.Component {
                     </div>
                     <div className="videoCont">
                         {
-                            teacherV.state.ARTextbookDataArr[useIndex].tagText.map((v, i) => {
-                                return (
-                                    <span className="spanTag">{v}<span className="del_ar" onClick={teacherV.deleteTag.bind(this, useIndex, i)}></span></span>
+                            teacherV.state.ARTextbookDataArr[useIndex].tagText.length == 0 ?
+                                ""
+                                :
+                                teacherV.unique(teacherV.state.ARTextbookDataArr[useIndex].tagText).map((v, i) => {
+                                    // console.log(v,)
+                                    return (
+                                        <span className="spanTag">{v}<span className="del_tag" onClick={teacherV.deleteTag.bind(this, useIndex, i)}></span></span>
                                         // {/* <span>{useIndex}</span> */}
-                                )
-                            })
+                                    )
+                                })
                         }
                         <button className="tagBtn icon_pointer" onClick={teacherV.addTag.bind(this, useIndex)}></button>
                     </div>
@@ -467,7 +505,7 @@ export default class addARTextbook extends React.Component {
                             <div>标签名称</div>
                         </InputItem>
 
-                        <div className="searchIcon" onClick={teacherV.searchARBookTag.bind(this, useIndex)}></div>
+                        <div className="searchIcon icon_pointer" onClick={teacherV.searchARBookTag.bind(this, useIndex)}></div>
                     </div>
                     <div className="classTags">
                         {
@@ -571,7 +609,8 @@ export default class addARTextbook extends React.Component {
     /**
      * 上传照片
      */
-    uploadImage(index) {
+    uploadImage(e, index) {
+        e.stopPropagation();
         var data = {
             method: 'selectImages',
         };
@@ -599,6 +638,7 @@ export default class addARTextbook extends React.Component {
      * 上传视频
      */
     uploadVideo(index) {
+        // event.stopPropagation();
         var data = {
             method: 'selectVideo',
         };
@@ -634,67 +674,71 @@ export default class addARTextbook extends React.Component {
         //     $(`calmTagDiv${useIndex}`).css("display") == "block"
         // }
 
-        if (teacherV.state.ARTextbookDataArr[useIndex].searchValue == "") {
-            Toast.info("请输入搜索的关键词")
-            return;
-        }
-        var param = {
-            "method": 'searchARBookTag',
-            "adminId": 23836,
-            "keyword": teacherV.state.ARTextbookDataArr[useIndex].searchValue,
-            "pn": -1
-        };
-        console.log(param)
-        WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
-            onResponse: (result) => {
-                if (result.msg == '调用成功' || result.success == true) {
-                    teacherV.setState({
-                        searchData: result.response
-                    })
-                    console.log(result, "info")
-                    var arr = []
-                    result.response.forEach((v, i) => {
-                        var searDiv = (
-                            <Tag data-seed={v.id} onChange={teacherV.tagChange.bind(this, v, useIndex)}>{v.content}</Tag>
-                        )
-                        arr.push(searDiv)
-                    })
-                    teacherV.state.ARTextbookDataArr[useIndex].searchData = arr;
-                    // teacherV.state.ARTextbookDataArr[useIndex].searchData.push(result.response)
+        teacherV.setState({
 
-                    // teacherV.setState({
-                    //     searchData: result.response
-                    // })
-                    // $(`calmTagDiv${useIndex}`).css("display") == "block"
-                    teacherV.setState({
-                        flag: false
-                    }, () => {
-                        teacherV.buildARTextbook();
-                        teacherV.state.flag = true;
-                        console.log(teacherV.state.flag, "calmFag")
-                    })
-
-                    // teacherV.state.ARTextbookDataArr[useIndex].tagName = []
-                    // teacherV.state.ARTextbookDataArr[useIndex].tagText.push(result.response.content)
-
-                    // teacherV.setState({
-                    //     // searchValue:"",
-                    //     // searchData:[],
-                    //     // arrIdDiv:[],
-                    //     // arrTextDiv:[]
-                    // }, () => {
-                    //     // teacherV.buildARTextbook();
-                    // })
-                    // teacherV.state.ARTextbookValue = "";
-                    // teacherV.state.searchData = [];
-                    // teacherV.state.arrIdDiv = [];
-                    // teacherV.state.arrTextDiv = [];
-                }
-            },
-            onError: function (error) {
-                Toast.fail('删除失败');
+        }, () => {
+            if (teacherV.state.ARTextbookDataArr[useIndex].searchValue == "") {
+                Toast.info("请输入搜索的关键词")
+                return;
             }
-        });
+            var param = {
+                "method": 'searchARBookTag',
+                "adminId": 23836,
+                "keyword": teacherV.state.ARTextbookDataArr[useIndex].searchValue,
+                "pn": -1
+            };
+            console.log(param)
+            WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
+                onResponse: (result) => {
+                    if (result.msg == '调用成功' || result.success == true) {
+                        teacherV.setState({
+                            searchData: result.response
+                        })
+                        console.log(result, "info")
+                        var arr = []
+                        result.response.forEach((v, i) => {
+                            var searDiv = (
+                                <Tag data-seed={v.id} onChange={teacherV.tagChange.bind(this, v, useIndex)}>{v.content}</Tag>
+                            )
+                            arr.push(searDiv)
+                        })
+                        teacherV.state.ARTextbookDataArr[useIndex].searchData = arr;
+                        // teacherV.state.ARTextbookDataArr[useIndex].searchData.push(result.response)
+
+                        // teacherV.setState({
+                        //     searchData: result.response
+                        // })
+                        // $(`calmTagDiv${useIndex}`).css("display") == "block"
+                        teacherV.setState({
+                            flag: false
+                        }, () => {
+                            teacherV.buildARTextbook();
+                            teacherV.state.flag = true;
+                            console.log(teacherV.state.flag, "calmFag")
+                        })
+
+                        // teacherV.state.ARTextbookDataArr[useIndex].tagName = []
+                        // teacherV.state.ARTextbookDataArr[useIndex].tagText.push(result.response.content)
+
+                        // teacherV.setState({
+                        //     // searchValue:"",
+                        //     // searchData:[],
+                        //     // arrIdDiv:[],
+                        //     // arrTextDiv:[]
+                        // }, () => {
+                        //     // teacherV.buildARTextbook();
+                        // })
+                        // teacherV.state.ARTextbookValue = "";
+                        // teacherV.state.searchData = [];
+                        // teacherV.state.arrIdDiv = [];
+                        // teacherV.state.arrTextDiv = [];
+                    }
+                },
+                onError: function (error) {
+                    Toast.fail('删除失败');
+                }
+            });
+        })
     }
 
     /**
