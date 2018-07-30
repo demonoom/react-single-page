@@ -7,7 +7,7 @@ export default class New extends React.Component {
         teacherV = this;
         this.state = {
             searchData: [],
-            arrDiv:[]
+            arrIdDiv:[]
         };
     }
     componentDidMount() {
@@ -37,27 +37,31 @@ export default class New extends React.Component {
             }
         });
     }
-    tagChange(id,selected){
-        var arr = [];
+
+
+    tagChange(v,selected){
+        var arrID = [];
+        var arrText = [];
         if(selected){
-            arr.push(id)
+            arrID.push(v.id)
+            arrText.push(v.content)
             teacherV.setState({
-                arrDiv:teacherV.state.arrDiv.concat(arr)
+                arrIdDiv:teacherV.state.arrIdDiv.concat(arrID)
             },()=>{
                 // console.log(teacherV.state.arrDiv,"arrDiv")
             })
         }
         if(!selected){
-            var index = teacherV.state.arrDiv.indexOf(id);
+            var index = teacherV.state.arrIdDiv.indexOf(id);
             if (index > -1) {
-                teacherV.state.arrDiv.splice(index, 1);
+                teacherV.state.arrIdDiv.splice(index, 1);
             }
         }
 
     }
 
     submitTagArr(){
-        console.log(teacherV.state.arrDiv,"finish")
+        console.log(teacherV.state.arrIdDiv,"finish")
     }
     render() {
         return (
@@ -74,7 +78,7 @@ export default class New extends React.Component {
                     teacherV.state.searchData.map((v,i)=>{
                         console.log(v,"V")
                         return (
-                            <Tag data-seed={v.id} onChange={teacherV.tagChange.bind(this,v.id)}>{v.content}</Tag>
+                            <Tag data-seed={v.id} onChange={teacherV.tagChange.bind(this,v)}>{v.content}</Tag>
                         )
                     })
                 }

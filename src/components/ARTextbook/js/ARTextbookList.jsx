@@ -79,6 +79,7 @@ export default class ARTextbookList extends React.Component {
         };
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
             onResponse: function (result) {
+                console.log(result)
                 if (result.msg == '调用成功' || result.success == true) {
                     var arr = result.response;
                     var pager = result.pager;
