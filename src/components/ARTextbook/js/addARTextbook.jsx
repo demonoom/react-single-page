@@ -424,7 +424,7 @@ export default class addARTextbook extends React.Component {
                                 )
                             })
                         }
-                        <button className="uploadBtn" onClick={teacherV.addTag.bind(this, useIndex)}></button>
+                        <button className="tagBtn" onClick={teacherV.addTag.bind(this, useIndex)}></button>
                     </div>
 
                 </div>
