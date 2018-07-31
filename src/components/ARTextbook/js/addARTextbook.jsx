@@ -406,10 +406,10 @@ export default class addARTextbook extends React.Component {
                     {teacherV.state.ARTextbookDataArr[i].picPath.length == 0 ?
                         <button className="uploadBtn" onClick={teacherV.uploadImage.bind(this, i)}>教材图片</button>
                         :
-                        <div>
+                        <div className="upload_file">
                             <img onClick={teacherV.imgPreview.bind(this, teacherV.state.ARTextbookDataArr[i])}
                                 className="imgTag" src={teacherV.state.ARTextbookDataArr[i].picPath} />
-                            <button className="" onClick={teacherV.uploadImage.bind(this, i)}>修改</button>
+                            <div className="icon_pointer" onClick={teacherV.uploadImage.bind(this, i)}>修改</div>
                         </div>
 
                     }
@@ -503,36 +503,37 @@ export default class addARTextbook extends React.Component {
                 <div className={`calmTagDiv${useIndex} tagCont`}
                     style={{
                         display: teacherV.state.flag ? "none" : "block",
-                        height: "50%"
                     }}
                 >
-                    {/*{useIndex}*/}
-                    <div className="tagInput">
-                        <InputItem
-                            placeholder="请输入关键字"
-                            onChange={teacherV.searchInputChange.bind(this, i)}
-                            value={v.searchValue}
-                        >
-                            <div>标签名称</div>
-                        </InputItem>
+                    <div className="inner">
+                        {/*{useIndex}*/}
+                        <div className="tagInput">
+                            <InputItem
+                                placeholder="请输入关键字"
+                                onChange={teacherV.searchInputChange.bind(this, i)}
+                                value={v.searchValue}
+                            >
+                                <div>标签名称</div>
+                            </InputItem>
 
-                        <div className="searchIcon" onClick={teacherV.searchARBookTag.bind(this, useIndex)}></div>
+                            <div className="searchIcon" onClick={teacherV.searchARBookTag.bind(this, useIndex)}></div>
+                        </div>
+                        <div className="classTags">
+                            {
+                                teacherV.state.ARTextbookDataArr[useIndex].searchData.map((v, i) => {
+                                    return (
+                                        v
+                                    )
+
+                                })
+                            }
+
+                        </div>
+                        <div className="bottomBox">
+                            <span className="close" onClick={teacherV.cancelSubmit.bind(this, useIndex)}>取消</span>
+                            <span className="bind" onClick={teacherV.submitTagArr.bind(this, useIndex)}>确 定</span>
+                        </div>
                     </div>
-                    <div className="classTags">
-                        {
-                            teacherV.state.ARTextbookDataArr[useIndex].searchData.map((v, i) => {
-                                return (
-                                    v
-                                )
-
-                            })
-                        }
-
-                    </div>
-                    <div className=" submitBtn">
-                        <button onClick={teacherV.cancelSubmit.bind(this, useIndex)}>取消</button><Button type="warning" onClick={teacherV.submitTagArr.bind(this, useIndex)}>确 定</Button>
-                    </div>
-
                 </div>
 
             </div>)
@@ -802,7 +803,7 @@ export default class addARTextbook extends React.Component {
                                 teacherV.state.fileNewArr.length == 0 ?
                                     <button className="uploadBtn" onClick={teacherV.uploadFile}>教材附件</button>
                                     :
-                                    <div>
+                                    <div className="upload_file">
                                         {
                                             teacherV.state.fileNewArr.map((v, i) => {
                                                 return (
@@ -812,7 +813,7 @@ export default class addARTextbook extends React.Component {
                                                 )
                                             })
                                         }
-                                        <button className="" onClick={teacherV.uploadFile}>修改</button>
+                                        <div className="icon_pointer" onClick={teacherV.uploadFile}>修改</div>
                                     </div>
                             }
                         </div>
