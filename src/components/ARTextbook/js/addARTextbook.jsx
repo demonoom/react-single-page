@@ -64,10 +64,10 @@ export default class addARTextbook extends React.Component {
      * @param arr
      * @returns {*}
      */
-    makeArr(arr) {
+    makeArr(arr, properties) {
         for (var i = 0; i < arr.length - 1; i++) {
             for (var j = i + 1; j < arr.length; j++) {
-                if (arr[i].index == arr[j].index) {
+                if (arr[i][properties] == arr[j][properties]) {
                     arr.splice(j, 1);
                     j--;
                 }
@@ -146,26 +146,12 @@ export default class addARTextbook extends React.Component {
         }
         var classArray = [];
         this.state.ARTextbookDataArr.forEach(function (v, i) {
-            var oldArr = arr[i].tagText;
-            var allArr = [];
-            $.each(oldArr, function (i, v) {
-                var flag = true;
-                if (allArr.length > 0) {
-                    $.each(allArr, function (n, m) {
-                        if (allArr[n].contact_id == oldArr[i].contact_id) { flag = false; };
-                    });
-                };
-                if (flag) {
-                    allArr.push(oldArr[i]);
-                };
-            });
-
             classArray.push({
                 "page": v.pageNoValue,
                 "index": i,
                 "pic": v.picPath + '?size=300x300',
                 "video": v.videoPath.join(","),
-                "tagList": allArr
+                "tagList": arr[i].tagText
             })
         })
         param.bookData.itemList = classArray;
@@ -317,23 +303,11 @@ export default class addARTextbook extends React.Component {
      */
     submitTagArr() {
         $(`.calmTagDiv`).slideUp();
-        debugger
-        console.log(teacherV.state.ARTextbookDataArr)
         teacherV.state.ARTextbookDataArr[teacherV.state.tagIndex].tagText = teacherV.state.ARTextbookDataArr[teacherV.state.tagIndex].tagText.concat(teacherV.state.tagChangeData);
-        
-        
-        // teacherV.state.ARTextbookDataArr[teacherV.state.tagIndex].tagText = teacherV.makeArr(teacherV.state.ARTextbookDataArr[teacherV.state.tagIndex].tagText,"id")
-        // console.log(teacherV.state.ARTextbookDataArr[teacherV.state.tagIndex].tagText)
-
-        console.log(teacherV.state.ARTextbookDataArr)
-
+    
         var arr = teacherV.state.ARTextbookDataArr[teacherV.state.tagIndex].tagText;
-        console.log(teacherV.makeArr(arr,"id"),999999)
 
-
-        // return
-        // console.log(teacherV.makeArr(teacherV.state.ARTextbookDataArr[useIndex].tagText,"id"),"makArr")
-        // debugger
+        teacherV.state.ARTextbookDataArr[teacherV.state.tagIndex].tagText = teacherV.makeArr(arr,"id")
         teacherV.buildARTextbook();
         teacherV.setState({ tagData: [], tagChangeData: [], searchValue: "" })
     }

@@ -88,7 +88,26 @@ export default class newUpdateARTextbook extends React.Component {
      * 更新AR教材
      */
     updateARBook = () => {
+
+        if (teacherV.state.ARTextbookValue.length == 0) {
+            Toast.fail('AR教材名不能为空', 2)
+            return
+        }
+
         var arr = teacherV.state.initData.itemList;
+        var upFlag = true
+        arr.forEach(function (item, index) {
+            if (item.pic.length == 0 || item.video.length == 0) {
+                Toast.fail('内容不能为空,请检查', 2)
+                upFlag = false
+                return
+            }
+        })
+
+        if (!upFlag) {
+            return
+        }
+
         for (var i = 0; i < arr.length; i++) {
             var array = []
             for (var j = 0; j < arr[i].tagList.length; j++) {
@@ -107,7 +126,7 @@ export default class newUpdateARTextbook extends React.Component {
                 "itemList": arr
             }
         }
-        console.log(param);
+
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
             onResponse: function (result) {
                 if (result.msg == '调用成功' || result.success == true) {
@@ -163,9 +182,8 @@ export default class newUpdateARTextbook extends React.Component {
                             tagClick: false
                         })
                     });
-
                     //去重
-                    teacherV.makeArr(tagArr);
+                    teacherV.makeArr(tagArr, 'index');
 
                     teacherV.setState({
                         ARTextbookValue: teacherV.state.initData.name,
@@ -199,10 +217,10 @@ export default class newUpdateARTextbook extends React.Component {
      * @param arr
      * @returns {*}
      */
-    makeArr(arr) {
+    makeArr(arr, properties) {
         for (var i = 0; i < arr.length - 1; i++) {
             for (var j = i + 1; j < arr.length; j++) {
-                if (arr[i].index == arr[j].index) {
+                if (arr[i][properties] == arr[j][properties]) {
                     arr.splice(j, 1);
                     j--;
                 }
@@ -506,6 +524,7 @@ export default class newUpdateARTextbook extends React.Component {
      */
     addTags(index) {
         $('.tagAddPanel').slideDown()
+        $('.tagAddPanel_bg').show()
         teacherV.setState({tagsIndex: index})
     }
 
@@ -514,6 +533,7 @@ export default class newUpdateARTextbook extends React.Component {
      */
     exitAddTags() {
         $('.tagAddPanel').slideUp()
+        $('.tagAddPanel_bg').hide()
         teacherV.setState({tagsLi: []})
         teacherV.setState({searchTagValue: ''})
     }
@@ -522,13 +542,62 @@ export default class newUpdateARTextbook extends React.Component {
      * 确定增加标签
      */
     addTagsForSure() {
-        //去重
-        teacherV.state.initData.itemList[teacherV.state.tagsIndex].tagList = teacherV.state.initData.itemList[teacherV.state.tagsIndex].tagList.concat(teacherV.state.tagsBefore)
+        $('.tagAddPanel').slideUp()
+        $('.tagAddPanel_bg').hide()
+
+        for (var i = 0; i < teacherV.state.initData.itemList.length; i++) {
+            if (teacherV.state.initData.itemList[i].index == teacherV.state.tagsIndex) {
+                teacherV.state.initData.itemList[i].tagList = teacherV.state.initData.itemList[i].tagList.concat(teacherV.state.tagsBefore)
+                //去重
+                teacherV.makeArr(teacherV.state.initData.itemList[i].tagList, 'id');
+            }
+        }
+
         teacherV.tabsOnChange(teacherV.state.clickTab)
 
-        $('.tagAddPanel').slideUp()
         teacherV.setState({tagsLi: [], tagsBefore: []})
         teacherV.setState({searchTagValue: ''})
+    }
+
+    /**
+     * 删除tags model
+     * @param src
+     * @param id
+     * @param event
+     */
+    showDelTagsAlert = (src, index, event) => {
+        event.stopPropagation()
+
+        var phoneType = navigator.userAgent;
+        var phone;
+        if (phoneType.indexOf('iPhone') > -1 || phoneType.indexOf('iPad') > -1) {
+            phone = 'ios'
+        } else {
+            phone = 'android'
+        }
+        var _this = this;
+        const alertInstance = alert('您确定移除吗?', '', [
+            {text: '取消', onPress: () => console.log('cancel'), style: 'default'},
+            {text: '确定', onPress: () => _this.delTags(src, index)},
+
+        ], phone);
+    }
+
+    /**
+     *删除标签
+     */
+    delTags(v, index) {
+
+        for (var i = 0; i < teacherV.state.initData.itemList.length; i++) {
+            if (teacherV.state.initData.itemList[i].index == index) {
+                for (var j = 0; j < teacherV.state.initData.itemList[i].tagList.length; j++) {
+                    if (teacherV.state.initData.itemList[i].tagList[j].id == v.id) {
+                        teacherV.state.initData.itemList[i].tagList.splice(j, 1)
+                    }
+                }
+            }
+        }
+        teacherV.tabsOnChange(teacherV.state.clickTab)
     }
 
     searchOnChange(e) {
@@ -587,15 +656,6 @@ export default class newUpdateARTextbook extends React.Component {
         // videoDiv[i].play();
     }
 
-    delTags(v, a) {
-        teacherV.state.initData.itemList[a].tagList.forEach(function (item, index) {
-            if (item.id == v.id) {
-                teacherV.state.initData.itemList[a].tagList.splice(index, 1)
-            }
-        })
-        teacherV.tabsOnChange(teacherV.state.clickTab)
-    }
-
     tabsOnChange(index, event) {
 
         //加点击类名字,只需要改变tagClick为true即可
@@ -623,8 +683,8 @@ export default class newUpdateARTextbook extends React.Component {
             </div>;
 
             if (WebServiceUtil.isEmpty(v.pic) == false) {
-                imgDivSon = <div className="div68" onClick={teacherV.imgPreview.bind(this, v.pic)}>
-                    <button className="uploadAttech i_uploadAttech">{
+                imgDivSon = <div className="div68">
+                    <button className="uploadAttech i_uploadAttech" onClick={teacherV.imgPreview.bind(this, v.pic)}>{
                         <img className="imgDiv" src={v.pic}/>
                     }
                         <div className="icon_pointer" onClick={teacherV.uploadImage.bind(this, v.index)}>修改</div>
@@ -734,7 +794,7 @@ export default class newUpdateARTextbook extends React.Component {
                                 return <li className="spanTag">
                                     <span className="textOver">{item.content}</span>
                                     <span className="del_ar icon_pointer"
-                                          onClick={teacherV.delTags.bind(this, item, v.index)}></span>
+                                          onClick={teacherV.showDelTagsAlert.bind(this, item, v.index)}></span>
                                 </li>
                             })
                         }
@@ -794,19 +854,23 @@ export default class newUpdateARTextbook extends React.Component {
             WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
                 onResponse: function (result) {
                     if (result.msg == '调用成功' || result.success == true) {
-                        var src = result.response.pdfPath || result.response.htmlPath || result.response.path;
+                        if (!WebServiceUtil.isEmpty(result.response)) {
+                            var src = result.response.pdfPath || result.response.htmlPath || result.response.path;
 
-                        var pdfURL = src.replace("60.205.111.227", "www.maaee.com");
-                        pdfURL = pdfURL.replace("60.205.86.217", "www.maaee.com");
-                        if (pdfURL.indexOf("https") == -1 && pdfURL.indexOf("http") != -1) {
-                            pdfURL = pdfURL.replace("http", "https");
+                            var pdfURL = src.replace("60.205.111.227", "www.maaee.com");
+                            pdfURL = pdfURL.replace("60.205.86.217", "www.maaee.com");
+                            if (pdfURL.indexOf("https") == -1 && pdfURL.indexOf("http") != -1) {
+                                pdfURL = pdfURL.replace("http", "https");
+                            }
+                            var data = {};
+                            data.method = 'openNewPage';
+                            data.url = pdfURL;
+                            Bridge.callHandler(data, null, function (error) {
+                                window.location.href = url;
+                            });
+                        } else {
+                            Toast.fail('该文件暂无法预览', 2)
                         }
-                        var data = {};
-                        data.method = 'openNewPage';
-                        data.url = pdfURL;
-                        Bridge.callHandler(data, null, function (error) {
-                            window.location.href = url;
-                        });
 
                     } else {
                         Toast.fail(result.msg, 5);
@@ -816,6 +880,15 @@ export default class newUpdateARTextbook extends React.Component {
                     // message.error(error);
                 }
             });
+
+            // var content2 = src.replace("60.205.111.227", "www.maaee.com");
+            // var content3 = content2.replace("60.205.86.217", "www.maaee.com");
+            // var data = {};
+            // data.method = 'openNewPage';
+            // data.url = "http://www.maaee.com/Excoord_For_Education/js/pdfjs/web/viewer.html?file=" + content3;
+            // Bridge.callHandler(data, null, function (error) {
+            //     window.location.href = url;
+            // });
         } else {
             //视频预览
 
@@ -887,13 +960,13 @@ export default class newUpdateARTextbook extends React.Component {
                     </div>
                 </div>
 
-
                 <div className='submitBtn icon_pointer'>
                     <Button type="warning" onClick={this.updateARBook}>提交</Button>
                 </div>
+
                 <div className="tagAddPanel_bg"></div>
-                {/*<div className='tagAddPanel' style={{height: document.body.clientHeight - 2, display: 'none'}}>*/}
-                    <div className='tagAddPanel' style={{display: 'none'}}>
+
+                <div className='tagAddPanel' style={{display: 'none'}}>
                     <div className="tagInput">
                         <InputItem
                             placeholder="请输入关键字"

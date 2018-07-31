@@ -2,21 +2,23 @@
   overflow: hidden;
   position: relative;
   height: 100% !important;
-  ::-webkit-scrollbar{
+  ::-webkit-scrollbar {
     width: 8px;
-    height:12px;
-  } /* 这是针对缺省样式 (必须的) */
+    height: 12px;
+  }
+  /* 这是针对缺省样式 (必须的) */
 
-
-  ::-webkit-scrollbar-thumb{
+  ::-webkit-scrollbar-thumb {
     background-color: #ccc;
     border-radius: 9px;
     -webkit-border-radius: 9px;
-  } /* 滑块颜色 */
+  }
+  /* 滑块颜色 */
 
-  ::-webkit-scrollbar-button{
+  ::-webkit-scrollbar-button {
     background-color: initial;
-  } /* 滑轨两头的监听按钮颜色 */
+  }
+  /* 滑轨两头的监听按钮颜色 */
 
   .imgDiv {
     width: 100%;
@@ -180,43 +182,44 @@
       }
     }
   }
-    .tabCont ul::-webkit-scrollbar{
-      width: 8px;
-      height:6px;
-    } /* 这是针对缺省样式 (必须的) */
-    .tabCont ul::-webkit-scrollbar-thumb {
-      background-color: #ccc;
-      border-radius: 4px;
-      -webkit-border-radius: 4px;
-    }
-    .fileBack{
-        width: 68px;
-        height: 68px;
-        background: url("../imgs/UpdateART.png") no-repeat;
-        background-size: 100%;
-        margin-right: 15px;
-    }
-    .am-list-item{
-        -ms-flex-align: start;
-        align-items: flex-start;
-        -webkit-align-items: flex-start;
-        box-align: flex-start;
-    }
-    .am-list-item .am-input-label.am-input-label-5 {
-        width: 70px;
-        padding-right: 15px;
-        text-align: right;
-        box-sizing: content-box;
-    }
-    .am-list-item .am-input-label, .am-list-item .am-input-control input{
-        font-size: 16px;
-    }
-    .am-tabs-pane-wrap{
-        height: calc(~"100% - 220px");
-        overflow-y: auto;
-        overflow-x: hidden;
-    }
 
+  .tabCont ul::-webkit-scrollbar {
+    width: 8px;
+    height: 6px;
+  }
+  /* 这是针对缺省样式 (必须的) */
+  .tabCont ul::-webkit-scrollbar-thumb {
+    background-color: #ccc;
+    border-radius: 4px;
+    -webkit-border-radius: 4px;
+  }
+  .fileBack {
+    width: 68px;
+    height: 68px;
+    background: url("../imgs/UpdateART.png") no-repeat;
+    background-size: 100%;
+    margin-right: 15px;
+  }
+  .am-list-item {
+    -ms-flex-align: start;
+    align-items: flex-start;
+    -webkit-align-items: flex-start;
+    box-align: flex-start;
+  }
+  .am-list-item .am-input-label.am-input-label-5 {
+    width: 70px;
+    padding-right: 15px;
+    text-align: right;
+    box-sizing: content-box;
+  }
+  .am-list-item .am-input-label, .am-list-item .am-input-control input {
+    font-size: 16px;
+  }
+  .am-tabs-pane-wrap {
+    height: calc(~"100% - 220px");
+    overflow-y: auto;
+    overflow-x: hidden;
+  }
 
   /* 滑块颜色 */
   .addARTextbookTable {
@@ -257,7 +260,7 @@
     position: relative;
     margin-top: 10px;
   }
-  .tabItem_cont .tabItem_list:first-child{
+  .tabItem_cont .tabItem_list:first-child {
     margin-top: 0;
   }
   .del_group {
@@ -291,7 +294,7 @@
     z-index: 999;
     height: 70%;
   }
-  .tagAddPanel_bg{
+  .tagAddPanel_bg {
     background: rgba(0, 0, 0, 0.4);
     height: 100%;
     width: 100%;
@@ -302,7 +305,7 @@
     left: 0;
     display: none;
   }
-  .spanTag{
+  .spanTag {
     border: 1px #2B84EF solid;
     color: #2B84EF;
     padding: 0 10px;
@@ -319,14 +322,14 @@
     box-sizing: border-box;
     position: relative;
     max-width: 100px;
-    .del_ar{
+    .del_ar {
       width: 16px;
       height: 16px;
-      top:-8px;
+      top: -8px;
       right: -8px;
     }
   }
-  .tagBtn{
+  .tagBtn {
     background: url("../imgs/tagBack.png") no-repeat;
     width: 36px;
     height: 36px;
@@ -334,10 +337,10 @@
     border: 0;
     display: inline-block;
   }
-  .tagInput{
+  .tagInput {
     position: relative;
     margin-bottom: 10px;
-    .searchIcon{
+    .searchIcon {
       width: 15px;
       height: 19px;
       position: absolute;
@@ -351,7 +354,7 @@
       font-size: 0;
       cursor: pointer;
     }
-    .am-list-item .am-input-control input{
+    .am-list-item .am-input-control input {
       width: 88%;
     }
   }
@@ -379,15 +382,15 @@
     background: #fff;
     color: #F56A55;
   }
-  .classTags{
-    padding: 0 10px 0 0 ;
+  .classTags {
+    padding: 0 10px 0 0;
     height: calc(~"100% - 100px");
     overflow-y: auto;
     overflow-x: hidden;
-    .am-tag-normal::before,.am-tag-active::before{
+    .am-tag-normal::before, .am-tag-active::before {
       display: none;
     }
-    .am-tag{
+    .am-tag {
       margin-left: 15px;
       margin-bottom: 10px;
       border: 1px #fff solid;
@@ -409,7 +412,7 @@
       display: block;
       max-width: 70px;
     }
-    .am-tag-active{
+    .am-tag-active {
       border: 1px #2B84EF solid;
       color: #2B84EF;
     }
