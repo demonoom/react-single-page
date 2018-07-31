@@ -380,7 +380,7 @@
   color: #F56A55;
 }
 #UpdateARTextbook .classTags {
-  padding: 0 10px 0 0 ;
+  padding: 0 10px 0 0;
   height: calc(100% - 100px);
   overflow-y: auto;
   overflow-x: hidden;

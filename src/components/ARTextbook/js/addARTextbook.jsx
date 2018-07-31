@@ -303,6 +303,7 @@ export default class addARTextbook extends React.Component {
      */
     submitTagArr() {
         $(`.calmTagDiv`).slideUp();
+        $(`.tagBack`).hide();
         teacherV.state.ARTextbookDataArr[teacherV.state.tagIndex].tagText = teacherV.state.ARTextbookDataArr[teacherV.state.tagIndex].tagText.concat(teacherV.state.tagChangeData);
     
         var arr = teacherV.state.ARTextbookDataArr[teacherV.state.tagIndex].tagText;
@@ -317,6 +318,7 @@ export default class addARTextbook extends React.Component {
      */
     cancelSubmit() {
         $(`.calmTagDiv`).slideUp();
+        $(`.tagBack`).hide();
         teacherV.setState({ tagData: [] })
         teacherV.setState({ searchValue: '' })
     }
@@ -334,6 +336,7 @@ export default class addARTextbook extends React.Component {
      */
     addTag(index) {
         $(`.calmTagDiv`).slideDown();
+        $(`.tagBack`).show();
         teacherV.setState({
             tagIndex: index
         })
@@ -703,8 +706,11 @@ export default class addARTextbook extends React.Component {
                             </div>
                         </div>
 
+                        <div className="tagBack" style={{
+                            display: "none",
+                        }}></div>
                         {/* 添加标签 */}
-                        <div className={`calmTagDiv tagBack`}
+                        <div className={`calmTagDiv tagCont`}
                             style={{
                                 display: "none",
                             }}
