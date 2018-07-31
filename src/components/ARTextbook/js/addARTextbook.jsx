@@ -499,13 +499,14 @@ export default class addARTextbook extends React.Component {
 
                 </div>
 
-
+                <div className={`calmTagDiv${useIndex} tagBack`} style={{
+                    display: teacherV.state.flag ? "none" : "block",
+                }}></div>
                 <div className={`calmTagDiv${useIndex} tagCont`}
                     style={{
                         display: teacherV.state.flag ? "none" : "block",
                     }}
                 >
-                    <div className="inner">
                         {/*{useIndex}*/}
                         <div className="tagInput">
                             <InputItem
@@ -533,7 +534,6 @@ export default class addARTextbook extends React.Component {
                             <span className="close" onClick={teacherV.cancelSubmit.bind(this, useIndex)}>取消</span>
                             <span className="bind" onClick={teacherV.submitTagArr.bind(this, useIndex)}>确 定</span>
                         </div>
-                    </div>
                 </div>
 
             </div>)
