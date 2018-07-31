@@ -43,6 +43,7 @@
   background: #eee;
   margin-right: 15px;
   margin-bottom: 15px;
+  vertical-align: top;
 }
 #UpdateARTextbook .i_uploadAttech.pdfDiv {
   background: url("../imgs/pdfIcon.png");
