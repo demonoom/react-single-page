@@ -537,6 +537,47 @@ export default class newUpdateARTextbook extends React.Component {
         teacherV.setState({searchTagValue: ''})
     }
 
+    /**
+     * 删除tags model
+     * @param src
+     * @param id
+     * @param event
+     */
+    showDelTagsAlert = (src, index, event) => {
+        event.stopPropagation()
+
+        var phoneType = navigator.userAgent;
+        var phone;
+        if (phoneType.indexOf('iPhone') > -1 || phoneType.indexOf('iPad') > -1) {
+            phone = 'ios'
+        } else {
+            phone = 'android'
+        }
+        var _this = this;
+        const alertInstance = alert('您确定移除吗?', '', [
+            {text: '取消', onPress: () => console.log('cancel'), style: 'default'},
+            {text: '确定', onPress: () => _this.delTags(src, index)},
+
+        ], phone);
+    }
+
+    /**
+     *删除标签
+     */
+    delTags(v, index) {
+
+        for (var i = 0; i < teacherV.state.initData.itemList.length; i++) {
+            if (teacherV.state.initData.itemList[i].index == index) {
+                for (var j = 0; j < teacherV.state.initData.itemList[i].tagList.length; j++) {
+                    if (teacherV.state.initData.itemList[i].tagList[j].id == v.id) {
+                        teacherV.state.initData.itemList[i].tagList.splice(j, 1)
+                    }
+                }
+            }
+        }
+        teacherV.tabsOnChange(teacherV.state.clickTab)
+    }
+
     searchOnChange(e) {
         teacherV.setState({searchTagValue: e})
     }
@@ -591,47 +632,6 @@ export default class newUpdateARTextbook extends React.Component {
     theVideoPlay(i) {
         // var videoDiv = $(".videoDiv")
         // videoDiv[i].play();
-    }
-
-    /**
-     * 删除tags model
-     * @param src
-     * @param id
-     * @param event
-     */
-    showDelTagsAlert = (src, index, event) => {
-        event.stopPropagation()
-
-        var phoneType = navigator.userAgent;
-        var phone;
-        if (phoneType.indexOf('iPhone') > -1 || phoneType.indexOf('iPad') > -1) {
-            phone = 'ios'
-        } else {
-            phone = 'android'
-        }
-        var _this = this;
-        const alertInstance = alert('您确定移除吗?', '', [
-            {text: '取消', onPress: () => console.log('cancel'), style: 'default'},
-            {text: '确定', onPress: () => _this.delTags(src, index)},
-
-        ], phone);
-    }
-
-    /**
-     *删除标签
-     */
-    delTags(v, index) {
-
-        for (var i = 0; i < teacherV.state.initData.itemList.length; i++) {
-            if (teacherV.state.initData.itemList[i].index == index) {
-                for (var j = 0; j < teacherV.state.initData.itemList[i].tagList.length; j++) {
-                    if (teacherV.state.initData.itemList[i].tagList[j].id == v.id) {
-                        teacherV.state.initData.itemList[i].tagList.splice(j, 1)
-                    }
-                }
-            }
-        }
-        teacherV.tabsOnChange(teacherV.state.clickTab)
     }
 
     tabsOnChange(index, event) {
@@ -924,7 +924,6 @@ export default class newUpdateARTextbook extends React.Component {
                             <span>添加扫描的图片</span></div>
                     </div>
                 </div>
-
 
                 <div className='submitBtn icon_pointer'>
                     <Button type="warning" onClick={this.updateARBook}>提交</Button>
