@@ -697,7 +697,8 @@ export default class newUpdateARTextbook extends React.Component {
                     <div className="div68">
                         {
                             v.tagList.map(function (item, index) {
-                                return <li className="spanTag">{item.content}
+                                return <li className="spanTag">
+                                    <span className="textOver">{item.content}</span>
                                     <span className="del_ar icon_pointer"
                                           onClick={teacherV.delTags.bind(this, item, v.index)}></span>
                                 </li>
