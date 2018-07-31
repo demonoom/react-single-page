@@ -350,6 +350,7 @@
   background: url("../imgs/icon_search.png") no-repeat;
   background-size: 100%;
   font-size: 0;
+  cursor: pointer;
 }
 #UpdateARTextbook .tagInput .am-list-item .am-input-control input {
   width: 88%;
@@ -402,6 +403,11 @@
 #UpdateARTextbook .classTags .am-tag-text {
   font-size: 13px;
   padding: 0 5px;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  display: block;
+  max-width: 70px;
 }
 #UpdateARTextbook .classTags .am-tag-active {
   border: 1px #2B84EF solid;
