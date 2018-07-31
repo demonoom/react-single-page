@@ -11,6 +11,29 @@ var teacherV;
 const alert = Modal.alert;
 const prompt = Modal.prompt;
 
+/**
+ * 排序
+ * @param prop
+ * @returns {Function}
+ */
+var compare = function (prop) {
+    return function (obj1, obj2) {
+        var val1 = obj1[prop];
+        var val2 = obj2[prop];
+        if (!isNaN(Number(val1)) && !isNaN(Number(val2))) {
+            val1 = Number(val1);
+            val2 = Number(val2);
+        }
+        if (val1 < val2) {
+            return -1;
+        } else if (val1 > val2) {
+            return 1;
+        } else {
+            return 0;
+        }
+    }
+}
+
 export default class newUpdateARTextbook extends React.Component {
 
     constructor(props) {
@@ -265,6 +288,9 @@ export default class newUpdateARTextbook extends React.Component {
         });
     }
 
+    /**
+     * 请输入页码model
+     */
     showAddPage() {
         var phoneType = navigator.userAgent;
         var phone;
@@ -319,15 +345,16 @@ export default class newUpdateARTextbook extends React.Component {
                     tagList: []
                 })
 
-                /**
-                 * 此处应该有排序
-                 */
-                console.log(teacherV.state.tagArr);
                 teacherV.state.tagArr.push({
                     index: value,
                     page: value,
                     title: '第' + value + "页"
                 })
+
+                /**
+                 * 页码排序
+                 */
+                teacherV.state.tagArr.sort(compare("page"))
 
                 teacherV.tabsOnChange({
                     index: value,
@@ -473,8 +500,12 @@ export default class newUpdateARTextbook extends React.Component {
         teacherV.tabsOnChange(teacherV.state.clickTab)
     }
 
+    /**
+     * 增加标签
+     * @param index
+     */
     addTags(index) {
-        $('.tagAddPanel').show()
+        $('.tagAddPanel').slideDown()
         teacherV.setState({tagsIndex: index})
     }
 
@@ -482,17 +513,20 @@ export default class newUpdateARTextbook extends React.Component {
      * 取消标签搜索面板
      */
     exitAddTags() {
-        $('.tagAddPanel').hide()
+        $('.tagAddPanel').slideUp()
         teacherV.setState({tagsLi: []})
         teacherV.setState({searchTagValue: ''})
     }
 
+    /**
+     * 确定增加标签
+     */
     addTagsForSure() {
         //去重
         teacherV.state.initData.itemList[teacherV.state.tagsIndex].tagList = teacherV.state.initData.itemList[teacherV.state.tagsIndex].tagList.concat(teacherV.state.tagsBefore)
         teacherV.tabsOnChange(teacherV.state.clickTab)
 
-        $('.tagAddPanel').hide()
+        $('.tagAddPanel').slideUp()
         teacherV.setState({tagsLi: [], tagsBefore: []})
         teacherV.setState({searchTagValue: ''})
     }
@@ -697,7 +731,8 @@ export default class newUpdateARTextbook extends React.Component {
                     <div className="div68">
                         {
                             v.tagList.map(function (item, index) {
-                                return <li className="spanTag">{item.content}
+                                return <li className="spanTag">
+                                    <span className="textOver">{item.content}</span>
                                     <span className="del_ar icon_pointer"
                                           onClick={teacherV.delTags.bind(this, item, v.index)}></span>
                                 </li>
@@ -857,7 +892,7 @@ export default class newUpdateARTextbook extends React.Component {
                     <Button type="warning" onClick={this.updateARBook}>提交</Button>
                 </div>
 
-                <div className='tagAddPanel' style={{height: document.body.clientHeight, display: 'none'}}>
+                <div className='tagAddPanel' style={{height: document.body.clientHeight / 2, display: 'none'}}>
                     <div className="tagInput">
                         <InputItem
                             placeholder="请输入关键字"

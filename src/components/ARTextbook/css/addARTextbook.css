@@ -1,3 +1,4 @@
+(node) util.print is deprecated. Use console.log instead.
 ::-webkit-scrollbar {
   width: 8px;
   height: 12px;
@@ -245,10 +246,11 @@
   -webkit-border-radius: 2px;
   -moz-border-radius: 2px;
   border-radius: 2px;
-  display: inline-block;
   vertical-align: top;
   box-sizing: border-box;
   position: relative;
+  max-width: 100px;
+  display: inline-block;
 }
 #addARTextbook .tagBtn {
   background: url("../imgs/tagBack.png") no-repeat;
