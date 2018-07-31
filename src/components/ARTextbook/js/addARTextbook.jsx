@@ -478,7 +478,10 @@ export default class addARTextbook extends React.Component {
                                 teacherV.unique(teacherV.state.ARTextbookDataArr[useIndex].tagText).map((v, i) => {
                                     // console.log(v,)
                                     return (
-                                        <span className="spanTag">{v}<span className="del_tag" onClick={teacherV.deleteTag.bind(this, useIndex, i)}></span></span>
+                                        <div className="spanTag">
+                                            <span className="textOver">{v}</span>
+                                            <span className="del_tag" onClick={teacherV.deleteTag.bind(this, useIndex, i)}></span>
+                                        </div>
                                         // {/* <span>{useIndex}</span> */}
                                     )
                                 })
