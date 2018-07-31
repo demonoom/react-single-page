@@ -395,6 +395,7 @@
   height: 36px;
   line-height: 36px;
   cursor: pointer;
+  padding: 0 10px;
 }
 #UpdateARTextbook .classTags .am-tag-normal {
   border-radius: 2px;
