@@ -4,6 +4,21 @@
   height: 100% !important;
   /* 这是针对缺省样式 (必须的) */
   /* 滑块颜色 */
+  /* 滑轨两头的监听按钮颜色 */
+  /* 这是针对缺省样式 (必须的) */
+  /* 滑块颜色 */
+}
+#UpdateARTextbook ::-webkit-scrollbar {
+  width: 8px;
+  height: 12px;
+}
+#UpdateARTextbook ::-webkit-scrollbar-thumb {
+  background-color: #ccc;
+  border-radius: 9px;
+  -webkit-border-radius: 9px;
+}
+#UpdateARTextbook ::-webkit-scrollbar-button {
+  background-color: initial;
 }
 #UpdateARTextbook .imgDiv {
   width: 100%;
@@ -27,7 +42,6 @@
   display: inline-block;
   background: #eee;
   margin-right: 15px;
-  overflow: hidden;
   margin-bottom: 15px;
 }
 #UpdateARTextbook .i_uploadAttech.pdfDiv {
@@ -117,14 +131,14 @@
   overflow-x: hidden;
 }
 #UpdateARTextbook .del_ar {
-  width: 18px;
-  height: 18px;
+  width: 16px;
+  height: 16px;
   background: url("../imgs/delPic.png") no-repeat;
   background-size: 100% 100%;
   display: inline-block;
   position: absolute;
-  right: 2px;
-  top: 2px;
+  right: -7px;
+  top: -7px;
   z-index: 9 !important;
 }
 #UpdateARTextbook .uploadBtn {
@@ -205,17 +219,6 @@
   overflow-y: auto;
   overflow-x: hidden;
 }
-#UpdateARTextbook .del_ar {
-  width: 18px;
-  height: 18px;
-  background: url("../imgs/delPic.png") no-repeat;
-  background-size: 100% 100%;
-  display: inline-block;
-  position: absolute;
-  right: 2px;
-  top: 2px;
-  z-index: 9 !important;
-}
 #UpdateARTextbook .addARTextbookTable {
   text-align: center;
   font-size: 16px;
@@ -252,7 +255,7 @@
 }
 #UpdateARTextbook .tabItem_list {
   position: relative;
-  margin-top: 15px;
+  margin-top: 10px;
 }
 #UpdateARTextbook .tabItem_cont .tabItem_list:first-child {
   margin-top: 0;
@@ -286,6 +289,18 @@
   position: absolute;
   bottom: 0;
   z-index: 999;
+  height: 70%;
+}
+#UpdateARTextbook .tagAddPanel_bg {
+  background: rgba(0, 0, 0, 0.4);
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
+  position: absolute;
+  z-index: 980;
+  top: 0;
+  left: 0;
+  display: none;
 }
 #UpdateARTextbook .spanTag {
   border: 1px #2B84EF solid;
@@ -349,29 +364,32 @@
 #UpdateARTextbook .bottomBox span {
   flex: 1;
   text-align: center;
-  font-size: 1rem;
+  font-size: 14px;
   padding: 1rem;
   display: inline-block;
 }
 #UpdateARTextbook .bottomBox .bind {
-  background: #e46a51;
+  background: #F56A55;
   color: #fff;
 }
 #UpdateARTextbook .close {
   font-size: 1.5em;
   background: #fff;
-  color: #e46a51;
+  color: #F56A55;
 }
 #UpdateARTextbook .classTags {
-  padding: 0 10px;
+  padding: 0 10px 0 0 ;
+  height: calc(100% - 100px);
+  overflow-y: auto;
+  overflow-x: hidden;
 }
 #UpdateARTextbook .classTags .am-tag-normal::before,
 #UpdateARTextbook .classTags .am-tag-active::before {
   display: none;
 }
 #UpdateARTextbook .classTags .am-tag {
-  margin-left: 5px;
-  margin-bottom: 5px;
+  margin-left: 15px;
+  margin-bottom: 10px;
   border: 1px #fff solid;
   height: 36px;
   line-height: 36px;
@@ -379,7 +397,7 @@
 }
 #UpdateARTextbook .classTags .am-tag-normal {
   border-radius: 2px;
-  margin-left: 5px;
+  margin-left: 15px;
 }
 #UpdateARTextbook .classTags .am-tag-text {
   font-size: 13px;
