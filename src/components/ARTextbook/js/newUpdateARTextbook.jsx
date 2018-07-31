@@ -534,7 +534,7 @@ export default class newUpdateARTextbook extends React.Component {
     searchOnChange(e) {
         teacherV.setState({searchTagValue: e})
     }
-
+    
     tagOnChange(data, v) {
         if (v) {
             teacherV.state.tagsBefore.push(data)
@@ -891,8 +891,9 @@ export default class newUpdateARTextbook extends React.Component {
                 <div className='submitBtn icon_pointer'>
                     <Button type="warning" onClick={this.updateARBook}>提交</Button>
                 </div>
-
-                <div className='tagAddPanel' style={{height: document.body.clientHeight / 2, display: 'none'}}>
+                <div className="tagAddPanel_bg"></div>
+                {/*<div className='tagAddPanel' style={{height: document.body.clientHeight - 2, display: 'none'}}>*/}
+                    <div className='tagAddPanel' style={{display: 'none'}}>
                     <div className="tagInput">
                         <InputItem
                             placeholder="请输入关键字"
