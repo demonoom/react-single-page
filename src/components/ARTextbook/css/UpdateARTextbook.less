@@ -2,6 +2,22 @@
   overflow: hidden;
   position: relative;
   height: 100% !important;
+  ::-webkit-scrollbar{
+    width: 8px;
+    height:12px;
+  } /* 这是针对缺省样式 (必须的) */
+
+
+  ::-webkit-scrollbar-thumb{
+    background-color: #ccc;
+    border-radius: 9px;
+    -webkit-border-radius: 9px;
+  } /* 滑块颜色 */
+
+  ::-webkit-scrollbar-button{
+    background-color: initial;
+  } /* 滑轨两头的监听按钮颜色 */
+
   .imgDiv {
     width: 100%;
     height: 100%;
@@ -24,7 +40,6 @@
     display: inline-block;
     background: #eee;
     margin-right: 15px;
-    overflow: hidden;
     margin-bottom: 15px;
     &.pdfDiv {
       background: url("../imgs/pdfIcon.png");
@@ -113,14 +128,14 @@
     overflow-x: hidden;
   }
   .del_ar {
-    width: 18px;
-    height: 18px;
+    width: 16px;
+    height: 16px;
     background: url("../imgs/delPic.png") no-repeat;
     background-size: 100% 100%;
     display: inline-block;
     position: absolute;
-    right: 2px;
-    top: 2px;
+    right: -7px;
+    top: -7px;
     z-index: 9 !important;
   }
   .uploadBtn {
@@ -147,7 +162,7 @@
     overflow: hidden;
     position: relative;
     ul {
-      width: 85%;
+      width: calc(~"100% - 30px");
       display: -webkit-box;
       overflow-y: hidden;
       overflow-x: auto;
@@ -159,101 +174,49 @@
       text-align: center;
       &.active {
         color: #108ee9;
-        border-bottom: 2px #108ee9 solid;
+        border-top: 2px #108ee9 solid;
+        padding: 11px 0 13px 0;
       }
     }
-    .fileBack{
-        width: 68px;
-        height: 68px;
-        background: url("../imgs/UpdateART.png") no-repeat;
-        background-size: 100%;
-        margin-right: 15px;
-    }
-    .am-list-item{
-        -ms-flex-align: start;
-        align-items: flex-start;
-        -webkit-align-items: flex-start;
-        box-align: flex-start;
-    }
-    .am-list-item .am-input-label.am-input-label-5 {
-        width: 70px;
-        padding-right: 15px;
-        text-align: right;
-        box-sizing: content-box;
-    }
-    .am-list-item .am-input-label, .am-list-item .am-input-control input{
-        font-size: 16px;
-    }
-    .am-tabs-pane-wrap{
-        height: calc(~"100% - 220px");
-        overflow-y: auto;
-        overflow-x: hidden;
-    }
-    .del_ar{
-        width: 18px;
-        height: 18px;
-        background: url("../imgs/delPic.png") no-repeat;
-        background-size: 100% 100%;
-        display: inline-block;
-        position: absolute;
-        right: 2px;
-        top: 2px;
-        z-index: 9 !important;
-
-    }
-    .uploadBtn{
-        background: url("../imgs/addPic.png") no-repeat;
-        font-size: 0;
-        width: 68px;
-        height: 68px;
-        background-size: 100%;
-        border: 0;
-        margin-right: 15px;
-        overflow: hidden;
-        margin-bottom: 15px;
-        display: inline-block;
-    }
-    .tabCont{
-        font-size: 15px;
-        height: 43.5px;
-        background-color: #fff;
-        -webkit-box-align: center;
-        -webkit-align-items: center;
-        -ms-flex-align: center;
-        align-items: center;
-        border-bottom: 1PX solid #ddd;
-        overflow: hidden;
-        position: relative;
-        ul{
-            width: 85%;
-            display: -webkit-box;
-            overflow-y: hidden;
-            overflow-x: auto;
-            height: 44px;
-        }
-        li{
-            padding: 13px 0;
-            width: 80px;
-            text-align: center;
-            &.active{
-                color: #108ee9;
-                border-top: 2px #108ee9 solid;
-                padding: 11px 0 13px 0;
-            }
-        }
-
-    }
-    .tabCont ul::-webkit-scrollbar{
-        width: 8px;
-        height:4px;
-    } /* 这是针对缺省样式 (必须的) */
-
   }
+  .tabCont ul::-webkit-scrollbar{
+    width: 8px;
+    height:4px;
+  } /* 这是针对缺省样式 (必须的) */
   .tabCont ul::-webkit-scrollbar-thumb {
     background-color: #ccc;
     border-radius: 4px;
     -webkit-border-radius: 4px;
   }
+  .fileBack{
+    width: 68px;
+    height: 68px;
+    background: url("../imgs/UpdateART.png") no-repeat;
+    background-size: 100%;
+    margin-right: 15px;
+  }
+  .am-list-item{
+    -ms-flex-align: start;
+    align-items: flex-start;
+    -webkit-align-items: flex-start;
+    box-align: flex-start;
+  }
+  .am-list-item .am-input-label.am-input-label-5 {
+    width: 70px;
+    padding-right: 15px;
+    text-align: right;
+    box-sizing: content-box;
+  }
+  .am-list-item .am-input-label, .am-list-item .am-input-control input{
+    font-size: 16px;
+  }
+  .am-tabs-pane-wrap{
+    height: calc(~"100% - 220px");
+    overflow-y: auto;
+    overflow-x: hidden;
+  }
+
+
   /* 滑块颜色 */
   .addARTextbookTable {
     text-align: center;
@@ -285,12 +248,16 @@
     }
   }
   .tabItem_cont {
-    height: calc(~"100% - 338px");
+    height: calc(~"100% - 280px");
     overflow-y: auto;
     overflow-x: hidden;
   }
   .tabItem_list {
     position: relative;
+    margin-top: 10px;
+  }
+  .tabItem_cont .tabItem_list:first-child{
+    margin-top: 0;
   }
   .del_group {
     background: url("../imgs/del_group.png") no-repeat;
@@ -319,8 +286,20 @@
     width: 100%;
     background-color: #f4f4f4;
     position: absolute;
-    top:0;
+    bottom: 0;
     z-index: 999;
+    height: 70%;
+  }
+  .tagAddPanel_bg{
+    background: rgba(0, 0, 0, 0.4);
+    height: 100%;
+    width: 100%;
+    overflow: hidden;
+    position: absolute;
+    z-index: 980;
+    top: 0;
+    left: 0;
+    display: none;
   }
   .spanTag{
     border: 1px #2B84EF solid;
@@ -338,6 +317,7 @@
     vertical-align: top;
     box-sizing: border-box;
     position: relative;
+    max-width: 100px;
     .del_ar{
       width: 16px;
       height: 16px;
@@ -382,12 +362,12 @@
     span {
       flex: 1;
       text-align: center;
-      font-size: 1rem;
+      font-size: 14px;
       padding: 1rem;
       display: inline-block;
     }
     .bind {
-      background: #e46a51;
+      background: #F56A55;
       color: #fff;
     }
 
@@ -395,16 +375,19 @@
   .close {
     font-size: 1.5em;
     background: #fff;
-    color: #e46a51;
+    color: #F56A55;
   }
   .classTags{
-    padding: 0 10px;
+    padding: 0 10px 0 0 ;
+    height: calc(~"100% - 100px");
+    overflow-y: auto;
+    overflow-x: hidden;
     .am-tag-normal::before,.am-tag-active::before{
       display: none;
     }
     .am-tag{
-      margin-left: 5px;
-      margin-bottom: 5px;
+      margin-left: 15px;
+      margin-bottom: 10px;
       border: 1px #fff solid;
       height: 36px;
       line-height: 36px;
@@ -412,7 +395,7 @@
     }
     .am-tag-normal {
       border-radius: 2px;
-      margin-left: 5px;
+      margin-left: 15px;
     }
     .am-tag-text {
       font-size: 13px;

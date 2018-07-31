@@ -67,6 +67,7 @@
 }
 #addARTextbook .videoCont {
   width: calc(100% - 89px);
+  overflow: visible;
 }
 #addARTextbook .videoCont video {
   height: 100%;
@@ -155,32 +156,33 @@
   text-align: center;
 }
 #addARTextbook .del_ar {
-  width: 18px;
-  height: 18px;
+  width: 16px;
+  height: 16px;
   background: url("../imgs/delPic.png") no-repeat;
   background-size: 100% 100%;
   display: inline-block;
   position: absolute;
-  right: 2px;
-  top: 2px;
+  right: -7px;
+  top: -7px;
   cursor: pointer;
 }
-#addARTextbook .tagCont {
+#addARTextbook .tagBack {
   position: absolute;
   width: 100%;
   height: 100%;
   top: 0;
   left: 0;
-  z-index: 1000;
+  z-index: 100;
   background-color: rgba(0, 0, 0, 0.4);
 }
-#addARTextbook .tagCont .inner {
+#addARTextbook .tagCont {
   background-color: #f4f4f4;
-  height: 50%;
+  height: 70%;
   position: absolute;
   bottom: 0;
   left: 0;
   width: 100%;
+  z-index: 101;
 }
 #addARTextbook .tagInput {
   position: relative;
@@ -225,7 +227,7 @@
 }
 #addARTextbook .classTags .am-tag {
   margin-left: 15px;
-  margin-bottom: 15px;
+  margin-bottom: 10px;
   border: 1px #fff solid;
   height: 36px;
   line-height: 36px;
