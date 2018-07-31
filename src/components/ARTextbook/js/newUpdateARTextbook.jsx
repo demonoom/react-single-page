@@ -505,7 +505,7 @@ export default class newUpdateARTextbook extends React.Component {
      * @param index
      */
     addTags(index) {
-        $('.tagAddPanel').show()
+        $('.tagAddPanel').slideDown()
         teacherV.setState({tagsIndex: index})
     }
 
@@ -513,7 +513,7 @@ export default class newUpdateARTextbook extends React.Component {
      * 取消标签搜索面板
      */
     exitAddTags() {
-        $('.tagAddPanel').hide()
+        $('.tagAddPanel').slideUp()
         teacherV.setState({tagsLi: []})
         teacherV.setState({searchTagValue: ''})
     }
@@ -526,7 +526,7 @@ export default class newUpdateARTextbook extends React.Component {
         teacherV.state.initData.itemList[teacherV.state.tagsIndex].tagList = teacherV.state.initData.itemList[teacherV.state.tagsIndex].tagList.concat(teacherV.state.tagsBefore)
         teacherV.tabsOnChange(teacherV.state.clickTab)
 
-        $('.tagAddPanel').hide()
+        $('.tagAddPanel').slideUp()
         teacherV.setState({tagsLi: [], tagsBefore: []})
         teacherV.setState({searchTagValue: ''})
     }
@@ -891,7 +891,7 @@ export default class newUpdateARTextbook extends React.Component {
                     <Button type="warning" onClick={this.updateARBook}>提交</Button>
                 </div>
 
-                <div className='tagAddPanel' style={{height: document.body.clientHeight, display: 'none'}}>
+                <div className='tagAddPanel' style={{height: document.body.clientHeight / 2, display: 'none'}}>
                     <div className="tagInput">
                         <InputItem
                             placeholder="请输入关键字"
