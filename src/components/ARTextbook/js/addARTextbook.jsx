@@ -63,14 +63,17 @@ export default class addARTextbook extends React.Component {
      * 数组
      * @param {*} arr 
      */
-    unique(arr) {
-        var newArr = [arr[0]];
-        for (var i = 1; i < arr.length; i++) {
-            if (newArr.indexOf(arr[i]) == -1) {
-                newArr.push(arr[i]);
-            }
-        }
-        return newArr;
+
+
+    unique(arr,name) {
+        function arrayUnique2(arr, name) {
+            var hash = {};
+            return arr.reduce(function (item, next) {
+              hash[next[name]] ? '' : hash[next[name]] = true && item.push(next);
+              return item;
+            }, []);
+          }
+  
     }
     /**
      * 删除标签
@@ -122,11 +125,12 @@ export default class addARTextbook extends React.Component {
             return v.filePath
         })
         var arr = teacherV.state.ARTextbookDataArr;
-        var newIdArr = [];
         for (var i = 0; i < arr.length; i++) {
             var array = []
             for (var j = 0; j < arr[i].tagText.length; j++) {
+
                 array.push(arr[i].tagText[j].id)
+
             }
             arr[i].tagText = array
             // newIdArr = arr[i].tagText;
@@ -142,15 +146,32 @@ export default class addARTextbook extends React.Component {
         }
         var classArray = [];
         this.state.ARTextbookDataArr.forEach(function (v, i) {
+            var oldArr = arr[i].tagText;
+            var allArr = [];
+            $.each(oldArr, function (i, v) {
+                var flag = true;
+                if (allArr.length > 0) {
+                    $.each(allArr, function (n, m) {
+                        if (allArr[n].contact_id == oldArr[i].contact_id) { flag = false; };
+                    });
+                };
+                if (flag) {
+                    allArr.push(oldArr[i]);
+                };
+            });
+
             classArray.push({
                 "page": v.pageNoValue,
                 "index": i,
                 "pic": v.picPath + '?size=300x300',
                 "video": v.videoPath.join(","),
-                "tagList": arr[i].tagText
+                "tagList": allArr
             })
         })
         param.bookData.itemList = classArray;
+
+        console.log(param)
+        return
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
             onResponse: function (result) {
                 if (result.msg == '调用成功' || result.success == true) {
@@ -355,6 +376,7 @@ export default class addARTextbook extends React.Component {
         var ARTextbookArr = [];
         this.state.ARTextbookDataArr.forEach(function (v, i) {
             var useIndex = i;
+            // var unique = {};
             ARTextbookArr.push(<div>
                 {/*<div className="cont_communal add_title font_gray">{i + 1}<span className="icon_delete icon_pointer" onClick={teacherV.deleteGroup.bind(this, useIndex)}></span></div>*/}
                 {/*<div className="line_public flex_container"></div>*/}
@@ -453,7 +475,8 @@ export default class addARTextbook extends React.Component {
                             v.tagText.length == 0 ?
                                 ""
                                 :
-                                 teacherV.state.ARTextbookDataArr[useIndex].tagText.map((v, i) => {
+                                teacherV.state.ARTextbookDataArr[useIndex].tagText.map((v, i) => {
+                                    console.log(v, "cal")
                                     return (
                                         <div className="spanTag">
                                             <span className="textOver">{v.content}</span>
@@ -494,7 +517,7 @@ export default class addARTextbook extends React.Component {
             arrTextDiv: []
         });
         this.buildARTextbook();
-       
+
     };
 
     /**
@@ -711,15 +734,12 @@ export default class addARTextbook extends React.Component {
                                 {
                                     teacherV.state.tagData
                                 }
-
                             </div>
                             <div className="bottomBox">
                                 <span className="close" onClick={teacherV.cancelSubmit}>取消</span>
                                 <span className="bind" onClick={teacherV.submitTagArr}>确 定</span>
                             </div>
                         </div>
-
-
                     </div>
                 </div>
 
