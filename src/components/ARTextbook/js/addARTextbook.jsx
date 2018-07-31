@@ -405,7 +405,7 @@ export default class addARTextbook extends React.Component {
                         <img onClick={teacherV.imgPreview.bind(this, teacherV.state.ARTextbookDataArr[i])}
                             className="imgTag" src={teacherV.state.ARTextbookDataArr[i].picPath} />
                     }
-                    <button className="uploadBtn" onClick={(e) => { teacherV.uploadImage.bind(this, i) }}>教材图片</button>
+                    <button className="uploadBtn" onClick={teacherV.uploadImage.bind(this, i)}>教材图片</button>
                 </div>
 
                 <div className="line_public flex_container"></div>
@@ -505,7 +505,7 @@ export default class addARTextbook extends React.Component {
                             <div>标签名称</div>
                         </InputItem>
 
-                        <div className="searchIcon icon_pointer" onClick={teacherV.searchARBookTag.bind(this, useIndex)}></div>
+                        <div className="searchIcon" onClick={teacherV.searchARBookTag.bind(this, useIndex)}></div>
                     </div>
                     <div className="classTags">
                         {
@@ -610,7 +610,7 @@ export default class addARTextbook extends React.Component {
      * 上传照片
      */
     uploadImage(index) {
-        
+        console.log("123")
         var data = {
             method: 'selectImages',
         };
@@ -825,3 +825,11 @@ export default class addARTextbook extends React.Component {
         );
     }
 }
+
+
+//  4:ar教材添加图片视频项，图片添加不了
+// 	5:添加教材内容页面，对于教材附件和扫描图片，上传完成后不要再有加号那个添加按钮，和修改保持一致，为修改逻辑
+// 	7:添加教材逻辑，删除添加的某一项，整个页面刷白了
+// 	3:给扫描图片添加标签返回键不合理
+//  标签删除多次
+//  添加的标签需要多次删除
