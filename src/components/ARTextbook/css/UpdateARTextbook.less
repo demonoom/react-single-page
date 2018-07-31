@@ -2,6 +2,22 @@
   overflow: hidden;
   position: relative;
   height: 100% !important;
+  ::-webkit-scrollbar{
+    width: 8px;
+    height:12px;
+  } /* 这是针对缺省样式 (必须的) */
+
+
+  ::-webkit-scrollbar-thumb{
+    background-color: #ccc;
+    border-radius: 9px;
+    -webkit-border-radius: 9px;
+  } /* 滑块颜色 */
+
+  ::-webkit-scrollbar-button{
+    background-color: initial;
+  } /* 滑轨两头的监听按钮颜色 */
+
   .imgDiv {
     width: 100%;
     height: 100%;
@@ -24,7 +40,6 @@
     display: inline-block;
     background: #eee;
     margin-right: 15px;
-    overflow: hidden;
     margin-bottom: 15px;
     &.pdfDiv {
       background: url("../imgs/pdfIcon.png");
@@ -113,14 +128,14 @@
     overflow-x: hidden;
   }
   .del_ar {
-    width: 18px;
-    height: 18px;
+    width: 16px;
+    height: 16px;
     background: url("../imgs/delPic.png") no-repeat;
     background-size: 100% 100%;
     display: inline-block;
     position: absolute;
-    right: 2px;
-    top: 2px;
+    right: -7px;
+    top: -7px;
     z-index: 9 !important;
   }
   .uploadBtn {
@@ -200,18 +215,6 @@
         overflow-y: auto;
         overflow-x: hidden;
     }
-    .del_ar{
-        width: 18px;
-        height: 18px;
-        background: url("../imgs/delPic.png") no-repeat;
-        background-size: 100% 100%;
-        display: inline-block;
-        position: absolute;
-        right: 2px;
-        top: 2px;
-        z-index: 9 !important;
-
-    }
 
 
   /* 滑块颜色 */
@@ -251,7 +254,7 @@
   }
   .tabItem_list {
     position: relative;
-    margin-top: 15px;
+    margin-top: 10px;
   }
   .tabItem_cont .tabItem_list:first-child{
     margin-top: 0;
@@ -285,6 +288,18 @@
     position: absolute;
     bottom: 0;
     z-index: 999;
+    height: 70%;
+  }
+  .tagAddPanel_bg{
+    background: rgba(0, 0, 0, 0.4);
+    height: 100%;
+    width: 100%;
+    overflow: hidden;
+    position: absolute;
+    z-index: 980;
+    top: 0;
+    left: 0;
+    display: none;
   }
   .spanTag{
     border: 1px #2B84EF solid;
@@ -347,12 +362,12 @@
     span {
       flex: 1;
       text-align: center;
-      font-size: 1rem;
+      font-size: 14px;
       padding: 1rem;
       display: inline-block;
     }
     .bind {
-      background: #e46a51;
+      background: #F56A55;
       color: #fff;
     }
 
@@ -360,16 +375,19 @@
   .close {
     font-size: 1.5em;
     background: #fff;
-    color: #e46a51;
+    color: #F56A55;
   }
   .classTags{
-    padding: 0 10px;
+    padding: 0 10px 0 0 ;
+    height: calc(~"100% - 100px");
+    overflow-y: auto;
+    overflow-x: hidden;
     .am-tag-normal::before,.am-tag-active::before{
       display: none;
     }
     .am-tag{
-      margin-left: 5px;
-      margin-bottom: 5px;
+      margin-left: 15px;
+      margin-bottom: 10px;
       border: 1px #fff solid;
       height: 36px;
       line-height: 36px;
@@ -377,7 +395,7 @@
     }
     .am-tag-normal {
       border-radius: 2px;
-      margin-left: 5px;
+      margin-left: 15px;
     }
     .am-tag-text {
       font-size: 13px;
