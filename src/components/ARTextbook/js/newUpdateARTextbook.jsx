@@ -709,7 +709,6 @@ export default class newUpdateARTextbook extends React.Component {
                 </div>
 
             </div>
-
             tabItem.push(imgDiv)
 
         })
@@ -845,13 +844,14 @@ export default class newUpdateARTextbook extends React.Component {
 
                 <div className="tabItem_cont">
                     {this.state.tabItem}
+                    <WhiteSpace size="lg"/>
+                    <div onClick={this.addList} className='addARTextbookTable'>
+                        <div className="addBtn icon_pointer">
+                            <Icon type="plus"/>
+                            <span>添加扫描的图片</span></div>
+                    </div>
                 </div>
-                <WhiteSpace size="lg"/>
-                <div onClick={this.addList} className='addARTextbookTable'>
-                    <div className="addBtn icon_pointer">
-                        <Icon type="plus"/>
-                        <span>添加扫描的图片</span></div>
-                </div>
+
 
                 <div className='submitBtn icon_pointer'>
                     <Button type="warning" onClick={this.updateARBook}>提交</Button>
