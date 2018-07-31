@@ -517,7 +517,7 @@ export default class addARTextbook extends React.Component {
                                 <div>标签名称</div>
                             </InputItem>
 
-                            <div className="searchIcon" onClick={teacherV.searchARBookTag.bind(this, useIndex)}></div>
+                            <div className="searchIcon icon_pointer" onClick={teacherV.searchARBookTag.bind(this, useIndex)}></div>
                         </div>
                         <div className="classTags">
                             {
@@ -797,7 +797,7 @@ export default class addARTextbook extends React.Component {
                             <div onClick={() => this.labelFocusInst.focus()}>AR教材</div>
                         </InputItem>
                         <div className="line_public flex_container"></div>
-                        <div className="my_flex sameBack">
+                        <div className="my_flex sameBack firstDiv">
                             <span className="textTitle">教材附件</span>
                             {
                                 teacherV.state.fileNewArr.length == 0 ?
@@ -821,10 +821,9 @@ export default class addARTextbook extends React.Component {
                         <div className='CourseTableArea'>
                             {
                                 this.state.ARTextbookArr.map((v) => {
-                                    return <div>{v}</div>
+                                    return <div className="cont">{v}</div>
                                 })
                             }
-                            <WhiteSpace size="lg" />
                             <div onClick={this.addARTextbookTable} className='addARTextbookTable sameBack'>
                                 <div className="addBtn icon_pointer">
                                     <Icon type="plus" />

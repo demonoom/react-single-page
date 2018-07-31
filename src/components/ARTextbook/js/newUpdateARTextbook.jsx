@@ -683,8 +683,8 @@ export default class newUpdateARTextbook extends React.Component {
             </div>;
 
             if (WebServiceUtil.isEmpty(v.pic) == false) {
-                imgDivSon = <div className="div68" onClick={teacherV.imgPreview.bind(this, v.pic)}>
-                    <button className="uploadAttech i_uploadAttech">{
+                imgDivSon = <div className="div68">
+                    <button className="uploadAttech i_uploadAttech" onClick={teacherV.imgPreview.bind(this, v.pic)}>{
                         <img className="imgDiv" src={v.pic}/>
                     }
                         <div className="icon_pointer" onClick={teacherV.uploadImage.bind(this, v.index)}>修改</div>
@@ -854,19 +854,23 @@ export default class newUpdateARTextbook extends React.Component {
             WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
                 onResponse: function (result) {
                     if (result.msg == '调用成功' || result.success == true) {
-                        var src = result.response.pdfPath || result.response.htmlPath || result.response.path;
+                        if (!WebServiceUtil.isEmpty(result.response)) {
+                            var src = result.response.pdfPath || result.response.htmlPath || result.response.path;
 
-                        var pdfURL = src.replace("60.205.111.227", "www.maaee.com");
-                        pdfURL = pdfURL.replace("60.205.86.217", "www.maaee.com");
-                        if (pdfURL.indexOf("https") == -1 && pdfURL.indexOf("http") != -1) {
-                            pdfURL = pdfURL.replace("http", "https");
+                            var pdfURL = src.replace("60.205.111.227", "www.maaee.com");
+                            pdfURL = pdfURL.replace("60.205.86.217", "www.maaee.com");
+                            if (pdfURL.indexOf("https") == -1 && pdfURL.indexOf("http") != -1) {
+                                pdfURL = pdfURL.replace("http", "https");
+                            }
+                            var data = {};
+                            data.method = 'openNewPage';
+                            data.url = pdfURL;
+                            Bridge.callHandler(data, null, function (error) {
+                                window.location.href = url;
+                            });
+                        } else {
+                            Toast.fail('该文件暂无法预览', 2)
                         }
-                        var data = {};
-                        data.method = 'openNewPage';
-                        data.url = pdfURL;
-                        Bridge.callHandler(data, null, function (error) {
-                            window.location.href = url;
-                        });
 
                     } else {
                         Toast.fail(result.msg, 5);
@@ -876,6 +880,15 @@ export default class newUpdateARTextbook extends React.Component {
                     // message.error(error);
                 }
             });
+
+            // var content2 = src.replace("60.205.111.227", "www.maaee.com");
+            // var content3 = content2.replace("60.205.86.217", "www.maaee.com");
+            // var data = {};
+            // data.method = 'openNewPage';
+            // data.url = "http://www.maaee.com/Excoord_For_Education/js/pdfjs/web/viewer.html?file=" + content3;
+            // Bridge.callHandler(data, null, function (error) {
+            //     window.location.href = url;
+            // });
         } else {
             //视频预览
 
