@@ -523,10 +523,16 @@ export default class newUpdateARTextbook extends React.Component {
      */
     addTagsForSure() {
         //去重
-        teacherV.state.initData.itemList[teacherV.state.tagsIndex].tagList = teacherV.state.initData.itemList[teacherV.state.tagsIndex].tagList.concat(teacherV.state.tagsBefore)
+        $('.tagAddPanel').slideUp()
+
+        for (var i = 0; i < teacherV.state.initData.itemList.length; i++) {
+            if (teacherV.state.initData.itemList[i].index == teacherV.state.tagsIndex) {
+                teacherV.state.initData.itemList[i].tagList = teacherV.state.initData.itemList[i].tagList.concat(teacherV.state.tagsBefore)
+            }
+        }
+
         teacherV.tabsOnChange(teacherV.state.clickTab)
 
-        $('.tagAddPanel').slideUp()
         teacherV.setState({tagsLi: [], tagsBefore: []})
         teacherV.setState({searchTagValue: ''})
     }
@@ -587,12 +593,44 @@ export default class newUpdateARTextbook extends React.Component {
         // videoDiv[i].play();
     }
 
-    delTags(v, a) {
-        teacherV.state.initData.itemList[a].tagList.forEach(function (item, index) {
-            if (item.id == v.id) {
-                teacherV.state.initData.itemList[a].tagList.splice(index, 1)
+    /**
+     * 删除tags model
+     * @param src
+     * @param id
+     * @param event
+     */
+    showDelTagsAlert = (src, index, event) => {
+        event.stopPropagation()
+
+        var phoneType = navigator.userAgent;
+        var phone;
+        if (phoneType.indexOf('iPhone') > -1 || phoneType.indexOf('iPad') > -1) {
+            phone = 'ios'
+        } else {
+            phone = 'android'
+        }
+        var _this = this;
+        const alertInstance = alert('您确定移除吗?', '', [
+            {text: '取消', onPress: () => console.log('cancel'), style: 'default'},
+            {text: '确定', onPress: () => _this.delTags(src, index)},
+
+        ], phone);
+    }
+
+    /**
+     *删除标签
+     */
+    delTags(v, index) {
+
+        for (var i = 0; i < teacherV.state.initData.itemList.length; i++) {
+            if (teacherV.state.initData.itemList[i].index == index) {
+                for (var j = 0; j < teacherV.state.initData.itemList[i].tagList.length; j++) {
+                    if (teacherV.state.initData.itemList[i].tagList[j].id == v.id) {
+                        teacherV.state.initData.itemList[i].tagList.splice(j, 1)
+                    }
+                }
             }
-        })
+        }
         teacherV.tabsOnChange(teacherV.state.clickTab)
     }
 
@@ -734,7 +772,7 @@ export default class newUpdateARTextbook extends React.Component {
                                 return <li className="spanTag">
                                     <span className="textOver">{item.content}</span>
                                     <span className="del_ar icon_pointer"
-                                          onClick={teacherV.delTags.bind(this, item, v.index)}></span>
+                                          onClick={teacherV.showDelTagsAlert.bind(this, item, v.index)}></span>
                                 </li>
                             })
                         }

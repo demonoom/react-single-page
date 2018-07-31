@@ -147,7 +147,7 @@
     overflow: hidden;
     position: relative;
     ul {
-      width: calc(~"100% - 30px");
+      width: 85%;
       display: -webkit-box;
       overflow-y: hidden;
       overflow-x: auto;
@@ -159,19 +159,8 @@
       text-align: center;
       &.active {
         color: #108ee9;
-        border-top: 2px #108ee9 solid;
-        padding: 11px 0 13px 0;
+        border-bottom: 2px #108ee9 solid;
       }
-    }
-  }
-    .tabCont ul::-webkit-scrollbar{
-      width: 8px;
-      height:4px;
-    } /* 这是针对缺省样式 (必须的) */
-    .tabCont ul::-webkit-scrollbar-thumb {
-      background-color: #ccc;
-      border-radius: 4px;
-      -webkit-border-radius: 4px;
     }
     .fileBack{
         width: 68px;
@@ -212,8 +201,59 @@
         z-index: 9 !important;
 
     }
+    .uploadBtn{
+        background: url("../imgs/addPic.png") no-repeat;
+        font-size: 0;
+        width: 68px;
+        height: 68px;
+        background-size: 100%;
+        border: 0;
+        margin-right: 15px;
+        overflow: hidden;
+        margin-bottom: 15px;
+        display: inline-block;
+    }
+    .tabCont{
+        font-size: 15px;
+        height: 43.5px;
+        background-color: #fff;
+        -webkit-box-align: center;
+        -webkit-align-items: center;
+        -ms-flex-align: center;
+        align-items: center;
+        border-bottom: 1PX solid #ddd;
+        overflow: hidden;
+        position: relative;
+        ul{
+            width: 85%;
+            display: -webkit-box;
+            overflow-y: hidden;
+            overflow-x: auto;
+            height: 44px;
+        }
+        li{
+            padding: 13px 0;
+            width: 80px;
+            text-align: center;
+            &.active{
+                color: #108ee9;
+                border-top: 2px #108ee9 solid;
+                padding: 11px 0 13px 0;
+            }
+        }
 
+    }
+    .tabCont ul::-webkit-scrollbar{
+        width: 8px;
+        height:4px;
+    } /* 这是针对缺省样式 (必须的) */
 
+  }
+  .tabCont ul::-webkit-scrollbar-thumb {
+    background-color: #ccc;
+    border-radius: 4px;
+    -webkit-border-radius: 4px;
+  }
   /* 滑块颜色 */
   .addARTextbookTable {
     text-align: center;
@@ -245,16 +285,12 @@
     }
   }
   .tabItem_cont {
-    height: calc(~"100% - 280px");
+    height: calc(~"100% - 338px");
     overflow-y: auto;
     overflow-x: hidden;
   }
   .tabItem_list {
     position: relative;
-    margin-top: 15px;
-  }
-  .tabItem_cont .tabItem_list:first-child{
-    margin-top: 0;
   }
   .del_group {
     background: url("../imgs/del_group.png") no-repeat;
@@ -283,7 +319,7 @@
     width: 100%;
     background-color: #f4f4f4;
     position: absolute;
-    bottom: 0;
+    top:0;
     z-index: 999;
   }
   .spanTag{
@@ -302,7 +338,6 @@
     vertical-align: top;
     box-sizing: border-box;
     position: relative;
-    max-width: 100px;
     .del_ar{
       width: 16px;
       height: 16px;
