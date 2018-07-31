@@ -59,21 +59,21 @@ export default class addARTextbook extends React.Component {
             })
         }, 100)
     }
-    /**
-     * 数组
-     * @param {*} arr 
+     /**
+     * 去重
+     * @param arr
+     * @returns {*}
      */
-
-
-    unique(arr,name) {
-        function arrayUnique2(arr, name) {
-            var hash = {};
-            return arr.reduce(function (item, next) {
-              hash[next[name]] ? '' : hash[next[name]] = true && item.push(next);
-              return item;
-            }, []);
-          }
-  
+    makeArr(arr) {
+        for (var i = 0; i < arr.length - 1; i++) {
+            for (var j = i + 1; j < arr.length; j++) {
+                if (arr[i].index == arr[j].index) {
+                    arr.splice(j, 1);
+                    j--;
+                }
+            }
+        }
+        return arr
     }
     /**
      * 删除标签
@@ -91,33 +91,33 @@ export default class addARTextbook extends React.Component {
      * 新增AR教材
      */
     addARBook = () => {
-        // if (teacherV.state.ARTextbookValue == undefined) {
-        //     Toast.info("请输入AR教材名称")
-        //     return
-        // }
-        // if (teacherV.state.fileNewArr.length == 0) {
-        //     Toast.info("请上传附件")
-        //     return
-        // }
+        if (teacherV.state.ARTextbookValue == undefined) {
+            Toast.info("请输入AR教材名称")
+            return
+        }
+        if (teacherV.state.fileNewArr.length == 0) {
+            Toast.info("请上传附件")
+            return
+        }
 
-        // if (teacherV.state.ARTextbookDataArr.length == 0) {
-        //     Toast.info("AR教材的图片和视频不能为空")
-        //     return
-        // }
-        // if (teacherV.state.pageNoValue == undefined) {
-        //     Toast.info("请输入页码")
-        //     return
-        // }
+        if (teacherV.state.ARTextbookDataArr.length == 0) {
+            Toast.info("AR教材的图片和视频不能为空")
+            return
+        }
+        if (teacherV.state.pageNoValue == undefined) {
+            Toast.info("请输入页码")
+            return
+        }
 
-        // if (teacherV.state.picNewArr.length == 0) {
-        //     Toast.info("请上传照片")
-        //     return
-        // }
+        if (teacherV.state.picNewArr.length == 0) {
+            Toast.info("请上传照片")
+            return
+        }
 
-        // if (teacherV.state.videoNewArr.length == 0) {
-        //     Toast.info("请上传视频")
-        //     return
-        // }
+        if (teacherV.state.videoNewArr.length == 0) {
+            Toast.info("请上传视频")
+            return
+        }
         /**
          * 获取文件路径
          */
@@ -171,7 +171,6 @@ export default class addARTextbook extends React.Component {
         param.bookData.itemList = classArray;
 
         console.log(param)
-        return
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
             onResponse: function (result) {
                 if (result.msg == '调用成功' || result.success == true) {
@@ -318,7 +317,23 @@ export default class addARTextbook extends React.Component {
      */
     submitTagArr() {
         $(`.calmTagDiv`).slideUp();
+        debugger
+        console.log(teacherV.state.ARTextbookDataArr)
         teacherV.state.ARTextbookDataArr[teacherV.state.tagIndex].tagText = teacherV.state.ARTextbookDataArr[teacherV.state.tagIndex].tagText.concat(teacherV.state.tagChangeData);
+        
+        
+        // teacherV.state.ARTextbookDataArr[teacherV.state.tagIndex].tagText = teacherV.makeArr(teacherV.state.ARTextbookDataArr[teacherV.state.tagIndex].tagText,"id")
+        // console.log(teacherV.state.ARTextbookDataArr[teacherV.state.tagIndex].tagText)
+
+        console.log(teacherV.state.ARTextbookDataArr)
+
+        var arr = teacherV.state.ARTextbookDataArr[teacherV.state.tagIndex].tagText;
+        console.log(teacherV.makeArr(arr,"id"),999999)
+
+
+        // return
+        // console.log(teacherV.makeArr(teacherV.state.ARTextbookDataArr[useIndex].tagText,"id"),"makArr")
+        // debugger
         teacherV.buildARTextbook();
         teacherV.setState({ tagData: [], tagChangeData: [], searchValue: "" })
     }
@@ -376,7 +391,6 @@ export default class addARTextbook extends React.Component {
         var ARTextbookArr = [];
         this.state.ARTextbookDataArr.forEach(function (v, i) {
             var useIndex = i;
-            // var unique = {};
             ARTextbookArr.push(<div>
                 {/*<div className="cont_communal add_title font_gray">{i + 1}<span className="icon_delete icon_pointer" onClick={teacherV.deleteGroup.bind(this, useIndex)}></span></div>*/}
                 {/*<div className="line_public flex_container"></div>*/}
@@ -475,7 +489,7 @@ export default class addARTextbook extends React.Component {
                             v.tagText.length == 0 ?
                                 ""
                                 :
-                                teacherV.state.ARTextbookDataArr[useIndex].tagText.map((v, i) => {
+                                 teacherV.state.ARTextbookDataArr[useIndex].tagText.map((v, i) => {
                                     console.log(v, "cal")
                                     return (
                                         <div className="spanTag">
@@ -489,8 +503,8 @@ export default class addARTextbook extends React.Component {
                     </div>
                 </div>
             </div>)
-            _this.setState({ ARTextbookArr })
         })
+        _this.setState({ ARTextbookArr })
     };
 
     /**
@@ -617,6 +631,9 @@ export default class addARTextbook extends React.Component {
                 }
             })
         }
+
+
+        console.log(teacherV.state.tagChangeData,"tagChangeData")
     }
     /**
    * 搜索关键字结果
@@ -750,8 +767,3 @@ export default class addARTextbook extends React.Component {
         );
     }
 }
-
-
-// 	7:添加教材逻辑，删除添加的某一项，整个页面刷白了
-//  标签删除多次
-//  添加的标签需要多次删除
