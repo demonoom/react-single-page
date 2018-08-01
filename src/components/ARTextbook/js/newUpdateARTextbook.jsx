@@ -707,7 +707,7 @@ export default class newUpdateARTextbook extends React.Component {
                         v.video.substr(v.video.length - 3, 3) !== "mp4" ?
                             <div className="am-input-label am-input-label-5">相关文件
                                 <p style={{ margin: 0, height: 5 }}></p>
-                                <span className="uploadSupport">(mp4、office文件)</span>
+                                <span className="uploadSupport">(office、mp4文件)</span>
                             </div>
                             :
                             <div className="am-input-label am-input-label-5">相关视频

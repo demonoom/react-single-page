@@ -406,7 +406,7 @@ export default class addARTextbook extends React.Component {
                 <div className="sameBack my_flex">
                     <div className="textTitle">相关文件
                         <p style={{ margin: 0, height: 5 }}></p>
-                        <span className="uploadSupport">(mp4、office文件)</span>
+                        <span className="uploadSupport">(office、mp4文件)</span>
                     </div>
                     <div className="videoCont my_flex">
                         {
