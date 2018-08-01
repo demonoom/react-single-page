@@ -19,8 +19,21 @@ export default class addARTag extends React.Component {
         var locationSearch = locationHref.substr(locationHref.indexOf("?") + 1);
         var uid = locationSearch.split("&")[0].split("=")[1];
         this.setState({ "uid": uid });
+        this.refreshPage();
     }
-
+    /**
+     * 刷新页面
+     */
+     refreshPage(){
+        var data = {
+            method: 'refreshPage',
+        };
+        Bridge.callHandler(data, function (res) {
+            console.log(res,"res")
+        }, function (error) {
+            console.log(error);
+        });
+     }
     /**
      * 提交
      */
@@ -34,7 +47,6 @@ export default class addARTag extends React.Component {
         }
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
             onResponse: function (result) {
-                console.log(result, "re")
                 if (result.msg == '调用成功' || result.success == true) {
                     //关闭当前窗口，并刷新上一个页面
                     var data = {
