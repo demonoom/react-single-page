@@ -17,6 +17,8 @@ export default class addARTag extends React.Component {
         }
     }
     componentDidMount(){
+        Bridge.setShareAble("false");
+        document.title = '添加AR标签';
         var locationHref = window.location.href;
         var locationSearch = locationHref.substr(locationHref.indexOf("?") + 1);
         var uid = locationSearch.split("&")[0].split("=")[1];
@@ -29,15 +31,11 @@ export default class addARTag extends React.Component {
     
     onChangeTag(selected) {
         console.log(`tag selected: ${selected}`);
-        // console.log(e, "value")
     }
     /**
      * 提交
      */
     submit() {
-        
-
-
         var param = {
             "method": 'addARBookTag',
             "tagData":{

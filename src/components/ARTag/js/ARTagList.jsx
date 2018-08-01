@@ -20,6 +20,8 @@ export default class ARTagList extends React.Component {
         }
     }
     componentDidMount() {
+        Bridge.setShareAble("false");
+        document.title = 'AR标签列表';
         var locationHref = window.location.href;
         var locationSearch = locationHref.substr(locationHref.indexOf("?") + 1);
         var uid = locationSearch.split("&")[0].split("=")[1];
@@ -48,7 +50,6 @@ export default class ARTagList extends React.Component {
             "adminId": uid,
             "pn": -1
         }
-        console.log(param)
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
             onResponse: function (result) {
                 console.log(result, "re")
@@ -95,7 +96,6 @@ export default class ARTagList extends React.Component {
             "tId": data.id,
         };
 
-        console.log(param)
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
             onResponse: (result) => {
                 console.log(result,"eee")
