@@ -385,7 +385,10 @@ export default class addARTextbook extends React.Component {
                 {/*<span>{teacherV.state.ARTextbookDataArr[i].picName}</span>*/}
                 <div className="line_public flex_container"></div>
                 <div className="sameBack my_flex">
-                    <span className="textTitle">教材图片</span>
+                    <span className="textTitle">教材图片
+                        <p style={{ margin: 0, height: 5 }}></p>
+                        <span className="uploadSupport">(jpg格式)</span>
+                    </span>
                     {teacherV.state.ARTextbookDataArr[i].picPath.length == 0 ?
                         <button className="uploadBtn" onClick={teacherV.uploadImage.bind(this, i)}>教材图片</button>
                         :
@@ -403,7 +406,7 @@ export default class addARTextbook extends React.Component {
                 <div className="sameBack my_flex">
                     <div className="textTitle">相关文件
                         <p style={{ margin: 0, height: 5 }}></p>
-                        <span className="uploadSupport">(支持视频、office文件)</span>
+                        <span className="uploadSupport">(mp4、office文件)</span>
                     </div>
                     <div className="videoCont my_flex">
                         {
@@ -673,7 +676,10 @@ export default class addARTextbook extends React.Component {
                         </InputItem>
                         <div className="line_public flex_container"></div>
                         <div className="my_flex sameBack firstDiv">
-                            <span className="textTitle">教材附件</span>
+                            <span className="textTitle">教材附件
+                                <p style={{ margin: 0, height: 5 }}></p>
+                                <span className="uploadSupport">(pdf文件)</span>
+                            </span>
                             {
                                 teacherV.state.fileNewArr.length == 0 ?
                                     <button className="uploadBtn" onClick={teacherV.uploadFile}>教材附件</button>
