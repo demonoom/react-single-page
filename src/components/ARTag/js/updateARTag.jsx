@@ -1,6 +1,6 @@
 import React from "react";
 import {
-    InputItem,Button
+    InputItem,Button,Toast
 } from 'antd-mobile';
 var calm;
 export default class updateARTag extends React.Component {
@@ -38,7 +38,7 @@ export default class updateARTag extends React.Component {
                         // calm.viewARBookTag(calm.state.id)
                     })
                 }else{
-
+                    // Toast.fail(result.msg, 5);
                 }
 
             },
@@ -75,11 +75,11 @@ export default class updateARTag extends React.Component {
                         console.log(error);
                     });
                 } else {
-                    // Toast.fail(result.msg, 5);
+                    Toast.fail(result.msg, 5);
                 }
             },
             onError: function (error) {
-                // message.error(error);
+                message.error(error);
             }
         });
         console.log(calm.state.ARTagValue)

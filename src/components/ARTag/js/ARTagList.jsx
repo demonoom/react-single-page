@@ -80,7 +80,7 @@ export default class ARTagList extends React.Component {
             phone = 'android'
         }
         var _this = this;
-        const alertInstance = alert('您确定要删除该教材吗?', '', [
+        const alertInstance = alert('您确定要删除该标签吗?', '', [
             {text: '取消', onPress: () => console.log('cancel'), style: 'default'},
             {text: '确定', onPress: () => _this.deleteTag(data)},
         ], phone);
