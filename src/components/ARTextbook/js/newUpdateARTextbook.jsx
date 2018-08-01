@@ -695,16 +695,25 @@ export default class newUpdateARTextbook extends React.Component {
             var imgDiv = <div className="tabItem_list">
                 <span className="del_group icon_pointer" onClick={teacherV.showListAlert.bind(this, v)}>删除</span>
                 <div className="am-list-item item_list20">
-                    <div className="am-input-label am-input-label-5">教材图片</div>
+                    <div className="am-input-label am-input-label-5">教材图片
+                        <p style={{ margin: 0, height: 5 }}></p>
+                        <span className="uploadSupport">(jpg格式)</span>
+                    </div>
                     {imgDivSon}
                 </div>
                 <div className="line_public flex_container"></div>
                 <div className="am-list-item item_list20">
                     {
                         v.video.substr(v.video.length - 3, 3) !== "mp4" ?
-                            <div className="am-input-label am-input-label-5">相关文件</div>
+                            <div className="am-input-label am-input-label-5">相关文件
+                                <p style={{ margin: 0, height: 5 }}></p>
+                                <span className="uploadSupport">(office、mp4文件)</span>
+                            </div>
                             :
-                            <div className="am-input-label am-input-label-5">相关视频</div>
+                            <div className="am-input-label am-input-label-5">相关视频
+                                <p style={{ margin: 0, height: 5 }}></p>
+                                <span className="uploadSupport">(mp4格式)</span>
+                            </div>
 
                     }
 
@@ -924,7 +933,10 @@ export default class newUpdateARTextbook extends React.Component {
                 {/*附件*/}
                 <div className="am-list-item item_list20"
                 >
-                    <div className="am-input-label am-input-label-5">教材附件</div>
+                    <div className="am-input-label am-input-label-5">教材附件
+                        <p style={{ margin: 0, height: 5 }}></p>
+                        <span className="uploadSupport">(pdf文件)</span>
+                    </div>
                     <div className="div68" onClick={teacherV.pdfPreview}>
                         <button className="uploadAttech i_uploadAttech upload_file">
                             <div className="icon_pointer" onClick={teacherV.uploadFile}>修改</div>

@@ -62,12 +62,20 @@
   background-color: #eee;
 }
 #addARTextbook .textTitle {
-  width: 85px;
+  width: 70px;
   margin-right: 4px;
+  text-align: right;
+  padding-right: 15px;
 }
 #addARTextbook .textTitle .uploadSupport {
   font-size: 14px;
   color: #888;
+}
+#addARTextbook .am-list-item .am-input-label.am-input-label-5 {
+  width: 70px;
+  margin-right: 4px;
+  text-align: right;
+  padding-right: 15px;
 }
 #addARTextbook .videoCont {
   width: calc(100% - 89px);
