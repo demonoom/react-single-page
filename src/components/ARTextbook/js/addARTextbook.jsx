@@ -659,7 +659,7 @@ export default class addARTextbook extends React.Component {
                 <div className="cont">
                     <div className="search_bg" style={{ display: this.state.search_bg ? 'block' : 'none' }}></div>
                     <div className="addCurriculum_cont">
-                        <div className="noticeMsg_common">该页面所有项为必填项</div>
+                        <div className="noticeMsg_common">该页面除标签项，其它项均为必填</div>
                         {/* 教材名称 */}
                         <InputItem
                             placeholder="请输入教材名称"
