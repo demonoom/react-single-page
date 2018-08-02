@@ -1,12 +1,8 @@
 import React from "react";
 import {
-    InputItem, Tag, Button
+    InputItem, Toast, Button
 } from 'antd-mobile';
 
-function onChange(selected, e) {
-    console.log(`tag selected: ${selected}`);
-    console.log(e, "value")
-}
 var calm;
 export default class addARTag extends React.Component {
     constructor(props) {
@@ -16,39 +12,41 @@ export default class addARTag extends React.Component {
 
         }
     }
-    componentDidMount(){
+    componentDidMount() {
+        Bridge.setShareAble("false");
+        document.title = '添加AR标签';
         var locationHref = window.location.href;
         var locationSearch = locationHref.substr(locationHref.indexOf("?") + 1);
         var uid = locationSearch.split("&")[0].split("=")[1];
-        this.setState({"uid": uid});
+        this.setState({ "uid": uid });
+        this.refreshPage();
     }
-    onChange(selected) {
-        console.log(`tag selected: ${selected}`);
-        // console.log(e, "value")
-    }
-    
-    onChangeTag(selected) {
-        console.log(`tag selected: ${selected}`);
-        // console.log(e, "value")
-    }
+    /**
+     * 刷新页面
+     */
+     refreshPage(){
+        var data = {
+            method: 'refreshPage',
+        };
+        Bridge.callHandler(data, function (res) {
+            console.log(res,"res")
+        }, function (error) {
+            console.log(error);
+        });
+     }
     /**
      * 提交
      */
     submit() {
-        
-
-
         var param = {
             "method": 'addARBookTag',
-            "tagData":{
-                "creatorId":calm.state.uid,     // 创建者id
+            "tagData": {
+                "creatorId": calm.state.uid,     // 创建者id
                 "content": calm.state.ARTagValue       // 标签内容
-             }
+            }
         }
-        console.log(param)
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
             onResponse: function (result) {
-                console.log(result,"re")
                 if (result.msg == '调用成功' || result.success == true) {
                     //关闭当前窗口，并刷新上一个页面
                     var data = {
@@ -59,14 +57,13 @@ export default class addARTag extends React.Component {
                         console.log(error);
                     });
                 } else {
-                    // Toast.fail(result.msg, 5);
+                    Toast.fail(result.msg, 5);
                 }
             },
             onError: function (error) {
-                // message.error(error);
+                message.error(error);
             }
         });
-        console.log(calm.state.ARTagValue)
     }
     render() {
         return (
@@ -80,29 +77,9 @@ export default class addARTag extends React.Component {
                 >
                     <div className="textTitle" onClick={() => this.labelFocusInst.focus()}>AR标签名<i className="redStar">*</i></div>
                 </InputItem>
-                    <div className="submitBtn">
-                        <Button type="warning" onClick={calm.submit}>提交</Button>
-                    </div>
-
-
-                {/* <div className="tag-container">
-                    <Tag closable onChange={calm.onChange}
-                        onClose={() => {
-                            console.log('onClose');
-                        }}
-                        afterClose={() => {
-                            console.log('afterClose');
-                        }}>Callback</Tag>
-
-                    <Tag closable onChange={calm.onChangeTag}
-                        onClose={() => {
-                            console.log('onClose');
-                        }}
-                        afterClose={() => {
-                            console.log('afterClose');
-                        }}>Callback2</Tag>
-
-                </div> */}
+                <div className="submitBtn">
+                    <Button type="warning" onClick={calm.submit}>提交</Button>
+                </div>
             </div>
         )
     }

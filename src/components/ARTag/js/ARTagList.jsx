@@ -20,6 +20,8 @@ export default class ARTagList extends React.Component {
         }
     }
     componentDidMount() {
+        Bridge.setShareAble("false");
+        document.title = 'AR标签列表';
         var locationHref = window.location.href;
         var locationSearch = locationHref.substr(locationHref.indexOf("?") + 1);
         var uid = locationSearch.split("&")[0].split("=")[1];
@@ -48,7 +50,6 @@ export default class ARTagList extends React.Component {
             "adminId": uid,
             "pn": -1
         }
-        console.log(param)
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
             onResponse: function (result) {
                 console.log(result, "re")
@@ -79,7 +80,7 @@ export default class ARTagList extends React.Component {
             phone = 'android'
         }
         var _this = this;
-        const alertInstance = alert('您确定要删除该教材吗?', '', [
+        const alertInstance = alert('您确定要删除该标签吗?', '', [
             {text: '取消', onPress: () => console.log('cancel'), style: 'default'},
             {text: '确定', onPress: () => _this.deleteTag(data)},
         ], phone);
@@ -95,7 +96,6 @@ export default class ARTagList extends React.Component {
             "tId": data.id,
         };
 
-        console.log(param)
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
             onResponse: (result) => {
                 console.log(result,"eee")
