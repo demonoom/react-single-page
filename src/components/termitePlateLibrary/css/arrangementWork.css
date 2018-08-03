@@ -1,4 +1,4 @@
-
+(node) util.print is deprecated. Use console.log instead.
 #arrangementWork {
   /*  .noom-accordion:before{
       content: "";
@@ -171,7 +171,8 @@
   position: absolute;
   left: 0;
   top: 0;
-  height: 48px;
+  height: 38px;
+  padding: 10px 0 !important;
   overflow: hidden;
 }
 #arrangementWork .ant_list_subject_no > div > div {
@@ -181,8 +182,8 @@
   color: #424242;
   text-overflow: ellipsis;
   overflow: hidden;
-  line-height: 48px !important;
-  height: 48px;
+  line-height: 38px !important;
+  height: 38px;
 }
 #arrangementWork .uuu {
   height: 400px !important;
@@ -198,31 +199,86 @@
   z-index: 2;
   height: 52px;
 }
+#arrangementWork .pushSubjects_cont:before {
+  content: "";
+  pointer-events: none;
+  box-sizing: border-box;
+  border: none;
+  border-top: 1px solid #e5e5e5;
+  height: 200%;
+  -webkit-transform: scaleY(0.5);
+  /* for Chrome || Safari */
+  -moz-transform: scaleY(0.5);
+  /* for Firefox */
+  -ms-transform: scaleY(0.5);
+  /* for IE */
+  -o-transform: scaleY(0.5);
+  /* for Opera */
+  transform: scaleY(0.5);
+  transform-origin: 0 0;
+  -webkit-transform-origin: 0 0;
+  position: absolute;
+  width: 100%;
+  top: 0;
+  left: 0;
+}
 #arrangementWork .pushSubjects {
   text-align: center;
   border-radius: 0;
-  background-color: #4a90e2;
+  background-color: #f46a55;
   height: 42px;
   line-height: 42px;
   width: 70%;
   color: #fff;
   margin: 10px auto;
   font-size: 17px;
+  border-radius: 2px;
 }
 #arrangementWork .am-list-item .am-list-line {
   z-index: 1;
 }
 #arrangementWork .am-list-item .am-list-line .am-list-content {
-  line-height: 2;
   position: relative;
   height: 34px;
+  line-height: 34px;
+  padding: 12px 0 !important;
+  font-size: 14px !important;
+  color: #424242;
+}
+#arrangementWork .am-list-body div:not(:last-child) .am-list-line {
+  border-bottom: none ;
+  position: relative;
+}
+#arrangementWork .am-list-body div:not(:last-child) .am-list-line:before {
+  content: "";
+  pointer-events: none;
+  box-sizing: border-box;
+  border: none;
+  border-bottom: 1px solid #e5e5e5;
+  height: 200%;
+  -webkit-transform: scaleY(0.5);
+  /* for Chrome || Safari */
+  -moz-transform: scaleY(0.5);
+  /* for Firefox */
+  -ms-transform: scaleY(0.5);
+  /* for IE */
+  -o-transform: scaleY(0.5);
+  /* for Opera */
+  transform: scaleY(0.5);
+  transform-origin: 0 0;
+  -webkit-transform-origin: 0 0;
+  position: absolute;
+  width: 100%;
+  top: 0;
+  left: 0;
 }
 #arrangementWork .am-checkbox-inner {
   border-radius: 0;
+  top: 18px !important;
 }
 #arrangementWork .flex_70 {
   width: 100px;
-  margin: 4px 0 0 0;
+  margin: 12px 0 0 0;
   text-align: right;
   display: inline-block;
 }
