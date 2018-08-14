@@ -82,7 +82,6 @@ export default class addARTextbook extends React.Component {
         teacherV.state.ARTextbookDataArr[index].tagText.forEach((v, i) => {
             if (item.id == v.id) {
                 teacherV.state.ARTextbookDataArr[index].tagText.splice(i, 1)
-
             }
         })
         teacherV.buildARTextbook();
@@ -146,6 +145,7 @@ export default class addARTextbook extends React.Component {
         }
         var classArray = [];
         this.state.ARTextbookDataArr.forEach(function (v, i) {
+            console.log(v,"vvcvc")
             classArray.push({
                 "page": v.pageNoValue,
                 "index": i,
@@ -155,7 +155,6 @@ export default class addARTextbook extends React.Component {
             })
         })
         param.bookData.itemList = classArray;
-
         console.log(param)
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
             onResponse: function (result) {
@@ -199,8 +198,9 @@ export default class addARTextbook extends React.Component {
      */
     deleteItem = (ind, useIndex, event) => {
         event.stopPropagation()
-        teacherV.state.ARTextbookDataArr[useIndex].videoObj.forEach((v, i) => {
+        teacherV.state.ARTextbookDataArr[useIndex].videoPath.forEach((v, i) => {
             if (ind == i) {
+                teacherV.state.ARTextbookDataArr[useIndex].videoPath.splice(i, 1)
                 teacherV.state.ARTextbookDataArr[useIndex].videoObj.splice(i, 1)
                 teacherV.buildARTextbook();
             }

@@ -109,6 +109,15 @@ export default class newUpdateARTextbook extends React.Component {
         }
 
         for (var i = 0; i < arr.length; i++) {
+            var videoArr = []
+            arr[i].video.split(',').forEach(function (item, index) {
+                if (item.length != 0) {
+                    videoArr.push(item.trim())
+                }
+            })
+            arr[i].video = videoArr.join(',');
+
+
             var array = []
             for (var j = 0; j < arr[i].tagList.length; j++) {
                 array.push(arr[i].tagList[j].id)
@@ -603,7 +612,7 @@ export default class newUpdateARTextbook extends React.Component {
     searchOnChange(e) {
         teacherV.setState({searchTagValue: e})
     }
-    
+
     tagOnChange(data, v) {
         if (v) {
             teacherV.state.tagsBefore.push(data)
@@ -696,7 +705,7 @@ export default class newUpdateARTextbook extends React.Component {
                 <span className="del_group icon_pointer" onClick={teacherV.showListAlert.bind(this, v)}>删除</span>
                 <div className="am-list-item item_list20">
                     <div className="am-input-label am-input-label-5">教材图片
-                        <p style={{ margin: 0, height: 5 }}></p>
+                        <p style={{margin: 0, height: 5}}></p>
                         <span className="uploadSupport">(jpg格式)</span>
                     </div>
                     {imgDivSon}
@@ -704,16 +713,17 @@ export default class newUpdateARTextbook extends React.Component {
                 <div className="line_public flex_container"></div>
                 <div className="am-list-item item_list20">
                     {
-                        v.video.substr(v.video.length - 3, 3) !== "mp4" ?
-                            <div className="am-input-label am-input-label-5">相关文件
-                                <p style={{ margin: 0, height: 5 }}></p>
-                                <span className="uploadSupport">(office、mp4文件)</span>
-                            </div>
-                            :
-                            <div className="am-input-label am-input-label-5">相关视频
-                                <p style={{ margin: 0, height: 5 }}></p>
-                                <span className="uploadSupport">(mp4格式)</span>
-                            </div>
+                        <div className="am-input-label am-input-label-5">相关文件
+                            <p style={{margin: 0, height: 5}}></p>
+                            <span className="uploadSupport">(office、mp4文件)</span>
+                        </div>
+                        // v.video.substr(v.video.length - 3, 3) !== "mp4" ?
+
+                        //     :
+                        //     <div className="am-input-label am-input-label-5">相关视频
+                        //         <p style={{ margin: 0, height: 5 }}></p>
+                        //         <span className="uploadSupport">(mp4格式)</span>
+                        //     </div>
 
                     }
 
@@ -934,7 +944,7 @@ export default class newUpdateARTextbook extends React.Component {
                 <div className="am-list-item item_list20"
                 >
                     <div className="am-input-label am-input-label-5">教材附件
-                        <p style={{ margin: 0, height: 5 }}></p>
+                        <p style={{margin: 0, height: 5}}></p>
                         <span className="uploadSupport">(pdf文件)</span>
                     </div>
                     <div className="div68" onClick={teacherV.pdfPreview}>

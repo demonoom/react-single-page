@@ -1,3 +1,4 @@
+(node) util.print is deprecated. Use console.log instead.
 #addWarnAdmin .itemAdd {
   position: absolute;
   top: 50%;
@@ -34,7 +35,7 @@
   height: 34px;
 }
 #addWarnAdmin .am-search-cancel {
-  background: #fff url("../imgs/icon_search.png") no-repeat center center;
+  background: #ffffff url("../imgs/icon_search.png") no-repeat center center;
   font-size: 0;
   width: 20px;
   height: 34px;
