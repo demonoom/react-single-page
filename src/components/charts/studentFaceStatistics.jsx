@@ -360,21 +360,36 @@ export default class studentFaceStatistics extends React.Component {
             chart.hideLoading();
         }, 3000);
     };
+    cutDataHandle =(data)=>{
+        var newData={};
+        var time;
+        var facedata;
+        if (!this.isEmptyObject(data)) {
+            for (var key in data) {
+                time=key;
+                facedata= data[key];
+            }
+
+        }
+        newData[key]=facedata;
+        return newData;
+    }
     handleResourse = (resourse) => {
         if (!resourse) {
             Toast.fail(resourse, 1);
             return;
         }
-        var faceEmotionDatas = resourse;
+        var faceEmotionDatas =resourse ;
         var lineChartOption = this.state.lineChartOption;
         var i = 1;
         var lastPoint;
 
         var currentFaceEmotion;
         if (!this.isEmptyObject(faceEmotionDatas)) {
-            for (var key in faceEmotionDatas) {
+           var faceEmotionDatascut= this.cutDataHandle(faceEmotionDatas)
+            for (var key in faceEmotionDatascut) {
                 i++;
-                var faceEmotionData = faceEmotionDatas[key];
+                var faceEmotionData = faceEmotionDatascut[key];
                 currentFaceEmotion = faceEmotionData;
                 var xMinuite = this.formatSeconds(key);
                 this.closeCollectData=xMinuite;
@@ -419,7 +434,6 @@ export default class studentFaceStatistics extends React.Component {
         var confuseUserList = data.confuseUserList;
         var thinkUserList =data.thinkUserList;
         var newData={noUnderstandUserList:noUnderstandUserList,understandUserList:understandUserList,aliveUserList:aliveUserList,attentionUserList:attentionUserList,confuseUserList:confuseUserList,thinkUserList:thinkUserList}
-        debugger
         if(oldData!=undefined){
             var _noUnderstandUserList = oldData.noUnderstandUserList;
             var _understandUserList = oldData.understandUserList;
