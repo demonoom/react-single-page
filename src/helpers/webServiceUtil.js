@@ -1,7 +1,7 @@
 var isDebug = false;
 var localDomain = "192.168.50.15";   //请求地址
 var isDebugLocal = true;
-var localUrl = "192.168.50.39";    //跳转地址http:
+var localUrl = "192.168.50.72";    //跳转地址http:
 
 // //云校本地测试webService地址
 // var elearningWebserviceURLOfLocal = "http://" + localDomain + ":8888/elearning/elearningControl/";
@@ -55,6 +55,24 @@ WebServiceUtil.requestLittleAntApi = function (data, listener) {
     });
 }
 
+
+/**
+ * 判断是否是pc端
+ */
+WebServiceUtil.isPC = function () {
+    var userAgentInfo = navigator.userAgent;
+    var Agents = ["Android", "iPhone",
+        "SymbianOS", "Windows Phone",
+        "iPad", "iPod"];
+    var flag = true;
+    for (var v = 0; v < Agents.length; v++) {
+        if (userAgentInfo.indexOf(Agents[v]) > 0) {
+            flag = false;
+            break;
+        }
+    }
+    return flag;
+}
 /**
  * 不带请求头的ajax
  * arpayment

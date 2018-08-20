@@ -1,5 +1,5 @@
 import React from 'react';
-import {Picker, List, WhiteSpace, WingBlank, Button, Toast, Modal} from 'antd-mobile';
+import { Picker, List, WhiteSpace, WingBlank, Button, Toast, Modal } from 'antd-mobile';
 import '../css/classDemeanor.less'
 
 var demeanor;
@@ -29,7 +29,7 @@ export default class classHonor extends React.Component {
         // console.log(className);
         // this.setState({className});
         document.title = className;
-        this.setState({classId: ident});
+        this.setState({ classId: ident });
         this.getClassDemeanorInfo(ident);
     }
 
@@ -41,8 +41,9 @@ export default class classHonor extends React.Component {
         };
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
             onResponse: function (result) {
+                console.log(result, "re")
                 if (result.msg == '调用成功' || result.success == true) {
-                    demeanor.setState({imgArr: result.response});
+                    demeanor.setState({ imgArr: result.response });
                 }
             },
             onError: function (error) {
@@ -56,12 +57,12 @@ export default class classHonor extends React.Component {
      */
     uploadImgBtn() {
         var data = {
-            method: 'uploadClassDemeanor',
+            method: 'selectImgAndVideo',
         };
         Bridge.callHandler(data, function (res) {
             //拿到图片地址,显示在页面等待上传
             var arr = res.split(',');
-            demeanor.setState({imgFromAndArr: demeanor.state.imgFromAndArr.concat(arr)});
+            demeanor.setState({ imgFromAndArr: demeanor.state.imgFromAndArr.concat(arr) });
         }, function (error) {
             console.log(error);
         });
@@ -72,7 +73,7 @@ export default class classHonor extends React.Component {
      */
     uploadImg = () => {
         if (demeanor.state.imgFromAndArr.length == 0) {
-            Toast.fail('请先选择照片',2)
+            Toast.fail('请先选择照片', 2)
             return
         }
         // if (WebServiceUtil.isEmpty(demeanor.state.asyncValue)) {
@@ -114,20 +115,20 @@ export default class classHonor extends React.Component {
             phone = 'android'
         }
 
-        const alertInstance = alert('确定删除此照片吗?', '', [
+        const alertInstance = alert('确定删除吗?', '', [
             {
                 text: '取消', onPress: () => {
-                if (cancel) {
-                    cancel();
-                }
-            }, style: 'default'
+                    if (cancel) {
+                        cancel();
+                    }
+                }, style: 'default'
             },
             {
                 text: '确定', onPress: () => {
-                if (success) {
-                    success()
+                    if (success) {
+                        success()
+                    }
                 }
-            }
             },
         ], phone);
     }
@@ -147,7 +148,7 @@ export default class classHonor extends React.Component {
                                 arr.splice(i, 1);
                             }
                         })
-                        demeanor.setState({imgArr: arr})
+                        demeanor.setState({ imgArr: arr })
                     }
                 },
                 onError: function (error) {
@@ -168,31 +169,44 @@ export default class classHonor extends React.Component {
                 arr.splice(i, 1);
             }
         })
-        demeanor.setState({imgFromAndArr: arr})
+        demeanor.setState({ imgFromAndArr: arr })
     }
 
     render() {
         return (
-            <div id="classDemeanor" style={{height: document.body.clientHeight}}>
+            <div id="classDemeanor" style={{ height: document.body.clientHeight }}>
                 <div className="Img_cont">
                     <div className="classDemeanor_title">荣誉展示</div>
                     <div className='showImg my_flex my_flex_wrap'>
                         {this.state.imgArr.map((v) => {
+                            console.log(v, "calmc")
+                            var arr = v.imagePath.split('?');
+                            var extra = arr[0].split('.');
                             return <div className="listImg flex_center">
-                                <img className='uploadImgBtn' src={v.imagePath} alt=""/>
+                                {
+                                    extra[extra.length - 1] == "mp4" ? <video style={{ width: "100%",height:"100%" }} src={v.imagePath}></video> : <img className='uploadImgBtn' src={v.imagePath} alt="" />
+                                }
+
                                 <img onClick={this.deleteClassDemeanorInfo.bind(this, v.id)} className='delImgBtn'
-                                     src={require('../imgs/delPic.png')} alt=""/>
+                                    src={require('../imgs/delPic.png')} alt="" />
                             </div>
                         })}
                     </div>
-                    <WhiteSpace size="lg"/>
-                    <div className="classDemeanor_title">上传照片</div>
+                    <WhiteSpace size="lg" />
+                    <div className="classDemeanor_title">上传资源</div>
                     <div className='uploadImg my_flex my_flex_wrap'>
                         {this.state.imgFromAndArr.map((v, i) => {
+                            console.log(v, "vvvv")
+                            var arr = v.split('?');
+                            var extra = arr[0].split('.');
+                            console.log(extra[extra.length - 1], "arr")
                             return <div className="listImg flex_center">
-                                <img className='uploadImgBtn' src={v} alt=""/>
+                                {
+                                    extra[extra.length - 1] == "jpg" ? <img className='uploadImgBtn' src={v} alt="" /> :
+                                        extra[extra.length - 1] == "mp4" ? <video style={{ width: "100%",height:"100%" }} src={v}></video> : ""
+                                }
                                 <img onClick={this.deleteimgFromAndArr.bind(this, i)} className='delImgBtn'
-                                     src={require('../imgs/delPic.png')} alt=""/>
+                                    src={require('../imgs/delPic.png')} alt="" />
                             </div>
                         })}
                         <img
@@ -204,7 +218,7 @@ export default class classHonor extends React.Component {
                     </div>
                 </div>
                 <div className='addCourseButton'>
-                    <WhiteSpace size="lg"/>
+                    <WhiteSpace size="lg" />
                     <WingBlank>
                         <Button type="warning" onClick={this.uploadImg}>上传</Button>
                     </WingBlank>
