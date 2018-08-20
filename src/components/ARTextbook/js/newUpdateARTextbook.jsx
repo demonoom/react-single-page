@@ -60,7 +60,7 @@ export default class newUpdateARTextbook extends React.Component {
         var bId = locationSearch.split("&")[0].split("=")[1];
         var uId = locationSearch.split("&")[1].split("=")[1];
         var ArName = locationSearch.split("&")[2].split("=")[1];
-        this.setState({ "bId": bId, "uId": uId, "ArName": ArName });
+        this.setState({"bId": bId, "uId": uId, "ArName": ArName});
         this.viewARBook(bId);
         window.addEventListener('resize', this.onWindwoResize);
     }
@@ -109,6 +109,15 @@ export default class newUpdateARTextbook extends React.Component {
         }
 
         for (var i = 0; i < arr.length; i++) {
+            var videoArr = []
+            arr[i].video.split(',').forEach(function (item, index) {
+                if (item.length != 0) {
+                    videoArr.push(item.trim())
+                }
+            })
+            arr[i].video = videoArr.join(',');
+
+
             var array = []
             for (var j = 0; j < arr[i].tagList.length; j++) {
                 array.push(arr[i].tagList[j].id)
@@ -199,7 +208,7 @@ export default class newUpdateARTextbook extends React.Component {
                          * 初始化点击
                          */
                         teacherV.tabsOnChange(tagArr[0])
-                        teacherV.setState({ clickTab: tagArr[0] })
+                        teacherV.setState({clickTab: tagArr[0]})
                     })
                 } else {
                     Toast.fail(result.msg, 5);
@@ -246,7 +255,7 @@ export default class newUpdateARTextbook extends React.Component {
             newArr.filePath = item[0],
                 newArr.fileName = item[1].split("=")[1],
                 newArr.fileExtra = (item[1].split("=")[1]).split(".")[1],
-                teacherV.setState({ attachment: newArr.filePath });
+                teacherV.setState({attachment: newArr.filePath});
             teacherV.tabsOnChange(teacherV.state.clickTab)
         }, function (error) {
             console.log(error);
@@ -319,8 +328,8 @@ export default class newUpdateARTextbook extends React.Component {
         }
 
         prompt('请输入页码', '', [
-            { text: '取消' },
-            { text: '确定', onPress: value => teacherV.addPage(value) },
+            {text: '取消'},
+            {text: '确定', onPress: value => teacherV.addPage(value)},
         ], 'default', '', [], phone)
         if (phone == 'ios') {
             document.getElementsByClassName('am-modal-input')[0].getElementsByTagName('input')[0].focus();
@@ -424,8 +433,8 @@ export default class newUpdateARTextbook extends React.Component {
         }
         var _this = this;
         const alertInstance = alert('您确定移除吗?', '', [
-            { text: '取消', onPress: () => console.log('cancel'), style: 'default' },
-            { text: '确定', onPress: () => _this.delList(v) },
+            {text: '取消', onPress: () => console.log('cancel'), style: 'default'},
+            {text: '确定', onPress: () => _this.delList(v)},
 
         ], phone);
     }
@@ -486,8 +495,8 @@ export default class newUpdateARTextbook extends React.Component {
         }
         var _this = this;
         const alertInstance = alert('您确定移除吗?', '', [
-            { text: '取消', onPress: () => console.log('cancel'), style: 'default' },
-            { text: '确定', onPress: () => _this.delVideoFile(src, id) },
+            {text: '取消', onPress: () => console.log('cancel'), style: 'default'},
+            {text: '确定', onPress: () => _this.delVideoFile(src, id)},
 
         ], phone);
     }
@@ -525,7 +534,7 @@ export default class newUpdateARTextbook extends React.Component {
     addTags(index) {
         $('.tagAddPanel').slideDown()
         $('.tagAddPanel_bg').show()
-        teacherV.setState({ tagsIndex: index })
+        teacherV.setState({tagsIndex: index})
     }
 
     /**
@@ -534,8 +543,8 @@ export default class newUpdateARTextbook extends React.Component {
     exitAddTags() {
         $('.tagAddPanel').slideUp()
         $('.tagAddPanel_bg').hide()
-        teacherV.setState({ tagsLi: [] })
-        teacherV.setState({ searchTagValue: '' })
+        teacherV.setState({tagsLi: []})
+        teacherV.setState({searchTagValue: ''})
     }
 
     /**
@@ -555,8 +564,8 @@ export default class newUpdateARTextbook extends React.Component {
 
         teacherV.tabsOnChange(teacherV.state.clickTab)
 
-        teacherV.setState({ tagsLi: [], tagsBefore: [] })
-        teacherV.setState({ searchTagValue: '' })
+        teacherV.setState({tagsLi: [], tagsBefore: []})
+        teacherV.setState({searchTagValue: ''})
     }
 
     /**
@@ -577,8 +586,8 @@ export default class newUpdateARTextbook extends React.Component {
         }
         var _this = this;
         const alertInstance = alert('您确定移除吗?', '', [
-            { text: '取消', onPress: () => console.log('cancel'), style: 'default' },
-            { text: '确定', onPress: () => _this.delTags(src, index) },
+            {text: '取消', onPress: () => console.log('cancel'), style: 'default'},
+            {text: '确定', onPress: () => _this.delTags(src, index)},
 
         ], phone);
     }
@@ -601,7 +610,7 @@ export default class newUpdateARTextbook extends React.Component {
     }
 
     searchOnChange(e) {
-        teacherV.setState({ searchTagValue: e })
+        teacherV.setState({searchTagValue: e})
     }
 
     tagOnChange(data, v) {
@@ -617,7 +626,7 @@ export default class newUpdateARTextbook extends React.Component {
     }
 
     searchTagByWords() {
-        teacherV.setState({ tagsLi: [] }, () => {
+        teacherV.setState({tagsLi: []}, () => {
             var param = {
                 "method": 'searchARBookTag',
                 "adminId": teacherV.state.uId,
@@ -635,7 +644,7 @@ export default class newUpdateARTextbook extends React.Component {
                                     onChange={teacherV.tagOnChange.bind(this, v)}
                                 >{v.content}</Tag>)
                             })
-                            teacherV.setState({ tagsLi: arr })
+                            teacherV.setState({tagsLi: arr})
                         }
                     } else {
                         Toast.fail(result.msg, 5);
@@ -685,7 +694,7 @@ export default class newUpdateARTextbook extends React.Component {
             if (WebServiceUtil.isEmpty(v.pic) == false) {
                 imgDivSon = <div className="div68">
                     <button className="uploadAttech i_uploadAttech" onClick={teacherV.imgPreview.bind(this, v.pic)}>{
-                        <img className="imgDiv" src={v.pic} />
+                        <img className="imgDiv" src={v.pic}/>
                     }
                         <div className="icon_pointer" onClick={teacherV.uploadImage.bind(this, v.index)}>修改</div>
                     </button>
@@ -696,7 +705,7 @@ export default class newUpdateARTextbook extends React.Component {
                 <span className="del_group icon_pointer" onClick={teacherV.showListAlert.bind(this, v)}>删除</span>
                 <div className="am-list-item item_list20">
                     <div className="am-input-label am-input-label-5">教材图片
-                        <p style={{ margin: 0, height: 5 }}></p>
+                        <p style={{margin: 0, height: 5}}></p>
                         <span className="uploadSupport">(jpg格式)</span>
                     </div>
                     {imgDivSon}
@@ -705,7 +714,7 @@ export default class newUpdateARTextbook extends React.Component {
                 <div className="am-list-item item_list20">
                     {
                         <div className="am-input-label am-input-label-5">相关文件
-                            <p style={{ margin: 0, height: 5 }}></p>
+                            <p style={{margin: 0, height: 5}}></p>
                             <span className="uploadSupport">(office、mp4文件)</span>
                         </div>
                         // v.video.substr(v.video.length - 3, 3) !== "mp4" ?
@@ -725,61 +734,61 @@ export default class newUpdateARTextbook extends React.Component {
                                 if (item[item.length - 1] == "pdf") {
                                     return (
                                         <div className="uploadAttech i_uploadAttech pdfDiv"
-                                            onClick={teacherV.videoPreview.bind(this, vtem, v.id)}>
+                                             onClick={teacherV.videoPreview.bind(this, vtem, v.id)}>
                                             {/* <div>{v.fileName}</div> */}
                                             <div className="icon_pointer"
-                                                onClick={teacherV.uploadVideo.bind(this, vtem, v.index)}>修改
+                                                 onClick={teacherV.uploadVideo.bind(this, vtem, v.index)}>修改
                                             </div>
                                             <span className="del_ar icon_pointer"
-                                                onClick={teacherV.showAlert.bind(this, vtem, v.id)}></span>
+                                                  onClick={teacherV.showAlert.bind(this, vtem, v.id)}></span>
                                         </div>
                                     )
                                 } else if (item[item.length - 1] == "pptx" || item[item.length - 1] == "ppt") {
                                     return (
                                         <div className="uploadAttech i_uploadAttech pptDiv"
-                                            onClick={teacherV.videoPreview.bind(this, vtem, v.id)}>
+                                             onClick={teacherV.videoPreview.bind(this, vtem, v.id)}>
                                             {/* <div>{v.fileName}</div> */}
                                             <div className="icon_pointer"
-                                                onClick={teacherV.uploadVideo.bind(this, vtem, v.index)}>修改
+                                                 onClick={teacherV.uploadVideo.bind(this, vtem, v.index)}>修改
                                             </div>
                                             <span className="del_ar icon_pointer"
-                                                onClick={teacherV.showAlert.bind(this, vtem, v.id)}></span>
+                                                  onClick={teacherV.showAlert.bind(this, vtem, v.id)}></span>
                                         </div>
                                     )
                                 } else if (item[item.length - 1] == "xls" || item[item.length - 1] == "xlsx") {
                                     return (
                                         <div className="uploadAttech i_uploadAttech xlsDiv"
-                                            onClick={teacherV.videoPreview.bind(this, vtem, v.id)}>
+                                             onClick={teacherV.videoPreview.bind(this, vtem, v.id)}>
                                             {/* <div>{v.fileName}</div> */}
                                             <div className="icon_pointer"
-                                                onClick={teacherV.uploadVideo.bind(this, vtem, v.index)}>修改
+                                                 onClick={teacherV.uploadVideo.bind(this, vtem, v.index)}>修改
                                             </div>
                                             <span className="del_ar icon_pointer"
-                                                onClick={teacherV.showAlert.bind(this, vtem, v.id)}></span>
+                                                  onClick={teacherV.showAlert.bind(this, vtem, v.id)}></span>
                                         </div>
                                     )
                                 } else if (item[item.length - 1] == "docx" || item[item.length - 1] == "doc") {
                                     return (
                                         <div className="uploadAttech i_uploadAttech docDiv"
-                                            onClick={teacherV.videoPreview.bind(this, vtem, v.id)}>
+                                             onClick={teacherV.videoPreview.bind(this, vtem, v.id)}>
                                             {/* <div>{v.fileName}</div> */}
                                             <div className="icon_pointer"
-                                                onClick={teacherV.uploadVideo.bind(this, vtem, v.index)}>修改
+                                                 onClick={teacherV.uploadVideo.bind(this, vtem, v.index)}>修改
                                             </div>
                                             <span className="del_ar icon_pointer"
-                                                onClick={teacherV.showAlert.bind(this, vtem, v.id)}></span>
+                                                  onClick={teacherV.showAlert.bind(this, vtem, v.id)}></span>
                                         </div>
                                     )
                                 } else if (item[item.length - 1] == "mp4") {
                                     return (
                                         <div className="uploadAttech i_uploadAttech"
-                                            onClick={teacherV.videoPreview.bind(this, vtem, v.id)}>
+                                             onClick={teacherV.videoPreview.bind(this, vtem, v.id)}>
                                             <span className="del_ar icon_pointer"
-                                                onClick={teacherV.showAlert.bind(this, vtem, v.id)}></span>
+                                                  onClick={teacherV.showAlert.bind(this, vtem, v.id)}></span>
                                             <video onClick={teacherV.theVideoPlay.bind(this, i)} className="videoDiv"
-                                                src={vtem}></video>
+                                                   src={vtem}></video>
                                             <div className="icon_pointer"
-                                                onClick={teacherV.uploadVideo.bind(this, vtem, v.index)}>修改
+                                                 onClick={teacherV.uploadVideo.bind(this, vtem, v.index)}>修改
                                             </div>
                                         </div>
                                     )
@@ -789,7 +798,7 @@ export default class newUpdateARTextbook extends React.Component {
                         }
 
                         <div className="uploadBtn icon_pointer"
-                            onClick={teacherV.addUploadVideo.bind(this, v.index)}>
+                             onClick={teacherV.addUploadVideo.bind(this, v.index)}>
                             增加
                         </div>
 
@@ -804,7 +813,7 @@ export default class newUpdateARTextbook extends React.Component {
                                 return <li className="spanTag">
                                     <span className="textOver">{item.content}</span>
                                     <span className="del_ar icon_pointer"
-                                        onClick={teacherV.showDelTagsAlert.bind(this, item, v.index)}></span>
+                                          onClick={teacherV.showDelTagsAlert.bind(this, item, v.index)}></span>
                                 </li>
                             })
                         }
@@ -817,7 +826,7 @@ export default class newUpdateARTextbook extends React.Component {
             tabItem.push(imgDiv)
 
         })
-        teacherV.setState({ tabItem, clickTab: index })
+        teacherV.setState({tabItem, clickTab: index})
     }
 
     /**
@@ -918,7 +927,7 @@ export default class newUpdateARTextbook extends React.Component {
         var _this = this;
 
         return (
-            <div id="UpdateARTextbook" style={{ height: this.state.clientHeight }}>
+            <div id="UpdateARTextbook" style={{height: this.state.clientHeight}}>
                 {/*教材名*/}
                 <InputItem
                     placeholder="请输入教材名称"
@@ -935,7 +944,7 @@ export default class newUpdateARTextbook extends React.Component {
                 <div className="am-list-item item_list20"
                 >
                     <div className="am-input-label am-input-label-5">教材附件
-                        <p style={{ margin: 0, height: 5 }}></p>
+                        <p style={{margin: 0, height: 5}}></p>
                         <span className="uploadSupport">(pdf文件)</span>
                     </div>
                     <div className="div68" onClick={teacherV.pdfPreview}>
@@ -945,7 +954,7 @@ export default class newUpdateARTextbook extends React.Component {
                     </div>
                 </div>
 
-                <WhiteSpace size="lg" />
+                <WhiteSpace size="lg"/>
 
                 <div className="tabCont">
                     <ul>
@@ -959,16 +968,16 @@ export default class newUpdateARTextbook extends React.Component {
                             })
                         }
                     </ul>
-                    <div className="add_page" onClick={this.showAddPage}><Icon className="icon_pointer" type="plus" />
+                    <div className="add_page" onClick={this.showAddPage}><Icon className="icon_pointer" type="plus"/>
                     </div>
                 </div>
 
                 <div className="tabItem_cont">
                     {this.state.tabItem}
-                    <WhiteSpace size="lg" />
+                    <WhiteSpace size="lg"/>
                     <div onClick={this.addList} className='addARTextbookTable'>
                         <div className="addBtn icon_pointer">
-                            <Icon type="plus" />
+                            <Icon type="plus"/>
                             <span>添加扫描的图片</span></div>
                     </div>
                 </div>
@@ -979,7 +988,7 @@ export default class newUpdateARTextbook extends React.Component {
 
                 <div className="tagAddPanel_bg"></div>
 
-                <div className='tagAddPanel' style={{ display: 'none' }}>
+                <div className='tagAddPanel' style={{display: 'none'}}>
                     <div className="tagInput">
                         <InputItem
                             placeholder="请输入关键字"
