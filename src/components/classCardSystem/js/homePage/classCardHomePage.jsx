@@ -124,6 +124,28 @@ export default class classCardHomePage extends React.Component {
         // demeanor.refs.health.getBraceletSportStepByClazzId(localStorage.getItem("clazzId"))
     }
 
+    playVideo = (src) => {
+
+        var videoPlayer = <video id="videoPlayerAr" controls="controls" minLength={100} autoplay>
+            <source type="video/mp4" src={src}/>
+        </video>;
+
+        this.setState({videoPlayer}, function () {
+            document.getElementById('videoPlayerMask').style.display = 'block'
+        })
+        setTimeout(function () {
+            document.getElementById('videoPlayerAr').play();
+        }, 300)
+    }
+
+    closePlayerMask = () => {
+        document.getElementById('videoPlayerAr').pause();
+        var videoPlayer = '';
+        this.setState({videoPlayer}, function () {
+            document.getElementById('videoPlayerMask').style.display = 'none'
+        });
+    }
+
     render() {
         return (
             <div id={this.state.defaultId}>
@@ -155,6 +177,7 @@ export default class classCardHomePage extends React.Component {
                             <div className="home_center">
                                 <ClassDemeanor
                                     classCommand={this.state.classCommand}
+                                    playVideo={this.playVideo}
                                 />
                                 <div>
                                     <Notify
@@ -177,6 +200,10 @@ export default class classCardHomePage extends React.Component {
                             {/*/>*/}
                             {/*</div>*/}
                         </div>
+                    </div>
+                    <div id='videoPlayerMask' style={{display: 'none'}}>
+                        <span onClick={this.closePlayerMask}>关闭</span>
+                        {this.state.videoPlayer}
                     </div>
                 </div>
             </div>

@@ -53,11 +53,16 @@ export default class classDemeanor extends React.Component {
                         } else {
                             var classDemeanors = result.response;
                             classDemeanors.forEach(function (classDemeanor) {
-                                if (classDemeanor != null && classDemeanor != undefined) {
+
+                                if (classDemeanor.imagePath.substr(classDemeanor.imagePath.length - 3, 3) == 'mp4') {
+                                    var stuImgTag = <video style={{width: '100%', height: '100%'}}
+                                                           onDoubleClick={_this.videoOnClick.bind(this, classDemeanor)}
+                                                           src={classDemeanor.imagePath.split('?')[0]}></video>
+                                } else {
                                     var stuImgTag = <img style={{width: '100%', height: '100%'}} id={classDemeanor.id}
                                                          src={classDemeanor.imagePath}/>;
-                                    classDemeanorList.push(stuImgTag)
                                 }
+                                classDemeanorList.push(stuImgTag);
                             })
                         }
                     }
@@ -92,8 +97,16 @@ export default class classDemeanor extends React.Component {
                             var classRewards = result.response;
                             classRewards.forEach(function (classDemeanor) {
                                 if (classDemeanor != null && classDemeanor != undefined) {
-                                    var stuImgTag = <img style={{width: '100%', height: '100%'}} id={classDemeanor.id}
-                                                         src={classDemeanor.imagePath}/>;
+
+                                    if (classDemeanor.imagePath.substr(classDemeanor.imagePath.length - 3, 3) == 'mp4') {
+                                        var stuImgTag = <video style={{width: '100%', height: '100%'}}
+                                                               onDoubleClick={_this.videoOnClick.bind(this, classDemeanor)}
+                                                               src={classDemeanor.imagePath.split('?')[0]}></video>
+                                    } else {
+                                        var stuImgTag = <img style={{width: '100%', height: '100%'}}
+                                                             id={classDemeanor.id}
+                                                             src={classDemeanor.imagePath}/>;
+                                    }
                                     classRewardList.push(stuImgTag);
                                 }
                             })
@@ -105,6 +118,14 @@ export default class classDemeanor extends React.Component {
             onError: function (error) {
             }
         });
+    }
+
+    /**
+     * 视频被点击
+     * 弹出窗口,播放视频
+     */
+    videoOnClick = (obj) => {
+        this.props.playVideo(obj.imagePath.split('?')[0])
     }
 
     render() {
