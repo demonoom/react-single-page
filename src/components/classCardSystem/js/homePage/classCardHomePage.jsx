@@ -202,7 +202,7 @@ export default class classCardHomePage extends React.Component {
                         </div>
                     </div>
                     <div id='videoPlayerMask' style={{display: 'none'}}>
-                        <span onClick={this.closePlayerMask}>关闭</span>
+                        <span className='close' onClick={this.closePlayerMask}>关闭</span>
                         {this.state.videoPlayer}
                     </div>
                 </div>
