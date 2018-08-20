@@ -420,13 +420,72 @@
 
   }
   #videoPlayerMask {
-    background-color: rgba(255, 255, 255, 0.5);
+    background-color: rgba(0, 0, 0, 0.3);
     position: absolute;
     top: 0;
     width: 100%;
     height: 100%;
-    > video {
-      height: 80%;
+    z-index: 100;
+
+    video{
+      max-width: 90%;
+      max-height: 90%;
+      margin: 0 auto;
+      position: absolute;
+      top:50%;
+      left: 50%;
+      -webkit-transform: translate(-50%,-50%);
+      -moz-transform: translate(-50%,-50%);
+      -ms-transform: translate(-50%,-50%);
+      -o-transform: translate(-50%,-50%);
+      transform: translate(-50%,-50%);
     }
+    .close{
+      display: block;
+      position: absolute;
+      top: 15px;
+      right: 15px;
+      background:url("../imgs/icon_closeVideo.png") no-repeat;
+      background-size: 100%;
+      width: 30px;
+      height: 30px;
+      font-size: 0;
+      cursor: pointer;
+
+    }
+
+  }
+#classDemeanor .videoDiv{
+    height: 100%;
+    width: 100%;
+    position: relative;
+    background-color: #000;
+    overflow: hidden;
+    video{
+      position: absolute;
+      top:50%;
+      left: 50%;
+      -webkit-transform: translate(-50%,-50%);
+      -moz-transform: translate(-50%,-50%);
+      -ms-transform: translate(-50%,-50%);
+      -o-transform: translate(-50%,-50%);
+      transform: translate(-50%,-50%);
+    }
+  i{
+    background:url("../imgs/videoClick.png") no-repeat;
+    background-size: 100%;
+    width: 36px;
+    height: 36px;
+    display: block;
+    position: absolute;
+    top:50%;
+    left: 50%;
+    -webkit-transform: translate(-50%,-50%);
+    -moz-transform: translate(-50%,-50%);
+    -ms-transform: translate(-50%,-50%);
+    -o-transform: translate(-50%,-50%);
+    transform: translate(-50%,-50%);
+    z-index: 10;
+  }
   }
 }
