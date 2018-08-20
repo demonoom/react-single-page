@@ -445,6 +445,17 @@
   width: 100%;
   position: relative;
   background-color: #000;
+  overflow: hidden;
+}
+#classCardHomePage #classDemeanor .videoDiv video {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  -webkit-transform: translate(-50%, -50%);
+  -moz-transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+  -o-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
 }
 #classCardHomePage #classDemeanor .videoDiv i {
   background: url("../imgs/videoClick.png") no-repeat;
