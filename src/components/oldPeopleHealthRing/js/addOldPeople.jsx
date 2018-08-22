@@ -14,6 +14,7 @@ export default class addOldPeople extends React.Component {
         this.state = {
             clientHeight: document.body.clientHeight,
             stNameValue: '',
+            heartWarnValue:90
         }
     }
 
@@ -120,6 +121,12 @@ export default class addOldPeople extends React.Component {
         this.setState({ stNameValue: e });
     }
 
+     /**
+    * 输入框改变的回调
+    */
+   heartValue(e) {
+    this.setState({ heartWarnValue: e });
+}
     /**
      * 绑定
      */
@@ -133,9 +140,12 @@ export default class addOldPeople extends React.Component {
             "bracelet": {
                 "weChatOpenId": calm.state.uid,
                 "macAddress": calm.state.macId,
-                "braceletName": calm.state.stNameValue
+                // "macAddress": "BE:BE:78:eh:67:77",
+                "braceletName": calm.state.stNameValue,
+                "heartRate":calm.state.heartWarnValue
             }
         };
+        console.log(param,"param")
         WebServiceUtil.requestLittleAntApiOldManBracelet(JSON.stringify(param), {
             onResponse: function (result) {
                 if (result.msg == '调用成功' && result.success == true) {
@@ -164,13 +174,22 @@ export default class addOldPeople extends React.Component {
                             value={this.state.stNameValue}
                         >手环名称：</InputItem>
                     </div>
-                    <div className='macAddress'>
+                    <div className='stName macAddress'>
                         <InputItem
                             placeholder="请扫码获取"
                             value={this.state.macId}
                             editable={false}
                         >手环ID：</InputItem>
                         <span className="scanBtn" onClick={this.scanQRCode}>扫描</span>
+                    </div>
+                    <div className='stName textDiv'>
+                        <InputItem
+                            placeholder=""
+                            data-seed="logId"
+                            onChange={this.heartValue.bind(this)}
+                            value={this.state.heartWarnValue}
+                        >预警阀值：</InputItem>
+                        <span className='text'>可自定义心率预警阀值</span>
                     </div>
                 </List>
                 <div className="binding">

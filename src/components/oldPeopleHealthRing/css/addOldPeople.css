@@ -1,4 +1,3 @@
-(node) util.print is deprecated. Use console.log instead.
 #addOldPeople .am-list {
   margin-top: 15px;
   margin-bottom: 56px;
@@ -42,6 +41,9 @@
 #addOldPeople .macAddress {
   position: relative;
 }
+#addOldPeople .macAddress .am-list-item .am-input-control input {
+  width: calc(100% - 35px);
+}
 #addOldPeople .macAddress .scanBtn {
   position: absolute;
   right: 15px;
@@ -53,6 +55,20 @@
   width: 30px;
   height: 30px;
   margin-top: -15px;
+}
+#addOldPeople .textDiv {
+  position: relative;
+}
+#addOldPeople .textDiv .am-list-item .am-input-control input {
+  width: calc(100% - 145px);
+}
+#addOldPeople .textDiv .text {
+  color: #666;
+  font-size: 14px;
+  position: absolute;
+  top: 0;
+  right: 15px;
+  line-height: 53px;
 }
 #addOldPeople .binding {
   padding: 0 15px;

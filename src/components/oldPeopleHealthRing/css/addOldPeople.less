@@ -19,11 +19,13 @@
     color: #666;
   }
   .stName{
+    
     .am-list-line{
       border-bottom: 1px #eee solid;
       padding-right: 0;
       margin-right: 15px;
     }
+   
   }
 
   .item{
@@ -41,6 +43,9 @@
   }
   .macAddress{
     position: relative;
+    .am-list-item .am-input-control input{
+      width:calc(~"100% - 35px");
+    }
     .scanBtn{
       position: absolute;
       right: 15px;
@@ -52,6 +57,22 @@
       width: 30px;
       height: 30px;
       margin-top: -15px;
+    }
+    
+
+  }
+  .textDiv{
+    position: relative;
+    .am-list-item .am-input-control input{
+      width:calc(~"100% - 145px");
+    }
+    .text{
+      color: #666;
+      font-size: 14px;
+      position: absolute;
+      top:0;
+      right: 15px;
+      line-height: 53px;
     }
   }
   .binding{

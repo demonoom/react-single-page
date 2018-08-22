@@ -1,4 +1,4 @@
-var isDebug = false;
+var isDebug = true;
 var localDomain = "192.168.50.15";   //请求地址
 var isDebugLocal = true;
 var localUrl = "192.168.50.72";    //跳转地址http:
@@ -19,7 +19,7 @@ const mobileURLOfRemote = "http://jiaoxue.maaee.com:8091/#/";
 
 
 //老人健康手环地址
-const OldManBraceletURLOfLocals = "http://" + localDomain + ":9010/Excoord_OldManBracelet/webservice";
+const OldManBraceletURLOfLocals = "http://" + localDomain + ":6010/Excoord_OldManBracelet/webservice";
 // const OldManBraceletURLOfLocals = "http://192.168.50.15:9010/Excoord_OldManBracelet/webservice";
 const OldManBraceletURLOfRemote = "http://www.maaee.com:6010/Excoord_OldManBracelet/webservice";
 var OldManBraceletURL = isDebug ? OldManBraceletURLOfLocals : OldManBraceletURLOfRemote;
