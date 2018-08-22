@@ -1,5 +1,6 @@
 import React from 'react';
 import {Carousel} from 'antd-mobile';
+
 var demeanor;
 
 export default class classDemeanor extends React.Component {
@@ -55,12 +56,11 @@ export default class classDemeanor extends React.Component {
 
                                 if (classDemeanor.imagePath.substr(classDemeanor.imagePath.length - 3, 3) == 'mp4') {
                                     var stuImgTag = <div className='videoDiv'>
-                                                       <i></i>
-                                                        <video style={{width: '100%'}}
-                                                               onDoubleClick={_this.videoOnClick.bind(this, classDemeanor)}
-                                                               src={classDemeanor.imagePath.split('?')[0]}>
-                                                        </video>
-                                                    </div>
+                                        <i onClick={_this.videoOnClick.bind(this, classDemeanor)}></i>
+                                        <video style={{width: '100%'}}
+                                               src={classDemeanor.imagePath.split('?')[0]}>
+                                        </video>
+                                    </div>
                                 } else {
                                     var stuImgTag = <img style={{width: '100%', height: '100%'}} id={classDemeanor.id}
                                                          src={classDemeanor.imagePath}/>;
@@ -104,10 +104,9 @@ export default class classDemeanor extends React.Component {
                                     if (classDemeanor.imagePath.substr(classDemeanor.imagePath.length - 3, 3) == 'mp4') {
                                         var stuImgTag =
                                             <div className='videoDiv'>
-                                            <i></i>
-                                            <video style={{width: '100%'}}
-                                                               onDoubleClick={_this.videoOnClick.bind(this, classDemeanor)}
-                                                            src={classDemeanor.imagePath.split('?')[0]}></video>
+                                                <i onClick={_this.videoOnClick.bind(this, classDemeanor)}></i>
+                                                <video style={{width: '100%'}}
+                                                       src={classDemeanor.imagePath.split('?')[0]}></video>
                                             </div>
                                     } else {
                                         var stuImgTag = <img style={{width: '100%', height: '100%'}}

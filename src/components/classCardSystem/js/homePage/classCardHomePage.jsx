@@ -125,6 +125,7 @@ export default class classCardHomePage extends React.Component {
     }
 
     playVideo = (src) => {
+        var _this = this;
 
         var videoPlayer = <video id="videoPlayerAr" controls="controls" minLength={100} autoplay>
             <source type="video/mp4" src={src}/>
@@ -132,6 +133,9 @@ export default class classCardHomePage extends React.Component {
 
         this.setState({videoPlayer}, function () {
             document.getElementById('videoPlayerMask').style.display = 'block'
+            document.getElementById("videoPlayerAr").onended = function () {
+                _this.closePlayerMask()
+            };
         })
         setTimeout(function () {
             document.getElementById('videoPlayerAr').play();
