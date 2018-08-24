@@ -3,6 +3,7 @@ import {
     Toast,
     InputItem,
     List,
+    Button
 } from 'antd-mobile';
 import '../css/addOldPeople.less';
 
@@ -140,10 +141,10 @@ export default class addOldPeople extends React.Component {
             "bracelet": {
                 "weChatOpenId": calm.state.uid,
                 "macAddress": calm.state.macId,
-                // "macAddress": "BE:BE:78:eh:67:77",
+                // "macAddress": "BE:BE:78:eh:67:37",
                 "braceletName": calm.state.stNameValue,
-                "heartRate":calm.state.heartWarnValue
-            }
+            },
+            "heartRate":calm.state.heartWarnValue
         };
         console.log(param,"param")
         WebServiceUtil.requestLittleAntApiOldManBracelet(JSON.stringify(param), {

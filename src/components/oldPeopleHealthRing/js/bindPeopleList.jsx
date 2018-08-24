@@ -3,11 +3,13 @@ import {
     Toast,
     Card,
     Modal,
+    Button
 } from 'antd-mobile';
 import '../css/bindPeopleList.less';
 
 var bindDing;
 const alert = Modal.alert;
+const prompt = Modal.prompt;
 export default class bindPeopleList extends React.Component {
     constructor(props) {
         super(props);
@@ -122,14 +124,11 @@ export default class bindPeopleList extends React.Component {
         });
     }
 
-
-
     /**
      * 跳转绑定页面
      */
     toaddRing = () => {
-
-        window.location.href = encodeURI(WebServiceUtil.mobileServiceURL + "addOldPeople?uid=" + bindDing.state.uid+"&refresh=true")
+        window.location.href = encodeURI(WebServiceUtil.mobileServiceURL + "addOldPeople?uid=" + bindDing.state.uid + "&refresh=true")
     };
 
     /**
@@ -139,7 +138,55 @@ export default class bindPeopleList extends React.Component {
         window.location.href = encodeURI(WebServiceUtil.mobileServiceURL + "healthDetail?uid=" + bindDing.state.uid + "&id=" + v.id + "&name=" + v.name + "&macAddress=" + v.macAddress);;
     }
 
+
+    /** 
+     * 保存
+    */
+   saveHeartWarnValue(value,macAddress,i){
+    var param = {
+        "method": 'updateOldManBraceletManager',
+        "macAddress": macAddress,
+        "heartRate":value
+    };
+    WebServiceUtil.requestLittleAntApiOldManBracelet(JSON.stringify(param), {
+        onResponse: function (result) {
+            console.log(result,"re")
+            if (result.msg == '调用成功' && result.success == true) {
+               Toast.info("修改成功")
+            } else {
+                Toast.fail(result.msg, 3);
+            }
+        },
+        onError: function (error) {
+            // message.error(error);
+        }
+    });
+        var spanDOM = document.getElementsByClassName("heartWarnValue");
+        spanDOM[i].innerHTML = value;
+        console.log(spanDOM,"spaDOM")
+   }
+    /**
+     * 编辑心率阀值
+     */
+    updateHeartWarnValue(value,macAddress,i){
+        console.log(value,"vvvvvv")
+        var phoneType = navigator.userAgent;
+        var phone;
+        if (phoneType.indexOf('iPhone') > -1 || phoneType.indexOf('iPad') > -1) {
+            phone = 'ios'
+        } else {
+            phone = 'android'
+        }
+        prompt('请输入页码', '', [
+            {text: '取消'},
+            {text: '确定', onPress: value => bindDing.saveHeartWarnValue(value,macAddress,i)},
+        ], 'default', value, [], phone)
+        if (phone == 'ios') {
+            document.getElementsByClassName('am-modal-input')[0].getElementsByTagName('input')[0].focus();
+        }
+    }
     render() {
+        console.log("render")
         var _this = this;
         return (
             <div id="bindPeopleList" style={{ height: bindDing.state.clientHeight }}>
@@ -147,6 +194,7 @@ export default class bindPeopleList extends React.Component {
                     <div className="listCont">
                         {
                             bindDing.state.initData.map((v, i) => {
+                                console.log(v.macAddress,"mac")
                                 return (
                                     <div className="item">
                                         <Card>
@@ -156,6 +204,10 @@ export default class bindPeopleList extends React.Component {
                                             </div>
                                             <Card.Body>
                                                 <div className="student_list textOver"><span className="title">手环ID：</span><span>{v.macAddress}</span></div>
+                                                <div className="student_list textOver"><span className="title">
+                                                    预警阀值：</span><span className="heartWarnValue">{v.braceletManager.braceletHeartRate}</span>
+                                                    <span className="modifyBtn" onClick={bindDing.updateHeartWarnValue.bind(this,v.braceletManager.braceletHeartRate,v.macAddress,i)}>修改</span>
+                                                </div>
                                                 <div className="healthDetail" onClick={_this.toHealthDetail.bind(this, v)}><span>健康详情</span></div>
                                             </Card.Body>
                                         </Card>
