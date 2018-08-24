@@ -169,7 +169,6 @@ export default class bindPeopleList extends React.Component {
      * 编辑心率阀值
      */
     updateHeartWarnValue(value,macAddress,i){
-        console.log(value,"vvvvvv")
         var phoneType = navigator.userAgent;
         var phone;
         if (phoneType.indexOf('iPhone') > -1 || phoneType.indexOf('iPad') > -1) {
