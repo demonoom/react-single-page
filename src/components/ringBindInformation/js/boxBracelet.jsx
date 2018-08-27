@@ -43,7 +43,7 @@ export default class boxBracelet extends React.Component {
 
     componentDidMount() {
         Bridge.setShareAble("false");
-        document.title = '盒子绑定教室信息';
+        document.title = '班牌/盒子绑定教室信息';
         var loginUser = JSON.parse(localStorage.getItem('loginUserRingBind'));
         this.setState({loginUser});
         this.viewAndroidBoxPage(loginUser);
@@ -333,8 +333,8 @@ export default class boxBracelet extends React.Component {
         var _this = this;
 
         const boxType = [
-            {value: 1, label: '绑定班牌'},
-            {value: 3, label: '绑定盒子'},
+            {value: 1, label: '绑定为班牌'},
+            {value: 3, label: '绑定为盒子'},
         ];
 
         const row = (rowData, sectionID, rowID) => {

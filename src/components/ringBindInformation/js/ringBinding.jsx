@@ -62,7 +62,7 @@ export default class ringBinding extends React.Component {
                 </div>
                 <div className='box' onClick={this.boxOnclick}>
                     <img src={require('../imgs/box.png')} alt=""/>
-                    <span>盒子绑定教室信息</span>
+                    <span>班牌/盒子绑定教室信息</span>
                 </div>
             </div>
         );
