@@ -39,9 +39,10 @@ export default class addCurriculumSchedule extends React.Component {
         };
     }
 
-    componentDidMount(){
+    componentDidMount() {
         Bridge.setShareAble("false");
     }
+
     componentWillMount() {
         document.title = '添加课程表';
         var locationHref = window.location.href;
@@ -84,17 +85,21 @@ export default class addCurriculumSchedule extends React.Component {
     addCourseTableItem = () => {
         var _this = this;
         if (this.state.asyncValue.length == 0) {
-            Toast.fail('请选择星期',2);
+            Toast.fail('请选择星期', 2);
             return
         }
         if (this.state.ClassTableDataArr.length == 0) {
-            Toast.fail('课表不能为空',2);
+            Toast.fail('课表不能为空', 2);
             return
         }
         for (var i = 0; i < this.state.ClassTableDataArr.length; i++) {
             var v = this.state.ClassTableDataArr[i];
-            if (v.startTimeData == '开始时间' || v.endTimeData == '结束时间' || v.clazzName == '' || v.teacherId == '' || v.classId == '') {
-                Toast.fail('课表存在空值',2);
+            if (v.startTimeData == '开始时间' || v.endTimeData == '结束时间' || v.clazzName == '') {
+                Toast.fail('课表存在空值', 2);
+                return false
+            }
+            if (v.teacherId == '' || v.classId == '') {
+                Toast.fail('授课教室及上课班级需输入并搜索后进行绑定,请检查', 3);
                 return false
             }
         }
@@ -336,7 +341,7 @@ export default class addCurriculumSchedule extends React.Component {
                 {/*搜索老师*/}
                 <div className="search_list my_flex">
                     <input type="text"
-                           style={{'margin-left':'-8px'}}
+                           style={{'margin-left': '-8px'}}
                            onChange={teacherV.teacgerChange.bind(this, i)}
                            placeholder="请输入老师姓名并搜索"
                            value={teacherV.state.ClassTableDataArr[i].tercherName}
@@ -346,7 +351,7 @@ export default class addCurriculumSchedule extends React.Component {
                 {/*搜索班级*/}
                 <div className="search_list my_flex">
                     <input type="text"
-                           style={{'margin-left':'-8px'}}
+                           style={{'margin-left': '-8px'}}
                            onChange={teacherV.classChange.bind(this, i)}
                            placeholder="请输入上课班级并搜索"
                            value={teacherV.state.ClassTableDataArr[i].className}
@@ -363,11 +368,11 @@ export default class addCurriculumSchedule extends React.Component {
                     ></InputItem>
                 </div>
                 {/*输入备注*/}
-                <div className="flex_container my_flex flex_addElement" >
+                <div className="flex_container my_flex flex_addElement">
                     <TextareaItem
                         rows={1}
                         className="add_element"
-                        style={{'margin-left':'-8px'}}
+                        style={{'margin-left': '-8px'}}
                         placeholder="添加备注"
                         labelNumber={2}
                         value={v.nodeDetal}
