@@ -204,8 +204,8 @@ export default class bindPeopleList extends React.Component {
                                             <Card.Body>
                                                 <div className="student_list textOver"><span className="title">手环ID：</span><span>{v.macAddress}</span></div>
                                                 <div className="student_list textOver"><span className="title">
-                                                    预警阀值：</span><span className="heartWarnValue">{v.braceletManager.braceletHeartRate}</span>
-                                                    <span className="modifyBtn" onClick={bindDing.updateHeartWarnValue.bind(this,v.braceletManager.braceletHeartRate,v.macAddress,i)}>修改</span>
+                                                    预警阀值：</span><span className="heartWarnValue">{v.braceletManager== undefined ? "": v.braceletManager.braceletHeartRate}</span>
+                                                    <span className="modifyBtn" onClick={v.braceletManager== undefined ? "": bindDing.updateHeartWarnValue.bind(this,v.braceletManager.braceletHeartRate,v.macAddress,i)}>修改</span>
                                                 </div>
                                                 <div className="healthDetail" onClick={_this.toHealthDetail.bind(this, v)}><span>健康详情</span></div>
                                             </Card.Body>

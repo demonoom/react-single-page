@@ -23,7 +23,8 @@ export default class addClassroomManage extends React.Component {
             teachBuildData: [],
             buildingId: [],
             gradeValue: [],
-            data:[]
+            data:[],
+            gradeValueByNoom:[]
         };
     }
     componentDidMount() {
@@ -139,9 +140,12 @@ export default class addClassroomManage extends React.Component {
     * 点击提交时，确认绑定教室和班级
     */
     binding = () => {
+        if(classBinding.state.gradeValueByNoom[0] == undefined){
+            Toast.info("未检测到班级，请点击搜索按钮选择班级!",3)
+        }
         var _this = this;
         if (classBinding.state.gradeValue == '' || classBinding.state.classroomValue == '') {
-            Toast.fail('请填写教室名称和班级名称', )
+            Toast.fail('请输入教室名称或班级名称')
             return
         }
         var param;
@@ -179,7 +183,7 @@ export default class addClassroomManage extends React.Component {
                     Bridge.callHandler(data, null, function (error) {
                     });
                 } else {
-                    Toast.fail(result.msg, 1);
+                    // Toast.fail(result.msg, 1);
                 }
             },
             onError: function (error) {

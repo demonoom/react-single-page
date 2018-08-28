@@ -141,7 +141,7 @@ export default class addOldPeople extends React.Component {
             "bracelet": {
                 "weChatOpenId": calm.state.uid,
                 "macAddress": calm.state.macId,
-                // "macAddress": "BE:BE:78:eh:67:37",
+                // "macAddress": "BE:BE:78:eh:67:37:11",
                 "braceletName": calm.state.stNameValue,
             },
             "heartRate":calm.state.heartWarnValue
