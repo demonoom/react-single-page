@@ -109,7 +109,7 @@ export default class addOldPeople extends React.Component {
             success: function (res) {
                 if (res.resultStr.indexOf(":") == -1) {
                     var string = splitStrTo2(res.resultStr).join(":");
-                    mes = string.substr(0, string.length - 1)
+                    var mes = string.substr(0, string.length - 1)
                 }
                 calm.setState({
                     macId: mes.toUpperCase()
