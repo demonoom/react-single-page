@@ -63,7 +63,7 @@ export default class classDemeanor extends React.Component {
                                     </div>
                                 } else {
                                     var stuImgTag = <img style={{width: '100%', height: '100%'}} id={classDemeanor.id}
-                                                         src={classDemeanor.imagePath + '?' + WebServiceUtil.MIDDLE_IMG}/>;
+                                                         src={classDemeanor.imagePath + '?' + WebServiceUtil.LARGE_IMG}/>;
                                 }
                                 classDemeanorList.push(stuImgTag);
                             })
@@ -111,7 +111,7 @@ export default class classDemeanor extends React.Component {
                                     } else {
                                         var stuImgTag = <img style={{width: '100%', height: '100%'}}
                                                              id={classDemeanor.id}
-                                                             src={classDemeanor.imagePath + '?' + WebServiceUtil.MIDDLE_IMG}/>;
+                                                             src={classDemeanor.imagePath + '?' + WebServiceUtil.LARGE_IMG}/>;
                                     }
                                     classRewardList.push(stuImgTag);
                                 }
