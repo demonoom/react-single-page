@@ -107,7 +107,7 @@ export default class wxBindIndex extends React.Component {
         var arr = []
         if (!WebServiceUtil.isEmpty(res)) {
             res.forEach(function (v, i) {
-                arr.push(<li>{v.userName} <span
+                arr.push(<li className="StudentList">{v.userName} <span
                     onClick={_this.weChatUnbindStduent.bind(this, v, obj)}>解绑</span>
                 </li>)
             })
@@ -373,7 +373,6 @@ export default class wxBindIndex extends React.Component {
                             </RadioItem>
                         ))}
                     </List>
-                    <WhiteSpace size="lg"/>
                     <div style={{
                         display: !this.state.openidFlag ? 'block' : 'none'
                     }}>
@@ -433,11 +432,12 @@ export default class wxBindIndex extends React.Component {
                     </div>
 
                 </div>
-                <div style={{display: !this.state.openidFlag ? 'none' : this.state.value != 2 ? 'none' : 'inline-block'}}>
-                    <span>您绑定的学生</span>
+                <WhiteSpace size="lg"/>
+                <div className="bindingNumber" style={{display: !this.state.openidFlag ? 'none' : this.state.value != 2 ? 'none' : 'block'}}>
+                    <div className="bindingNumberStudent">您绑定的学生</div>
                     {this.state.stuLis}
                 </div>
-                <div style={{display: !this.state.openidFlag ? 'none' : this.state.value != 2 ? 'none' : 'block'}}
+                <div className="Student-am-button" style={{display: !this.state.openidFlag ? 'none' : this.state.value != 2 ? 'none' : 'block'}}
                      onClick={this.showBindModel}>绑定学生
                 </div>
                 {/*解绑标签块 end*/}
