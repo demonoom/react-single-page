@@ -31,10 +31,17 @@ export default class addOldPeople extends React.Component {
     }
 
     componentDidMount() {
-        // var resultStr = "12nh12nh"
-        // var string = splitStrTo2(resultStr).join(":");
-        // var mes = string.substr(0, string.length - 1)
-        // console.log(mes,"mes")
+        // var resultStr = "GH:HU:JI"
+        // var mes;
+        // if (resultStr.indexOf(":") == -1) {
+        //     var string = splitStrTo2(resultStr).join(":");
+        //     mes = string.substr(0, string.length - 1);
+        //     console.log(mes,"mes1")
+        // }else {
+        //     mes = resultStr;
+        //     console.log(mes,"mes2")
+        // }
+       
         Bridge.setShareAble("false");
         document.title = '老人健康手环绑定';
         var locationHref = window.location.href;
@@ -126,6 +133,8 @@ export default class addOldPeople extends React.Component {
                 if (res.resultStr.indexOf(":") == -1) {
                     var string = splitStrTo2(res.resultStr).join(":");
                     mes = string.substr(0, string.length - 1)
+                }else {
+                    mes = res.resultStr;
                 }
                 calm.setState({
                     macId: mes.toUpperCase()
