@@ -1,6 +1,6 @@
 import React from 'react';
 import './css/wxBindIndex.less'
-import {List, Toast, ListView, Button, InputItem, Radio, WhiteSpace} from 'antd-mobile';
+import {List, Toast, ListView, Button, InputItem, Radio, WhiteSpace, Modal} from 'antd-mobile';
 
 const RadioItem = Radio.RadioItem;
 const Item = List.Item;
@@ -9,6 +9,7 @@ const data = [
     {value: 2, label: '家长'},
 ];
 var timer = null;
+const prompt = Modal.prompt;
 export default class wxBindIndex extends React.Component {
 
     constructor(props) {
@@ -28,6 +29,7 @@ export default class wxBindIndex extends React.Component {
             openidFlag: false,//判断openid是否有效 true已绑定  false 未绑定
             colAccount: '',
             phoneNumber: '',
+            stuLis: [],
         };
 
     }
@@ -53,7 +55,6 @@ export default class wxBindIndex extends React.Component {
         };
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
             onResponse: (result) => {
-                // Toast.info(result.msg);
                 if (result.success) {
                     if (result.response) {
                         this.setState({
@@ -61,8 +62,12 @@ export default class wxBindIndex extends React.Component {
                             phoneNumber: result.response.users.phoneNumber,
                             colAccount: result.response.users.colAccount,
                             col_id: result.response.col_id,
+                            col_obj: result.response,
 
                         })
+                        if (result.response.users.colUtype == 'PAREN') {
+                            this.getBindedChildren(result.response)
+                        }
                     } else {   //openid 未绑定
                         this.setState({
                             openidFlag: false,
@@ -78,12 +83,74 @@ export default class wxBindIndex extends React.Component {
         });
     }
 
+    //获取此家长绑定的学生列表
+    getBindedChildren(obj) {
+        var _this = this;
+        var param = {
+            "method": 'getBindedChildren',
+            "parentId": obj.col_uid,
+        };
+        WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
+            onResponse: (result) => {
+                if (result.msg == '调用成功' && result.success) {
+                    _this.buildStuLists(result.response, obj)
+                }
+            },
+            onError: function (error) {
+                Toast.info('验证用户类型请求失败');
+            },
+        });
+    }
+
+    buildStuLists(res, obj) {
+        var _this = this
+        var arr = []
+        if (!WebServiceUtil.isEmpty(res)) {
+            res.forEach(function (v, i) {
+                arr.push(<li>{v.userName} <span
+                    onClick={_this.weChatUnbindStduent.bind(this, v, obj)}>解绑</span>
+                </li>)
+            })
+        }
+        _this.setState({stuLis: arr, stuArr: res})
+    }
+
+    //家长解绑学生帐号
+    weChatUnbindStduent = (stu, pat) => {
+        var _this = this
+        var param = {
+            "method": 'weChatUnbindStduent',
+            "pId": pat.col_uid,
+            "studId": stu.colUid,
+        };
+        WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
+            onResponse: (result) => {
+                if (result.msg == '调用成功' && result.success) {
+                    Toast.success('解绑成功', 1)
+                    var arr = _this.state.stuArr;
+                    arr.forEach(function (v, i) {
+                        if (v.colUid == stu.colUid) {
+                            arr.splice(i, 1)
+                        }
+                    })
+                    _this.buildStuLists(arr, _this.state.col_obj)
+                }
+            },
+            onError: function (error) {
+                Toast.info('验证用户类型请求失败');
+            },
+        });
+    }
+
 
     //单选框change事件
     onChange = (value) => {
         this.setState({
             value: value,
             tel: '',//清空手机号
+            telSuccess: 'none',
+            stuLis: [],
+            stuArr: [],
         }, () => {
             this.getUserOpenIdInfoByOpenId();
         });
@@ -250,6 +317,46 @@ export default class wxBindIndex extends React.Component {
         });
     }
 
+    showBindModel = () => {
+        var phoneType = navigator.userAgent;
+        var phone;
+        if (phoneType.indexOf('iPhone') > -1 || phoneType.indexOf('iPad') > -1) {
+            phone = 'ios'
+        } else {
+            phone = 'android'
+        }
+        prompt('请输入学生ID', '', [
+            {text: '取消'},
+            {text: '确定', onPress: value => this.weChatParentBindStudent(value)},
+        ], 'default', '', [], phone)
+        if (phone == 'ios') {
+            document.getElementsByClassName('am-modal-input')[0].getElementsByTagName('input')[0].focus();
+        }
+    }
+
+    //家长绑定学生帐号
+    weChatParentBindStudent(value) {
+        var _this = this;
+        var param = {
+            "method": 'weChatParentBindStudent',
+            "pId": this.state.col_obj.col_uid,
+            "studAccount": value,
+        };
+        WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
+            onResponse: (result) => {
+                if (result.success && result.response) {
+                    Toast.success('绑定成功');
+                    _this.getBindedChildren(this.state.col_obj)
+                } else {
+                    Toast.fail('绑定失败');
+                }
+            },
+            onError: function (error) {
+                Toast.info('请求失败');
+            }
+        });
+    }
+
 
     render() {
         const {value} = this.state;
@@ -319,11 +426,19 @@ export default class wxBindIndex extends React.Component {
                         <div>您的微信已绑定以下账号</div>
                         <div>
                             <span><i className="i-icon i-phone"></i>{this.state.colAccount}</span>
-                            <span><i className="i-icon i-tel"></i>{this.state.phoneNumber}</span>
+                            <span style={{display: this.state.value == 2 ? 'none' : 'inline-block'}}><i
+                                className="i-icon i-tel"></i>{this.state.phoneNumber}</span>
                         </div>
                         <Button onClick={this.unBindAccount}>解绑</Button>
                     </div>
 
+                </div>
+                <div style={{display: !this.state.openidFlag ? 'none' : this.state.value != 2 ? 'none' : 'inline-block'}}>
+                    <span>您绑定的学生</span>
+                    {this.state.stuLis}
+                </div>
+                <div style={{display: !this.state.openidFlag ? 'none' : this.state.value != 2 ? 'none' : 'block'}}
+                     onClick={this.showBindModel}>绑定学生
                 </div>
                 {/*解绑标签块 end*/}
                 <div className="empty_center success3" style={{
