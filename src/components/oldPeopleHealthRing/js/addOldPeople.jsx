@@ -8,6 +8,17 @@ import {
 import '../css/addOldPeople.less';
 
 var calm;
+
+/**
+ * 字符串两两切割
+ * @param str
+ * @returns {Array|{index: number, input: string}}
+ */
+function splitStrTo2(str) {
+    var reg = /.{2}/g, rs = str.toUpperCase().match(reg);
+    rs.push(str.substring(rs.join('').length));
+    return rs
+}
 export default class addOldPeople extends React.Component {
     constructor(props) {
         super(props);
@@ -20,6 +31,10 @@ export default class addOldPeople extends React.Component {
     }
 
     componentDidMount() {
+        // var resultStr = "12nh12nh"
+        // var string = splitStrTo2(resultStr).join(":");
+        // var mes = string.substr(0, string.length - 1)
+        // console.log(mes,"mes")
         Bridge.setShareAble("false");
         document.title = '老人健康手环绑定';
         var locationHref = window.location.href;
@@ -36,6 +51,7 @@ export default class addOldPeople extends React.Component {
         //添加对视窗大小的监听,在屏幕转换以及键盘弹起时重设各项高度
         window.addEventListener('resize', this.onWindowResize);
         this.wxchatConfig(locationHref);
+       
     }
 
 
@@ -47,14 +63,13 @@ export default class addOldPeople extends React.Component {
             bindDing.setState({ clientHeight: document.body.clientHeight, calmHeight: document.body.clientHeight - 296 });
         }, 100)
     }
-
+    
 
     /**
      *微信配置
      获取openID
      */
     wxchatConfig(locationHref) {
-
         var param = {
             "method": 'getWeChatSignature', 
             "url": locationHref
