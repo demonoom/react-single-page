@@ -54,6 +54,8 @@ export default class classDemeanor extends React.Component {
                             var classDemeanors = result.response;
                             classDemeanors.forEach(function (classDemeanor) {
 
+                                // console.log(classDemeanor);
+
                                 if (classDemeanor.imagePath.substr(classDemeanor.imagePath.length - 3, 3) == 'mp4') {
                                     var stuImgTag = <div className='videoDiv'>
                                         <i onClick={_this.videoOnClick.bind(this, classDemeanor)}></i>
@@ -62,8 +64,16 @@ export default class classDemeanor extends React.Component {
                                         </video>
                                     </div>
                                 } else {
-                                    var stuImgTag = <img style={{width: '100%', height: '100%'}} id={classDemeanor.id}
-                                                         src={classDemeanor.imagePath}/>;
+
+                                    if (classDemeanor.imagePath.indexOf('?') == -1) {
+                                        var stuImgTag = <img style={{width: '100%', height: '100%'}}
+                                                             id={classDemeanor.id}
+                                                             src={classDemeanor.imagePath + '?' + WebServiceUtil.LARGE_IMG}/>;
+                                    } else {
+                                        var stuImgTag = <img style={{width: '100%', height: '100%'}}
+                                                             id={classDemeanor.id}
+                                                             src={classDemeanor.imagePath + '&' + WebServiceUtil.LARGE_IMG}/>;
+                                    }
                                 }
                                 classDemeanorList.push(stuImgTag);
                             })
@@ -99,6 +109,7 @@ export default class classDemeanor extends React.Component {
                         } else {
                             var classRewards = result.response;
                             classRewards.forEach(function (classDemeanor) {
+                                console.log(classDemeanor);
                                 if (classDemeanor != null && classDemeanor != undefined) {
 
                                     if (classDemeanor.imagePath.substr(classDemeanor.imagePath.length - 3, 3) == 'mp4') {
@@ -109,9 +120,16 @@ export default class classDemeanor extends React.Component {
                                                        src={classDemeanor.imagePath.split('?')[0]}></video>
                                             </div>
                                     } else {
-                                        var stuImgTag = <img style={{width: '100%', height: '100%'}}
-                                                             id={classDemeanor.id}
-                                                             src={classDemeanor.imagePath}/>;
+
+                                        if (classDemeanor.imagePath.indexOf('?') == -1) {
+                                            var stuImgTag = <img style={{width: '100%', height: '100%'}}
+                                                                 id={classDemeanor.id}
+                                                                 src={classDemeanor.imagePath + '?' + WebServiceUtil.LARGE_IMG}/>;
+                                        } else {
+                                            var stuImgTag = <img style={{width: '100%', height: '100%'}}
+                                                                 id={classDemeanor.id}
+                                                                 src={classDemeanor.imagePath + '&' + WebServiceUtil.LARGE_IMG}/>;
+                                        }
                                     }
                                     classRewardList.push(stuImgTag);
                                 }

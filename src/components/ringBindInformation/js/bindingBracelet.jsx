@@ -229,6 +229,12 @@ export default class bindingBracelet extends React.Component {
      */
     binding = () => {
         var _this = this;
+
+        if (this.state.stNameValue.length != 0 && this.state.searchCheckValue == '') {
+            Toast.fail('请输入学生姓名后搜索绑定', 3)
+            return
+        }
+
         if (this.state.searchCheckValue == '' || bindDing.state.macId == '') {
             Toast.fail('未选择学生或手环', 3)
             return
