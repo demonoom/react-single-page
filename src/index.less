@@ -48,6 +48,10 @@ hr {
   min-height: 100%;
 }
 
+.am-card,.am-list-body{
+  border: 0 !important;
+}
+
 // .am-popup-mask, .am-popup-wrap, .am-popup {
 //   position: absolute;
 // }
@@ -297,6 +301,7 @@ hr {
   box-sizing: border-box;
   z-index: 99;
   border-radius: 2px;
+  cursor: pointer;
   .am-button-primary {
     background-color: #F56A55;
     border: 1PX solid #F56A55;
@@ -447,7 +452,7 @@ hr {
 .line_public:after {
   content: '';
   position: absolute;
-  background-color: #eeeeee;
+  background-color: #e5e5e5;
   display: block;
   z-index: 1;
   top: auto;
@@ -456,9 +461,9 @@ hr {
   left: 0;
   width: 100%;
   height: 1PX;
-  -webkit-transform-origin: 50% 100%;
-  -ms-transform-origin: 50% 100%;
-  transform-origin: 50% 100%;
+  -webkit-transform-origin: 0 0;
+  -ms-transform-origin: 0 0;
+  transform-origin: 0 0;
   -webkit-transform: scaleY(0.5);
   -ms-transform: scaleY(0.5);
   transform: scaleY(0.5);
@@ -479,9 +484,9 @@ hr {
   left: 0;
   width: 100%;
   height: 1PX;
-  -webkit-transform-origin: 50% 100%;
-  -ms-transform-origin: 50% 100%;
-  transform-origin: 50% 100%;
+  -webkit-transform-origin: 0 0;
+  -ms-transform-origin: 0 0;
+  transform-origin: 0 0;
   -webkit-transform: scaleY(0.5);
   -ms-transform: scaleY(0.5);
   transform: scaleY(0.5);
@@ -613,4 +618,7 @@ hr {
         background-color: none;
   } 横向滚动条和纵向滚动条相交处尖角的颜色 */
 
+}
+.icon_pointer{
+  cursor: pointer;
 }

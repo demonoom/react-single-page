@@ -722,7 +722,7 @@ const originationList = (location, cb) => {
 
 
 /**
- * 老人健康手环绑定
+ * 老人健康手环绑定---start
  * bindPeopleList---列表页
  * addOldPeople---添加绑定页
  * healthDetail--健康数据页
@@ -734,8 +734,6 @@ const bindPeopleList = (location, cb) => {
     )
 }
 
-
-
 const addOldPeople = (location, cb) => {
     require.ensure([], require => {
             cb(null, require("./components/oldPeopleHealthRing/js/addOldPeople").default)
@@ -743,9 +741,64 @@ const addOldPeople = (location, cb) => {
     )
 }
 
-const healthDetail =  (location, cb) => {
+const healthDetail = (location, cb) => {
     require.ensure([], require => {
             cb(null, require("./components/oldPeopleHealthRing/js/healthDetail").default)
+        }
+    )
+}
+/**
+ * 老人健康手环绑定---end
+ */
+const searchFromOrigination = (location, cb) => {
+    require.ensure([], require => {
+            cb(null, require("./components/mobileChat/js/searchFromOrigination").default)
+        }
+    )
+}
+
+
+const newUpdateARTextbook = (location, cb) => {
+    require.ensure([], require => {
+            cb(null, require("./components/ARTextbook/js/newUpdateARTextbook").default)
+        }
+    )
+}
+
+
+/**
+ * 添加标签
+ */
+const ARTagList = (location, cb) => {
+    require.ensure([], require => {
+            cb(null, require("./components/ARTag/js/ARTagList").default)
+        }
+    )
+}
+
+const updateARTag = (location, cb) => {
+    require.ensure([], require => {
+            cb(null, require("./components/ARTag/js/updateARTag").default)
+        }
+    )
+}
+const addARTag = (location, cb) => {
+    require.ensure([], require => {
+            cb(null, require("./components/ARTag/js/addARTag").default)
+        }
+    )
+}
+
+const weArrPayment = (location, cb) => {
+    require.ensure([], require => {
+            cb(null, require("./components/weArrPayment/js/weArrPayment").default)
+        }
+    )
+}
+
+const New = (location, cb) => {
+    require.ensure([], require => {
+            cb(null, require("./components/ARTextbook/js/New").default)
         }
     )
 }
@@ -775,8 +828,8 @@ class Index extends React.Component {
                     {/*style={{fontSize: '24px'}}>蚁盘推题</Link></li>*/}
                     {/*<li><Link to="/arrangementWork?ident=23836&fileId=-1"*/}
                     {/*style={{fontSize: '24px'}}>布置作业</Link></li>*/}
-                    {/*<li><Link to="/fileShareLink?shareId=1971&userId=23836&userType=st"*/}
-                    {/*style={{fontSize: '24px'}}>文件分享</Link></li>*/}
+                    {/*<li><Link to="/fileShareLink?shareId=1971&userId=23836&userType=st"
+                              style={{fontSize: '24px'}}>文件分享</Link></li>*/}
                     {/*{<li><Link to="/ringBinding?ident=23836"*/}
                     {/*style={{fontSize: '24px'}}>手环绑定</Link></li>}*/}
                     {/*<li><Link to="/personalSettings?uid=23836&tid=31837&utype=te"*/}
@@ -843,12 +896,12 @@ class Index extends React.Component {
                     <li><Link
                         to="/classCardHomePageDoor?access_user=23836"
                         style={{fontSize: '24px'}}>后台总入口</Link></li>
-                    <li><Link
-                        to="/dashboard?destId=9&areaType=0"
-                        style={{fontSize: '24px'}}>管理驾驶舱</Link></li>
-                    <li><Link
-                        to="/dashboardByCity?destId=9&areaType=0"
-                        style={{fontSize: '24px'}}>宜昌市教育局管理驾驶舱</Link></li>
+                    {/*<li><Link*/}
+                    {/*to="/dashboard?destId=9&areaType=0"*/}
+                    {/*style={{fontSize: '24px'}}>管理驾驶舱</Link></li>*/}
+                    {/*<li><Link*/}
+                    {/*to="/dashboardByCity?destId=9&areaType=0"*/}
+                    {/*style={{fontSize: '24px'}}>宜昌市教育局管理驾驶舱</Link></li>*/}
                     {/*<li><Link*/}
                     {/*to="/fileAnalysis?aid=590961"*/}
                     {/*style={{fontSize: '24px'}}>文件表情分析</Link></li>*/}
@@ -870,17 +923,17 @@ class Index extends React.Component {
                     {/*<li><Link*/}
                     {/*to="/answerFormStudent?studentId=23991&topicId=8888"*/}
                     {/*style={{fontSize: '24px'}}>查看作答答案(学生)</Link></li>*/}
-                    <li><Link
+                    {/*<li><Link
                         to="/lookAtTheAnswer?tpId=1285598&access_user=23836"
                         style={{fontSize: '24px'}}>查看作答</Link></li>
                     <li>
                         <Link
                             to="/waterWork?tid=8888&stuId=23993" style={{fontSize: '24px'}}>水滴作业</Link>
-                    </li>
-                    <li>
+                    </li>*/}
+                    {/* <li>
                         <Link
                             to="/attendanceTime?uid=23836" style={{fontSize: '24px'}}>考勤考勤</Link>
-                    </li>
+                    </li> */}
                     <li>
                         <Link
                             to="/inAndOutSchool?uid=23836" style={{fontSize: '24px'}}>出入校园考勤</Link>
@@ -899,8 +952,12 @@ class Index extends React.Component {
                     </li>
                     <li>
                         <Link
-                            to="/ArIndex?uid=23836" style={{fontSize: '24px'}}>AR首页</Link>
+                            to="/ARTagList?uid=23836" style={{fontSize: '24px'}}>AR教材标签</Link>
                     </li>
+                    {/* <li>
+                        <Link
+                            to="/ArIndex?uid=23836" style={{fontSize: '24px'}}>AR首页</Link>
+                    </li> */}
 
                     {/*<li><Link*/}
                     {/*to="/attendanceStatistical?schoolId=9"*/}
@@ -909,10 +966,10 @@ class Index extends React.Component {
                     {/*to="/attendanceSatisticaForClass?schoolId=9"*/}
                     {/*style={{fontSize: '24px'}}>班级出勤率统计(柱状图)</Link></li>*/}
 
-                    <li>
+                    {/*<li>
                         <Link
                             to="/wxLogin?local=contactsList" style={{fontSize: '24px'}}>聊天</Link>
-                    </li>
+                    </li>*/}
 
                     <li>
                         <Link
@@ -930,9 +987,15 @@ class Index extends React.Component {
                         <Link
                             to="/wxLogin?local=bindPeopleList" style={{fontSize: '24px'}}>健康手环绑定</Link>
                     </li>
+                    {/* <li>
+                        <Link
+                            to="/New?" style={{fontSize: '24px'}}>new</Link>
+                    </li> */}
+
+
                     <li>
                         <Link
-                            to="/healthDetail?uid=23836" style={{fontSize: '24px'}}>健康手环绑定</Link>
+                            to="/weArrPayment" style={{fontSize: '24px'}}>充值</Link>
                     </li>
 
                 </ul>
@@ -1067,6 +1130,13 @@ ReactDOM.render(
             <Route path="classList" getComponent={classList}/>
             <Route path="groupChatList" getComponent={groupChatList}/>
             <Route path="originationList" getComponent={originationList}/>
+            <Route path="searchFromOrigination" getComponent={searchFromOrigination}/>
+            <Route path="newUpdateARTextbook" getComponent={newUpdateARTextbook}/>
+            <Route path="weArrPayment" getComponent={weArrPayment}/>
+            <Route path="ARTagList" getComponent={ARTagList}/>
+            <Route path="updateARTag" getComponent={updateARTag}/>
+            <Route path="addARTag" getComponent={addARTag}/>
+            <Route path="New" getComponent={New}/>
         </Route>
     </Router>
     ,

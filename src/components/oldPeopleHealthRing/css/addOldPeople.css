@@ -1,0 +1,89 @@
+#addOldPeople .am-list {
+  margin-top: 15px;
+  margin-bottom: 56px;
+}
+#addOldPeople .am-list-body::before,
+#addOldPeople .am-list-body::after,
+#addOldPeople .am-list-line::after {
+  display: none;
+}
+#addOldPeople .am-list-line,
+#addOldPeople .am-list-body {
+  border: 0;
+}
+#addOldPeople .am-list-item .am-input-label {
+  font-size: 16px;
+}
+#addOldPeople .am-list-item {
+  min-height: 53px;
+}
+#addOldPeople .am-list-item .am-input-control input {
+  color: #666;
+}
+#addOldPeople .stName .am-list-line {
+  border-bottom: 1px #eee solid;
+  padding-right: 0;
+  margin-right: 15px;
+}
+#addOldPeople .item {
+  padding-bottom: 10px;
+}
+#addOldPeople .item:last-child {
+  padding-bottom: 40px;
+}
+#addOldPeople .am-card {
+  -webkit-border-radius: 2px;
+  -moz-border-radius: 2px;
+  border-radius: 2px;
+  padding: 0;
+  border: 0;
+}
+#addOldPeople .macAddress {
+  position: relative;
+}
+#addOldPeople .macAddress .am-list-item .am-input-control input {
+  width: calc(100% - 35px);
+}
+#addOldPeople .macAddress .scanBtn {
+  position: absolute;
+  right: 15px;
+  top: 50%;
+  background: url("../img/weixin_scan.png") no-repeat center right;
+  font-size: 0;
+  background-size: 20px;
+  display: block;
+  width: 30px;
+  height: 30px;
+  margin-top: -15px;
+}
+#addOldPeople .textDiv {
+  position: relative;
+}
+#addOldPeople .textDiv .am-list-item .am-input-control input {
+  width: calc(100% - 145px);
+}
+#addOldPeople .textDiv .text {
+  color: #666;
+  font-size: 14px;
+  position: absolute;
+  top: 0;
+  right: 15px;
+  line-height: 53px;
+}
+#addOldPeople .binding {
+  padding: 0 15px;
+}
+#addOldPeople .bindingBtn {
+  height: 48px;
+  line-height: 48px;
+  background-color: #1CAC1B;
+  color: #fff;
+  font-size: 16px;
+  text-align: center;
+  -webkit-border-radius: 2px;
+  -moz-border-radius: 2px;
+  border-radius: 2px;
+  margin-bottom: 15px;
+  width: 100%;
+  display: block;
+}

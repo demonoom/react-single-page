@@ -1,83 +1,427 @@
 #UpdateARTextbook {
-    overflow: auto;
+  overflow: hidden;
+  position: relative;
+  height: 100% !important;
+  ::-webkit-scrollbar {
+    width: 8px;
+    height: 12px;
+  }
+  /* 这是针对缺省样式 (必须的) */
+
+  ::-webkit-scrollbar-thumb {
+    background-color: #ccc;
+    border-radius: 9px;
+    -webkit-border-radius: 9px;
+  }
+  /* 滑块颜色 */
+
+  ::-webkit-scrollbar-button {
+    background-color: initial;
+  }
+  /* 滑轨两头的监听按钮颜色 */
+
+  .imgDiv {
+    width: 100%;
+    height: 100%;
+  }
+  .videoDiv {
+    width: 100%;
+    height: 100%;
+  }
+  .uploadAttech {
+    width: 68px;
+    height: 68px;
+  }
+  .i_uploadAttech {
+    width: 68px;
+    height: 68px;
+    border: none;
+    padding: 0;
     position: relative;
+    border-radius: 2px;
+    display: inline-block;
+    background: #eee;
+    margin-right: 15px;
+    margin-bottom: 15px;
+    vertical-align: top;
+    &.pdfDiv {
+      background: url("../imgs/pdfIcon.png");
+      background-size: 100%;
+    }
+    &.docDiv {
+      background: url("../imgs/docIcon.png");
+      background-size: 100%;
+    }
+    &.xlsDiv {
+      background: url("../imgs/xlsIcon.png");
+      background-size: 100%;
+    }
+    &.pptDiv {
+      background: url("../imgs/pptIcon.png");
+      background-size: 100%;
+    }
+    div {
+      background: rgba(0, 0, 0, 0.4);
+      color: #fff;
+      position: absolute;
+      bottom: 0;
+      width: 100%;
+      padding: 4px 0;
+      border-radius: 0 0 2px 2px;
+      text-align: center;
+      font-size: 12px;
+    }
+  }
+  .mt3PX {
+    margin: 20px 0;
+  }
+  .item_list20 {
+    padding: 15px 15px 0 15px;
+  }
+  .am-list-item .am-input-label.am-input-label-5 {
+    color: #666 !important;
+  }
+  .am-list-line:after {
     background: #fff;
-    .imgDiv {
-        width: 100%;
-        height: 100%;
+  }
+  .upload_file {
+    background: url("../imgs/UpdateART.png") no-repeat;
+    background-size: 100%;
+  }
+  .div68 {
+    min-height: 68px;
+    flex: 1;
+  }
+  .am-list-item:not(:last-child) .am-list-line {
+    border-bottom: none;
+  }
+  .submitBtn .am-button {
+    border: none
+  }
+  .addCurriculum_cont {
+    height: calc(~ "100% - 77px");
+    overflow-x: hidden;
+    overflow-y: auto;
+  }
+  .fileBack {
+    width: 68px;
+    height: 68px;
+    background: url("../imgs/UpdateART.png") no-repeat;
+    background-size: 100%;
+    margin-right: 15px;
+  }
+  .am-list-item {
+    -ms-flex-align: start;
+    align-items: flex-start;
+    -webkit-align-items: flex-start;
+    box-align: flex-start;
+  }
+  .am-list-item .am-input-label.am-input-label-5 {
+    width: 70px;
+    padding-right: 15px;
+    text-align: right;
+    box-sizing: content-box;
+  }
+  .am-list-item .am-input-label, .am-list-item .am-input-control input {
+    font-size: 16px;
+  }
+  .am-tabs-pane-wrap {
+    height: calc(~"100% - 220px");
+    overflow-y: auto;
+    overflow-x: hidden;
+  }
+  .del_ar {
+    width: 16px;
+    height: 16px;
+    background: url("../imgs/delPic.png") no-repeat;
+    background-size: 100% 100%;
+    display: inline-block;
+    position: absolute;
+    right: -7px;
+    top: -7px;
+    z-index: 9 !important;
+  }
+  .uploadBtn {
+    background: url("../imgs/addPic.png") no-repeat;
+    font-size: 0;
+    width: 68px;
+    height: 68px;
+    background-size: 100%;
+    border: 0;
+    margin-right: 15px;
+    overflow: hidden;
+    margin-bottom: 15px;
+    display: inline-block;
+  }
+  .tabCont {
+    font-size: 15px;
+    height: 43.5px;
+    background-color: #fff;
+    -webkit-box-align: center;
+    -webkit-align-items: center;
+    -ms-flex-align: center;
+    align-items: center;
+    border-bottom: 1PX solid #ddd;
+    overflow: hidden;
+    position: relative;
+    ul {
+      width: calc(~"100% - 30px");
+      display: -webkit-box;
+      overflow-y: hidden;
+      overflow-x: auto;
+      height: 44px;
     }
-    .videoDiv {
-        width: 100%;
-        height: 100%;
+    li {
+      padding: 13px 0;
+      width: 80px;
+      text-align: center;
+      &.active {
+        color: #108ee9;
+        border-top: 2px #108ee9 solid;
+        padding: 11px 0 13px 0;
+      }
     }
-    .uploadAttech {
-        width: 68px;
-        height: 68px;
+  }
+
+  .tabCont ul::-webkit-scrollbar {
+    width: 8px;
+    height: 6px;
+  }
+  /* 这是针对缺省样式 (必须的) */
+  .tabCont ul::-webkit-scrollbar-thumb {
+    background-color: #ccc;
+    border-radius: 4px;
+    -webkit-border-radius: 4px;
+  }
+  .fileBack {
+    width: 68px;
+    height: 68px;
+    background: url("../imgs/UpdateART.png") no-repeat;
+    background-size: 100%;
+    margin-right: 15px;
+  }
+  .am-list-item {
+    -ms-flex-align: start;
+    align-items: flex-start;
+    -webkit-align-items: flex-start;
+    box-align: flex-start;
+  }
+  .am-list-item .am-input-label.am-input-label-5 {
+    width: 70px;
+    padding-right: 15px;
+    text-align: right;
+    box-sizing: content-box;
+  }
+  .am-list-item .am-input-label, .am-list-item .am-input-control input {
+    font-size: 16px;
+  }
+  .am-tabs-pane-wrap {
+    height: calc(~"100% - 220px");
+    overflow-y: auto;
+    overflow-x: hidden;
+  }
+
+  /* 滑块颜色 */
+  .addARTextbookTable {
+    text-align: center;
+    font-size: 16px;
+    color: #638bb7;
+    line-height: 30px;
+    padding: 7px 15px;
+    background: #fff;
+    .addBtn {
+      margin: 0 auto;
+      position: relative;
+      width: 125px;
+      padding-left: 20px;
     }
-    .i_uploadAttech {
-        width: 68px;
-        height: 68px;
-        border: none;
-        padding: 0;
-        position: relative;
-        border-radius:2px ;
-        display: inline-block;
-        background: #eee;
-        margin-right: 15px;
-        overflow: hidden;
-        margin-bottom: 15px;
-        &.pdfDiv{
-            background: url("../imgs/pdfIcon.png");
-            background-size: 100%;
-        }
-        div{
-            background: rgba(0, 0, 0, 0.4);
-            color: #fff;
-            position: absolute;
-            bottom: 0;
-            width: 100%;
-            padding: 4px 0;
-            border-radius:0 0 2px 2px;
-            text-align: center;
-        }
+    .icon {
+      font-size: 30px;
+      padding-right: 5px;
+      position: absolute;
+      left: 0;
+      top: 0;
     }
-    .mt3PX {
-        margin: 20px 0;
+    .am-icon-md {
+      width: 18px;
+      height: 18px;
+      margin-right: 3px;
+      position: absolute;
+      left: 0;
+      top: 5px
     }
-    .item_list20{
-        padding: 5px 15px 0 15px;
+  }
+  .tabItem_cont {
+    height: calc(~"100% - 280px");
+    overflow-y: auto;
+    overflow-x: hidden;
+  }
+  .tabItem_list {
+    position: relative;
+    margin-top: 10px;
+      .am-list-item .am-input-label{
+        white-space: normal;
+      }
+  }
+  .tabItem_cont .tabItem_list:first-child {
+    margin-top: 0;
+  }
+  .del_group {
+    background: url("../imgs/del_group.png") no-repeat;
+    font-size: 0;
+    width: 34px;
+    height: 32px;
+    background-size: 100%;
+    border: 0;
+    position: absolute;
+    right: 0;
+    top: 0;
+    z-index: 1;
+  }
+  .add_page {
+    position: absolute;
+    right: 0;
+    width: 24px;
+    color: #638bb7;
+    top: 13px;
+    .am-icon-md {
+      width: 16px;
+      height: 16px;
     }
-    .am-list-item .am-input-label.am-input-label-5{
-        color: #666 !important;
+  }
+  .tagAddPanel {
+    width: 100%;
+    background-color: #f4f4f4;
+    position: absolute;
+    bottom: 0;
+    z-index: 999;
+    height: 70%;
+  }
+  .tagAddPanel_bg {
+    background: rgba(0, 0, 0, 0.4);
+    height: 100%;
+    width: 100%;
+    overflow: hidden;
+    position: absolute;
+    z-index: 980;
+    top: 0;
+    left: 0;
+    display: none;
+  }
+  .spanTag {
+    border: 1px #2B84EF solid;
+    color: #2B84EF;
+    padding: 0 10px;
+    font-size: 13px;
+    margin-right: 15px;
+    margin-bottom: 15px;
+    height: 36px;
+    line-height: 36px;
+    -webkit-border-radius: 2px;
+    -moz-border-radius: 2px;
+    border-radius: 2px;
+    display: inline-block;
+    vertical-align: top;
+    box-sizing: border-box;
+    position: relative;
+    max-width: 100px;
+    .del_ar {
+      width: 16px;
+      height: 16px;
+      top: -8px;
+      right: -8px;
     }
-    .am-list-line:after{
-        background: #fff;
+  }
+  .tagBtn {
+    background: url("../imgs/tagBack.png") no-repeat;
+    width: 36px;
+    height: 36px;
+    background-size: 100%;
+    border: 0;
+    display: inline-block;
+  }
+  .tagInput {
+    position: relative;
+    margin-bottom: 10px;
+    .searchIcon {
+      width: 15px;
+      height: 19px;
+      position: absolute;
+      right: 15px;
+      top: 50%;
+      -webkit-transform: translateY(-50%);
+      -ms-transform: translateY(-50%);
+      transform: translateY(-50%);
+      background: url("../imgs/icon_search.png") no-repeat;
+      background-size: 100%;
+      font-size: 0;
+      cursor: pointer;
     }
-    .upload_file{
-        background: url("../imgs/UpdateART.png") no-repeat;
-        background-size: 100%;
+    .am-list-item .am-input-control input {
+      width: 88%;
     }
-    .div68{
-        min-height: 68px;
-        flex: 1;
+  }
+  .bottomBox {
+    display: flex;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    span {
+      flex: 1;
+      text-align: center;
+      font-size: 14px;
+      padding: 1rem;
+      display: inline-block;
     }
-    .am-list-item:not(:last-child) .am-list-line {
-        border-bottom: none;
-    }
-    .submitBtn .am-button{
-        border: none
-    }
-    .addCurriculum_cont{
-        height:calc(~ "100% - 77px");
-        overflow-x: hidden;
-        overflow-y: auto;
-    }
-    .fileBack{
-        width: 68px;
-        height: 68px;
-        background: url("../imgs/UpdateART.png") no-repeat;
-        background-size: 100%;
-        margin-right: 15px;
+    .bind {
+      background: #F56A55;
+      color: #fff;
     }
 
+  }
+  .close {
+    font-size: 1.5em;
+    background: #fff;
+    color: #F56A55;
+  }
+  .classTags {
+    padding: 0 10px 0 0;
+    height: calc(~"100% - 100px");
+    overflow-y: auto;
+    overflow-x: hidden;
+    .am-tag-normal::before, .am-tag-active::before {
+      display: none;
+    }
+    .am-tag {
+      margin-left: 15px;
+      margin-bottom: 10px;
+      border: 1px #fff solid;
+      height: 36px;
+      line-height: 36px;
+      cursor: pointer;
+      padding: 0 10px;
+    }
+    .am-tag-normal {
+      border-radius: 2px;
+      margin-left: 15px;
+    }
+    .am-tag-text {
+      font-size: 13px;
+      padding: 0 5px;
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+      display: block;
+      max-width: 70px;
+    }
+    .am-tag-active {
+      border: 1px #2B84EF solid;
+      color: #2B84EF;
+    }
+  }
+  .uploadSupport{
+    font-size: 14px;
+    color: #888;
+  }
 }

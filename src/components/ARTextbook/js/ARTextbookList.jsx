@@ -41,8 +41,9 @@ export default class ARTextbookList extends React.Component {
         this.viewARBookPage(uid, true);
         //添加对视窗大小的监听,在屏幕转换以及键盘弹起时重设各项高度
         window.addEventListener('resize', classBinding.onWindowResize)
+        window.addEventListener("scroll",classBinding.getScrollTop)
     }
-
+    
     componentWillUnmount() {
         //解除监听
         window.removeEventListener('resize', classBinding.onWindowResize)
@@ -56,11 +57,15 @@ export default class ARTextbookList extends React.Component {
             classBinding.setState({ clientHeight: document.body.clientHeight });
         }, 100)
     }
-
+    getScrollTop(event){
+        console.log("123")
+        var distance = event.srcElement.body.scrollTop; //获取滚动条初始高度的值 ：0
+        console.log(distance); //打印滚动条不同高度的位置的值
+    }
 
     /**
-    *获取AR教材列表
-    */
+     *获取AR教材列表
+     */
     viewARBookPage = (uid, flag) => {
         var _this = this;
         if (flag) {
@@ -79,6 +84,7 @@ export default class ARTextbookList extends React.Component {
         };
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
             onResponse: function (result) {
+                console.log(result)
                 if (result.msg == '调用成功' || result.success == true) {
                     var arr = result.response;
                     var pager = result.pager;
@@ -111,8 +117,8 @@ export default class ARTextbookList extends React.Component {
     }
 
     /**
-    *  ListView数据全部渲染完毕的回调
-    */
+     *  ListView数据全部渲染完毕的回调
+     */
     onEndReached = (event) => {
         console.log("number")
 
@@ -138,7 +144,6 @@ export default class ARTextbookList extends React.Component {
     }
 
 
-
     /**
      * 跳转新增页面
      */
@@ -158,7 +163,8 @@ export default class ARTextbookList extends React.Component {
      * toUpdateARTextbook
      */
     toUpdateARTextbook(data) {
-        var url = encodeURI(WebServiceUtil.mobileServiceURL + "groupList?bId=" + data.id + "&uid=" + classBinding.state.uid + "&ArName=" + data.name);
+        // var url = encodeURI(WebServiceUtil.mobileServiceURL + "groupList?bId=" + data.id + "&uid=" + classBinding.state.uid + "&ArName=" + data.name);
+        var url = encodeURI(WebServiceUtil.mobileServiceURL + "newUpdateARTextbook?bId=" + data.id + "&uid=" + classBinding.state.uid + "&ArName=" + data.name);
         var data = {
             method: 'openNewPage',
             url: url
@@ -167,7 +173,8 @@ export default class ARTextbookList extends React.Component {
             window.location.href = url;
         });
     }
-    /** 
+
+    /**
      *　删除AR教材
      * @param bId   AR教材id
      * @param condition 课表状态 0 = 删除, -1 =　未发布, 1 = 已发布
@@ -282,9 +289,6 @@ export default class ARTextbookList extends React.Component {
             { text: '确定', onPress: () => _this.publish(data) },
         ], phone);
     };
-
-
-
     render() {
         var _this = this;
         const row = (rowData, sectionID, rowID) => {
@@ -292,13 +296,13 @@ export default class ARTextbookList extends React.Component {
                 const { getFieldProps } = props.form;
                 return (
                     <div className="amList_cont">
-                        {rowData.status == -1 ? <div>
-                            <Button size="small" className="publishBtn" onClick={_this.showPublishAlert.bind(this, rowData)}>发布</Button>
-                            <Button className="modifyBtn_common" type="primary" size="small" onClick={this.toUpdateARTextbook.bind(this, rowData)}></Button>
-                            <Button type="primary" size="small" className="btn_del deleteBtn_common" onClick={this.showAlert.bind(this, rowData)}></Button>
+                        {<div>
+                            <Button className="modifyBtn_common" type="primary" size="small"
+                                onClick={this.toUpdateARTextbook.bind(this, rowData)}></Button>
+                            <Button type="primary" size="small" className="btn_del deleteBtn_common"
+                                onClick={this.showAlert.bind(this, rowData)}></Button>
                         </div>
-                            :
-                            <span className="publishBtn published">已发布</span>}
+                        }
 
                     </div>
                 );
@@ -313,7 +317,8 @@ export default class ARTextbookList extends React.Component {
                                 {rowData.name}
                             </div>
                             <div className="creatTime textOver">
-                                <span className="classroom_span">创建时间：</span>{WebServiceUtil.formatYMD(rowData.createTime)}
+                                <span
+                                    className="classroom_span">创建时间：</span>{WebServiceUtil.formatYMD(rowData.createTime)}
                             </div>
                         </div>
                         <SwitchExample />
@@ -332,7 +337,7 @@ export default class ARTextbookList extends React.Component {
                         ref={el => this.lv = el}
                         dataSource={this.state.dataSource}    //数据类型是 ListViewDataSource
                         renderFooter={() => (
-                            <div style={{ paddingTop: 5, paddingBottom: 40, textAlign: 'center' }}>
+                            <div style={{ paddingTop: 5, paddingBottom: 0, textAlign: 'center' }}>
                                 {this.state.isLoadingLeft ? '正在加载' : '已经全部加载完毕'}
                             </div>)}
                         renderRow={row}   //需要的参数包括一行数据等,会返回一个可渲染的组件为这行数据渲染  返回renderable

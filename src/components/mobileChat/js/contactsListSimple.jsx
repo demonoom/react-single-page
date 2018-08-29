@@ -48,8 +48,8 @@ export default class contacts_ListS extends React.Component {
         var locationSearch = locationHref.substr(locationHref.indexOf("?") + 1);
         var searchArray = locationSearch.split("&");
         var unionid = searchArray[0].split('=')[1];
-        // this.setState({unionid});
-        this.setState({unionid: 'o-w611FMw4s8WtiCwNqD1Ltr9w2w'});
+        this.setState({unionid});
+        // this.setState({unionid: 'o-w611FMw4s8WtiCwNqD1Ltr9w2w'});
     }
 
     componentDidMount() {
@@ -68,9 +68,10 @@ export default class contacts_ListS extends React.Component {
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
             onResponse: function (result) {
                 if (result.success == true && result.msg == '调用成功') {
+
                     if (result.response.length == 1) {
                         // butFoot控制下面的老师,家长的显示隐藏
-                        _this.setState({butFoot: false})
+                        _this.setState({butFoot: false, schoolId: result.response[0].schoolId})
                         _this.getRecentShareUsers(result.response[0].colUid)
                     } else if (result.response.length == 0) {
                         Toast.fail('未找到用户', 2)
@@ -155,8 +156,11 @@ export default class contacts_ListS extends React.Component {
      * 去组织架构
      */
     turnToOrgrination() {
-        Toast.info('暂未开通', 2)
-        // window.location.href = encodeURI(WebServiceUtil.mobileServiceURL + 'originationList?fromId=' + contactsList.state.userId)
+
+        var colPasswd = contactsList.state.userData[0].colPasswd;
+        var unionid = contactsList.state.unionid;
+
+        window.location.href = encodeURI(WebServiceUtil.mobileServiceURL + 'originationList?fromId=' + contactsList.state.userId + '&colPasswd=' + colPasswd + '&unionid=' + unionid + '&structureId=-1' + '&schoolId=' + contactsList.state.schoolId)
     }
 
     /**

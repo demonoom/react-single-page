@@ -1,3 +1,4 @@
+(node) util.print is deprecated. Use console.log instead.
 #studentDutyList .content {
   height: 100%;
   overflow-y: auto;
@@ -91,7 +92,7 @@
   position: relative;
   font-size: 17px;
   line-height: 24px;
-  padding: 12px 15px 5px;
+  padding: 6px 15px 5px;
   background-color: #fff;
 }
 #studentDutyList .planTitle .top {

@@ -88,21 +88,29 @@ export default class classCardHomePageDoor extends React.Component {
      * 班级风采
      */
     turnToClassDemeanor = (type) => {
-
-        var url;
-        if (type == 1) {
-            url = WebServiceUtil.mobileServiceURL + "classDemeanorList?ident=" + this.state.ident;
+        var isPc = WebServiceUtil.isPC();
+        if (isPc == true) {
+            var url;
+            if (type == 1) {
+                url = WebServiceUtil.mobileServiceURL + "classDemeanorList?ident=" + this.state.ident;
+            } else {
+                url = WebServiceUtil.mobileServiceURL + "classHonorList?ident=" + this.state.ident;
+            }
+    
+            var data = {
+                method: 'openNewPage',
+                url: url
+            };
+            Bridge.callHandler(data, null, function (error) {
+                window.location.href = url;
+            });
         } else {
-            url = WebServiceUtil.mobileServiceURL + "classHonorList?ident=" + this.state.ident;
+            Toast.fail("请在电脑端操作,谢谢!", 3);
         }
 
-        var data = {
-            method: 'openNewPage',
-            url: url
-        };
-        Bridge.callHandler(data, null, function (error) {
-            window.location.href = url;
-        });
+
+
+      
     }
 
     /**

@@ -1,0 +1,195 @@
+(node) util.print is deprecated. Use console.log instead.
+#healthDetail {
+  background-color: #fff;
+  padding: 0 10px;
+  overflow-y: auto;
+  /*步数*/
+}
+#healthDetail .titleItem {
+  font-size: 16px;
+  color: #666;
+  width: 50%;
+  padding: 15px 0;
+  border-bottom: 1px #eee solid;
+  margin-bottom: 15px;
+}
+#healthDetail .titleItem:last-child {
+  text-align: right;
+}
+#healthDetail .titleItem .title {
+  color: #333;
+}
+#healthDetail .chartItem {
+  -webkit-border-radius: 4px;
+  -moz-border-radius: 4px;
+  border-radius: 4px;
+  min-height: 216px;
+  margin-bottom: 30px;
+  color: #fff;
+}
+#healthDetail .step {
+  background: -webkit-linear-gradient(left top, #07e29a, #1a929b);
+  /* Safari 5.1 - 6.0 */
+  background: -o-linear-gradient(bottom right, #07e29a, #1a929b);
+  /* Opera 11.1 - 12.0 */
+  background: -moz-linear-gradient(bottom right, #07e29a, #1a929b);
+  /* Firefox 3.6 - 15 */
+  background: linear-gradient(to bottom right, #07e29a, #1a929b);
+  /* 标准的语法 */
+  padding: 0 10px;
+}
+#healthDetail .step .title {
+  border-bottom: 1px #8AFFF7 solid;
+  padding: 10px 0;
+}
+#healthDetail .step .title .stepNum {
+  color: #8AFFF7 ;
+  font-size: 22px;
+  width: calc(100% - 47px);
+  text-align: right;
+}
+#healthDetail .step .switchBtn {
+  width: 46px;
+  height: 23px;
+  position: relative;
+  overflow: hidden;
+}
+#healthDetail .step .switchBtn .am-switch {
+  background: none;
+}
+#healthDetail .step .switchBtn .am-list-line::after {
+  display: none;
+}
+#healthDetail .step .switchBtn .month {
+  position: absolute;
+  left: 6px;
+  top: 3px;
+}
+#healthDetail .step .switchBtn .week {
+  position: absolute;
+  right: 7px;
+  top: 3px;
+}
+#healthDetail .step .switchBtn .am-list-line {
+  border: none;
+}
+#healthDetail .step .switchBtn .am-switch {
+  display: block;
+}
+#healthDetail .step .switchBtn .am-list-item {
+  background: none;
+  min-height: auto;
+}
+#healthDetail .step .switchBtn .am-list-item .am-list-line .am-list-extra {
+  -webkit-flex-basis: auto;
+  -ms-flex-preferred-size: auto;
+  flex-basis: auto;
+  padding: 0;
+}
+#healthDetail .step .switchBtn .am-switch .checkbox {
+  height: 23px;
+  width: 46px;
+  background-color: #029C71;
+}
+#healthDetail .step .switchBtn .am-switch .checkbox:after {
+  width: 21px;
+  height: 21px;
+  top: 1px;
+  background-color: #8AFFF7;
+}
+#healthDetail .step .switchBtn .am-switch .checkbox:before {
+  background: #029C71 ;
+  height: 23px;
+  width: 44px;
+  top: 0;
+}
+#healthDetail .step .switchBtn .am-list-line,
+#healthDetail .step .switchBtn .am-list-item {
+  padding: 0;
+}
+#healthDetail .heartRate {
+  background: -webkit-linear-gradient(#f8b542, #ff8162);
+  /* Safari 5.1 - 6.0 */
+  background: -o-linear-gradient(#f8b542, #ff8162);
+  /* Opera 11.1 - 12.0 */
+  background: -moz-linear-gradient(#f8b542, #ff8162);
+  /* Firefox 3.6 - 15 */
+  background: linear-gradient(#f8b542, #ff8162);
+  /* 标准的语法 */
+  font-size: 12px;
+  padding: 0 10px;
+}
+#healthDetail .heartRate .title {
+  padding: 5px 0;
+  border-bottom: 1px #F8E71C solid;
+  height: 35px;
+  -webkit-align-items: center;
+  -moz-align-items: center;
+  -ms-align-items: center;
+  -o-align-items: center;
+  -khtml-align-items: center;
+  align-items: center;
+}
+#healthDetail .heartRate .title .arrow {
+  line-height: 22px;
+  width: 45px;
+  position: relative;
+}
+#healthDetail .heartRate .title .arrow svg {
+  vertical-align: middle;
+  position: absolute;
+  top: 0;
+}
+#healthDetail .heartRate .title .arrow.left {
+  padding-left: 15px;
+}
+#healthDetail .heartRate .title .arrow.left svg {
+  left: -7px;
+}
+#healthDetail .heartRate .title .arrow.right {
+  padding-right: 6px;
+}
+#healthDetail .heartRate .title .arrow.right svg {
+  right: -6px;
+}
+#healthDetail .heartRate .title .text {
+  font-size: 16px;
+  width: calc(100% - 111px);
+  text-align: center;
+}
+#healthDetail .heartRate .title .text p {
+  font-size: 12px;
+  margin: 0;
+}
+#healthDetail .unusualHeartRate {
+  color: #333333;
+  font-size: 14px;
+  margin-bottom: 15px;
+}
+#healthDetail .unusualHeartRate .title {
+  background: -webkit-linear-gradient(#68cff9, #4b99f0);
+  /* Safari 5.1 - 6.0 */
+  background: -o-linear-gradient(#68cff9, #4b99f0);
+  /* Opera 11.1 - 12.0 */
+  background: -moz-linear-gradient(#68cff9, #4b99f0);
+  /* Firefox 3.6 - 15 */
+  background: linear-gradient(#68cff9, #4b99f0);
+  /* 标准的语法 */
+  height: 42px;
+  line-height: 42px;
+}
+#healthDetail .unusualHeartRate .title span {
+  color: #fff;
+  font-size: 16px;
+}
+#healthDetail .unusualHeartRate .first,
+#healthDetail .unusualHeartRate .second {
+  width: 50%;
+  text-align: center;
+}
+#healthDetail .unusualHeartRate .item {
+  line-height: 46px;
+}
+#healthDetail .unusualHeartRate .item:nth-child(2n+1) {
+  background-color: #F6F6F6;
+}

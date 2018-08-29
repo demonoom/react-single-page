@@ -1,8 +1,7 @@
-var isDebug = true;
+var isDebug = false;
 var localDomain = "192.168.50.15";   //请求地址
 var isDebugLocal = true;
 var localUrl = "192.168.50.186";    //跳转地址http:
-
 
 // //云校本地测试webService地址
 // var elearningWebserviceURLOfLocal = "http://" + localDomain + ":8888/elearning/elearningControl/";
@@ -11,13 +10,24 @@ var localUrl = "192.168.50.186";    //跳转地址http:
 // var elearningWebserviceURL = isDebug ? elearningWebserviceURLOfLocal : elearningWebserviceURLOfRemote;
 
 // //小蚂蚁webService地址
- const apiWebServiceURLOfLocals = "http://" + localDomain + ":9006/Excoord_ApiServer/webservice";
-//const apiWebServiceURLOfLocals = "http://" + localDomain + ":9010/Excoord_OldManBracelet/webservice";
+const apiWebServiceURLOfLocals = "http://" + localDomain + ":9006/Excoord_ApiServer/webservice";
 const apiWebServiceURLOfRemote = "https://www.maaee.com/Excoord_For_Education/webservice";
 var apiWebServiceURL = isDebug ? apiWebServiceURLOfLocals : apiWebServiceURLOfRemote;
 //小蚂蚁mobile地址
 const mobileURLOfLocal = "http://" + localUrl + ":8091/#/";
 const mobileURLOfRemote = "http://jiaoxue.maaee.com:8091/#/";
+
+
+//老人健康手环地址
+const OldManBraceletURLOfLocals = "http://" + localDomain + ":6010/Excoord_OldManBracelet/webservice";
+// const OldManBraceletURLOfLocals = "http://192.168.50.15:9010/Excoord_OldManBracelet/webservice";
+const OldManBraceletURLOfRemote = "http://www.maaee.com:6010/Excoord_OldManBracelet/webservice";
+var OldManBraceletURL = isDebug ? OldManBraceletURLOfLocals : OldManBraceletURLOfRemote;
+
+//AR支付
+const ArPaymentURLOfLocals = "http://" + localDomain + ":6012/Excoord_LittleVideoApiServer/webservice";
+const ArPaymentURLOfRemote = "http://www.maaee.com:6010/Excoord_LittleVideoApiServer/webservice";
+var ArPaymentURL = isDebug ? ArPaymentURLOfLocals : ArPaymentURLOfRemote;
 
 
 function WebServiceUtil() {
@@ -35,6 +45,64 @@ WebServiceUtil.requestLittleAntApi = function (data, listener) {
     $.ajax({
         type: "post",
         url: apiWebServiceURL,
+        data: {params: data},
+        dataType: "json",
+        success: function (result) {
+            listener.onResponse(result);
+        }, error: function (error) {
+            listener.onError(error);
+        }
+    });
+}
+
+
+/**
+ * 判断是否是pc端
+ */
+WebServiceUtil.isPC = function () {
+    var userAgentInfo = navigator.userAgent;
+    var Agents = ["Android", "iPhone",
+        "SymbianOS", "Windows Phone",
+        "iPad", "iPod"];
+    var flag = true;
+    for (var v = 0; v < Agents.length; v++) {
+        if (userAgentInfo.indexOf(Agents[v]) > 0) {
+            flag = false;
+            break;
+        }
+    }
+    return flag;
+}
+/**
+ * 不带请求头的ajax
+ * arpayment
+ * @param data
+ * @param listener
+ */
+WebServiceUtil.requestArPaymentApi = function (data, listener) {
+    $.ajax({
+        type: "post",
+        url: ArPaymentURL,
+        data: {params: data},
+        dataType: "json",
+        success: function (result) {
+            listener.onResponse(result);
+        }, error: function (error) {
+            listener.onError(error);
+        }
+    });
+}
+
+
+/**
+ * 请求头的ajax
+ * @param data
+ * @param listener
+ */
+WebServiceUtil.requestLittleAntApiOldManBracelet = function (data, listener) {
+    $.ajax({
+        type: "post",
+        url: OldManBraceletURL,
         data: {params: data},
         dataType: "json",
         success: function (result) {
@@ -72,7 +140,7 @@ WebServiceUtil.requestLittleAntApiWithHead = function (data, headObj, listener) 
  * @returns {boolean}
  */
 WebServiceUtil.isEmpty = function (content) {
-    if (content == null || content == "null" || content == "" || typeof(content) == "undefined") {
+    if (content == null || content == "null" || content == "" || typeof (content) == "undefined") {
         return true;
     } else {
         return false;
@@ -90,6 +158,20 @@ WebServiceUtil.formatYMD = function (nS) {
     var month = da.getMonth() + 1;
     var date = da.getDate();
     var ymdStr = [year, month, date].join('-');
+    return ymdStr;
+};
+
+/**
+ * 时间戳转月日
+ * @param nS
+ * @returns {string}
+ */
+WebServiceUtil.formatMD = function (nS) {
+    var da = new Date(parseInt(nS));
+    var year = da.getFullYear();
+    var month = da.getMonth() + 1;
+    var date = da.getDate();
+    var ymdStr = [month, date].join('-');
     return ymdStr;
 };
 

@@ -1,4 +1,3 @@
-(node) util.print is deprecated. Use console.log instead.
 ::-webkit-scrollbar {
   width: 8px;
   height: 12px;
@@ -14,7 +13,7 @@
   background-color: initial;
 }
 #addARTextbook {
-  height: 100%;
+  height: 100% !important;
 }
 #addARTextbook .cont {
   overflow-y: auto;
@@ -23,18 +22,15 @@
 #addARTextbook .sameBack {
   background-color: #fff;
   padding: 15px;
-  font-size: 17px;
+  font-size: 16px;
   color: #666;
 }
 #addARTextbook .my_flex {
-  -webkit-box-align: center;
-  -webkit-align-items: center;
-  -ms-flex-align: center;
-  align-items: center;
   flex-wrap: wrap;
 }
 #addARTextbook .am-list-item .am-input-label {
   color: #666 !important;
+  font-size: 16px;
 }
 #addARTextbook .am-list-line {
   border: 0 !important;
@@ -43,10 +39,20 @@
   display: none;
 }
 #addARTextbook .imgTag {
-  width: 68px;
-  height: 68px;
-  margin-right: 15px;
-  background-color: #eee;
+  width: 100%;
+  height: 100%;
+}
+#addARTextbook .firstDiv {
+  margin-bottom: 15px;
+}
+#addARTextbook .calm {
+  position: relative;
+}
+#addARTextbook .calm .am-list-item .am-input-control input {
+  width: 88%;
+}
+#addARTextbook .CourseTableArea .cont {
+  margin-bottom: 10px;
 }
 #addARTextbook .videoDiv {
   width: 68px;
@@ -56,19 +62,28 @@
   background-color: #eee;
 }
 #addARTextbook .textTitle {
-  width: 85px;
+  width: 70px;
   margin-right: 4px;
+  text-align: right;
+  padding-right: 15px;
 }
 #addARTextbook .textTitle .uploadSupport {
   font-size: 14px;
   color: #888;
 }
+#addARTextbook .am-list-item .am-input-label.am-input-label-5 {
+  width: 70px;
+  margin-right: 4px;
+  text-align: right;
+  padding-right: 15px;
+}
 #addARTextbook .videoCont {
   width: calc(100% - 89px);
-  -webkit-box-align: flex-start;
-  -webkit-align-items: flex-start;
-  -ms-flex-align: flex-start;
-  align-items: flex-start;
+  overflow: visible;
+}
+#addARTextbook .videoCont video {
+  height: 100%;
+  max-width: 100%;
 }
 #addARTextbook .uploadAttech {
   width: 100px;
@@ -82,18 +97,20 @@
   height: 68px;
   background-size: 100%;
   border: 0;
+  cursor: pointer;
 }
 #addARTextbook .addARTextbookTable {
   text-align: center;
-  font-size: 17px;
+  font-size: 16px;
   color: #638bb7;
   line-height: 30px;
   padding: 7px 15px;
+  margin-top: 15px;
 }
 #addARTextbook .addARTextbookTable .addBtn {
   margin: 0 auto;
   position: relative;
-  width: 60px;
+  width: 110px;
   padding-left: 20px;
 }
 #addARTextbook .addARTextbookTable .icon {
@@ -112,7 +129,10 @@
   top: 5px;
 }
 #addARTextbook .add_title {
-  background-color: #f4f4f4;
+  background-color: #fff;
+  font-size: 16px;
+  position: relative;
+  margin-top: 15px;
 }
 #addARTextbook .fileBack {
   width: 68px;
@@ -125,4 +145,201 @@
   background: url("../imgs/pdfIcon.png") no-repeat;
   background-size: 100%;
   margin-bottom: 15px;
+}
+#addARTextbook .fileBack.docBack {
+  background: url("../imgs/docIcon.png") no-repeat;
+  background-size: 100%;
+  margin-bottom: 15px;
+}
+#addARTextbook .fileBack.xlsBack {
+  background: url("../imgs/xlsIcon.png") no-repeat;
+  background-size: 100%;
+  margin-bottom: 15px;
+}
+#addARTextbook .fileBack.pptBack {
+  background: url("../imgs/pptIcon.png") no-repeat;
+  background-size: 100%;
+  margin-bottom: 15px;
+}
+#addARTextbook .am-list-item .am-input-control input {
+  font-size: 16px;
+}
+#addARTextbook .videoCont > div {
+  position: relative;
+  text-align: center;
+}
+#addARTextbook .del_ar {
+  width: 16px;
+  height: 16px;
+  background: url("../imgs/delPic.png") no-repeat;
+  background-size: 100% 100%;
+  display: inline-block;
+  position: absolute;
+  right: -7px;
+  top: -7px;
+  cursor: pointer;
+}
+#addARTextbook .tagBack {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  z-index: 100;
+  background-color: rgba(0, 0, 0, 0.4);
+}
+#addARTextbook .tagCont {
+  background-color: #f4f4f4;
+  height: 70%;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  z-index: 101;
+}
+#addARTextbook .tagInput {
+  position: relative;
+}
+#addARTextbook .tagInput .searchIcon {
+  width: 15px;
+  height: 19px;
+  position: absolute;
+  right: 15px;
+  top: 50%;
+  -webkit-transform: translateY(-50%);
+  -ms-transform: translateY(-50%);
+  transform: translateY(-50%);
+  background: url("../imgs/icon_search.png") no-repeat;
+  background-size: 100%;
+  font-size: 0;
+}
+#addARTextbook .tagInput .am-list-item .am-input-control input {
+  width: 88%;
+}
+#addARTextbook .icon_delete {
+  background: url("../imgs/del_group.png") no-repeat;
+  font-size: 0;
+  width: 34px;
+  height: 32px;
+  background-size: 100%;
+  border: 0;
+  position: absolute;
+  right: 0;
+  top: 0;
+  z-index: 1;
+}
+#addARTextbook .classTags {
+  padding-right: 15px;
+  padding-top: 10px;
+  height: calc(100% - 98px);
+  overflow-y: auto;
+}
+#addARTextbook .classTags .am-tag-normal::before,
+#addARTextbook .classTags .am-tag-active::before {
+  display: none;
+}
+#addARTextbook .classTags .am-tag {
+  margin-left: 15px;
+  margin-bottom: 10px;
+  border: 1px #fff solid;
+  height: 36px;
+  line-height: 36px;
+  cursor: pointer;
+  padding: 0 10px;
+}
+#addARTextbook .classTags .am-tag-normal {
+  border-radius: 2px;
+  margin-left: 15px;
+}
+#addARTextbook .classTags .am-tag-text {
+  font-size: 13px;
+  padding: 0 5px;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  display: block;
+  max-width: 70px;
+}
+#addARTextbook .classTags .am-tag-active {
+  border: 1px #2B84EF solid;
+  color: #2B84EF;
+}
+#addARTextbook .spanTag {
+  border: 1px #2B84EF solid;
+  color: #2B84EF;
+  padding: 0 10px;
+  font-size: 13px;
+  margin-right: 15px;
+  margin-bottom: 15px;
+  height: 36px;
+  line-height: 36px;
+  -webkit-border-radius: 2px;
+  -moz-border-radius: 2px;
+  border-radius: 2px;
+  vertical-align: top;
+  box-sizing: border-box;
+  position: relative;
+  max-width: 100px;
+  display: inline-block;
+}
+#addARTextbook .tagBtn {
+  background: url("../imgs/tagBack.png") no-repeat;
+  width: 36px;
+  height: 36px;
+  background-size: 100%;
+  border: 0;
+  display: inline-block;
+}
+#addARTextbook .del_tag {
+  width: 16px;
+  height: 16px;
+  background: url("../imgs/delPic.png") no-repeat;
+  background-size: 100% 100%;
+  display: inline-block;
+  position: absolute;
+  right: -8px;
+  top: -8px;
+  z-index: 9 !important;
+  cursor: pointer;
+}
+#addARTextbook .upload_file {
+  width: 68px;
+  height: 68px;
+  text-align: center;
+  background-color: #eee;
+  position: relative;
+}
+#addARTextbook .upload_file .icon_pointer {
+  background: rgba(0, 0, 0, 0.4);
+  color: #fff;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  padding: 4px 0;
+  border-radius: 0 0 2px 2px;
+  text-align: center;
+  font-size: 12px;
+}
+#addARTextbook .bottomBox {
+  display: flex;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+}
+#addARTextbook .bottomBox span {
+  flex: 1;
+  text-align: center;
+  font-size: 1rem;
+  padding: 1rem;
+  display: inline-block;
+}
+#addARTextbook .bottomBox .bind {
+  background: #e46a51;
+  color: #fff;
+}
+#addARTextbook .bottomBox .close {
+  background: #fff;
+  color: #e46a51;
 }

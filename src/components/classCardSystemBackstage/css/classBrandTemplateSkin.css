@@ -9,7 +9,8 @@
 #classBrandTemplateSkin .am-list-line::after {
   display: none;
 }
-#classBrandTemplateSkin .am-list-body {
+#classBrandTemplateSkin .am-list-body,
+#classBrandTemplateSkin .am-list-line {
   border: 0;
 }
 #classBrandTemplateSkin .classInfo .am-list-item {
@@ -47,11 +48,14 @@
   transform: translateY(-50%);
 }
 #classBrandTemplateSkin .am-radio-inner {
-  border: 1px #F56A55 solid;
+  border: 1px #b4b4b4 solid;
   width: 16px;
   height: 16px;
   border-radius: 50%;
   background-color: #fff;
+}
+#classBrandTemplateSkin .am-radio-checked .am-radio-inner {
+  border: 1px #F56A55 solid;
 }
 #classBrandTemplateSkin .am-radio-inner:after {
   border: 0;

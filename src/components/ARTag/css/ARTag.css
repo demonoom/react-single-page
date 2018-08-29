@@ -1,0 +1,47 @@
+(node) util.print is deprecated. Use console.log instead.
+#ARTag {
+  height: 100%;
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+#ARTag .textTitle {
+  position: relative;
+}
+#ARTag .am-list-item .am-input-label.am-input-label-5 {
+  width: 86px;
+}
+#ARTag .redStar {
+  color: red;
+  font-size: 22px;
+  position: absolute;
+  right: 2px;
+  top: 2px;
+}
+#ARTag .am-list-line::after {
+  display: none !important;
+}
+#ARTag .am-list-line {
+  border: 0;
+}
+#ARTag .arBtn {
+  background-color: #F56A55;
+  font-size: 18px;
+  height: 47px;
+  line-height: 47px;
+  text-align: center;
+}
+#ARTag .tagList {
+  background-color: #fff;
+  padding: 12.5px 15px;
+  overflow: hidden;
+}
+#ARTag .tagList .content {
+  float: left;
+  font-size: 17px;
+  color: #333;
+  line-height: 30px;
+  width: calc(100% - 70px);
+}
+#ARTag .tagList .smallBtn {
+  height: 30px;
+}
