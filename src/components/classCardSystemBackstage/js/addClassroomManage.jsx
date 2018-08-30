@@ -179,11 +179,10 @@ export default class addClassroomManage extends React.Component {
                     var data = {
                         method: 'finishForRefresh',
                     };
-
                     Bridge.callHandler(data, null, function (error) {
                     });
                 } else {
-                    // Toast.fail(result.msg, 1);
+                    Toast.fail(result.msg, 2);
                 }
             },
             onError: function (error) {
