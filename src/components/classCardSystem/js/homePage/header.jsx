@@ -108,7 +108,9 @@ export default class header extends React.Component {
         }
         if (this.state.timeFoot == '00:10:00') {
             var date = new Date();
-            demeanor.setState({timeHeader: setTodayDate(date)});
+            //此处使用setState会进入生命周期的循环导致页面奔溃,使用直接赋值可解决此问题
+            // demeanor.setState({timeHeader: setTodayDate(date)});
+            demeanor.state.timeHeader = setTodayDate(date)
         }
     }
 

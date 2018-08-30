@@ -18,6 +18,17 @@ const alert = Modal.alert;
 const RadioItem = Radio.RadioItem;
 var bindDing;
 
+/**
+ * 字符串两两切割
+ * @param str
+ * @returns {Array|{index: number, input: string}}
+ */
+function splitStrTo2(str) {
+    var reg = /.{2}/g, rs = str.toUpperCase().match(reg);
+    rs.push(str.substring(rs.join('').length));
+    return rs
+}
+
 export default class bindingBracelet extends React.Component {
 
     constructor(props) {
@@ -201,7 +212,13 @@ export default class bindingBracelet extends React.Component {
             //     Toast.fail('mac地址超过最大字节数', 2)
             //     return
             // }
-            bindDing.setState({macId: mes});
+
+            if (mes.indexOf(":") == -1) {
+                var string = splitStrTo2(mes).join(":");
+                mes = string.substr(0, string.length - 1)
+            }
+
+            bindDing.setState({macId: mes.toUpperCase()});
         }, function (error) {
             console.log(error);
         });
@@ -212,8 +229,14 @@ export default class bindingBracelet extends React.Component {
      */
     binding = () => {
         var _this = this;
+
+        if (this.state.stNameValue.length != 0 && this.state.searchCheckValue == '') {
+            Toast.fail('请输入学生姓名后搜索绑定', 3)
+            return
+        }
+
         if (this.state.searchCheckValue == '' || bindDing.state.macId == '') {
-            Toast.fail('未选择学生或手环',3)
+            Toast.fail('未选择学生或手环', 3)
             return
         }
         var param = {
@@ -360,11 +383,14 @@ export default class bindingBracelet extends React.Component {
                         />
                         <Card.Body>
                             <div className="student_contList">
-                                <div className="student_list text_hidden"><span>MAC：</span><span>{rowData.macAddress}</span></div>
-                                <div className="student_list2 text_hidden"><span>ID：</span><span>{rowData.bindingUser.colAccount}</span></div>
+                                <div className="student_list text_hidden">
+                                    <span>MAC：</span><span>{rowData.macAddress}</span></div>
+                                <div className="student_list2 text_hidden">
+                                    <span>ID：</span><span>{rowData.bindingUser.colAccount}</span></div>
                             </div>
                             <div className="studen_contList2">
-                                <span className="class">班级：</span><span className="classinfo">{ rowData.bindingUser.clazz.name}</span>
+                                <span className="class">班级：</span><span
+                                className="classinfo">{rowData.bindingUser.clazz.name}</span>
                             </div>
                         </Card.Body>
                     </Card>
@@ -413,7 +439,8 @@ export default class bindingBracelet extends React.Component {
                                 value={bindDing.state.macId}
                                 editable={false}
                             >MAC：</InputItem>
-                            <img className='scanIcon' src={require('../imgs/icon_scan.png')} alt="" onClick={this.scanMac}/>
+                            <img className='scanIcon' src={require('../imgs/icon_scan.png')} alt=""
+                                 onClick={this.scanMac}/>
                         </div>
 
                         <div className='stName'>

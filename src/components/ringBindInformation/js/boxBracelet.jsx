@@ -10,7 +10,7 @@ import {
     WingBlank,
     WhiteSpace,
     Modal,
-    PullToRefresh
+    PullToRefresh,
 } from 'antd-mobile';
 import '../css/boxBracelet.less'
 
@@ -37,12 +37,13 @@ export default class boxBracelet extends React.Component {
             chooseResultDiv: 'none',
             stNameValue: '',
             searchData: [],
+            boxTypeValue: 1,
         };
     }
 
     componentDidMount() {
         Bridge.setShareAble("false");
-        document.title = '盒子绑定教室信息';
+        document.title = '班牌/盒子绑定教室信息';
         var loginUser = JSON.parse(localStorage.getItem('loginUserRingBind'));
         this.setState({loginUser});
         this.viewAndroidBoxPage(loginUser);
@@ -205,6 +206,12 @@ export default class boxBracelet extends React.Component {
      */
     binding = () => {
         var _this = this;
+
+        if (this.state.stNameValue.length != 0 && this.state.searchCheckValue == '') {
+            Toast.fail('请输入教室后搜索绑定', 3)
+            return
+        }
+
         if (this.state.searchCheckValue == '' || bindDing.state.macId == '') {
             Toast.fail('未选择教室或班牌',)
             return
@@ -214,6 +221,7 @@ export default class boxBracelet extends React.Component {
             "rid": this.state.searchCheckValue,
             "mac": bindDing.state.macId,
             "opId": this.state.loginUser.ident,
+            "boxType": this.state.boxTypeValue
         };
 
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
@@ -330,6 +338,11 @@ export default class boxBracelet extends React.Component {
 
         var _this = this;
 
+        const boxType = [
+            {value: 1, label: '绑定为班牌'},
+            {value: 3, label: '绑定为盒子'},
+        ];
+
         const row = (rowData, sectionID, rowID) => {
 
             return (
@@ -338,7 +351,7 @@ export default class boxBracelet extends React.Component {
                     <Card>
                         <Card.Header
                             className='noomCardHeader'
-                            title={'教室名称：'+rowData.room.name}
+                            title={'教室名称：' + rowData.room.name}
                             extra={<span className='noomCardUnbind'
                                          onClick={_this.showAlert.bind(this, rowData)}>解绑</span>}
                         />
@@ -385,12 +398,29 @@ export default class boxBracelet extends React.Component {
                 <div className='addModel' style={{height: bindDing.state.clientHeight}}>
 
                     <List>
+                        {boxType.map(i => (
+                            <RadioItem
+                                key={i.value}
+                                checked={this.state.boxTypeValue === i.value}
+                                onChange={() => {
+                                    this.setState({boxTypeValue: i.value})
+                                }}
+                            >
+                                {i.label}
+                            </RadioItem>
+                        ))}
+                    </List>
+
+                    <WhiteSpace/>
+
+                    <List>
                         <div className='macAddress'>
                             <InputItem
                                 value={bindDing.state.macId}
                                 editable={false}
                             >MAC：</InputItem>
-                            <img className='scanIcon' src={require('../imgs/icon_scan.png')} alt="" onClick={this.scanMac}/>
+                            <img className='scanIcon' src={require('../imgs/icon_scan.png')} alt=""
+                                 onClick={this.scanMac}/>
                         </div>
 
                         <div className='stName'>
