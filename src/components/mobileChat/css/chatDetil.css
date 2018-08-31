@@ -32,6 +32,9 @@
 #chatDetil .message .content {
   overflow: hidden;
 }
+#chatDetil .message .content {
+  overflow: hidden;
+}
 #chatDetil .bubble.bubble_primary {
   background-color: #a2e65b;
 }
