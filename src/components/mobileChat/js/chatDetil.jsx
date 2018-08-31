@@ -821,7 +821,6 @@ export default class chat_Detil extends React.Component {
      */
     buildChatsContent(posFlag) {
         var arr = this.state.messageList
-        console.log(arr);
         var array = []
         if (WebServiceUtil.isEmpty(arr) == false) {
             arr.forEach(function (v, i) {
@@ -860,6 +859,21 @@ export default class chat_Detil extends React.Component {
                                                         <source src={v.attachment} type="audio/mpeg"></source>
                                                     </audio>
                                     </span>
+                                </div>
+                            </li>
+                        } else if (v.attachmentType == 4) {
+                            var contentItem = <li className="message me">
+                                <span className="message_userR"
+                                      style={{display: chatDetil.state.mesToType == 0 ? "none" : "inlineBlock"}}>{v.fromUser.userName}</span>
+                                <img className='userAvatar' src={v.fromUser.avatar}/>
+                                <div className="content">
+                                    <div className="bubble bubble_primary right">
+                                        <div className="bubble_cont">
+                                            <div className="plain">
+                                                <pre>[发送了一个链接，请在客户端上查看]</pre>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                             </li>
                         }
@@ -926,6 +940,21 @@ export default class chat_Detil extends React.Component {
                                                         <source src={v.attachment} type="audio/mpeg"></source>
                                                     </audio>
                                     </span>
+                                </div>
+                            </li>
+                        } else if (v.attachmentType == 4) {
+                            var contentItem = <li className="message">
+                                <span className="message_userL"
+                                      style={{display: chatDetil.state.mesToType == 0 ? "none" : "inlineBlock"}}>{v.fromUser.userName}</span>
+                                <img className='userAvatar' src={v.fromUser.avatar}/>
+                                <div className="content">
+                                    <div className="bubble bubble_default left">
+                                        <div className="bubble_cont">
+                                            <div className="plain">
+                                                <pre>[收到了一个链接，请在客户端上查看]</pre>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                             </li>
                         }
