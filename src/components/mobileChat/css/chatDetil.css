@@ -32,6 +32,113 @@
 #chatDetil .message .content {
   overflow: hidden;
 }
+#chatDetil .message .content .picture,
+#chatDetil .message.me .content .picture {
+  max-width: 230px;
+  min-height: 21px;
+  line-height: 0;
+  position: relative;
+  display: inline-block;
+  overflow: hidden;
+  border-radius: 4px;
+}
+#chatDetil .message .content .picture {
+  padding: 0 0 0 10px;
+}
+#chatDetil .message.me .content .picture {
+  padding: 0 10px 0 0;
+}
+#chatDetil .message .content .picture img,
+#chatDetil .message.me .content .picture img {
+  max-width: 230px;
+  cursor: zoom-in;
+  cursor: -webkit-zoom-in;
+  height: auto !important;
+}
+#chatDetil .message .content .noom_audio {
+  display: inline-block;
+  padding: 0 20px 0 12px;
+}
+#chatDetil .message.me .content .noom_audio {
+  display: inline-block;
+  padding: 0 12px 0 20px;
+}
+#chatDetil .audio_left {
+  width: 24px;
+  height: 17px;
+  display: inline-block;
+  background: url(http://60.205.111.227/upload2/common/img/audio_left.png) no-repeat;
+  background-position: -48px 0;
+  position: relative;
+  top: 11px;
+}
+#chatDetil .audio_right {
+  width: 24px;
+  height: 17px;
+  display: inline-block;
+  background: url(../img/audio_right.png) no-repeat;
+  background-position: -48px 0;
+  position: relative;
+  top: 11px;
+}
+#chatDetil .audio_left_run {
+  width: 24px;
+  height: 17px;
+  display: inline-block;
+  animation: audio_left_1 1s infinite;
+  position: relative;
+  top: 11px;
+  background: url(http://60.205.111.227/upload2/common/img/audio_left.png) no-repeat;
+}
+#chatDetil .audio_right_run {
+  width: 24px;
+  height: 17px;
+  display: inline-block;
+  animation: audio_right_1 1s infinite;
+  position: relative;
+  top: 11px;
+  background: url(../img/audio_right.png) no-repeat;
+}
+@keyframes audio_right_1 {
+  0% {
+    background-position: 0 0;
+  }
+  30% {
+    background-position: 0 0;
+  }
+  31% {
+    background-position: -24px 0;
+  }
+  61% {
+    background-position: -24px 0;
+  }
+  61.5% {
+    background-position: -48px 0;
+  }
+  100% {
+    background-position: -48px 0;
+  }
+}
+@keyframes audio_left_1 {
+  0% {
+    background-position: 0 0;
+  }
+  30% {
+    background-position: 0 0;
+  }
+  31% {
+    background-position: -24px 0;
+  }
+  61% {
+    background-position: -24px 0;
+  }
+  61.5% {
+    background-position: -48px 0;
+  }
+  100% {
+    background-position: -48px 0;
+  }
+}
 #chatDetil .bubble.bubble_primary {
   background-color: #a2e65b;
 }

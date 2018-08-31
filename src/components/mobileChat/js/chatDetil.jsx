@@ -833,7 +833,9 @@ export default class chat_Detil extends React.Component {
                                       style={{display: chatDetil.state.mesToType == 0 ? "none" : "inlineBlock"}}>{v.fromUser.userName}</span>
                                 <img className='userAvatar' src={v.fromUser.avatar}/>
                                 <div className="content">
-                                    <img src={v.attachment} alt=""/>
+                                    <span className="picture">
+                                        <img src={v.attachment} alt=""/>
+                                    </span>
                                 </div>
                             </li>
                         } else if (v.attachmentType == 2) {
@@ -843,18 +845,16 @@ export default class chat_Detil extends React.Component {
                                       style={{display: chatDetil.state.mesToType == 0 ? "none" : "inlineBlock"}}>{v.fromUser.userName}</span>
                                 <img className='userAvatar' src={v.fromUser.avatar}/>
                                 <div className="content">
-                                    <span
+                                    <span className="bubble bubble_primary right noom_audio"
                                         style={{
-                                            width: '40px',
-                                            height: '30px',
-                                            backgroundColor: 'red',
-                                            display: 'block'
+                                            display: 'inline-block'
                                         }}
                                         onClick={chatDetil.audioPlay.bind(this, v.attachment, '_right')}
                                     >
                                         <audio id={v.attachment}>
-                                                        <source src={v.attachment} type="audio/mpeg"></source>
-                                                    </audio>
+                                            <source src={v.attachment} type="audio/mpeg"></source>
+                                         </audio>
+                                        <span className="audio_right"></span>
                                     </span>
                                 </div>
                             </li>
@@ -912,7 +912,9 @@ export default class chat_Detil extends React.Component {
                                       style={{display: chatDetil.state.mesToType == 0 ? "none" : "inlineBlock"}}>{v.fromUser.userName}</span>
                                 <img className='userAvatar' src={v.fromUser.avatar}/>
                                 <div className="content">
-                                    <img src={v.attachment} alt=""/>
+                                    <span className="picture">
+                                        <img src={v.attachment} alt=""/>
+                                    </span>
                                 </div>
                             </li>
                         } else if (v.attachmentType == 2) {
@@ -922,18 +924,16 @@ export default class chat_Detil extends React.Component {
                                       style={{display: chatDetil.state.mesToType == 0 ? "none" : "inlineBlock"}}>{v.fromUser.userName}</span>
                                 <img className='userAvatar' src={v.fromUser.avatar}/>
                                 <div className="content">
-                                    <span
+                                    <span className="bubble bubble_default left noom_audio"
                                         style={{
-                                            width: '40px',
-                                            height: '30px',
-                                            backgroundColor: 'red',
-                                            display: 'block'
+                                            display: 'inline-block'
                                         }}
                                         onClick={chatDetil.audioPlay.bind(this, v.attachment, '_left')}
                                     >
                                         <audio id={v.attachment}>
-                                                        <source src={v.attachment} type="audio/mpeg"></source>
-                                                    </audio>
+                                            <source src={v.attachment} type="audio/mpeg"></source>
+                                        </audio>
+                                        <span className="audio_left"></span>
                                     </span>
                                 </div>
                             </li>
