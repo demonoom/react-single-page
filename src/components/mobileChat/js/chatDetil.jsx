@@ -5,6 +5,7 @@ import {PullToRefresh, List, TextareaItem, Toast, Button} from 'antd-mobile';
 
 var chatDetil;
 var scrollNum = 0;
+var timer = null
 
 //消息通信js
 window.ms = null;
@@ -75,9 +76,17 @@ export default class chat_Detil extends React.Component {
             onResponse: function (result) {
                 if (result.success == true && result.msg == '调用成功') {
                     if (choosePos == 'te') {
-                        chatDetil.setState({loginUser: result.response[0]})
+                        chatDetil.setState({
+                            loginUser: result.response.filter((item) => {
+                                return (item.colUtype == 'TEAC')
+                            })[0]
+                        })
                     } else {
-                        chatDetil.setState({loginUser: result.response[1]})
+                        chatDetil.setState({
+                            loginUser: result.response.filter((item) => {
+                                return (item.colUtype == "PAREN")
+                            })[0]
+                        })
                     }
                 } else {
                     Toast.fail(result.msg, 3);
@@ -802,16 +811,24 @@ export default class chat_Detil extends React.Component {
      * 聊天语音播放的回调
      */
     audioPlay(id, direction) {
-        document.getElementById(id).play();
-        // var timer = setInterval(function () {
-        //     //播放开始，替换类名
-        //     document.getElementById(id + '_audio').className = 'audio' + direction + '_run';
-        //     if (document.getElementById(id).ended) {
-        //         //播放结束，替换类名
-        //         document.getElementById(id + '_audio').className = 'audio' + direction;
-        //         window.clearInterval(timer);
-        //     }
-        // }, 10)
+        var music = document.getElementById(id);
+        if (music.paused) {
+            music.play();
+            timer = setInterval(function () {
+                //播放开始，替换类名
+                document.getElementById(id + '_audio').className = 'audio' + direction + '_run';
+                if (document.getElementById(id).ended) {
+                    //播放结束，替换类名
+                    document.getElementById(id + '_audio').className = 'audio' + direction;
+                    window.clearInterval(timer);
+                }
+            }, 10)
+        }
+        else {
+            window.clearInterval(timer);
+            $("#" + `${id}` + '_audio').attr("class", 'audio' + direction);
+            music.pause();
+        }
     }
 
     /**
@@ -846,15 +863,15 @@ export default class chat_Detil extends React.Component {
                                 <img className='userAvatar' src={v.fromUser.avatar}/>
                                 <div className="content">
                                     <span className="bubble bubble_primary right noom_audio"
-                                        style={{
-                                            display: 'inline-block'
-                                        }}
-                                        onClick={chatDetil.audioPlay.bind(this, v.attachment, '_right')}
+                                          style={{
+                                              display: 'inline-block'
+                                          }}
+                                          onClick={chatDetil.audioPlay.bind(this, v.uuid, '_right')}
                                     >
-                                        <audio id={v.attachment}>
+                                        <audio id={v.uuid}>
                                             <source src={v.attachment} type="audio/mpeg"></source>
                                          </audio>
-                                        <span className="audio_right"></span>
+                                        <span className="audio_right" id={v.uuid + '_audio'}></span>
                                     </span>
                                 </div>
                             </li>
@@ -925,15 +942,15 @@ export default class chat_Detil extends React.Component {
                                 <img className='userAvatar' src={v.fromUser.avatar}/>
                                 <div className="content">
                                     <span className="bubble bubble_default left noom_audio"
-                                        style={{
-                                            display: 'inline-block'
-                                        }}
-                                        onClick={chatDetil.audioPlay.bind(this, v.attachment, '_left')}
+                                          style={{
+                                              display: 'inline-block'
+                                          }}
+                                          onClick={chatDetil.audioPlay.bind(this, v.uuid, '_left')}
                                     >
-                                        <audio id={v.attachment}>
+                                        <audio id={v.uuid}>
                                             <source src={v.attachment} type="audio/mpeg"></source>
                                         </audio>
-                                        <span className="audio_left"></span>
+                                        <span className="audio_left" id={v.uuid + '_audio'}></span>
                                     </span>
                                 </div>
                             </li>
