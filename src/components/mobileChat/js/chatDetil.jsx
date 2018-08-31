@@ -835,7 +835,9 @@ export default class chat_Detil extends React.Component {
                                       style={{display: chatDetil.state.mesToType == 0 ? "none" : "inlineBlock"}}>{v.fromUser.userName}</span>
                                 <img className='userAvatar' src={v.fromUser.avatar}/>
                                 <div className="content">
-                                    <img src={v.attachment} alt=""/>
+                                    <span className="picture">
+                                        <img src={v.attachment} alt=""/>
+                                    </span>
                                 </div>
                             </li>
                         } else if (v.attachmentType == 2) {
@@ -899,7 +901,9 @@ export default class chat_Detil extends React.Component {
                                       style={{display: chatDetil.state.mesToType == 0 ? "none" : "inlineBlock"}}>{v.fromUser.userName}</span>
                                 <img className='userAvatar' src={v.fromUser.avatar}/>
                                 <div className="content">
-                                    <img src={v.attachment} alt=""/>
+                                    <span className="picture">
+                                        <img src={v.attachment} alt=""/>
+                                    </span>
                                 </div>
                             </li>
                         } else if (v.attachmentType == 2) {

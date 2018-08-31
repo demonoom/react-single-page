@@ -32,8 +32,21 @@
 #chatDetil .message .content {
   overflow: hidden;
 }
-#chatDetil .message .content {
-  overflow: hidden;
+#chatDetil .message .content .picture {
+  max-width: 230px;
+  min-height: 21px;
+  line-height: 0;
+  position: relative;
+  display: block;
+}
+#chatDetil .message .content .picture img {
+  padding: 5px;
+  max-width: 230px;
+  cursor: zoom-in;
+  cursor: -webkit-zoom-in;
+  border-radius: 4px;
+  height: auto !important;
+  padding: 0 0 0 10px;
 }
 #chatDetil .bubble.bubble_primary {
   background-color: #a2e65b;
