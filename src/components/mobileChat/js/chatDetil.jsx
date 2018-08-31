@@ -346,7 +346,6 @@ export default class chat_Detil extends React.Component {
                     }
                 }
             } else if (messageOfSinge.toType == 4 && typeof (content) != 'undefined' && messageOfSinge.command != "retractMessage") {
-                debugger
                 //群组单条消息
                 if (chatDetil.state.toId == messageOfSinge.toChatGroup.chatGroupId) {
                     //判断选中的群组就是要发送的群组

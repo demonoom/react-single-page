@@ -259,8 +259,16 @@ export default class contacts_ListS extends React.Component {
 
         contactsList.setState({
             choosePos: 'pe',
-            headItem: [<Item onClick={contactsList.turnToStuClass}><i
-                className='userImg message_friend'></i><span>学生班级</span></Item>]
+            headItem: [<Item onClick={contactsList.turnToStuClass}>
+                <i className='userImg message_friend'></i><span>学生班级</span></Item>,
+                <Item onClick={contactsList.turnToGroup}>
+                    <i className='userImg message_group'></i>
+                    <span>我的群组</span>
+                </Item>,
+                <Item onClick={contactsList.turnToFriend}>
+                    <i className='userImg message_friend'></i>
+                    <span>我的好友</span>
+                </Item>]
         })
         contactsList.state.userData.forEach(function (v, i) {
             if (v.colUtype == 'PAREN') {
