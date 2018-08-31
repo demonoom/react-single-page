@@ -800,6 +800,22 @@ export default class chat_Detil extends React.Component {
     }
 
     /**
+     * 聊天语音播放的回调
+     */
+    audioPlay(id, direction) {
+        document.getElementById(id).play();
+        // var timer = setInterval(function () {
+        //     //播放开始，替换类名
+        //     document.getElementById(id + '_audio').className = 'audio' + direction + '_run';
+        //     if (document.getElementById(id).ended) {
+        //         //播放结束，替换类名
+        //         document.getElementById(id + '_audio').className = 'audio' + direction;
+        //         window.clearInterval(timer);
+        //     }
+        // }, 10)
+    }
+
+    /**
      * 根据messageList渲染聊天内容列表
      * 收发消息后将新内容push到数组中再调用这个函数
      */
@@ -824,7 +840,26 @@ export default class chat_Detil extends React.Component {
                             </li>
                         } else if (v.attachmentType == 2) {
                             //语音
-                            console.log(v);
+                            var contentItem = <li className="message me">
+                                <span className="message_userR"
+                                      style={{display: chatDetil.state.mesToType == 0 ? "none" : "inlineBlock"}}>{v.fromUser.userName}</span>
+                                <img className='userAvatar' src={v.fromUser.avatar}/>
+                                <div className="content">
+                                    <span
+                                        style={{
+                                            width: '40px',
+                                            height: '30px',
+                                            backgroundColor: 'red',
+                                            display: 'block'
+                                        }}
+                                        onClick={chatDetil.audioPlay.bind(this, v.attachment, '_right')}
+                                    >
+                                        <audio id={v.attachment}>
+                                                        <source src={v.attachment} type="audio/mpeg"></source>
+                                                    </audio>
+                                    </span>
+                                </div>
+                            </li>
                         }
                     } else if (WebServiceUtil.isEmpty(v.expressionItem) == false) {
                         //来自安卓的动态表情（安卓的动态表情的content里有“表情”两个字）
@@ -858,7 +893,6 @@ export default class chat_Detil extends React.Component {
                     //我收到的
                     if (WebServiceUtil.isEmpty(v.attachment) == false) {
                         if (v.attachmentType == 1) {
-                            console.log(v);
                             //图片
                             var contentItem = <li className="message">
                                 <span className="message_userL"
@@ -870,7 +904,26 @@ export default class chat_Detil extends React.Component {
                             </li>
                         } else if (v.attachmentType == 2) {
                             //语音
-                            console.log(v);
+                            var contentItem = <li className="message">
+                                <span className="message_userL"
+                                      style={{display: chatDetil.state.mesToType == 0 ? "none" : "inlineBlock"}}>{v.fromUser.userName}</span>
+                                <img className='userAvatar' src={v.fromUser.avatar}/>
+                                <div className="content">
+                                    <span
+                                        style={{
+                                            width: '40px',
+                                            height: '30px',
+                                            backgroundColor: 'red',
+                                            display: 'block'
+                                        }}
+                                        onClick={chatDetil.audioPlay.bind(this, v.attachment, '_left')}
+                                    >
+                                        <audio id={v.attachment}>
+                                                        <source src={v.attachment} type="audio/mpeg"></source>
+                                                    </audio>
+                                    </span>
+                                </div>
+                            </li>
                         }
 
                     } else if (WebServiceUtil.isEmpty(v.expressionItem) == false) {
