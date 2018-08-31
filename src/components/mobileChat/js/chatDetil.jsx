@@ -805,14 +805,27 @@ export default class chat_Detil extends React.Component {
      */
     buildChatsContent(posFlag) {
         var arr = this.state.messageList
+        console.log(arr);
         var array = []
         if (WebServiceUtil.isEmpty(arr) == false) {
             arr.forEach(function (v, i) {
                 if (v.fromUser.colUid == chatDetil.state.fromId) {
                     //我发出的
                     if (WebServiceUtil.isEmpty(v.attachment) == false) {
-                        //有内容的链接
-
+                        if (v.attachmentType == 1) {
+                            //图片
+                            var contentItem = <li className="message me">
+                                <span className="message_userR"
+                                      style={{display: chatDetil.state.mesToType == 0 ? "none" : "inlineBlock"}}>{v.fromUser.userName}</span>
+                                <img className='userAvatar' src={v.fromUser.avatar}/>
+                                <div className="content">
+                                    <img src={v.attachment} alt=""/>
+                                </div>
+                            </li>
+                        } else if (v.attachmentType == 2) {
+                            //语音
+                            console.log(v);
+                        }
                     } else if (WebServiceUtil.isEmpty(v.expressionItem) == false) {
                         //来自安卓的动态表情（安卓的动态表情的content里有“表情”两个字）
 
@@ -844,7 +857,21 @@ export default class chat_Detil extends React.Component {
                 } else {
                     //我收到的
                     if (WebServiceUtil.isEmpty(v.attachment) == false) {
-                        //有内容的链接
+                        if (v.attachmentType == 1) {
+                            console.log(v);
+                            //图片
+                            var contentItem = <li className="message">
+                                <span className="message_userL"
+                                      style={{display: chatDetil.state.mesToType == 0 ? "none" : "inlineBlock"}}>{v.fromUser.userName}</span>
+                                <img className='userAvatar' src={v.fromUser.avatar}/>
+                                <div className="content">
+                                    <img src={v.attachment} alt=""/>
+                                </div>
+                            </li>
+                        } else if (v.attachmentType == 2) {
+                            //语音
+                            console.log(v);
+                        }
 
                     } else if (WebServiceUtil.isEmpty(v.expressionItem) == false) {
                         //来自安卓的动态表情（安卓的动态表情的content里有“表情”两个字）

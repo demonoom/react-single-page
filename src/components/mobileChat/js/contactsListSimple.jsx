@@ -68,7 +68,6 @@ export default class contacts_ListS extends React.Component {
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
             onResponse: function (result) {
                 if (result.success == true && result.msg == '调用成功') {
-
                     if (result.response.length == 1) {
                         // butFoot控制下面的老师,家长的显示隐藏
                         _this.setState({butFoot: false, schoolId: result.response[0].schoolId})
@@ -225,7 +224,7 @@ export default class contacts_ListS extends React.Component {
         contactsList.state.dataSource = new ListView.DataSource({
             rowHasChanged: (row1, row2) => row1 !== row2,
         });
-        
+
         contactsList.setState({
             choosePos: 'te',
             headItem: [<Item onClick={contactsList.turnToGroup}><i className='userImg message_group'></i>
@@ -258,7 +257,11 @@ export default class contacts_ListS extends React.Component {
             rowHasChanged: (row1, row2) => row1 !== row2,
         });
 
-        contactsList.setState({choosePos: 'pe', headItem: [<Item onClick={contactsList.turnToStuClass}>学生班级</Item>]})
+        contactsList.setState({
+            choosePos: 'pe',
+            headItem: [<Item onClick={contactsList.turnToStuClass}><i
+                className='userImg message_friend'></i><span>学生班级</span></Item>]
+        })
         contactsList.state.userData.forEach(function (v, i) {
             if (v.colUtype == 'PAREN') {
                 contactsList.getRecentShareUsers(v.colUid)
