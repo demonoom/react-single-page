@@ -68,15 +68,27 @@ export default class contacts_ListS extends React.Component {
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
             onResponse: function (result) {
                 if (result.success == true && result.msg == '调用成功') {
-
                     if (result.response.length == 1) {
+                        if (result.response[0].colUtype == 'PAREN') {
+                            _this.setState({
+                                headItem: [
+                                    <Item onClick={contactsList.turnToGroup}>
+                                        <i className='userImg message_group'></i>
+                                        <span>我的群组</span>
+                                    </Item>,
+                                    <Item onClick={contactsList.turnToFriend}>
+                                        <i className='userImg message_friend'></i>
+                                        <span>我的好友</span>
+                                    </Item>]
+                            })
+                        }
                         // butFoot控制下面的老师,家长的显示隐藏
-                        _this.setState({butFoot: false, schoolId: result.response[0].schoolId})
+                        _this.setState({butFoot: false, schoolId: result.response[0].schoolId, missDistance: 240})
                         _this.getRecentShareUsers(result.response[0].colUid)
                     } else if (result.response.length == 0) {
                         Toast.fail('未找到用户', 2)
                     } else {
-                        _this.setState({butFoot: true})
+                        _this.setState({butFoot: true, missDistance: 284})
                         result.response.forEach(function (v, i) {
                             if (v.colUtype == "TEAC") {
                                 _this.getRecentShareUsers(v.colUid)
@@ -227,10 +239,15 @@ export default class contacts_ListS extends React.Component {
         });
 
         contactsList.setState({
-            choosePos: 'te', headItem: [<Item onClick={contactsList.turnToGroup}>我的群组</Item>,
-                <Item onClick={contactsList.turnToOrgrination}>组织架构</Item>,
-                <Item onClick={contactsList.turnToClass}>我的班级</Item>,
-                <Item onClick={contactsList.turnToFriend}>我的好友</Item>]
+            choosePos: 'te',
+            headItem: [<Item onClick={contactsList.turnToGroup}><i className='userImg message_group'></i>
+                <span>我的群组</span></Item>,
+                <Item onClick={contactsList.turnToOrgrination}><i className='userImg message_tissue'></i>
+                    <span>组织架构</span></Item>,
+                <Item onClick={contactsList.turnToClass}><i className='userImg message_class'></i>
+                    <span>我的班级</span></Item>,
+                <Item onClick={contactsList.turnToFriend}><i className='userImg message_friend'></i>
+                    <span>我的好友</span></Item>]
         })
         contactsList.state.userData.forEach(function (v, i) {
             if (v.colUtype == "TEAC") {
@@ -253,7 +270,18 @@ export default class contacts_ListS extends React.Component {
             rowHasChanged: (row1, row2) => row1 !== row2,
         });
 
-        contactsList.setState({choosePos: 'pe', headItem: [<Item onClick={contactsList.turnToStuClass}>学生班级</Item>]})
+        contactsList.setState({
+            choosePos: 'pe',
+            headItem: [
+                <Item onClick={contactsList.turnToGroup}>
+                    <i className='userImg message_group'></i>
+                    <span>我的群组</span>
+                </Item>,
+                <Item onClick={contactsList.turnToFriend}>
+                    <i className='userImg message_friend'></i>
+                    <span>我的好友</span>
+                </Item>]
+        })
         contactsList.state.userData.forEach(function (v, i) {
             if (v.colUtype == 'PAREN') {
                 contactsList.getRecentShareUsers(v.colUid)
@@ -338,7 +366,7 @@ export default class contacts_ListS extends React.Component {
                     initialListSize={30}   //指定在组件刚挂载的时候渲染多少行数据，用这个属性来确保首屏显示合适数量的数据
                     scrollEventThrottle={20}     //控制在滚动过程中，scroll事件被调用的频率
                     style={{
-                        height: document.body.clientHeight - 240,
+                        height: document.body.clientHeight - this.state.missDistance,
                     }}
                 />
 

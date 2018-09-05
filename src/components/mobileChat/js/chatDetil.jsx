@@ -5,6 +5,7 @@ import {PullToRefresh, List, TextareaItem, Toast, Button} from 'antd-mobile';
 
 var chatDetil;
 var scrollNum = 0;
+var timer = null
 
 //消息通信js
 window.ms = null;
@@ -75,9 +76,17 @@ export default class chat_Detil extends React.Component {
             onResponse: function (result) {
                 if (result.success == true && result.msg == '调用成功') {
                     if (choosePos == 'te') {
-                        chatDetil.setState({loginUser: result.response[0]})
+                        chatDetil.setState({
+                            loginUser: result.response.filter((item) => {
+                                return (item.colUtype == 'TEAC')
+                            })[0]
+                        })
                     } else {
-                        chatDetil.setState({loginUser: result.response[1]})
+                        chatDetil.setState({
+                            loginUser: result.response.filter((item) => {
+                                return (item.colUtype == "PAREN")
+                            })[0]
+                        })
                     }
                 } else {
                     Toast.fail(result.msg, 3);
@@ -346,7 +355,6 @@ export default class chat_Detil extends React.Component {
                     }
                 }
             } else if (messageOfSinge.toType == 4 && typeof (content) != 'undefined' && messageOfSinge.command != "retractMessage") {
-                debugger
                 //群组单条消息
                 if (chatDetil.state.toId == messageOfSinge.toChatGroup.chatGroupId) {
                     //判断选中的群组就是要发送的群组
@@ -800,6 +808,30 @@ export default class chat_Detil extends React.Component {
     }
 
     /**
+     * 聊天语音播放的回调
+     */
+    audioPlay(id, direction) {
+        var music = document.getElementById(id);
+        if (music.paused) {
+            music.play();
+            timer = setInterval(function () {
+                //播放开始，替换类名
+                document.getElementById(id + '_audio').className = 'audio' + direction + '_run';
+                if (document.getElementById(id).ended) {
+                    //播放结束，替换类名
+                    document.getElementById(id + '_audio').className = 'audio' + direction;
+                    window.clearInterval(timer);
+                }
+            }, 10)
+        }
+        else {
+            window.clearInterval(timer);
+            $("#" + `${id}` + '_audio').attr("class", 'audio' + direction);
+            music.pause();
+        }
+    }
+
+    /**
      * 根据messageList渲染聊天内容列表
      * 收发消息后将新内容push到数组中再调用这个函数
      */
@@ -811,8 +843,54 @@ export default class chat_Detil extends React.Component {
                 if (v.fromUser.colUid == chatDetil.state.fromId) {
                     //我发出的
                     if (WebServiceUtil.isEmpty(v.attachment) == false) {
-                        //有内容的链接
-
+                        if (v.attachmentType == 1) {
+                            //图片
+                            var contentItem = <li className="message me">
+                                <span className="message_userR"
+                                      style={{display: chatDetil.state.mesToType == 0 ? "none" : "inlineBlock"}}>{v.fromUser.userName}</span>
+                                <img className='userAvatar' src={v.fromUser.avatar}/>
+                                <div className="content">
+                                    <span className="picture">
+                                        <img src={v.attachment} alt=""/>
+                                    </span>
+                                </div>
+                            </li>
+                        } else if (v.attachmentType == 2) {
+                            //语音
+                            var contentItem = <li className="message me">
+                                <span className="message_userR"
+                                      style={{display: chatDetil.state.mesToType == 0 ? "none" : "inlineBlock"}}>{v.fromUser.userName}</span>
+                                <img className='userAvatar' src={v.fromUser.avatar}/>
+                                <div className="content">
+                                    <span className="bubble bubble_primary right noom_audio"
+                                          style={{
+                                              display: 'inline-block'
+                                          }}
+                                          onClick={chatDetil.audioPlay.bind(this, v.uuid, '_right')}
+                                    >
+                                        <audio id={v.uuid}>
+                                            <source src={v.attachment} type="audio/mpeg"></source>
+                                         </audio>
+                                        <span className="audio_right" id={v.uuid + '_audio'}></span>
+                                    </span>
+                                </div>
+                            </li>
+                        } else if (v.attachmentType == 4) {
+                            var contentItem = <li className="message me">
+                                <span className="message_userR"
+                                      style={{display: chatDetil.state.mesToType == 0 ? "none" : "inlineBlock"}}>{v.fromUser.userName}</span>
+                                <img className='userAvatar' src={v.fromUser.avatar}/>
+                                <div className="content">
+                                    <div className="bubble bubble_primary right">
+                                        <div className="bubble_cont">
+                                            <div className="plain">
+                                                <pre>[发送了一个链接，请在客户端上查看]</pre>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
+                        }
                     } else if (WebServiceUtil.isEmpty(v.expressionItem) == false) {
                         //来自安卓的动态表情（安卓的动态表情的content里有“表情”两个字）
 
@@ -844,7 +922,54 @@ export default class chat_Detil extends React.Component {
                 } else {
                     //我收到的
                     if (WebServiceUtil.isEmpty(v.attachment) == false) {
-                        //有内容的链接
+                        if (v.attachmentType == 1) {
+                            //图片
+                            var contentItem = <li className="message">
+                                <span className="message_userL"
+                                      style={{display: chatDetil.state.mesToType == 0 ? "none" : "inlineBlock"}}>{v.fromUser.userName}</span>
+                                <img className='userAvatar' src={v.fromUser.avatar}/>
+                                <div className="content">
+                                    <span className="picture">
+                                        <img src={v.attachment} alt=""/>
+                                    </span>
+                                </div>
+                            </li>
+                        } else if (v.attachmentType == 2) {
+                            //语音
+                            var contentItem = <li className="message">
+                                <span className="message_userL"
+                                      style={{display: chatDetil.state.mesToType == 0 ? "none" : "inlineBlock"}}>{v.fromUser.userName}</span>
+                                <img className='userAvatar' src={v.fromUser.avatar}/>
+                                <div className="content">
+                                    <span className="bubble bubble_default left noom_audio"
+                                          style={{
+                                              display: 'inline-block'
+                                          }}
+                                          onClick={chatDetil.audioPlay.bind(this, v.uuid, '_left')}
+                                    >
+                                        <audio id={v.uuid}>
+                                            <source src={v.attachment} type="audio/mpeg"></source>
+                                        </audio>
+                                        <span className="audio_left" id={v.uuid + '_audio'}></span>
+                                    </span>
+                                </div>
+                            </li>
+                        } else if (v.attachmentType == 4) {
+                            var contentItem = <li className="message">
+                                <span className="message_userL"
+                                      style={{display: chatDetil.state.mesToType == 0 ? "none" : "inlineBlock"}}>{v.fromUser.userName}</span>
+                                <img className='userAvatar' src={v.fromUser.avatar}/>
+                                <div className="content">
+                                    <div className="bubble bubble_default left">
+                                        <div className="bubble_cont">
+                                            <div className="plain">
+                                                <pre>[收到了一个链接，请在客户端上查看]</pre>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
+                        }
 
                     } else if (WebServiceUtil.isEmpty(v.expressionItem) == false) {
                         //来自安卓的动态表情（安卓的动态表情的content里有“表情”两个字）
