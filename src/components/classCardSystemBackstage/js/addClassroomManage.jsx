@@ -142,6 +142,7 @@ export default class addClassroomManage extends React.Component {
     binding = () => {
         if(classBinding.state.gradeValueByNoom[0] == undefined){
             Toast.info("未检测到班级，请点击搜索按钮选择班级!",3)
+            return
         }
         var _this = this;
         if (classBinding.state.gradeValue == '' || classBinding.state.classroomValue == '') {

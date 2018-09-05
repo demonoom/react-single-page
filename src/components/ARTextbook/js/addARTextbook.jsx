@@ -303,10 +303,12 @@ export default class addARTextbook extends React.Component {
     submitTagArr() {
         $(`.calmTagDiv`).slideUp();
         $(`.tagBack`).hide();
+        var newAtemprr = JSON.parse(localStorage.getItem('tagChangeData') || '[]')
+        newAtemprr = newAtemprr.concat(teacherV.state.tagChangeData);
+        newAtemprr = teacherV.makeArr(newAtemprr,"id")
+        localStorage.setItem('tagChangeData', JSON.stringify(newAtemprr));
         teacherV.state.ARTextbookDataArr[teacherV.state.tagIndex].tagText = teacherV.state.ARTextbookDataArr[teacherV.state.tagIndex].tagText.concat(teacherV.state.tagChangeData);
-    
         var arr = teacherV.state.ARTextbookDataArr[teacherV.state.tagIndex].tagText;
-
         teacherV.state.ARTextbookDataArr[teacherV.state.tagIndex].tagText = teacherV.makeArr(arr,"id")
         teacherV.buildARTextbook();
         teacherV.setState({ tagData: [], tagChangeData: [], searchValue: "" })
@@ -334,6 +336,16 @@ export default class addARTextbook extends React.Component {
      * 添加标签
      */
     addTag(index) {
+        var arr = [];
+        var tempArr = JSON.parse(localStorage.getItem('tagChangeData') || '[]')
+        console.log(arr)
+        tempArr.forEach(function (v, i) {
+            arr.push(<Tag
+                selected={false}
+                onChange={teacherV.tagChange.bind(this, v)}
+            >{v.content}</Tag>)
+        })
+        teacherV.setState({ tagData: arr })
         $(`.calmTagDiv`).slideDown();
         $(`.tagBack`).show();
         teacherV.setState({
@@ -652,7 +664,6 @@ export default class addARTextbook extends React.Component {
                 }
             });
         })
-
     }
 
     render() {
@@ -710,7 +721,6 @@ export default class addARTextbook extends React.Component {
                                     <span>添加扫描图片</span></div>
                             </div>
                         </div>
-
                         <div className="tagBack" style={{
                             display: "none",
                         }}></div>
@@ -729,7 +739,6 @@ export default class addARTextbook extends React.Component {
                                 >
                                     <div>标签名称</div>
                                 </InputItem>
-
                                 <div className="searchIcon" onClick={teacherV.searchARBookTag}></div>
                             </div>
                             <div className="classTags">
