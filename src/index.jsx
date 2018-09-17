@@ -765,6 +765,14 @@ const newUpdateARTextbook = (location, cb) => {
     )
 }
 
+//微信绑定有样账号
+const wxBindProperly = (location, cb) => {
+    require.ensure([], require => {
+            cb(null, require("./components/wxBindProperly/js/wxBindProperly").default)
+        }
+    )
+}
+
 
 /**
  * 添加标签
@@ -872,6 +880,12 @@ class Index extends React.Component {
                     <li><Link
                         to="/classCardHomePage?clazzId=819&roomId=1&mac=14:1f:78:73:1e:c3&schoolId=9"
                         style={{fontSize: '24px'}}>班牌首页</Link></li>
+                    <li><Link
+                        to="/wxBindProperly?unionid=oAYBW0kTVTiqF4t0yVQYXqrZetvI"
+                        style={{fontSize: '24px'}}>微信绑定有样账号(电脑进入)</Link></li>
+                    <li><Link
+                        to="/wxLogin?path=wxBindProperly"
+                        style={{fontSize: '24px'}}>微信绑定有样账号(微信进入)</Link></li>
                     {/*<li><Link*/}
                     {/*to="/publicClassCardHomePage?roomId=2&mac=02:00:00:00:00:00"*/}
                     {/*style={{fontSize: '24px'}}>公共教室班牌首页</Link></li>*/}
@@ -1137,6 +1151,7 @@ ReactDOM.render(
             <Route path="updateARTag" getComponent={updateARTag}/>
             <Route path="addARTag" getComponent={addARTag}/>
             <Route path="New" getComponent={New}/>
+            <Route path="wxBindProperly" getComponent={wxBindProperly}/>
         </Route>
     </Router>
     ,

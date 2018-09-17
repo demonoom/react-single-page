@@ -5,11 +5,10 @@ export default class wxLogin extends React.Component {
 
     constructor(props) {
         super(props);
-        console.log(apiWebServiceURL);
         this.state = {
             appId: 'wx181574f3ea687daf',      //线上
             // appId: 'wx9d076742b77044dd',    //测试
-            // local: 'http://192.168.50.29:8091/#/',
+            // local: 'http://192.168.50.186:8091/#/',
             local: 'http://jiaoxue.maaee.com:8091/#/',
             // local:WebServiceUtil.mobileServiceURL,
             info: '###',
@@ -29,6 +28,7 @@ export default class wxLogin extends React.Component {
         this.setState({
             local: this.state.local + local,
         }, () => {
+            // Toast.info(this.state.jsp);
             window.location.href = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=" + this.state.appId + "&redirect_uri=" + encodeURIComponent(this.state.jsp) + "&response_type=code&scope=" + this.state.scope + "&state=" + encodeURIComponent(this.state.local) + "#wechat_redirect";
         })
     }

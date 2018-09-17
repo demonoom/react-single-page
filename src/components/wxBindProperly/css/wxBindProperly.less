@@ -1,0 +1,281 @@
+#wxBindProperly{
+  background: #f0eff5;
+  height: 100%;
+  overflow-y: auto;
+  overflow-x: hidden;
+  .am-list-item .am-input-label.am-input-label-5{
+    width: 85px;
+  }
+  .am-whitespace.am-whitespace-lg{
+    background: #f0eff5;
+    height: 12px;
+  }
+  .isDangerArea{
+    .am-list{
+      overflow: hidden;
+      background: #fff;
+    }
+    .am-list-header{
+      color: #0c0c0c;
+      font-size: 17px;
+      float: left;
+      width: 100px;
+      padding-right: 5px;
+    }
+    .am-list-content{
+      color: #666 !important;
+      font-size: 16px;
+      padding-left: 24px;
+      line-height: 32px;
+      vertical-align: bottom;
+    }
+    .am-list-body{
+      float: left;
+      border: 0;
+      background: none !important;
+      &::before,&:after,.am-list-line::after{
+        display: none;
+        border: 0;
+      }
+      .am-list-line{
+        border: 0;
+      }
+    }
+    .am-radio-item{
+      display: inline-block;
+      background:none;
+      width: 75px;
+      padding-left: 20px;
+    }
+    .am-radio-inner:after{
+      border: 0;
+      width: 8px;
+      height: 8px;
+      -webkit-border-radius: 50%;
+      -moz-border-radius: 50%;
+      border-radius: 50%;
+      background-color: #1aad19;
+      top:50%;
+      left: 50%;
+      margin-top: -4px;
+      margin-left: -4px;
+    }
+    .am-radio-checked .am-radio-inner{
+      border: 1px #1aad19 solid;
+      width: 16px;
+      height: 16px;
+      -webkit-border-radius: 50%;
+      -moz-border-radius: 50%;
+      border-radius: 50%;
+      background-color: #fff;
+      left: 0 !important;
+    }
+    .am-radio-inner{
+      border: 1px #888 solid;
+      width: 16px;
+      height: 16px;
+      -webkit-border-radius: 50%;
+      -moz-border-radius: 50%;
+      border-radius: 50%;
+      background-color: #fff;
+      left: 0 !important;
+    }
+  }
+  .am-input-control {
+    margin-left: 20px;
+    margin-right: 10px;
+  }
+  .am-input-control input {
+    font-size: 16px;
+    color: #333 !important;
+  }
+  .am-list-line::after {
+    background: none;
+  }
+  .am-list-line{
+    border-bottom: 0;
+  }
+  .Verification{
+    position: relative;
+    .am-button-primary{
+      background: #fff;
+      border-color: #1aad19;
+      color: #1aad19;
+      right: 15px;
+      position: absolute;
+      top: 9px;
+      font-size: 13px;
+      height: 26px;
+      line-height: 27px;
+      padding: 0 8px;
+      z-index: 10;
+
+    }
+    .am-list-item .am-input-label.am-input-label-5{
+
+
+    }
+    .am-button::before{
+      border-color: #1aad19 !important;
+    }
+    .am-input-control input{
+      width: 120px;
+    }
+
+  }
+  .tel_element{
+    position: relative;
+    .am-list-line{
+      position: relative;
+    }
+    .am-list-line:after{
+      content: '';
+      position: absolute;
+      border-bottom: 1px solid #d9d9d9;
+      display: block;
+      z-index: 1;
+      top: auto;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 1PX;
+      -webkit-transform-origin: 50% 100%;
+      -ms-transform-origin: 50% 100%;
+      transform-origin: 50% 100%;
+      -webkit-transform: scaleY(0.5);
+      -ms-transform: scaleY(0.5);
+      transform: scaleY(0.5);
+    }
+  }
+  #telImg{
+    position: absolute;
+    top: 50%;
+    right: 15px;
+    width: 22px;
+    height: 22px;
+    transform: translateY(-50%);
+    z-index: 99;
+  }
+  .telLoad{
+    position: absolute;
+    top: 50%;
+    right: 10px;
+    width: 60px;
+    transform: translateY(-50%);
+    z-index: 99;
+    color: #ccc;
+  }
+  .success3{
+    line-height: 40px;
+    font-size: 17px;
+    text-align: center;
+    margin-top: -30px;
+  }
+  .success3 i{
+    background: url("../imgs/success3.png") no-repeat;
+    background-size: 100%;
+    width: 64px;
+    height: 64px;
+    display: inline-block;
+  }
+  .bindingNumber{
+    display: block;
+    color: #57595f;
+    padding: 20px 15px 20px 15px;
+    font-size: 15px;
+    background: #fff;
+    div{
+      color: #57595f;
+    }
+    span{
+      line-height: 44px;
+      width: 50%;
+      display: inline-block;
+    }
+    .am-button{
+      padding: 0;
+      border:1px solid #1AAD18;
+      color: #1AAD18;
+      height: 37px;
+      line-height: 37px;
+      text-align: center;
+      display: block;
+      font-size: 14px;
+      margin: 30px 90px 15px 90px;
+      background: transparent;
+      span{
+        line-height: 37px;
+        margin-right: 0;
+        font-size: 16px;
+        color: #1AAD18;
+      }
+    }
+    .am-button::before{
+      border-color:#f0eff5 !important;;
+      border-radius: 2px !important;
+    }
+  }
+  .submitBtn_green{
+    margin-top: 50px;
+    padding: 0 15px;
+    .am-button-primary{
+      background: #1AAD18;
+      border: 1px solid #1AAD18;
+    }
+    .am-button-primary::before{
+      border: 1px solid #1AAD18 !important;
+    }
+  }
+  .i-icon{
+    width: 20px;
+    height: 20px;
+    position: relative;
+    top: 4px;
+    margin-right: 6px;
+  }
+  .i-tel{
+    background: url("../imgs/i-tel.png") no-repeat;
+    display: inline-block;
+    background-size: 100%;
+  }
+  .i-phone{
+    background: url("../imgs/i-user.png") no-repeat;
+    display: inline-block;
+    background-size: 100%;
+  }
+  .bindingNumberStudent{
+    margin-bottom: 10px;
+  }
+  .StudentList{
+    font-size: 14px;
+    height: 38px;
+    line-height: 38px;
+    position: relative;
+    span{
+      position: absolute;
+      width: 70px;
+      right: 0;
+      border: 1px solid #1AAD18;
+      color: #1AAD18;
+      line-height: 26px;
+      height: 26px;
+      text-align: center;
+      border-radius: 2px;
+      font-size: 14px;
+      top: 5px;
+    }
+  }
+  .Student-am-button{
+    padding: 0;
+    border:1px solid #1AAD18;
+    color: #fff;
+    height: 37px;
+    line-height: 37px;
+    text-align: center;
+    display: block;
+    font-size: 14px;
+    margin: 30px 90px 15px 90px;
+    background: #1AAD18;
+    border-radius: 2px;
+  }
+}
