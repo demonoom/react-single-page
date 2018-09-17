@@ -29,6 +29,11 @@ const ArPaymentURLOfLocals = "http://" + localDomain + ":6012/Excoord_LittleVide
 const ArPaymentURLOfRemote = "http://www.maaee.com:6010/Excoord_LittleVideoApiServer/webservice";
 var ArPaymentURL = isDebug ? ArPaymentURLOfLocals : ArPaymentURLOfRemote;
 
+const wxBindURLOfLocals = "http://" + localDomain + ":6012/Excoord_LittleVideoApiServer/webservice";
+const wxBindURLOfRemote = "http://www.maaee.com:6012/Excoord_LittleVideoApiServer/webservice";
+
+var wxBindURL = isDebug ? wxBindURLOfLocals : wxBindURLOfRemote;
+
 
 function WebServiceUtil() {
 
@@ -83,6 +88,26 @@ WebServiceUtil.requestArPaymentApi = function (data, listener) {
     $.ajax({
         type: "post",
         url: ArPaymentURL,
+        data: {params: data},
+        dataType: "json",
+        success: function (result) {
+            listener.onResponse(result);
+        }, error: function (error) {
+            listener.onError(error);
+        }
+    });
+}
+
+/**
+ * 不带请求头的ajax
+ * arpayment
+ * @param data
+ * @param listener
+ */
+WebServiceUtil.requestBindWx = function (data, listener) {
+    $.ajax({
+        type: "post",
+        url: wxBindURL,
         data: {params: data},
         dataType: "json",
         success: function (result) {

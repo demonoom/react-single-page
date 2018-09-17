@@ -41,7 +41,7 @@ export default class wxBindProperly extends React.Component {
             "method": 'getBindWechatByOpenId',
             "openId": this.state.openid,
         };
-        WebServiceUtil.requestArPaymentApi(JSON.stringify(param), {
+        WebServiceUtil.requestBindWx(JSON.stringify(param), {
             onResponse: (result) => {
                 console.log(result);
                 if (result.success) {
@@ -136,7 +136,7 @@ export default class wxBindProperly extends React.Component {
             "method": 'getVerifyCodeForLittleVideoBinded',
             "phoneNumber": this.state.tel,
         };
-        WebServiceUtil.requestArPaymentApi(JSON.stringify(param), {
+        WebServiceUtil.requestBindWx(JSON.stringify(param), {
             onResponse: (result) => {
 
             },
@@ -189,7 +189,7 @@ export default class wxBindProperly extends React.Component {
             "openId": this.state.openid,
             "verifyCode": this.state.code
         };
-        WebServiceUtil.requestArPaymentApi(JSON.stringify(param), {
+        WebServiceUtil.requestBindWx(JSON.stringify(param), {
             onResponse: (result) => {
                 if (result.success) {
                     this.setState({
@@ -210,7 +210,7 @@ export default class wxBindProperly extends React.Component {
             "method": 'unBindWechatToLittleVideo',
             "openId": this.state.openid,
         };
-        WebServiceUtil.requestArPaymentApi(JSON.stringify(param), {
+        WebServiceUtil.requestBindWx(JSON.stringify(param), {
             onResponse: (result) => {
                 if (result.success && result.response) {
                     Toast.info('解绑成功');
