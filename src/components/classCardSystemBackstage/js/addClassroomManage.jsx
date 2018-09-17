@@ -142,6 +142,7 @@ export default class addClassroomManage extends React.Component {
     binding = () => {
         if(classBinding.state.gradeValueByNoom[0] == undefined){
             Toast.info("未检测到班级，请点击搜索按钮选择班级!",3)
+            return
         }
         var _this = this;
         if (classBinding.state.gradeValue == '' || classBinding.state.classroomValue == '') {
@@ -179,11 +180,10 @@ export default class addClassroomManage extends React.Component {
                     var data = {
                         method: 'finishForRefresh',
                     };
-
                     Bridge.callHandler(data, null, function (error) {
                     });
                 } else {
-                    // Toast.fail(result.msg, 1);
+                    Toast.fail(result.msg, 2);
                 }
             },
             onError: function (error) {

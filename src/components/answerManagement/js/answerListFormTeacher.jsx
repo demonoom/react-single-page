@@ -34,7 +34,6 @@ export default class answerListFormTeacher extends React.Component {
 
 
     buildChartOption = (category, barData, lineData) => {
-        // debugger
         var _this = this;
         var text = this.state.type == 0 ? '理解度' : '时长';
         return {
@@ -160,9 +159,7 @@ export default class answerListFormTeacher extends React.Component {
     }
 
     getData(data) {   //设置数据结构
-        // debugger
         var domArray = [];
-        console.log(data, 'getData')
         for (var k in data) {  //todo 循环生成题目
             var reactDom = [];
             // var classArray = data[k].clazzArray;   //获取到班级数组

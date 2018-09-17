@@ -426,95 +426,95 @@ export default class studentFaceStatistics extends React.Component {
     }
 
     showUserHandleByScreenWidth = (data) => {
-        var oldData=this.lastData;
-        var noUnderstandUserList = data.noUnderstandUserList;
-        var understandUserList = data.understandUserList;
-        var aliveUserList =data.aliveUserList;
-        var attentionUserList =data.attentionUserList;
-        var confuseUserList = data.confuseUserList;
-        var thinkUserList =data.thinkUserList;
-        var newData={noUnderstandUserList:noUnderstandUserList,understandUserList:understandUserList,aliveUserList:aliveUserList,attentionUserList:attentionUserList,confuseUserList:confuseUserList,thinkUserList:thinkUserList}
-        if(oldData!=undefined){
-            var _noUnderstandUserList = oldData.noUnderstandUserList;
-            var _understandUserList = oldData.understandUserList;
-            if(_understandUserList!=undefined){
-                for(var i=0;i<_understandUserList.length;i++){
-                    var user=_understandUserList[i];
-                    var userId1=user.colUid;//上一次的数据
-                    var noUndersFlag1=false;
-                    var underFlag2=false;
-                    if(noUnderstandUserList!=undefined){
-                        for(var j=0;j<noUnderstandUserList.length;j++){
-                            var userId2=noUnderstandUserList[j].colUid;
-                            if(userId1==userId2){
-                                noUndersFlag1=true;//表示在下一次有
-                            }
-                        }
-                    }
-                    if(understandUserList!=undefined){
-                        for(var k=0;k<understandUserList.length;k++){
-                            var userId3=understandUserList[k].colUid;
-                            if(userId1==userId3){
-                                underFlag2=true;//表示在下一次有
-                            }
-                        }
-                    }
-                    if(noUndersFlag1){
-                        return
-                    }
-                    if(underFlag2){
-                        return
-                    }
-                    if(!noUndersFlag1&&!underFlag2){
-                        if( newData.understandUserList==undefined){
-                            newData.understandUserList=new Array();
-                        }
-                        newData.understandUserList.push(user);
-                    }
-
-                }
-            }
-            ///////
-            if(_noUnderstandUserList!=undefined) {
-                for (var i = 0; i < _noUnderstandUserList.length; i++) {
-                    var user = _noUnderstandUserList[i];
-                    var userId1 = user.colUid;//上一次的数据
-                    var noUndersFlag1 = false;
-                    var underFlag2 = false;
-                    if(noUnderstandUserList!=undefined){
-                        for (var h = 0; h < noUnderstandUserList.length; h++) {
-                            var userId2 = noUnderstandUserList[h].colUid;
-                            if (userId1 == userId2) {
-                                noUndersFlag1 = true;//表示在下一次有
-                            }
-                        }
-                    }
-                    if(noUnderstandUserList!=undefined) {
-                        for (var m = 0; k < understandUserList.length; m++) {
-                            var userId3 = understandUserList[m].colUid;
-                            if (userId1 == userId3) {
-                                underFlag2 = true;//表示在下一次有
-                            }
-                        }
-                    }
-                    if (noUndersFlag1) {
-                        return
-                    }
-                    if (underFlag2) {
-                        return
-                    }
-                    if (!noUndersFlag1 && !underFlag2) {
-                        if( newData.noUnderstandUserList==undefined){
-                            newData.noUnderstandUserList=new Array();
-                        }
-                        newData.noUnderstandUserList.push(user);
-                    }
-
-                }
-            }
-        }
-        this.setState({currentFaceEmotion: newData});
-        this.lastData=data;
+        // var oldData=this.lastData;
+        // var noUnderstandUserList = data.noUnderstandUserList;
+        // var understandUserList = data.understandUserList;
+        // var aliveUserList =data.aliveUserList;
+        // var attentionUserList =data.attentionUserList;
+        // var confuseUserList = data.confuseUserList;
+        // var thinkUserList =data.thinkUserList;
+        // var newData={noUnderstandUserList:noUnderstandUserList,understandUserList:understandUserList,aliveUserList:aliveUserList,attentionUserList:attentionUserList,confuseUserList:confuseUserList,thinkUserList:thinkUserList}
+        // if(oldData!=undefined){
+        //     var _noUnderstandUserList = oldData.noUnderstandUserList;
+        //     var _understandUserList = oldData.understandUserList;
+        //     if(_understandUserList!=undefined){
+        //         for(var i=0;i<_understandUserList.length;i++){
+        //             var user=_understandUserList[i];
+        //             var userId1=user.colUid;//上一次的数据
+        //             var noUndersFlag1=false;
+        //             var underFlag2=false;
+        //             if(noUnderstandUserList!=undefined){
+        //                 for(var j=0;j<noUnderstandUserList.length;j++){
+        //                     var userId2=noUnderstandUserList[j].colUid;
+        //                     if(userId1==userId2){
+        //                         noUndersFlag1=true;//表示在下一次有
+        //                     }
+        //                 }
+        //             }
+        //             if(understandUserList!=undefined){
+        //                 for(var k=0;k<understandUserList.length;k++){
+        //                     var userId3=understandUserList[k].colUid;
+        //                     if(userId1==userId3){
+        //                         underFlag2=true;//表示在下一次有
+        //                     }
+        //                 }
+        //             }
+        //             if(noUndersFlag1){
+        //                 return
+        //             }
+        //             if(underFlag2){
+        //                 return
+        //             }
+        //             if(!noUndersFlag1&&!underFlag2){
+        //                 if( newData.understandUserList==undefined){
+        //                     newData.understandUserList=new Array();
+        //                 }
+        //                 newData.understandUserList.push(user);
+        //             }
+        //
+        //         }
+        //     }
+        //     ///////
+        //     if(_noUnderstandUserList!=undefined) {
+        //         for (var i = 0; i < _noUnderstandUserList.length; i++) {
+        //             var user = _noUnderstandUserList[i];
+        //             var userId1 = user.colUid;//上一次的数据
+        //             var noUndersFlag1 = false;
+        //             var underFlag2 = false;
+        //             if(noUnderstandUserList!=undefined){
+        //                 for (var h = 0; h < noUnderstandUserList.length; h++) {
+        //                     var userId2 = noUnderstandUserList[h].colUid;
+        //                     if (userId1 == userId2) {
+        //                         noUndersFlag1 = true;//表示在下一次有
+        //                     }
+        //                 }
+        //             }
+        //             if(noUnderstandUserList!=undefined) {
+        //                 for (var m = 0; k < understandUserList.length; m++) {
+        //                     var userId3 = understandUserList[m].colUid;
+        //                     if (userId1 == userId3) {
+        //                         underFlag2 = true;//表示在下一次有
+        //                     }
+        //                 }
+        //             }
+        //             if (noUndersFlag1) {
+        //                 return
+        //             }
+        //             if (underFlag2) {
+        //                 return
+        //             }
+        //             if (!noUndersFlag1 && !underFlag2) {
+        //                 if( newData.noUnderstandUserList==undefined){
+        //                     newData.noUnderstandUserList=new Array();
+        //                 }
+        //                 newData.noUnderstandUserList.push(user);
+        //             }
+        //
+        //         }
+        //     }
+        // }
+        this.setState({currentFaceEmotion: data});
+       // this.lastData=data;
     }
     formateNumer = (number, i) => {
         if (!number) {

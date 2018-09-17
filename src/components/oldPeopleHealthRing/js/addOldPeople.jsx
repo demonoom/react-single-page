@@ -31,16 +31,18 @@ export default class addOldPeople extends React.Component {
     }
 
     componentDidMount() {
-        // var resultStr = "GH:HU:JI"
-        // var mes;
-        // if (resultStr.indexOf(":") == -1) {
-        //     var string = splitStrTo2(resultStr).join(":");
-        //     mes = string.substr(0, string.length - 1);
-        //     console.log(mes,"mes1")
-        // }else {
-        //     mes = resultStr;
-        //     console.log(mes,"mes2")
-        // }
+        var resultStr = "hhahahahhahh"
+        var mes;
+        if (resultStr.indexOf(":") == -1) {
+            var string = splitStrTo2(resultStr).join(":");
+            console.log(string.length,"string.length")
+            mes = string.substr(0, string.length - 1);
+            console.log(mes,"mes1")
+
+        }else {
+            mes = resultStr;
+            console.log(mes,"mes2")
+        }
        
         Bridge.setShareAble("false");
         document.title = '老人健康手环绑定';
