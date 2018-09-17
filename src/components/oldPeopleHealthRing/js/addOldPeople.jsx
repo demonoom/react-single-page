@@ -8,6 +8,17 @@ import {
 import '../css/addOldPeople.less';
 
 var calm;
+
+/**
+ * 字符串两两切割
+ * @param str
+ * @returns {Array|{index: number, input: string}}
+ */
+function splitStrTo2(str) {
+    var reg = /.{2}/g, rs = str.toUpperCase().match(reg);
+    rs.push(str.substring(rs.join('').length));
+    return rs
+}
 export default class addOldPeople extends React.Component {
     constructor(props) {
         super(props);
@@ -20,6 +31,17 @@ export default class addOldPeople extends React.Component {
     }
 
     componentDidMount() {
+        // var resultStr = "GH:HU:JI"
+        // var mes;
+        // if (resultStr.indexOf(":") == -1) {
+        //     var string = splitStrTo2(resultStr).join(":");
+        //     mes = string.substr(0, string.length - 1);
+        //     console.log(mes,"mes1")
+        // }else {
+        //     mes = resultStr;
+        //     console.log(mes,"mes2")
+        // }
+       
         Bridge.setShareAble("false");
         document.title = '老人健康手环绑定';
         var locationHref = window.location.href;
@@ -36,6 +58,7 @@ export default class addOldPeople extends React.Component {
         //添加对视窗大小的监听,在屏幕转换以及键盘弹起时重设各项高度
         window.addEventListener('resize', this.onWindowResize);
         this.wxchatConfig(locationHref);
+       
     }
 
 
@@ -47,14 +70,13 @@ export default class addOldPeople extends React.Component {
             bindDing.setState({ clientHeight: document.body.clientHeight, calmHeight: document.body.clientHeight - 296 });
         }, 100)
     }
-
+    
 
     /**
      *微信配置
      获取openID
      */
     wxchatConfig(locationHref) {
-
         var param = {
             "method": 'getWeChatSignature', 
             "url": locationHref
@@ -107,8 +129,15 @@ export default class addOldPeople extends React.Component {
             needResult: 1, // 默认为0，扫描结果由微信处理，1则直接返回扫描结果，
             scanType: ["qrCode", "barCode"], // 可以指定扫二维码还是一维码，默认二者都有
             success: function (res) {
+                var mes;
+                if (res.resultStr.indexOf(":") == -1) {
+                    var string = splitStrTo2(res.resultStr).join(":");
+                    mes = string.substr(0, string.length - 1)
+                }else {
+                    mes = res.resultStr;
+                }
                 calm.setState({
-                    macId: res.resultStr
+                    macId: mes.toUpperCase()
                 })
                 // var result = res.resultStr; // 当needResult 为 1 时，扫码返回的结果
             }
