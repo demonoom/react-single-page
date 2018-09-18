@@ -7,6 +7,7 @@ export default class classListDetail extends React.Component {
         calm = this;
         this.state = {
             studentListData: [],
+            studentPartData: [],
             showAllStu:false
         }
     }
@@ -21,50 +22,46 @@ export default class classListDetail extends React.Component {
             classId
         })
         document.title = className;
-        // calm.getClazzesByUserId(id)
+        calm.getPart(classId)
     }
     componentDidMount() {
 
     }
 
+
     /**
-     *获取班级的ID
-     */
-    // getClazzesByUserId(id) {
-    //     var _this = this;
-    //     var param = {
-    //         "method": 'getClazzesByUserId',
-    //         "userId": id
-    //     };
-    //     WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
-    //         onResponse: function (result) {
-    //             console.log(result, "班级列表")
-    //             if (result.msg == '调用成功' || result.success == true) {
-    //                 if (WebServiceUtil.isEmpty(result.response) == false) {
-    //                     // var arr = [];
-    //                     // result.response.forEach(function (v, i) {
-    //                     //     arr.push({
-    //                     //         value: v.id, label: v.name
-    //                     //     })
-    //                     // })
-    //                     calm.setState({ classListData: result.response })
-    //                 }
-    //             }
-    //         },
-    //         onError: function (error) {
-    //             message.error(error)
-    //         }
-    //     });
-    // }
-
-
+    *获取实时学生列表
+    */
+   getPart(classId) {
+        var param = {
+            "method": 'getBraceletOpeningStudentByClazzId',
+            "clazzId": classId,
+            "type":1
+        };
+        WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
+            onResponse: function (result) {
+                console.log(result, "学生")
+                if (result.msg == '调用成功' || result.success == true) {
+                    if (WebServiceUtil.isEmpty(result.response) == false) {
+                        calm.setState({
+                            studentPartData: result.response
+                        })
+                    }
+                }
+            },
+            onError: function (error) {
+                message.error(error)
+            }
+        });
+    }
     /**
     *获取学生列表
     */
-    getClassStudents() {
+   getAll() {
         var param = {
-            "method": 'getClassStudents',
-            "clazzId": calm.state.classId
+            "method": 'getBraceletOpeningStudentByClazzId',
+            "clazzId": calm.state.classId,
+            "type":2
         };
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
             onResponse: function (result) {
@@ -86,7 +83,7 @@ export default class classListDetail extends React.Component {
      * 显示全部学生列表
      */
     getStuList(){
-        calm.getClassStudents();
+        calm.getAll();
         calm.setState({
             showAllStu:true
         })
@@ -95,6 +92,7 @@ export default class classListDetail extends React.Component {
      * 显示范围学生列表
      */
     getPartStu(){
+        calm.getPart(calm.state.classId)
         calm.setState({
             showAllStu:false
         })
@@ -103,7 +101,7 @@ export default class classListDetail extends React.Component {
      * 跳转学生详情页
      */
     toStudentDetail=(v)=>{
-        var url = WebServiceUtil.mobileServiceURL + "studentDetail?className=" +v;
+        var url = WebServiceUtil.mobileServiceURL + "studentDetail?className=" +v.user.userName+"&uid="+v.user.colUid;
         var data = {
             method: 'openNewPage',
             url: url,
@@ -126,6 +124,24 @@ export default class classListDetail extends React.Component {
                     <span>学生姓名</span>
                     <span>实时心率</span>
                     <span>今日步数</span>
+                    {
+                        calm.state.studentPartData.map((v,i)=>{
+                            return (
+                                <div>
+                                    <span>{v.user.userName}</span>
+                                    <span>{v.heartRate}</span>
+                                     {
+                                         v.heartRate > 150 ? 
+                                         <span>感叹号</span>
+                                         :
+                                         ""
+                                        
+                                     }
+                                    <span>{v.step}</span>
+                                </div>
+                            )
+                        })
+                    }
                 </div>
                     范围内实时数据
                 </div>
@@ -133,9 +149,9 @@ export default class classListDetail extends React.Component {
                     {
                         calm.state.studentListData.map((v, i) => {
                             return (
-                                <div onClick={calm.toStudentDetail.bind(this, v.userName)}>
-                                    <span>{v.userName}</span>
-                                    <span></span>
+                                <div onClick={calm.toStudentDetail.bind(this, v)}>
+                                    <span>{v.user.userName}</span>
+                                    {v.status ? <span>已监测</span> : <span>未监测</span> }
                                 </div>
                             )
                         })
