@@ -1,41 +1,41 @@
 import React from "react";
-
+import ReactEcharts from 'echarts-for-react';
 var calm;
-export default class studentDetail extends React.Component{
-    constructor(props){
+export default class studentDetail extends React.Component {
+    constructor(props) {
         super(props);
         calm = this;
         this.state = {
-            studentDetailData:[],
-            heartChartDiv:[]
+            studentDetailData: [],
+            heartChartDiv: []
         }
     }
-    componentDidMount(){
+    componentDidMount() {
         document.title = "手环检测统计列表"
         var locationHref = decodeURI(window.location.href);
         var locationSearch = locationHref.substr(locationHref.indexOf("?") + 1);
         var locationSearchArray = locationSearch.split("&");
         var stuName = locationSearchArray[0].split("=")[1];
-        document.title = stuName+"手环数据统计"
-        // calm.getClassStudents(clazzId)
+        var uid = locationSearchArray[1].split("=")[1];
+        document.title = stuName + "手环数据统计"
+        calm.getBraceletHeartRateAnalysisByUserId(uid)
     }
 
-    
-  
+
+
     /**
      * 获取心率数据
      */
-    getOldManBraceletHeartRateByOpenId(uid, date) {
+    getBraceletHeartRateAnalysisByUserId(userId) {
         var _this = this;
         var param;
         param = {
-            "method": 'getOldManBraceletHeartRateByOpenId',
-            "openId": uid,
-            "heartDate": WebServiceUtil.formatYMD(date),
-            "address": cccalm.state.macAddress
+            "method": 'getBraceletHeartRateAnalysisByUserId',
+            "userId": userId
         };
-        WebServiceUtil.requestLittleAntApiOldManBracelet(JSON.stringify(param), {
+        WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
             onResponse: function (result) {
+                console.log(result)
                 var response = result.response;
                 _this.buildHeartBarChart(response);
             },
@@ -53,12 +53,18 @@ export default class studentDetail extends React.Component{
         var _this = this;
         var xClazzNameArray = [];
         var seriesDataArray = [];
-        braceletHeartSteps.forEach(function (braceletHeartStepObj) {
-            var heartTime = braceletHeartStepObj.heartTime;
+        for (var key in braceletHeartSteps) {
+            console.log(braceletHeartSteps[key])
+            var braceletHeartStepObj = braceletHeartSteps[key];
+            console.log(braceletHeartStepObj.heartRate)
+            var heartTime = key;
             var heartRate = braceletHeartStepObj.heartRate;
             xClazzNameArray.push(WebServiceUtil.formatHM(heartTime));
-            seriesDataArray.push(heartRate);
-        });
+            seriesDataArray.push(heartRate);  
+        }
+        // braceletHeartSteps.forEach(function (braceletHeartStepObj) {
+            
+        // });
         var stepOption = _this.buildHeartOption(xClazzNameArray, seriesDataArray)
         var heartChartDiv = <div>
             <div style={{ width: '100%', height: '170px' }} className="echarts_wrap">
@@ -160,9 +166,9 @@ export default class studentDetail extends React.Component{
                     symbolSize: 6,
                     markLine: {
                         silent: true,
-                        data: [{
-                            yAxis: 90
-                        }]
+                        // data: [{
+                        //     yAxis: 90
+                        // }]
                     },
                     itemStyle: {
                         //通常情况下：
@@ -181,8 +187,8 @@ export default class studentDetail extends React.Component{
             ]
         };
     }
-    render (){
-        return(
+    render() {
+        return (
             <div>学生列表心律统计
                 <div>
                     心率折线图
