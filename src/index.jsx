@@ -811,6 +811,32 @@ const New = (location, cb) => {
     )
 }
 
+
+/**班级列表 */
+const classListMobile = (location, cb) => {
+    require.ensure([], require => {
+            cb(null, require("./components/classListMobile/js/classListMobile").default)
+        }
+    )
+}
+const studentList = (location, cb) => {
+    require.ensure([], require => {
+            cb(null, require("./components/classListMobile/js/studentList").default)
+        }
+    )
+}
+const classListDetail = (location, cb) => {
+    require.ensure([], require => {
+            cb(null, require("./components/classListMobile/js/classListDetail").default)
+        }
+    )
+}
+const studentDetail = (location, cb) => {
+    require.ensure([], require => {
+            cb(null, require("./components/classListMobile/js/studentDetail").default)
+        }
+    )
+}
 import './index.less';
 
 class Index extends React.Component {
@@ -1011,6 +1037,14 @@ class Index extends React.Component {
                         <Link
                             to="/weArrPayment" style={{fontSize: '24px'}}>充值</Link>
                     </li>
+                    <li>
+                        <Link
+                            to="/classListMobile?uid=23836" style={{fontSize: '24px'}}>班级列表</Link>
+                    </li>
+                    <li>
+                        <Link
+                            to="/studentList?clazzId=819" style={{fontSize: '24px'}}>学生列表</Link>
+                    </li>
 
                 </ul>
             </div>
@@ -1152,6 +1186,10 @@ ReactDOM.render(
             <Route path="addARTag" getComponent={addARTag}/>
             <Route path="New" getComponent={New}/>
             <Route path="wxBindProperly" getComponent={wxBindProperly}/>
+            <Route path="classListMobile" getComponent={classListMobile}/>
+            <Route path="studentList" getComponent={studentList}/>
+            <Route path="classListDetail" getComponent={classListDetail}/>
+            <Route path="studentDetail" getComponent={studentDetail}/>
         </Route>
     </Router>
     ,
