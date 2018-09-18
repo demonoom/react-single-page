@@ -6,8 +6,9 @@
   .tabTitle{
     line-height: 40px;
     background-color: #fff;
+    overflow: hidden;
     &>div{
-      flex: 1;
+      width: 50%;
       text-align: center;
     }
     span{
@@ -30,11 +31,11 @@
       border-top: 4px #f4f4f4 solid;
     }
     .title,.content{
-
        span{
          display: inline-block;
          width: 33.3%;
          text-align: center;
+         line-height: 1;
        }
     }
     .title{
@@ -43,7 +44,9 @@
     .content{
       color: #666;
       font-size: 13px;
-      line-height: 40px;
+      &>div{
+        padding: 12px 0;
+      }
     }
     .studentItem{
       line-height: 40px;

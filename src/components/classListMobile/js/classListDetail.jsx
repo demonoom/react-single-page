@@ -134,7 +134,7 @@ export default class classListDetail extends React.Component {
                                 calm.state.studentPartData.map((v,i)=>{
                                     return (
                                         <div className='line_public'>
-                                            <span>{v.user.userName}</span>
+                                            <span className='text_hidden'>{v.user.userName}</span>
                                             <span>{v.heartRate}</span>
                                             {
                                                 v.heartRate > 150 ?
@@ -155,7 +155,7 @@ export default class classListDetail extends React.Component {
                             calm.state.studentListData.map((v, i) => {
                                 return (
                                     <div className='my_flex line_public studentItem' onClick={calm.toStudentDetail.bind(this, v)}>
-                                        <span className='studentTitle'>{v.user.userName}</span>
+                                        <span className='studentTitle text_hidden'>{v.user.userName}</span>
                                         {v.status ? <span className='status'>已监测</span> : <span className='status'>未监测</span> }
                                     </div>
                                 )

@@ -7,9 +7,10 @@
 #classListDetail .tabTitle {
   line-height: 40px;
   background-color: #fff;
+  overflow: hidden;
 }
 #classListDetail .tabTitle > div {
-  flex: 1;
+  width: 50%;
   text-align: center;
 }
 #classListDetail .tabTitle span {
@@ -35,6 +36,7 @@
   display: inline-block;
   width: 33.3%;
   text-align: center;
+  line-height: 1;
 }
 #classListDetail .tabCont .title {
   line-height: 44px;
@@ -42,7 +44,9 @@
 #classListDetail .tabCont .content {
   color: #666;
   font-size: 13px;
-  line-height: 40px;
+}
+#classListDetail .tabCont .content > div {
+  padding: 12px 0;
 }
 #classListDetail .tabCont .studentItem {
   line-height: 40px;
