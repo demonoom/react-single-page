@@ -116,7 +116,7 @@ export default class classListDetail extends React.Component {
     render() {
         return (
             <div id="classListDetail">
-                <div>
+                <div className='tabTitle'>
                     <span className={calm.state.showAllStu ? "" : "highLight"} onClick={calm.getPartStu}>范围内实时数据列表</span>
                     <span className={calm.state.showAllStu ? "highLight" : ""} onClick={calm.getStuList}>全部学生列表</span>
                 </div>
