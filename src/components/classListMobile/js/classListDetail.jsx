@@ -114,49 +114,56 @@ export default class classListDetail extends React.Component {
     render() {
         return (
             <div id="classListDetail">
-                <div className='tabTitle'>
-                    <span className={calm.state.showAllStu ? "" : "highLight"} onClick={calm.getPartStu}>范围内实时数据列表</span>
-                    <span className={calm.state.showAllStu ? "highLight" : ""} onClick={calm.getStuList}>全部学生列表</span>
+                <div className='tabTitle my_flex line_public'>
+                    <div>
+                         <span className={calm.state.showAllStu ? "" : "highLight"} onClick={calm.getPartStu}>范围内实时数据列表</span>
+                    </div>
+                    <div>
+                         <span className={calm.state.showAllStu ? "highLight" : ""} onClick={calm.getStuList}>全部学生列表</span>
+                    </div>
                 </div>
-                
-                <div style={{display:calm.state.showAllStu ? "none":"block"}} >
-                <div>
-                    <span>学生姓名</span>
-                    <span>实时心率</span>
-                    <span>今日步数</span>
-                    {
-                        calm.state.studentPartData.map((v,i)=>{
-                            return (
-                                <div>
-                                    <span>{v.user.userName}</span>
-                                    <span>{v.heartRate}</span>
-                                     {
-                                         v.heartRate > 150 ? 
-                                         <span>感叹号</span>
-                                         :
-                                         ""
-                                        
-                                     }
-                                    <span>{v.step}</span>
-                                </div>
-                            )
-                        })
-                    }
+                <div className='tabCont'>
+                    <div style={{display:calm.state.showAllStu ? "none":"block"}} >
+                        <div className='title line_public'>
+                            <span>学生姓名</span>
+                            <span>实时心率</span>
+                            <span>今日步数</span>
+                        </div>
+                        <div className='content'>
+                            {
+                                calm.state.studentPartData.map((v,i)=>{
+                                    return (
+                                        <div className='line_public'>
+                                            <span>{v.user.userName}</span>
+                                            <span>{v.heartRate}</span>
+                                            {
+                                                v.heartRate > 150 ?
+                                                    <span>感叹号</span>
+                                                    :
+                                                    ""
+
+                                            }
+                                            <span>{v.step}</span>
+                                        </div>
+                                    )
+                                })
+                            }
+                        </div>
+                    </div>
+                    <div style={{display:calm.state.showAllStu ? "block":"none"}}>
+                        {
+                            calm.state.studentListData.map((v, i) => {
+                                return (
+                                    <div className='my_flex line_public studentItem' onClick={calm.toStudentDetail.bind(this, v)}>
+                                        <span className='studentTitle'>{v.user.userName}</span>
+                                        {v.status ? <span className='status'>已监测</span> : <span className='status'>未监测</span> }
+                                    </div>
+                                )
+                            })
+                        }
+                    </div>
                 </div>
-                    范围内实时数据
-                </div>
-                <div style={{display:calm.state.showAllStu ? "block":"none"}}>
-                    {
-                        calm.state.studentListData.map((v, i) => {
-                            return (
-                                <div onClick={calm.toStudentDetail.bind(this, v)}>
-                                    <span>{v.user.userName}</span>
-                                    {v.status ? <span>已监测</span> : <span>未监测</span> }
-                                </div>
-                            )
-                        })
-                    }
-                </div>
+
             </div>
         )
     }
