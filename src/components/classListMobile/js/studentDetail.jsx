@@ -59,7 +59,7 @@ export default class studentDetail extends React.Component {
             console.log(braceletHeartStepObj.heartRate)
             var heartTime = key;
             var heartRate = braceletHeartStepObj.heartRate;
-            xClazzNameArray.push(WebServiceUtil.formatHM(heartTime));
+            xClazzNameArray.push(heartTime);
             seriesDataArray.push(heartRate);  
         }
         // braceletHeartSteps.forEach(function (braceletHeartStepObj) {
@@ -142,7 +142,7 @@ export default class studentDetail extends React.Component {
             yAxis: [
                 {
                     type: 'value',
-                    show: false
+                    show: true
                 }
             ],
             // toolbox: {
