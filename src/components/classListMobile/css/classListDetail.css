@@ -1,71 +1,66 @@
 #classListDetail {
   height: 100%;
-  overflow: hidden;
+  overflow-y: auto;
   font-size: 14px;
   color: #333;
 }
-#classListDetail .tabTitle {
-  line-height: 40px;
+#classListDetail .content {
+  -webkit-flex-wrap: wrap;
+  flex-wrap: wrap;
+  padding: 14px 13px 9px 8px;
   background-color: #fff;
-  overflow: hidden;
 }
-#classListDetail .tabTitle > div {
-  width: 50%;
-  text-align: center;
-}
-#classListDetail .tabTitle span {
-  color: #121212;
-  text-align: center;
-  padding-bottom: 9px;
-}
-#classListDetail .tabTitle span.highLight {
-  color: #EEA03D;
-  border-bottom: 2px #EEA03D solid ;
-}
-#classListDetail .tabCont {
-  height: calc(100% - 40px);
-  overflow-y: auto;
-}
-#classListDetail .tabCont > div {
-  padding: 0 13px;
-  background-color: #fff;
-  border-top: 4px #f4f4f4 solid;
-}
-#classListDetail .tabCont .title span,
-#classListDetail .tabCont .content span {
-  display: inline-block;
+#classListDetail .content > div {
   width: 33.3%;
-  text-align: center;
-  line-height: 1;
+  height: 90px;
+  padding: 0 0 5px 5px;
+  box-sizing: border-box;
 }
-#classListDetail .tabCont .title {
-  line-height: 44px;
+#classListDetail .content > div > div {
+  height: 100%;
+  width: 100%;
+  color: #fff;
+  box-sizing: border-box;
+  padding: 10px 5px 0 10px;
+  position: relative;
 }
-#classListDetail .tabCont .content {
-  color: #666;
-  font-size: 13px;
+#classListDetail .content > div .red {
+  background: url("../image/icon_bg_red.png") no-repeat;
+  background-size: cover;
 }
-#classListDetail .tabCont .content > div {
-  padding: 12px 0;
+#classListDetail .content > div .orange {
+  background: url("../image/icon_bg_orange.png") no-repeat;
+  background-size: cover;
 }
-#classListDetail .tabCont .studentItem {
-  line-height: 40px;
+#classListDetail .content > div .yellow {
+  background: url("../image/icon_bg_yellow.png") no-repeat;
+  background-size: cover;
 }
-#classListDetail .tabCont .studentItem > span {
-  flex: 1;
+#classListDetail .content > div .blue {
+  background: url("../image/icon_bg_blue.png") no-repeat;
+  background-size: cover;
 }
-#classListDetail .tabCont .studentTitle {
-  padding-left: 42px;
+#classListDetail .content > div .green {
+  background: url("../image/icon_bg_green.png") no-repeat;
+  background-size: cover;
 }
-#classListDetail .tabCont .status {
-  font-size: 12px;
-  color: #666;
-  background: url("../image/icon_arrow_right.png") no-repeat right center;
-  background-size: 7px;
-  text-align: right;
-  padding-right: 33px;
-  margin-right: 9px;
+#classListDetail .user_name {
+  padding: 0;
+  font-size: 15px;
+  box-sizing: border-box;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  line-height: 1.2;
 }
-#classListDetail .warning-red {
-  color: #FF3B30;
+#classListDetail .icon_heart {
+  position: absolute;
+  bottom: 8px;
+  left: 10px;
+  font-size: 19px;
+  background: url("../image/icon_heart.png") no-repeat left center;
+  background-size: 12px;
+  padding-left: 16px;
 }
