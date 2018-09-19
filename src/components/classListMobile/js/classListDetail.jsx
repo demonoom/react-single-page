@@ -116,32 +116,29 @@ export default class classListDetail extends React.Component {
             <div id="classListDetail">
                 <div className='tabCont'>
                     <div style={{ display: calm.state.showAllStu ? "none" : "block" }} >
-                        <div className='content'>
+                        <div className='content my_flex'>
                             {
                                 calm.state.studentPartData.map((v, i) => {
+                                    var classBg;
+                                    if(v.heartRate > 140){
+                                        classBg = 'red';
+                                    }else if(v.heartRate > 120){
+                                        classBg = 'orange';
+                                    }else if(v.heartRate > 100){
+                                        classBg = 'yellow';
+                                    }else if(v.heartRate > 90){
+                                        classBg = 'blue';
+                                    }else{
+                                        classBg = 'green';
+                                    }
                                     return (
-                                        <div className='line_public' onClick={calm.toStudentDetail.bind(this,v)}>
-                                            <span className='text_hidden'>{v.user.userName}</span>
-                                            {
-                                                v.heartRate > 140 ?
-                                                <span>红色爱心</span>
-                                                :
-                                                v.heartRate > 120 ?
-                                                <span>橙色爱心</span>
-                                                :
-                                                v.heartRate > 100 ?
-                                                <span>黄色爱心</span>
-                                                :
-                                                v.heartRate > 90 ?
-                                                <span>蓝色爱心</span>
-                                                :
-                                                <span>绿色爱心</span>
-
-                                                
-                                            }
-                                           
-                                            <span>{v.heartRate}</span>
+                                        <div>
+                                            <div className={classBg} onClick={calm.toStudentDetail.bind(this,v)}>
+                                                <div className='user_name'>{v.user.userName}</div>
+                                                <div className='icon_heart'>{v.heartRate}</div>
+                                            </div>
                                         </div>
+
                                     )
                                 })
                             }
