@@ -54,3 +54,6 @@
   right: 7px;
   bottom: 24px;
 }
+#studentDetail .echarts_wrap {
+  width: calc(100% - 26px);
+}

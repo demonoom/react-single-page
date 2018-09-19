@@ -78,7 +78,7 @@ export default class studentDetail extends React.Component {
         });
         var stepOption = _this.buildHeartOption(xClazzNameArray, seriesDataArray)
         var heartChartDiv = <div>
-            <div style={{ width: '100%', height: '314px' }} className="echarts_wrap">
+            <div style={{  height: '314px' }} className="echarts_wrap">
                 <ReactEcharts
                     option={stepOption}
                     style={{ height: '100%', width: '100%' }}
