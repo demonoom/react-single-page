@@ -1,6 +1,8 @@
 import React from "react";
 import "../css/classListDetail.less"
 var calm;
+
+
 export default class classListDetail extends React.Component {
     constructor(props) {
         super(props);
@@ -25,8 +27,13 @@ export default class classListDetail extends React.Component {
         calm.getPart(classId)
     }
     componentDidMount() {
-
+        this.timerID = setInterval(()=>{
+            calm.getPart(calm.state.classId)
+        },15000);
     }
+    componentWillUnmount() {
+        clearInterval(this.timerID);
+      }
 
     /**
     *获取实时学生列表

@@ -9,10 +9,10 @@ export default class studentDetail extends React.Component {
         this.state = {
             studentDetailData: [],
             heartChartDiv: [],
-            heartRateSum:"",
-            arr:[],
-            heartCount:1,
-            result:{}
+            heartRateSum: "",
+            arr: [],
+            heartCount: 1,
+            result: {}
         }
     }
     componentDidMount() {
@@ -29,8 +29,15 @@ export default class studentDetail extends React.Component {
         //     step
         // })
         document.title = stuName + "手环数据统计"
-        calm.getBraceletHeartRateAnalysisByUserId(uid)
+        calm.getBraceletHeartRateAnalysisByUserId(uid);
+        this.timerID = setInterval(() => {
+            calm.getBraceletHeartRateAnalysisByUserId(uid);
+        }, 15000);
+
     }
+    componentWillUnmount() {
+        clearInterval(this.timerID);
+      }
 
 
 
@@ -46,11 +53,12 @@ export default class studentDetail extends React.Component {
         };
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
             onResponse: function (result) {
-                console.log(result)
+                // console.log(result)
                 var response = result.response;
                 calm.setState({
-                    heartCount:response.length,
-                    result:result.userData
+                    heartCount: response.length,
+                    result: result.userData,
+                    arr:result.response
                 })
                 _this.buildHeartBarChart(response);
             },
@@ -68,17 +76,15 @@ export default class studentDetail extends React.Component {
         var _this = this;
         var xClazzNameArray = [];
         var seriesDataArray = [];
-
         braceletHeartSteps.forEach(function (braceletHeartStepObj) {
             var heartTime = braceletHeartStepObj.x;
             var heartRate = braceletHeartStepObj.y;
-            calm.state.arr.push(heartRate)
             xClazzNameArray.push(WebServiceUtil.formatHMS(heartTime));
             seriesDataArray.push(heartRate);
         });
         var stepOption = _this.buildHeartOption(xClazzNameArray, seriesDataArray)
         var heartChartDiv = <div>
-            <div style={{  height: '314px' }} className="echarts_wrap">
+            <div style={{ height: '314px' }} className="echarts_wrap">
                 <ReactEcharts
                     option={stepOption}
                     style={{ height: '100%', width: '100%' }}
@@ -110,7 +116,7 @@ export default class studentDetail extends React.Component {
                 left: '15',
                 right: '20',
                 bottom: '24',
-                top:30,
+                top: 30,
                 containLabel: true
             },
             legend: {
@@ -237,11 +243,18 @@ export default class studentDetail extends React.Component {
     }
 
     render() {
+        // console.log(calm.state.arr)
         var result = 0;
-        calm.state.arr.forEach((v,i)=>{
-            result += v-0;
+        var newArr = [];
+        calm.state.arr.forEach((v, i) => {
+            if(v.y!=0){
+                newArr.push(v)
+            }
         })
-        // console.log(calm.state.result)
+        newArr.forEach((v,i)=>{
+            result += v.y - 0;
+        })
+        // console.log(newArr)
         return (
             <div id="studentDetail">
                 <div className="Heart-title">
@@ -250,9 +263,9 @@ export default class studentDetail extends React.Component {
                     <span>今日步数</span>
                 </div>
                 <div className="heart-cont">
-                    <span><i className="heart-red"></i>{(result / calm.state.heartCount).toFixed(1)}</span>
+                    <span><i className="heart-red"></i>{(result / newArr.length).toFixed(1)}</span>
                     <span><i className="heart-red"></i>{calm.state.result.heartRate}</span>
-                    <span><i className="steps-blue"></i>{calm.state.result.step}</span>
+                    <span><i className="steps-blue"></i>{calm.state.result.step?calm.state.result.step :0}</span>
                 </div>
                 <div className="title">实时心率折线图</div>
                 <div className="student-echarts">

@@ -1041,10 +1041,10 @@ class Index extends React.Component {
                         <Link
                             to="/classListMobile?uid=23836" style={{fontSize: '24px'}}>班级列表</Link>
                     </li>
-                    <li>
+                    {/* <li>
                         <Link
                             to="/studentList?clazzId=819" style={{fontSize: '24px'}}>学生列表</Link>
-                    </li>
+                    </li> */}
 
                 </ul>
             </div>
