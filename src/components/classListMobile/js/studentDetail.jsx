@@ -187,13 +187,11 @@ export default class studentDetail extends React.Component {
             ]
         };
     }
-    render() {
-        return (
-            <div>学生列表心律统计
-                <div>
-                    心率折线图
-                    {this.state.heartChartDiv}
-                </div>
+    render (){
+        return(
+            <div>
+                实时心率折线图
+                {this.state.heartChartDiv}
             </div>
         )
     }
