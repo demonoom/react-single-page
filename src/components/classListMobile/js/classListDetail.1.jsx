@@ -101,7 +101,7 @@ export default class classListDetail extends React.Component {
      * 跳转学生详情页
      */
     toStudentDetail = (v) => {
-        var url = WebServiceUtil.mobileServiceURL + "studentDetail?className=" + v.user.userName + "&uid=" + v.user.colUid+"&heartRate="+v.heartRate+"&step="+v.step;
+        var url = WebServiceUtil.mobileServiceURL + "studentDetail?className=" + v.user.userName + "&uid=" + v.user.colUid;
         var data = {
             method: 'openNewPage',
             url: url,
@@ -114,38 +114,51 @@ export default class classListDetail extends React.Component {
     render() {
         return (
             <div id="classListDetail">
+                <div className='tabTitle my_flex line_public'>
+                    <div>
+                        <span className={calm.state.showAllStu ? "" : "highLight"} onClick={calm.getPartStu}>范围内实时数据列表</span>
+                    </div>
+                    <div>
+                        <span className={calm.state.showAllStu ? "highLight" : ""} onClick={calm.getStuList}>全部学生列表</span>
+                    </div>
+                </div>
                 <div className='tabCont'>
                     <div style={{ display: calm.state.showAllStu ? "none" : "block" }} >
+                        <div className='title line_public'>
+                            <span>学生姓名</span>
+                            <span>实时心率</span>
+                            <span>今日步数</span>
+                        </div>
                         <div className='content'>
                             {
                                 calm.state.studentPartData.map((v, i) => {
                                     return (
-                                        <div className='line_public' onClick={calm.toStudentDetail.bind(this,v)}>
+                                        <div className='line_public'>
                                             <span className='text_hidden'>{v.user.userName}</span>
                                             {
-                                                v.heartRate > 140 ?
-                                                <span>红色爱心</span>
-                                                :
-                                                v.heartRate > 120 ?
-                                                <span>橙色爱心</span>
-                                                :
-                                                v.heartRate > 100 ?
-                                                <span>黄色爱心</span>
-                                                :
-                                                v.heartRate > 90 ?
-                                                <span>蓝色爱心</span>
-                                                :
-                                                <span>绿色爱心</span>
-
-                                                
+                                                v.heartRate > 150 ?
+                                                    <span className="warning-red">{v.heartRate}</span>
+                                                    :
+                                                    <span>{v.heartRate}</span>
                                             }
-                                           
-                                            <span>{v.heartRate}</span>
+                                            <span>{v.step}</span>
                                         </div>
                                     )
                                 })
                             }
                         </div>
+                    </div>
+                    <div style={{ display: calm.state.showAllStu ? "block" : "none" }}>
+                        {
+                            calm.state.studentListData.map((v, i) => {
+                                return (
+                                    <div className='my_flex line_public studentItem' onClick={calm.toStudentDetail.bind(this, v)}>
+                                        <span className='studentTitle text_hidden'>{v.user.userName}</span>
+                                        {v.status ? <span className='status'>已监测</span> : <span className='status'>未监测</span>}
+                                    </div>
+                                )
+                            })
+                        }
                     </div>
                 </div>
 

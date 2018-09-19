@@ -1,0 +1,26 @@
+#studentDetail {
+  background: #fff;
+  color: #333333;
+  font-size: 14px;
+  padding: 0;
+}
+#studentDetail .title {
+  padding: 15px;
+}
+#studentDetail .student-echarts {
+  position: relative;
+}
+#studentDetail .student-echarts .Heart-rate,
+#studentDetail .student-echarts .Heart-time {
+  font-size: 10px;
+  color: #666;
+  position: absolute;
+}
+#studentDetail .student-echarts .Heart-rate {
+  left: 10px;
+  top: 7px;
+}
+#studentDetail .student-echarts .Heart-time {
+  right: 7px;
+  bottom: 24px;
+}
