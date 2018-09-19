@@ -1,7 +1,7 @@
 var isDebug = true;
 var localDomain = "192.168.50.15";   //请求地址
 var isDebugLocal = true;
-var localUrl = "192.168.50.163";    //跳转地址http:
+var localUrl = "192.168.50.72";    //跳转地址http:
 // //云校本地测试webService地址
 // var elearningWebserviceURLOfLocal = "http://" + localDomain + ":8888/elearning/elearningControl/";
 // //云校的远程服务器地址
@@ -216,6 +216,19 @@ WebServiceUtil.formatAllTime = function (nS) {
     var dateStr = dayStr + " " + hour + minutes + sencond;
     return dateStr;
 };
+/**
+ * 时间戳转时分秒，完整时间显示
+ * @param nS
+ * @returns {string}
+ */
+WebServiceUtil.formatSFM = function (nS) {
+    var da = new Date(parseInt(nS));
+    var hour = da.getHours() + ":";
+    var minutes = da.getMinutes() + ":";
+    var sencond = da.getSeconds();
+    var dateStr = hour + minutes < 10 ? "0"+minutes:minutes + sencond<10? "0"+sencond : sencond;
+    return dateStr;
+};
 
 /**
  * 时间戳转年月
@@ -243,6 +256,25 @@ WebServiceUtil.formatHM = function (nS) {
         minutes = "0" + minutes;
     }
     var hmStr = hour + minutes;
+    return hmStr;
+};
+/**
+ * 时间戳转时分
+ * @param nS
+ * @returns {string}
+ */
+WebServiceUtil.formatHMS = function (nS) {
+    var da = new Date(parseInt(nS));
+    var hour = da.getHours() + ":";
+    var minutes = da.getMinutes()+":";
+    if (minutes < 10) {
+        minutes = "0" + minutes;
+    }
+    var sencond = da.getSeconds();
+    if (sencond < 10) {
+        sencond = "0" + minutes;
+    }
+    var hmStr = hour + minutes+sencond;
     return hmStr;
 };
 

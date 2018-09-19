@@ -15,7 +15,7 @@ export default class classListDetail extends React.Component {
         var locationHref = decodeURI(window.location.href);
         var locationSearch = locationHref.substr(locationHref.indexOf("?") + 1);
         var locationSearchArray = locationSearch.split("&");
-        var className = locationSearchArray[0].split("=")[1];
+        var className = decodeURI(locationSearchArray[0].split("=")[1]);
         var classId = locationSearchArray[1].split("=")[1];
         console.log(className)
         calm.setState({
@@ -27,7 +27,6 @@ export default class classListDetail extends React.Component {
     componentDidMount() {
 
     }
-
 
     /**
     *获取实时学生列表
@@ -101,7 +100,7 @@ export default class classListDetail extends React.Component {
      * 跳转学生详情页
      */
     toStudentDetail = (v) => {
-        var url = WebServiceUtil.mobileServiceURL + "studentDetail?className=" + v.user.userName + "&uid=" + v.user.colUid+"&heartRate="+v.heartRate+"&step="+v.step;
+        var url = WebServiceUtil.mobileServiceURL + "studentDetail?className=" + v.user.userName + "&uid=" + v.user.colUid;
         var data = {
             method: 'openNewPage',
             url: url,

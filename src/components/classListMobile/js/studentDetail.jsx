@@ -11,7 +11,8 @@ export default class studentDetail extends React.Component {
             heartChartDiv: [],
             heartRateSum:"",
             arr:[],
-            heartCount:1
+            heartCount:1,
+            result:{}
         }
     }
     componentDidMount() {
@@ -21,12 +22,12 @@ export default class studentDetail extends React.Component {
         var locationSearchArray = locationSearch.split("&");
         var stuName = locationSearchArray[0].split("=")[1];
         var uid = locationSearchArray[1].split("=")[1];
-        var rate = locationSearchArray[2].split("=")[1];
-        var step = locationSearchArray[3].split("=")[1];
-        calm.setState({
-            rate,
-            step
-        })
+        // var rate = locationSearchArray[2].split("=")[1];
+        // var step = locationSearchArray[3].split("=")[1];
+        // calm.setState({
+        //     rate,
+        //     step
+        // })
         document.title = stuName + "手环数据统计"
         calm.getBraceletHeartRateAnalysisByUserId(uid)
     }
@@ -50,7 +51,7 @@ export default class studentDetail extends React.Component {
                 var arr = Object.keys(response);
                 calm.setState({
                     heartCount:arr.length,
-                    arr:arr
+                    result:result.userData
                 })
                 _this.buildHeartBarChart(response);
             },
@@ -74,12 +75,11 @@ export default class studentDetail extends React.Component {
             console.log(braceletHeartStepObj.heartRate)
             var heartTime = key;
             var heartRate = braceletHeartStepObj.heartRate;
-            xClazzNameArray.push(WebServiceUtil.formatHM(heartTime));
+            calm.state.arr.push(heartRate)
+            console.log(calm.state.arr)
+            xClazzNameArray.push(WebServiceUtil.formatHMS(heartTime));
             seriesDataArray.push(heartRate);
         }
-        // braceletHeartSteps.forEach(function (braceletHeartStepObj) {
-
-        // });
         var stepOption = _this.buildHeartOption(xClazzNameArray, seriesDataArray)
         var heartChartDiv = <div>
             <div style={{ width: '100%', height: '314px' }} className="echarts_wrap">
@@ -165,8 +165,8 @@ export default class studentDetail extends React.Component {
             yAxis: [
                 {
                     type: 'value',
-                    // min: 40,
-                    // max: 120,
+                    min: 40,
+                    max: 120,
                     show: true,
                     axisLine: {
                         show: true,
@@ -245,6 +245,7 @@ export default class studentDetail extends React.Component {
         calm.state.arr.forEach((v,i)=>{
             result += v-0;
         })
+        console.log(calm.state.result)
         return (
             <div id="studentDetail">
                 <div className="Heart-title">
@@ -253,9 +254,9 @@ export default class studentDetail extends React.Component {
                     <span>今日步数</span>
                 </div>
                 <div className="heart-cont">
-                    <span><i className="heart-red"></i>{result/ calm.state.heartCount}</span>
-                    <span><i className="heart-red"></i>{calm.state.rate}</span>
-                    <span><i className="steps-blue"></i>{calm.state.step}</span>
+                    <span><i className="heart-red"></i>{result / calm.state.heartCount}</span>
+                    <span><i className="heart-red"></i>{calm.state.result.heartRate}</span>
+                    <span><i className="steps-blue"></i>{calm.state.result.step}</span>
                 </div>
                 <div className="title">实时心率折线图</div>
                 <div className="student-echarts">
