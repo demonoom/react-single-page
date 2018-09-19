@@ -99,7 +99,7 @@ export default class studentDetail extends React.Component {
             grid: {
                 left: '10',
                 right: '20',
-                bottom: '0',
+                bottom: '24',
                 top:30,
                 containLabel: true
             },
