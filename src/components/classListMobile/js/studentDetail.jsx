@@ -235,13 +235,13 @@ export default class studentDetail extends React.Component {
     render() {
         return (
             <div id="studentDetail">
-                <div>
-                    <span>实时心率</span>
-                    <span>今日步数</span>
+                <div className="Heart-title">
+                    <span className="Heart-rate-title">实时心率</span>
+                    <span className="They-count-title">今日步数</span>
                 </div>
-                <div>
-                    <span>{calm.state.rate}</span>
-                    <span>{calm.state.step}</span>
+                <div className="Heart-title">
+                    <span className="Heart-rate-title">{calm.state.rate}</span>
+                    <span className="They-count-title">{calm.state.step}</span>
                 </div>
                 <div className="title">心率折线图</div>
                 <div className="student-echarts">

@@ -5,7 +5,15 @@
   padding: 0;
 }
 #studentDetail .title {
-  padding: 15px;
+  padding: 25px 15px 15px 15px;
+}
+#studentDetail .Heart-title {
+  padding: 15px 15px 0 15px;
+}
+#studentDetail .Heart-rate-title,
+#studentDetail .They-count-title {
+  width: 40%;
+  display: inline-block;
 }
 #studentDetail .student-echarts {
   position: relative;
