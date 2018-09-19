@@ -8,7 +8,10 @@ export default class studentDetail extends React.Component {
         calm = this;
         this.state = {
             studentDetailData: [],
-            heartChartDiv: []
+            heartChartDiv: [],
+            heartRateSum:"",
+            arr:[],
+            heartCount:1
         }
     }
     componentDidMount() {
@@ -44,6 +47,11 @@ export default class studentDetail extends React.Component {
             onResponse: function (result) {
                 console.log(result)
                 var response = result.response;
+                var arr = Object.keys(response);
+                calm.setState({
+                    heartCount:arr.length,
+                    arr:arr
+                })
                 _this.buildHeartBarChart(response);
             },
             onError: function (error) {
@@ -233,13 +241,19 @@ export default class studentDetail extends React.Component {
     }
 
     render() {
+        var result = 0;
+        calm.state.arr.forEach((v,i)=>{
+            result += v-0;
+        })
         return (
             <div id="studentDetail">
                 <div>
+                    <span>平均心率</span>
                     <span>实时心率</span>
                     <span>今日步数</span>
                 </div>
                 <div>
+                    <span>{result/ calm.state.heartCount}</span>
                     <span>{calm.state.rate}</span>
                     <span>{calm.state.step}</span>
                 </div>
