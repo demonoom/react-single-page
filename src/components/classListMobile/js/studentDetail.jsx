@@ -90,11 +90,18 @@ export default class studentDetail extends React.Component {
                 axisPointer: {            // 坐标轴指示器，坐标轴触发有效
                     type: 'line',         // 默认为直线，可选为：'line' | 'shadow'
                     lineStyle: {          // 直线指示器样式设置
-                        color: '#FFE298',
+                        color: '#638BB7',
                         width: 1,
                         type: 'solid'
                     },
                 },
+            },
+            grid: {
+                left: '10',
+                right: '20',
+                bottom: '0',
+                top:30,
+                containLabel: true
             },
             legend: {
                 show: false,
@@ -140,11 +147,39 @@ export default class studentDetail extends React.Component {
                     },
                 }
             ],
+
             yAxis: [
                 {
                     type: 'value',
-                    show: true
+                    show: true,
+                    axisLine: {
+                        show: true,
+                        lineStyle: {
+                            color: '#C9C9C9',
+                            width: 1,
+                            type: 'solid'
+                        },
+                    },
+                    splitLine: {
+                        show: true,
+                        lineStyle:{
+                            color: '#eee',
+                            width: 1,
+                            type: 'solid'
+                        }
+                    },
+                    axisLabel: {
+                        textStyle: {
+                            color: '#666',
+                            fontSize: 12
+                        },
+                        //这个是倾斜角度，也是考虑到文字过多的时候，方式覆盖采用倾斜
+                        rotate: 0,
+                        //这里是考虑到x轴文件过多的时候设置的，如果文字太多，默认是间隔显示，设置为0，标示全部显示，当然，如果x轴都不显示，那也就没有意义了
+                        interval: 'auto',
+                    },
                 }
+
             ],
             // toolbox: {
             //     left: 'right',
@@ -188,11 +223,14 @@ export default class studentDetail extends React.Component {
             ]
         };
     }
+
     render() {
         return (
             <div id="studentDetail">
                 <div className="title">心率折线图</div>
-                <div>
+                <div className="student-echarts">
+                    <span className="Heart-rate">心率</span>
+                    <span className="Heart-time">时间</span>
                     {this.state.heartChartDiv}
                 </div>
             </div>
