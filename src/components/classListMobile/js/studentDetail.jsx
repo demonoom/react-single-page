@@ -1,5 +1,6 @@
 import React from "react";
 import ReactEcharts from 'echarts-for-react';
+import "../css/studentDetail.less";
 var calm;
 export default class studentDetail extends React.Component {
     constructor(props) {
@@ -67,7 +68,7 @@ export default class studentDetail extends React.Component {
         // });
         var stepOption = _this.buildHeartOption(xClazzNameArray, seriesDataArray)
         var heartChartDiv = <div>
-            <div style={{ width: '100%', height: '170px' }} className="echarts_wrap">
+            <div style={{ width: '100%', height: '314px' }} className="echarts_wrap">
                 <ReactEcharts
                     option={stepOption}
                     style={{ height: '100%', width: '100%' }}
@@ -122,15 +123,15 @@ export default class studentDetail extends React.Component {
                     axisLine: {
                         show: true,
                         lineStyle: {
-                            color: '#F8E71C',
+                            color: '#C9C9C9',
                             width: 1,
                             type: 'solid'
                         },
                     },
                     axisLabel: {
                         textStyle: {
-                            color: '#fff',
-                            fontSize: 38
+                            color: '#666',
+                            fontSize: 12
                         },
                         //这个是倾斜角度，也是考虑到文字过多的时候，方式覆盖采用倾斜
                         rotate: 0,
@@ -142,7 +143,7 @@ export default class studentDetail extends React.Component {
             yAxis: [
                 {
                     type: 'value',
-                    show: false
+                    show: true
                 }
             ],
             // toolbox: {
@@ -174,7 +175,7 @@ export default class studentDetail extends React.Component {
                         //通常情况下：
                         normal: {
                             //每个柱子的颜色即为colorList数组里的每一项，如果柱子数目多于colorList的长度，则柱子颜色循环使用该数组
-                            color: '#FFE298'
+                            color: '#2B84EF',
                         }
                     },
                     label: {
@@ -189,9 +190,9 @@ export default class studentDetail extends React.Component {
     }
     render() {
         return (
-            <div>学生列表心律统计
+            <div id="studentDetail">
+                <div className="title">心率折线图</div>
                 <div>
-                    心率折线图
                     {this.state.heartChartDiv}
                 </div>
             </div>

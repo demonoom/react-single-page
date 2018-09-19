@@ -1,0 +1,9 @@
+#studentDetail {
+  background: #fff;
+  color: #333333;
+  font-size: 14px;
+  padding: 15px 15px 24px 15px;
+}
+#studentDetail .title {
+  margin-bottom: 15px;
+}
