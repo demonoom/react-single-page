@@ -8,7 +8,10 @@ export default class studentDetail extends React.Component {
         calm = this;
         this.state = {
             studentDetailData: [],
-            heartChartDiv: []
+            heartChartDiv: [],
+            heartRateSum:"",
+            arr:[],
+            heartCount:1
         }
     }
     componentDidMount() {
@@ -44,6 +47,11 @@ export default class studentDetail extends React.Component {
             onResponse: function (result) {
                 console.log(result)
                 var response = result.response;
+                var arr = Object.keys(response);
+                calm.setState({
+                    heartCount:arr.length,
+                    arr:arr
+                })
                 _this.buildHeartBarChart(response);
             },
             onError: function (error) {
@@ -103,7 +111,7 @@ export default class studentDetail extends React.Component {
                 },
             },
             grid: {
-                left: '10',
+                left: '15',
                 right: '20',
                 bottom: '24',
                 top:30,
@@ -203,7 +211,7 @@ export default class studentDetail extends React.Component {
                 {
                     name: '心率',
                     type: 'line',
-                    smooth: true,
+                    smooth: false,
                     data: seriesDataArray,
                     left: 0,
                     bottom: 0,
@@ -233,17 +241,23 @@ export default class studentDetail extends React.Component {
     }
 
     render() {
+        var result = 0;
+        calm.state.arr.forEach((v,i)=>{
+            result += v-0;
+        })
         return (
             <div id="studentDetail">
                 <div className="Heart-title">
-                    <span className="Heart-rate-title">实时心率</span>
-                    <span className="They-count-title">今日步数</span>
+                    <span>平均心率</span>
+                    <span>实时心率</span>
+                    <span>今日步数</span>
                 </div>
-                <div className="Heart-title">
-                    <span className="Heart-rate-title">{calm.state.rate}</span>
-                    <span className="They-count-title">{calm.state.step}</span>
+                <div className="heart-cont">
+                    <span><i className="heart-red"></i>{result/ calm.state.heartCount}</span>
+                    <span><i className="heart-red"></i>{calm.state.rate}</span>
+                    <span><i className="steps-blue"></i>{calm.state.step}</span>
                 </div>
-                <div className="title">心率折线图</div>
+                <div className="title">实时心率折线图</div>
                 <div className="student-echarts">
                     <span className="Heart-rate">心率</span>
                     <span className="Heart-time">时间</span>

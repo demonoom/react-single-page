@@ -5,15 +5,37 @@
   padding: 0;
 }
 #studentDetail .title {
-  padding: 25px 15px 15px 15px;
+  padding: 27px 15px 10px 15px;
 }
-#studentDetail .Heart-title {
-  padding: 15px 15px 0 15px;
+#studentDetail .Heart-title,
+#studentDetail .heart-cont {
+  padding: 16px 15px 0 15px;
+  display: flex;
+  justify-content: space-between;
 }
-#studentDetail .Heart-rate-title,
-#studentDetail .They-count-title {
-  width: 40%;
+#studentDetail .Heart-title span i,
+#studentDetail .heart-cont span i {
   display: inline-block;
+  margin-right: 4px;
+}
+#studentDetail .Heart-title span .heart-red,
+#studentDetail .heart-cont span .heart-red {
+  width: 12px;
+  height: 10px;
+  background: url("../image/heart-red.png") no-repeat;
+  background-size: 100% 100%;
+}
+#studentDetail .Heart-title span .steps-blue,
+#studentDetail .heart-cont span .steps-blue {
+  width: 10px;
+  height: 16px;
+  background: url("../image/steps-blue.png") no-repeat;
+  background-size: 100% 100%;
+}
+#studentDetail .heart-cont {
+  font-size: 25px;
+  font-weight: 500;
+  line-height: 1;
 }
 #studentDetail .student-echarts {
   position: relative;
@@ -25,7 +47,7 @@
   position: absolute;
 }
 #studentDetail .student-echarts .Heart-rate {
-  left: 10px;
+  left: 15px;
   top: 7px;
 }
 #studentDetail .student-echarts .Heart-time {

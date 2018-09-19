@@ -4,20 +4,35 @@
   font-size: 14px;
   padding:0;
   .title{
-    padding: 25px 15px 15px 15px;
+    padding: 27px 15px 10px 15px;
   }
-  .Heart-title{
-    padding: 15px 15px 0 15px;
+  .Heart-title, .heart-cont{
+    padding: 16px 15px 0 15px;
+    display: flex;
+    justify-content: space-between;
+    span{
+      i{
+        display: inline-block;
+        margin-right: 4px;
+      }
+      .heart-red{
+        width: 12px;
+        height: 10px;
+        background: url("../image/heart-red.png") no-repeat;
+        background-size: 100% 100%;
+      }
+      .steps-blue{
+        width: 10px;
+        height: 16px;
+        background: url("../image/steps-blue.png") no-repeat;
+        background-size: 100% 100%;
+      }
+    }
   }
-  .Heart-rate-title, .They-count-title{
-    width: 40%;
-    display: inline-block;
-  }
-  .Heart-rate-title{
-
-  }
-  .They-count-title{
-
+  .heart-cont{
+    font-size: 25px;
+    font-weight:500;
+    line-height: 1;
   }
   .student-echarts{
     position: relative;
@@ -27,7 +42,7 @@
       position: absolute;
     }
     .Heart-rate{
-      left:10px;
+      left:15px;
       top: 7px;
     }
     .Heart-time{
