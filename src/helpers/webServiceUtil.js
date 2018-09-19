@@ -49,7 +49,7 @@ WebServiceUtil.requestLittleAntApi = function (data, listener) {
     $.ajax({
         type: "post",
         url: apiWebServiceURL,
-        data: {params: data},
+        data: { params: data },
         dataType: "json",
         success: function (result) {
             listener.onResponse(result);
@@ -87,7 +87,7 @@ WebServiceUtil.requestArPaymentApi = function (data, listener) {
     $.ajax({
         type: "post",
         url: ArPaymentURL,
-        data: {params: data},
+        data: { params: data },
         dataType: "json",
         success: function (result) {
             listener.onResponse(result);
@@ -107,7 +107,7 @@ WebServiceUtil.requestBindWx = function (data, listener) {
     $.ajax({
         type: "post",
         url: wxBindURL,
-        data: {params: data},
+        data: { params: data },
         dataType: "json",
         success: function (result) {
             listener.onResponse(result);
@@ -127,7 +127,7 @@ WebServiceUtil.requestLittleAntApiOldManBracelet = function (data, listener) {
     $.ajax({
         type: "post",
         url: OldManBraceletURL,
-        data: {params: data},
+        data: { params: data },
         dataType: "json",
         success: function (result) {
             listener.onResponse(result);
@@ -147,7 +147,7 @@ WebServiceUtil.requestLittleAntApiWithHead = function (data, headObj, listener) 
     $.ajax({
         type: "post",
         url: apiWebServiceURL,
-        data: {params: data},
+        data: { params: data },
         dataType: "json",
         headers: JSON.parse(headObj),
         success: function (result) {
@@ -224,9 +224,9 @@ WebServiceUtil.formatAllTime = function (nS) {
 WebServiceUtil.formatSFM = function (nS) {
     var da = new Date(parseInt(nS));
     var hour = da.getHours() + ":";
-    var minutes = da.getMinutes() + ":";
+    var minutes = da.getMinutes();
     var sencond = da.getSeconds();
-    var dateStr = hour + minutes < 10 ? "0"+minutes:minutes + sencond<10? "0"+sencond : sencond;
+    var dateStr = hour + minutes < 10 ? "0" + minutes : minutes + sencond < 10 ? "0" + sencond : sencond;
     return dateStr;
 };
 
@@ -266,15 +266,16 @@ WebServiceUtil.formatHM = function (nS) {
 WebServiceUtil.formatHMS = function (nS) {
     var da = new Date(parseInt(nS));
     var hour = da.getHours() + ":";
-    var minutes = da.getMinutes()+":";
+    var minutes = da.getMinutes() + ":";
+    var sencond = da.getSeconds();
+
     if (minutes < 10) {
         minutes = "0" + minutes;
     }
-    var sencond = da.getSeconds();
     if (sencond < 10) {
-        sencond = "0" + minutes;
+        sencond = "0" + sencond;
     }
-    var hmStr = hour + minutes+sencond;
+    var hmStr = hour + minutes + sencond;
     return hmStr;
 };
 

@@ -48,9 +48,8 @@ export default class studentDetail extends React.Component {
             onResponse: function (result) {
                 console.log(result)
                 var response = result.response;
-                var arr = Object.keys(response);
                 calm.setState({
-                    heartCount:arr.length,
+                    heartCount:response.length,
                     result:result.userData
                 })
                 _this.buildHeartBarChart(response);
@@ -69,17 +68,14 @@ export default class studentDetail extends React.Component {
         var _this = this;
         var xClazzNameArray = [];
         var seriesDataArray = [];
-        for (var key in braceletHeartSteps) {
-            console.log(braceletHeartSteps[key])
-            var braceletHeartStepObj = braceletHeartSteps[key];
-            console.log(braceletHeartStepObj.heartRate)
-            var heartTime = key;
-            var heartRate = braceletHeartStepObj.heartRate;
+
+        braceletHeartSteps.forEach(function (braceletHeartStepObj) {
+            var heartTime = braceletHeartStepObj.x;
+            var heartRate = braceletHeartStepObj.y;
             calm.state.arr.push(heartRate)
-            console.log(calm.state.arr)
             xClazzNameArray.push(WebServiceUtil.formatHMS(heartTime));
             seriesDataArray.push(heartRate);
-        }
+        });
         var stepOption = _this.buildHeartOption(xClazzNameArray, seriesDataArray)
         var heartChartDiv = <div>
             <div style={{ width: '100%', height: '314px' }} className="echarts_wrap">
@@ -245,7 +241,7 @@ export default class studentDetail extends React.Component {
         calm.state.arr.forEach((v,i)=>{
             result += v-0;
         })
-        console.log(calm.state.result)
+        // console.log(calm.state.result)
         return (
             <div id="studentDetail">
                 <div className="Heart-title">
@@ -254,7 +250,7 @@ export default class studentDetail extends React.Component {
                     <span>今日步数</span>
                 </div>
                 <div className="heart-cont">
-                    <span><i className="heart-red"></i>{result / calm.state.heartCount}</span>
+                    <span><i className="heart-red"></i>{(result / calm.state.heartCount).toFixed(1)}</span>
                     <span><i className="heart-red"></i>{calm.state.result.heartRate}</span>
                     <span><i className="steps-blue"></i>{calm.state.result.step}</span>
                 </div>
