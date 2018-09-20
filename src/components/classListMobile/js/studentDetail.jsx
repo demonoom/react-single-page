@@ -140,6 +140,7 @@ export default class studentDetail extends React.Component {
                 {
                     type: 'category',
                     data: xClazzNameArray,
+                    // name:"时间",
                     axisTick: {
                         show: false
                     },
@@ -167,6 +168,7 @@ export default class studentDetail extends React.Component {
             yAxis: [
                 {
                     type: 'value',
+                    // name: '心率',
                     min: 40,
                     max: 120,
                     show: true,
@@ -263,9 +265,9 @@ export default class studentDetail extends React.Component {
                     <span>今日步数</span>
                 </div>
                 <div className="heart-cont">
-                    <span><i className="heart-red"></i>{(result / newArr.length).toFixed(1)}</span>
-                    <span><i className="heart-red"></i>{calm.state.result.heartRate}</span>
-                    <span><i className="steps-blue"></i>{calm.state.result.step?calm.state.result.step :0}</span>
+                    <span><i className="heart-red"></i>{Math.ceil(result / (newArr.length ? newArr.length : 1))}</span>
+                    <span><i className="heart-red"></i>{calm.state.result.heartRate ? calm.state.result.heartRate : "0"}</span>
+                    <span><i className="steps-blue"></i>{calm.state.result.step?calm.state.result.step : 0}</span>
                 </div>
                 <div className="title">实时心率折线图</div>
                 <div className="student-echarts">
