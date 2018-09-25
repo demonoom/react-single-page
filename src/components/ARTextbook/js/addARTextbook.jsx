@@ -227,8 +227,8 @@ export default class addARTextbook extends React.Component {
     imgPreview(data) {
         var dataObj = {};
         dataObj.method = 'showImage';
-        dataObj.url = data.picPath;
-        dataObj.currentUrl = data.picPath;
+        dataObj.url = data;
+        dataObj.currentUrl = data;
         Bridge.callHandler(dataObj, null, function (error) {
             console.log(error);
         })
@@ -419,7 +419,7 @@ export default class addARTextbook extends React.Component {
                             console.log(v,"picpath")
                             return (
                                <div className="fileBack picDiv">
-                                    <img onClick={teacherV.imgPreview.bind(this, teacherV.state.ARTextbookDataArr[i])}
+                                    <img onClick={teacherV.imgPreview.bind(this, v)}
                                 className="imgTag" src={v} />
                                   <span className="del_ar" onClick={teacherV.deleteImg.bind(this, i, useIndex)} ></span>
                                </div>
