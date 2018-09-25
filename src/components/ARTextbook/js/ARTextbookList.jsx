@@ -308,7 +308,6 @@ export default class ARTextbookList extends React.Component {
                 );
             };
             SwitchExample = createForm()(SwitchExample);
-
             return (
                 <div className="classInfo">
                     <div className="line_public my_flex">

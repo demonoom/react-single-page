@@ -85,6 +85,9 @@
   height: 100%;
   max-width: 100%;
 }
+#addARTextbook .videoCont .picDiv {
+  margin-bottom: 15px;
+}
 #addARTextbook .uploadAttech {
   width: 100px;
   height: 20px;

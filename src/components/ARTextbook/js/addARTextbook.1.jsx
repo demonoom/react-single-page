@@ -144,13 +144,12 @@ export default class addARTextbook extends React.Component {
             }
         }
         var classArray = [];
-        
         this.state.ARTextbookDataArr.forEach(function (v, i) {
             console.log(v,"vvcvc")
             classArray.push({
                 "page": v.pageNoValue,
                 "index": i,
-                "pic": v.picPath.join(","),
+                "pic": v.picPath + '?size=300x300',
                 "video": v.videoPath.join(","),
                 "tagList": arr[i].tagText
             })
@@ -207,18 +206,6 @@ export default class addARTextbook extends React.Component {
             }
         })
 
-    }
-
-
-
-    deleteImg=(ind, useIndex, event)=>{
-        event.stopPropagation()
-        teacherV.state.ARTextbookDataArr[useIndex].picPath.forEach((v, i) => {
-            if (ind == i) {
-                teacherV.state.ARTextbookDataArr[useIndex].picPath.splice(i, 1)
-                teacherV.buildARTextbook();
-            }
-        })
     }
 
     /**
@@ -413,30 +400,16 @@ export default class addARTextbook extends React.Component {
                         <p style={{ margin: 0, height: 5 }}></p>
                         <span className="uploadSupport">(jpg格式)</span>
                     </span>
-                    <div className="videoCont my_flex">
-                    {
-                        teacherV.state.ARTextbookDataArr[i].picPath.map((v,i)=>{
-                            console.log(v,"picpath")
-                            return (
-                               <div className="fileBack picDiv">
-                                    <img onClick={teacherV.imgPreview.bind(this, teacherV.state.ARTextbookDataArr[i])}
-                                className="imgTag" src={v} />
-                                  <span className="del_ar" onClick={teacherV.deleteImg.bind(this, i, useIndex)} ></span>
-                               </div>
-                            )
-                        })
-                    }
-                     <button className="uploadBtn" onClick={teacherV.uploadImage.bind(this, i)}>教材图片</button>
-                     </div>
-                    {/* {teacherV.state.ARTextbookDataArr[i].picPath.length == 0 ?
+                    {teacherV.state.ARTextbookDataArr[i].picPath.length == 0 ?
                         <button className="uploadBtn" onClick={teacherV.uploadImage.bind(this, i)}>教材图片</button>
                         :
                         <div className="upload_file">
-                            
+                            <img onClick={teacherV.imgPreview.bind(this, teacherV.state.ARTextbookDataArr[i])}
+                                className="imgTag" src={teacherV.state.ARTextbookDataArr[i].picPath} />
                             <div className="icon_pointer" onClick={teacherV.uploadImage.bind(this, i)}>修改</div>
                         </div>
 
-                    } */}
+                    }
 
                 </div>
 
@@ -593,16 +566,13 @@ export default class addARTextbook extends React.Component {
             arr.forEach((v, i) => {
                 let item = v.split("?");
                 newArr.push({
-                    picPath: item[0]+'?size=300x300',
+                    picPath: item[0],
                     picName: item[1].split("=")[1]
                 })
-                // teacherV.state.ARTextbookDataArr[index].picPath = newArr[i].picPath
-                // teacherV.state.ARTextbookDataArr[index].picName = newArr[i].picName;
-                teacherV.state.ARTextbookDataArr[index].picPath.push(newArr[i].picPath);
-                teacherV.state.ARTextbookDataArr[index].picName.push(newArr[i].picName);
+                teacherV.state.ARTextbookDataArr[index].picPath = newArr[i].picPath
+                teacherV.state.ARTextbookDataArr[index].picName = newArr[i].picName;
             })
-            var calmArr = teacherV.state.picNewArr.concat(newArr);
-            teacherV.setState({ picNewArr: calmArr });
+            teacherV.setState({ picNewArr: newArr });
             teacherV.buildARTextbook();
         }, function (error) {
             console.log(error);
