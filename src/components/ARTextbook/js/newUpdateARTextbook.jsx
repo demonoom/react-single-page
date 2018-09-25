@@ -143,8 +143,18 @@ export default class newUpdateARTextbook extends React.Component {
                 if (result.msg == '调用成功' || result.success == true) {
                     Toast.success('成功');
                     //关闭当前窗口，并刷新上一个页面
-                    var data = {
+                    /*var data = {
                         method: 'finishForRefresh',
+                    };
+                    Bridge.callHandler(data, null, function (error) {
+                        console.log(error);
+                    });*/
+
+                    var data = {
+                        method: 'finishForRefreshV2',
+                        id: teacherV.state.bId,
+                        name: teacherV.state.ARTextbookValue,
+                        fnName: 'updateFn'
                     };
                     Bridge.callHandler(data, null, function (error) {
                         console.log(error);
@@ -276,7 +286,7 @@ export default class newUpdateARTextbook extends React.Component {
             // 拿到照片地址,显示在页面等待上传
             let newArr = {};
             let item = res.split("?");
-            newArr.picPath = item[0],
+            newArr.picPath = item[0] + '?size=300x300',
                 newArr.picName = item[1].split("=")[1]
 
             teacherV.state.initData.itemList.forEach(function (v, i) {
@@ -312,6 +322,7 @@ export default class newUpdateARTextbook extends React.Component {
                 Toast.fail('请上传图片', 2)
                 return
             }
+            item += '?size=300x300';
 
             teacherV.state.initData.itemList.forEach(function (v, i) {
                 if (v.index == index) {
@@ -341,7 +352,7 @@ export default class newUpdateARTextbook extends React.Component {
             // 拿到视频地址,显示在页面等待上传
             var arr = res.split(',');
 
-            let item = ',' + arr[0].split("?")[0];
+            let item = ',' + arr[0].split("?")[0] + '?size=300x300';
 
             teacherV.state.initData.itemList.forEach(function (v, i) {
                 if (v.index == index) {
@@ -786,8 +797,6 @@ export default class newUpdateARTextbook extends React.Component {
         })
 
         var tabItem = []
-
-        console.log(arr);
 
         arr.forEach(function (v, i) {
 

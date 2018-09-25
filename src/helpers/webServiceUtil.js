@@ -1,7 +1,7 @@
 var isDebug = false;
 var localDomain = "192.168.50.15";   //请求地址
 var isDebugLocal = false;
-var localUrl = "192.168.50.72";    //跳转地址http:
+var localUrl = "192.168.50.29";    //跳转地址http:
 // //云校本地测试webService地址
 // var elearningWebserviceURLOfLocal = "http://" + localDomain + ":8888/elearning/elearningControl/";
 // //云校的远程服务器地址
@@ -49,7 +49,7 @@ WebServiceUtil.requestLittleAntApi = function (data, listener) {
     $.ajax({
         type: "post",
         url: apiWebServiceURL,
-        data: { params: data },
+        data: {params: data},
         dataType: "json",
         success: function (result) {
             listener.onResponse(result);
@@ -87,7 +87,7 @@ WebServiceUtil.requestArPaymentApi = function (data, listener) {
     $.ajax({
         type: "post",
         url: ArPaymentURL,
-        data: { params: data },
+        data: {params: data},
         dataType: "json",
         success: function (result) {
             listener.onResponse(result);
@@ -107,7 +107,7 @@ WebServiceUtil.requestBindWx = function (data, listener) {
     $.ajax({
         type: "post",
         url: wxBindURL,
-        data: { params: data },
+        data: {params: data},
         dataType: "json",
         success: function (result) {
             listener.onResponse(result);
@@ -127,7 +127,7 @@ WebServiceUtil.requestLittleAntApiOldManBracelet = function (data, listener) {
     $.ajax({
         type: "post",
         url: OldManBraceletURL,
-        data: { params: data },
+        data: {params: data},
         dataType: "json",
         success: function (result) {
             listener.onResponse(result);
@@ -147,7 +147,7 @@ WebServiceUtil.requestLittleAntApiWithHead = function (data, headObj, listener) 
     $.ajax({
         type: "post",
         url: apiWebServiceURL,
-        data: { params: data },
+        data: {params: data},
         dataType: "json",
         headers: JSON.parse(headObj),
         success: function (result) {
