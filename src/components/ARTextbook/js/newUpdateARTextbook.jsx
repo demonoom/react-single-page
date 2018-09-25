@@ -136,6 +136,8 @@ export default class newUpdateARTextbook extends React.Component {
             }
         }
 
+        console.log(param);
+
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
             onResponse: function (result) {
                 if (result.msg == '调用成功' || result.success == true) {
@@ -280,6 +282,70 @@ export default class newUpdateARTextbook extends React.Component {
             teacherV.state.initData.itemList.forEach(function (v, i) {
                 if (v.index == index) {
                     v.pic = newArr.picPath
+                }
+            })
+            teacherV.tabsOnChange(teacherV.state.clickTab)
+
+        }, function (error) {
+            console.log(error);
+        });
+    }
+
+    /**
+     * 多张的修改
+     * @param index
+     * @param event
+     */
+    uploadImages(index, j, event) {
+        event.stopPropagation()
+        var data = {
+            method: 'selectImages',
+        };
+
+        Bridge.callHandler(data, function (res) {
+            // 拿到视频地址,显示在页面等待上传
+            var arr = res.split(',');
+
+            let item = arr[0].split("?")[0];
+
+            if (item.length === 0) {
+                Toast.fail('请上传图片', 2)
+                return
+            }
+
+            teacherV.state.initData.itemList.forEach(function (v, i) {
+                if (v.index == index) {
+                    var arr = v.pic.split(',')
+                    arr[j] = item
+                    v.pic = arr.join(',')
+                }
+            })
+            teacherV.tabsOnChange(teacherV.state.clickTab)
+
+        }, function (error) {
+            console.log(error);
+        });
+    }
+
+    /**
+     * 多张的上传
+     * @param index
+     * @param event
+     */
+    addUploadImages(index, event) {
+        event.stopPropagation()
+        var data = {
+            method: 'selectImages',
+        };
+        Bridge.callHandler(data, function (res) {
+            // 拿到视频地址,显示在页面等待上传
+            var arr = res.split(',');
+
+            let item = ',' + arr[0].split("?")[0];
+
+            teacherV.state.initData.itemList.forEach(function (v, i) {
+                if (v.index == index) {
+                    v.pic += item
                 }
             })
             teacherV.tabsOnChange(teacherV.state.clickTab)
@@ -528,6 +594,43 @@ export default class newUpdateARTextbook extends React.Component {
     }
 
     /**
+     * 删除图片model
+     * @param src
+     * @param id
+     * @param event
+     */
+    showAlertImg = (index, j, event) => {
+        event.stopPropagation()
+
+        var phoneType = navigator.userAgent;
+        var phone;
+        if (phoneType.indexOf('iPhone') > -1 || phoneType.indexOf('iPad') > -1) {
+            phone = 'ios'
+        } else {
+            phone = 'android'
+        }
+        var _this = this;
+        const alertInstance = alert('您确定移除吗?', '', [
+            {text: '取消', onPress: () => console.log('cancel'), style: 'default'},
+            {text: '确定', onPress: () => _this.delImgFile(index, j)},
+
+        ], phone);
+    }
+
+    delImgFile(index, j) {
+        teacherV.state.initData.itemList.forEach(function (v, i) {
+            if (v.index == index) {
+                debugger
+                var arr = v.pic.split(',');
+                arr.splice(j, 1)
+
+                v.pic = arr.join(',')
+            }
+        })
+        teacherV.tabsOnChange(teacherV.state.clickTab)
+    }
+
+    /**
      * 增加标签
      * @param index
      */
@@ -684,6 +787,8 @@ export default class newUpdateARTextbook extends React.Component {
 
         var tabItem = []
 
+        console.log(arr);
+
         arr.forEach(function (v, i) {
 
             //新加的图片,样式是加号
@@ -693,11 +798,23 @@ export default class newUpdateARTextbook extends React.Component {
 
             if (WebServiceUtil.isEmpty(v.pic) == false) {
                 imgDivSon = <div className="div68">
-                    <button className="uploadAttech i_uploadAttech" onClick={teacherV.imgPreview.bind(this, v.pic)}>{
-                        <img className="imgDiv" src={v.pic}/>
+                    {
+                        v.pic.split(',').map((vtem, j) => {
+                            return <button className="uploadAttech i_uploadAttech"
+                                           onClick={teacherV.imgPreview.bind(this, vtem)}>{
+                                <img className="imgDiv" src={vtem}/>
+                            }
+                                <div className="icon_pointer" onClick={teacherV.uploadImages.bind(this, v.index, j)}>修改
+                                </div>
+                                <span className="del_ar icon_pointer"
+                                      onClick={teacherV.showAlertImg.bind(this, v.index, j)}></span>
+                            </button>
+                        })
                     }
-                        <div className="icon_pointer" onClick={teacherV.uploadImage.bind(this, v.index)}>修改</div>
-                    </button>
+                    <div className="uploadBtn icon_pointer"
+                         onClick={teacherV.addUploadImages.bind(this, v.index)}>
+                        增加
+                    </div>
                 </div>
             }
 
