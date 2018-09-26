@@ -157,6 +157,7 @@ export default class addARTextbook extends React.Component {
         })
         param.bookData.itemList = classArray;
         console.log(param)
+        return
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
             onResponse: function (result) {
                 if (result.msg == '调用成功' || result.success == true) {
@@ -584,9 +585,10 @@ export default class addARTextbook extends React.Component {
      */
     uploadImage(index) {
         var data = {
-            method: 'selectImages',
+            method: 'selectImgComplex',
         };
         Bridge.callHandler(data, function (res) {
+            console.log(res,"rererere")
             // 拿到照片地址,显示在页面等待上传
             var arr = res.split(',');
             let newArr = [];
@@ -615,7 +617,7 @@ export default class addARTextbook extends React.Component {
     uploadVideo(index) {
         // event.stopPropagation();
         var data = {
-            method: 'selectVideo',
+            method: 'selectComplexVideo',
         };
         Bridge.callHandler(data, function (res) {
             // 拿到视频地址,显示在页面等待上传
