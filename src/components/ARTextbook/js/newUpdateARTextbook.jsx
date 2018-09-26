@@ -280,20 +280,30 @@ export default class newUpdateARTextbook extends React.Component {
     uploadImage(index, event) {
         event.stopPropagation()
         var data = {
-            method: 'selectImages',
+            method: 'selectImgComplex',
         };
         Bridge.callHandler(data, function (res) {
+            debugger
             // 拿到照片地址,显示在页面等待上传
-            let newArr = {};
-            let item = res.split("?");
-            newArr.picPath = item[0] + '?size=300x300',
-                newArr.picName = item[1].split("=")[1]
+            var arr = res.split(',');
+            let item = '';
+            if (arr.length == 0) {
+                Toast.fail('请选择图片')
+                return
+            } else {
+                arr.forEach(function (v, i) {
+                    item += v.split('?')[0] + '?size=300x300,'
+                })
+            }
+
+            console.log(item);
 
             teacherV.state.initData.itemList.forEach(function (v, i) {
                 if (v.index == index) {
-                    v.pic = newArr.picPath
+                    v.pic = item.substr(0, item.length - 1)
                 }
             })
+
             teacherV.tabsOnChange(teacherV.state.clickTab)
 
         }, function (error) {
@@ -346,17 +356,24 @@ export default class newUpdateARTextbook extends React.Component {
     addUploadImages(index, event) {
         event.stopPropagation()
         var data = {
-            method: 'selectImages',
+            method: 'selectImgComplex',
         };
         Bridge.callHandler(data, function (res) {
             // 拿到视频地址,显示在页面等待上传
             var arr = res.split(',');
-
-            let item = ',' + arr[0].split("?")[0] + '?size=300x300';
+            let item = ','
+            if (arr.length == 0) {
+                Toast.fail('请选择图片')
+                return
+            } else {
+                arr.forEach(function (v, i) {
+                    item += v.split('?')[0] + '?size=300x300,'
+                })
+            }
 
             teacherV.state.initData.itemList.forEach(function (v, i) {
                 if (v.index == index) {
-                    v.pic += item
+                    v.pic += item.substr(0, item.length - 1)
                 }
             })
             teacherV.tabsOnChange(teacherV.state.clickTab)

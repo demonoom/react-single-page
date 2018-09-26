@@ -157,7 +157,6 @@ export default class addARTextbook extends React.Component {
         })
         param.bookData.itemList = classArray;
         console.log(param)
-        return
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
             onResponse: function (result) {
                 if (result.msg == '调用成功' || result.success == true) {
