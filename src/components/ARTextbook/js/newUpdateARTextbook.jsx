@@ -283,7 +283,6 @@ export default class newUpdateARTextbook extends React.Component {
             method: 'selectImgComplex',
         };
         Bridge.callHandler(data, function (res) {
-            debugger
             // 拿到照片地址,显示在页面等待上传
             var arr = res.split(',');
             let item = '';
@@ -295,8 +294,6 @@ export default class newUpdateARTextbook extends React.Component {
                     item += v.split('?')[0] + '?size=300x300,'
                 })
             }
-
-            console.log(item);
 
             teacherV.state.initData.itemList.forEach(function (v, i) {
                 if (v.index == index) {
@@ -551,19 +548,26 @@ export default class newUpdateARTextbook extends React.Component {
      */
     addUploadVideo(index) {
         var data = {
-            method: 'selectVideo',
+            method: 'selectComplexVideo',
         };
         Bridge.callHandler(data, function (res) {
             // 拿到视频地址,显示在页面等待上传
             var arr = res.split(',');
-
-            let item = ',' + arr[0].split("?")[0];
-
+            let item = ',';
+            if (arr.length == 0) {
+                Toast.fail('请选择图片')
+                return
+            } else {
+                arr.forEach(function (v, i) {
+                    item += v.split('?')[0] + ','
+                })
+            }
             teacherV.state.initData.itemList.forEach(function (v, i) {
                 if (v.index == index) {
-                    v.video += item
+                    v.video += item.substr(0, item.length - 1)
                 }
             })
+
             teacherV.tabsOnChange(teacherV.state.clickTab)
 
         }, function (error) {
