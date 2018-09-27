@@ -1,5 +1,5 @@
 #ARTextbookList {
-    overflow: auto;
+    overflow: hidden;
     .am-list-view-scrollview-content{
         width: 100%;
     }
@@ -71,5 +71,48 @@
         }
 
     }
+    .searcch-item{
+        background: #fff;
+        .search-left{
+            width: calc(~"100% - 60px");
+            display: inline-block;
+            position: relative;
+            i{
+                background: url("../imgs/icon_search.png") no-repeat ;
+                display: inline-block;
+                background-size: 100% 100%;
+                width: 13px;
+                height: 16px;
+                position: absolute;
+                left: 22px;
+                top: 17px;
+            }
+        }
+        .search-right{
+            width:60px;
+            display: inline-block;
+            color: #f46a55;
+            font-size: 16px;
+            text-align: center;
+        }
+        .am-list-item.am-input-item{
+            height: 50px;
+            min-height: 50px;
+        }
+        .am-list-item .am-input-control input{
+            background-color: #f6f6f6 !important;
+            font-size: 14px;
+            padding:9px 6px 9px 26px;
+            border-radius: 4px;
+            position: relative;
+        }
+        .am-list-item .am-list-line{
+            padding-right: 0;
+        }
+        .am-list-line::after{
+            background-color: transparent;
+        }
+    }
+
 
 }

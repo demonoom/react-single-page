@@ -5,6 +5,7 @@ import {
     Toast,
     Switch,
     InputItem,
+    WhiteSpace,
     List,
     Button
 } from 'antd-mobile';
@@ -371,11 +372,18 @@ export default class ARTextbookList extends React.Component {
         return (
             <div id="ARTextbookList" style={{ height: classBinding.state.clientHeight }}>
                 <div className='tableDiv' style={{ height: classBinding.state.clientHeight }}>
-                        <InputItem
-                            onChange={this.nameInput}
-                            placeholder="请输入关键词"
-                            value={this.state.nameInputValue}
-                        ></InputItem>
+                    <div className="searcch-item">
+                        <span className="search-left">
+                            <InputItem
+                                onChange={this.nameInput}
+                                placeholder="请输入关键词"
+                                value={this.state.nameInputValue}
+                            ></InputItem>
+                            <i></i>
+                        </span>
+                        <span className="search-right">搜索</span>
+                    </div>
+                    <WhiteSpace />
                         {/* <span onClick={this.searchResult}>搜索</span> */}
                     <div className='addBunton' onClick={this.toAddARTextbook}>
                         <img src={require("../imgs/addBtn.png")} />
@@ -398,7 +406,7 @@ export default class ARTextbookList extends React.Component {
                         initialListSize={30}   //指定在组件刚挂载的时候渲染多少行数据，用这个属性来确保首屏显示合适数量的数据
                         scrollEventThrottle={20}     //控制在滚动过程中，scroll事件被调用的频率
                         style={{
-                            height: classBinding.state.clientHeight,
+                            height: classBinding.state.clientHeight - 60,
                         }}
                     />
                 </div>
