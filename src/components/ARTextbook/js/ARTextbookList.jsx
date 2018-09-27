@@ -60,7 +60,6 @@ export default class ARTextbookList extends React.Component {
     }
 
     finishForRefreshV2 = (id, name) => {
-        debugger
         this.state.dataSource = [];
         this.state.dataSource = new ListView.DataSource({
             rowHasChanged: (row1, row2) => row1 !== row2,
@@ -122,7 +121,7 @@ export default class ARTextbookList extends React.Component {
                     }
                     var isLoading = false;
                     if (arr.length > 0) {
-                        if (pager.pageCount == 1 && pager.rsCount < 10) {
+                        if (pager.pageCount == 1 && pager.rsCount < 16) {
                             isLoading = false;
                         } else {
                             isLoading = true;
@@ -130,6 +129,7 @@ export default class ARTextbookList extends React.Component {
                     } else {
                         isLoading = false;
                     }
+                    console.log(isLoading,"isLoading")
                     _this.initData = _this.initData.concat(arr);
                     _this.setState({
                         dataSource: _this.state.dataSource.cloneWithRows(_this.initData),
@@ -151,7 +151,6 @@ export default class ARTextbookList extends React.Component {
      */
     onEndReached = (event) => {
         console.log("number")
-
         var _this = this;
         var currentPageNo = this.state.defaultPageNo;
         if (!this.state.isLoadingLeft && !this.state.hasMore) {
@@ -261,76 +260,25 @@ export default class ARTextbookList extends React.Component {
     };
 
 
-    /**
-     * 点击发布
-     */
-    publish(data) {
-        var _this = this;
-        var param = {
-            "method": 'changeARBookStatus',
-            "condition": 1,
-            "bId": data.id,
-        };
-        WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
-            onResponse: (result) => {
-                if (result.msg == '调用成功' || result.success == true) {
-                    Toast.success("发布成功", 1)
-                    _this.state.dataSource = [];
-                    _this.state.dataSource = new ListView.DataSource({
-                        rowHasChanged: (row1, row2) => row1 !== row2,
-                    });
-                    _this.initData.forEach(function (v, i) {
-                        if (data.id == v.id) {
-                            v.status = 1;
-                        }
-                    });
-                    _this.setState({
-                        dataSource: _this.state.dataSource.cloneWithRows(_this.initData)
-                    });
-                } else {
-                    Toast.fail(result.msg, 3)
-                }
-            },
-            onError: function (error) {
-                Toast.info('修改失败');
-            }
-        });
-    }
-
-    /**
-     * 发布弹出框
-     */
-    showPublishAlert = (data, event) => {
-        if (data.status == 1) {
-            Toast.info("已发布");
-            return;
-        }
-        event.stopPropagation();
-        var phoneType = navigator.userAgent;
-        var phone;
-        if (phoneType.indexOf('iPhone') > -1 || phoneType.indexOf('iPad') > -1) {
-            phone = 'ios'
-        } else {
-            phone = 'android'
-        }
-        var _this = this;
-        const alertInstance = alert('将不能修改和删除，确定发布？', '', [
-            { text: '取消', onPress: () => console.log('cancel'), style: 'default' },
-            { text: '确定', onPress: () => _this.publish(data) },
-        ], phone);
-    };
-
+   
     /**
      * 
      */
     nameInput = (value) => {
-        this.setState({ nameInputValue: value },()=>{
-            this.viewARBookPage(this.state.uid,true)
-        })
+        this.setState({ nameInputValue: value })
     }
 
+
+    /**
+     * 点击搜索
+     */
     searchResult=()=>{
-        this.viewARBookPage(this.state.uid,true)
+        this.setState({
+            defaultPageNo: 1,
+        },()=>{
+            this.viewARBookPage(this.state.uid,true)
+        })
+       
     }
 
     render() {
@@ -381,7 +329,7 @@ export default class ARTextbookList extends React.Component {
                             ></InputItem>
                             <i></i>
                         </span>
-                        <span className="search-right">搜索</span>
+                        <span className="search-right" onClick={this.searchResult}>搜索</span>
                     </div>
                     <WhiteSpace />
                         {/* <span onClick={this.searchResult}>搜索</span> */}
