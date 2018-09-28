@@ -1,6 +1,27 @@
 #chatDetil {
   background: #ebebeb;
 }
+#chatDetil .contactsListNav {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  background: #cccccc;
+}
+#chatDetil .contactsListNav .nav-left {
+  width: 50%;
+  box-sizing: border-box;
+  display: inline-block;
+  text-align: center;
+  padding: 20px 0px;
+}
+#chatDetil .contactsListNav .nav-right {
+  width: 50%;
+  box-sizing: border-box;
+  display: inline-block;
+  text-align: center;
+  padding: 20px 0px;
+}
 #chatDetil .messageWrap {
   padding: 10px;
 }

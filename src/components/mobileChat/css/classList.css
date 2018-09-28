@@ -1,4 +1,24 @@
-(node) util.print is deprecated. Use console.log instead.
+#classList .contactsListNav {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  background: #cccccc;
+}
+#classList .contactsListNav .nav-left {
+  width: 50%;
+  box-sizing: border-box;
+  display: inline-block;
+  text-align: center;
+  padding: 20px 0px;
+}
+#classList .contactsListNav .nav-right {
+  width: 50%;
+  box-sizing: border-box;
+  display: inline-block;
+  text-align: center;
+  padding: 20px 0px;
+}
 #classList .am-list-item .am-list-line .am-list-content {
   padding: 10px 0;
   font-size: 15px;

@@ -1,4 +1,24 @@
-(node) util.print is deprecated. Use console.log instead.
+#friendList .contactsListNav {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  background: #cccccc;
+}
+#friendList .contactsListNav .nav-left {
+  width: 50%;
+  box-sizing: border-box;
+  display: inline-block;
+  text-align: center;
+  padding: 20px 0px;
+}
+#friendList .contactsListNav .nav-right {
+  width: 50%;
+  box-sizing: border-box;
+  display: inline-block;
+  text-align: center;
+  padding: 20px 0px;
+}
 #friendList .userImg {
   width: 40px;
   height: 40px;
