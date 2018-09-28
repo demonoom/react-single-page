@@ -70,7 +70,8 @@ export default class wxBindIndex extends React.Component {
                         }
                     } else {   //openid 未绑定
                         this.setState({
-                            openidFlag: false,
+                            // openidFlag: false,
+                            openidFlag: true, //debug
                         })
                     }
                 } else {
@@ -357,6 +358,14 @@ export default class wxBindIndex extends React.Component {
         });
     }
 
+    toDetail(toThere,type){
+        console.log(toThere);
+        console.log(type);
+        var url = WebServiceUtil.mobileServiceURL+toThere+"?userId="+this.state.col_id;
+        console.log(url);
+        window.location.href = url;
+    }
+
 
     render() {
         const {value} = this.state;
@@ -434,8 +443,13 @@ export default class wxBindIndex extends React.Component {
                 </div>
                 <WhiteSpace size="lg"/>
                 <div className="bindingNumber" style={{display: !this.state.openidFlag ? 'none' : this.state.value != 2 ? 'none' : 'block'}}>
-                    <div className="bindingNumberStudent">您绑定的学生</div>
-                    {this.state.stuLis}
+                    <div className="bindingNumberStudent">学生校园个人信息</div>
+                    {/*{this.state.stuLis}*/}
+                    <div>
+                        <div onClick={this.toDetail.bind(this,'stuAttendance','TEAC')}>孩子考勤</div>
+                        <div onClick={this.toDetail.bind(this,'stuState','TEAC')}>孩子状态</div>
+                        <div onClick={this.toDetail.bind(this,'stuRanking','TEAC')}>运动排名</div>
+                    </div>
                 </div>
                 <div className="Student-am-button" style={{display: !this.state.openidFlag ? 'none' : this.state.value != 2 ? 'none' : 'block'}}
                      onClick={this.showBindModel}>绑定学生

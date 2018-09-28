@@ -837,6 +837,24 @@ const studentDetail = (location, cb) => {
         }
     )
 }
+const stuAttendance = (location, cb) => {
+    require.ensure([], require => {
+            cb(null, require("./components/studentsInfo/js/stuAttendance").default)
+        }
+    )
+}
+const stuState = (location, cb) => {
+    require.ensure([], require => {
+            cb(null, require("./components/studentsInfo/js/stuState").default)
+        }
+    )
+}
+const stuRanking = (location, cb) => {
+    require.ensure([], require => {
+            cb(null, require("./components/studentsInfo/js/stuRanking").default)
+        }
+    )
+}
 
 
 import './index.less';
@@ -908,6 +926,9 @@ class Index extends React.Component {
                     <li><Link
                         to="/contactsList?unionid=o-w611I9nKqTHcT3P34srzwIrf6U"
                         style={{fontSize: '24px'}}>疑心</Link></li>
+                    <li><Link
+                        to="/wxBindIndex?unionid=o-w611I9nKqTHcT3P34srzwIrf6U"
+                        style={{fontSize: '24px'}}>绑定账号</Link></li>
                     <li><Link
                         to="/classCardHomePage?clazzId=819&roomId=1&mac=14:1f:78:73:1e:c3&schoolId=9"
                         style={{fontSize: '24px'}}>班牌首页</Link></li>
@@ -1195,6 +1216,9 @@ ReactDOM.render(
             <Route path="studentList" getComponent={studentList}/>
             <Route path="classListDetail" getComponent={classListDetail}/>
             <Route path="studentDetail" getComponent={studentDetail}/>
+            <Route path="stuAttendance" getComponent={stuAttendance}/>
+            <Route path="stuState" getComponent={stuState}/>
+            <Route path="stuRanking" getComponent={stuRanking}/>
         </Route>
     </Router>
     ,
