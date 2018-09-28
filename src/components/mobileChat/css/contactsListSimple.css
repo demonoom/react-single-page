@@ -76,6 +76,9 @@
 #contactsListSimple .am-list-view-scrollview-content {
   width: 100%;
 }
+#contactsListSimple .am-list-view-scrollview-content .am-list-body::after {
+  background-color: transparent;
+}
 #contactsListSimple .am-list-item .am-list-line .am-list-content {
   padding: 10px 0;
   font-size: 15px;
