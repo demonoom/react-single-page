@@ -837,6 +837,8 @@ const studentDetail = (location, cb) => {
         }
     )
 }
+
+
 import './index.less';
 
 class Index extends React.Component {
@@ -903,6 +905,9 @@ class Index extends React.Component {
                     {/*<li><Link*/}
                     {/*to="/moralEducation?ident=23836"*/}
                     {/*style={{fontSize: '24px'}}>德育评价</Link></li>*/}
+                    <li><Link
+                        to="/contactsList?unionid=o-w611I9nKqTHcT3P34srzwIrf6U"
+                        style={{fontSize: '24px'}}>疑心</Link></li>
                     <li><Link
                         to="/classCardHomePage?clazzId=819&roomId=1&mac=14:1f:78:73:1e:c3&schoolId=9"
                         style={{fontSize: '24px'}}>班牌首页</Link></li>

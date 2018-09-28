@@ -43,6 +43,7 @@ export default class contacts_ListS extends React.Component {
     }
 
     componentWillMount() {
+        // history.back(-1);
         document.title = "小蚂蚁聊天";   //设置title
         var locationHref = window.location.href;
         var locationSearch = locationHref.substr(locationHref.indexOf("?") + 1);
@@ -290,6 +291,14 @@ export default class contacts_ListS extends React.Component {
 
     }
 
+    historyBack(){
+        window.history.back();
+    }
+
+    historyGo(){
+        window.history.go(1);
+    }
+
     render() {
 
         const row = (rowData, sectionID, rowID) => {
@@ -341,6 +350,9 @@ export default class contacts_ListS extends React.Component {
             }
         }
 
+
+
+
         return (
             <div id='contactsListSimple'>
                 <div className="address_header" style={{display: this.state.butFoot ? 'block' : 'none'}}>
@@ -369,6 +381,10 @@ export default class contacts_ListS extends React.Component {
                         height: document.body.clientHeight - this.state.missDistance,
                     }}
                 />
+                <div className="contactsListNav">
+                    <div className="nav-left" onClick={()=>{window.history.back()}}>后退</div>
+                    <div className="nav-right" onClick={()=>{window.history.go(1)}}>前进</div>
+                </div>
 
             </div>
         );

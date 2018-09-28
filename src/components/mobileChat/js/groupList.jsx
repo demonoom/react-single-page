@@ -145,6 +145,10 @@ export default class groupChatList extends React.Component {
                             height: document.body.clientHeight,
                         }}
                     />
+                <div className="contactsListNav">
+                    <div className="nav-left" onClick={()=>{window.history.back()}}>后退</div>
+                    <div className="nav-right" onClick={()=>{window.history.go(1)}}>前进</div>
+                </div>
             </div>
         );
     }
