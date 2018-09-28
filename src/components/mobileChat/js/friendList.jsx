@@ -174,8 +174,9 @@ export default class friendList extends React.Component {
                     }}
                 />
                 <div className="contactsListNav">
-                    <div className="nav-left" onClick={()=>{window.history.back()}}>后退</div>
-                    <div className="nav-right" onClick={()=>{window.history.go(1)}}>前进</div>
+                    <div className="line_public"></div>
+                    <div className="nav-left" onClick={()=>{window.history.back()}}></div>
+                    <div className="nav-right" onClick={()=>{window.history.go(1)}}></div>
                 </div>
             </div>
         );

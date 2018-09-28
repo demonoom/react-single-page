@@ -1,27 +1,6 @@
 #contactsListSimple {
   height: 100%;
 }
-#contactsListSimple .contactsListNav {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  width: 100%;
-  background: #cccccc;
-}
-#contactsListSimple .contactsListNav .nav-left {
-  width: 50%;
-  box-sizing: border-box;
-  display: inline-block;
-  text-align: center;
-  padding: 20px 0px;
-}
-#contactsListSimple .contactsListNav .nav-right {
-  width: 50%;
-  box-sizing: border-box;
-  display: inline-block;
-  text-align: center;
-  padding: 20px 0px;
-}
 #contactsListSimple .maaee_group_face,
 #contactsListSimple .maaee_group_face1,
 #contactsListSimple .maaee_group_face2,
@@ -96,6 +75,9 @@
 }
 #contactsListSimple .am-list-view-scrollview-content {
   width: 100%;
+}
+#contactsListSimple .am-list-view-scrollview-content .am-list-body::after {
+  background-color: transparent;
 }
 #contactsListSimple .am-list-item .am-list-line .am-list-content {
   padding: 10px 0;
