@@ -79,8 +79,8 @@ export default class stuList extends React.Component {
         console.log('弹窗');
         console.log(colUid);
         prompt('请输入心率阀值', '', [
-            {text: 'Cancel'},
-            {text: 'Submit', onPress: value => {
+            {text: '取消'},
+            {text: '确定', onPress: value => {
                 console.log(`输入的内容:${value}`);
                 this.updateBindedChildrenAndHeartRate(colUid,value);
             }},

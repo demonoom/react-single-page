@@ -1,9 +1,12 @@
 #stuRanking .stuAttendanceList .am-list-content {
   font-size: 16px !important;
 }
-#stuRanking .stuAttendanceList .am-list-view-scrollview-content,
-#stuRanking .stuAttendanceList .am-list-body {
+#stuRanking .stuAttendanceList .am-list-view-scrollview-content {
   height: 100%;
+  width: 100%;
+}
+#stuRanking .stuAttendanceList .am-list-body {
+  height: calc(100% - 40px);
   width: 100%;
 }
 #stuRanking .stuAttendanceList .am-list-item {
@@ -57,7 +60,7 @@
 }
 #stuRanking .single-multi-foo-menu {
   position: absolute;
-  z-index: 70 !important;
+  z-index: 81 !important;
   width: 100%;
   bottom: 0;
 }
@@ -80,7 +83,7 @@
   height: 100%;
   background-color: #000;
   opacity: 0.4;
-  z-index: 69;
+  z-index: 80;
 }
 #stuRanking .single-multi-top-nav-bar {
   border-bottom: 8px #f5f5f9 solid !important;
