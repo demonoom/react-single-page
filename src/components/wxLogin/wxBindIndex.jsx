@@ -370,6 +370,8 @@ export default class wxBindIndex extends React.Component {
         // }else if(type == 'TEAC'){
         //     var id = this.state.col_uid
         // }
+        // console.log(this.state.col_uid);
+        // return;
         var url = WebServiceUtil.mobileServiceURL+toThere+"?userId="+this.state.col_uid+"&type="+type;
         // console.log(url);
         window.location.href = url;

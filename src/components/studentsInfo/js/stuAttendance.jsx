@@ -172,14 +172,23 @@ export default class stuAttendance extends React.Component {
 
     onCancel = (value) => {
         console.log(this.state.initClazzId,'cancel');
-        this.setState({show: false, clazzId:this.state.initClazzId});
+        this.setState({show: false});
+        if(this.state.clazzId.length <= 0){
+            this.setState({
+                clazzId:this.state.initClazzId
+            })
+        }
     }
 
     handleClick = (e) => {
         e.preventDefault();
+        var arr = [];
+        for(var k in this.state.clazzId){
+            arr.push(this.state.clazzId[k]);
+        }
         this.setState({
             show: !this.state.show,
-            initClazzId: this.state.clazzId
+            initClazzId: arr
         },()=>{
             console.log(this.state.initClazzId,'initClazzId')
         });

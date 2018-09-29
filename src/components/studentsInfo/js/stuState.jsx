@@ -164,12 +164,22 @@ export default class stuState extends React.Component {
 
     onCancel = () => {
         this.setState({ show: false });
+        if(this.state.clazzId.length <= 0){
+            this.setState({
+                clazzId:this.state.initClazzId
+            })
+        }
     }
 
     handleClick = (e) => {
         e.preventDefault();
+        var arr = [];
+        for(var k in this.state.clazzId){
+            arr.push(this.state.clazzId[k]);
+        }
         this.setState({
             show: !this.state.show,
+            initClazzId: arr
         });
 
         if (!this.state.initData) {

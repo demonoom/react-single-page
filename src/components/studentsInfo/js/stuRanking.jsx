@@ -22,7 +22,7 @@ export default class stuRanking extends React.Component {
             hasMore:true,
             initData: '',
             show: false,
-            className:'请选择班级'
+            className:[]
         };
 
     }
@@ -70,7 +70,7 @@ export default class stuRanking extends React.Component {
                     })
                     this.setState({
                         clazzId: [res.response[0].id],
-                        className: res.response[0].grade.name + res.response[0].name
+                        className: [res.response[0].grade.name + res.response[0].name]
                     },()=>{
                         if(callback){
                             callback();
@@ -178,13 +178,24 @@ export default class stuRanking extends React.Component {
     }
 
     onCancel = () => {
-        this.setState({ show: false });
+        this.setState({ show: false});
+        console.log(this.state.clazzId,'this.state.clazzId')
+        if(this.state.clazzId.length <= 0){
+            this.setState({
+                clazzId:this.state.initClazzId
+            })
+        }
     }
 
     handleClick = (e) => {
         e.preventDefault();
+        var arr = [];
+        for(var k in this.state.clazzId){
+            arr.push(this.state.clazzId[k]);
+        }
         this.setState({
             show: !this.state.show,
+            initClazzId: arr
         });
 
         if (!this.state.initData) {
@@ -230,7 +241,9 @@ export default class stuRanking extends React.Component {
                             mode="light"
                             onClick={this.handleClick}
                             className="single-multi-top-nav-bar"
-                            rightContent={this.state.className}
+                            rightContent={this.state.className.map((value,index)=>{
+                                return <span>{value}</span>
+                            })}
                         >
                             {/*请选择班级*/}
                         </NavBar>
@@ -253,17 +266,16 @@ export default class stuRanking extends React.Component {
 
         return (
             <div id="stuRanking">
-
                 <ListView
                     ref={el => this.lv = el}
                     dataSource={this.state.dataSource}    //数据类型是 ListViewDataSource
                     renderHeader={()=>{
                         return <div>本周运动排名</div>
                     }}
-                    renderFooter={() => (
-                        <div style={{paddingTop: 5, paddingBottom: 0, textAlign: 'center'}}>
-                            {this.state.isLoading ? '正在加载...' : '已经全部加载完毕'}
-                        </div>)}
+                    // renderFooter={() => (
+                    //     <div style={{paddingTop: 5, paddingBottom: 0, textAlign: 'center'}}>
+                    //         {this.state.isLoading ? '正在加载...' : '已经全部加载完毕'}
+                    //     </div>)}
                     renderRow={row}   //需要的参数包括一行数据等,会返回一个可渲染的组件为这行数据渲染  返回renderable
                     className="am-list stuAttendanceList"
                     pageSize={30}    //每次事件循环（每帧）渲染的行数
