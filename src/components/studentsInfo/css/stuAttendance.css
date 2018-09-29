@@ -62,6 +62,10 @@
   width: 100%;
   bottom: 0;
 }
+#stuAttendance .single-multi-foo-menu .am-list-item {
+  padding: 0 0 0 15px;
+  margin: 0;
+}
 #stuAttendance .single-multi-top-nav-bar {
   border-bottom: 8px #f5f5f9 solid !important;
   position: relative;

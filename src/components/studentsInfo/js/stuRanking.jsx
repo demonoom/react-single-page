@@ -205,7 +205,7 @@ export default class stuRanking extends React.Component {
 
                 const menuEl = (
                     <Menu
-                        className="single-multi-foo-menu"
+                        className="single-multi-foo-menu stuModal"
                         data={initData}
                         value={this.state.clazzId}
                         level={1}
@@ -242,7 +242,7 @@ export default class stuRanking extends React.Component {
                 {/*<Item extra={rowData.courseTableItem} align="top" thumb="http://i2.hdslb.com/bfs/face/91e4fa4006e6af4801da253640128d59bcebe1e6.jpg" multipleLine>*/}
                 {/*{rowData.user.userName} <Brief><span>图片</span>曲江拿铁城b座</Brief>*/}
                 {/*</Item>*/}
-                dom = <Item extra={rowData.sportStepCount+'步'} align="top" thumb={<span className={rowID == 1?'first':rowID == 2?'second':rowID == 3?'third':'other'}>{parseInt(rowID)}</span>} multipleLine>
+                dom = <Item extra={rowData.sportStepCount+'步'} align="top" thumb={<span className={rowID == 1?'icon-movement movement-first':rowID == 2?'icon-movement movement-second':rowID == 3?'icon-movement movement-third':'other'}>{parseInt(rowID)}</span>} multipleLine>
                     {rowData.user.userName} <Brief>共消耗{(rowData.calorie?rowData.calorie:0).toFixed(2)}卡</Brief>
                 </Item>
             }
@@ -261,11 +261,11 @@ export default class stuRanking extends React.Component {
                         return <div>本周运动排名</div>
                     }}
                     renderFooter={() => (
-                        <div style={{paddingTop: 5, paddingBottom: 40, textAlign: 'center'}}>
+                        <div style={{paddingTop: 5, paddingBottom: 0, textAlign: 'center'}}>
                             {this.state.isLoading ? '正在加载...' : '已经全部加载完毕'}
                         </div>)}
                     renderRow={row}   //需要的参数包括一行数据等,会返回一个可渲染的组件为这行数据渲染  返回renderable
-                    className="am-list"
+                    className="am-list stuAttendanceList"
                     pageSize={30}    //每次事件循环（每帧）渲染的行数
                     //useBodyScroll  //使用 html 的 body 作为滚动容器   bool类型   不应这么写  否则无法下拉刷新
                     scrollRenderAheadDistance={200}   //当一个行接近屏幕范围多少像素之内的时候，就开始渲染这一行
