@@ -63,6 +63,17 @@ export default class chat_Detil extends React.Component {
 
         document.title = toName;   //设置title
 
+        var phoneType = navigator.userAgent;
+        var phone;
+        if (phoneType.indexOf('iPhone') > -1 || phoneType.indexOf('iPad') > -1) {
+            phone = 'ios'
+        } else {
+            phone = 'android'
+        }
+        this.setState({
+            phone:phone
+        })
+
         /**
          * 根据unionid获取绑定的小蚂蚁用户信息
          * @type {{method: string, openId: (string|string)}}
@@ -1163,7 +1174,9 @@ export default class chat_Detil extends React.Component {
 
                 <button className="submit" onClick={this.sendMessage}>发送</button>
             </List>
-            <div className="contactsListNav">
+            <div style={
+                this.state.phone == 'ios'?{display:'none'}:{display:'block'}
+            } className="contactsListNav">
                 <div className="line_public"></div>
                 <div className="nav-left" onClick={()=>{window.history.back()}}></div>
                 <div className="nav-right" onClick={()=>{window.history.go(1)}}></div>

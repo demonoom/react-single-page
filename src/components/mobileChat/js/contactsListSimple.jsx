@@ -50,6 +50,16 @@ export default class contacts_ListS extends React.Component {
         var searchArray = locationSearch.split("&");
         var unionid = searchArray[0].split('=')[1];
         this.setState({unionid});
+        var phoneType = navigator.userAgent;
+        var phone;
+        if (phoneType.indexOf('iPhone') > -1 || phoneType.indexOf('iPad') > -1) {
+            phone = 'ios'
+        } else {
+            phone = 'android'
+        }
+        this.setState({
+            phone:phone
+        })
         // this.setState({unionid: 'o-w611FMw4s8WtiCwNqD1Ltr9w2w'});
     }
 
@@ -381,7 +391,9 @@ export default class contacts_ListS extends React.Component {
                         height: document.body.clientHeight - this.state.missDistance -49,
                     }}
                 />
-                <div className="contactsListNav">
+                <div style={
+                    this.state.phone == 'ios'?{display:'none'}:{display:'block'}
+                } className="contactsListNav">
                     <div className="line_public"></div>
                     <div className="nav-left" onClick={()=>{window.history.back()}}></div>
                     <div className="nav-right" onClick={()=>{window.history.go(1)}}></div>
