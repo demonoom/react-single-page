@@ -1,11 +1,13 @@
 import React from 'react';
 import '../css/stuAttendance.less'
-import {List, Toast, ListView, Button, InputItem, Radio, WhiteSpace, Modal} from 'antd-mobile';
+import {List, Menu, ListView, NavBar, ActivityIndicator, Toast, WhiteSpace, Modal} from 'antd-mobile';
+
 const dataSource = new ListView.DataSource({
     rowHasChanged: (row1, row2) => row1 !== row2,
 });
 const Item = List.Item;
 const Brief = Item.Brief;
+const data = [];
 export default class stuAttendance extends React.Component {
 
     constructor(props) {
@@ -15,48 +17,52 @@ export default class stuAttendance extends React.Component {
             dataSource: dataSource.cloneWithRows(this.initData),
             defaultPageNo: 1,
             isLoading: true,
-            hasMore:true,
+            hasMore: true,
+            initData: '',
+            show: false,
+            className: '请选择班级'
         };
 
     }
 
     componentDidMount() {
-        document.title= "孩子考勤";
+        document.title = "孩子考勤";
         var locationHref = window.location.href;
         var locationSearch = locationHref.substr(locationHref.indexOf("?") + 1);
         var userId = locationSearch.split("&")[0].split('=')[1];
         var type = locationSearch.split("&")[1].split('=')[1];
         this.setState({
-            userId:userId
+            userId: userId,
+            type: type
         }, () => {
-            if(type == 'PARENT'){
+            if (type == 'PARENT') {
                 this.getBraceletStudentInfoAttendByParentId();
-            }else if(type == 'TEAC'){
+            } else if (type == 'TEAC') {
                 console.log('教师');
                 // 根据教师id获取clazzid
-                this.getClazzesByUserId(()=>{
+                this.getClazzesByUserId(() => {
                     this.getBraceletStudentInfoAttendByClazzId();
-                    });
+                });
             }
         });
 
     }
 
 
-    getBraceletStudentInfoAttendByClazzId(){
+    getBraceletStudentInfoAttendByClazzId() {
         var param = {
             "method": 'getBraceletStudentInfoAttendByClazzId',
-            "clazzId": this.state.clazzId,
+            "clazzId": this.state.clazzId.join(','),
         };
 
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
-            onResponse:  (res) => {
-                console.log(res,'res');
+            onResponse: (res) => {
+                console.log(res, 'res');
                 if (res.success == true && res.msg == '调用成功') {
                     this.initData = this.initData.concat(res.response);
                     this.setState({
                         dataSource: dataSource.cloneWithRows(this.initData),
-                        isLoading:false,
+                        isLoading: false,
                         hasMore: false,
 
                     })
@@ -73,20 +79,28 @@ export default class stuAttendance extends React.Component {
     }
 
     //根据教师id获取clazzid
-    getClazzesByUserId(callback){
+    getClazzesByUserId(callback) {
         var param = {
             "method": 'getClazzesByUserId',
             "userId": this.state.userId,
         };
 
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
-            onResponse:  (res) => {
-                console.log(res,'res');
+            onResponse: (res) => {
+                console.log(res, 'res');
                 if (res.success == true && res.msg == '调用成功') {
+                    var changeData = res.response;
+                    changeData.forEach((value, index) => {
+                        data.push({
+                            value: value.id,
+                            label: value.grade.name + value.name
+                        })
+                    })
                     this.setState({
-                        clazzId: res.response[0].id
-                    },()=>{
-                        if(callback){
+                        clazzId: [res.response[0].id],
+                        className: res.response[0].grade.name + res.response[0].name
+                    }, () => {
+                        if (callback) {
                             callback();
                         }
                     })
@@ -100,20 +114,20 @@ export default class stuAttendance extends React.Component {
     }
 
     //根据家长id获取孩子列表
-    getBraceletStudentInfoAttendByParentId(){
+    getBraceletStudentInfoAttendByParentId() {
         var param = {
             "method": 'getBraceletStudentInfoAttendByParentId',
             "userId": this.state.userId,
         };
 
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
-            onResponse:  (res) => {
-                console.log(res,'res');
+            onResponse: (res) => {
+                console.log(res, 'res');
                 if (res.success == true && res.msg == '调用成功') {
                     this.initData = this.initData.concat(res.response);
                     this.setState({
                         dataSource: dataSource.cloneWithRows(this.initData),
-                        isLoading:false,
+                        isLoading: false,
                         hasMore: false,
 
                     })
@@ -129,32 +143,93 @@ export default class stuAttendance extends React.Component {
         });
     }
 
-
-    /**
-     *  ListView数据全部渲染完毕的回调
-     */
-    onEndReached = (event) => {
-        var _this = this;
-        var currentPageNo = this.state.defaultPageNo;
-        if (!this.state.isLoading && !this.state.hasMore) {
+    onOk = (value) => {
+        if (value.length <= 0) {
+            Toast.info('未选中任何班级!', 1);
             return;
         }
-        currentPageNo += 1;
-        this.setState({isLoading: true, defaultPageNo: currentPageNo});
-        _this.getBraceletStudentInfoAttendByParentId(_this.state.ident);
-    };
+        this.setState({
+            clazzId: value,
+        }, () => {
+            this.getBraceletStudentInfoAttendByClazzId();
+            this.onCancel();
+        })
+    }
+
+    onCancel = () => {
+        this.setState({show: false});
+    }
+
+    handleClick = (e) => {
+        e.preventDefault();
+        this.setState({
+            show: !this.state.show,
+        });
+
+        if (!this.state.initData) {
+            setTimeout(() => {
+                this.setState({
+                    initData: data,
+                });
+            }, 500);
+        }
+    }
 
 
     render() {
         const row = (rowData, sectionID, rowID) => {
             return (
-                <Item align="top" thumb="http://i2.hdslb.com/bfs/face/91e4fa4006e6af4801da253640128d59bcebe1e6.jpg" multipleLine>
-                    {rowData.user.userName} <Brief>本周迟到{rowData.attend.weekCount}次&nbsp;本月迟到{rowData.attend.monthCount}次</Brief>
+                <Item align="top" thumb="http://i2.hdslb.com/bfs/face/91e4fa4006e6af4801da253640128d59bcebe1e6.jpg"
+                      multipleLine>
+                    {rowData.user.userName} <Brief>本周迟到{rowData.attend.weekCount}次&nbsp;
+                    本月迟到{rowData.attend.monthCount}次</Brief>
                 </Item>
             )
         };
+        const {initData, show} = this.state;
+        const menuEl = (
+            <Menu
+                className="single-multi-foo-menu"
+                data={initData}
+                value={this.state.clazzId}
+                level={1}
+                onChange={this.onChange}
+                onOk={this.onOk}
+                onCancel={this.onCancel}
+                height={document.documentElement.clientHeight * 0.6}
+                multiSelect
+            />
+        );
+        const loadingEl = (
+            <div style={{
+                position: 'absolute',
+                width: '100%',
+                height: document.documentElement.clientHeight * 0.6,
+                display: 'flex',
+                justifyContent: 'center'
+            }}>
+                <ActivityIndicator size="large"/>
+            </div>
+        );
         return (
             <div id="stuAttendance">
+                <div style={
+                    this.state.type == 'TEAC' ? {display: 'block'} : {display: 'none'}
+                } className={show ? 'single-multi-menu-active' : ''}>
+                    <div>
+                        <NavBar
+                            leftContent="选择绑定的班级"
+                            mode="light"
+                            onClick={this.handleClick}
+                            className="single-multi-top-nav-bar"
+                            rightContent={this.state.className}
+                        >
+                            {/*请选择班级*/}
+                        </NavBar>
+                    </div>
+                    {show ? initData ? menuEl : loadingEl : null}
+                    {show ? <div className="menu-mask" onClick={this.onCancel}/> : null}
+                </div>
                 <ListView
                     ref={el => this.lv = el}
                     dataSource={this.state.dataSource}    //数据类型是 ListViewDataSource
