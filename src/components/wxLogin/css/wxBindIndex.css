@@ -195,6 +195,12 @@
   width: 40%;
   display: inline-block;
 }
+#wxBindIndex .bindingNumber .left {
+  width: 35%;
+}
+#wxBindIndex .bindingNumber .right {
+  width: 42%;
+}
 #wxBindIndex .bindingNumber .am-button {
   padding: 0;
   border: 1px solid #1AAD18;

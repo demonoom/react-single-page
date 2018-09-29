@@ -78,9 +78,9 @@
 #stuRanking .menu-mask {
   content: ' ';
   position: absolute;
-  top: 0;
+  top: -40px;
   width: 100%;
-  height: 100%;
+  height: calc(100% + 40px);
   background-color: #000;
   opacity: 0.4;
   z-index: 80;
@@ -160,6 +160,8 @@
   color: #666;
   font-size: 16px;
   text-align: center;
+  width: 25px;
+  display: inline-block;
 }
 #stuRanking .stuModal .am-menu-select-container {
   padding-top: 42px;
