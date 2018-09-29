@@ -63,7 +63,8 @@ export default class stuState extends React.Component {
                     this.initData = [{
                         value: -1,
                     }]
-                    this.initData = res.response;
+                    // this.initData = res.response;
+                    this.initData = this.initData.concat(res.response);
                     this.setState({
                         dataSource: dataSource.cloneWithRows(this.initData),
                         isLoading:false,
@@ -184,8 +185,8 @@ export default class stuState extends React.Component {
     render() {
         const row = (rowData, sectionID, rowID) => {
             var dom = '';
-            console.log();
             if(rowData.value == -1){
+                console.log(rowData.value);
                 const {initData, show} = this.state;
                 const menuEl = (
                     <Menu
