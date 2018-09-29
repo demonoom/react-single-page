@@ -46,6 +46,16 @@
 #stuAttendance .stuAttendanceList .am-list-brief .blueText {
   color: #108EE9;
 }
+#stuAttendance .stuAttendanceList .am-list-brief .icon-address {
+  width: 12px;
+  height: 15px;
+  background: url("../img/icon-address.png") no-repeat;
+  background-size: 100% 100%;
+  display: inline-block;
+  margin-right: 6px;
+  position: relative;
+  top: 2px;
+}
 #stuAttendance .single-multi-foo-menu {
   position: absolute;
   z-index: 70 !important;

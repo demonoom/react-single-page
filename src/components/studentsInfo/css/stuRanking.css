@@ -25,3 +25,54 @@
   opacity: 0.4;
   z-index: 69;
 }
+#stuRanking .single-multi-top-nav-bar {
+  border-bottom: 8px #f5f5f9 solid !important;
+  position: relative;
+  background-color: #fff;
+  color: #666666;
+  flex-wrap: wrap;
+  min-height: 45px;
+  height: auto;
+  flex: auto !important;
+  -webkit-box-flex: inherit !important;
+  -webkit-box-align: start;
+  -webkit-align-items: baseline;
+  -ms-flex-align: start;
+  align-items: start;
+  padding: 10px 0 3px;
+  box-sizing: border-box;
+}
+#stuRanking .single-multi-top-nav-bar .am-navbar-left {
+  font-size: 14px !important;
+  flex: auto !important;
+  -webkit-box-flex: inherit !important;
+  max-width: 150px;
+  line-height: 26px;
+}
+#stuRanking .single-multi-top-nav-bar .am-navbar-right {
+  font-size: 15px!important;
+  color: #333 !important;
+  background: url("../img/arrow_righ.png") no-repeat right 8px;
+  background-size: 8px;
+  padding-right: 15px;
+  flex-wrap: wrap;
+  flex: auto !important;
+  -webkit-box-flex: inherit !important;
+  height: auto!important;
+  max-width: calc(100% - 150px);
+}
+#stuRanking .single-multi-top-nav-bar .am-navbar-right span {
+  color: #108EE9;
+  font-size: 13px!important;
+  border: 1px #108EE9 solid;
+  -webkit-border-radius: 1px;
+  -moz-border-radius: 1px;
+  border-radius: 1px;
+  margin-right: 7px;
+  margin-bottom: 7px;
+  padding: 5px 9px;
+}
+#stuRanking .single-multi-top-nav-bar .am-navbar-title {
+  display: none;
+  color: #FFF !important;
+}
