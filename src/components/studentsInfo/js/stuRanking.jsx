@@ -259,7 +259,7 @@ export default class stuRanking extends React.Component {
                     rowID = parseInt(rowID) + 1;
                 }
                 dom = <Item extra={rowData.sportStepCount+'步'} align="top" thumb={<span className={rowID == 1?'icon-movement movement-first':rowID == 2?'icon-movement movement-second':rowID == 3?'icon-movement movement-third':'other'}>{parseInt(rowID)}</span>} multipleLine>
-                    {rowData.user.userName} <Brief>共消耗{(rowData.calorie?rowData.calorie:0).toFixed(2)}卡</Brief>
+                    {rowData.user.userName} <Brief>共消耗<span>{(rowData.calorie?rowData.calorie:0).toFixed(2)}</span>卡</Brief>
                 </Item>
             }
             return (
