@@ -285,3 +285,32 @@
   flex: 1;
   text-align: center;
 }
+#wxBindIndex .Student-info i {
+  width: 45px;
+  height: 45px;
+  display: inline-block;
+}
+#wxBindIndex .Student-info span {
+  display: block;
+  margin-top: 8px;
+  width: 100%;
+  line-height: 1;
+  font-size: 12px;
+  color: #666;
+}
+#wxBindIndex .Student-info .student-status {
+  background: url("../imgs/student-status.png") no-repeat;
+  background-size: 100% 100%;
+}
+#wxBindIndex .Student-info .Sports-rankings {
+  background: url("../imgs/Sports-rankings.png") no-repeat;
+  background-size: 100% 100%;
+}
+#wxBindIndex .Student-info .Class-attendance {
+  background: url("../imgs/Class-attendance.png") no-repeat;
+  background-size: 100% 100%;
+}
+#wxBindIndex .Student-info .student-list {
+  background: url("../imgs/student-list.png") no-repeat;
+  background-size: 100% 100%;
+}

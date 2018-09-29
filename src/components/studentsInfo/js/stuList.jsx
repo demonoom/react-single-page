@@ -60,16 +60,20 @@ export default class stuList extends React.Component {
 
     buildStuLists(res) {
         var _this = this
-        var arr = [<div>您绑定的孩子</div>]
+        var arr = [<div className="stu-title">您绑定的孩子</div>]
         if (!WebServiceUtil.isEmpty(res)) {
             res.forEach(function (v, i) {
                 arr.push(
                     <li className="StudentList">
-                        姓名: {v.userName} <span
-                        onClick={_this.weChatUnbindStduent.bind(this, v)}>解绑</span>
+                        <div className="line_public">
+                            <span>姓名: </span>
+                            <span className="gray">{v.userName}</span>
+                            <span onClick={_this.weChatUnbindStduent.bind(this, v)} className="unbundling">解绑</span>
+                        </div>
                         <div>
-                            <span>心率阀值: 90</span>
-                            <span onClick={_this.showModal.bind(_this)}>更改图标</span>
+                            <span>心率阀值：</span>
+                            <span className="gray">90</span>
+                            <span className="i-change" onClick={_this.showModal.bind(_this)}></span>
                         </div>
                     </li>
                 )

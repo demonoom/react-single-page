@@ -111,7 +111,8 @@ export default class wxBindIndex extends React.Component {
         var arr = []
         if (!WebServiceUtil.isEmpty(res)) {
             res.forEach(function (v, i) {
-                arr.push(<li className="StudentList">{v.userName} <span
+                arr.push(<li className="StudentList">
+                    {v.userName} <span
                     onClick={_this.weChatUnbindStduent.bind(this, v, obj)}>解绑</span>
                 </li>)
             })
@@ -453,9 +454,9 @@ export default class wxBindIndex extends React.Component {
                         <div className="bindingNumberStudent">您绑定的班级学生信息</div>
                         <div className="Student-info">
                             {/*<div onClick={this.toDetail.bind(this,'stuList','TEAC')}>孩子列表</div>*/}
-                            <div onClick={this.toDetail.bind(this,'stuAttendance','TEAC')}>孩子考勤</div>
-                            <div onClick={this.toDetail.bind(this,'stuState','TEAC')}>孩子状态</div>
-                            <div onClick={this.toDetail.bind(this,'stuRanking','TEAC')}>运动排名</div>
+                            <div onClick={this.toDetail.bind(this,'stuAttendance','TEAC')}><i className="student-status"></i><span>孩子考勤</span></div>
+                            <div onClick={this.toDetail.bind(this,'stuState','TEAC')}><i className="Class-attendance"></i><span>孩子状态</span></div>
+                            <div onClick={this.toDetail.bind(this,'stuRanking','TEAC')}><i className="Sports-rankings"></i><span>运动排名</span></div>
                         </div>
                     </div>
 
@@ -463,11 +464,11 @@ export default class wxBindIndex extends React.Component {
                 <WhiteSpace size="lg"/>
                 <div className="bindingNumber" style={{display: !this.state.openidFlag ? 'none' : this.state.value != 2 ? 'none' : 'block'}}>
                     <div className="bindingNumberStudent">学生校园个人信息</div>
-                    <div>
-                        <div onClick={this.toDetail.bind(this,'stuList','PARENT')}>孩子列表</div>
-                        <div onClick={this.toDetail.bind(this,'stuAttendance','PARENT')}>孩子考勤</div>
-                        <div onClick={this.toDetail.bind(this,'stuState','PARENT')}>孩子状态</div>
-                        <div onClick={this.toDetail.bind(this,'stuRanking','PARENT')}>运动排名</div>
+                    <div className="Student-info">
+                        <div onClick={this.toDetail.bind(this,'stuList','PARENT')}><i className="student-list"></i><span>孩子列表</span></div>
+                        <div onClick={this.toDetail.bind(this,'stuAttendance','PARENT')}><i className="student-status"></i><span>孩子考勤</span></div>
+                        <div onClick={this.toDetail.bind(this,'stuState','PARENT')}><i className="Class-attendance"></i><span>孩子状态</span></div>
+                        <div onClick={this.toDetail.bind(this,'stuRanking','PARENT')}><i className="Sports-rankings"></i><span>运动排名</span></div>
                     </div>
                 </div>
                 <div className="Student-am-button" style={{display: !this.state.openidFlag ? 'none' : this.state.value != 2 ? 'none' : 'block'}}
