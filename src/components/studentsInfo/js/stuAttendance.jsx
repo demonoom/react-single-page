@@ -255,7 +255,7 @@ export default class stuAttendance extends React.Component {
             }else{
                 dom = <Item align="top" thumb="http://i2.hdslb.com/bfs/face/91e4fa4006e6af4801da253640128d59bcebe1e6.jpg"
                             multipleLine>
-                    {rowData.user.userName} <Brief>本周迟到{rowData.attend.weekCount}次&nbsp;
+                    {rowData.user.userName} <Brief>本周迟到<span className="blueText">{rowData.attend.weekCount}</span>次&nbsp;
                     本月迟到<span className="blueText">{rowData.attend.monthCount}</span>次</Brief>
                 </Item>
             }
