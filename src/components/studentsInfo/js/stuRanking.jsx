@@ -97,8 +97,11 @@ export default class stuRanking extends React.Component {
             onResponse:  (res) => {
                 console.log(res,'res');
                 if (res.success == true && res.msg == '调用成功') {
-                    // this.initData = this.initData.concat(res.response);
-                    this.initData = (res.response);
+                    this.initData = [{
+                        value: -1,
+                    }]
+                    this.initData = this.initData.concat(res.response);
+                    // this.initData = (res.response);
                     this.setState({
                         dataSource: dataSource.cloneWithRows(this.initData),
                         isLoading:false,
@@ -195,36 +198,30 @@ export default class stuRanking extends React.Component {
 
 
     render() {
-        const row = (rowData, sectionID, rowID) => {
-            return (
-                    <Item extra={rowData.sportStepCount+'步'} align="top" thumb={<span className={rowID == 0?'first':rowID == 1?'second':rowID == 2?'third':'other'}>{parseInt(rowID)+1}</span>} multipleLine>
-                        {rowData.user.userName} <Brief>共消耗{(rowData.calorie).toFixed(2)}卡</Brief>
-                    </Item>
-            )
-        };
         const { initData, show } = this.state;
-        const menuEl = (
-            <Menu
-                className="single-multi-foo-menu"
-                data={initData}
-                value={this.state.clazzId}
-                level={1}
-                onChange={this.onChange}
-                onOk={this.onOk}
-                onCancel={this.onCancel}
-                height={document.documentElement.clientHeight * 0.6}
-                multiSelect
-            />
-        );
-        const loadingEl = (
-            <div style={{ position: 'absolute', width: '100%', height: document.documentElement.clientHeight * 0.6, display: 'flex', justifyContent: 'center' }}>
-                <ActivityIndicator size="large" />
-            </div>
-        );
-        return (
-            <div id="stuRanking">
+        const row = (rowData, sectionID, rowID) => {
+            var dom = '';
+            if(rowData.value == -1){
 
-                <div style={
+                const menuEl = (
+                    <Menu
+                        className="single-multi-foo-menu"
+                        data={initData}
+                        value={this.state.clazzId}
+                        level={1}
+                        onChange={this.onChange}
+                        onOk={this.onOk}
+                        onCancel={this.onCancel}
+                        height={document.documentElement.clientHeight * 0.6}
+                        multiSelect
+                    />
+                );
+                const loadingEl = (
+                    <div style={{ position: 'absolute', width: '100%', height: document.documentElement.clientHeight * 0.6, display: 'flex', justifyContent: 'center' }}>
+                        <ActivityIndicator size="large" />
+                    </div>
+                );
+                dom = <div style={
                     this.state.type == 'TEAC'?{display:'block'}:{display:'none'}
                 } className={show ? 'single-multi-menu-active' : ''}>
                     <div>
@@ -241,6 +238,21 @@ export default class stuRanking extends React.Component {
                     {show ? initData ? menuEl : loadingEl : null}
                     {show ? <div className="menu-mask" onClick={this.onCancel} /> : null}
                 </div>
+            }else{
+                {/*<Item extra={rowData.courseTableItem} align="top" thumb="http://i2.hdslb.com/bfs/face/91e4fa4006e6af4801da253640128d59bcebe1e6.jpg" multipleLine>*/}
+                {/*{rowData.user.userName} <Brief><span>图片</span>曲江拿铁城b座</Brief>*/}
+                {/*</Item>*/}
+                dom = <Item extra={rowData.sportStepCount+'步'} align="top" thumb={<span className={rowID == 0?'first':rowID == 1?'second':rowID == 2?'third':'other'}>{parseInt(rowID)+1}</span>} multipleLine>
+                    {rowData.user.userName} <Brief>共消耗{(rowData.calorie).toFixed(2)}卡</Brief>
+                </Item>
+            }
+            return (
+                dom
+            )
+        };
+
+        return (
+            <div id="stuRanking">
 
                 <ListView
                     ref={el => this.lv = el}
