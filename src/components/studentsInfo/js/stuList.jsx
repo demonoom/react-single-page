@@ -39,13 +39,32 @@ export default class stuList extends React.Component {
     getBindedChildren() {
         var _this = this;
         var param = {
-            "method": 'getBindedChildren',
+            "method": 'getBindedChildrenAndHeartRate',
             "parentId": this.state.userId,
         };
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
             onResponse: (result) => {
                 if (result.msg == '调用成功' && result.success) {
                     _this.buildStuLists(result.response)
+                }
+            },
+            onError: function (error) {
+                Toast.info('验证用户类型请求失败');
+            },
+        });
+    }
+
+    //设置心率阀值
+    updateBindedChildrenAndHeartRate(){
+        var param = {
+            "method": 'updateBindedChildrenAndHeartRate',
+            "userId": this.state.userId,
+            "heartRate": this.state.heartRate
+        };
+        WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
+            onResponse: (result) => {
+                if (result.msg == '调用成功' && result.success) {
+                    console.log('设置成功')
                 }
             },
             onError: function (error) {
@@ -65,10 +84,10 @@ export default class stuList extends React.Component {
             res.forEach(function (v, i) {
                 arr.push(
                     <li className="StudentList">
-                        姓名: {v.userName} <span
-                        onClick={_this.weChatUnbindStduent.bind(this, v)}>解绑</span>
+                        姓名: {v.user.userName} <span
+                        onClick={_this.weChatUnbindStduent.bind(this, v.user)}>解绑</span>
                         <div>
-                            <span>心率阀值: 90</span>
+                            <span>心率阀值: {v.childrenHeartRate}</span>
                             <span onClick={_this.showModal.bind(_this)}>更改图标</span>
                         </div>
                     </li>
