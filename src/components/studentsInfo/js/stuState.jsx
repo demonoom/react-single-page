@@ -60,6 +60,9 @@ export default class stuState extends React.Component {
                 console.log(res,'res');
                 if (res.success == true && res.msg == '调用成功') {
                     // this.initData = this.initData.concat(res.response);
+                    this.initData = [{
+                        value: -1,
+                    }]
                     this.initData = res.response;
                     this.setState({
                         dataSource: dataSource.cloneWithRows(this.initData),
@@ -99,7 +102,7 @@ export default class stuState extends React.Component {
                     })
                     this.setState({
                         clazzId: [res.response[0].id],
-                        className: res.response[0].grade.name + res.response[0].name
+                        className: [res.response[0].grade.name + res.response[0].name]
                     },()=>{
                         if(callback){
                             callback();
@@ -180,35 +183,36 @@ export default class stuState extends React.Component {
 
     render() {
         const row = (rowData, sectionID, rowID) => {
-            return (
-                <Item extra={rowData.courseTableItem} align="top" thumb="http://i2.hdslb.com/bfs/face/91e4fa4006e6af4801da253640128d59bcebe1e6.jpg" multipleLine>
-                    {rowData.user.userName} <Brief><span>图片</span>曲江拿铁城b座</Brief>
-                </Item>
-            )
-        };
-        const { initData, show } = this.state;
-        const menuEl = (
-            <Menu
-                className="single-multi-foo-menu"
-                data={initData}
-                value={this.state.clazzId}
-                level={1}
-                onChange={this.onChange}
-                onOk={this.onOk}
-                onCancel={this.onCancel}
-                height={document.documentElement.clientHeight * 0.6}
-                multiSelect
-            />
-        );
-        const loadingEl = (
-            <div style={{ position: 'absolute', width: '100%', height: document.documentElement.clientHeight * 0.6, display: 'flex', justifyContent: 'center' }}>
-                <ActivityIndicator size="large" />
-            </div>
-        );
-        return (
-            <div id="stuState">
-                <div style={
-                    this.state.type == 'TEAC'?{display:'block'}:{display:'none'}
+            var dom = '';
+            console.log();
+            if(rowData.value == -1){
+                const {initData, show} = this.state;
+                const menuEl = (
+                    <Menu
+                        className="single-multi-foo-menu stuModal"
+                        data={initData}
+                        value={this.state.clazzId}
+                        level={1}
+                        onChange={this.onChange}
+                        onOk={this.onOk}
+                        onCancel={this.onCancel}
+                        height={document.documentElement.clientHeight * 0.6}
+                        multiSelect
+                    />
+                );
+                const loadingEl = (
+                    <div style={{
+                        position: 'absolute',
+                        width: '100%',
+                        height: document.documentElement.clientHeight * 0.6,
+                        display: 'flex',
+                        justifyContent: 'center'
+                    }}>
+                        <ActivityIndicator size="large"/>
+                    </div>
+                );
+                dom = <div style={
+                    this.state.type == 'TEAC' ? {display: 'block'} : {display: 'none'}
                 } className={show ? 'single-multi-menu-active' : ''}>
                     <div>
                         <NavBar
@@ -216,14 +220,31 @@ export default class stuState extends React.Component {
                             mode="light"
                             onClick={this.handleClick}
                             className="single-multi-top-nav-bar"
-                            rightContent={this.state.className}
+                            rightContent={this.state.className.map((value,index)=>{
+                                return <span>{value}</span>
+                            })}
                         >
                             {/*请选择班级*/}
                         </NavBar>
                     </div>
                     {show ? initData ? menuEl : loadingEl : null}
-                    {show ? <div className="menu-mask" onClick={this.onCancel} /> : null}
+                    {show ? <div className="menu-mask" onClick={this.onCancel}/> : null}
                 </div>
+            }else{
+                {/*<Item extra={rowData.courseTableItem} align="top" thumb="http://i2.hdslb.com/bfs/face/91e4fa4006e6af4801da253640128d59bcebe1e6.jpg" multipleLine>*/}
+                    {/*{rowData.user.userName} <Brief><span>图片</span>曲江拿铁城b座</Brief>*/}
+                {/*</Item>*/}
+                dom = <Item extra={typeof(rowData.courseTableItem) == 'object'?"正在上"+rowData.courseTableItem.courseName+"课":rowData.courseTableItem} align="top" thumb="http://i2.hdslb.com/bfs/face/91e4fa4006e6af4801da253640128d59bcebe1e6.jpg"
+                            multipleLine>
+                    {rowData.user.userName} <Brief><span>图片</span>曲江拿铁城b座</Brief>
+                </Item>
+            }
+            return (
+                dom
+            )
+        };
+        return (
+            <div id="stuState">
 
                 <ListView
                     ref={el => this.lv = el}

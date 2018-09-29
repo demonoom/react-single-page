@@ -244,7 +244,6 @@ export default class stuAttendance extends React.Component {
 
         return (
             <div id="stuAttendance">
-
                 <ListView
                     ref={el => this.lv = el}
                     dataSource={this.state.dataSource}    //数据类型是 ListViewDataSource
