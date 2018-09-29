@@ -855,6 +855,12 @@ const stuRanking = (location, cb) => {
         }
     )
 }
+const stuList = (location, cb) => {
+    require.ensure([], require => {
+            cb(null, require("./components/studentsInfo/js/stuList").default)
+        }
+    )
+}
 
 
 import './index.less';
@@ -1219,6 +1225,7 @@ ReactDOM.render(
             <Route path="stuAttendance" getComponent={stuAttendance}/>
             <Route path="stuState" getComponent={stuState}/>
             <Route path="stuRanking" getComponent={stuRanking}/>
+            <Route path="stuList" getComponent={stuList}/>
         </Route>
     </Router>
     ,
