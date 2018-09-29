@@ -447,9 +447,11 @@ export default class wxBindIndex extends React.Component {
                         </div>
                         <Button onClick={this.unBindAccount}>解绑</Button>
                     </div>
-                    <div style={{display: !this.state.openidFlag ? 'none' : this.state.value == 2 ? 'none' : 'block'}}>
+                </div>
+                    <WhiteSpace size="lg"/>
+                    <div className="bindingNumber" style={{display: !this.state.openidFlag ? 'none' : this.state.value == 2 ? 'none' : 'block'}}>
                         <div className="bindingNumberStudent">您绑定的班级学生信息</div>
-                        <div>
+                        <div className="Student-info">
                             {/*<div onClick={this.toDetail.bind(this,'stuList','TEAC')}>孩子列表</div>*/}
                             <div onClick={this.toDetail.bind(this,'stuAttendance','TEAC')}>孩子考勤</div>
                             <div onClick={this.toDetail.bind(this,'stuState','TEAC')}>孩子状态</div>
@@ -457,7 +459,7 @@ export default class wxBindIndex extends React.Component {
                         </div>
                     </div>
 
-                </div>
+
                 <WhiteSpace size="lg"/>
                 <div className="bindingNumber" style={{display: !this.state.openidFlag ? 'none' : this.state.value != 2 ? 'none' : 'block'}}>
                     <div className="bindingNumberStudent">学生校园个人信息</div>

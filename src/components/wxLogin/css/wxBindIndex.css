@@ -273,3 +273,15 @@
   background: #1AAD18;
   border-radius: 2px;
 }
+#wxBindIndex .Student-info {
+  margin-top: 18px;
+  display: flex;
+  justify-content: center;
+}
+#wxBindIndex .Student-info > div {
+  -webkit-box-flex: 1;
+  -webkit-flex: 1;
+  -ms-flex: 1;
+  flex: 1;
+  text-align: center;
+}
