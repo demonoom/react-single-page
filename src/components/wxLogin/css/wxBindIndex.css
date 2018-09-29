@@ -176,35 +176,48 @@
 #wxBindIndex .bindingNumber {
   display: block;
   color: #57595f;
-  padding: 20px 15px 20px 15px;
+  padding: 15px 0;
   font-size: 15px;
   background: #fff;
 }
+#wxBindIndex .bindingNumber .number-title {
+  padding: 0 15px 15px 15px;
+}
+#wxBindIndex .bindingNumber .mumber-cont {
+  padding: 15px 15px 0 15px;
+}
 #wxBindIndex .bindingNumber div {
   color: #57595f;
+  position: relative;
 }
 #wxBindIndex .bindingNumber span {
-  line-height: 44px;
-  width: 50%;
+  line-height: 30px;
+  width: 40%;
   display: inline-block;
 }
 #wxBindIndex .bindingNumber .am-button {
   padding: 0;
   border: 1px solid #1AAD18;
   color: #1AAD18;
-  height: 37px;
-  line-height: 37px;
+  width: 60px;
+  height: 30px;
+  line-height: 30px;
   text-align: center;
   display: block;
   font-size: 14px;
-  margin: 30px 90px 15px 90px;
+  margin: 0px;
   background: transparent;
+  display: inline-block;
+  position: absolute;
+  top: 15px;
+  right: 15px;
 }
 #wxBindIndex .bindingNumber .am-button span {
-  line-height: 37px;
+  line-height: 30px;
   margin-right: 0;
-  font-size: 16px;
+  font-size: 14px;
   color: #1AAD18;
+  width: 100%;
 }
 #wxBindIndex .bindingNumber .am-button::before {
   border-color: #f0eff5 !important;
@@ -240,6 +253,7 @@
 }
 #wxBindIndex .bindingNumberStudent {
   margin-bottom: 10px;
+  padding: 0 15px;
 }
 #wxBindIndex .StudentList {
   font-size: 14px;
@@ -295,7 +309,7 @@
   margin-top: 8px;
   width: 100%;
   line-height: 1;
-  font-size: 12px;
+  font-size: 14px;
   color: #666;
 }
 #wxBindIndex .Student-info .student-status {
