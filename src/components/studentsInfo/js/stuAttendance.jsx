@@ -152,23 +152,36 @@ export default class stuAttendance extends React.Component {
             Toast.info('未选中任何班级!', 1);
             return;
         }
+        var classNameArray = [];
+        for(var k in value){
+            for(var i in data){
+                if(value[k] == data[i].value){
+                    classNameArray.push(data[i].label)
+                }
+            }
+        }
+        console.log(classNameArray);
         this.setState({
             clazzId: value,
-            className: ['是是是','ssss'],
+            className: classNameArray,
         }, () => {
             this.getBraceletStudentInfoAttendByClazzId();
             this.onCancel();
         })
     }
 
-    onCancel = () => {
-        this.setState({show: false});
+    onCancel = (value) => {
+        console.log(this.state.initClazzId,'cancel');
+        this.setState({show: false, clazzId:this.state.initClazzId});
     }
 
     handleClick = (e) => {
         e.preventDefault();
         this.setState({
             show: !this.state.show,
+            initClazzId: this.state.clazzId
+        },()=>{
+            console.log(this.state.initClazzId,'initClazzId')
         });
 
         if (!this.state.initData) {
