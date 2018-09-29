@@ -234,7 +234,7 @@ export default class stuAttendance extends React.Component {
                 dom = <Item align="top" thumb="http://i2.hdslb.com/bfs/face/91e4fa4006e6af4801da253640128d59bcebe1e6.jpg"
                             multipleLine>
                     {rowData.user.userName} <Brief>本周迟到{rowData.attend.weekCount}次&nbsp;
-                    本月迟到{rowData.attend.monthCount}次</Brief>
+                    本月迟到<span className="blueText">{rowData.attend.monthCount}</span>次</Brief>
                 </Item>
             }
             return (
@@ -261,7 +261,7 @@ export default class stuAttendance extends React.Component {
                     initialListSize={30}   //指定在组件刚挂载的时候渲染多少行数据，用这个属性来确保首屏显示合适数量的数据
                     scrollEventThrottle={20}     //控制在滚动过程中，scroll事件被调用的频率
                     style={{
-                        height: document.body.clientHeight - 45,
+                        height: document.body.clientHeight,
                     }}
                 />
             </div>
