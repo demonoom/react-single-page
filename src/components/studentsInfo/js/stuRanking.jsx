@@ -6,7 +6,10 @@ const dataSource = new ListView.DataSource({
 });
 const Item = List.Item;
 const Brief = Item.Brief;
-const data = [];
+const data = [{
+    value: 1,
+    label:'萨达所多'
+}];
 export default class stuRanking extends React.Component {
 
     constructor(props) {
@@ -194,7 +197,7 @@ export default class stuRanking extends React.Component {
     render() {
         const row = (rowData, sectionID, rowID) => {
             return (
-                    <Item extra={rowData.sportStepCount+'步'} align="top" thumb="http://i2.hdslb.com/bfs/face/91e4fa4006e6af4801da253640128d59bcebe1e6.jpg" multipleLine>
+                    <Item extra={rowData.sportStepCount+'步'} align="top" thumb={<span className={rowID == 0?'first':rowID == 1?'second':rowID == 2?'third':'other'}>{parseInt(rowID)+1}</span>} multipleLine>
                         {rowData.user.userName} <Brief>共消耗{(rowData.calorie).toFixed(2)}卡</Brief>
                     </Item>
             )
