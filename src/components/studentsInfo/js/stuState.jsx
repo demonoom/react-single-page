@@ -1,5 +1,5 @@
 import React from 'react';
-import '../css/stuState.less'
+import '../css/stuAttendance.less'
 import {List, Menu, ListView, NavBar, ActivityIndicator, Toast, WhiteSpace, Modal} from 'antd-mobile';
 const dataSource = new ListView.DataSource({
     rowHasChanged: (row1, row2) => row1 !== row2,
@@ -237,7 +237,7 @@ export default class stuState extends React.Component {
                 {/*</Item>*/}
                 dom = <Item extra={typeof(rowData.courseTableItem) == 'object'?"正在上"+rowData.courseTableItem.courseName+"课":rowData.courseTableItem} align="top" thumb="http://i2.hdslb.com/bfs/face/91e4fa4006e6af4801da253640128d59bcebe1e6.jpg"
                             multipleLine>
-                    {rowData.user.userName} <Brief><span>图片</span>{typeof(rowData.courseTableItem) == 'object'?rowData.courseTableItem.classRoom.name:''}</Brief>
+                    {rowData.user.userName} <Brief><span className="icon-address"></span>{typeof(rowData.courseTableItem) == 'object'?rowData.courseTableItem.classRoom.name:''}</Brief>
                 </Item>
             }
             return (
@@ -245,7 +245,7 @@ export default class stuState extends React.Component {
             )
         };
         return (
-            <div id="stuState">
+            <div id="stuAttendance">
 
                 <ListView
                     ref={el => this.lv = el}
@@ -255,7 +255,7 @@ export default class stuState extends React.Component {
                     //         {this.state.isLoading ? '正在加载...' : '已经全部加载完毕'}
                     //     </div>)}
                     renderRow={row}   //需要的参数包括一行数据等,会返回一个可渲染的组件为这行数据渲染  返回renderable
-                    className="am-list"
+                    className="am-list stuAttendanceList"
                     pageSize={30}    //每次事件循环（每帧）渲染的行数
                     //useBodyScroll  //使用 html 的 body 作为滚动容器   bool类型   不应这么写  否则无法下拉刷新
                     scrollRenderAheadDistance={200}   //当一个行接近屏幕范围多少像素之内的时候，就开始渲染这一行

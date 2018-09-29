@@ -1,12 +1,13 @@
 import React from 'react';
 import '../css/stuList.less'
-import {List, Toast, ListView, Button, InputItem, Radio, WhiteSpace, Modal} from 'antd-mobile';
+import {List, Toast, ListView, Button, Radio, WhiteSpace, Modal} from 'antd-mobile';
 
 const dataSource = new ListView.DataSource({
     rowHasChanged: (row1, row2) => row1 !== row2,
 });
 const Item = List.Item;
 const Brief = Item.Brief;
+const prompt = Modal.prompt;
 export default class stuList extends React.Component {
 
     constructor(props) {
@@ -55,16 +56,17 @@ export default class stuList extends React.Component {
     }
 
     //设置心率阀值
-    updateBindedChildrenAndHeartRate(){
+    updateBindedChildrenAndHeartRate(id,value) {
         var param = {
             "method": 'updateBindedChildrenAndHeartRate',
-            "userId": this.state.userId,
-            "heartRate": this.state.heartRate
+            "userId": id,
+            "heartRate": value
         };
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
             onResponse: (result) => {
                 if (result.msg == '调用成功' && result.success) {
-                    console.log('设置成功')
+                    console.log('设置成功');
+                    this.getBindedChildren();
                 }
             },
             onError: function (error) {
@@ -73,22 +75,35 @@ export default class stuList extends React.Component {
         });
     }
 
-    showModal(){
-        console.log('弹窗')
+    showModal(childrenHeartRate,colUid) {
+        console.log('弹窗');
+        console.log(colUid);
+        prompt('请输入心率阀值', '', [
+            {text: 'Cancel'},
+            {text: 'Submit', onPress: value => {
+                console.log(`输入的内容:${value}`);
+                this.updateBindedChildrenAndHeartRate(colUid,value);
+            }},
+        ], 'default', childrenHeartRate)
     }
 
     buildStuLists(res) {
         var _this = this
-        var arr = [<div>您绑定的孩子</div>]
+        var arr = [<div className="stu-title">您绑定的孩子</div>]
         if (!WebServiceUtil.isEmpty(res)) {
             res.forEach(function (v, i) {
                 arr.push(
                     <li className="StudentList">
-                        姓名: {v.user.userName} <span
-                        onClick={_this.weChatUnbindStduent.bind(this, v.user)}>解绑</span>
+                        <div className="line_public">
+                            <span>姓名: </span>
+                            <span className="gray">{v.user.userName}</span>
+                            <span onClick={_this.weChatUnbindStduent.bind(this, v.user)}
+                                  className="unbundling">解绑</span>
+                        </div>
                         <div>
-                            <span>心率阀值: {v.childrenHeartRate}</span>
-                            <span onClick={_this.showModal.bind(_this)}>更改图标</span>
+                            <span>心率阀值：</span>
+                            <span className="gray">{v.childrenHeartRate}</span>
+                            <span className="i-change" onClick={_this.showModal.bind(_this,v.childrenHeartRate,v.user.colUid)}></span>
                         </div>
                     </li>
                 )
@@ -129,6 +144,8 @@ export default class stuList extends React.Component {
         return (
             <div id="stuList">
                 {this.state.stuLis}
+                {/*<Button id="updateSchedule" */}
+                {/*>defaultValue</Button>*/}
             </div>
         );
     }
