@@ -247,7 +247,7 @@ export default class stuState extends React.Component {
                 {/*</Item>*/}
                 dom = <Item extra={typeof(rowData.courseTableItem) == 'object'?"正在上"+rowData.courseTableItem.courseName+"课":rowData.courseTableItem} align="top" thumb={rowData.user.avatar}
                             multipleLine>
-                    {rowData.user.userName} <Brief><span className="icon-address"></span>{typeof(rowData.courseTableItem) == 'object'?rowData.courseTableItem.classRoom.name:'下课中...'}</Brief>
+                    {rowData.user.userName} <Brief><span className="icon-address"></span>{typeof(rowData.courseTableItem) == 'object'?rowData.courseTableItem.classRoom.name:'暂无定位'}</Brief>
                 </Item>
             }
             return (
