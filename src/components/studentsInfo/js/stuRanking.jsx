@@ -242,8 +242,8 @@ export default class stuRanking extends React.Component {
                 {/*<Item extra={rowData.courseTableItem} align="top" thumb="http://i2.hdslb.com/bfs/face/91e4fa4006e6af4801da253640128d59bcebe1e6.jpg" multipleLine>*/}
                 {/*{rowData.user.userName} <Brief><span>图片</span>曲江拿铁城b座</Brief>*/}
                 {/*</Item>*/}
-                dom = <Item extra={rowData.sportStepCount+'步'} align="top" thumb={<span className={rowID == 0?'first':rowID == 1?'second':rowID == 2?'third':'other'}>{parseInt(rowID)+1}</span>} multipleLine>
-                    {rowData.user.userName} <Brief>共消耗{(rowData.calorie).toFixed(2)}卡</Brief>
+                dom = <Item extra={rowData.sportStepCount+'步'} align="top" thumb={<span className={rowID == 1?'first':rowID == 2?'second':rowID == 3?'third':'other'}>{parseInt(rowID)}</span>} multipleLine>
+                    {rowData.user.userName} <Brief>共消耗{(rowData.calorie?rowData.calorie:0).toFixed(2)}卡</Brief>
                 </Item>
             }
             return (
