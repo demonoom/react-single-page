@@ -1,12 +1,13 @@
 import React from 'react';
 import '../css/stuList.less'
-import {List, Toast, ListView, Button, InputItem, Radio, WhiteSpace, Modal} from 'antd-mobile';
+import {List, Toast, ListView, Button, Radio, WhiteSpace, Modal} from 'antd-mobile';
 
 const dataSource = new ListView.DataSource({
     rowHasChanged: (row1, row2) => row1 !== row2,
 });
 const Item = List.Item;
 const Brief = Item.Brief;
+const prompt = Modal.prompt;
 export default class stuList extends React.Component {
 
     constructor(props) {
@@ -39,7 +40,7 @@ export default class stuList extends React.Component {
     getBindedChildren() {
         var _this = this;
         var param = {
-            "method": 'getBindedChildren',
+            "method": 'getBindedChildrenAndHeartRate',
             "parentId": this.state.userId,
         };
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
@@ -54,8 +55,36 @@ export default class stuList extends React.Component {
         });
     }
 
-    showModal(){
-        console.log('弹窗')
+    //设置心率阀值
+    updateBindedChildrenAndHeartRate(id,value) {
+        var param = {
+            "method": 'updateBindedChildrenAndHeartRate',
+            "userId": id,
+            "heartRate": value
+        };
+        WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
+            onResponse: (result) => {
+                if (result.msg == '调用成功' && result.success) {
+                    console.log('设置成功');
+                    this.getBindedChildren();
+                }
+            },
+            onError: function (error) {
+                Toast.info('验证用户类型请求失败');
+            },
+        });
+    }
+
+    showModal(childrenHeartRate,colUid) {
+        console.log('弹窗');
+        console.log(colUid);
+        prompt('请输入心率阀值', '', [
+            {text: 'Cancel'},
+            {text: 'Submit', onPress: value => {
+                console.log(`输入的内容:${value}`);
+                this.updateBindedChildrenAndHeartRate(colUid,value);
+            }},
+        ], 'default', childrenHeartRate)
     }
 
     buildStuLists(res) {
@@ -67,13 +96,14 @@ export default class stuList extends React.Component {
                     <li className="StudentList">
                         <div className="line_public">
                             <span>姓名: </span>
-                            <span className="gray">{v.userName}</span>
-                            <span onClick={_this.weChatUnbindStduent.bind(this, v)} className="unbundling">解绑</span>
+                            <span className="gray">{v.user.userName}</span>
+                            <span onClick={_this.weChatUnbindStduent.bind(this, v.user)}
+                                  className="unbundling">解绑</span>
                         </div>
                         <div>
                             <span>心率阀值：</span>
-                            <span className="gray">90</span>
-                            <span className="i-change" onClick={_this.showModal.bind(_this)}></span>
+                            <span className="gray">{v.childrenHeartRate}</span>
+                            <span className="i-change" onClick={_this.showModal.bind(_this,v.childrenHeartRate,v.user.colUid)}></span>
                         </div>
                     </li>
                 )
@@ -114,6 +144,8 @@ export default class stuList extends React.Component {
         return (
             <div id="stuList">
                 {this.state.stuLis}
+                {/*<Button id="updateSchedule" */}
+                {/*>defaultValue</Button>*/}
             </div>
         );
     }
