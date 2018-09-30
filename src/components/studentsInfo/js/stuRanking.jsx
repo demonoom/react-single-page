@@ -84,37 +84,43 @@ export default class stuRanking extends React.Component {
     }
 
     getClazzStudentSportsRankingList(){
-        var param = {
-            "method": 'getClazzStudentSportsRankingList',
-            "userId": this.state.userId,
-            "clazzId": this.state.clazzId.join(','),
-            "pageNo": this.state.defaultPageNo,
-        };
+        this.setState({
+            load:true,
+        },()=>{
+            var param = {
+                "method": 'getClazzStudentSportsRankingList',
+                "userId": this.state.userId,
+                "clazzId": this.state.clazzId.join(','),
+                "pageNo": -1,
+            };
 
-        WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
-            onResponse:  (res) => {
-                console.log(res,'res');
-                if (res.success == true && res.msg == '调用成功') {
-                    this.initData = [{
-                        value: -1,
-                    }]
-                    this.initData = this.initData.concat(res.response);
-                    // this.initData = (res.response);
-                    this.setState({
-                        dataSource: dataSource.cloneWithRows(this.initData),
-                        isLoading:false,
-                    })
-                    if(this.initData.length >= res.pager.rsCount){
+            WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
+                onResponse:  (res) => {
+                    console.log(res,'res');
+                    if (res.success == true && res.msg == '调用成功') {
+                        // this.initData = [{
+                        //     value: -1,
+                        // }]
+                        this.initData = this.initData.concat(res.response);
+                        // this.initData = (res.response);
                         this.setState({
-                            hasMore: false,
+                            dataSource: dataSource.cloneWithRows(this.initData),
+                            isLoading:false,
+                            load:false,
                         })
+                        // if(this.initData.length >= res.pager.rsCount){
+                        //     this.setState({
+                        //         hasMore: false,
+                        //     })
+                        // }
                     }
+                },
+                onError: function (error) {
+                    // message.error(error);
                 }
-            },
-            onError: function (error) {
-                // message.error(error);
-            }
-        });
+            });
+        })
+
     }
 
 
@@ -122,7 +128,7 @@ export default class stuRanking extends React.Component {
         var param = {
             "method": 'getStudentSportsListByParentId',
             "userId": this.state.userId,
-            "pageNo": this.state.defaultPageNo,
+            "pageNo": -1,
         };
 
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
@@ -134,11 +140,11 @@ export default class stuRanking extends React.Component {
                         dataSource: dataSource.cloneWithRows(this.initData),
                         isLoading:false,
                     })
-                    if(this.initData.length >= res.pager.rsCount){
-                        this.setState({
-                            hasMore: false,
-                        })
-                    }
+                    // if(this.initData.length >= res.pager.rsCount){
+                    //     this.setState({
+                    //         hasMore: false,
+                    //     })
+                    // }
                 }
             },
             onError: function (error) {
@@ -148,27 +154,36 @@ export default class stuRanking extends React.Component {
     }
 
 
-    /**
-     *  ListView数据全部渲染完毕的回调
-     */
-    onEndReached = (event) => {
-        var _this = this;
-        var currentPageNo = this.state.defaultPageNo;
-        if (!this.state.isLoading && !this.state.hasMore) {
-            return;
-        }
-        currentPageNo += 1;
-        this.setState({isLoading: true, defaultPageNo: currentPageNo});
-        _this.getStudentSportsListByParentId(_this.state.ident);
-    };
+    // /**
+    //  *  ListView数据全部渲染完毕的回调
+    //  */
+    // onEndReached = (event) => {
+    //     var _this = this;
+    //     var currentPageNo = this.state.defaultPageNo;
+    //     if (!this.state.isLoading && !this.state.hasMore) {
+    //         return;
+    //     }
+    //     currentPageNo += 1;
+    //     this.setState({isLoading: true, defaultPageNo: currentPageNo});
+    //     _this.getStudentSportsListByParentId(_this.state.ident);
+    // };
 
     onOk = (value) => {
         if(value.length <= 0){
             Toast.info('未选中任何班级!',1);
             return;
         }
+        var classNameArray = [];
+        for(var k in value){
+            for(var i in data){
+                if(value[k] == data[i].value){
+                    classNameArray.push(data[i].label)
+                }
+            }
+        }
         this.setState({
             clazzId: value,
+            className: classNameArray,
         },()=>{
             this.getClazzStudentSportsRankingList();
         })
@@ -208,70 +223,73 @@ export default class stuRanking extends React.Component {
 
     render() {
         const { initData, show } = this.state;
-        const row = (rowData, sectionID, rowID) => {
-            var dom = '';
-            if(rowData.value == -1){
+        const menuEl = (
+            <Menu
+                className="single-multi-foo-menu stuModal"
+                data={initData}
+                value={this.state.clazzId}
+                level={1}
+                onChange={this.onChange}
+                onOk={this.onOk}
+                onCancel={this.onCancel}
+                height={document.documentElement.clientHeight * 0.6}
+                multiSelect
+            />
+        );
+        const loadingEl = (
+            <div style={{ position: 'absolute', width: '100%', height: document.documentElement.clientHeight * 0.6, display: 'flex', justifyContent: 'center' }}>
+                <ActivityIndicator size="large" />
+            </div>
+        );
 
-                const menuEl = (
-                    <Menu
-                        className="single-multi-foo-menu stuModal"
-                        data={initData}
-                        value={this.state.clazzId}
-                        level={1}
-                        onChange={this.onChange}
-                        onOk={this.onOk}
-                        onCancel={this.onCancel}
-                        height={document.documentElement.clientHeight * 0.6}
-                        multiSelect
-                    />
-                );
-                const loadingEl = (
-                    <div style={{ position: 'absolute', width: '100%', height: document.documentElement.clientHeight * 0.6, display: 'flex', justifyContent: 'center' }}>
-                        <ActivityIndicator size="large" />
-                    </div>
-                );
-                dom = <div style={
-                    this.state.type == 'TEAC'?{display:'block'}:{display:'none'}
-                } className={show ? 'single-multi-menu-active' : ''}>
-                    <div>
-                        <NavBar
-                            leftContent="选择绑定的班级"
-                            mode="light"
-                            onClick={this.handleClick}
-                            className="single-multi-top-nav-bar"
-                            rightContent={this.state.className.map((value,index)=>{
-                                return <span>{value}</span>
-                            })}
-                        >
-                            {/*请选择班级*/}
-                        </NavBar>
-                    </div>
-                    {show ? initData ? menuEl : loadingEl : null}
-                    {show ? <div className="menu-mask" onClick={this.onCancel} /> : null}
-                </div>
-            }else{
-                {/*<Item extra={rowData.courseTableItem} align="top" thumb="http://i2.hdslb.com/bfs/face/91e4fa4006e6af4801da253640128d59bcebe1e6.jpg" multipleLine>*/}
-                {/*{rowData.user.userName} <Brief><span>图片</span>曲江拿铁城b座</Brief>*/}
-                {/*</Item>*/}
-                if(this.state.type == "PARENT"){
+        const row = (rowData, sectionID, rowID) => {
+                // if(this.state.type == "PARENT"){
                     rowID = parseInt(rowID) + 1;
-                }
-                dom = <Item extra={rowData.sportStepCount+'步'} align="top" thumb={<span className={rowID == 1?'icon-movement movement-first':rowID == 2?'icon-movement movement-second':rowID == 3?'icon-movement movement-third':'other'}>{parseInt(rowID)}</span>} multipleLine>
+                // }
+
+            return (
+                <Item extra={rowData.sportStepCount+'步'} align="top" thumb={<span className={rowID == 1?'icon-movement movement-first':rowID == 2?'icon-movement movement-second':rowID == 3?'icon-movement movement-third':'other'}>{parseInt(rowID)}</span>} multipleLine>
                     {rowData.user.userName} <Brief>共消耗<span className="blueText">{(rowData.calorie?rowData.calorie:0).toFixed(2)}</span>卡</Brief>
                 </Item>
-            }
-            return (
-                dom
             )
         };
 
         return (
             <div id="stuRanking">
+                <div style={
+                    this.state.load?{display:'block'}:{display:'none'}
+                }>
+                    <div className="mask" style={
+                        {height: document.body.clientHeight}
+                    }></div>
+                    {loadingEl}
+                </div>
                 <ListView
                     ref={el => this.lv = el}
                     dataSource={this.state.dataSource}    //数据类型是 ListViewDataSource
                     renderHeader={()=>{
-                        return <div>本周运动排名</div>
+                        return <div>
+                            <div style={
+                                this.state.type == 'TEAC'?{display:'block'}:{display:'none'}
+                            } className={show ? 'single-multi-menu-active' : ''}>
+                                <div>
+                                    <NavBar
+                                        leftContent="选择绑定的班级"
+                                        mode="light"
+                                        onClick={this.handleClick}
+                                        className="single-multi-top-nav-bar"
+                                        rightContent={this.state.className.map((value,index)=>{
+                                            return <span>{value}</span>
+                                        })}
+                                    >
+                                        {/*请选择班级*/}
+                                    </NavBar>
+                                </div>
+                                {show ? initData ? menuEl : loadingEl : null}
+                                {show ? <div className="menu-mask" onClick={this.onCancel} /> : null}
+                            </div>
+                            <div>本周运动排名</div>
+                        </div>
                     }}
                     // renderFooter={() => (
                     //     <div style={{paddingTop: 5, paddingBottom: 0, textAlign: 'center'}}>
@@ -282,9 +300,9 @@ export default class stuRanking extends React.Component {
                     pageSize={30}    //每次事件循环（每帧）渲染的行数
                     //useBodyScroll  //使用 html 的 body 作为滚动容器   bool类型   不应这么写  否则无法下拉刷新
                     scrollRenderAheadDistance={200}   //当一个行接近屏幕范围多少像素之内的时候，就开始渲染这一行
-                    onEndReached={this.onEndReached}  //当所有的数据都已经渲染过，并且列表被滚动到距离最底部不足onEndReachedThreshold个像素的距离时调用
+                    // onEndReached={this.onEndReached}  //当所有的数据都已经渲染过，并且列表被滚动到距离最底部不足onEndReachedThreshold个像素的距离时调用
                     onEndReachedThreshold={10}  //调用onEndReached之前的临界值，单位是像素  number类型
-                    initialListSize={30}   //指定在组件刚挂载的时候渲染多少行数据，用这个属性来确保首屏显示合适数量的数据
+                    initialListSize={1000}   //指定在组件刚挂载的时候渲染多少行数据，用这个属性来确保首屏显示合适数量的数据
                     scrollEventThrottle={20}     //控制在滚动过程中，scroll事件被调用的频率
                     style={
                         this.state.show?{height: document.body.clientHeight,overflow:'hidden'}:{height: document.body.clientHeight,overflow:'auto'}

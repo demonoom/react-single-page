@@ -20,7 +20,7 @@ export default class stuAttendance extends React.Component {
             hasMore: true,
             initData: '',
             show: false,
-            className: '请选择班级'
+            className: []
         };
 
     }
@@ -50,35 +50,41 @@ export default class stuAttendance extends React.Component {
 
 
     getBraceletStudentInfoAttendByClazzId() {
-        var param = {
-            "method": 'getBraceletStudentInfoAttendByClazzId',
-            "clazzId": this.state.clazzId.join(','),
-        };
+        this.setState({
+            load: true,
+        },()=>{
+            var param = {
+                "method": 'getBraceletStudentInfoAttendByClazzId',
+                "clazzId": this.state.clazzId.join(','),
+            };
 
-        WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
-            onResponse: (res) => {
-                console.log(res, 'res');
-                if (res.success == true && res.msg == '调用成功') {
-                    this.initData = [{
-                        value: -1,
-                    }]
-                    this.initData = this.initData.concat(res.response);
-                    this.setState({
-                        dataSource: dataSource.cloneWithRows(this.initData),
-                        isLoading: false,
-                        hasMore: false,
+            WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
+                onResponse: (res) => {
+                    console.log(res, 'res');
+                    if (res.success == true && res.msg == '调用成功') {
+                        // this.initData = [{
+                        //     value: -1,
+                        // }]
+                        this.initData = this.initData.concat(res.response);
+                        this.setState({
+                            dataSource: dataSource.cloneWithRows(this.initData),
+                            isLoading: false,
+                            hasMore: false,
+                            load: false,
 
-                    })
-                    // if(this.initData.length >= res.pager.rsCount){
-                    //     this.setState({
-                    //     })
-                    // }
+                        })
+                        // if(this.initData.length >= res.pager.rsCount){
+                        //     this.setState({
+                        //     })
+                        // }
+                    }
+                },
+                onError: function (error) {
+                    // message.error(error);
                 }
-            },
-            onError: function (error) {
-                // message.error(error);
-            }
-        });
+            });
+        })
+
     }
 
     //根据教师id获取clazzid
@@ -148,16 +154,16 @@ export default class stuAttendance extends React.Component {
         });
     }
 
-    onOk = (value,label) => {
+    onOk = (value, label) => {
         // console.log(label)
         if (value.length <= 0) {
             Toast.info('未选中任何班级!', 1);
             return;
         }
         var classNameArray = [];
-        for(var k in value){
-            for(var i in data){
-                if(value[k] == data[i].value){
+        for (var k in value) {
+            for (var i in data) {
+                if (value[k] == data[i].value) {
                     classNameArray.push(data[i].label)
                 }
             }
@@ -173,11 +179,11 @@ export default class stuAttendance extends React.Component {
     }
 
     onCancel = (value) => {
-        console.log(this.state.initClazzId,'cancel');
+        console.log(this.state.initClazzId, 'cancel');
         this.setState({show: false});
-        if(this.state.clazzId.length <= 0){
+        if (this.state.clazzId.length <= 0) {
             this.setState({
-                clazzId:this.state.initClazzId
+                clazzId: this.state.initClazzId
             })
         }
     }
@@ -185,14 +191,14 @@ export default class stuAttendance extends React.Component {
     handleClick = (e) => {
         e.preventDefault();
         var arr = [];
-        for(var k in this.state.clazzId){
+        for (var k in this.state.clazzId) {
             arr.push(this.state.clazzId[k]);
         }
         this.setState({
             show: !this.state.show,
             initClazzId: arr
-        },()=>{
-            console.log(this.state.initClazzId,'initClazzId')
+        }, () => {
+            console.log(this.state.initClazzId, 'initClazzId')
         });
 
         if (!this.state.initData) {
@@ -206,71 +212,78 @@ export default class stuAttendance extends React.Component {
 
 
     render() {
-
+        const {initData, show} = this.state;
+        const menuEl = (
+            <Menu
+                className="single-multi-foo-menu stuModal"
+                data={initData}
+                value={this.state.clazzId}
+                level={1}
+                // onChange={this.onChange}
+                onOk={this.onOk}
+                onCancel={this.onCancel}
+                height={document.documentElement.clientHeight * 0.6}
+                multiSelect
+            />
+        );
+        const loadingEl = (
+            <div style={{
+                position: 'absolute',
+                width: '100%',
+                height: document.documentElement.clientHeight * 0.6,
+                display: 'flex',
+                justifyContent: 'center'
+            }}>
+                <ActivityIndicator size="large"/>
+            </div>
+        );
         const row = (rowData, sectionID, rowID) => {
-            var dom = '';
-            if(rowData.value == -1){
-                const {initData, show} = this.state;
-                const menuEl = (
-                    <Menu
-                        className="single-multi-foo-menu stuModal"
-                        data={initData}
-                        value={this.state.clazzId}
-                        level={1}
-                        onChange={this.onChange}
-                        onOk={this.onOk}
-                        onCancel={this.onCancel}
-                        height={document.documentElement.clientHeight * 0.6}
-                        multiSelect
-                    />
-                );
-                const loadingEl = (
-                    <div style={{
-                        position: 'absolute',
-                        width: '100%',
-                        height: document.documentElement.clientHeight * 0.6,
-                        display: 'flex',
-                        justifyContent: 'center'
-                    }}>
-                        <ActivityIndicator size="large"/>
-                    </div>
-                );
-                dom = <div style={
-                    this.state.type == 'TEAC' ? {display: 'block'} : {display: 'none'}
-                } className={show ? 'single-multi-menu-active' : ''}>
-                    <div>
-                        <NavBar
-                            leftContent="选择绑定的班级"
-                            mode="light"
-                            onClick={this.handleClick}
-                            className="single-multi-top-nav-bar"
-                            rightContent={this.state.className.map((value,index)=>{
-                                return <span>{value}</span>
-                            })}
-                        >
-                            {/*请选择班级*/}
-                        </NavBar>
-                    </div>
-                    {show ? initData ? menuEl : loadingEl : null}
-                    {show ? <div className="menu-mask" onClick={this.onCancel}/> : null}
-                </div>
-            }else{
-                dom = <Item align="top" thumb={rowData.user.avatar}
-                            multipleLine>
-                    {rowData.user.userName} <Brief>本周迟到<span className="blueText">{rowData.attend.weekCount}</span>次&nbsp;
+
+            return (
+                <Item align="top" thumb={rowData.user.avatar}
+                      multipleLine>
+                    {rowData.user.userName} <Brief>本周迟到<span
+                    className="blueText">{rowData.attend.weekCount}</span>次&nbsp;
                     本月迟到<span className="blueText">{rowData.attend.monthCount}</span>次</Brief>
                 </Item>
-            }
-            return (
-                dom
             )
+
         };
 
         return (
             <div id="stuAttendance">
+                <div style={
+                    this.state.load?{display:'block'}:{display:'none'}
+                }>
+                    <div className="mask" style={
+                        {height: document.body.clientHeight}
+                    }></div>
+                    {loadingEl}
+                </div>
                 <ListView
                     ref={el => this.lv = el}
                     dataSource={this.state.dataSource}    //数据类型是 ListViewDataSource
+                    renderHeader={()=>{
+                        return <div style={
+                            this.state.type == 'TEAC' ? {display: 'block'} : {display: 'none'}
+                        } className={show ? 'single-multi-menu-active' : ''}>
+                            <div>
+                                <NavBar
+                                    leftContent="选择绑定的班级"
+                                    mode="light"
+                                    onClick={this.handleClick}
+                                    className="single-multi-top-nav-bar"
+                                    rightContent={this.state.className.map((value, index) => {
+                                        return <span>{value}</span>
+                                    })}
+                                >
+                                    {/*请选择班级*/}
+                                </NavBar>
+                            </div>
+                            {show ? initData ? menuEl : loadingEl : null}
+                            {show ? <div className="menu-mask" onClick={this.onCancel}/> : null}
+                        </div>
+                    }}
                     // renderFooter={() => (
                     //     <div style={{paddingTop: 5, paddingBottom: 40, textAlign: 'center'}}>
                     //         {this.state.isLoading ? '正在加载...' : '已经全部加载完毕'}
@@ -280,12 +293,15 @@ export default class stuAttendance extends React.Component {
                     pageSize={30}    //每次事件循环（每帧）渲染的行数
                     //useBodyScroll  //使用 html 的 body 作为滚动容器   bool类型   不应这么写  否则无法下拉刷新
                     scrollRenderAheadDistance={200}   //当一个行接近屏幕范围多少像素之内的时候，就开始渲染这一行
-                    onEndReached={this.onEndReached}  //当所有的数据都已经渲染过，并且列表被滚动到距离最底部不足onEndReachedThreshold个像素的距离时调用
+                    // onEndReached={this.onEndReached}  //当所有的数据都已经渲染过，并且列表被滚动到距离最底部不足onEndReachedThreshold个像素的距离时调用
                     onEndReachedThreshold={10}  //调用onEndReached之前的临界值，单位是像素  number类型
-                    initialListSize={30}   //指定在组件刚挂载的时候渲染多少行数据，用这个属性来确保首屏显示合适数量的数据
+                    initialListSize={1000}   //指定在组件刚挂载的时候渲染多少行数据，用这个属性来确保首屏显示合适数量的数据
                     scrollEventThrottle={20}     //控制在滚动过程中，scroll事件被调用的频率
                     style={
-                        this.state.show?{height: document.body.clientHeight,overflow:'hidden'}:{height: document.body.clientHeight,overflow:'auto'}
+                        this.state.show ? {
+                            height: document.body.clientHeight,
+                            overflow: 'hidden'
+                        } : {height: document.body.clientHeight, overflow: 'auto'}
                     }
                 />
             </div>
