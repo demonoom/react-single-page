@@ -9,9 +9,16 @@
   height: calc(100% - 40px);
   width: 100%;
 }
+#stuRanking .stuAttendanceList .am-list-body .am-list-line::after {
+  background: transparent;
+}
+#stuRanking .stuAttendanceList .am-list-body:after,
+#stuRanking .stuAttendanceList .am-list-body:before {
+  background: transparent;
+}
 #stuRanking .stuAttendanceList .am-list-item {
   padding-left: 0;
-  margin: 0 15px;
+  padding: 0 15px;
 }
 #stuRanking .stuAttendanceList .am-list-item::after {
   content: '';
