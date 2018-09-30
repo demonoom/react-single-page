@@ -261,10 +261,10 @@ export default class stuState extends React.Component {
                 <ListView
                     ref={el => this.lv = el}
                     dataSource={this.state.dataSource}    //数据类型是 ListViewDataSource
-                    // renderFooter={() => (
-                    //     <div style={{paddingTop: 5, paddingBottom: 40, textAlign: 'center'}}>
-                    //         {this.state.isLoading ? '正在加载...' : '已经全部加载完毕'}
-                    //     </div>)}
+                    renderFooter={() => (
+                        <div style={{paddingTop: 5, paddingBottom: 40, textAlign: 'center'}}>
+                            {this.state.isLoading ? '正在加载...' : '已经全部加载完毕'}
+                        </div>)}
                     renderRow={row}   //需要的参数包括一行数据等,会返回一个可渲染的组件为这行数据渲染  返回renderable
                     className="am-list stuAttendanceList"
                     pageSize={30}    //每次事件循环（每帧）渲染的行数
