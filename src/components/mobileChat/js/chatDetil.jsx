@@ -1139,12 +1139,13 @@ export default class chat_Detil extends React.Component {
     render() {
 
         return (<div id='chatDetil'>
+            <div className="chatDetil-top">
             <PullToRefresh
                 id='pullContent'
                 damping={60}   //拉动距离限制, 建议小于 200
                 ref={el => this.ptr = el}
                 style={{
-                    height: this.state.height - 54,
+                    height: this.state.height - 103,
                     overflow: 'auto',
                 }}
                 direction='down'
@@ -1158,8 +1159,6 @@ export default class chat_Detil extends React.Component {
 
             <List className="input_message lineTop_public"
                   style={{
-                      position: 'absolute',
-                      bottom: '0px',
                       width: document.body.clientWidth - 24
                   }}>
                 <TextareaItem
@@ -1174,6 +1173,7 @@ export default class chat_Detil extends React.Component {
 
                 <button className="submit" onClick={this.sendMessage}>发送</button>
             </List>
+            </div>
             <div style={
                 this.state.phone == 'ios'?{display:'none'}:{display:'block'}
             } className="contactsListNav">
