@@ -12,7 +12,7 @@
 }
 #stuAttendance .stuAttendanceList .am-list-item {
   padding-left: 0;
-  margin: 0 15px;
+  padding: 0 15px;
 }
 #stuAttendance .stuAttendanceList .am-list-item::after {
   content: '';
