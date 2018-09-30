@@ -6,7 +6,7 @@ const dataSource = new ListView.DataSource({
 });
 const Item = List.Item;
 const Brief = Item.Brief;
-const data = [];
+var data = [];
 
 export default class stuState extends React.Component {
 
@@ -95,6 +95,7 @@ export default class stuState extends React.Component {
                 console.log(res,'getClazzesByUserId');
                 if (res.success == true && res.msg == '调用成功') {
                     var changeData = res.response;
+                    data = [];
                     changeData.forEach((value,index)=>{
                         data.push({
                             value: value.id,
@@ -247,7 +248,7 @@ export default class stuState extends React.Component {
                 {/*</Item>*/}
                 dom = <Item extra={typeof(rowData.courseTableItem) == 'object'?"正在上"+rowData.courseTableItem.courseName+"课":rowData.courseTableItem} align="top" thumb={rowData.user.avatar}
                             multipleLine>
-                    {rowData.user.userName} <Brief><span className="icon-address"></span>{typeof(rowData.courseTableItem) == 'object'?rowData.courseTableItem.classRoom.name:'下课中...'}</Brief>
+                    {rowData.user.userName} <Brief><span className="icon-address"></span>{rowData.braceletLocation == ""?'暂无位置':rowData.braceletLocation.room.name}</Brief>
                 </Item>
             }
             return (
