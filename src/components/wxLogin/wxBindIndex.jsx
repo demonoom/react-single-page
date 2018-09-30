@@ -456,8 +456,8 @@ export default class wxBindIndex extends React.Component {
                         <div className="bindingNumberStudent">您绑定的班级学生信息</div>
                         <div className="Student-info">
                             {/*<div onClick={this.toDetail.bind(this,'stuList','TEAC')}>孩子列表</div>*/}
-                            <div onClick={this.toDetail.bind(this,'stuAttendance','TEAC')}><i className="student-status"></i><span>孩子考勤</span></div>
-                            <div onClick={this.toDetail.bind(this,'stuState','TEAC')}><i className="Class-attendance"></i><span>孩子状态</span></div>
+                            <div onClick={this.toDetail.bind(this,'stuAttendance','TEAC')}><i className="student-status"></i><span>学生考勤</span></div>
+                            <div onClick={this.toDetail.bind(this,'stuState','TEAC')}><i className="Class-attendance"></i><span>学生状态</span></div>
                             <div onClick={this.toDetail.bind(this,'stuRanking','TEAC')}><i className="Sports-rankings"></i><span>运动排名</span></div>
                         </div>
                     </div>
