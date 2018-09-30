@@ -257,7 +257,6 @@ export default class stuState extends React.Component {
         };
         return (
             <div id="stuAttendance">
-
                 <ListView
                     ref={el => this.lv = el}
                     dataSource={this.state.dataSource}    //数据类型是 ListViewDataSource
@@ -275,7 +274,7 @@ export default class stuState extends React.Component {
                     initialListSize={30}   //指定在组件刚挂载的时候渲染多少行数据，用这个属性来确保首屏显示合适数量的数据
                     scrollEventThrottle={20}     //控制在滚动过程中，scroll事件被调用的频率
                     style={
-                        this.state.show?{height: document.body.clientHeight,overflow:'hidden'}:{height: document.body.clientHeight,overflow:'auto'}
+                        2<1?{height: document.body.clientHeight,overflow:'hidden'}:{height: document.body.clientHeight,overflow:'auto'}
                     }
                 />
             </div>
