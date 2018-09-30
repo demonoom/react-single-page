@@ -10,10 +10,16 @@
     .am-list-body{
       height: calc(~"100% - 40px");
       width: 100%;
+      .am-list-line::after{
+        background: transparent;
+      }
+    }
+    .am-list-body:after, .am-list-body:before{
+      background: transparent;
     }
     .am-list-item{
       padding-left: 0;
-      margin: 0 15px;
+      padding: 0 15px;
       &::after{
         content: '';
         position: absolute;
