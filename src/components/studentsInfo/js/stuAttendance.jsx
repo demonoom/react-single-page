@@ -7,7 +7,7 @@ const dataSource = new ListView.DataSource({
 });
 const Item = List.Item;
 const Brief = Item.Brief;
-const data = [];
+var data = [];
 export default class stuAttendance extends React.Component {
 
     constructor(props) {
@@ -93,6 +93,8 @@ export default class stuAttendance extends React.Component {
                 console.log(res, 'res');
                 if (res.success == true && res.msg == '调用成功') {
                     var changeData = res.response;
+                    // data = [];
+                    data = [];
                     changeData.forEach((value, index) => {
                         data.push({
                             value: value.id,
