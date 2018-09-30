@@ -196,10 +196,12 @@
   display: inline-block;
 }
 #wxBindIndex .bindingNumber .left {
-  width: 35%;
+  width: 40%;
+  font-size: 14px;
 }
 #wxBindIndex .bindingNumber .right {
-  width: 42%;
+  width: 40%;
+  font-size: 14px;
 }
 #wxBindIndex .bindingNumber .am-button {
   padding: 0;
