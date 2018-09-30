@@ -160,3 +160,9 @@
   background: url("../img/message_tissue.png") no-repeat;
   background-size: 100% 100%;
 }
+#contactsListSimple .teacher-contact {
+  height: calc(100% - 49px);
+}
+#contactsListSimple .parents-contact {
+  height: calc(100% - 213px);
+}
