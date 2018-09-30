@@ -461,9 +461,6 @@ export default class wxBindIndex extends React.Component {
                             <div onClick={this.toDetail.bind(this,'stuRanking','TEAC')}><i className="Sports-rankings"></i><span>运动排名</span></div>
                         </div>
                     </div>
-
-
-                <WhiteSpace size="lg"/>
                 <div className="bindingNumber" style={{display: !this.state.openidFlag ? 'none' : this.state.value != 2 ? 'none' : 'block'}}>
                     <div className="bindingNumberStudent">学生校园个人信息</div>
                     <div className="Student-info">
