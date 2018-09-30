@@ -226,9 +226,9 @@ export default class stuState extends React.Component {
         }
         currentPageNo += 1;
         this.setState({isLoading: true, defaultPageNo: currentPageNo});
-        if (type == 'PARENT') {
+        if (this.state.type == 'PARENT') {
             this.getBraceletStudentInfoByParentId();
-        } else if (type == 'TEAC') {
+        } else if (this.state.type == 'TEAC') {
                 this.getBraceletStudentInfoByClazzId();
         }
     };

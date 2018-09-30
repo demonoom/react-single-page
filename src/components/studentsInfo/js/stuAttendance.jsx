@@ -234,9 +234,9 @@ export default class stuAttendance extends React.Component {
         }
         currentPageNo += 1;
         this.setState({isLoading: true, defaultPageNo: currentPageNo});
-        if (type == 'PARENT') {
+        if (this.state.type == 'PARENT') {
             this.getBraceletStudentInfoAttendByParentId();
-        } else if (type == 'TEAC') {
+        } else if (this.state.type == 'TEAC') {
             this.getBraceletStudentInfoAttendByClazzId();
         }
     };
