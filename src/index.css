@@ -555,6 +555,7 @@ hr {
   background: #fff;
   height: 49px;
   margin: 0 auto;
+  z-index: 10;
 }
 .contactsListNav .line_public {
   position: relative;
