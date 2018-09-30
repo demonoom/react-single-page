@@ -288,7 +288,7 @@ export default class stuRanking extends React.Component {
                                 {show ? initData ? menuEl : loadingEl : null}
                                 {show ? <div className="menu-mask" onClick={this.onCancel} /> : null}
                             </div>
-                            <div>本周运动排名</div>
+                            <div className="ranking-weektitle">本周运动排名</div>
                         </div>
                     }}
                     // renderFooter={() => (

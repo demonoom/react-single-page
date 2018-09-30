@@ -3,9 +3,12 @@
 #stuAttendance .am-list-line::after {
   display: none !important;
 }
-#stuAttendance .stuAttendanceList .am-list-view-scrollview-content,
-#stuAttendance .stuAttendanceList .am-list-body {
+#stuAttendance .stuAttendanceList .am-list-view-scrollview-content {
   height: 100%;
+  width: 100%;
+}
+#stuAttendance .stuAttendanceList .am-list-view-scrollview-content .am-list-header {
+  padding: 0;
 }
 #stuAttendance .stuAttendanceList .am-list-content {
   font-size: 16px !important;
@@ -182,4 +185,12 @@
   height: 14px;
   top: 0;
   border-color: #108ee9;
+}
+#stuAttendance .mask {
+  width: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 98;
 }

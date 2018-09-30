@@ -301,7 +301,7 @@ export default class stuAttendance extends React.Component {
                         this.state.show ? {
                             height: document.body.clientHeight,
                             overflow: 'hidden'
-                        } : {height: document.body.clientHeight, overflow: 'auto'}
+                        } : {height: document.body.clientHeight - 0, overflow: 'auto'}
                     }
                 />
             </div>

@@ -5,8 +5,11 @@
   height: 100%;
   width: 100%;
 }
+#stuRanking .stuAttendanceList .am-list-view-scrollview-content .am-list-header {
+  padding: 0;
+}
 #stuRanking .stuAttendanceList .am-list-body {
-  height: calc(100% - 40px);
+  height: calc(100% - 84px);
   width: 100%;
 }
 #stuRanking .stuAttendanceList .am-list-body .am-list-line::after {
@@ -93,7 +96,6 @@
   z-index: 80;
 }
 #stuRanking .single-multi-top-nav-bar {
-  border-bottom: 8px #f5f5f9 solid !important;
   position: relative;
   background-color: #fff;
   color: #666666;
@@ -221,4 +223,19 @@
   height: 14px;
   top: 0;
   border-color: #108ee9;
+}
+#stuRanking .mask {
+  width: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 98;
+}
+#stuRanking .ranking-weektitle {
+  height: 38px;
+  line-height: 38px;
+  padding-left: 15px;
+  color: #666;
+  font-size: 13px;
 }
