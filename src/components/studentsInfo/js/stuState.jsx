@@ -162,6 +162,7 @@ export default class stuState extends React.Component {
             return;
         }
         var classNameArray = [];
+        this.initData = [];
         for(var k in value){
             for(var i in data){
                 if(value[k] == data[i].value){
