@@ -33,6 +33,16 @@ export default class classList extends React.Component {
         var colPasswd = searchArray[1].split('=')[1];
         var unionid = searchArray[2].split('=')[1];
         this.setState({userId, colPasswd, unionid});
+        var phoneType = navigator.userAgent;
+        var phone;
+        if (phoneType.indexOf('iPhone') > -1 || phoneType.indexOf('iPad') > -1) {
+            phone = 'ios'
+        } else {
+            phone = 'android'
+        }
+        this.setState({
+            phone:phone
+        })
     }
 
     componentDidMount() {
@@ -115,9 +125,16 @@ export default class classList extends React.Component {
                     initialListSize={30}   //指定在组件刚挂载的时候渲染多少行数据，用这个属性来确保首屏显示合适数量的数据
                     scrollEventThrottle={20}     //控制在滚动过程中，scroll事件被调用的频率
                     style={{
-                        height: document.body.clientHeight,
+                        height: document.body.clientHeight - 49,
                     }}
                 />
+                <div style={
+                    this.state.phone == 'ios'?{display:'none'}:{display:'block'}
+                } className="contactsListNav">
+                    <div className="line_public"></div>
+                    <div className="nav-left" onClick={()=>{window.history.back()}}></div>
+                    <div className="nav-right" onClick={()=>{window.history.go(1)}}></div>
+                </div>
             </div>
         );
     }

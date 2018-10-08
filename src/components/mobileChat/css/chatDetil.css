@@ -1,5 +1,5 @@
 #chatDetil {
-  background: #ebebeb;
+  background: #f5f5f7;
 }
 #chatDetil .messageWrap {
   padding: 10px;
@@ -269,7 +269,6 @@
   position: relative;
   top: 1px;
 }
-#chatDetil .lineTop_public:after,
 #chatDetil .am-list-body::before,
 #chatDetil .am-list .am-list-item.am-textarea-item::after,
 #chatDetil .am-list-body::after {
@@ -292,4 +291,7 @@
 }
 #chatDetil .message_userL {
   margin-left: 10px;
+}
+#chatDetil .chatDetil-top {
+  height: calc(100% - 49px);
 }

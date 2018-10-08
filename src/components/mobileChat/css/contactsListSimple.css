@@ -76,6 +76,9 @@
 #contactsListSimple .am-list-view-scrollview-content {
   width: 100%;
 }
+#contactsListSimple .am-list-view-scrollview-content .am-list-body::after {
+  background-color: transparent;
+}
 #contactsListSimple .am-list-item .am-list-line .am-list-content {
   padding: 10px 0;
   font-size: 15px;
@@ -156,4 +159,10 @@
 #contactsListSimple .message_tissue {
   background: url("../img/message_tissue.png") no-repeat;
   background-size: 100% 100%;
+}
+#contactsListSimple .teacher-contact {
+  height: calc(100% - 49px);
+}
+#contactsListSimple .parents-contact {
+  height: calc(100% - 213px);
 }

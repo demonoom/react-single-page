@@ -23,6 +23,7 @@ export default class contacts_ListS extends React.Component {
             unionid: '',        //微信登录的unionid
             userData: [],   //unionid绑定的用户身份数组
             choosePos: '',   //控制选择的是左还是右
+            indexType: 'teacher',
             headItem: [<Item onClick={this.turnToGroup}>
                 <i className='userImg message_group'></i>
                 <span>我的群组</span>
@@ -43,12 +44,23 @@ export default class contacts_ListS extends React.Component {
     }
 
     componentWillMount() {
+        // history.back(-1);
         document.title = "小蚂蚁聊天";   //设置title
         var locationHref = window.location.href;
         var locationSearch = locationHref.substr(locationHref.indexOf("?") + 1);
         var searchArray = locationSearch.split("&");
         var unionid = searchArray[0].split('=')[1];
         this.setState({unionid});
+        var phoneType = navigator.userAgent;
+        var phone;
+        if (phoneType.indexOf('iPhone') > -1 || phoneType.indexOf('iPad') > -1) {
+            phone = 'ios'
+        } else {
+            phone = 'android'
+        }
+        this.setState({
+            phone:phone
+        })
         // this.setState({unionid: 'o-w611FMw4s8WtiCwNqD1Ltr9w2w'});
     }
 
@@ -260,8 +272,10 @@ export default class contacts_ListS extends React.Component {
      * 调用getUserContacts切换联系人
      * 更换choosePos,向下一页传递属于他的用户信息
      */
-    turnTojiaZhang() {
-
+    turnTojiaZhang(type) {
+        this.setState({
+            indexType: type
+        })
         document.getElementById('selectR').className = 'select'
         document.getElementById('selectL').className = ''
         contactsList.initData.splice(0);
@@ -288,6 +302,14 @@ export default class contacts_ListS extends React.Component {
             }
         })
 
+    }
+
+    historyBack(){
+        window.history.back();
+    }
+
+    historyGo(){
+        window.history.go(1);
     }
 
     render() {
@@ -341,11 +363,14 @@ export default class contacts_ListS extends React.Component {
             }
         }
 
+
+
+
         return (
             <div id='contactsListSimple'>
                 <div className="address_header" style={{display: this.state.butFoot ? 'block' : 'none'}}>
-                    <span id='selectL' className="select" onClick={this.turnToTercher}>老师</span>
-                    <span id='selectR' onClick={this.turnTojiaZhang}>家长</span>
+                    <span id='selectL' className="select" onClick={this.turnToTercher.bind(this,'teacher')}>老师</span>
+                    <span id='selectR' onClick={this.turnTojiaZhang.bind(this,'parent')}>家长</span>
                 </div>
 
                 <div>
@@ -365,10 +390,18 @@ export default class contacts_ListS extends React.Component {
                     scrollRenderAheadDistance={200}   //当一个行接近屏幕范围多少像素之内的时候，就开始渲染这一行
                     initialListSize={30}   //指定在组件刚挂载的时候渲染多少行数据，用这个属性来确保首屏显示合适数量的数据
                     scrollEventThrottle={20}     //控制在滚动过程中，scroll事件被调用的频率
-                    style={{
-                        height: document.body.clientHeight - this.state.missDistance,
-                    }}
+                    style={
+                        this.state.indexType == 'teacher'?{height: document.body.clientHeight - this.state.missDistance - 49,
+                        }:{height: document.body.clientHeight - 210}
+                        }
                 />
+                <div style={
+                    this.state.phone == 'ios'?{display:'none'}:{display:'block'}
+                } className="contactsListNav">
+                    <div className="line_public"></div>
+                    <div className="nav-left" onClick={()=>{window.history.back()}}></div>
+                    <div className="nav-right" onClick={()=>{window.history.go(1)}}></div>
+                </div>
 
             </div>
         );

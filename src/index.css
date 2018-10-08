@@ -545,3 +545,57 @@ hr {
 .icon_pointer {
   cursor: pointer;
 }
+/*前进后退*/
+.contactsListNav {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  padding: 0;
+  background: #fff;
+  height: 49px;
+  margin: 0 auto;
+  z-index: 10;
+}
+.contactsListNav .line_public {
+  position: relative;
+  width: 100%;
+}
+.contactsListNav .line_public:after {
+  content: '';
+  position: absolute;
+  background-color: #e5e5e5;
+  display: block;
+  z-index: 1;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 1PX;
+  -webkit-transform-origin: 0 0;
+  -ms-transform-origin: 0 0;
+  transform-origin: 0 0;
+  -webkit-transform: scaleY(0.5);
+  -ms-transform: scaleY(0.5);
+  transform: scaleY(0.5);
+}
+.contactsListNav .nav-left,
+.contactsListNav .nav-right {
+  box-sizing: border-box;
+  display: inline-block;
+  width: 10px;
+  height: 18px;
+  margin-top: 15px;
+}
+.contactsListNav .nav-left {
+  background: url("components/mobileChat/img/left-back.png") no-repeat;
+  background-size: 100% 100%;
+  margin-left: 33.333%;
+}
+.contactsListNav .nav-right {
+  background: url("components/mobileChat/img/right-forward.png") no-repeat;
+  background-size: 100% 100%;
+  margin-right: 33.333%;
+  float: right;
+}

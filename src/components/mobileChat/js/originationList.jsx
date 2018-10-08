@@ -37,6 +37,16 @@ export default class originationList extends React.Component {
         var schoolId = searchArray[4].split('=')[1];
 
         this.setState({userId, colPasswd, unionid, structureId, schoolId});
+        var phoneType = navigator.userAgent;
+        var phone;
+        if (phoneType.indexOf('iPhone') > -1 || phoneType.indexOf('iPad') > -1) {
+            phone = 'ios'
+        } else {
+            phone = 'android'
+        }
+        this.setState({
+            phone:phone
+        })
     }
 
     componentDidMount() {
@@ -305,6 +315,13 @@ export default class originationList extends React.Component {
                             {this.state.membersItem}
                         </div>
                     </div>
+                </div>
+                <div style={
+                    this.state.phone == 'ios'?{display:'none'}:{display:'block'}
+                } className="contactsListNav">
+                    <div className="line_public"></div>
+                    <div className="nav-left" onClick={()=>{window.history.back()}}></div>
+                    <div className="nav-right" onClick={()=>{window.history.go(1)}}></div>
                 </div>
             </div>
         );

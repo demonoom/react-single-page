@@ -1,9 +1,12 @@
-(node) util.print is deprecated. Use console.log instead.
 #friendList .userImg {
   width: 40px;
   height: 40px;
   vertical-align: middle;
   margin-right: 15px;
+  object-fit: cover;
+}
+#friendList .am-list-body::after {
+  background: transparent;
 }
 #friendList .am-list-item .am-list-line .am-list-content {
   padding: 10px 0;
