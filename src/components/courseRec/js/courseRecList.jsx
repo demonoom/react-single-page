@@ -88,9 +88,6 @@ export default class courseRecList extends React.Component {
         WebServiceUtil.requestLittleElearningWeb(JSON.stringify(param), {
             onResponse: result => {
                 console.log(result, "kekekeke");
-                result.response.forEach((v, i) => {
-                    v.initialValue = false
-                })
                 if (result.success) {
                     calm.state.rsCount2 = result.pager.rsCount;
                     calm.initDataSource2 = calm.initDataSource2.concat(result.response);
@@ -164,11 +161,10 @@ export default class courseRecList extends React.Component {
      */
     cancle() {
         $(".updateModel").slideUp()
-        if (calm.state.type == 1) {
-            $(".updateModel video")[0].pause()
-            $(".updateModel video")[0].currentTime = 0;
-        }
         $(".tagAddPanel_bg").hide();
+        calm.setState({
+            searchValue:""
+        })
 
     }
 
