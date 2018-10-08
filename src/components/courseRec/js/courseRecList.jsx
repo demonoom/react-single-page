@@ -325,10 +325,9 @@ export default class courseRecList extends React.Component {
     /**
      * 跳转详情页
      */
-    toDetail=(id,user)=>{
+    toDetail=(id,userId,courseName)=>{
         console.log(id)
-        console.log(user)
-        var url = WebServiceUtil.mobileServiceURL + "addRecCourse?id=" + id+ "&user=" + user;
+        var url = WebServiceUtil.mobileServiceURL + "addRecCourse?id=" + id+ "&userId=" + userId+"&cName="+courseName;
         var data = {
             method: 'openNewPage',
             url: url,
@@ -344,9 +343,9 @@ export default class courseRecList extends React.Component {
             console.log(rowData, "rowData")
             rowData = rowData || {}
             return (
-                <div onClick={calm.toDetail.bind(this,rowData.id,rowData.publisher)}>
+                <div onClick={calm.toDetail.bind(this,rowData.id,rowData.publisher_id,rowData.courseName)}>
                     <img src={rowData.image} alt="" />
-                    <div>{rowData.content}</div>
+                    <div>{rowData.courseName}</div>
                     <div>{rowData.courseType.name}</div>
                     <div>{rowData.publisher}</div>
                     <div onClick={calm.showAlert.bind(this, rowData.id, rowID)}>删除</div>
@@ -377,7 +376,7 @@ export default class courseRecList extends React.Component {
             return (
                 <div>
                     <img src={rowData.image} alt="" />
-                    <div>{rowData.content}</div>
+                    <div>{rowData.courseName}</div>
                     <div>{rowData.courseType.name}</div>
                     {
                         rowData.videos.length == 1 ?
