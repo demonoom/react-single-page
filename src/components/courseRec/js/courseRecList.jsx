@@ -20,7 +20,7 @@ export default class courseRecList extends React.Component {
         calm.initDataSource = [];
         calm.initDataSource2 = [];
         this.state = {
-            showCancelButton: false,
+            showCancelButton: true,
             dataSource: dataSource.cloneWithRows(this.initDataSource),
             dataSource2: dataSource2.cloneWithRows(this.initDataSource2),
             defaultPageNo: 1,
@@ -450,7 +450,7 @@ export default class courseRecList extends React.Component {
                             onClear={value => console.log(value, 'onClear')}
                             onFocus={() => console.log('onFocus')}
                             onBlur={() => console.log('onBlur')}
-                            onCancel={this.cancelPage}
+                            onCancel={this.cancle}
                             onChange={this.onChange}
                             showCancelButton={calm.state.showCancelButton}
                             placeholder="请输入搜索内容"

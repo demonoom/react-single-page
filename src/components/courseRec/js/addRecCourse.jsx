@@ -98,7 +98,7 @@ export default class addRecCourse extends React.Component {
                            <img src={calm.state.initObj.users[0].avatar} alt=""/>
                            <div className='rightText'>
                                <div className='text_hidden'>{calm.state.initObj.users[0].userName}</div>
-                               <div>{calm.state.initObj.users[0].userContent}</div>
+                               <div>{calm.state.initObj.users[0].userContent == "" ? "暂无简介":calm.state.initObj.users[0].userContent}</div>
                            </div>
                        </div>
                    </div>
@@ -106,7 +106,7 @@ export default class addRecCourse extends React.Component {
                 <div className='bg'>
                     <div className="title">课程介绍</div>
                     <div className="text">
-                        {calm.state.initObj.content}
+                        {calm.state.initObj.content == "" ? "暂无内容":calm.state.initObj.content}
                     </div>
                 </div>
 
