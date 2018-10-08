@@ -1,12 +1,12 @@
 var isDebug = true;
 var localDomain = "192.168.50.15";   //请求地址
 var isDebugLocal = true;
-var localUrl = "192.168.50.39";    //跳转地址http:
-// //云校本地测试webService地址
-// var elearningWebserviceURLOfLocal = "http://" + localDomain + ":8888/elearning/elearningControl/";
-// //云校的远程服务器地址
-// var elearningWebserviceURLOfRemote = "http://www.maaee.com/elearning/elearningControl/";
-// var elearningWebserviceURL = isDebug ? elearningWebserviceURLOfLocal : elearningWebserviceURLOfRemote;
+var localUrl = "192.168.50.72";    //跳转地址http:
+//云校本地测试webService地址
+var elearningWebserviceURLOfLocal = "http://" + localDomain + ":9007/elearning/elearningControl/";
+//云校的远程服务器地址
+var elearningWebserviceURLOfRemote = "http://www.maaee.com/elearning/elearningControl/";
+var elearningWebserviceURL = isDebug ? elearningWebserviceURLOfLocal : elearningWebserviceURLOfRemote;
 
 // //小蚂蚁webService地址
 const apiWebServiceURLOfLocals = "http://" + localDomain + ":9006/Excoord_ApiServer/webservice";
@@ -42,6 +42,24 @@ WebServiceUtil.mobileServiceURL = isDebugLocal ? mobileURLOfLocal : mobileURLOfR
 
 /**
  * 不带请求头的ajax
+ * @param data
+ * @param listener
+ */
+WebServiceUtil.requestLittleElearningWeb = function (data, listener) {
+    $.ajax({
+        type: "post",
+        url: elearningWebserviceURL,
+        data: {params: data},
+        dataType: "json",
+        success: function (result) {
+            listener.onResponse(result);
+        }, error: function (error) {
+            listener.onError(error);
+        }
+    });
+}
+/**
+ * 不带请求头的ajax---云校
  * @param data
  * @param listener
  */
@@ -196,6 +214,14 @@ WebServiceUtil.formatMD = function (nS) {
     var month = da.getMonth() + 1;
     var date = da.getDate();
     var ymdStr = [month, date].join('-');
+    return ymdStr;
+};
+WebServiceUtil.formatMD2 = function (nS) {
+    var da = new Date(parseInt(nS));
+    var year = da.getFullYear();
+    var month = da.getMonth() + 1;
+    var date = da.getDate();
+    var ymdStr = [month, date].join('.');
     return ymdStr;
 };
 

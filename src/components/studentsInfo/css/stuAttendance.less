@@ -3,15 +3,19 @@
     display: none !important;
   }
   .stuAttendanceList{
-    .am-list-view-scrollview-content,.am-list-body{
+    .am-list-view-scrollview-content{
       height: 100%;
+      width: 100%;
+      .am-list-header{
+        padding: 0;
+      }
     }
     .am-list-content{
       font-size: 16px !important;
     }
     .am-list-item{
       padding-left: 0;
-      margin: 0 15px;
+      padding: 0 15px;
       &::after{
         content: '';
         position: absolute;
@@ -34,11 +38,25 @@
     }
     .am-list-line-multiple{
       padding-right: 0;
+      .am-list-extra{
+        color: #638BB7;
+        font-size: 14px;
+      }
     }
     .am-list-brief{
       font-size: 14px !important;
       .blueText{
-          color: #108EE9;
+          color: #638BB7;
+      }
+      .icon-address{
+        width:12px;
+        height:15px;
+        background: url("../img/icon-address.png") no-repeat;
+        background-size: 100% 100%;
+        display: inline-block;
+        margin-right: 6px;
+        position: relative;
+        top: 2px;
       }
     }
   }
@@ -48,6 +66,10 @@
     z-index: 70 !important;
     width: 100%;
     bottom:0;
+    .am-list-item{
+      padding: 0 0 0 15px;
+      margin: 0;
+    }
   }
 
   .single-multi-top-nav-bar {
@@ -148,6 +170,7 @@
     .am-menu-select-container .am-flexbox-item .am-list-item.am-menu-selected .am-list-content {
       color: #4a90e2 !important;
     }
+
     .am-multi-select-btns-btn::before{
       display: none !important;
     }
@@ -168,5 +191,13 @@
         border-color: #108ee9;
       }
     }
+  }
+  .mask{
+    width: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    background: rgba(0,0,0,0.5);
+    z-index: 98;
   }
 }

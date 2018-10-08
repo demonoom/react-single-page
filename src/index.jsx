@@ -861,6 +861,21 @@ const stuList = (location, cb) => {
         }
     )
 }
+/**
+ * 云校课程推荐
+ */
+const courseRecListst = (location, cb) => {
+    require.ensure([], require => {
+            cb(null, require("./components/courseRec/js/courseRecList").default)
+        }
+    )
+}
+const addRecCourse = (location, cb) => {
+    require.ensure([], require => {
+            cb(null, require("./components/courseRec/js/addRecCourse").default)
+        }
+    )
+}
 
 
 import './index.less';
@@ -1073,6 +1088,10 @@ class Index extends React.Component {
                         <Link
                             to="/classListMobile?uid=23836" style={{fontSize: '24px'}}>班级列表</Link>
                     </li>
+                    <li>
+                        <Link
+                            to="/courseRecListst" style={{fontSize: '24px'}}>课程推荐</Link>
+                    </li>
                     {/* <li>
                         <Link
                             to="/studentList?clazzId=819" style={{fontSize: '24px'}}>学生列表</Link>
@@ -1226,6 +1245,8 @@ ReactDOM.render(
             <Route path="stuState" getComponent={stuState}/>
             <Route path="stuRanking" getComponent={stuRanking}/>
             <Route path="stuList" getComponent={stuList}/>
+            <Route path="courseRecListst" getComponent={courseRecListst}/>
+            <Route path="addRecCourse" getComponent={addRecCourse}/>
         </Route>
     </Router>
     ,
