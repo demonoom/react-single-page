@@ -1,5 +1,6 @@
 import React from "react";
 import { Tabs, WhiteSpace, ListView, Button, List, Radio, TextareaItem, Toast, Modal, } from 'antd-mobile';
+import '../css/addRecCourse.less'
 const RadioItem = Radio.RadioItem;
 const alert = Modal.alert;
 
@@ -68,31 +69,46 @@ export default class addRecCourse extends React.Component {
         var _this = this;
         console.log(calm.state.initObj)
         return (
-            <div id="lookThrough" style={{
+            <div id="addRecCourse" style={{
                 height: document.body.clientHeight
             }}>
-                <img src={calm.state.initObj.image} alt="" srcset="" />
-                <div>{calm.state.initObj.courseType.name}</div>
-                <div>开课时长：
-                {
-                    calm.state.initObj.videos.length == 1 ?
-                        <span>{WebServiceUtil.formatYMD(calm.state.initObj.createTime)}</span>
-                        :
-                        <span>
+                <div className="imgCont">
+                    <img src={calm.state.initObj.image} alt="" srcSet=""/>
+                </div>
+               <div className="topCont bg">
+
+                   <div className='courseTime'>开课时长：
+                       {
+                           calm.state.initObj.videos.length == 1 ?
+                               <span>{WebServiceUtil.formatYMD(calm.state.initObj.createTime)}</span>
+                               :
+                               <span>
                             {WebServiceUtil.formatMD2(calm.state.initObj.createTime) + '-' + WebServiceUtil.formatMD2(calm.state.initObj.endTime)}
                         </span>
 
-                }
+                       }
+                       <span className='tag'>{calm.state.initObj.courseType.name}</span>
+                   </div>
+                   <div>时长:{calm.state.initObj.videos.length}课时</div>
+               </div>
+                <div className='bg teacherInfo'>
+                    <div className="title">老师简介</div>
+                   <div>
+                       <div className='my_flex item'>
+                           <img src={calm.state.initObj.users[0].avatar} alt=""/>
+                           <div className='rightText'>
+                               <div className='text_hidden'>{calm.state.initObj.users[0].userName}</div>
+                               <div>{calm.state.initObj.users[0].userContent}</div>
+                           </div>
+                       </div>
+                   </div>
                 </div>
-                <div>时长:{calm.state.initObj.videos.length}课时</div>
-                <div>老师简介
-                    <div>
-                        <img src={calm.state.initObj.users[0].avatar} alt=""/>
-                        <span>{calm.state.initObj.users[0].userName}</span>
-                        <span>{calm.state.initObj.users[0].userContent}</span>
+                <div className='bg'>
+                    <div className="title">课程介绍</div>
+                    <div className="text">
+                        {calm.state.initObj.content}
                     </div>
                 </div>
-                <div>课程介绍{calm.state.initObj.content}</div>
 
             </div>
         )
