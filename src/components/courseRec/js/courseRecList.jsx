@@ -1,6 +1,7 @@
 import React from "react";
 import { Switch, SearchBar, ListView, Button, List, Radio, TextareaItem, Toast, Modal, } from 'antd-mobile';
 import { createForm } from 'rc-form';
+import '../css/courseRecListst.less'
 const RadioItem = Radio.RadioItem;
 const alert = Modal.alert;
 
@@ -343,12 +344,19 @@ export default class courseRecList extends React.Component {
             console.log(rowData, "rowData")
             rowData = rowData || {}
             return (
-                <div onClick={calm.toDetail.bind(this,rowData.id,rowData.publisher_id,rowData.courseName)}>
+                <div className="list_item my_flex" onClick={calm.toDetail.bind(this,rowData.id,rowData.publisher_id,rowData.courseName)}>
                     <img src={rowData.image} alt="" />
-                    <div>{rowData.courseName}</div>
-                    <div>{rowData.courseType.name}</div>
-                    <div>{rowData.publisher}</div>
-                    <div onClick={calm.showAlert.bind(this, rowData.id, rowID)}>删除</div>
+                    <div className="textCont my_flex">
+                        <div className="text_hidden courseName">{rowData.courseName}</div>
+                        <div>
+                            <span className="tag">{rowData.courseType.name}</span>
+                        </div>
+                        <div className="teacherName">
+                            <span className='text_hidden'>{rowData.publisher}</span>
+                            <div className="deleteBtn_common" onClick={calm.showAlert.bind(this, rowData.id, rowID)}></div>
+                        </div>
+
+                    </div>
                 </div>
             )
         }
@@ -374,21 +382,25 @@ export default class courseRecList extends React.Component {
             };
             SwitchExample = createForm()(SwitchExample);
             return (
-                <div>
-                    <img src={rowData.image} alt="" />
-                    <div>{rowData.courseName}</div>
-                    <div>{rowData.courseType.name}</div>
-                    {
-                        rowData.videos.length == 1 ?
-                            <div>{WebServiceUtil.formatYMD(rowData.createTime)}</div>
-                            :
-                            <div>
-                                {WebServiceUtil.formatMD2(rowData.createTime) + '-' + WebServiceUtil.formatMD2(rowData.endTime)}<span>{rowData.videos.length}课时</span>
-                            </div>
+                <div className="item">
+                    <div className="bg">
+                        <img src={rowData.image} alt="" />
+                       <div className="content">
+                           <div className="courseName text_hidden marginTop">{rowData.courseName}</div>
+                           <div className='marginTop'><span className="tag">{rowData.courseType.name}</span></div>
+                           {
+                               rowData.videos.length == 1 ?
+                                   <div className="time marginTop">{WebServiceUtil.formatYMD(rowData.createTime)}</div>
+                                   :
+                                   <div className="time marginTop">
+                                       {WebServiceUtil.formatMD2(rowData.createTime) + '-' + WebServiceUtil.formatMD2(rowData.endTime)}<span>{rowData.videos.length}课时</span>
+                                   </div>
 
-                    }
-                    <div>{rowData.publisher}</div>
-                    <SwitchExample />
+                           }
+                           <div className="teacherName text_hidden marginTop">{rowData.publisher}</div>
+                           <SwitchExample />
+                       </div>
+                    </div>
                 </div>
             )
         }
@@ -396,7 +408,7 @@ export default class courseRecList extends React.Component {
 
 
         return (
-            <div id="lookThrough" style={{
+            <div id="courseRecListst" style={{
                 height: document.body.clientHeight
             }}>
                 <div className='emptyDiv' style={{ display: calm.initDataSource.length == 0 ? "block" : 'none' }}>
@@ -404,8 +416,7 @@ export default class courseRecList extends React.Component {
                 </div>
 
                 <div style={{
-                    height: document.documentElement.clientHeight - 46,
-                    backgroundColor: '#f4f4f4'
+                    height: document.documentElement.clientHeight,
                 }}>
                     {/* 未审核 */}
                     <ListView
@@ -426,13 +437,13 @@ export default class courseRecList extends React.Component {
                         scrollEventThrottle={20}     //控制在滚动过程中，scroll事件被调用的频率
                         onScroll={this.scroll}
                         style={{
-                            height: document.body.clientHeight - 46,
+                            height: document.body.clientHeight,
                         }}
                     />
                 </div>
-                <div onClick={calm.toAdd}>添加</div>
-                <div className="updateModel" style={{ display: 'none', width: "100%", height: "500px", position: "absolute", left: "0", padding: "10px 0 0 0", bottom: "0" }}>
-                    <div id="waitLookThrough">
+                <div className="addBunton" onClick={calm.toAdd}><img src={require("../../classCardSystemBackstage/imgs/addBtn.png")} /></div>
+                <div id="courseRecListst" className="updateModel noPadding">
+                    <div className="modalCont">
                         {/* <div className="goBack line_public"><Icon type="left" onClick={calm.goBack}/></div> */}
                         <SearchBar id="search"
                             onSubmit={value => console.log(value, 'onSubmit')}
@@ -454,7 +465,7 @@ export default class courseRecList extends React.Component {
                                         {this.state.isLoading2 ? '正在加载...' : '已经全部加载完毕'}
                                     </div>)}
                                 renderRow={row2}   //需要的参数包括一行数据等,会返回一个可渲染的组件为这行数据渲染  返回renderable
-                                className="am-list noReviewed"
+                                className="am-list searchList"
                                 pageSize={30}    //每次事件循环（每帧）渲染的行数
                                 //useBodyScroll  //使用 html 的 body 作为滚动容器   bool类型   不应这么写  否则无法下拉刷新
                                 scrollRenderAheadDistance={200}   //当一个行接近屏幕范围多少像素之内的时候，就开始渲染这一行
@@ -464,14 +475,10 @@ export default class courseRecList extends React.Component {
                                 scrollEventThrottle={20}     //控制在滚动过程中，scroll事件被调用的频率
                                 onScroll={this.scroll}
                                 style={{
-                                    height: document.body.clientHeight - 46,
+                                    height: document.body.clientHeight*0.7 - 49,
                                 }}
                             />
                         </div>
-                    </div>
-                    <div className="bottomBox">
-                        <span className="close" onClick={calm.cancle}>取消</span>
-                        <span className="bind" onClick={_this.submit}>确定</span>
                     </div>
                 </div>
                 <div className="tagAddPanel_bg"></div>

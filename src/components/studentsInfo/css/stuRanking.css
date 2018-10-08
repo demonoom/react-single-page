@@ -9,7 +9,6 @@
   padding: 0;
 }
 #stuRanking .stuAttendanceList .am-list-body {
-  height: 100%;
   width: 100%;
 }
 #stuRanking .stuAttendanceList .am-list-body .am-list-line::after {
