@@ -1,5 +1,5 @@
 import React from "react";
-import { Switch, SearchBar, ListView, Button, List, Radio, InputItem, Toast, Modal, } from 'antd-mobile';
+import { Switch, SearchBar, ListView, Button, List, Radio, TextareaItem, Toast, Modal, } from 'antd-mobile';
 import { createForm } from 'rc-form';
 import '../css/courseRecListst.less'
 const RadioItem = Radio.RadioItem;
@@ -34,10 +34,6 @@ export default class courseRecList extends React.Component {
             clientHeight: document.body.clientHeight,
             textareaValue: "",
             showMark: true,
-            numValue: 0,
-            currentId:"",
-            sureState:false,
-            cancleState:true
         }
     }
 
@@ -60,7 +56,6 @@ export default class courseRecList extends React.Component {
         WebServiceUtil.requestLittleElearningWeb(JSON.stringify(param), {
             onResponse: result => {
                 if (result.success) {
-                    
                     calm.state.rsCount = result.pager.rsCount;
                     calm.initDataSource = calm.initDataSource.concat(result.response);
                     calm.setState({
@@ -92,16 +87,6 @@ export default class courseRecList extends React.Component {
         WebServiceUtil.requestLittleElearningWeb(JSON.stringify(param), {
             onResponse: result => {
                 if (result.success) {
-                    result.response.forEach((v,i)=>{
-                        if(v.recommend == true){
-                            v.updateState=false
-
-                        }
-                        if(v.recommend == false){
-                            v.updateState=true
-                            
-                        }
-                    })
                     calm.state.rsCount2 = result.pager.rsCount;
                     calm.initDataSource2 = calm.initDataSource2.concat(result.response);
                     calm.setState({
@@ -175,9 +160,9 @@ export default class courseRecList extends React.Component {
     cancle() {
         $(".updateModel").slideUp()
         $(".tagAddPanel_bg").hide();
-        calm.initDataSource2 = [];
+        calm.initDataSource2=[];
         calm.setState({
-            searchValue: "",
+            searchValue:"",
             dataSource2: dataSource2.cloneWithRows(calm.initDataSource2),
 
         })
@@ -278,24 +263,14 @@ export default class courseRecList extends React.Component {
     /**
     *  点击获取checked值
     */
-    saveChecked = (checked, rowData,rowID) => {
+    saveChecked = (checked, rowData) => {
         if (checked == true) {
-            calm.initDataSource2[rowID].updateState = false;
             calm.addRecommendCourse(rowData, checked)
-            calm.setState({
-                updateState:false,
-                dataSource2: dataSource2.cloneWithRows(calm.initDataSource2)
-            })
         }
         if (checked == false) {
-            calm.initDataSource2[rowID].updateState = true;
             calm.cancelRecommendCourse(rowData, checked)
-            calm.setState({
-                dataSource2: dataSource2.cloneWithRows(calm.initDataSource2)
-            })
 
         }
-        
     }
     /**
      * 重新审核弹出框
@@ -345,8 +320,8 @@ export default class courseRecList extends React.Component {
     /**
      * 跳转详情页
      */
-    toDetail = (id, userId, courseName) => {
-        var url = WebServiceUtil.mobileServiceURL + "addRecCourse?id=" + id + "&userId=" + userId + "&cName=" + courseName;
+    toDetail=(id,userId,courseName)=>{
+        var url = WebServiceUtil.mobileServiceURL + "addRecCourse?id=" + id+ "&userId=" + userId+"&cName="+courseName;
         var data = {
             method: 'openNewPage',
             url: url,
@@ -356,117 +331,12 @@ export default class courseRecList extends React.Component {
             window.location.href = url;
         });
     }
-
-    onChange333 = (val) => {
-        // console.log(val, "val");
-        // calm.setState({ numberValue: val }, () => {
-        //     console.log(calm.state.numberValue, "calm.state.numberValue")
-
-        // });
-        // console.log(val);
-        this.setState({ val });
-    }
-
-    showModal = (id,index) => {
-        calm.setState({
-            currentId:id,
-            currentIndex:index
-        },()=>{
-            console.log(calm.state.currentId)
-        })
-        $(".modalNum").show()
-        $(".tagAddPanel_bg").show();
-    }
-
-
-
-    addNum = () => {
-        var tempV = calm.state.numValue - 0;
-        if(tempV >= 9){
-            calm.setState({
-                sureState:true,
-                numValue: 10
-            })
-            return
-        }
-        if(calm.state.numValue >= 0 ){
-            calm.setState({
-                cancleState:false
-            })
-        }
-        tempV += 1;
-        calm.setState({
-            numValue: tempV
-        }, () => {
-            console.log(calm.state.numValue)
-        })
-    }
-    subNum = () => {
-        var tempV = calm.state.numValue - 0;
-        if(tempV <= 1){
-            calm.setState({
-                cancleState:true,
-                numValue: 0
-            })
-            return
-        }
-        tempV -= 1;
-        if(calm.state.numValue <= 10 ){
-            calm.setState({
-                sureState:false
-            })
-        }
-        calm.setState({
-            numValue: tempV,
-            
-        }, () => {
-            console.log(calm.state.numValue)
-        })
-    }
-
-    toSetNum=()=>{
-        $(".modalNum").hide()
-        calm.setState({
-            val: calm.state.numValue,
-            numValue:0
-        },()=>{
-            var param = {
-                "method": 'setRecommendCourseWeight',
-                "courseId": calm.state.currentId,
-                "weight":calm.state.val
-            };
-            WebServiceUtil.requestLittleElearningWeb(JSON.stringify(param), {
-                onResponse: result => {
-                    if (result.response) {
-                        if (result.success) {
-                            calm.initDataSource2[calm.state.currentIndex].recommendWeight =calm.state.val;
-                            calm.setState({
-                                dataSource2: dataSource2.cloneWithRows(calm.initDataSource2),
-                            })
-                        }
-                    }
-                },
-                onError: function (error) {
-                    // Toast.fail(error, 1); 
-                }
-            });
-        })
-       
-        
-    }
-    cancleSet=()=>{
-        $(".modalNum").hide()
-        calm.setState({
-            val:calm.state.val,
-            numValue:0
-        })
-    }
     render() {
         var _this = this;
         const row = (rowData, sectionID, rowID) => {
             rowData = rowData || {}
             return (
-                <div className="list_item my_flex" onClick={calm.toDetail.bind(this, rowData.id, rowData.publisher_id, rowData.courseName)}>
+                <div className="list_item my_flex" onClick={calm.toDetail.bind(this,rowData.id,rowData.publisher_id,rowData.courseName)}>
                     <img src={rowData.image} alt="" />
                     <div className="textCont my_flex">
                         <div className="text_hidden courseName">{rowData.courseName}</div>
@@ -495,7 +365,7 @@ export default class courseRecList extends React.Component {
                             })}
                             platform="ios"
                             onClick={(checked) => {
-                                calm.saveChecked(checked, rowData,rowID)
+                                calm.saveChecked(checked, rowData)
                             }}
                         />}
                     >设为推荐</List.Item>
@@ -506,50 +376,25 @@ export default class courseRecList extends React.Component {
                 <div className="item">
                     <div className="bg">
                         <img src={rowData.image} alt="" />
-                        <div className="content">
-                            <div className="courseName text_hidden marginTop">{rowData.courseName}</div>
-                            <div className='marginTop'><span className="tag">{rowData.courseType.name}</span></div>
-                            {
-                                rowData.videos.length == 1 ?
-                                    <div className="time marginTop">{WebServiceUtil.formatYMD(rowData.createTime)}</div>
-                                    :
-                                    <div className="time marginTop">
-                                        {WebServiceUtil.formatMD2(rowData.createTime) + '-' + WebServiceUtil.formatMD2(rowData.endTime)}<span>{rowData.videos.length}课时</span>
-                                    </div>
+                       <div className="content">
+                           <div className="courseName text_hidden marginTop">{rowData.courseName}</div>
+                           <div className='marginTop'><span className="tag">{rowData.courseType.name}</span></div>
+                           {
+                               rowData.videos.length == 1 ?
+                                   <div className="time marginTop">{WebServiceUtil.formatYMD(rowData.createTime)}</div>
+                                   :
+                                   <div className="time marginTop">
+                                       {WebServiceUtil.formatMD2(rowData.createTime) + '-' + WebServiceUtil.formatMD2(rowData.endTime)}<span>{rowData.videos.length}课时</span>
+                                   </div>
 
-                            }
-                            <div className="teacherName text_hidden marginTop">{rowData.publisher}</div>
-                            <SwitchExample />
-                            <div>设置权重:{rowData.recommendWeight}   
-                            <Button
-                                onClick={calm.showModal.bind(this, rowData.id,rowID)}
-                                disabled={rowData.updateState}
-                            >修改</Button></div>
-
-                            {/* <div>
-                                <List.Item
-                                    wrap
-                                    extra={
-                                        <Stepper
-                                            style={{ width: '100%', minWidth: '100px' }}
-                                            showNumber
-                                            max={10}
-                                            min={1}
-                                            value={this.state.val}
-                                            onChange={this.onChange333}
-                                            
-                                        />}
-                                >
-                                    Show number value
-                        </List.Item>
-                            </div> */}
-                        </div>
+                           }
+                           <div className="teacherName text_hidden marginTop">{rowData.publisher}</div>
+                           <SwitchExample />
+                       </div>
                     </div>
                 </div>
             )
         }
-
-       
 
 
 
@@ -592,7 +437,7 @@ export default class courseRecList extends React.Component {
                     <div className="modalCont">
                         {/* <div className="goBack line_public"><Icon type="left" onClick={calm.goBack}/></div> */}
                         <SearchBar id="search"
-                            value={calm.state.searchValue}
+                            value = {calm.state.searchValue}
                             onSubmit={value => console.log(value, 'onSubmit')}
                             onClear={value => console.log(value, 'onClear')}
                             onFocus={() => console.log('onFocus')}
@@ -622,37 +467,13 @@ export default class courseRecList extends React.Component {
                                 scrollEventThrottle={20}     //控制在滚动过程中，scroll事件被调用的频率
                                 onScroll={this.scroll}
                                 style={{
-                                    height: document.body.clientHeight * 0.7 - 49,
+                                    height: document.body.clientHeight*0.7 - 49,
                                 }}
                             />
                         </div>
                     </div>
                 </div>
                 <div className="tagAddPanel_bg"></div>
-                <div className="modalNum" style={{
-                    display: "none", position: "absolute",
-                    bottom: 0,
-                    left: 0,
-                    zIndex: 3333,
-                }}>
-                <div>默认为0，可以自定义输入为自己的权重值</div>
-                    <Button disabled={calm.state.cancleState}  onClick={calm.subNum}>-</Button>
-                    <InputItem
-                        type="number"
-                        ref={el => this.autoFocusInst = el}
-                        value={calm.state.numValue}
-                        onChange={v => calm.setState({
-                            "numValue": v
-                        }, () => {
-                            console.log(calm.state.numValue, "numValue")
-                        })}
-                    ></InputItem>
-                    <Button disabled={calm.state.sureState} onClick={calm.addNum}>+</Button>
-                    <div>
-                        <Button  onClick={calm.toSetNum}>确定</Button>
-                        <Button onClick={calm.cancleSet}>取消</Button>
-                    </div>
-                    </div>
             </div>
         )
     }
