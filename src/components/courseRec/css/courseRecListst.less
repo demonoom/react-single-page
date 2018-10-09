@@ -34,7 +34,7 @@
         margin-right: 0;
       }
     }
-  .tagAddPanel_bg {
+  .tagAddPanel_bg, .modalNum_mask {
     background: rgba(0, 0, 0, 0.4);
     height: 100%;
     width: 100%;
@@ -162,5 +162,128 @@
     width:39px;
     top: 0;
     left: -3.5px;
+  }
+  .modify-list{
+    margin-top: 8px;
+  }
+  .icon-Modify{
+    float: right;
+    height: 15px;
+    i{
+      width: 15px;
+      height: 15px;
+      background: url("../img/i-Modify.png") no-repeat;
+      background-size: 15px;
+      margin-right: 5px;
+      float: left;
+    }
+    span{
+      font-size: 12px;
+      color: #666;
+      line-height: 16px;
+      float: left;
+    }
+  }
+  .icon-Modify::before{
+    border: none;
+  }
+  .modalNum_mask{
+    z-Index: 3332;
+  }
+  .modalNum{
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    z-Index: 3333;
+    width: 100%;
+    background: #fff;
+    .modalNum-title{
+      line-height: 54px;
+      font-size: 17px;
+      padding-left: 24px;
+      padding-top: 5px;
+      position: relative;
+    }
+    .modalNum-tag{
+      color: #666;
+      padding-left: 24px;
+    }
+    .modalNum-add{
+      width: 140px;
+      margin: 0 auto;
+      height: 32px;
+      padding: 30px 0;
+      .am-button{
+        width: 32px;
+        height: 32px;
+        line-height: 32px;
+        float: left;
+        &::before{
+          border-color: #4285F4 !important;
+        }
+      }
+      .am-list-item{
+        width: 60px;
+        float: left;
+        line-height: 32px;
+        height: 32px;
+        text-align: center;
+        padding-left: 0;
+        min-height: 32px;
+        .am-list-line{
+          padding-right: 0;
+        }
+        .am-input-control input{
+          text-align: center;
+        }
+      }
+    }
+  }
+  .modalNum-btn{
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    width: 100%;
+    padding: 15px 0;
+    position: relative;
+    &:after {
+      content: '';
+      position: absolute;
+      background-color: #e5e5e5;
+      display: block;
+      z-index: 1;
+      top: 0;
+      right: 15px;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 1PX;
+      -webkit-transform-origin: 0 0;
+      -ms-transform-origin: 0 0;
+      transform-origin: 0 0;
+      -webkit-transform: scaleY(0.5);
+      -ms-transform: scaleY(0.5);
+      transform: scaleY(0.5);
+    }
+    .am-button{
+      background: #fff;
+      color: #4285F4;
+      -webkit-box-flex: 1;
+      -webkit-flex: 1;
+      -ms-flex: 1;
+      flex: 1;
+      text-align: center;
+      padding: 0;
+      display: inline-block;
+      margin: 0 15px;
+      border-radius: 4px;
+      height: 43px;
+      line-height: 43px;
+      font-size: 16px;
+      &::before{
+        border-color: #4285F4 !important;
+      }
+    }
   }
 }

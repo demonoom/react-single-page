@@ -520,11 +520,12 @@ export default class courseRecList extends React.Component {
                             }
                             <div className="teacherName text_hidden marginTop">{rowData.publisher}</div>
                             <SwitchExample />
-                            <div>设置权重:{rowData.recommendWeight}   
-                            <Button
+                            <div className="modify-list">设置权重:{rowData.recommendWeight}
+                            <Button className="icon-Modify"
                                 onClick={calm.showModal.bind(this, rowData.id,rowID)}
                                 disabled={rowData.updateState}
-                            >修改</Button></div>
+                            ><i></i><span>修改</span></Button>
+                            </div>
 
                             {/* <div>
                                 <List.Item
@@ -628,27 +629,27 @@ export default class courseRecList extends React.Component {
                         </div>
                     </div>
                 </div>
-                <div className="tagAddPanel_bg"></div>
+                <div className="modalNum_mask"></div>
                 <div className="modalNum" style={{
-                    display: "none", position: "absolute",
-                    bottom: 0,
-                    left: 0,
-                    zIndex: 3333,
+                    display: "none"
                 }}>
-                <div>默认为0，可以自定义输入为自己的权重值</div>
-                    <Button disabled={calm.state.cancleState}  onClick={calm.subNum}>-</Button>
-                    <InputItem
-                        type="number"
-                        ref={el => this.autoFocusInst = el}
-                        value={calm.state.numValue}
-                        onChange={v => calm.setState({
-                            "numValue": v
-                        }, () => {
-                            console.log(calm.state.numValue, "numValue")
-                        })}
-                    ></InputItem>
-                    <Button disabled={calm.state.sureState} onClick={calm.addNum}>+</Button>
-                    <div>
+                    <div className="modalNum-title">修改权重值</div>
+                    <div className="modalNum-tag">默认为0，可以自定义输入为自己的权重值</div>
+                    <div className="modalNum-add">
+                        <Button disabled={calm.state.cancleState}  onClick={calm.subNum}>—</Button>
+                        <InputItem
+                            type="number"
+                            ref={el => this.autoFocusInst = el}
+                            value={calm.state.numValue}
+                            onChange={v => calm.setState({
+                                "numValue": v
+                            }, () => {
+                                console.log(calm.state.numValue, "numValue")
+                            })}
+                        ></InputItem>
+                        <Button disabled={calm.state.sureState} onClick={calm.addNum}>+</Button>
+                    </div>
+                    <div className="modalNum-btn">
                         <Button  onClick={calm.toSetNum}>确定</Button>
                         <Button onClick={calm.cancleSet}>取消</Button>
                     </div>
