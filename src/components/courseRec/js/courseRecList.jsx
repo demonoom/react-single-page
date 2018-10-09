@@ -372,10 +372,9 @@ export default class courseRecList extends React.Component {
             currentId:id,
             currentIndex:index
         },()=>{
-            console.log(calm.state.currentId)
         })
         $(".modalNum").show()
-        $(".tagAddPanel_bg").show();
+        $(".modalNum_mask").show();
     }
 
 
@@ -398,7 +397,6 @@ export default class courseRecList extends React.Component {
         calm.setState({
             numValue: tempV
         }, () => {
-            console.log(calm.state.numValue)
         })
     }
     subNum = () => {
@@ -420,12 +418,13 @@ export default class courseRecList extends React.Component {
             numValue: tempV,
             
         }, () => {
-            console.log(calm.state.numValue)
         })
     }
 
     toSetNum=()=>{
         $(".modalNum").hide()
+        $(".modalNum_mask").hide();
+
         calm.setState({
             val: calm.state.numValue,
             numValue:0
@@ -456,6 +455,7 @@ export default class courseRecList extends React.Component {
     }
     cancleSet=()=>{
         $(".modalNum").hide()
+        $(".modalNum_mask").hide();
         calm.setState({
             val:calm.state.val,
             numValue:0
@@ -630,6 +630,7 @@ export default class courseRecList extends React.Component {
                     </div>
                 </div>
                 <div className="modalNum_mask"></div>
+                <div className="tagAddPanel_bg"></div>
                 <div className="modalNum" style={{
                     display: "none"
                 }}>
@@ -644,7 +645,6 @@ export default class courseRecList extends React.Component {
                             onChange={v => calm.setState({
                                 "numValue": v
                             }, () => {
-                                console.log(calm.state.numValue, "numValue")
                             })}
                         ></InputItem>
                         <Button disabled={calm.state.sureState} onClick={calm.addNum}>+</Button>
