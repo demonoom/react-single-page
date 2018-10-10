@@ -1,5 +1,5 @@
 import React from "react";
-import { Switch, SearchBar, ListView, Button, List, Radio, InputItem, Toast, Modal, } from 'antd-mobile';
+import { Switch, SearchBar, ListView, Button, List, Radio, InputItem, Toast, Modal, Icon } from 'antd-mobile';
 import { createForm } from 'rc-form';
 import '../css/courseRecListst.less'
 const RadioItem = Radio.RadioItem;
@@ -35,9 +35,9 @@ export default class courseRecList extends React.Component {
             textareaValue: "",
             showMark: true,
             numValue: 0,
-            currentId:"",
-            sureState:false,
-            cancleState:true
+            currentId: "",
+            sureState: false,
+            cancleState: true
         }
     }
 
@@ -60,7 +60,7 @@ export default class courseRecList extends React.Component {
         WebServiceUtil.requestLittleElearningWeb(JSON.stringify(param), {
             onResponse: result => {
                 if (result.success) {
-                    
+
                     calm.state.rsCount = result.pager.rsCount;
                     calm.initDataSource = calm.initDataSource.concat(result.response);
                     calm.setState({
@@ -92,14 +92,14 @@ export default class courseRecList extends React.Component {
         WebServiceUtil.requestLittleElearningWeb(JSON.stringify(param), {
             onResponse: result => {
                 if (result.success) {
-                    result.response.forEach((v,i)=>{
-                        if(v.recommend == true){
-                            v.updateState=false
+                    result.response.forEach((v, i) => {
+                        if (v.recommend == true) {
+                            v.updateState = false
 
                         }
-                        if(v.recommend == false){
-                            v.updateState=true
-                            
+                        if (v.recommend == false) {
+                            v.updateState = true
+
                         }
                     })
                     calm.state.rsCount2 = result.pager.rsCount;
@@ -170,7 +170,7 @@ export default class courseRecList extends React.Component {
     }
 
     /**
-     * 点击取消
+     * 点击返回箭头
      */
     cancle() {
         $(".updateModel").slideUp()
@@ -205,7 +205,7 @@ export default class courseRecList extends React.Component {
             searchValue: value,
             dataSource2: dataSource2.cloneWithRows(this.initDataSource2)
         }, () => {
-            calm.getCourseListV3()
+
         });
     };
 
@@ -278,12 +278,12 @@ export default class courseRecList extends React.Component {
     /**
     *  点击获取checked值
     */
-    saveChecked = (checked, rowData,rowID) => {
+    saveChecked = (checked, rowData, rowID) => {
         if (checked == true) {
             calm.initDataSource2[rowID].updateState = false;
             calm.addRecommendCourse(rowData, checked)
             calm.setState({
-                updateState:false,
+                updateState: false,
                 dataSource2: dataSource2.cloneWithRows(calm.initDataSource2)
             })
         }
@@ -295,7 +295,7 @@ export default class courseRecList extends React.Component {
             })
 
         }
-        
+
     }
     /**
      * 重新审核弹出框
@@ -357,40 +357,36 @@ export default class courseRecList extends React.Component {
         });
     }
 
-    onChange333 = (val) => {
-        // console.log(val, "val");
-        // calm.setState({ numberValue: val }, () => {
-        //     console.log(calm.state.numberValue, "calm.state.numberValue")
 
-        // });
-        // console.log(val);
-        this.setState({ val });
-    }
-
-    showModal = (id,index) => {
+    /**
+     * 显示修改弹框
+     */
+    showModal = (id, index) => {
         calm.setState({
-            currentId:id,
-            currentIndex:index
-        },()=>{
+            currentId: id,
+            currentIndex: index
+        }, () => {
         })
         $(".modalNum").show()
         $(".modalNum_mask").show();
     }
 
 
-
+    /**
+     * 点击+号
+     */
     addNum = () => {
         var tempV = calm.state.numValue - 0;
-        if(tempV >= 9){
+        if (tempV >= 9) {
             calm.setState({
-                sureState:true,
+                sureState: true,
                 numValue: 10
             })
             return
         }
-        if(calm.state.numValue >= 0 ){
+        if (calm.state.numValue >= 0) {
             calm.setState({
-                cancleState:false
+                cancleState: false
             })
         }
         tempV += 1;
@@ -399,46 +395,54 @@ export default class courseRecList extends React.Component {
         }, () => {
         })
     }
+    /**
+     * 点击-号
+     */
     subNum = () => {
         var tempV = calm.state.numValue - 0;
-        if(tempV <= 1){
+        if (tempV <= 1) {
             calm.setState({
-                cancleState:true,
+                cancleState: true,
                 numValue: 0
             })
             return
         }
         tempV -= 1;
-        if(calm.state.numValue <= 10 ){
+        if (calm.state.numValue <= 10) {
             calm.setState({
-                sureState:false
+                sureState: false
             })
         }
         calm.setState({
             numValue: tempV,
-            
+
         }, () => {
         })
     }
 
-    toSetNum=()=>{
+    /**
+     * 点击确定
+     */
+    toSetNum = () => {
         $(".modalNum").hide()
         $(".modalNum_mask").hide();
 
         calm.setState({
             val: calm.state.numValue,
-            numValue:0
-        },()=>{
+            numValue: 0,
+            cancleState: true,
+            sureState: false
+        }, () => {
             var param = {
                 "method": 'setRecommendCourseWeight',
                 "courseId": calm.state.currentId,
-                "weight":calm.state.val
+                "weight": calm.state.val
             };
             WebServiceUtil.requestLittleElearningWeb(JSON.stringify(param), {
                 onResponse: result => {
                     if (result.response) {
                         if (result.success) {
-                            calm.initDataSource2[calm.state.currentIndex].recommendWeight =calm.state.val;
+                            calm.initDataSource2[calm.state.currentIndex].recommendWeight = calm.state.val;
                             calm.setState({
                                 dataSource2: dataSource2.cloneWithRows(calm.initDataSource2),
                             })
@@ -450,15 +454,20 @@ export default class courseRecList extends React.Component {
                 }
             });
         })
-       
-        
+
+
     }
-    cancleSet=()=>{
+    /**
+     * 点击取消
+     */
+    cancleSet = () => {
         $(".modalNum").hide()
         $(".modalNum_mask").hide();
         calm.setState({
-            val:calm.state.val,
-            numValue:0
+            val: calm.state.val,
+            numValue: 0,
+            cancleState: true,
+            sureState: false
         })
     }
     render() {
@@ -495,7 +504,7 @@ export default class courseRecList extends React.Component {
                             })}
                             platform="ios"
                             onClick={(checked) => {
-                                calm.saveChecked(checked, rowData,rowID)
+                                calm.saveChecked(checked, rowData, rowID)
                             }}
                         />}
                     >设为推荐</List.Item>
@@ -520,37 +529,22 @@ export default class courseRecList extends React.Component {
                             }
                             <div className="teacherName text_hidden marginTop">{rowData.publisher}</div>
                             <SwitchExample />
-                            <div className="modify-list">设置权重:{rowData.recommendWeight}
-                            <Button className="icon-Modify"
-                                onClick={calm.showModal.bind(this, rowData.id,rowID)}
-                                disabled={rowData.updateState}
-                            ><i></i><span>修改</span></Button>
+                            <div className="modify-list">
+                            <span className="modify-content">
+                            设置权重:{rowData.recommendWeight}
+                            </span>
+                                <Button className="icon-Modify"
+                                    onClick={calm.showModal.bind(this, rowData.id, rowID)}
+                                    disabled={rowData.updateState}
+                                ><i></i><span>修改</span></Button>
                             </div>
-
-                            {/* <div>
-                                <List.Item
-                                    wrap
-                                    extra={
-                                        <Stepper
-                                            style={{ width: '100%', minWidth: '100px' }}
-                                            showNumber
-                                            max={10}
-                                            min={1}
-                                            value={this.state.val}
-                                            onChange={this.onChange333}
-                                            
-                                        />}
-                                >
-                                    Show number value
-                        </List.Item>
-                            </div> */}
                         </div>
                     </div>
                 </div>
             )
         }
 
-       
+
 
 
 
@@ -591,18 +585,21 @@ export default class courseRecList extends React.Component {
                 <div className="addBunton" onClick={calm.toAdd}><img src={require("../../classCardSystemBackstage/imgs/addBtn.png")} /></div>
                 <div id="courseRecListst" className="updateModel noPadding">
                     <div className="modalCont">
-                        {/* <div className="goBack line_public"><Icon type="left" onClick={calm.goBack}/></div> */}
-                        <SearchBar id="search"
-                            value={calm.state.searchValue}
-                            onSubmit={value => console.log(value, 'onSubmit')}
-                            onClear={value => console.log(value, 'onClear')}
-                            onFocus={() => console.log('onFocus')}
-                            onBlur={() => console.log('onBlur')}
-                            onCancel={this.cancle}
-                            onChange={this.onChange}
-                            showCancelButton={calm.state.showCancelButton}
-                            placeholder="请输入搜索内容"
-                            maxLength={8} />
+                        {/* <div className="goBack line_public"></div> */}
+                        <div className="searchHeader">
+                            <span className="leftSpan"><Icon type="left" onClick={calm.cancle} /></span>
+                            <SearchBar id="search"
+                                value={calm.state.searchValue}
+                                onSubmit={value => console.log(value, 'onSubmit')}
+                                onClear={value => console.log(value, 'onClear')}
+                                onFocus={() => console.log('onFocus')}
+                                onBlur={() => console.log('onBlur')}
+                                onCancel={calm.getCourseListV3}
+                                onChange={this.onChange}
+                                cancelText="搜索"
+                                showCancelButton={calm.state.showCancelButton}
+                                placeholder="请输入搜索内容"
+                                maxLength={8} /></div>
                         <div className="content" ref="contentDOM">
                             {/* 搜素结果 */}
                             <ListView
@@ -635,9 +632,9 @@ export default class courseRecList extends React.Component {
                     display: "none"
                 }}>
                     <div className="modalNum-title">修改权重值</div>
-                    <div className="modalNum-tag">默认为0，可以自定义输入为自己的权重值</div>
+                    <div className="modalNum-tag">可以自定义输入权重值</div>
                     <div className="modalNum-add">
-                        <Button disabled={calm.state.cancleState}  onClick={calm.subNum}>—</Button>
+                        <Button disabled={calm.state.cancleState} onClick={calm.subNum}>—</Button>
                         <InputItem
                             type="number"
                             ref={el => this.autoFocusInst = el}
@@ -650,10 +647,10 @@ export default class courseRecList extends React.Component {
                         <Button disabled={calm.state.sureState} onClick={calm.addNum}>+</Button>
                     </div>
                     <div className="modalNum-btn">
-                        <Button  onClick={calm.toSetNum}>确定</Button>
-                        <Button onClick={calm.cancleSet}>取消</Button>
+                        <span className="cancleBtn" onClick={calm.cancleSet}>取消</span>
+                        <span className="sureBtn" onClick={calm.toSetNum}>确定</span>
                     </div>
-                    </div>
+                </div>
             </div>
         )
     }
