@@ -289,6 +289,7 @@ export default class courseRecList extends React.Component {
         }
         if (checked == false) {
             calm.initDataSource2[rowID].updateState = true;
+            calm.initDataSource2[rowID].recommendWeight = 0;
             calm.cancelRecommendCourse(rowData, checked)
             calm.setState({
                 dataSource2: dataSource2.cloneWithRows(calm.initDataSource2)
@@ -496,7 +497,8 @@ export default class courseRecList extends React.Component {
             let SwitchExample = (props) => {
                 const { getFieldProps } = props.form;
                 return (
-                    <List.Item
+                    <div className="switchDiv">
+                        <List.Item
                         extra={<Switch
                             {...getFieldProps('Switch8', {
                                 initialValue: rowData.recommend,
@@ -508,6 +510,7 @@ export default class courseRecList extends React.Component {
                             }}
                         />}
                     >设为推荐</List.Item>
+                    </div>
                 );
             };
             SwitchExample = createForm()(SwitchExample);
@@ -543,10 +546,6 @@ export default class courseRecList extends React.Component {
                 </div>
             )
         }
-
-
-
-
 
         return (
             <div id="courseRecListst" style={{

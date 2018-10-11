@@ -9,6 +9,9 @@
 #courseRecListst .am-list-line::after {
   display: none;
 }
+#courseRecListst .switchDiv .am-list-line {
+  border: none;
+}
 #courseRecListst.noPadding {
   padding: 0;
 }
@@ -198,6 +201,7 @@
 #courseRecListst .icon-Modify {
   float: right;
   height: 15px;
+  border: none;
 }
 #courseRecListst .icon-Modify i {
   width: 15px;
