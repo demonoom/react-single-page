@@ -268,6 +268,9 @@ hr {
   background-color: #F56A55;
   opcity: 0.3;
 }
+video::-webkit-media-controls-fullscreen-button {
+  display: none;
+}
 /*班牌内页返回首页*/
 .navBar {
   font-size: 0.89rem;
