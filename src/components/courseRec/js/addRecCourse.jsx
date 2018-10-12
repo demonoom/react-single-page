@@ -53,7 +53,6 @@ export default class addRecCourse extends React.Component {
         };
         WebServiceUtil.requestLittleElearningWeb(JSON.stringify(param), {
             onResponse: result => {
-                console.log(result, "hhhhh");
                 calm.setState({
                     initObj: result.response
                 }
@@ -67,7 +66,6 @@ export default class addRecCourse extends React.Component {
 
     render() {
         var _this = this;
-        console.log(calm.state.initObj)
         return (
             <div id="addRecCourse" style={{
                 height: document.body.clientHeight
@@ -98,7 +96,7 @@ export default class addRecCourse extends React.Component {
                            <img src={calm.state.initObj.users[0].avatar} alt=""/>
                            <div className='rightText'>
                                <div className='text_hidden'>{calm.state.initObj.users[0].userName}</div>
-                               <div>{calm.state.initObj.users[0].userContent}</div>
+                               <div>{calm.state.initObj.users[0].userContent == "" ? "暂无简介":calm.state.initObj.users[0].userContent}</div>
                            </div>
                        </div>
                    </div>
@@ -106,7 +104,7 @@ export default class addRecCourse extends React.Component {
                 <div className='bg'>
                     <div className="title">课程介绍</div>
                     <div className="text">
-                        {calm.state.initObj.content}
+                        {calm.state.initObj.content == undefined ? "暂无内容":calm.state.initObj.content}
                     </div>
                 </div>
 

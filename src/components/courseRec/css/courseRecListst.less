@@ -1,166 +1,385 @@
-#courseRecListst{
-  background-color: #F6F6F6;
-  padding: 10px;
-  box-sizing: border-box;
-  height: 100%;
-  .am-list-body::before,.am-list-body::after,.am-list-line::after{
-    display: none;
-  }
-    &.noPadding{
-      padding: 0;
-    }
-    .list_item{
-      height: 100px;
-      border-bottom: 10px #f6f6f6 solid;
-        img{
-          width: 50%;
-          height: 100%;
-          object-fit: cover;
-        }
-      .textCont{
-        width:50%;
-        padding: 13px 10px;
-        box-sizing: border-box;
-        justify-content:space-between;
-        -webkit-justify-content: space-between;
-        flex-flow:column;
-        -webkit-flex-flow:column;
-      }
-      .teacherName .text_hidden{
-        width: calc(~"100% - 30px");
-      }
-      .deleteBtn_common{
-        padding: 0;
-        margin-right: 0;
-      }
-    }
-  .tagAddPanel_bg {
-    background: rgba(0, 0, 0, 0.4);
+#courseRecListst {
+    background-color: #F6F6F6;
+    padding: 10px;
+    box-sizing: border-box;
     height: 100%;
-    width: 100%;
-    overflow: hidden;
-    position: absolute;
-    z-index: 49;
-    top: 0;
-    left: 0;
-    display: none;
-  }
-  .updateModel{
-     display: none;
-    width: 100%;
-    height: 70%;
-    position: absolute;
-    left: 0;
-    bottom: 0;
-    background-color: #f6f6f6;
-    z-index: 50;
-    .teacherName{
-      width: 100%;
+    .am-list-body::before,
+    .am-list-body::after,
+    .am-list-line::after {
+        display: none;
     }
-    .am-search{
-      height: 49px;
-      background-color: white;
-      .am-search-input, .am-search-synthetic-ph{
+    .switchDiv {
+        .am-list-line {
+            border: none;
+        }
+    }
+    &.noPadding {
+        padding: 0;
+    }
+    .list_item {
+        height: 100px;
+        border-bottom: 10px #f6f6f6 solid;
+        img {
+            width: 50%;
+            height: 100%;
+            object-fit: cover;
+        }
+        .textCont {
+            width: 50%;
+            padding: 13px 10px;
+            box-sizing: border-box;
+            justify-content: space-between;
+            -webkit-justify-content: space-between;
+            flex-flow: column;
+            -webkit-flex-flow: column;
+        }
+        .teacherName .text_hidden {
+            width: calc(~"100% - 30px");
+        }
+        .deleteBtn_common {
+            padding: 0;
+            margin-right: 0;
+        }
+    }
+    .tagAddPanel_bg,
+    .modalNum_mask {
+        background: rgba(0, 0, 0, 0.4);
+        height: 100%;
+        width: 100%;
+        overflow: hidden;
+        position: absolute;
+        z-index: 49;
+        top: 0;
+        left: 0;
+        display: none;
+    }
+    .updateModel {
+        display: none;
+        width: 100%;
+        height: 70%;
+        position: absolute;
+        left: 0;
+        bottom: 0;
         background-color: #f6f6f6;
-        height: 35px;
-        line-height: 35px;
-      }
-      .am-search-input input[type="search"],.am-search-input .am-search-clear {
-        top: 3.5px;
-      }
-    }
-
-    .am-search-cancel{
-      font-size: 15px;
-      color: #4285F4;
-    }
-    .searchList{
-      width: 100%;
-      overflow-x: hidden;
-      .am-list-body{
-        background-color: #f6f6f6;
-        .list-view-section-body{
-          display: flex;
-          flex-wrap: wrap;
-          padding: 0 5px;
-
+        z-index: 50;
+        .teacherName {
+            width: 100%;
         }
-      }
-      .item{
-        width: 50%;
-        box-sizing: border-box;
-        padding: 10px 5px 0;
-        .bg{
-          background-color: white;
-        }
-         img{
-           height: 96px;
-           width: 100%;
-           object-fit: cover;
-         }
-        .content{
-          padding: 0 10px 7px;
-          .am-list-item{
-            min-height: auto;
-            margin-top: 1px;
-            padding-left: 0;
-            .am-list-content,.am-list-line .am-list-extra{
-              font-size: 14px;
-              padding: 0;
+        .searchHeader {
+            width: 100%;
+            background-color: #fff;
+            height: 49px;
+            .am-icon-md {
+                height: 46px;
+                color: #333;
+                width: 30px;
+                padding-left: 3px;
             }
-            .am-list-line{
-              padding-right: 0;
+            .leftSpan {
+              display: inline-block;
+              width: 40px;
+              // text-align: center;
             }
-          }
         }
-      }
+        .am-search {
+            position: absolute;
+            right: 0;
+            top: 0;
+            width: 87%;
+            height: 49px;
+            line-height: 49px;
+            background-color: white;
+            .am-search-input,
+            .am-search-synthetic-ph {
+                background-color: #f6f6f6;
+                height: 35px;
+                line-height: 35px;
+            }
+            .am-search-input input[type="search"],
+            .am-search-input .am-search-clear {
+                top: 3.5px;
+            }
+        }
+        .am-search-cancel {
+            font-size: 15px;
+            color: #4285F4;
+        }
+        .searchList {
+            width: 100%;
+            overflow-x: hidden;
+            .am-list-body {
+                background-color: #f6f6f6;
+                .list-view-section-body {
+                    display: flex;
+                    flex-wrap: wrap;
+                    padding: 0 5px;
+                }
+            }
+            .item {
+                width: 50%;
+                box-sizing: border-box;
+                padding: 10px 5px 0;
+                .bg {
+                    background-color: white;
+                }
+                img {
+                    height: 96px;
+                    width: 100%;
+                    object-fit: cover;
+                }
+                .content {
+                    padding: 0 10px 7px;
+                    .am-list-item {
+                        min-height: auto;
+                        margin-top: 1px;
+                        padding-left: 0;
+                        .am-list-content,
+                        .am-list-line .am-list-extra {
+                            font-size: 14px;
+                            padding: 0;
+                        }
+                        .am-list-line {
+                            
+                            padding-right: 0;
+                        }
+                    }
+                }
+            }
+        }
     }
-
-  }
-  .am-list-view-scrollview-content{
-    width: 100%;
-  }
-  .marginTop{
-    margin-top: 6px;
-  }
-  .courseName{
-    font-size: 15px;
-    width: 100%;
-  }
-  .teacherName,.time{
-    color: #666;
-    font-size: 12px;
-    line-height: 16px;
-  }
-  .time{
-    overflow: hidden;
-    span{
-      float: right;
+    .am-list-view-scrollview-content {
+        width: 100%;
     }
-  }
-  .tag{
-    border: 1px #3672ED solid;
-    color: #3672ED;
-    font-size: 12px;
-    padding: 0 7px;
-    line-height: 18px;
-    display: inline-block;
-  }
-  .am-switch .checkbox{
-    height: 23px;
-    width:39px;
-  }
-  .am-switch .checkbox:after{
-    width:20px ;
-    height: 20px;
-    top: 1px;
-    left: -2.5px;
-  }
-  .am-switch .checkbox:before{
-    background: #e5e5e5;
-    height: 23px;
-    width:39px;
-    top: 0;
-    left: -3.5px;
-  }
+    .marginTop {
+        margin-top: 6px;
+    }
+    .courseName {
+        font-size: 15px;
+        width: 100%;
+    }
+    .teacherName,
+    .time {
+        color: #666;
+        font-size: 12px;
+        line-height: 16px;
+    }
+    .time {
+        overflow: hidden;
+        span {
+            float: right;
+        }
+    }
+    .tag {
+        border: 1px #3672ED solid;
+        color: #3672ED;
+        font-size: 12px;
+        padding: 0 7px;
+        line-height: 18px;
+        display: inline-block;
+    }
+    .am-switch .checkbox {
+        height: 23px;
+        width: 39px;
+    }
+    .am-switch .checkbox:after {
+        width: 20px;
+        height: 20px;
+        top: 1px;
+        left: -2.5px;
+    }
+    .am-switch .checkbox:before {
+        background: #e5e5e5;
+        height: 23px;
+        width: 39px;
+        top: 0;
+        left: -3.5px;
+    }
+    .modify-list {
+        margin-top: 8px;
+        .modify-content{
+          font-size: 14px;
+          color: #3e3e3e !important;
+        }
+    }
+    .icon-Modify {
+        float: right;
+        height: 15px;
+        border: none;
+        i {
+            width: 15px;
+            height: 15px;
+            background: url("../img/i-Modify.png") no-repeat;
+            background-size: 15px;
+            margin-right: 5px;
+            float: left;
+        }
+        span {
+            font-size: 12px;
+            color: #666;
+            line-height: 16px;
+            float: left;
+        }
+    }
+    .icon-Modify::before {
+        border: none;
+    }
+    .modalNum_mask {
+        z-Index: 3332;
+    }
+    .modalNum {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        z-Index: 3333;
+        width: 270px;
+        background: #fff;
+        transform: translate(-50%, -50%);
+        .modalNum-title {
+            // line-height: 54px;
+            // font-size: 17px;
+            // padding-left: 24px;
+            // padding-top: 5px;
+            // position: relative;
+            color: #333 !important;
+            line-height: 22px;
+            font-size: 17px !important;
+            text-align: center;
+            padding: 21px 15px 5px !important;
+        }
+        .modalNum-tag {
+            color: #666;
+            padding: 0px 24px;
+            text-align: center;
+        }
+        .modalNum-add {
+            width: 140px;
+            margin: 0 auto;
+            height: 32px;
+            padding: 18px 0;
+            .am-button {
+                width: 32px;
+                height: 32px;
+                line-height: 32px;
+                float: left;
+                &::before {
+                    border-color: #4285F4 !important;
+                }
+            }
+            .am-list-item {
+                width: 60px;
+                float: left;
+                line-height: 32px;
+                height: 32px;
+                text-align: center;
+                padding-left: 0;
+                min-height: 32px;
+                .am-list-line {
+                    padding-right: 0;
+                }
+                .am-input-control input {
+                    text-align: center;
+                }
+            }
+        }
+    }
+    .modalNum-btn {
+        display: -webkit-box;
+        display: -webkit-flex;
+        display: -ms-flexbox;
+        display: flex;
+        width: 100%;
+        position: relative;
+        height: 45px !important;
+        line-height: 45px !important;
+        .sureBtn {
+            flex: 1;
+            box-sizing: border-box;
+            text-align: center;
+            text-decoration: none;
+            outline: none;
+            color: #108ee9;
+            font-size: 16px;
+            height: 45px !important;
+            line-height: 45px !important;
+            display: block;
+            width: auto;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+        .cancleBtn {
+            flex: 1;
+            box-sizing: border-box;
+            text-align: center;
+            text-decoration: none;
+            outline: none;
+            color:#333;
+            font-size: 16px;
+            height: 45px !important;
+            line-height: 45px !important;
+            display: block;
+            width: auto;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            border-right: 1px solid #e5e5e5;
+            &::after {
+                content: '';
+                position: absolute;
+                background-color: #e5e5e5;
+                display: block;
+                z-index: 1;
+                top: 0;
+                right: 15px;
+                bottom: 0;
+                left: 0;
+                width: 1px;
+                height: 100%;
+                -webkit-transform-origin: 0 0;
+                -ms-transform-origin: 0 0;
+                transform-origin: 0 0;
+                -webkit-transform: scaleY(0.5);
+                -ms-transform: scaleY(0.5);
+                transform: scaleY(0.5);
+            }
+        }
+        &:after {
+            content: '';
+            position: absolute;
+            background-color: #e5e5e5;
+            display: block;
+            z-index: 1;
+            top: 0;
+            right: 15px;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 1PX;
+            -webkit-transform-origin: 0 0;
+            -ms-transform-origin: 0 0;
+            transform-origin: 0 0;
+            -webkit-transform: scaleY(0.5);
+            -ms-transform: scaleY(0.5);
+            transform: scaleY(0.5);
+        }
+        .am-button {
+            background: #fff;
+            color: #4285F4;
+            -webkit-box-flex: 1;
+            -webkit-flex: 1;
+            -ms-flex: 1;
+            flex: 1;
+            text-align: center;
+            padding: 0;
+            display: inline-block;
+            margin: 0 15px;
+            border-radius: 4px;
+            height: 43px;
+            line-height: 43px;
+            font-size: 16px;
+            &::before {
+                border-color: #4285F4 !important;
+            }
+        }
+    }
 }
