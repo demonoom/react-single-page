@@ -94,10 +94,10 @@ export default class addARTextbook extends React.Component {
             Toast.info("请输入AR教材名称")
             return
         }
-        if (teacherV.state.fileNewArr.length == 0) {
+        /*if (teacherV.state.fileNewArr.length == 0) {
             Toast.info("请上传附件")
             return
-        }
+        }*/
 
         if (teacherV.state.ARTextbookDataArr.length == 0) {
             Toast.info("AR教材的图片和视频不能为空")
