@@ -1,0 +1,72 @@
+#addRecCourse {
+  height: 100%;
+  overflow-y: auto;
+}
+#addRecCourse .imgCont {
+  height: 210px;
+  width: 100%;
+}
+#addRecCourse .imgCont img {
+  height: 100%;
+  width: 100%;
+  object-fit: cover;
+}
+#addRecCourse .bg {
+  background-color: white;
+  padding: 15px;
+}
+#addRecCourse .tag {
+  border: 1px #3672ED solid;
+  color: #3672ED;
+  font-size: 12px;
+  padding: 0 7px;
+  line-height: 18px;
+  display: inline-block;
+  float: right;
+}
+#addRecCourse .topCont {
+  font-size: 14px;
+  color: #999;
+  margin-bottom: 10px;
+}
+#addRecCourse .topCont .courseTime {
+  margin-bottom: 8px;
+  line-height: 20px;
+}
+#addRecCourse .title {
+  font-size: 18px;
+  margin-bottom: 12px;
+}
+#addRecCourse .teacherInfo {
+  margin-bottom: 10px;
+}
+#addRecCourse .teacherInfo .item {
+  margin-top: 20px;
+}
+#addRecCourse .teacherInfo .item:first-child {
+  margin-top: 0;
+}
+#addRecCourse .teacherInfo img {
+  width: 40px;
+  height: 40px;
+  overflow: hidden;
+  -webkit-border-radius: 50%;
+  -moz-border-radius: 50%;
+  border-radius: 50%;
+  margin-right: 15px;
+}
+#addRecCourse .teacherInfo .rightText {
+  width: calc(100% - 55px);
+  font-size: 14px;
+  color: #999;
+}
+#addRecCourse .teacherInfo .rightText .text_hidden {
+  font-size: 15px;
+  color: #333;
+  margin-bottom: 6px;
+}
+#addRecCourse .text {
+  font-size: 14px;
+  color: #666;
+  line-height: 1.4;
+}
