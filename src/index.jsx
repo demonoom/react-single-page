@@ -878,6 +878,33 @@ const addRecCourse = (location, cb) => {
 }
 
 
+/**
+ * 下载页面
+ */
+const litleantTeacher = (location, cb) => {
+    require.ensure([], require => {
+            cb(null, require("./components/upLoadPage/js/litleantTeacher").default)
+        }
+    )
+}
+const youyang = (location, cb) => {
+    require.ensure([], require => {
+            cb(null, require("./components/upLoadPage/js/youyang").default)
+        }
+    )
+}
+const yunxiao = (location, cb) => {
+    require.ensure([], require => {
+            cb(null, require("./components/upLoadPage/js/yunxiao").default)
+        }
+    )
+}
+const ringIntroduce = (location, cb) => {
+    require.ensure([], require => {
+            cb(null, require("./components/upLoadPage/js/ringIntroduce").default)
+        }
+    )
+}
 import './index.less';
 
 class Index extends React.Component {
@@ -1096,7 +1123,23 @@ class Index extends React.Component {
                         <Link
                             to="/studentList?clazzId=819" style={{fontSize: '24px'}}>学生列表</Link>
                     </li> */}
-
+                     
+                     <li>
+                        <Link
+                            to="/litleantTeacher" style={{fontSize: '24px'}}>下载页老师</Link>
+                    </li>
+                     <li>
+                        <Link
+                            to="/youyang?unionid=oAYBW0kTVTiqF4t0yVQYXqrZetvI" style={{fontSize: '24px'}}>下载页有样</Link>
+                    </li>
+                     <li>
+                        <Link
+                            to="/yunxiao" style={{fontSize: '24px'}}>下载页云校</Link>
+                    </li>
+                     <li>
+                        <Link
+                            to="/ringIntroduce" style={{fontSize: '24px'}}>手环介绍</Link>
+                    </li>
                 </ul>
             </div>
         );
@@ -1247,6 +1290,11 @@ ReactDOM.render(
             <Route path="stuList" getComponent={stuList}/>
             <Route path="courseRecListst" getComponent={courseRecListst}/>
             <Route path="addRecCourse" getComponent={addRecCourse}/>
+           
+            <Route path="litleantTeacher" getComponent={litleantTeacher}/>
+            <Route path="youyang" getComponent={youyang}/>
+            <Route path="yunxiao" getComponent={yunxiao}/>
+            <Route path="ringIntroduce" getComponent={ringIntroduce}/>
         </Route>
     </Router>
     ,
