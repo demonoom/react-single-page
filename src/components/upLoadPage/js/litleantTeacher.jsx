@@ -1,6 +1,7 @@
 import React from 'react';
 import { Tabs, WhiteSpace } from 'antd-mobile';
 import { StickyContainer, Sticky } from 'react-sticky';
+import '../css/downApp.less'
 const tabs = [
     { title: '教师端' },
     { title: '学生端' },
@@ -53,42 +54,60 @@ export default class litleantTeacher extends React.Component {
     }
     render() {
         return (
-            <div>
+            <div id='fileDownload'>
                 <StickyContainer>
                     <Tabs tabs={tabs}
                         initalPage={'t2'}
                         renderTabBar={renderTabBar}
                     >
-                        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: '250px', backgroundColor: '#fff' }}>
-                            {/* <div className='topImg'><img src={require('../img/topImg_' + imgName + '.png')} alt=""/></div> */}
-                            <div>
-                                <div>小蚂蚁.教师端</div>
-                                <div>科技改变未来，教育成就梦想</div>
-                            </div>
+                        <div>
+                            {
+                                this.state.phone == "IOS" ?
+                                    <div>
+                                        <div className='topImg'><img src={require('../img/topImg_littleAntSt.png')} alt=""/></div>
+                                        <div className='textCont'>
+                                            <div>小蚂蚁移动教学</div>
+                                            <span>科技改变未来，教育成就梦想</span>
+                                        </div>
+                                    </div>
+                                    :
+                                    <div>
+                                        <div className='topImg'><img src={require('../img/topImg_littleAntTe.png')} alt=""/></div>
+                                        <div className='textCont'>
+                                            <div>小蚂蚁.教师端</div>
+                                            <span>科技改变未来，教育成就梦想</span>
+                                        </div>
+                                    </div>
+                            }
+
                             <div className={this.state.phone + ' downBtn'} onClick={this.downLoadFile.bind(this,"littleAntTe")}>
                                 <span>免费下载{this.state.phone}版</span></div>
-                            {/* <div className='bottomImg'><img
-                        src={require('../img/bottomImg_' + imgName + '.png')} alt=""/></div> */}
+                             <div className='bottomImg'><img
+                        src={require('../img/bottomImg_littleAntTe.png')} alt=""/></div>
                         </div>
-                        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: '250px', backgroundColor: '#fff' }}>
-                            <div>
-                                <div>小蚂蚁.学生端</div>
-                                <div>科技改变未来，教育成就梦想</div>
+                        <div>
+                            <div className='topImg'><img src={require('../img/topImg_littleAntSt.png')} alt=""/></div>
+                            <div className='textCont'>
+                                {
+                                    this.state.phone == "IOS" ? <div>小蚂蚁移动教学</div> :  <div>小蚂蚁.学生端</div>
+                                }
+                                <span>科技改变未来，教育成就梦想</span>
                             </div>
                             <div className={this.state.phone + ' downBtn'} onClick={this.downLoadFile.bind(this,"littleAntSt")}>
                                 <span>免费下载{this.state.phone}版</span></div>
-                            {/* <div className='bottomImg'><img
-                        src={require('../img/bottomImg_' + imgName + '.png')} alt=""/></div> */}
+                             <div className='bottomImg'><img
+                        src={require('../img/bottomImg_littleAntSt.png')} alt=""/></div>
                         </div>
-                        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: '250px', backgroundColor: '#fff' }}>
-                            <div>
+                        <div>
+                            <div className='topImg'><img src={require('../img/topImg_littleAntFa.png')} alt=""/></div>
+                            <div className='textCont'>
                                 <div>小蚂蚁.家长端</div>
-                                <div>科技改变未来，教育成就梦想</div>
+                                <span>科技改变未来，教育成就梦想</span>
                             </div>
                             <div className={this.state.phone + ' downBtn'} onClick={this.downLoadFile.bind(this,"littleAntFa")}>
                                 <span>免费下载{this.state.phone}版</span></div>
-                            {/* <div className='bottomImg'><img
-                        src={require('../img/bottomImg_' + imgName + '.png')} alt=""/></div> */}
+                             <div className='bottomImg'><img
+                        src={require('../img/bottomImg_littleAntFa.png')} alt=""/></div>
                         </div>
                     </Tabs>
                 </StickyContainer>

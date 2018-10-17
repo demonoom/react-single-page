@@ -246,66 +246,69 @@ export default class youyang extends React.Component {
     render() {
         const { value } = this.state;
         return (
-            <div id='fileDownload'>
-                {/* <div className='topImg'><img src={require('../img/topImg_' + imgName + '.png')} alt=""/></div> */}
-                <div>
+            <div id='fileDownload' className='youyang'>
+                 <div className='topImg'><img src={require('../img/topImg_youyang.png')} alt=""/></div>
+                <div className='textCont'>
                     <div>有样</div>
-                    <div>AR微分享学习平台</div>
+                    <span>AR微分享学习平台</span>
                 </div>
                 <div className={this.state.phone + ' downBtn'} onClick={this.downLoadFile}>
                     <span>免费下载{this.state.phone}版</span></div>
-                <a href="#bind">绑定有样管理账号</a>
-                {/* <div className='bottomImg'><img
-                        src={require('../img/bottomImg_' + imgName + '.png')} alt=""/></div> */}
+                <div className='bindUser'>
+                    <span>绑定有样管理账号</span>
+                </div>
+                 <div className='bottomImg'><img
+                        src={require('../img/bottomImg_youyang.png')} alt=""/></div>
                 <div name="bind">
                     <div id="wxBindProperly">
                         <div style={{
                             display: this.state.textFlag ? 'block' : 'none'
                         }} className="isDangerArea">
-                            <div style={{
+                            <div className="bindCont" style={{
                                 display: !this.state.openidFlag ? 'block' : 'none'
                             }}>
-                                <div>
+                                <div className='title'>
                                     绑定有样管理账号
                                 </div>
-                                <div className="tel_element">
-                                    <InputItem
-                                        maxLength={11}
-                                        placeholder="请输入手机号码"
-                                        value={this.state.tel}
-                                        onChange={this.inputOnChange}
-                                    >手机号码
-                                    </InputItem>
-                                    <img style={{
-                                        display: (this.state.telSuccess == 'success' || this.state.telSuccess == 'error') && (!this.state.pending) ? 'block' : 'none'
-                                    }} id="telImg"
-                                        // src={this.state.telSuccess == 'success' ? require("../imgs/success1.png") : require('../imgs/error.png')}
-                                        alt="" />
-                                    <div style={{
-                                        display: (this.state.pending) ? 'block' : 'none'
-                                    }} className="telLoad">验证中...
-                            </div>
-                                </div>
-                                <div className="Verification">
-                                    <InputItem
-                                        // className="add_element"
-                                        maxLength={100}
-                                        placeholder="请输入验证码"
-                                        value={this.state.code}
-                                        onChange={this.inputOnChangeForCode}
-                                    >验证码
-                            </InputItem>
-                                    <Button type="primary" size="small" disabled={this.state.sendButton}
-                                        onClick={this.sendCode}>{this.state.sendButtonText}</Button>
-                                </div>
+                              <div className='inputCont'>
+                                  <div className="tel_element">
+                                      <InputItem
+                                          maxLength={11}
+                                          placeholder="请输入手机号码"
+                                          value={this.state.tel}
+                                          onChange={this.inputOnChange}
+                                      >
+                                      </InputItem>
+                                      <img style={{
+                                          display: (this.state.telSuccess == 'success' || this.state.telSuccess == 'error') && (!this.state.pending) ? 'block' : 'none'
+                                      }} id="telImg"
+                                          // src={this.state.telSuccess == 'success' ? require("../imgs/success1.png") : require('../imgs/error.png')}
+                                           alt="" />
+                                      <div style={{
+                                          display: (this.state.pending) ? 'block' : 'none'
+                                      }} className="telLoad">验证中...
+                                      </div>
+                                  </div>
+                                  <div className="Verification">
+                                      <InputItem
+                                          // className="add_element"
+                                          maxLength={100}
+                                          placeholder="请输入验证码"
+                                          value={this.state.code}
+                                          onChange={this.inputOnChangeForCode}
+                                      >
+                                      </InputItem>
+                                      <Button type="primary" size="small" disabled={this.state.sendButton}
+                                              onClick={this.sendCode}>{this.state.sendButtonText}</Button>
+                                  </div>
+                              </div>
                                 <div className="submitBtn_green">
                                     <Button type="primary" onClick={this.bindUser}>确定</Button>
                                 </div>
-                                <div>绑定后将收到需审核的消息提示</div>
+                                <div className='msgText'>绑定后将收到需审核的消息提示</div>
                             </div>
                         </div>
                         {/*解绑标签块 start*/}
-                        <WhiteSpace size="lg" />
                         <div className="bindingNumber" style={{
                             display: this.state.openidFlag ? 'block' : 'none'
                         }}>
@@ -318,9 +321,6 @@ export default class youyang extends React.Component {
                                 <Button onClick={this.unBindAccount}>解绑</Button>
                             </div>
 
-                        </div>
-                        <WhiteSpace size="lg" />
-                        <div className="bindingNumber" style={{ display: !this.state.openidFlag ? 'none' : this.state.value != 2 ? 'none' : 'block' }}>
                         </div>
                         {/*解绑标签块 end*/}
                         <div className="empty_center success3" style={{
