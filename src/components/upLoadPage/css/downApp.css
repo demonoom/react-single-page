@@ -37,7 +37,7 @@
 #fileDownload .topImg {
   width: 110px;
   height: 110px;
-  margin: 30px auto 0;
+  margin: 30px auto 14px;
 }
 #fileDownload .topImg img {
   width: 100%;

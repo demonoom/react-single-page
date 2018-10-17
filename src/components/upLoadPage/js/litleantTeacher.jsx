@@ -57,6 +57,7 @@ export default class litleantTeacher extends React.Component {
             <div id='fileDownload' className='down_tab'>
                 <StickyContainer>
                     <Tabs tabs={tabs}
+                        swipeable={false}
                         initalPage={'t2'}
                         renderTabBar={renderTabBar}
                     >
