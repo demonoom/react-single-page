@@ -28,7 +28,7 @@ export default class yunxiao extends React.Component {
 
     render() {
         return (
-            <div id='fileDownload'>
+            <div id='fileDownload' className='yunxiao'>
                  <div className='topImg'><img src={require('../img/topImg_elearning.png')} alt=""/></div>
                 <div className='textCont'>
                     <div>小蚂蚁云校</div>
