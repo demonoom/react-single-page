@@ -51,7 +51,7 @@ export default class litleantTeacher extends React.Component {
                 window.open('http://60.205.86.217/upload7_app/2018-06-28/21/f500639a-e8e5-43e2-b813-be6ffbf2f10a.apk')
             }
         }
-    }
+        }
     render() {
         return (
             <div id='fileDownload'>

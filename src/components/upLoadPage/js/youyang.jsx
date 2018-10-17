@@ -38,6 +38,20 @@ export default class youyang extends React.Component {
         }, () => {
             this.getBindWechatByOpenId();
         });
+          /**
+         * 防止软键盘挡住页面
+         */
+        var winHeight = $(window).height(); // 获取当前页面高度  
+        $(window).resize(function () {
+            var resizeHeight = $(this).height();
+            if (winHeight - resizeHeight > 50) {
+                // 软键盘弹出  
+                $('body').css('height', winHeight + 'px');
+            } else {
+                //软键盘收起
+                $('body').css('height', '100%');
+            }
+        });
     }
 
     downLoadFile = () => {
@@ -62,7 +76,7 @@ export default class youyang extends React.Component {
                     if (result.response) {
                         this.setState({
                             openidFlag: true,
-                            userName: result.response.user.userName,
+                            userName: result.response.user ? result.response.user.userName : "",
                             phoneNumber: result.response.phoneNumber
                         })
                     } else {   //openid 未绑定
@@ -93,12 +107,6 @@ export default class youyang extends React.Component {
                     this.setState({
                         sendButton: false,
                     })
-                    // this.setState({
-                    //     pending: true,
-                    // }, () => {
-                    //     //验证手机号码
-                    //     this.validationTel();
-                    // })
                 } else {
                     this.setState({
                         sendButton: true
@@ -116,33 +124,6 @@ export default class youyang extends React.Component {
         });
     }
 
-    //验证手机号码
-    // validationTel() {
-    //     var param = {
-    //         "method": 'verifyUserPhoneNumber',
-    //         "phoneNumber": this.state.tel,
-    //     };
-    //     WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
-    //         onResponse: (result) => {
-    //             console.log(result, 'tel');
-    //             if (result.success) {
-    //                 this.setState({
-    //                     telSuccess: 'success',
-    //                     sendButton: false,
-    //                     pending: false,
-    //                 })
-    //             } else {
-    //                 this.setState({
-    //                     telSuccess: 'error',
-    //                     pending: false,
-    //                 })
-    //             }
-    //         },
-    //         onError: function (error) {
-    //             Toast.info('验证手机号码请求失败');
-    //         },
-    //     });
-    // }
 
     // 发送
     getVerifyCodeForLittleVideoBinded = (code) => {
@@ -206,11 +187,10 @@ export default class youyang extends React.Component {
         WebServiceUtil.requestBindWx(JSON.stringify(param), {
             onResponse: (result) => {
                 if (result.success) {
-                    this.setState({
-                        textFlag: false,
-                    }, () => {
+                    Toast.info("绑定成功", 5)
+                    setTimeout(function () {
                         location.reload();
-                    })
+                    }, 800)
                 } else {
                     Toast.info('' + result.msg);
                 }
@@ -241,13 +221,16 @@ export default class youyang extends React.Component {
         });
     }
 
-
+    toBind() {
+        var sumTop = $(".topImg").height()+ $(".textCont").height()+$(".downBtn").height()+$(".bindUser").height()+$(".bottomImg").height()
+        $(".youyang").animate({ scrollTop: sumTop }, 1000);
+    }
 
     render() {
         const { value } = this.state;
         return (
             <div id='fileDownload' className='youyang'>
-                 <div className='topImg'><img src={require('../img/topImg_youyang.png')} alt=""/></div>
+                <div className='topImg'><img src={require('../img/topImg_youyang.png')} alt="" /></div>
                 <div className='textCont'>
                     <div>有样</div>
                     <span>AR微分享学习平台</span>
@@ -255,10 +238,10 @@ export default class youyang extends React.Component {
                 <div className={this.state.phone + ' downBtn'} onClick={this.downLoadFile}>
                     <span>免费下载{this.state.phone}版</span></div>
                 <div className='bindUser'>
-                    <span>绑定有样管理账号</span>
+                    <span onClick={this.toBind}>绑定有样管理账号</span>
                 </div>
-                 <div className='bottomImg'><img
-                        src={require('../img/bottomImg_youyang.png')} alt=""/></div>
+                <div className='bottomImg'><img
+                    src={require('../img/bottomImg_youyang.png')} alt="" /></div>
                 <div name="bind">
                     <div id="wxBindProperly">
                         <div style={{
@@ -270,38 +253,38 @@ export default class youyang extends React.Component {
                                 <div className='title'>
                                     绑定有样管理账号
                                 </div>
-                              <div className='inputCont'>
-                                  <div className="tel_element">
-                                      <InputItem
-                                          maxLength={11}
-                                          placeholder="请输入手机号码"
-                                          value={this.state.tel}
-                                          onChange={this.inputOnChange}
-                                      >
-                                      </InputItem>
-                                      <img style={{
-                                          display: (this.state.telSuccess == 'success' || this.state.telSuccess == 'error') && (!this.state.pending) ? 'block' : 'none'
-                                      }} id="telImg"
-                                          // src={this.state.telSuccess == 'success' ? require("../imgs/success1.png") : require('../imgs/error.png')}
-                                           alt="" />
-                                      <div style={{
-                                          display: (this.state.pending) ? 'block' : 'none'
-                                      }} className="telLoad">验证中...
+                                <div className='inputCont'>
+                                    <div className="tel_element">
+                                        <InputItem
+                                            maxLength={11}
+                                            placeholder="请输入手机号码"
+                                            value={this.state.tel}
+                                            onChange={this.inputOnChange}
+                                        >
+                                        </InputItem>
+                                        <img style={{
+                                            display: (this.state.telSuccess == 'success' || this.state.telSuccess == 'error') && (!this.state.pending) ? 'block' : 'none'
+                                        }} id="telImg"
+                                            // src={this.state.telSuccess == 'success' ? require("../imgs/success1.png") : require('../imgs/error.png')}
+                                            alt="" />
+                                        <div style={{
+                                            display: (this.state.pending) ? 'block' : 'none'
+                                        }} className="telLoad">验证中...
                                       </div>
-                                  </div>
-                                  <div className="Verification">
-                                      <InputItem
-                                          // className="add_element"
-                                          maxLength={100}
-                                          placeholder="请输入验证码"
-                                          value={this.state.code}
-                                          onChange={this.inputOnChangeForCode}
-                                      >
-                                      </InputItem>
-                                      <Button type="primary" size="small" disabled={this.state.sendButton}
-                                              onClick={this.sendCode}>{this.state.sendButtonText}</Button>
-                                  </div>
-                              </div>
+                                    </div>
+                                    <div className="Verification">
+                                        <InputItem
+                                            // className="add_element"
+                                            maxLength={100}
+                                            placeholder="请输入验证码"
+                                            value={this.state.code}
+                                            onChange={this.inputOnChangeForCode}
+                                        >
+                                        </InputItem>
+                                        <Button type="primary" size="small" disabled={this.state.sendButton}
+                                            onClick={this.sendCode}>{this.state.sendButtonText}</Button>
+                                    </div>
+                                </div>
                                 <div className="submitBtn_green">
                                     <Button type="primary" onClick={this.bindUser}>确定</Button>
                                 </div>
@@ -322,16 +305,8 @@ export default class youyang extends React.Component {
                             </div>
 
                         </div>
-                        {/*解绑标签块 end*/}
-                        <div className="empty_center success3" style={{
-                            display: this.state.textFlag ? 'none' : 'inline-block'
-                        }}><i></i>
-                            <div>绑定成功</div>
-                        </div>
                     </div>
                 </div>
-
-
             </div>
         );
 
