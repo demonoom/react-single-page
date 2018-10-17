@@ -10,7 +10,7 @@ const tabs = [
 
 function renderTabBar(props) {
     return (<Sticky>
-        {({ style }) => <div style={{ ...style, zIndex: 1 }}><Tabs.DefaultTabBar {...props} /></div>}
+        {({ style }) => <div style={{ ...style, zIndex: 1}}><Tabs.DefaultTabBar {...props} /></div>}
     </Sticky>);
 }
 export default class litleantTeacher extends React.Component {
@@ -54,7 +54,7 @@ export default class litleantTeacher extends React.Component {
     }
     render() {
         return (
-            <div id='fileDownload'>
+            <div id='fileDownload' className='down_tab'>
                 <StickyContainer>
                     <Tabs tabs={tabs}
                         initalPage={'t2'}

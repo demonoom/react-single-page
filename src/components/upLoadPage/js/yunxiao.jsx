@@ -29,15 +29,15 @@ export default class yunxiao extends React.Component {
     render() {
         return (
             <div id='fileDownload'>
-                {/* <div className='topImg'><img src={require('../img/topImg_' + imgName + '.png')} alt=""/></div> */}
-                <div>
+                 <div className='topImg'><img src={require('../img/topImg_elearning.png')} alt=""/></div>
+                <div className='textCont'>
                     <div>小蚂蚁云校</div>
-                    <div>实景体验式学习，把世界装进课堂</div>
+                    <span>实景体验式学习，把世界装进课堂</span>
                 </div>
                 <div className={this.state.phone + ' downBtn'} onClick={this.downLoadFile}>
                     <span>免费下载{this.state.phone}版</span></div>
-                {/* <div className='bottomImg'><img
-                        src={require('../img/bottomImg_' + imgName + '.png')} alt=""/></div> */}
+                 <div className='bottomImg'><img
+                        src={require('../img/bottomImg_elearning.png')} alt=""/></div>
             </div>
         );
 
