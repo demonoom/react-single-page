@@ -37,7 +37,7 @@
 #fileDownload .topImg {
   width: 110px;
   height: 110px;
-  margin: 30px auto 14px;
+  margin: 30px auto 6px;
 }
 #fileDownload .topImg img {
   width: 100%;
@@ -137,7 +137,7 @@
   color: #4E8BFD;
 }
 #fileDownload #wxBindProperly .bindCont .inputCont .Verification .am-button::before {
-  border-color: #4E8BFD!important;
+  border-color: #4E8BFD !important;
 }
 #fileDownload #wxBindProperly .bindCont .submitBtn_green {
   margin-top: 22px;
@@ -146,8 +146,8 @@
   border-radius: 4px;
 }
 #fileDownload #wxBindProperly .bindCont .submitBtn_green .am-button-primary {
-  background: #4E8BFD!important;
-  border: 1px solid #4E8BFD!important;
+  background: #4E8BFD !important;
+  border: 1px solid #4E8BFD !important;
   height: 44px;
   line-height: 44px;
 }
@@ -163,11 +163,11 @@
   padding: 15px 25px 20px 25px;
 }
 #fileDownload #wxBindProperly .bindingNumber .am-button {
-  border: 1px solid #4E8BFD!important;
+  border: 1px solid #4E8BFD !important;
   margin-top: 20px;
 }
 #fileDownload #wxBindProperly .bindingNumber .am-button span {
-  color: #4E8BFD!important;
+  color: #4E8BFD !important;
 }
 #fileDownload #wxBindProperly .bindingNumber .am-button::before {
   border: 1px solid #4E8BFD !important;
