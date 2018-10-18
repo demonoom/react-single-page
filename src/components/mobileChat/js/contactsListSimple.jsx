@@ -318,9 +318,55 @@ export default class contacts_ListS extends React.Component {
         window.history.go(1);
     }
 
-    render() {
+    unBindAccount = (id) => {
+        console.log(id);
 
-        console.log(this.state.userData);
+        var param = {
+            "method": 'unbindUserOpenId',
+            "id": id,
+        };
+        WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
+            onResponse: (result) => {
+                if (result.success && result.response) {
+                    Toast.info('解绑成功');
+                    location.reload();
+                } else {
+                    Toast.info('解绑失败');
+                }
+            },
+            onError: function (error) {
+                Toast.info('请求失败');
+            }
+        });
+    }
+
+    getUserOpenIdInfoByOpenId = () => {
+        var _this = this;
+        var param = {
+            "method": 'getUserOpenIdInfoByOpenId',
+            "openId": this.state.unionid,
+            "userType": this.state.indexType == 'teacher' ? 'TEAC' : 'PAREN',
+            "weixinType": '1',
+        };
+        WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
+            onResponse: (result) => {
+                if (result.success) {
+                    if (result.response) {
+                        _this.unBindAccount(result.response.col_id)
+                    } else {   //openid 未绑定
+
+                    }
+                } else {
+
+                }
+            },
+            onError: function (error) {
+                Toast.info('验证用户类型请求失败');
+            },
+        });
+    }
+
+    render() {
 
         const row = (rowData, sectionID, rowID) => {
 
@@ -378,7 +424,7 @@ export default class contacts_ListS extends React.Component {
                     <span id='selectR' onClick={this.turnTojiaZhang.bind(this, 'parent')}>家长</span>
                 </div>
 
-                <div className='myAccount'>
+                <div className='myAccount' style={{display: this.state.topDis ? '' : 'none'}}>
                     <div className="inner line_public">
                         <img src={
                             !this.state.userData.length ? '' : !this.state.butFoot ? this.state.userData[0].avatar : this.state.indexType === 'teacher' ? this.state.userData[0].avatar : this.state.userData[1].avatar
@@ -389,7 +435,7 @@ export default class contacts_ListS extends React.Component {
                                 this.state.indexType === 'teacher' ? this.state.userData[0].userName : this.state.userData[1].userName : ''
                         }
                     </span>
-                        <span className='cancelBindBtn'>解绑账号</span>
+                        <span className='cancelBindBtn' onClick={this.getUserOpenIdInfoByOpenId}>解绑账号</span>
                     </div>
                 </div>
 
