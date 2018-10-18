@@ -1124,7 +1124,7 @@ class Index extends React.Component {
                             to="/studentList?clazzId=819" style={{fontSize: '24px'}}>学生列表</Link>
                     </li> */}
                      
-                     {/* <li>
+                     <li>
                         <Link
                             to="/litleantTeacher" style={{fontSize: '24px'}}>下载页老师</Link>
                     </li>
@@ -1139,7 +1139,7 @@ class Index extends React.Component {
                      <li>
                         <Link
                             to="/ringIntroduce" style={{fontSize: '24px'}}>手环介绍</Link>
-                    </li> */}
+                    </li>
                 </ul>
             </div>
         );
