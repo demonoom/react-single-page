@@ -164,7 +164,6 @@ export default class wxBindIndex extends React.Component {
 
     // 手机号码change事件
     inputOnChange = (value) => {
-        console.log(value);
         this.setState({
             tel: value,
             sendButton: true,

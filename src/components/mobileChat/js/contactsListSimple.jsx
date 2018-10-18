@@ -59,7 +59,7 @@ export default class contacts_ListS extends React.Component {
             phone = 'android'
         }
         this.setState({
-            phone:phone
+            phone: phone
         })
         // this.setState({unionid: 'o-w611FMw4s8WtiCwNqD1Ltr9w2w'});
     }
@@ -91,7 +91,8 @@ export default class contacts_ListS extends React.Component {
                                     <Item onClick={contactsList.turnToFriend}>
                                         <i className='userImg message_friend'></i>
                                         <span>我的好友</span>
-                                    </Item>]
+                                    </Item>],
+                                indexType: 'parent'
                             })
                         }
                         // butFoot控制下面的老师,家长的显示隐藏
@@ -99,6 +100,7 @@ export default class contacts_ListS extends React.Component {
                         _this.getRecentShareUsers(result.response[0].colUid)
                     } else if (result.response.length == 0) {
                         Toast.fail('未找到用户', 2)
+                        //跳转至登录页面
                     } else {
                         _this.setState({butFoot: true, missDistance: 284})
                         result.response.forEach(function (v, i) {
@@ -304,11 +306,11 @@ export default class contacts_ListS extends React.Component {
 
     }
 
-    historyBack(){
+    historyBack() {
         window.history.back();
     }
 
-    historyGo(){
+    historyGo() {
         window.history.go(1);
     }
 
@@ -363,14 +365,11 @@ export default class contacts_ListS extends React.Component {
             }
         }
 
-
-
-
         return (
             <div id='contactsListSimple'>
                 <div className="address_header" style={{display: this.state.butFoot ? 'block' : 'none'}}>
-                    <span id='selectL' className="select" onClick={this.turnToTercher.bind(this,'teacher')}>老师</span>
-                    <span id='selectR' onClick={this.turnTojiaZhang.bind(this,'parent')}>家长</span>
+                    <span id='selectL' className="select" onClick={this.turnToTercher.bind(this, 'teacher')}>老师</span>
+                    <span id='selectR' onClick={this.turnTojiaZhang.bind(this, 'parent')}>家长</span>
                 </div>
 
                 <div>
@@ -390,17 +389,23 @@ export default class contacts_ListS extends React.Component {
                     scrollRenderAheadDistance={200}   //当一个行接近屏幕范围多少像素之内的时候，就开始渲染这一行
                     initialListSize={30}   //指定在组件刚挂载的时候渲染多少行数据，用这个属性来确保首屏显示合适数量的数据
                     scrollEventThrottle={20}     //控制在滚动过程中，scroll事件被调用的频率
+                    // height: document.body.clientHeight - this.state.missDistance,
                     style={
-                        this.state.indexType == 'teacher'?{height: document.body.clientHeight - this.state.missDistance - 49,
-                        }:{height: document.body.clientHeight - 210}
-                        }
+                        this.state.indexType == 'teacher' ? {
+                            height: this.state.phone === 'ios' ? document.body.clientHeight - this.state.missDistance : document.body.clientHeight - this.state.missDistance - 49
+                        } : {height: this.state.phone === 'ios' ? document.body.clientHeight - 112 : this.state.butFoot ? document.body.clientHeight - 210 : document.body.clientHeight - 161}
+                    }
                 />
                 <div style={
-                    this.state.phone == 'ios'?{display:'none'}:{display:'block'}
+                    this.state.phone == 'ios' ? {display: 'none'} : {display: 'block'}
                 } className="contactsListNav">
                     <div className="line_public"></div>
-                    <div className="nav-left" onClick={()=>{window.history.back()}}></div>
-                    <div className="nav-right" onClick={()=>{window.history.go(1)}}></div>
+                    <div className="nav-left" onClick={() => {
+                        window.history.back()
+                    }}></div>
+                    <div className="nav-right" onClick={() => {
+                        window.history.go(1)
+                    }}></div>
                 </div>
 
             </div>

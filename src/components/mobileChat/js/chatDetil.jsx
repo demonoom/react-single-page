@@ -71,7 +71,7 @@ export default class chat_Detil extends React.Component {
             phone = 'android'
         }
         this.setState({
-            phone:phone
+            phone: phone
         })
 
         /**
@@ -1140,46 +1140,50 @@ export default class chat_Detil extends React.Component {
 
         return (<div id='chatDetil'>
             <div className="chatDetil-top">
-            <PullToRefresh
-                id='pullContent'
-                damping={60}   //拉动距离限制, 建议小于 200
-                ref={el => this.ptr = el}
-                style={{
-                    height: this.state.height - 103,
-                    overflow: 'auto',
-                }}
-                direction='down'
-                refreshing={this.state.refreshing}  //是否显示刷新状态
-                onRefresh={() => {
-                    this.pullToFresh()
-                }}
-            >
-                <div className="messageWrap">{this.state.mesConList}</div>
-            </PullToRefresh>
+                <PullToRefresh
+                    id='pullContent'
+                    damping={60}   //拉动距离限制, 建议小于 200
+                    ref={el => this.ptr = el}
+                    style={{
+                        height: this.state.phone === 'ios' ? this.state.height - 54 : this.state.height - 103,
+                        overflow: 'auto',
+                    }}
+                    direction='down'
+                    refreshing={this.state.refreshing}  //是否显示刷新状态
+                    onRefresh={() => {
+                        this.pullToFresh()
+                    }}
+                >
+                    <div className="messageWrap">{this.state.mesConList}</div>
+                </PullToRefresh>
 
-            <List className="input_message lineTop_public"
-                  style={{
-                      width: document.body.clientWidth - 24
-                  }}>
-                <TextareaItem
-                    value={this.state.TextareaValue}
-                    autoHeight
-                    labelNumber={3}
-                    // onKeyUp={this.TextareaOnKeyUp}
-                    onChange={this.TextareaOnKeyChange}
-                    count={60}
-                    onFocus={this.TextareaOnFocus}
-                />
+                <List className="input_message lineTop_public"
+                      style={{
+                          width: document.body.clientWidth - 24
+                      }}>
+                    <TextareaItem
+                        value={this.state.TextareaValue}
+                        autoHeight
+                        labelNumber={3}
+                        // onKeyUp={this.TextareaOnKeyUp}
+                        onChange={this.TextareaOnKeyChange}
+                        count={60}
+                        onFocus={this.TextareaOnFocus}
+                    />
 
-                <button className="submit" onClick={this.sendMessage}>发送</button>
-            </List>
+                    <button className="submit" onClick={this.sendMessage}>发送</button>
+                </List>
             </div>
             <div style={
-                this.state.phone == 'ios'?{display:'none'}:{display:'block'}
+                this.state.phone == 'ios' ? {display: 'none'} : {display: 'block'}
             } className="contactsListNav">
                 <div className="line_public"></div>
-                <div className="nav-left" onClick={()=>{window.history.back()}}></div>
-                <div className="nav-right" onClick={()=>{window.history.go(1)}}></div>
+                <div className="nav-left" onClick={() => {
+                    window.history.back()
+                }}></div>
+                <div className="nav-right" onClick={() => {
+                    window.history.go(1)
+                }}></div>
             </div>
         </div>);
     }

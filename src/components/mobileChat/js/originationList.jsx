@@ -45,7 +45,7 @@ export default class originationList extends React.Component {
             phone = 'android'
         }
         this.setState({
-            phone:phone
+            phone: phone
         })
     }
 
@@ -257,7 +257,8 @@ export default class originationList extends React.Component {
                 )
             } else {
                 arr.push(
-                    <span onClick={origination_List.structureSpanArrOnClick(v)}>{v.name}<span className="originationName_arrow">></span></span>
+                    <span onClick={origination_List.structureSpanArrOnClick(v)}>{v.name}<span
+                        className="originationName_arrow">></span></span>
                 )
             }
         })
@@ -304,7 +305,7 @@ export default class originationList extends React.Component {
                         </Item>
                         <WhiteSpace/>
                     </div>
-                    <div className="origination_cont">
+                    <div className={this.state.phone === 'ios' ? 'origination_cont_ios' : 'origination_cont_andriod'}>
                         <div>
                             {this.state.structuresItem}
                         </div>
@@ -317,11 +318,15 @@ export default class originationList extends React.Component {
                     </div>
                 </div>
                 <div style={
-                    this.state.phone == 'ios'?{display:'none'}:{display:'block'}
+                    this.state.phone == 'ios' ? {display: 'none'} : {display: 'block'}
                 } className="contactsListNav">
                     <div className="line_public"></div>
-                    <div className="nav-left" onClick={()=>{window.history.back()}}></div>
-                    <div className="nav-right" onClick={()=>{window.history.go(1)}}></div>
+                    <div className="nav-left" onClick={() => {
+                        window.history.back()
+                    }}></div>
+                    <div className="nav-right" onClick={() => {
+                        window.history.go(1)
+                    }}></div>
                 </div>
             </div>
         );
