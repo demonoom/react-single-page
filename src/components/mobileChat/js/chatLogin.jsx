@@ -1,5 +1,6 @@
 import React from 'react';
-import {Toast, Button, List, InputItem} from 'antd-mobile'
+import {Toast, Button, List, InputItem} from 'antd-mobile';
+import '../css/chatLogin.less'
 
 var contactsList;
 
@@ -99,10 +100,10 @@ export default class chatLogin extends React.Component {
         
         return (
             <div id='chatLogin' style={{textAlign: 'center'}}>
-                <div>
+                <div className='topDiv'>
                     <img src={require("../img/loginlogo.png")}/>
-                    <div>蚁信</div>
-                    <div>小蚂蚁移动教学快捷通讯录</div>
+                    <div className='text'>蚁信</div>
+                    <div className='grayText'>小蚂蚁移动教学快捷通讯录</div>
                 </div>
                 <div>
                     <List>
@@ -121,17 +122,24 @@ export default class chatLogin extends React.Component {
                         }} className="telLoad">验证中...
                         </div>
                     </List>
-                    <List>
-                        <InputItem
-                            placeholder="请输入收到的验证码"
-                            codeValue={this.state.codeValue}
-                            onChange={this.codeOnChange.bind(this)}
-                        />
-                    </List>
-                    <Button size='small' disabled={this.state.btnDisabled}>获取验证码</Button>
+                    <div className='inputDiv'>
+                        <List>
+                            <InputItem
+                                placeholder="请输入收到的验证码"
+                                codeValue={this.state.codeValue}
+                                onChange={this.codeOnChange.bind(this)}
+                            />
+                        </List>
+                        <Button size='small' disabled={this.state.btnDisabled}>获取验证码</Button>
+                    </div>
+
                 </div>
-                <Button type="warning">确定</Button>
-                <div>支持教师端和家长端快捷通讯录同步使用</div>
+                <div className='btn'>
+                    <Button type="warning">确定</Button>
+                    <div className='text'>支持教师端和家长端快捷通讯录同步使用</div>
+                </div>
+
+
             </div>
         );
     }
