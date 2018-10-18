@@ -2,7 +2,7 @@ import React from 'react';
 import {Toast, Button, List, InputItem} from 'antd-mobile'
 
 var contactsList;
-
+var timer = null;
 export default class chatLogin extends React.Component {
 
     constructor(props) {
@@ -13,6 +13,9 @@ export default class chatLogin extends React.Component {
             phoneValue: '',
             codeValue: '',
             btnDisabled: true,
+            sendButtonText: '获取验证码',
+            teaBind: '',
+            parBind: '',
         };
     }
 
@@ -22,7 +25,7 @@ export default class chatLogin extends React.Component {
         var locationSearch = locationHref.substr(locationHref.indexOf("?") + 1);
         var searchArray = locationSearch.split("&");
         var unionid = searchArray[0].split('=')[1];
-        console.log(unionid);
+        this.setState({unionid})
     }
 
     componentDidMount() {
@@ -47,6 +50,7 @@ export default class chatLogin extends React.Component {
                         });
                     })
                     Promise.all([tea, par]).then((result) => {
+                        this.setState({teaBind: result[0].success, parBind: result[1].success})
                         if (result[0].success || result[1].success) {
                             this.setState({telSuccess: 'success', btnDisabled: false})
                         } else {
@@ -95,8 +99,143 @@ export default class chatLogin extends React.Component {
         this.setState({codeValue: e})
     }
 
+    getCode = () => {
+        var number = 60;
+        timer = setInterval(function () {
+            if (number < 0) {
+                this.setState({
+                    btnDisabled: false,
+                    sendButtonText: '重新发送',
+                })
+                clearInterval(timer);
+            } else {
+                this.setState({
+                    sendButtonText: '重新发送(' + number + ')'
+                })
+                number--;
+            }
+        }.bind(this), 1000)
+        this.setState({
+            btnDisabled: true,
+        });
+        //在此发送验证码
+        this.getVerifyCodeForWeixinBinded();
+    }
+
+    getVerifyCodeForWeixinBinded = () => {
+        var param = {
+            "method": 'getVerifyCodeForWeixinBinded',
+            "phoneNumber": this.state.phoneValue,
+        };
+        WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
+            onResponse: (result) => {
+
+            },
+            onError: function (error) {
+
+            }
+        });
+    }
+
+    bindUser = () => {
+        var _this = this;
+        var warn = "";
+        if (this.state.tel == '') {
+            warn = '请输入手机号码';
+        } else if (this.state.code == '') {
+            warn = '请输入验证码';
+        }
+        if (warn !== "") {
+            Toast.info(warn, 1);
+            return;
+        }
+
+        let tea = new Promise((resolve, reject) => {
+            this.bindUserToTea(function (obj) {
+                resolve(obj);
+            });
+        });
+        let par = new Promise((resolve, reject) => {
+            this.bindUserToPar(function (obj) {
+                resolve(obj);
+            });
+        })
+
+        if (this.state.teaBind && !this.state.parBind) {
+            Promise.all([tea]).then((result) => {
+                if (result[0].success) {
+                    window.location.href = encodeURI(WebServiceUtil.mobileServiceURL + 'contactsList?unionid=' + _this.state.unionid)
+                } else {
+                    Toast.fail(result[0].msg, 2)
+                }
+            })
+        } else if (!this.state.teaBind && this.state.parBind) {
+            Promise.all([par]).then((result) => {
+                if (result[0].success) {
+                    window.location.href = encodeURI(WebServiceUtil.mobileServiceURL + 'contactsList?unionid=' + _this.state.unionid)
+                } else {
+                    Toast.fail(result[0].msg, 2)
+                }
+            })
+        } else if (this.state.teaBind && this.state.parBind) {
+            Promise.all([tea, par]).then((result) => {
+                if (result[0].success && result[1].success) {
+                    window.location.href = encodeURI(WebServiceUtil.mobileServiceURL + 'contactsList?unionid=' + _this.state.unionid)
+                } else if (!result[0].success && result[1].success) {
+                    Toast.fail(result[0].msg, 2)
+                } else if (result[0].success && !result[1].success) {
+                    Toast.fail(result[1].msg, 2)
+                } else if (!result[0].success && !result[1].success) {
+                    Toast.fail(result[0].msg, 2)
+                }
+            })
+        } else {
+
+        }
+    }
+
+    bindUserToTea = (resolve) => {
+        debugger
+        var param = {
+            "method": 'saveUserOpenId',
+            "phoneNumber": this.state.phoneValue,
+            "openId": this.state.unionid,
+            "userType": 'TEAC',
+            "weiXinType": 1,
+            "verifyMessage": this.state.codeValue
+        };
+        WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
+            onResponse: (result) => {
+                resolve(result)
+            },
+            onError: function (error) {
+                Toast.info('请求失败');
+            }
+        });
+    }
+
+    bindUserToPar = (resolve) => {
+        debugger
+        var param = {
+            "method": 'saveUserOpenId',
+            "phoneNumber": this.state.phoneValue,
+            "openId": this.state.unionid,
+            "userType": 'PAREN',
+            "weiXinType": 1,
+            "verifyMessage": this.state.codeValue
+        };
+        WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
+            onResponse: (result) => {
+                resolve(result)
+            },
+            onError: function (error) {
+                Toast.info('请求失败');
+            }
+        });
+    }
+
     render() {
-        
+
         return (
             <div id='chatLogin' style={{textAlign: 'center'}}>
                 <div>
@@ -128,9 +267,10 @@ export default class chatLogin extends React.Component {
                             onChange={this.codeOnChange.bind(this)}
                         />
                     </List>
-                    <Button size='small' disabled={this.state.btnDisabled}>获取验证码</Button>
+                    <Button size='small' disabled={this.state.btnDisabled}
+                            onClick={this.getCode}>{this.state.sendButtonText}</Button>
                 </div>
-                <Button type="warning">确定</Button>
+                <Button type="warning" onClick={this.bindUser}>确定</Button>
                 <div>支持教师端和家长端快捷通讯录同步使用</div>
             </div>
         );

@@ -99,8 +99,8 @@ export default class contacts_ListS extends React.Component {
                         _this.setState({butFoot: false, schoolId: result.response[0].schoolId, missDistance: 240})
                         _this.getRecentShareUsers(result.response[0].colUid)
                     } else if (result.response.length == 0) {
-                        Toast.fail('未找到用户', 2)
                         //跳转至登录页面
+                        window.location.href = encodeURI(WebServiceUtil.mobileServiceURL + 'chatLogin?unionid=' + _this.state.unionid)
                     } else {
                         _this.setState({butFoot: true, missDistance: 284})
                         result.response.forEach(function (v, i) {
