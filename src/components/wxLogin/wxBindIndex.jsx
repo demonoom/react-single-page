@@ -302,6 +302,7 @@ export default class wxBindIndex extends React.Component {
     }
 
     unBindAccount = () => {
+        debugger
         var param = {
             "method": 'unbindUserOpenId',
             "id": this.state.col_id,

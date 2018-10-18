@@ -318,6 +318,36 @@ export default class contacts_ListS extends React.Component {
         window.history.go(1);
     }
 
+    unBindAccount = (id) => {
+        console.log(id);
+    }
+
+    getUserOpenIdInfoByOpenId() {
+        var _this = this;
+        var param = {
+            "method": 'getUserOpenIdInfoByOpenId',
+            "openId": this.state.openid,
+            "userType": this.state.indexType == 'teacher' ? 'TEAC' : 'PAREN',
+            "weixinType": '1',
+        };
+        WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
+            onResponse: (result) => {
+                if (result.success) {
+                    if (result.response) {
+                        _this.unBindAccount(result.response.col_id)
+                    } else {   //openid 未绑定
+
+                    }
+                } else {
+
+                }
+            },
+            onError: function (error) {
+                Toast.info('验证用户类型请求失败');
+            },
+        });
+    }
+
     render() {
 
         console.log(this.state.userData);
@@ -388,7 +418,7 @@ export default class contacts_ListS extends React.Component {
                                 this.state.indexType === 'teacher' ? this.state.userData[0].userName : this.state.userData[1].userName : ''
                         }
                     </span>
-                    <span>解绑账号</span>
+                    <span onClick={this.getUserOpenIdInfoByOpenId}>解绑账号</span>
                 </div>
 
                 <div style={{display: this.state.topDis ? '' : 'none'}}>
