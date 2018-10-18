@@ -244,8 +244,10 @@ export default class contacts_ListS extends React.Component {
      * 调用getUserContacts切换联系人
      * 更换choosePos,向下一页传递属于他的用户信息
      */
-    turnToTercher() {
-
+    turnToTercher(type) {
+        this.setState({
+            indexType: type
+        })
         document.getElementById('selectR').className = ''
         document.getElementById('selectL').className = 'select'
         contactsList.initData.splice(0);
@@ -318,6 +320,8 @@ export default class contacts_ListS extends React.Component {
 
     render() {
 
+        console.log(this.state.userData);
+
         const row = (rowData, sectionID, rowID) => {
 
             if (rowData.type == 1) {
@@ -372,6 +376,19 @@ export default class contacts_ListS extends React.Component {
                 <div className="address_header" style={{display: this.state.butFoot ? 'block' : 'none'}}>
                     <span id='selectL' className="select" onClick={this.turnToTercher.bind(this, 'teacher')}>老师</span>
                     <span id='selectR' onClick={this.turnTojiaZhang.bind(this, 'parent')}>家长</span>
+                </div>
+
+                <div>
+                    <img src={
+                        !this.state.userData.length ? '' : !this.state.butFoot ? this.state.userData[0].avatar : this.state.indexType === 'teacher' ? this.state.userData[0].avatar : this.state.userData[1].avatar
+                    } alt=""/>
+                    <span>
+                        {
+                            this.state.userData.length ? !this.state.butFoot ? this.state.userData[0].userName :
+                                this.state.indexType === 'teacher' ? this.state.userData[0].userName : this.state.userData[1].userName : ''
+                        }
+                    </span>
+                    <span>解绑账号</span>
                 </div>
 
                 <div style={{display: this.state.topDis ? '' : 'none'}}>
