@@ -101,7 +101,9 @@ export default class chatLogin extends React.Component {
         return (
             <div id='chatLogin' style={{textAlign: 'center'}}>
                 <div className='topDiv'>
-                    <img src={require("../img/loginlogo.png")}/>
+                    <div className="logo">
+                        <img src={require("../img/loginlogo.png")}/>
+                    </div>
                     <div className='text'>蚁信</div>
                     <div className='grayText'>小蚂蚁移动教学快捷通讯录</div>
                 </div>
