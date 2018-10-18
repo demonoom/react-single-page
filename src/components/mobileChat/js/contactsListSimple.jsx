@@ -145,7 +145,7 @@ export default class contacts_ListS extends React.Component {
 
                     let response = result.response.filter(function (item) {
                         if (item.type == 0) {
-                            return (item.user.colUtype != 'CHAT_GROUP_INFORMER' );
+                            return (item.user.colUtype != 'CHAT_GROUP_INFORMER');
                         } else {
                             return item
                         }
@@ -459,8 +459,8 @@ export default class contacts_ListS extends React.Component {
                     // height: document.body.clientHeight - this.state.missDistance,
                     style={
                         this.state.indexType == 'teacher' ? {
-                            height: this.state.phone === 'ios' ? document.body.clientHeight - this.state.missDistance : document.body.clientHeight - this.state.missDistance - 49
-                        } : {height: this.state.phone === 'ios' ? document.body.clientHeight - 112 : this.state.butFoot ? document.body.clientHeight - 210 : document.body.clientHeight - 161}
+                            height: this.state.phone === 'ios' ? document.body.clientHeight - this.state.missDistance - 45 : document.body.clientHeight - this.state.missDistance - 49 - 45
+                        } : {height: this.state.phone === 'ios' ? document.body.clientHeight - 112 - 45 : this.state.butFoot ? document.body.clientHeight - 210 - 45 : document.body.clientHeight - 161 - 45}
                     }
                 />
                 <div style={

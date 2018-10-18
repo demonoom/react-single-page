@@ -109,14 +109,14 @@
   text-align: center;
 }
 #contactsListSimple .address_header .select {
-  color: #1aad19;
+  color: #F56A55;
   position: relative;
 }
 #contactsListSimple .address_header .select:after {
   content: '';
   width: 20px;
   height: 2PX;
-  background: #1aad19;
+  background: #F56A55;
   position: absolute;
   left: 50%;
   bottom: 0;
