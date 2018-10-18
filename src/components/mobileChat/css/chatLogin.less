@@ -1,0 +1,125 @@
+#chatLogin{
+  background-color: white;
+  .topDiv{
+    padding-top: 22px;
+    padding-bottom: 50px;
+    .logo{
+      height: 83px;
+      img{
+        width: 70px;
+      }
+    }
+
+    .text{
+      font-size: 22px;
+      color: #F56A55;
+      padding: 14px 0 14px;
+    }
+    .grayText{
+      color: #666666;
+      font-size: 13px;
+    }
+  }
+  .am-list-body::before,.am-list-body::after{
+    display: none;
+  }
+  .am-list-body{
+    padding: 0 15px;
+    .am-list-item{
+      padding-left: 0;
+      .am-input-control input{
+        font-size: 14px;
+        color: #333;
+      }
+    }
+    .am-list-line::after{
+      background-color: #333;
+    }
+    #telImg{
+      width: 18px;
+      position: absolute;
+      right: 15px;
+      top: 50%;
+      -webkit-transform: translateY(-50%);
+      -moz-transform: translateY(-50%);
+      -ms-transform: translateY(-50%);
+      -o-transform: translateY(-50%);
+      transform: translateY(-50%);
+    }
+    .telLoad{
+      color: #666;
+      position: absolute;
+      right: 38px;
+      top: 50%;
+      -webkit-transform: translateY(-50%);
+      -moz-transform: translateY(-50%);
+      -ms-transform: translateY(-50%);
+      -o-transform: translateY(-50%);
+      transform: translateY(-50%);
+      font-size: 12px;
+    }
+  }
+  .inputDiv{
+    position: relative;
+    .am-button{
+      padding: 0 9px;
+      display: inline-block;
+      color: #F56A55;
+      font-size: 13px;
+      border: 1px #F56A55 solid;
+      border-radius: 4px;
+      position: absolute;
+      right: 15px;
+      top:50%;
+      -webkit-transform: translateY(-50%);
+      -moz-transform: translateY(-50%);
+      -ms-transform: translateY(-50%);
+      -o-transform: translateY(-50%);
+      transform: translateY(-50%);
+      &::before{
+        display: none;
+      }
+    }
+
+    .am-list-line::after{
+      content: '';
+      position: absolute;
+      display: block;
+      z-index: 1;
+      top: auto;
+      right: auto;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 1PX;
+      -webkit-transform-origin: 50% 100%;
+      -ms-transform-origin: 50% 100%;
+      transform-origin: 50% 100%;
+      -webkit-transform: scaleY(0.5);
+      -ms-transform: scaleY(0.5);
+      transform: scaleY(0.5);
+       background-color: #333;
+     }
+  }
+  .am-input-control{
+    -webkit-box-flex: inherit!important;
+    -webkit-flex: initial !important;
+    -ms-flex: initial !important;
+    flex: initial !important;
+    width: calc(~"100% - 80px") !important;
+  }
+  .btn{
+    padding: 55px 15px;
+    .am-button{
+      height: 44px;
+      line-height: 44px;
+      border-radius: 4px;
+      font-size: 17px;
+    }
+    .text{
+      color: #666;
+      font-size: 13px;
+      padding-top: 15px;
+    }
+  }
+}
