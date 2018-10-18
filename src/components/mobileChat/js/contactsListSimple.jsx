@@ -378,17 +378,19 @@ export default class contacts_ListS extends React.Component {
                     <span id='selectR' onClick={this.turnTojiaZhang.bind(this, 'parent')}>家长</span>
                 </div>
 
-                <div>
-                    <img src={
-                        !this.state.userData.length ? '' : !this.state.butFoot ? this.state.userData[0].avatar : this.state.indexType === 'teacher' ? this.state.userData[0].avatar : this.state.userData[1].avatar
-                    } alt=""/>
-                    <span>
+                <div className='myAccount'>
+                    <div className="inner line_public">
+                        <img src={
+                            !this.state.userData.length ? '' : !this.state.butFoot ? this.state.userData[0].avatar : this.state.indexType === 'teacher' ? this.state.userData[0].avatar : this.state.userData[1].avatar
+                        } alt=""/>
+                        <span className='userName text_hidden'>
                         {
                             this.state.userData.length ? !this.state.butFoot ? this.state.userData[0].userName :
                                 this.state.indexType === 'teacher' ? this.state.userData[0].userName : this.state.userData[1].userName : ''
                         }
                     </span>
-                    <span>解绑账号</span>
+                        <span className='cancelBindBtn'>解绑账号</span>
+                    </div>
                 </div>
 
                 <div style={{display: this.state.topDis ? '' : 'none'}}>
