@@ -18,12 +18,14 @@ export default class contacts_ListS extends React.Component {
         this.initData = [];
 
         this.state = {
+            topDis: true,
             dataSource: dataSource.cloneWithRows(this.initData),
             userId: '',
             unionid: '',        //微信登录的unionid
             userData: [],   //unionid绑定的用户身份数组
             choosePos: '',   //控制选择的是左还是右
             indexType: 'teacher',
+            newContactLists: [],
             headItem: [<Item onClick={this.turnToGroup}>
                 <i className='userImg message_group'></i>
                 <span>我的群组</span>
@@ -59,7 +61,7 @@ export default class contacts_ListS extends React.Component {
             phone = 'android'
         }
         this.setState({
-            phone:phone
+            phone: phone
         })
         // this.setState({unionid: 'o-w611FMw4s8WtiCwNqD1Ltr9w2w'});
     }
@@ -91,14 +93,17 @@ export default class contacts_ListS extends React.Component {
                                     <Item onClick={contactsList.turnToFriend}>
                                         <i className='userImg message_friend'></i>
                                         <span>我的好友</span>
-                                    </Item>]
+                                    </Item>],
+                                indexType: 'parent'
                             })
                         }
                         // butFoot控制下面的老师,家长的显示隐藏
                         _this.setState({butFoot: false, schoolId: result.response[0].schoolId, missDistance: 240})
                         _this.getRecentShareUsers(result.response[0].colUid)
                     } else if (result.response.length == 0) {
-                        Toast.fail('未找到用户', 2)
+                        //跳转至登录页面
+                        _this.setState({topDis: false})
+                        location.replace(encodeURI(WebServiceUtil.mobileServiceURL + 'chatLogin?unionid=' + _this.state.unionid))
                     } else {
                         _this.setState({butFoot: true, missDistance: 284})
                         result.response.forEach(function (v, i) {
@@ -141,11 +146,15 @@ export default class contacts_ListS extends React.Component {
 
                     let response = result.response.filter(function (item) {
                         if (item.type == 0) {
-                            return (item.user.colUtype != 'CHAT_GROUP_INFORMER' );
+                            return (item.user.colUtype != 'CHAT_GROUP_INFORMER');
                         } else {
                             return item
                         }
                     })
+
+                    console.log(response, 'response');
+
+                    _this.setState({newContactLists: response});
 
                     for (let i = 0; i < response.length; i++) {
                         var topic = response[i];
@@ -240,8 +249,10 @@ export default class contacts_ListS extends React.Component {
      * 调用getUserContacts切换联系人
      * 更换choosePos,向下一页传递属于他的用户信息
      */
-    turnToTercher() {
-
+    turnToTercher(type) {
+        this.setState({
+            indexType: type
+        })
         document.getElementById('selectR').className = ''
         document.getElementById('selectL').className = 'select'
         contactsList.initData.splice(0);
@@ -304,12 +315,60 @@ export default class contacts_ListS extends React.Component {
 
     }
 
-    historyBack(){
+    historyBack() {
         window.history.back();
     }
 
-    historyGo(){
+    historyGo() {
         window.history.go(1);
+    }
+
+    unBindAccount = (id) => {
+        console.log(id);
+
+        var param = {
+            "method": 'unbindUserOpenId',
+            "id": id,
+        };
+        WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
+            onResponse: (result) => {
+                if (result.success && result.response) {
+                    Toast.info('解绑成功');
+                    location.reload();
+                } else {
+                    Toast.info('解绑失败');
+                }
+            },
+            onError: function (error) {
+                Toast.info('请求失败');
+            }
+        });
+    }
+
+    getUserOpenIdInfoByOpenId = () => {
+        var _this = this;
+        var param = {
+            "method": 'getUserOpenIdInfoByOpenId',
+            "openId": this.state.unionid,
+            "userType": this.state.indexType == 'teacher' ? 'TEAC' : 'PAREN',
+            "weixinType": '1',
+        };
+        WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
+            onResponse: (result) => {
+                if (result.success) {
+                    if (result.response) {
+                        _this.unBindAccount(result.response.col_id)
+                    } else {   //openid 未绑定
+
+                    }
+                } else {
+
+                }
+            },
+            onError: function (error) {
+                Toast.info('验证用户类型请求失败');
+            },
+        });
     }
 
     render() {
@@ -363,21 +422,88 @@ export default class contacts_ListS extends React.Component {
             }
         }
 
-
-
-
         return (
             <div id='contactsListSimple'>
                 <div className="address_header" style={{display: this.state.butFoot ? 'block' : 'none'}}>
-                    <span id='selectL' className="select" onClick={this.turnToTercher.bind(this,'teacher')}>老师</span>
-                    <span id='selectR' onClick={this.turnTojiaZhang.bind(this,'parent')}>家长</span>
+                    <span id='selectL' className="select" onClick={this.turnToTercher.bind(this, 'teacher')}>老师</span>
+                    <span id='selectR' onClick={this.turnTojiaZhang.bind(this, 'parent')}>家长</span>
                 </div>
+                <div className='inner'
+                     style={{height: this.state.phone === 'ios' ? this.state.butFoot ? 'calc(100% - 45px)' : '100%' : this.state.butFoot ? 'calc(100% - 94px)' : 'calc(100% - 49px)'}}>
+                    <div className='myAccount' style={{display: this.state.topDis ? '' : 'none'}}>
+                        <div className="inner line_public">
+                            <img src={
+                                !this.state.userData.length ? '' : !this.state.butFoot ? this.state.userData[0].avatar : this.state.indexType === 'teacher' ? this.state.userData[0].avatar : this.state.userData[1].avatar
+                            } alt=""/>
+                            <span className='userName text_hidden'>
+                        {
+                            this.state.userData.length ? !this.state.butFoot ? this.state.userData[0].userName :
+                                this.state.indexType === 'teacher' ? this.state.userData[0].userName : this.state.userData[1].userName : ''
+                        }
+                    </span>
+                            <span className='cancelBindBtn' onClick={this.getUserOpenIdInfoByOpenId}>解绑账号</span>
+                        </div>
+                    </div>
 
-                <div>
-                    {this.state.headItem}
-                </div>
+                    <div style={{display: this.state.topDis ? '' : 'none'}}>
+                        {this.state.headItem}
+                    </div>
 
-                <ListView
+                    <div style={{display: this.state.topDis ? '' : 'none'}} className='personTitle'>常用联系人</div>
+
+                    <div>
+                        {
+                            this.state.newContactLists.map((rowData) => {
+                                if (rowData.type == 1) {
+                                    //群
+
+                                    var groupMemebersPhoto = [];
+                                    var currentMemberArray = rowData.chatGroup.avatar.split('#');
+                                    for (var i = 0; i < currentMemberArray.length; i++) {
+                                        var member = currentMemberArray[i];
+                                        var memberAvatarTag = <img src={member}></img>;
+                                        groupMemebersPhoto.push(memberAvatarTag);
+                                        if (i >= 3) {
+                                            break;
+                                        }
+                                    }
+
+                                    var imgTag = <div className="maaee_group_face">{groupMemebersPhoto}</div>;
+                                    switch (groupMemebersPhoto.length) {
+                                        case 1:
+                                            imgTag = <div className="maaee_group_face1">{groupMemebersPhoto}</div>;
+                                            break;
+                                        case 2:
+                                            imgTag = <div className="maaee_group_face2">{groupMemebersPhoto}</div>;
+                                            break;
+                                        case 3:
+                                            imgTag = <div className="maaee_group_face3">{groupMemebersPhoto}</div>;
+                                            break;
+                                        case 4:
+                                            imgTag = <div className="maaee_group_face">{groupMemebersPhoto}</div>;
+                                            break;
+                                    }
+
+                                    return (
+                                        <Item onClick={this.itemOnClick(rowData)}>
+                                            {imgTag}
+                                            <span className="text_hidden">{rowData.chatGroup.name}</span>
+                                        </Item>
+                                    )
+                                } else if (rowData.type == 0) {
+                                    //个人
+                                    return (
+                                        <Item onClick={this.itemOnClick(rowData)}>
+                                            <img className='userImg' src={rowData.user.avatar}/>
+                                            <span className="text_hidden">{rowData.user.userName}</span>
+                                        </Item>
+                                    )
+                                }
+                            })
+                        }
+                    </div>
+
+                    {/*<ListView
                     ref={el => this.lv = el}
                     dataSource={this.state.dataSource}    //数据类型是 ListViewDataSource
                     renderHeader={() => (
@@ -390,19 +516,26 @@ export default class contacts_ListS extends React.Component {
                     scrollRenderAheadDistance={200}   //当一个行接近屏幕范围多少像素之内的时候，就开始渲染这一行
                     initialListSize={30}   //指定在组件刚挂载的时候渲染多少行数据，用这个属性来确保首屏显示合适数量的数据
                     scrollEventThrottle={20}     //控制在滚动过程中，scroll事件被调用的频率
+                    // height: document.body.clientHeight - this.state.missDistance,
                     style={
-                        this.state.indexType == 'teacher'?{height: document.body.clientHeight - this.state.missDistance - 49,
-                        }:{height: document.body.clientHeight - 210}
-                        }
-                />
-                <div style={
-                    this.state.phone == 'ios'?{display:'none'}:{display:'block'}
-                } className="contactsListNav">
-                    <div className="line_public"></div>
-                    <div className="nav-left" onClick={()=>{window.history.back()}}></div>
-                    <div className="nav-right" onClick={()=>{window.history.go(1)}}></div>
-                </div>
+                        this.state.indexType == 'teacher' ? {
+                            height: this.state.phone === 'ios' ? document.body.clientHeight - this.state.missDistance - 45 : document.body.clientHeight - this.state.missDistance - 49 - 45
+                        } : {height: this.state.phone === 'ios' ? document.body.clientHeight - 112 - 45 : this.state.butFoot ? document.body.clientHeight - 210 - 45 : document.body.clientHeight - 161 - 45}
+                    }
+                />*/}
 
+                    <div style={
+                        this.state.phone == 'ios' ? {display: 'none'} : {display: 'block'}
+                    } className="contactsListNav">
+                        <div className="line_public"></div>
+                        <div className="nav-left" onClick={() => {
+                            window.history.back()
+                        }}></div>
+                        <div className="nav-right" onClick={() => {
+                            window.history.go(1)
+                        }}></div>
+                    </div>
+                </div>
             </div>
         );
     }

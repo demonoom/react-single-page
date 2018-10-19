@@ -49,7 +49,7 @@ export default class friendList extends React.Component {
             phone = 'android'
         }
         this.setState({
-            phone:phone
+            phone: phone
         })
     }
 
@@ -180,15 +180,19 @@ export default class friendList extends React.Component {
                     initialListSize={30}   //指定在组件刚挂载的时候渲染多少行数据，用这个属性来确保首屏显示合适数量的数据
                     scrollEventThrottle={20}     //控制在滚动过程中，scroll事件被调用的频率
                     style={{
-                        height: document.body.clientHeight - 49,
+                        height: this.state.phone === 'ios' ? document.body.clientHeight : document.body.clientHeight - 49
                     }}
                 />
                 <div style={
-                    this.state.phone == 'ios'?{display:'none'}:{display:'block'}
+                    this.state.phone == 'ios' ? {display: 'none'} : {display: 'block'}
                 } className="contactsListNav">
                     <div className="line_public"></div>
-                    <div className="nav-left" onClick={()=>{window.history.back()}}></div>
-                    <div className="nav-right" onClick={()=>{window.history.go(1)}}></div>
+                    <div className="nav-left" onClick={() => {
+                        window.history.back()
+                    }}></div>
+                    <div className="nav-right" onClick={() => {
+                        window.history.go(1)
+                    }}></div>
                 </div>
             </div>
         );

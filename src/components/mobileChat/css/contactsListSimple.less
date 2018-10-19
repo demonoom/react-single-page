@@ -1,5 +1,15 @@
 #contactsListSimple {
   height: 100%;
+  .inner{
+    overflow-y: auto;
+  }
+  .personTitle{
+    padding: 9px 15px 9px 15px;
+    font-size: 14px;
+    color: #888;
+    width: 100%;
+    box-sizing: border-box;
+  }
   .maaee_group_face,
   .maaee_group_face1,
   .maaee_group_face2,
@@ -111,14 +121,14 @@
       text-align: center;
     }
     .select{
-      color: #1aad19;
+      color: #F56A55;
       position: relative;
     }
     .select:after{
       content: '';
       width: 20px;
       height: 2PX;
-      background: #1aad19;
+      background: #F56A55;
       position: absolute;
       left: 50%;
       bottom: 0;
@@ -168,5 +178,44 @@
   }
   .parents-contact{
     height: calc(~"100% - 213px");
+  }
+  .myAccount{
+    background-color: white;
+    padding: 0 15px;
+    .inner{
+      padding: 6px 0;
+      height: 33px;
+      line-height: 33px;
+      overflow: hidden;
+      position: relative;
+    }
+    img{
+      width: 33px;
+      height: 33px;
+      border-radius: 50%;
+      overflow: hidden;
+      margin-right: 22px;
+    }
+    .userName{
+      font-size: 15px;
+      color: #999;
+      font-weight: bold;
+      line-height: 33px;
+      width: calc(~"100% - 135px");
+    }
+    .cancelBindBtn{
+      border: 1px #F56A55 solid;
+      color: #F56A55;
+      font-size: 12px;
+      border-radius: 4px;
+      line-height: 22px;
+      height: 22px;
+      padding: 0 7px;
+      display: block;
+      position: absolute;
+      right: 0;
+      top:50%;
+      transform: translateY(-50%);
+    }
   }
 }

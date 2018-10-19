@@ -905,6 +905,14 @@ const ringIntroduce = (location, cb) => {
         }
     )
 }
+
+const chatLogin = (location, cb) => {
+    require.ensure([], require => {
+            cb(null, require("./components/mobileChat/js/chatLogin").default)
+        }
+    )
+}
+
 import './index.less';
 
 class Index extends React.Component {
@@ -971,7 +979,18 @@ class Index extends React.Component {
                     {/*<li><Link*/}
                     {/*to="/moralEducation?ident=23836"*/}
                     {/*style={{fontSize: '24px'}}>德育评价</Link></li>*/}
+                    {/* <li><Link
+                        to="/contactsList?unionid=o-w611I9nKqTHcT3P34srzwIrf6U"
+                        style={{fontSize: '24px'}}>疑心</Link></li>
                     <li><Link
+                        // to="/wxLogin?local=chatLogin"
+                        to="/chatLogin?unionid=o-w611I9nKqTHcT3P34srzwIrf6U"
+                        style={{fontSize: '24px'}}>chatLogin</Link></li> */}
+                    {/*<li>*/}
+                    {/*<Link*/}
+                    {/*to="/wxLogin?local=contactsList" style={{fontSize: '24px'}}>聊天</Link>*/}
+                    {/*</li>*/}
+                    {/* <li><Link
                         to="/contactsList?unionid=o-w611I9nKqTHcT3P34srzwIrf6U"
                         style={{fontSize: '24px'}}>疑心</Link></li>
                     <li><Link
@@ -1007,9 +1026,9 @@ class Index extends React.Component {
                     {/*<li><Link*/}
                     {/*to="/comments?access_user=23836&sid=1021&stype=1&access_user=6075"*/}
                     {/*style={{fontSize: '24px'}}>评论列表</Link></li>*/}
-                    <li><Link
+                    {/* <li><Link
                         to="/classCardHomePageDoor?access_user=23836"
-                        style={{fontSize: '24px'}}>后台总入口</Link></li>
+                        style={{fontSize: '24px'}}>后台总入口</Link></li> */}
                     {/*<li><Link
                     {/*to="/dashboard?destId=9&areaType=0"*/}
                     {/*style={{fontSize: '24px'}}>管理驾驶舱</Link></li>*/}
@@ -1079,12 +1098,6 @@ class Index extends React.Component {
                     {/*<li><Link*/}
                     {/*to="/attendanceSatisticaForClass?schoolId=9"*/}
                     {/*style={{fontSize: '24px'}}>班级出勤率统计(柱状图)</Link></li>*/}
-
-                    {/*<li>
-                        <Link
-                            to="/wxLogin?local=contactsList" style={{fontSize: '24px'}}>聊天</Link>
-                    </li>*/}
-
                     {/* <li>
                         <Link
                             to="/arDoor" style={{fontSize: '24px'}}>arDoor</Link>
@@ -1123,8 +1136,8 @@ class Index extends React.Component {
                         <Link
                             to="/studentList?clazzId=819" style={{fontSize: '24px'}}>学生列表</Link>
                     </li> */}
-                     
-                     {/* <li>
+
+                    {/* <li>
                         <Link
                             to="/litleantTeacher" style={{fontSize: '24px'}}>下载页老师</Link>
                     </li>
@@ -1290,11 +1303,12 @@ ReactDOM.render(
             <Route path="stuList" getComponent={stuList}/>
             <Route path="courseRecListst" getComponent={courseRecListst}/>
             <Route path="addRecCourse" getComponent={addRecCourse}/>
-           
+
             <Route path="litleantTeacher" getComponent={litleantTeacher}/>
             <Route path="youyang" getComponent={youyang}/>
             <Route path="yunxiao" getComponent={yunxiao}/>
             <Route path="ringIntroduce" getComponent={ringIntroduce}/>
+            <Route path="chatLogin" getComponent={chatLogin}/>
         </Route>
     </Router>
     ,
