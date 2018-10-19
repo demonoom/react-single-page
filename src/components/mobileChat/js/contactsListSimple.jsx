@@ -428,7 +428,8 @@ export default class contacts_ListS extends React.Component {
                     <span id='selectL' className="select" onClick={this.turnToTercher.bind(this, 'teacher')}>老师</span>
                     <span id='selectR' onClick={this.turnTojiaZhang.bind(this, 'parent')}>家长</span>
                 </div>
-                <div className='inner' style={{height:'100%'}}>
+                <div className='inner'
+                     style={{height: this.state.phone === 'ios' ? this.state.butFoot ? 'calc(100% - 45px)' : '100%' : this.state.butFoot ? 'calc(100% - 94px)' : 'calc(100% - 49px)'}}>
                     <div className='myAccount' style={{display: this.state.topDis ? '' : 'none'}}>
                         <div className="inner line_public">
                             <img src={
@@ -448,7 +449,7 @@ export default class contacts_ListS extends React.Component {
                         {this.state.headItem}
                     </div>
 
-                    <div className='personTitle'>常用联系人</div>
+                    <div style={{display: this.state.topDis ? '' : 'none'}} className='personTitle'>常用联系人</div>
 
                     <div>
                         {
