@@ -1,6 +1,16 @@
 #contactsListSimple {
   height: 100%;
 }
+#contactsListSimple .inner {
+  overflow-y: auto;
+}
+#contactsListSimple .personTitle {
+  padding: 9px 15px 9px 15px;
+  font-size: 14px;
+  color: #888;
+  width: 100%;
+  box-sizing: border-box;
+}
 #contactsListSimple .maaee_group_face,
 #contactsListSimple .maaee_group_face1,
 #contactsListSimple .maaee_group_face2,

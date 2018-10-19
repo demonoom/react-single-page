@@ -428,79 +428,81 @@ export default class contacts_ListS extends React.Component {
                     <span id='selectL' className="select" onClick={this.turnToTercher.bind(this, 'teacher')}>老师</span>
                     <span id='selectR' onClick={this.turnTojiaZhang.bind(this, 'parent')}>家长</span>
                 </div>
-
-                <div className='myAccount' style={{display: this.state.topDis ? '' : 'none'}}>
-                    <div className="inner line_public">
-                        <img src={
-                            !this.state.userData.length ? '' : !this.state.butFoot ? this.state.userData[0].avatar : this.state.indexType === 'teacher' ? this.state.userData[0].avatar : this.state.userData[1].avatar
-                        } alt=""/>
-                        <span className='userName text_hidden'>
+                <div className='inner' style={{height:'100%'}}>
+                    <div className='myAccount' style={{display: this.state.topDis ? '' : 'none'}}>
+                        <div className="inner line_public">
+                            <img src={
+                                !this.state.userData.length ? '' : !this.state.butFoot ? this.state.userData[0].avatar : this.state.indexType === 'teacher' ? this.state.userData[0].avatar : this.state.userData[1].avatar
+                            } alt=""/>
+                            <span className='userName text_hidden'>
                         {
                             this.state.userData.length ? !this.state.butFoot ? this.state.userData[0].userName :
                                 this.state.indexType === 'teacher' ? this.state.userData[0].userName : this.state.userData[1].userName : ''
                         }
                     </span>
-                        <span className='cancelBindBtn' onClick={this.getUserOpenIdInfoByOpenId}>解绑账号</span>
+                            <span className='cancelBindBtn' onClick={this.getUserOpenIdInfoByOpenId}>解绑账号</span>
+                        </div>
                     </div>
-                </div>
 
-                <div style={{display: this.state.topDis ? '' : 'none'}}>
-                    {this.state.headItem}
-                </div>
-                <div>常用联系人</div>
-                <div>
-                    {
-                        this.state.newContactLists.map((rowData) => {
-                            if (rowData.type == 1) {
-                                //群
+                    <div style={{display: this.state.topDis ? '' : 'none'}}>
+                        {this.state.headItem}
+                    </div>
 
-                                var groupMemebersPhoto = [];
-                                var currentMemberArray = rowData.chatGroup.avatar.split('#');
-                                for (var i = 0; i < currentMemberArray.length; i++) {
-                                    var member = currentMemberArray[i];
-                                    var memberAvatarTag = <img src={member}></img>;
-                                    groupMemebersPhoto.push(memberAvatarTag);
-                                    if (i >= 3) {
-                                        break;
+                    <div className='personTitle'>常用联系人</div>
+
+                    <div>
+                        {
+                            this.state.newContactLists.map((rowData) => {
+                                if (rowData.type == 1) {
+                                    //群
+
+                                    var groupMemebersPhoto = [];
+                                    var currentMemberArray = rowData.chatGroup.avatar.split('#');
+                                    for (var i = 0; i < currentMemberArray.length; i++) {
+                                        var member = currentMemberArray[i];
+                                        var memberAvatarTag = <img src={member}></img>;
+                                        groupMemebersPhoto.push(memberAvatarTag);
+                                        if (i >= 3) {
+                                            break;
+                                        }
                                     }
+
+                                    var imgTag = <div className="maaee_group_face">{groupMemebersPhoto}</div>;
+                                    switch (groupMemebersPhoto.length) {
+                                        case 1:
+                                            imgTag = <div className="maaee_group_face1">{groupMemebersPhoto}</div>;
+                                            break;
+                                        case 2:
+                                            imgTag = <div className="maaee_group_face2">{groupMemebersPhoto}</div>;
+                                            break;
+                                        case 3:
+                                            imgTag = <div className="maaee_group_face3">{groupMemebersPhoto}</div>;
+                                            break;
+                                        case 4:
+                                            imgTag = <div className="maaee_group_face">{groupMemebersPhoto}</div>;
+                                            break;
+                                    }
+
+                                    return (
+                                        <Item onClick={this.itemOnClick(rowData)}>
+                                            {imgTag}
+                                            <span className="text_hidden">{rowData.chatGroup.name}</span>
+                                        </Item>
+                                    )
+                                } else if (rowData.type == 0) {
+                                    //个人
+                                    return (
+                                        <Item onClick={this.itemOnClick(rowData)}>
+                                            <img className='userImg' src={rowData.user.avatar}/>
+                                            <span className="text_hidden">{rowData.user.userName}</span>
+                                        </Item>
+                                    )
                                 }
+                            })
+                        }
+                    </div>
 
-                                var imgTag = <div className="maaee_group_face">{groupMemebersPhoto}</div>;
-                                switch (groupMemebersPhoto.length) {
-                                    case 1:
-                                        imgTag = <div className="maaee_group_face1">{groupMemebersPhoto}</div>;
-                                        break;
-                                    case 2:
-                                        imgTag = <div className="maaee_group_face2">{groupMemebersPhoto}</div>;
-                                        break;
-                                    case 3:
-                                        imgTag = <div className="maaee_group_face3">{groupMemebersPhoto}</div>;
-                                        break;
-                                    case 4:
-                                        imgTag = <div className="maaee_group_face">{groupMemebersPhoto}</div>;
-                                        break;
-                                }
-
-                                return (
-                                    <Item onClick={this.itemOnClick(rowData)}>
-                                        {imgTag}
-                                        <span className="text_hidden">{rowData.chatGroup.name}</span>
-                                    </Item>
-                                )
-                            } else if (rowData.type == 0) {
-                                //个人
-                                return (
-                                    <Item onClick={this.itemOnClick(rowData)}>
-                                        <img className='userImg' src={rowData.user.avatar}/>
-                                        <span className="text_hidden">{rowData.user.userName}</span>
-                                    </Item>
-                                )
-                            }
-                        })
-                    }
-                </div>
-
-                {/*<ListView
+                    {/*<ListView
                     ref={el => this.lv = el}
                     dataSource={this.state.dataSource}    //数据类型是 ListViewDataSource
                     renderHeader={() => (
@@ -521,18 +523,18 @@ export default class contacts_ListS extends React.Component {
                     }
                 />*/}
 
-                <div style={
-                    this.state.phone == 'ios' ? {display: 'none'} : {display: 'block'}
-                } className="contactsListNav">
-                    <div className="line_public"></div>
-                    <div className="nav-left" onClick={() => {
-                        window.history.back()
-                    }}></div>
-                    <div className="nav-right" onClick={() => {
-                        window.history.go(1)
-                    }}></div>
+                    <div style={
+                        this.state.phone == 'ios' ? {display: 'none'} : {display: 'block'}
+                    } className="contactsListNav">
+                        <div className="line_public"></div>
+                        <div className="nav-left" onClick={() => {
+                            window.history.back()
+                        }}></div>
+                        <div className="nav-right" onClick={() => {
+                            window.history.go(1)
+                        }}></div>
+                    </div>
                 </div>
-
             </div>
         );
     }
