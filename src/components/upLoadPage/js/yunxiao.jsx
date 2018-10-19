@@ -15,6 +15,13 @@ export default class yunxiao extends React.Component {
         } else {
             this.setState({ phone: 'Android' })
         }
+        if(window.location.href.indexOf("/yunxiao") > -1) {
+            //防止页面后退
+               history.pushState(null, null, document.URL);
+               window.addEventListener('popstate', function () {
+                    history.pushState(null, null, document.URL);
+                });
+        }
     }
 
     downLoadFile = () => {
