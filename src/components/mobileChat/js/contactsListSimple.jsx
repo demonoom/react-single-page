@@ -25,6 +25,7 @@ export default class contacts_ListS extends React.Component {
             userData: [],   //unionid绑定的用户身份数组
             choosePos: '',   //控制选择的是左还是右
             indexType: 'teacher',
+            newContactLists: [],
             headItem: [<Item onClick={this.turnToGroup}>
                 <i className='userImg message_group'></i>
                 <span>我的群组</span>
@@ -150,6 +151,10 @@ export default class contacts_ListS extends React.Component {
                             return item
                         }
                     })
+
+                    console.log(response, 'response');
+
+                    _this.setState({newContactLists: response});
 
                     for (let i = 0; i < response.length; i++) {
                         var topic = response[i];
@@ -442,8 +447,60 @@ export default class contacts_ListS extends React.Component {
                 <div style={{display: this.state.topDis ? '' : 'none'}}>
                     {this.state.headItem}
                 </div>
+                <div>常用联系人</div>
+                <div>
+                    {
+                        this.state.newContactLists.map((rowData) => {
+                            if (rowData.type == 1) {
+                                //群
 
-                <ListView
+                                var groupMemebersPhoto = [];
+                                var currentMemberArray = rowData.chatGroup.avatar.split('#');
+                                for (var i = 0; i < currentMemberArray.length; i++) {
+                                    var member = currentMemberArray[i];
+                                    var memberAvatarTag = <img src={member}></img>;
+                                    groupMemebersPhoto.push(memberAvatarTag);
+                                    if (i >= 3) {
+                                        break;
+                                    }
+                                }
+
+                                var imgTag = <div className="maaee_group_face">{groupMemebersPhoto}</div>;
+                                switch (groupMemebersPhoto.length) {
+                                    case 1:
+                                        imgTag = <div className="maaee_group_face1">{groupMemebersPhoto}</div>;
+                                        break;
+                                    case 2:
+                                        imgTag = <div className="maaee_group_face2">{groupMemebersPhoto}</div>;
+                                        break;
+                                    case 3:
+                                        imgTag = <div className="maaee_group_face3">{groupMemebersPhoto}</div>;
+                                        break;
+                                    case 4:
+                                        imgTag = <div className="maaee_group_face">{groupMemebersPhoto}</div>;
+                                        break;
+                                }
+
+                                return (
+                                    <Item onClick={this.itemOnClick(rowData)}>
+                                        {imgTag}
+                                        <span className="text_hidden">{rowData.chatGroup.name}</span>
+                                    </Item>
+                                )
+                            } else if (rowData.type == 0) {
+                                //个人
+                                return (
+                                    <Item onClick={this.itemOnClick(rowData)}>
+                                        <img className='userImg' src={rowData.user.avatar}/>
+                                        <span className="text_hidden">{rowData.user.userName}</span>
+                                    </Item>
+                                )
+                            }
+                        })
+                    }
+                </div>
+
+                {/*<ListView
                     ref={el => this.lv = el}
                     dataSource={this.state.dataSource}    //数据类型是 ListViewDataSource
                     renderHeader={() => (
@@ -462,7 +519,8 @@ export default class contacts_ListS extends React.Component {
                             height: this.state.phone === 'ios' ? document.body.clientHeight - this.state.missDistance - 45 : document.body.clientHeight - this.state.missDistance - 49 - 45
                         } : {height: this.state.phone === 'ios' ? document.body.clientHeight - 112 - 45 : this.state.butFoot ? document.body.clientHeight - 210 - 45 : document.body.clientHeight - 161 - 45}
                     }
-                />
+                />*/}
+
                 <div style={
                     this.state.phone == 'ios' ? {display: 'none'} : {display: 'block'}
                 } className="contactsListNav">
