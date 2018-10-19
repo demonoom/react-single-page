@@ -3,8 +3,6 @@ body {
   height: 100%;
   font-size: 14px;
   font-family: "Helvetica Neue", "Hiragino Sans GB", Helvetica, "Microsoft YaHei", Arial;
-  background-image: url(components/arDoor/img/loseBg.png);
-  background-size: cover;
 }
 body {
   overflow: auto !important;
