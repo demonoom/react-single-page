@@ -103,7 +103,7 @@ export default class contacts_ListS extends React.Component {
                     } else if (result.response.length == 0) {
                         //跳转至登录页面
                         _this.setState({topDis: false})
-                        window.location.href = encodeURI(WebServiceUtil.mobileServiceURL + 'chatLogin?unionid=' + _this.state.unionid)
+                        location.replace(encodeURI(WebServiceUtil.mobileServiceURL + 'chatLogin?unionid=' + _this.state.unionid))
                     } else {
                         _this.setState({butFoot: true, missDistance: 284})
                         result.response.forEach(function (v, i) {

@@ -165,7 +165,7 @@ export default class chatLogin extends React.Component {
         if (this.state.teaBind && !this.state.parBind) {
             Promise.all([tea]).then((result) => {
                 if (result[0].success) {
-                    window.location.href = encodeURI(WebServiceUtil.mobileServiceURL + 'contactsList?unionid=' + _this.state.unionid)
+                    location.replace(encodeURI(WebServiceUtil.mobileServiceURL + 'contactsList?unionid=' + _this.state.unionid))
                 } else {
                     Toast.fail(result[0].msg, 2)
                 }
@@ -173,7 +173,7 @@ export default class chatLogin extends React.Component {
         } else if (!this.state.teaBind && this.state.parBind) {
             Promise.all([par]).then((result) => {
                 if (result[0].success) {
-                    window.location.href = encodeURI(WebServiceUtil.mobileServiceURL + 'contactsList?unionid=' + _this.state.unionid)
+                    location.replace(encodeURI(WebServiceUtil.mobileServiceURL + 'contactsList?unionid=' + _this.state.unionid))
                 } else {
                     Toast.fail(result[0].msg, 2)
                 }
@@ -181,7 +181,7 @@ export default class chatLogin extends React.Component {
         } else if (this.state.teaBind && this.state.parBind) {
             Promise.all([tea, par]).then((result) => {
                 if (result[0].success && result[1].success) {
-                    window.location.href = encodeURI(WebServiceUtil.mobileServiceURL + 'contactsList?unionid=' + _this.state.unionid)
+                    location.replace(encodeURI(WebServiceUtil.mobileServiceURL + 'contactsList?unionid=' + _this.state.unionid))
                 } else if (!result[0].success && result[1].success) {
                     Toast.fail(result[0].msg, 2)
                 } else if (result[0].success && !result[1].success) {
