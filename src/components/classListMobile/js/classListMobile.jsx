@@ -136,23 +136,26 @@ export default class classListMobile extends React.Component {
         return (
             <div id='classListMobile'>
                 <SwitchExample />
-                {
-                    calm.state.classListData.length == 0 ?
-                        <div className='empty'>
-                            空的
-                    </div>
-                        :
-                        calm.state.classListData.map((v, i) => {
-                            return (
-                                <div className='line_public item'>
-                                    <div className={v.status ? "black":"gray"}>
-                                        <span onClick={calm.toDetail.bind(this, v)}>{v.clazz.grade.name + v.clazz.name}</span>
-                                        <span>{v.courseItem ? v.courseItem.courseName:""}课</span>
+                <div className='listCont'>
+                    {
+                        calm.state.classListData.length == 0 ?
+                            <div className='empty'>
+                                暂无数据
+                            </div>
+                            :
+                            calm.state.classListData.map((v, i) => {
+                                return (
+                                    <div className='line_public item textOver'>
+                                        <div className={v.status ? "black":"gray"}>
+                                            <span onClick={calm.toDetail.bind(this, v)}>{v.clazz.grade.name + v.clazz.name}</span>
+                                            <span className='course'>{v.courseItem ? v.courseItem.courseName:""}课</span>
+                                        </div>
                                     </div>
-                                </div>
-                            )
-                        })
-                }
+                                )
+                            })
+                    }
+                </div>
+
             </div>
         )
     }
