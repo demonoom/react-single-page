@@ -40,7 +40,7 @@ export default class HomeWorkUnderstandAnalysisByStudent extends React.Component
         var pushTime = searchArray[1].split('=')[1];
         var clazzId = searchArray[2].split('=')[1];
         var userId = searchArray[3].split('=')[1];
-        returnUrl = "http://localhost:8091/#/homeWorkUnderstandAnalysisByClass?userId="+userId+"&clazzId="+clazzId+"&pushTime="+pushTime;
+        returnUrl = "http://localhost:7091/#/homeWorkUnderstandAnalysisByClass?userId="+userId+"&clazzId="+clazzId+"&pushTime="+pushTime;
         // var studentId = "23837";
         // var pushTime = "2018-04-13";
         var param = {
