@@ -17,42 +17,13 @@ export default class classListMobile extends React.Component {
         var locationSearch = locationHref.substr(locationHref.indexOf("?") + 1);
         var locationSearchArray = locationSearch.split("&");
         var id = locationSearchArray[0].split("=")[1];
-        // calm.getClazzesByUserId(id)
         calm.setState({
             userId: id
         })
         calm.getBraceletOpeningClazzesByUserId(id)
     }
 
-    /**
-     *获取班级的ID
-     */
-    getClazzesByUserId(id) {
-        var _this = this;
-        var param = {
-            "method": 'getClazzesByUserId',
-            "userId": id
-        };
-        WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
-            onResponse: function (result) {
-                console.log(result, "班级列表")
-                if (result.msg == '调用成功' || result.success == true) {
-                    if (WebServiceUtil.isEmpty(result.response) == false) {
-                        // var arr = [];
-                        // result.response.forEach(function (v, i) {
-                        //     arr.push({
-                        //         value: v.id, label: v.name
-                        //     })
-                        // })
-                        calm.setState({ classListData: result.response })
-                    }
-                }
-            },
-            onError: function (error) {
-                message.error(error)
-            }
-        });
-    }
+   
     /**
      *获取班级开课
      */
@@ -67,12 +38,6 @@ export default class classListMobile extends React.Component {
                 console.log(result, "userID")
                 if (result.msg == '调用成功' || result.success == true) {
                     if (WebServiceUtil.isEmpty(result.response) == false) {
-                        // var arr = [];
-                        // result.response.forEach(function (v, i) {
-                        //     arr.push({
-                        //         value: v.id, label: v.name
-                        //     })
-                        // })
                         calm.setState({ classListData: result.response })
                     }
                 }
