@@ -1,6 +1,7 @@
 import React from "react";
 import { List, Switch,Toast } from 'antd-mobile';
 import { createForm } from 'rc-form';
+import '../css/classListMobile.less'
 var calm;
 export default class classListMobile extends React.Component {
     constructor(props) {
@@ -123,7 +124,6 @@ export default class classListMobile extends React.Component {
                                 valuePropName: 'checked',
                             })}
                             platform="ios"
-                            color="#f55045"
                             onClick={(checked) => {
                                 calm.getChatMsg(checked)
                             }}
@@ -134,19 +134,21 @@ export default class classListMobile extends React.Component {
         };
         SwitchExample = createForm()(SwitchExample);
         return (
-            <div>
+            <div id='classListMobile'>
                 <SwitchExample />
                 {
                     calm.state.classListData.length == 0 ?
-                        <div>
+                        <div className='empty'>
                             空的
                     </div>
                         :
                         calm.state.classListData.map((v, i) => {
                             return (
-                                <div style={v.status ? "black":"gray"}>
-                                    <span onClick={calm.toDetail.bind(this, v)}>{v.clazz.grade.name + v.clazz.name}</span>
-                                    <span>{v.courseItem ? v.courseItem.courseName:""}课</span>
+                                <div className='line_public item'>
+                                    <div className={v.status ? "black":"gray"}>
+                                        <span onClick={calm.toDetail.bind(this, v)}>{v.clazz.grade.name + v.clazz.name}</span>
+                                        <span>{v.courseItem ? v.courseItem.courseName:""}课</span>
+                                    </div>
                                 </div>
                             )
                         })
