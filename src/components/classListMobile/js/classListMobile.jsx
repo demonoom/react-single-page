@@ -1,5 +1,5 @@
 import React from "react";
-import { List, Switch,Toast } from 'antd-mobile';
+import { List, Switch, Toast } from 'antd-mobile';
 import { createForm } from 'rc-form';
 import '../css/classListMobile.less'
 var calm;
@@ -9,7 +9,7 @@ export default class classListMobile extends React.Component {
         calm = this;
         this.state = {
             classListData: [],
-            initialValue:false
+            initialValue: false
         }
     }
     componentDidMount() {
@@ -19,7 +19,7 @@ export default class classListMobile extends React.Component {
         var id = locationSearchArray[0].split("=")[1];
         // calm.getClazzesByUserId(id)
         calm.setState({
-            userId:id
+            userId: id
         })
         calm.getBraceletOpeningClazzesByUserId(id)
     }
@@ -84,22 +84,24 @@ export default class classListMobile extends React.Component {
     }
     /** */
     toDetail = (v) => {
-        if(!calm.state.initialValue){
-            Toast.info("请先开启课堂监测",1)
+        if (!calm.state.initialValue) {
+            Toast.info("请先开启课堂监测", 1)
             return
         }
-        if(v.status){
+        if (v.status) {
             var url = WebServiceUtil.mobileServiceURL + "classListDetail?className=" + v.clazz.grade.name + v.clazz.name + "&classId=" + v.clazz.id;
             var data = {
                 method: 'openNewPage',
                 url: url,
             };
-    
+
             Bridge.callHandler(data, null, function (error) {
                 window.location.href = url;
             });
-        }else {
-            Toast.info("该班级暂未开课",1)
+        } else {
+            Toast.info("该班级暂未开课", 1)
+            return;
+
         }
     }
 
@@ -109,12 +111,12 @@ export default class classListMobile extends React.Component {
      */
     getChatMsg(checked) {
         calm.setState({
-            initialValue:checked
+            initialValue: checked
         })
     }
     render() {
         let SwitchExample = (props) => {
-            const {getFieldProps} = props.form;
+            const { getFieldProps } = props.form;
             return (
                 <List>
                     <List.Item
@@ -146,9 +148,8 @@ export default class classListMobile extends React.Component {
                             calm.state.classListData.map((v, i) => {
                                 return (
                                     <div className='line_public item textOver'>
-                                        <div className={v.status ? "black":"gray"}>
-                                            <span onClick={calm.toDetail.bind(this, v)}>{v.clazz.grade.name + v.clazz.name}</span>
-                                            <span className='course'>{v.courseItem ? v.courseItem.courseName:""}课</span>
+                                        <div className={v.status ? "black" : "gray"} onClick={calm.toDetail.bind(this, v)}>{v.clazz.grade.name + v.clazz.name}
+                                            {v.courseItem ? <span className='course'>{v.courseItem.courseName}课</span> : ""}
                                         </div>
                                     </div>
                                 )
