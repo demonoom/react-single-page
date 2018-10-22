@@ -32,6 +32,8 @@ export default class warningAdminList extends React.Component {
     }
 
     componentDidMount() {
+
+        document.title = "预警人员管理";
         const dataSource = new ListView.DataSource({
             rowHasChanged: (row1, row2) => row1 !== row2,
         });
