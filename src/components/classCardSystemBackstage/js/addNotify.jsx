@@ -50,7 +50,7 @@ export default class addNotify extends React.Component {
         var param = {
             "method": 'viewClassRoomPage',
             "uid": calm.state.ident,
-            "pn":1
+            "pn":-1
         };
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
             onResponse: (result) => {
