@@ -94,7 +94,7 @@ export default class analysisList extends React.Component {
     turnToAnaysis(id) {
         // window.open("/#/resultAnalysis?taskId=" + id);
 
-        var url = "http://jiaoxue.maaee.com:7091/#/resultAnalysis?taskId=" + id;
+        var url = "http://jiaoxue.maaee.com:8091/#/resultAnalysis?taskId=" + id;
         var data = {};
         data.method = 'openNewPage';
         data.url = url;

@@ -88,7 +88,7 @@ export default class questionBank extends React.Component {
 
     componentWillMount() {
         //地址:    http://localhost:7091/#/questionBank?ident=54208&pointId=4339&title=nihao
-        //   http://jiaoxue.maaee.com:7091
+        //   http://jiaoxue.maaee.com:8091
 
         Bridge.setShareAble("false");
 
