@@ -140,7 +140,7 @@ export default class classListMobile extends React.Component {
                     calm.state.classListData.length == 0 ?
                         <div>
                             空的
-                    </div>
+                        </div>
                         :
                         calm.state.classListData.map((v, i) => {
                             return (
