@@ -613,9 +613,6 @@ video::-webkit-media-controls-fullscreen-button {
 .clazzDemeanor .slick-list {
   height: 100% !important;
 }
-.clazzDemeanor video {
-  height: 100%;
-}
 .clazzDemeanor .slick-track img,
 .clazzDemeanor .slick-track .videoDiv {
   margin: 0 6px;
@@ -633,9 +630,6 @@ video::-webkit-media-controls-fullscreen-button {
   object-fit: cover;
   -o-object-fit: cover;
   -webkit-object-fit: cover;
-}
-.classReward video {
-  height: 100%;
 }
 .classReward .slick-track,
 .classReward .slick-slider,
