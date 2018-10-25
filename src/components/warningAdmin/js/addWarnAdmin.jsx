@@ -23,7 +23,7 @@ export default class addWarnAdmin extends React.Component {
     }
 
     componentDidMount() {
-
+        document.title = "添加预警人员";
     }
 
 

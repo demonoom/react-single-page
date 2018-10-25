@@ -92,7 +92,7 @@ export default class application extends React.Component {
                     </li>
                     <li className="app_list" onClick={this.intoNFC}>
                         <div className="app_list_img"><span className="message"></span></div>
-                        <div className="app_list_text text_hidden">NFC</div>
+                        <div className="app_list_text text_hidden">家校</div>
                     </li>
                     <li className="app_list" onClick={this.toStep}>
                         <div className="app_list_img"><span className="stepNumber"></span></div>

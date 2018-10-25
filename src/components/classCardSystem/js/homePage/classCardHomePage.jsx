@@ -127,7 +127,7 @@ export default class classCardHomePage extends React.Component {
     playVideo = (src) => {
         var _this = this;
 
-        var videoPlayer = <video id="videoPlayerAr" controls="controls" minLength={100} autoplay>
+        var videoPlayer = <video id="videoPlayerAr" controls="controls" minLength={100} autoplay playsinline="true"  webkit-playsinline="true" controlslist="nodownload nofullscreen" x5-video-player-type="h5" playsinline webkit-playsinline>
             <source type="video/mp4" src={src}/>
         </video>;
 

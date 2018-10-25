@@ -1,3 +1,5 @@
+@import "~slick-carousel/slick/slick.css";
+@import "~slick-carousel/slick/slick-theme.css";
 html,
 body {
   height: 100%;
@@ -268,6 +270,9 @@ hr {
   background-color: #F56A55;
   opcity: 0.3;
 }
+video::-webkit-media-controls-fullscreen-button {
+  display: none;
+}
 /*班牌内页返回首页*/
 .navBar {
   font-size: 0.89rem;
@@ -362,7 +367,7 @@ hr {
 .am-modal-content .am-modal-title {
   color: #333 !important;
   line-height: 22px;
-  font-size: 17px!important;
+  font-size: 17px !important;
 }
 .am-modal-content .am-modal-input input {
   padding-left: 6px;
@@ -598,4 +603,36 @@ hr {
   background-size: 100% 100%;
   margin-right: 33.333%;
   float: right;
+}
+.clazzDemeanor {
+  padding: 0.83rem 0 0 0;
+  height: 4.17rem !important;
+}
+.clazzDemeanor .slick-track,
+.clazzDemeanor .slick-slider,
+.clazzDemeanor .slick-list {
+  height: 100% !important;
+}
+.clazzDemeanor .slick-track img,
+.clazzDemeanor .slick-track .videoDiv {
+  margin: 0 6px;
+  object-fit: cover;
+  -o-object-fit: cover;
+  -webkit-object-fit: cover;
+}
+.classReward {
+  margin: 0.83rem 0 0 0;
+  height: 7.78rem !important;
+}
+.classReward img,
+.classReward .videoDiv {
+  margin: 0 6px;
+  object-fit: cover;
+  -o-object-fit: cover;
+  -webkit-object-fit: cover;
+}
+.classReward .slick-track,
+.classReward .slick-slider,
+.classReward .slick-list {
+  height: 100% !important;
 }

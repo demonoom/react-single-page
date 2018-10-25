@@ -203,7 +203,8 @@ export default class classHonor extends React.Component {
                             return <div className="listImg flex_center">
                                 {
                                     extra[extra.length - 1] == "jpg" ? <img className='uploadImgBtn' src={v} alt="" /> :
-                                        extra[extra.length - 1] == "mp4" ? <video style={{ width: "100%",height:"100%" }} src={v}></video> : ""
+                                        extra[extra.length - 1] == "mp4" ? <video style={{ width: "100%",height:"100%" }} src={v}></video> : 
+                                        extra[extra.length - 1] == "JPG" ? <img className='uploadImgBtn' src={v} alt="" /> : ""
                                 }
                                 <img onClick={this.deleteimgFromAndArr.bind(this, i)} className='delImgBtn'
                                     src={require('../imgs/delPic.png')} alt="" />

@@ -33,7 +33,8 @@ module.exports = {
     ],
     devtool: 'false', // or 'inline-source-map'    生产模式,不再打包.map文件
     devServer: {
-        disableHostCheck: true
+        disableHostCheck: true,
+        // inline: false,  // 关闭热更新
     },
 
     entry: {
@@ -43,7 +44,7 @@ module.exports = {
 
     output: {
         filename: '[name].js',
-        chunkFilename: '[id].chunk.js',   //匹配chunk
+        chunkFilename: '[id].chunk.js?v=0.0.4',   //匹配chunk
         path: path.join(__dirname, '/dist'), /*输出的文件路径*/
         publicPath: '/dist/'
     },
@@ -70,7 +71,7 @@ module.exports = {
                 }
             },
             {
-                test: /\.(jpg|png|gif)$/,
+                test: /\.(jpg|png|gif|svg|ttf|eot|woff)$/,
                 loader: "url-loader?limit=8192"
             },
             // 注意：如下不使用 ExtractTextPlugin 的写法，不能单独 build 出 css 文件
@@ -110,7 +111,7 @@ module.exports = {
             filename: 'shared.js'
         }),
 
-        new webpack.optimize.UglifyJsPlugin({
+        /*new webpack.optimize.UglifyJsPlugin({
             //压缩插件,使用npm 安装, cnpm会报错
             mangle: {
                 except: ['$super', '$', 'exports', 'require', 'module', '_']
@@ -126,7 +127,7 @@ module.exports = {
                 // 是否剔除代码中所有的  console  语句，默认为不剔除。开启后不仅可以提升代码压缩效果，也可以兼容不支持 console 语句 IE 浏览器。
                 drop_console: true,
             }
-        }),
+        }),*/
 
         //将开发模式变为生产模式
         new webpack.DefinePlugin({

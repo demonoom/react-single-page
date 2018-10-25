@@ -8,7 +8,12 @@
 #originationList .origination_top {
   height: 111px;
 }
-#originationList .origination_cont {
+#originationList .origination_cont_ios {
+  height: calc(100% - 106px);
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+#originationList .origination_cont_andriod {
   height: calc(100% - 160px);
   overflow-y: auto;
   overflow-x: hidden;

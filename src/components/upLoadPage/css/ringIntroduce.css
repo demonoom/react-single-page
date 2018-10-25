@@ -1,0 +1,40 @@
+#ringIntroduce {
+  padding: 10px 15px;
+  box-sizing: border-box;
+  height: 100%;
+  overflow-y: auto;
+  background-color: white;
+}
+#ringIntroduce .title {
+  font-size: 20px;
+  line-height: 22px;
+  word-break: break-word;
+  color: #333;
+  font-weight: bold;
+  letter-spacing: 1px;
+  margin: 10px 0 12px;
+}
+#ringIntroduce .at {
+  font-size: 12px;
+  margin: 5px 0 10px;
+}
+#ringIntroduce .at .author {
+  display: inline-block;
+  padding-right: 10px;
+  color: #999;
+}
+#ringIntroduce .at .createTime {
+  display: inline-block;
+  color: #999;
+}
+#ringIntroduce .content {
+  font-size: 15px;
+  line-height: 1.6;
+  color: #000000;
+}
+#ringIntroduce .content img {
+  width: auto;
+  height: auto;
+  max-width: 100%;
+  margin: 10px auto 8px auto;
+}

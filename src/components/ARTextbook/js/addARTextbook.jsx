@@ -28,7 +28,8 @@ export default class addARTextbook extends React.Component {
             searchValue: "",
             tagIndex: "",
             arrTextDiv: [],
-            flag: true
+            flag: true,
+            pageNoValue:1
         };
     }
 
@@ -94,20 +95,19 @@ export default class addARTextbook extends React.Component {
             Toast.info("请输入AR教材名称")
             return
         }
-        if (teacherV.state.fileNewArr.length == 0) {
+        /*if (teacherV.state.fileNewArr.length == 0) {
             Toast.info("请上传附件")
             return
-        }
+        }*/
 
         if (teacherV.state.ARTextbookDataArr.length == 0) {
             Toast.info("AR教材的图片和视频不能为空")
             return
         }
-        if (teacherV.state.pageNoValue == undefined) {
+        if (teacherV.state.pageNoValue == "") {
             Toast.info("请输入页码")
             return
         }
-
         if (teacherV.state.picNewArr.length == 0) {
             Toast.info("请上传照片")
             return
@@ -144,9 +144,7 @@ export default class addARTextbook extends React.Component {
             }
         }
         var classArray = [];
-        
         this.state.ARTextbookDataArr.forEach(function (v, i) {
-            console.log(v,"vvcvc")
             classArray.push({
                 "page": v.pageNoValue,
                 "index": i,
@@ -156,7 +154,6 @@ export default class addARTextbook extends React.Component {
             })
         })
         param.bookData.itemList = classArray;
-        console.log(param)
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
             onResponse: function (result) {
                 if (result.msg == '调用成功' || result.success == true) {
@@ -538,7 +535,7 @@ export default class addARTextbook extends React.Component {
          * videoName视频名称
          */
         teacherV.state.ARTextbookDataArr.push({
-            pageNoValue: '',
+            pageNoValue: 1,
             picPath: [],
             picName: [],
             videoPath: [],
