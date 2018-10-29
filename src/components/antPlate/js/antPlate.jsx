@@ -297,6 +297,7 @@ export default class antPlate extends React.Component {
      */
     upLoadQue = () => {
         console.log('上传')
+        Toast.info('暂未开通', 3)
     };
 
     /**
