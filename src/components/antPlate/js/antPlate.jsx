@@ -90,6 +90,9 @@ export default class antPlate extends React.Component {
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
             onResponse: function (result) {
                 if (result.msg == '调用成功' || result.success == true) {
+                    if (result.response[0]) {
+                        _this.setState({parentId: result.response[0].parent.parentId})
+                    }
                     var response = result.response;
                     var pager = result.pager;
                     for (let i = 0; i < response.length; i++) {
@@ -213,7 +216,16 @@ export default class antPlate extends React.Component {
         var _this = this
         event.stopPropagation();
         if (obj.fileType === 0) {
-            console.log('文件')
+            var type = obj.suffix
+
+            if (type == 'mp4') {
+                var url = 'http://www.maaee.com/Excoord_PhoneService/cloudFile/cloudFileShow/' + obj.uuid + '/' + obj.id;
+                window.open(url)
+            } else {
+                var url = "http://www.maaee.com/Excoord_PhoneService/cloudFile/cloudFileShow/" + obj.id + "/" + obj.createUid;
+                window.open(url)
+            }
+
         } else {
             _this.setState({defaultPageNo: 1}, () => {
                 this.setState({parentId: obj.parentId}, () => {
