@@ -511,15 +511,17 @@ export default class antPlate extends React.Component {
             <div id="antPlate" className={this.state.phoneType == '0' ? 'Android_wrap' : ''}
                  style={{height: this.state.clientHeight}}>
                 <div className="ant_title">
-                    <span className="ant_btn_list" onClick={this.returnParentAtMoveModal}><Icon type='left'/></span>
-                    <span className="ant_btn_line"></span>
-                    <span className="ant_btn_list" onClick={this.creatNewFile}><img className="ant_btn_img"
-                                                                                    src={require('../imgs/icon_ant_new.png')}
-                                                                                    alt=""/><span>新建</span></span>
-                    <span className="ant_btn_line"></span>
-                    <span className="ant_btn_list" onClick={this.upLoadQue}><img className="ant_btn_img"
-                                                                                 src={require('../imgs/icon_ant_uploading.png')}
-                                                                                 alt=""/><span>上传</span></span>
+                    <span className="ant_btn_list icon_back" onClick={this.returnParentAtMoveModal}><Icon type='left'/></span>
+                    <div className='btns'>
+                         <span className="ant_btn_list" onClick={this.creatNewFile}><img className="ant_btn_img"
+                                                                                         src={require('../imgs/icon_ant_new.png')}
+                                                                                         alt=""/><span>新建</span></span>
+                        <span className="ant_btn_line"></span>
+                        <span className="ant_btn_list" onClick={this.upLoadQue}><img className="ant_btn_img"
+                                                                                     src={require('../imgs/icon_ant_uploading.png')}
+                                                                                     alt=""/><span>上传</span></span>
+                    </div>
+
                 </div>
 
                 <ListView

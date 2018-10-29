@@ -7,6 +7,9 @@
     padding: 0;
     list-style: none;
   }
+  .am-accordion .am-accordion-item .am-accordion-content .am-accordion-content-box{
+    border-bottom: 0;
+  }
   .my-accordion .pad .am-accordion-content-box {
     padding: 10px;
   }
@@ -21,15 +24,17 @@
       align-items: center;
       position: relative;
       align-items: center;
+      border-top: 1px #f5f5f5 solid;
+      border-bottom: 0;
     }
     .am-accordion-header i {
-      top: 20px;
+      top: 27px;
     }
     .filePic, .QuePic {
       margin-right: 15px;
       width: 45px;
       height: 45px;
-      margin-left: 15px;
+      margin-left: 32px;
     }
     .am-accordion{
       border-top: none;
@@ -38,10 +43,31 @@
 
   .ant_title {
     height: 14px;
-    padding: 20px 15px;
+    line-height: 14px;
+    padding: 20px 13px;
     color: #545454;
     background: #fff;
     font-size: 14px;
+    overflow: hidden;
+    position: relative;
+    .btns{
+      float: right;
+    }
+    .am-icon-md{
+      color: #999;
+      width: 28px;
+      height: 28px;
+    }
+    .icon_back{
+      position: absolute;
+      left: 12px;
+      top:50%;
+      -webkit-transform: translateY(-50%);
+      -moz-transform: translateY(-50%);
+      -ms-transform: translateY(-50%);
+      -o-transform: translateY(-50%);
+      transform: translateY(-50%);
+    }
   }
 
   .noomWidth {
@@ -51,6 +77,7 @@
     display: inline-block;
     line-height: 15px;
     vertical-align: middle;
+    cursor: pointer;
   }
   .ant_btn_line {
     margin: 0 15px;
@@ -91,7 +118,7 @@
   }
   .ant_list_title {
     font-size: 14px;
-    margin-bottom: 6px;
+    margin-bottom: 10px;
     color: #333;
     width: 100%;
     text-overflow: ellipsis;
@@ -103,6 +130,7 @@
     width: 100%;
     text-overflow: ellipsis;
     overflow: hidden;
+    line-height: 1.2;
   }
   .flex_align_center {
     align-items: center;
@@ -129,8 +157,8 @@
     overflow: hidden;
     width: 65%;
     position: absolute;
-    left: 70px;
-    top: 25px;
+    left: 95px;
+    top: 16px;
     display: inline-block;
     text-overflow: ellipsis;
     white-space: nowrap;
@@ -140,8 +168,8 @@
     overflow: hidden;
     width: 65%;
     position: absolute;
-    left: 70px;
-    top: 25px;
+    left: 95px;
+    top: 16px;
     display: inline-block;
     text-overflow: ellipsis;
     white-space: nowrap;
@@ -167,224 +195,3 @@
   justify-content: center;
 }
 
-#termitePlateLibrary.Android_wrap {
-  @media only screen and (min-width: 321px) and (max-width: 414px) {
-    .ant_title {
-      padding: 20px 15px;
-      color: #545454;
-      background: #fff;
-      font-size: 14px;
-      line-height: 1;
-    }
-
-    .ant_btn_img {
-      width: 24px;
-      position: relative;
-      margin-right: 4px;
-      top: -5px;
-    }
-
-    .am-accordion {
-      border-top: 0;
-    }
-
-    .noom-accordion .am-accordion-header {
-      box-sizing: border-box;
-      cursor: pointer;
-      padding: 15px 0;
-      height: 70px;
-      display: -webkit-box;
-      display: -webkit-flex;
-      display: -ms-flexbox;
-      display: flex;
-      -webkit-box-orient: horizontal;
-      -webkit-box-direction: normal;
-      -webkit-flex-flow: row nowrap;
-      -ms-flex-flow: row nowrap;
-      flex-flow: row nowrap;
-      position: relative;
-      -webkit-box-align: center;
-      -webkit-align-items: center;
-      -ms-flex-align: center;
-      align-items: center;
-    }
-
-    .noom-accordion .filePic, .noom-accordion .QuePic {
-      margin-right: 10px;
-      width: 38px;
-      height: 38px;
-      margin-left: 15px;
-    }
-
-    .ant_list_title {
-      font-size: 14px;
-      margin-bottom: 8px;
-      color: #333;
-      width: 100%;
-      text-overflow: ellipsis;
-      overflow: hidden;
-    }
-
-    .ant_list_time {
-      color: #a9a9a9;
-      font-size: 12px;
-      width: 100%;
-      text-overflow: ellipsis;
-      overflow: hidden;
-    }
-
-    .noom-accordion .am-accordion-header i {
-      top: 30px;
-    }
-
-    .am-accordion .am-accordion-item .am-accordion-header {
-      border-bottom: none
-    }
-
-    .am-accordion .am-accordion-item .am-accordion-header:before {
-      content: "";
-      pointer-events: none;
-      box-sizing: border-box;
-      border: none;
-      border-bottom: 1px solid #ddd;
-      height: 1px;
-      transform: scaleY(0.5);
-      transform-origin: 0 0;
-      -webkit-transform: scaleY(0.5);
-      -webkit-transform-origin: 0 0;
-      position: absolute;
-      width: 100%;
-      top: 0;
-    }
-    .ant_list_subject_no > div > div{
-      padding-left:10px !important;
-    }
-    .am-list-body {
-      border: none;
-    }
-    .ant_list_subject{
-      padding-left: 0;
-    }
-  }
-  @media screen and (min-width: 415px) and (max-width: 1024px) {
-    .ant_title {
-      height: 18px;
-      padding: 25px;
-      color: #545454;
-      background: #fff;
-      font-size: 18px;
-    }
-    .ant_list_subject_no > div > div{
-      line-height: 38px !important;
-      padding-left: 10px !important;
-    }
-    .ant_btn_img {
-      width: 28px;
-      position: relative;
-      margin-right: 4px;
-      top: -6px;
-    }
-
-    .am-accordion {
-      border-top: 0;
-    }
-
-    .noom-accordion .am-accordion-header {
-      box-sizing: border-box;
-      cursor: pointer;
-      padding: 25px 0;
-      height: 90px;
-      display: -webkit-box;
-      display: -webkit-flex;
-      display: -ms-flexbox;
-      display: flex;
-      -webkit-box-orient: horizontal;
-      -webkit-box-direction: normal;
-      -webkit-flex-flow: row nowrap;
-      -ms-flex-flow: row nowrap;
-      flex-flow: row nowrap;
-      position: relative;
-      -webkit-box-align: center;
-      -webkit-align-items: center;
-      -ms-flex-align: center;
-      align-items: center;
-    }
-
-    .noom-accordion .filePic, .noom-accordion .QuePic {
-      margin-right: 20px;
-      width: 45px;
-      height: 45px;
-      margin-left: 25px;
-    }
-
-    .ant_list_title {
-      font-size: 18px;
-      margin-bottom: 10px;
-      color: #333;
-      width: 100%;
-      text-overflow: ellipsis;
-      overflow: hidden;
-    }
-
-    .ant_list_time {
-      color: #a9a9a9;
-      font-size: 14px;
-      width: 100%;
-      text-overflow: ellipsis;
-      overflow: hidden;
-    }
-
-    .noom-accordion .am-accordion-header i {
-      top: 40px;
-    }
-
-    .am-accordion .am-accordion-item .am-accordion-header {
-      border-bottom: none
-    }
-
-    .am-accordion .am-accordion-item .am-accordion-header:before {
-      content: "";
-      pointer-events: none;
-      box-sizing: border-box;
-      border: none;
-      border-bottom: 1px solid #ddd;
-      height: 1px;
-      transform: scaleY(0.5);
-      transform-origin: 0 0;
-      -webkit-transform: scaleY(0.5);
-      -webkit-transform-origin: 0 0;
-      position: absolute;
-      width: 100%;
-      top: 0;
-    }
-
-    .am-list-body {
-      border: none;
-    }
-  }
-  @media screen and (min-width: 1025px){
-    .ant_list_subject_no > div > div{
-      padding-left: 10px !important;
-    }
-  }
-  .am-accordion .am-accordion-item .am-accordion-header {
-    border-bottom: none
-  }
-
-  .am-accordion .am-accordion-item .am-accordion-header:before {
-    content: "";
-    pointer-events: none;
-    box-sizing: border-box;
-    border: none;
-    border-bottom: 1px solid #ddd;
-    height: 1px;
-    transform: scaleY(0.5);
-    transform-origin: 0 0;
-    -webkit-transform: scaleY(0.5);
-    -webkit-transform-origin: 0 0;
-    position: absolute;
-    width: 100%;
-    top: 0;
-  }
-
-}
