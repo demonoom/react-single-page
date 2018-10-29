@@ -60,7 +60,7 @@ $(function () {
                         var type = res.substring(res.length - 3, res.length);
                         console.log(type, 'type')
                         if (type == 'jpg' || type == 'png' || type == 'gif' || type == 'peg' || type == 'JPG' || type == 'PNG' || type == 'PEG' || type == 'GIF') {
-                            var imageDiv = $("<img class='upload_box_image' />").attr('src', res);
+                            var imageDiv = $("<imgs class='upload_box_image' />").attr('src', res);
                             var imageBox = $("<span class='image_box_upload'><i class='deleteImage_upload'></i></span>");
                             $(imageBox).append(imageDiv);
                             //image ---> uploadBox
@@ -524,10 +524,10 @@ $(function () {
             $('#editor_box > div').attr('contenteditable', 'true');
             $('#title').val(article.title);
             $('#author').val(article.author);
-            // console.log($('#editor_box img'),'imag');
-            // for(var k in $('#editor_box img')){
-            //     // console.log($($('#editor_box img')[k]).attr('src'),'path');
-            //     // console.log($($('#editor_box img')[k]).attr('cover'),'cover');
+            // console.log($('#editor_box imgs'),'imag');
+            // for(var k in $('#editor_box imgs')){
+            //     // console.log($($('#editor_box imgs')[k]).attr('src'),'path');
+            //     // console.log($($('#editor_box imgs')[k]).attr('cover'),'cover');
             // }
             // console.log($('#editor_box video'),'video');
             // console.log(res.response.articleImgs);
