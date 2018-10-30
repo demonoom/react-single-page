@@ -16,7 +16,7 @@
 #antPlate .noom-accordion .am-accordion-header {
   box-sizing: border-box;
   cursor: pointer;
-  height: 70px;
+  height: 63px;
   display: flex;
   flex-flow: row nowrap;
   position: relative;
