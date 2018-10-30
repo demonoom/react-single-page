@@ -459,48 +459,51 @@ export default class antPlate extends React.Component {
                 var fileTypeLog;
                 switch (fileType) {
                     case "png":
-                        fileTypeLog = <img className="filePic" src={require('../imgs/subject.png')} alt=""/>;
+                        fileTypeLog = <img className="filePic" src={require('../imgs/icon_png.png')} alt=""/>;
                         break;
                     case "jpg":
-                        fileTypeLog = <img className="filePic" src={require('../imgs/subject.png')} alt=""/>;
+                        fileTypeLog = <img className="filePic" src={require('../imgs/icon_jpg.png')} alt=""/>;
                         break;
                     case "mp3":
-                        fileTypeLog = <img className="filePic" src={require('../imgs/subject.png')} alt=""/>;
+                        fileTypeLog = <img className="filePic" src={require('../imgs/icon_mp3.png')} alt=""/>;
+                        break;
+                    case "mp4":
+                        fileTypeLog = <img className="filePic" src={require('../imgs/icon_mp4.png')} alt=""/>;
+                        break;
+                    case "apk":
+                        fileTypeLog = <img className="filePic" src={require('../imgs/icon_apk.png')} alt=""/>;
                         break;
                     case "pdf":
-                        fileTypeLog = <img className="filePic" src={require('../imgs/subject.png')} alt=""/>;
+                        fileTypeLog = <img className="filePic" src={require('../imgs/icon_pdf.png')} alt=""/>;
                         break;
                     case "ppt":
                     case "pptx":
-                        fileTypeLog = <img className="filePic" src={require('../imgs/subject.png')} alt=""/>;
+                        fileTypeLog = <img className="filePic" src={require('../imgs/icon_ppt.png')} alt=""/>;
                         break;
                     case "doc":
                     case "docx":
-                        fileTypeLog = <img className="filePic" src={require('../imgs/subject.png')} alt=""/>;
+                        fileTypeLog = <img className="filePic" src={require('../imgs/icon_doc.png')} alt=""/>;
                         break;
                     case "xls":
                     case "xlsx":
-                        fileTypeLog = <img className="filePic" src={require('../imgs/subject.png')} alt=""/>;
+                        fileTypeLog = <img className="filePic" src={require('../imgs/icon_xls.png')} alt=""/>;
                         break;
                     case "wps":
-                        fileTypeLog = <img className="filePic" src={require('../imgs/subject.png')} alt=""/>;
+                        fileTypeLog = <img className="filePic" src={require('../imgs/icon_wps.png')} alt=""/>;
                         break;
                     default:
-                        fileTypeLog = <img className="filePic" src={require('../imgs/subject.png')} alt=""/>;
+                        fileTypeLog = <img className="filePic" src={require('../imgs/icon_else.png')} alt=""/>;
                         break;
                 }
 
                 //文件
                 headDiv = <div className="my_flex flex_align_center noomWidth"
                                onClick={_this.fileClicked.bind(this, rowData)}>
-                    {fileTypeLog}
-                    <div className="lineheight ant_list_subject2">
-                        <div className="ant_list_title">{rowData.name}</div>
-                        <div className="ant_list_time">
-                            <span className="margin_right_8">{rowData.creator.userName}</span>
-                            <span>{time}</span>
-                        </div>
-                    </div>
+                    <span className="ant_list_title">{fileTypeLog}{rowData.name}</span>
+                    <span className="ant_list_time">
+                        {/*<span className="margin_right_8">{rowData.creator.userName}</span>*/}
+                        <span>{time}</span>
+                    </span>
                 </div>;
                 headDivItem = <ul className="my_flex ul_list_del flex_align_center">
                     <li className="flex_1" onClick={this.showAlert.bind(this, rowData)}>
@@ -516,14 +519,11 @@ export default class antPlate extends React.Component {
                 //文件夹
                 headDiv = <div className="my_flex flex_align_center noomWidth"
                                onClick={_this.fileClicked.bind(this, rowData)}>
-                    <img className="filePic" src={require('../imgs/file.png')} alt=""/>
-                    <div className="lineheight ant_list_subject2">
-                        <div className="ant_list_title">{rowData.name}</div>
-                        <div className="ant_list_time">
-                            <span className="margin_right_8">{rowData.creator.userName}</span>
-                            <span>{time}</span>
-                        </div>
-                    </div>
+                    <span className="ant_list_title"><img className="filePic" src={require('../imgs/file.png')} alt=""/>{rowData.name}</span>
+                    <span className="ant_list_time">
+                        {/*<span className="margin_right_8">{rowData.creator.userName}</span>*/}
+                        <span>{time}</span>
+                    </span>
                 </div>;
                 headDivItem = <ul className="my_flex ul_list_del flex_align_center">
                     <li className="flex_1" onClick={this.showAlert.bind(this, rowData)}>
@@ -556,13 +556,8 @@ export default class antPlate extends React.Component {
                     <span style={{display: parentId === -1 ? 'none' : ''}} className="ant_btn_list icon_back"
                           onClick={this.returnParentAtMoveModal}><Icon type='left'/></span>
                     <div className='btns'>
-                         <span className="ant_btn_list" onClick={this.creatNewFile}><img className="ant_btn_img"
-                                                                                         src={require('../imgs/icon_ant_new.png')}
-                                                                                         alt=""/><span>新建</span></span>
-                        <span className="ant_btn_line"></span>
-                        <span className="ant_btn_list" onClick={this.upLoadQue}><img className="ant_btn_img"
-                                                                                     src={require('../imgs/icon_ant_uploading.png')}
-                                                                                     alt=""/><span>上传</span></span>
+                         <span className="ant_btn_list add_file" onClick={this.creatNewFile}>新建文件夹</span>
+                        <span className="ant_btn_list upload_file" onClick={this.upLoadQue}>本地上传</span>
                     </div>
 
                 </div>
@@ -570,6 +565,14 @@ export default class antPlate extends React.Component {
                 <ListView
                     ref={el => this.lv = el}
                     dataSource={this.state.dataSource}    //数据类型是 ListViewDataSource
+                    renderHeader={() => (
+                        <div className='tableTitle my_flex'>
+                           <div className='noomWidth'>
+                               <span>名称</span>
+                               <span>创建时间</span>
+                           </div>
+                            <span className='option'>操作</span>
+                        </div>)}
                     renderFooter={() => (
                         <div style={{paddingTop: 5, paddingBottom: 40, textAlign: 'center'}}>
                             {this.state.isLoadingLeft ? '正在加载' : '已经全部加载完毕'}
@@ -584,7 +587,7 @@ export default class antPlate extends React.Component {
                     initialListSize={30}   //指定在组件刚挂载的时候渲染多少行数据，用这个属性来确保首屏显示合适数量的数据
                     scrollEventThrottle={20}     //控制在滚动过程中，scroll事件被调用的频率
                     style={{
-                        height: this.state.clientHeight - 28,
+                        height: this.state.clientHeight - 64,
                     }}
                 />
             </div>
