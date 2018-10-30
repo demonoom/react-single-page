@@ -91,6 +91,11 @@ export default class antPlate extends React.Component {
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
             onResponse: function (result) {
                 if (result.msg == '调用成功' || result.success == true) {
+                    if (result.response.length === 0) {
+                        _this.setState({dataNone: false})
+                    } else {
+                        _this.setState({dataNone: true})
+                    }
                     if (result.response[0]) {
                         _this.setState({parentId: result.response[0].parent.parentId})
                     }
@@ -135,6 +140,7 @@ export default class antPlate extends React.Component {
      * 点"我的题目"时调用的接口
      */
     getUserRootCloudSubjects(clearFlag) {
+        this.setState({parentCloudFileId: -1});
         var loginUser = JSON.parse(localStorage.getItem('loginUserTLibrary'));
         var _this = this;
         const dataBlob = {};
@@ -149,6 +155,11 @@ export default class antPlate extends React.Component {
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
             onResponse: function (result) {
                 if (result.msg == '调用成功' || result.success == true) {
+                    if (result.response.length === 0) {
+                        _this.setState({dataNone: false})
+                    } else {
+                        _this.setState({dataNone: true})
+                    }
                     var response = result.response;
                     var pager = result.pager;
                     for (let i = 0; i < response.length; i++) {
@@ -696,21 +707,20 @@ export default class antPlate extends React.Component {
                     <img src={require('../imgs/icon_loading.gif')}/><br/>
                     正在上传 <span>{this.state.uploadPercent}%</span>
                 </div>
-                <div className='emptyCont'>
+                <div className='emptyCont' style={{display: this.state.dataNone ? 'none' : ''}}>
                     <img src={require('../imgs/icon_empty.png')} alt=""/><br/>
                     暂无数据
+                </div>
+                <div className='tableTitle my_flex'>
+                    <div className='noomWidth'>
+                        <span>名称</span>
+                        <span>创建时间</span>
+                    </div>
+                    <span className='option'>操作</span>
                 </div>
                 <ListView
                     ref={el => this.lv = el}
                     dataSource={this.state.dataSource}    //数据类型是 ListViewDataSource
-                    renderHeader={() => (
-                        <div className='tableTitle my_flex'>
-                            <div className='noomWidth'>
-                                <span>名称</span>
-                                <span>创建时间</span>
-                            </div>
-                            <span className='option'>操作</span>
-                        </div>)}
                     renderFooter={() => (
                         <div style={{paddingTop: 5, paddingBottom: 40, textAlign: 'center'}}>
                             {this.state.isLoadingLeft ? '正在加载' : '已经全部加载完毕'}
@@ -725,7 +735,8 @@ export default class antPlate extends React.Component {
                     initialListSize={30}   //指定在组件刚挂载的时候渲染多少行数据，用这个属性来确保首屏显示合适数量的数据
                     scrollEventThrottle={20}     //控制在滚动过程中，scroll事件被调用的频率
                     style={{
-                        height: this.state.clientHeight - 64,
+                        height: this.state.clientHeight - 64 - 46,
+                        display: this.state.dataNone ? '' : 'none'
                     }}
                 />
             </div>
