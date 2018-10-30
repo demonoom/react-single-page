@@ -296,9 +296,135 @@ export default class antPlate extends React.Component {
      * 上传
      */
     upLoadQue = () => {
-        console.log('上传')
-        Toast.info('暂未开通', 3)
+        var _this = this;
+
+        $("#upload").click();
+        //取消加绑定change事件解决change事件无法控制
+        $("#upload").off("change");
+        var fileArr;
+        $("#upload").change(function () {
+            fileArr = this.files
+            var formData = new FormData();
+            for (var i = 0; i < this.files.length; i++) {
+                formData.append("file" + 0, this.files[i]);
+                formData.append("name" + 0, this.files[i].name);
+            }
+
+            $.ajax({
+                type: "POST",
+                url: "https://jiaoxue.maaee.com:8890/Excoord_Upload_Server/file/upload",
+                enctype: 'multipart/form-data',
+                data: formData,
+                // 告诉jQuery不要去处理发送的数据
+                processData: false,
+                // 告诉jQuery不要去设置Content-Type请求头
+                contentType: false,
+                xhr: function () {        //这是关键  获取原生的xhr对象  做以前做的所有事情
+                    var xhr = jQuery.ajaxSettings.xhr();
+                    xhr.upload.onload = function () {
+                        cloudTable.setState({progressState: 'none'});
+                    }
+                    xhr.upload.onprogress = function (ev) {
+                        if (ev.lengthComputable) {
+                            var percent = 100 * ev.loaded / ev.total;
+                            cloudTable.setState({uploadPercent: Math.round(percent), progressState: 'block'});
+                        }
+                    }
+                    return xhr;
+                },
+                success: function (responseStr) {
+                    var arr = responseStr.split(',');
+                    arr.forEach(function (v, i) {
+                        _this.createCloudFile(v, fileArr[i]);
+                    });
+                },
+                error: function (responseStr) {
+
+                }
+            });
+
+            return
+
+            if (this.files[0]) {
+                var formData = new FormData();
+                formData.append("file" + 0, this.files[0]);
+                formData.append("name" + 0, this.files[0].name);
+                $.ajax({
+                    type: "POST",
+                    url: "https://jiaoxue.maaee.com:8890/Excoord_Upload_Server/file/upload",
+                    enctype: 'multipart/form-data',
+                    data: formData,
+                    // 告诉jQuery不要去处理发送的数据
+                    processData: false,
+                    // 告诉jQuery不要去设置Content-Type请求头
+                    contentType: false,
+                    xhr: function () {        //这是关键  获取原生的xhr对象  做以前做的所有事情
+                        var xhr = jQuery.ajaxSettings.xhr();
+                        xhr.upload.onload = function () {
+                            // console.log('上传完成隐藏进度条');
+                            $('.progressText').text('上传完成')
+                            // setTimeout(function(){
+                            $('#progress')[0].style.display = 'none';
+                            $('.progress-bar')[0].style.width = '0%';
+                            $('.progressText').text('进度: 0%');
+                            // },500);
+                        };
+                        xhr.upload.onprogress = function (ev) {
+                            if ($('#progress')[0].style.display == 'none') {
+                                $('#progress')[0].style.display = 'block';
+                            } else {
+                                // console.log(((ev.loaded / ev.total) * 100).toFixed(0) + '%', 'ev');
+                                //显示进度条
+                                $('.progress-bar')[0].style.width = ((ev.loaded / ev.total) * 100).toFixed(0) + '%';
+                                $('.progressText').text('进度: ' + ((ev.loaded / ev.total) * 100).toFixed(0) + '%')
+                            }
+                        };
+                        return xhr;
+                    },
+                    success: function (res) {
+                        debugger
+                        //返回在线图片地址
+                        var type = res.substring(res.length - 3, res.length);
+
+                    }
+                });
+            }
+        })
     };
+
+    /**
+     * 向指定文件夹上传文件
+     */
+    createCloudFile = (fileUrl, fileObj) => {
+        var _this = this;
+        this.state.defaultPageNo = 1;
+
+        var param = {
+            "method": 'createCloudFile',
+            "operateUserId": JSON.parse(localStorage.getItem('loginUserTLibrary')).ident,
+            "parentCloudFileId": this.state.parentCloudFileId,
+            "name": fileObj.name,
+            "path": fileUrl,
+            "length": fileObj.size
+        };
+        console.log(param);
+
+        WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
+            onResponse: function (result) {
+                if (result.msg == '调用成功' || result.success == true) {
+                    // 刷新
+                    if (_this.state.parentCloudFileId == -1) {
+                        _this.getUserRootCloudSubjects(true)
+                    } else {
+                        _this.listCloudSubject(_this.state.parentCloudFileId, true)
+                    }
+                }
+            },
+            onError: function (error) {
+                // message.error(error);
+            }
+        });
+    }
 
     /**
      * 删除文件,文件夹
@@ -563,6 +689,7 @@ export default class antPlate extends React.Component {
                         <span className="ant_btn_list" onClick={this.upLoadQue}><img className="ant_btn_img"
                                                                                      src={require('../imgs/icon_ant_uploading.png')}
                                                                                      alt=""/><span>上传</span></span>
+                        <input style={{display: 'none'}} type="file" id="upload" multiple="multiple"/>
                     </div>
 
                 </div>
