@@ -434,6 +434,7 @@ export default class antPlate extends React.Component {
             return
         } else if (this.state.parentId === 0) {
             this.getUserRootCloudSubjects(true)
+            this.setState({parentId: -1})
         } else {
             this.listCloudSubject(this.state.parentId, true)
         }
@@ -443,6 +444,8 @@ export default class antPlate extends React.Component {
 
         var _this = this;
 
+        var parentId = this.state.parentId
+
         const row = (rowData, sectionID, rowID) => {
 
             var headDiv;
@@ -451,10 +454,46 @@ export default class antPlate extends React.Component {
             var id = rowData.id;
 
             if (rowData.fileType == 0) {
+
+                var fileType = rowData.suffix;
+                var fileTypeLog;
+                switch (fileType) {
+                    case "png":
+                        fileTypeLog = <img className="filePic" src={require('../imgs/subject.png')} alt=""/>;
+                        break;
+                    case "jpg":
+                        fileTypeLog = <img className="filePic" src={require('../imgs/subject.png')} alt=""/>;
+                        break;
+                    case "mp3":
+                        fileTypeLog = <img className="filePic" src={require('../imgs/subject.png')} alt=""/>;
+                        break;
+                    case "pdf":
+                        fileTypeLog = <img className="filePic" src={require('../imgs/subject.png')} alt=""/>;
+                        break;
+                    case "ppt":
+                    case "pptx":
+                        fileTypeLog = <img className="filePic" src={require('../imgs/subject.png')} alt=""/>;
+                        break;
+                    case "doc":
+                    case "docx":
+                        fileTypeLog = <img className="filePic" src={require('../imgs/subject.png')} alt=""/>;
+                        break;
+                    case "xls":
+                    case "xlsx":
+                        fileTypeLog = <img className="filePic" src={require('../imgs/subject.png')} alt=""/>;
+                        break;
+                    case "wps":
+                        fileTypeLog = <img className="filePic" src={require('../imgs/subject.png')} alt=""/>;
+                        break;
+                    default:
+                        fileTypeLog = <img className="filePic" src={require('../imgs/subject.png')} alt=""/>;
+                        break;
+                }
+
                 //文件
                 headDiv = <div className="my_flex flex_align_center noomWidth"
                                onClick={_this.fileClicked.bind(this, rowData)}>
-                    <img className="filePic" src={require('../imgs/subject.png')} alt=""/>
+                    {fileTypeLog}
                     <div className="lineheight ant_list_subject2">
                         <div className="ant_list_title">{rowData.name}</div>
                         <div className="ant_list_time">
@@ -512,7 +551,10 @@ export default class antPlate extends React.Component {
             <div id="antPlate" className={this.state.phoneType == '0' ? 'Android_wrap' : ''}
                  style={{height: this.state.clientHeight}}>
                 <div className="ant_title">
-                    <span className="ant_btn_list icon_back" onClick={this.returnParentAtMoveModal}><Icon type='left'/></span>
+                    <span style={{display: parentId === -1 ? '' : 'none'}} className="ant_btn_list icon_back"
+                    >我的资源</span>
+                    <span style={{display: parentId === -1 ? 'none' : ''}} className="ant_btn_list icon_back"
+                          onClick={this.returnParentAtMoveModal}><Icon type='left'/></span>
                     <div className='btns'>
                          <span className="ant_btn_list" onClick={this.creatNewFile}><img className="ant_btn_img"
                                                                                          src={require('../imgs/icon_ant_new.png')}
