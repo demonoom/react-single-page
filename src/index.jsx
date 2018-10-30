@@ -929,9 +929,9 @@ class Index extends React.Component {
             <div className="body">
                 {/* <h1>Stages list</h1> */}
                 <ul role="nav">
-                    {/*<li><Link to="/antPlate?ident=23836&fileId=-1&title=蚁盘题目&phoneType=0"*/}
-                              {/*style={{fontSize: '24px'}}>蚁盘</Link>*/}
-                    {/*</li>*/}
+                    <li><Link to="/antPlate?ident=23836&fileId=-1&title=蚁盘题目&phoneType=0"
+                              style={{fontSize: '24px'}}>蚁盘</Link>
+                    </li>
                     {/*<li><Link to="/s1">ListView + Carousel</Link></li>*/}
                     {/*<li><Link to="/s3">Form + ...</Link></li>*/}
                     {/*<li><Link to="/s4" style={{fontSize: '24px'}}>蚁巢</Link></li>*/}
