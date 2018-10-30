@@ -692,11 +692,14 @@ export default class antPlate extends React.Component {
 
                 </div>
 
-                <div style={{display: this.state.progressState}}>
-                    正在上传
-                    {this.state.uploadPercent}
+                <div className='progress' style={{display: this.state.progressState}}>
+                    <img src={require('../imgs/icon_loading.gif')}/><br/>
+                    正在上传 <span>{this.state.uploadPercent}%</span>
                 </div>
-
+                <div className='emptyCont'>
+                    <img src={require('../imgs/icon_empty.png')} alt=""/><br/>
+                    暂无数据
+                </div>
                 <ListView
                     ref={el => this.lv = el}
                     dataSource={this.state.dataSource}    //数据类型是 ListViewDataSource
