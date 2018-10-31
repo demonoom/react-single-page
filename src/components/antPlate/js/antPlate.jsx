@@ -691,13 +691,13 @@ export default class antPlate extends React.Component {
                 style={{ height: this.state.clientHeight }}>
                 <div className="ant_title">
                     <span style={{ display: parentId === -1 ? '' : 'none' }} className="ant_btn_list icon_back"
-                    >我的资源</span>
+                    >我的课件</span>
                     <span style={{ display: parentId === -1 ? 'none' : '' }} className="ant_btn_list icon_back"
                         onClick={this.returnParentAtMoveModal}><Icon type='left' /></span>
                     <div className='btns'>
                         <span className="ant_btn_list add_file" onClick={this.creatNewFile}>新建文件夹</span>
                         <input style={{ display: 'none' }} type="file" id="upload" multiple="multiple" />
-                        <span className="ant_btn_list upload_file" onClick={this.upLoadQue}>本地上传</span>
+                        <span className="ant_btn_list upload_file" onClick={this.upLoadQue}>上传文件</span>
                     </div>
                 </div>
                 <div className='progress' style={{ display: this.state.progressState }}>
