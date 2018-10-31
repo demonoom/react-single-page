@@ -19,7 +19,6 @@ export default class classListDetail extends React.Component {
         var locationSearchArray = locationSearch.split("&");
         var className = decodeURI(locationSearchArray[0].split("=")[1]);
         var classId = locationSearchArray[1].split("=")[1];
-        console.log(className)
         calm.setState({
             classId
         })
@@ -46,7 +45,6 @@ export default class classListDetail extends React.Component {
         };
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
             onResponse: function (result) {
-                console.log(result, "学生")
                 if (result.msg == '调用成功' || result.success == true) {
                     if (WebServiceUtil.isEmpty(result.response) == false) {
                         calm.setState({
@@ -71,7 +69,6 @@ export default class classListDetail extends React.Component {
         };
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
             onResponse: function (result) {
-                console.log(result, "学生")
                 if (result.msg == '调用成功' || result.success == true) {
                     if (WebServiceUtil.isEmpty(result.response) == false) {
                         calm.setState({

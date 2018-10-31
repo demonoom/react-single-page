@@ -89,7 +89,7 @@ export default class excellentStu extends React.Component {
                                                 </div>
                                                 <span className="time">
                                                 <img src={require("../imgs/clock.png")}/>
-                                                    {WebServiceUtil.formatHM(v.attendTime)}
+                                                    {WebServiceUti.formatHM(v.attendTime)}
                                             </span>
 
                                             </div>

@@ -33,7 +33,8 @@ module.exports = {
     ],
     devtool: 'false', // or 'inline-source-map'    生产模式,不再打包.map文件
     devServer: {
-        disableHostCheck: true
+        disableHostCheck: true,
+        inline: false,  // 关闭热更新
     },
 
     entry: {
@@ -43,7 +44,7 @@ module.exports = {
 
     output: {
         filename: '[name].js',
-        chunkFilename: '[id].chunk.js',   //匹配chunk
+        chunkFilename: '[id].chunk.js?v=0.0.1',   //匹配chunk
         path: path.join(__dirname, '/dist'), /*输出的文件路径*/
         publicPath: '/dist/'
     },
