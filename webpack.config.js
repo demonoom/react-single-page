@@ -34,7 +34,7 @@ module.exports = {
     devtool: 'false', // or 'inline-source-map'    生产模式,不再打包.map文件
     devServer: {
         disableHostCheck: true,
-        inline: false,  // 关闭热更新
+        // inline: false,  // 关闭热更新
     },
 
     entry: {
@@ -44,7 +44,7 @@ module.exports = {
 
     output: {
         filename: '[name].js',
-        chunkFilename: '[id].chunk.js?v=0.0.1',   //匹配chunk
+        chunkFilename: '[id].chunk.js?v=0.0.6',   //匹配chunk
         path: path.join(__dirname, '/dist'), /*输出的文件路径*/
         publicPath: '/dist/'
     },
@@ -71,7 +71,7 @@ module.exports = {
                 }
             },
             {
-                test: /\.(jpg|png|gif)$/,
+                test: /\.(jpg|png|gif|svg|ttf|eot|woff)$/,
                 loader: "url-loader?limit=8192"
             },
             // 注意：如下不使用 ExtractTextPlugin 的写法，不能单独 build 出 css 文件

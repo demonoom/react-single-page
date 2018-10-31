@@ -1,3 +1,5 @@
+@import "~slick-carousel/slick/slick.css";
+@import "~slick-carousel/slick/slick-theme.css";
 html,
 body {
   height: 100%;
@@ -273,19 +275,19 @@ video::-webkit-media-controls-fullscreen-button {
 }
 /*班牌内页返回首页*/
 .navBar {
-  font-size: .89rem;
+  font-size: 0.89rem;
   color: #2a3350;
   font-weight: bold;
   height: 2.22rem;
   line-height: 2.22rem;
-  border-bottom: .05rem #f4f4f4 solid;
-  padding: 0 .56rem;
+  border-bottom: 0.05rem #f4f4f4 solid;
+  padding: 0 0.56rem;
 }
 .navBar span {
   display: inline-block;
 }
 .navBar .icon {
-  margin: 0 .56rem;
+  margin: 0 0.56rem;
   background: url("components/classCardSystem/imgs/backArrow.png") no-repeat;
   width: 0.47rem;
   height: 0.81rem;
@@ -365,7 +367,7 @@ video::-webkit-media-controls-fullscreen-button {
 .am-modal-content .am-modal-title {
   color: #333 !important;
   line-height: 22px;
-  font-size: 17px!important;
+  font-size: 17px !important;
 }
 .am-modal-content .am-modal-input input {
   padding-left: 6px;
@@ -460,8 +462,8 @@ video::-webkit-media-controls-fullscreen-button {
   margin: 0 2.22rem;
 }
 .notify_contModal .am-modal-title {
-  color: #191c26!important;
-  font-size: 0.72rem!important;
+  color: #191c26 !important;
+  font-size: 0.72rem !important;
   font-weight: bold;
 }
 .notify_contModal .am-modal-content .am-modal-body {
@@ -601,4 +603,36 @@ video::-webkit-media-controls-fullscreen-button {
   background-size: 100% 100%;
   margin-right: 33.333%;
   float: right;
+}
+.clazzDemeanor {
+  padding: 0.83rem 0 0 0;
+  height: 4.17rem !important;
+}
+.clazzDemeanor .slick-track,
+.clazzDemeanor .slick-slider,
+.clazzDemeanor .slick-list {
+  height: 100% !important;
+}
+.clazzDemeanor .slick-track img,
+.clazzDemeanor .slick-track .videoDiv {
+  margin: 0 6px;
+  object-fit: cover;
+  -o-object-fit: cover;
+  -webkit-object-fit: cover;
+}
+.classReward {
+  margin: 0.83rem 0 0 0;
+  height: 7.78rem !important;
+}
+.classReward img,
+.classReward .videoDiv {
+  margin: 0 6px;
+  object-fit: cover;
+  -o-object-fit: cover;
+  -webkit-object-fit: cover;
+}
+.classReward .slick-track,
+.classReward .slick-slider,
+.classReward .slick-list {
+  height: 100% !important;
 }

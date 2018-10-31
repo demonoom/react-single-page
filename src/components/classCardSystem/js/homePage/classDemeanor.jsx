@@ -1,5 +1,5 @@
 import React from 'react';
-import {Carousel} from 'antd-mobile';
+import Slider from 'react-slick';
 
 var demeanor;
 
@@ -153,30 +153,26 @@ export default class classDemeanor extends React.Component {
     }
 
     render() {
-        var clazzDemeanor = <Carousel className="space-carousel class_mien1"
-                                      frameOverflow="visible"
-                                      cellSpacing={12}
-                                      slideWidth={0.25}
-                                      autoplay={true}
-                                      infinite
-                                      dots={false}
-                                      beforeChange={(from, to) => console.log(`slide from ${from} to ${to}`)}
-                                      afterChange={index => this.setState({slideIndex: index})}
-        >
+
+        const settings = {
+            infinite: true,
+            speed: 300,
+            autoplaySpeed: 4500,
+            slidesToShow: 3,
+            sliderToScroll: 30,
+            autoplay: true,
+            arrows: false,
+            pauseOnHover: true,
+        };
+
+        var clazzDemeanor = <Slider {...settings}>
             {this.state.classDemeanorList}
-        </Carousel>;
-        var classReward = <Carousel className="space-carousel class_mien2"
-                                    frameOverflow="visible"
-                                    cellSpacing={12}
-                                    slideWidth={0.45}
-                                    autoplay={true}
-                                    infinite
-                                    dots={false}
-                                    beforeChange={(from, to) => console.log(`slide from ${from} to ${to}`)}
-                                    afterChange={index => this.setState({slideIndex: index})}
-        >
+        </Slider>;
+
+        var classReward = <Slider  {...settings}>
             {this.state.classRewardList}
-        </Carousel>;
+        </Slider>;
+
         if (WebServiceUtil.isEmpty(this.state.classDemeanorList) === true || this.state.classDemeanorList.length == 0) {
             clazzDemeanor = <div className="demeanor_list1">
                 <div className="empty_center">
@@ -185,6 +181,7 @@ export default class classDemeanor extends React.Component {
                 </div>
             </div>
         }
+
         if (WebServiceUtil.isEmpty(this.state.classRewardList) === true || this.state.classRewardList.length == 0) {
             classReward = <div className="demeanor_list2">
                 <div className="empty_center">
@@ -198,8 +195,12 @@ export default class classDemeanor extends React.Component {
             <div id="classDemeanor" className="home_card classDemeanor_height">
                 <h3 className="home_title">班级风采</h3>
                 <div className="demeanor_margin">
-                    {clazzDemeanor}
-                    {classReward}
+                    <div className='clazzDemeanor'>
+                        {clazzDemeanor}
+                    </div>
+                    <div className='classReward'>
+                        {classReward}
+                    </div>
                 </div>
             </div>
         );

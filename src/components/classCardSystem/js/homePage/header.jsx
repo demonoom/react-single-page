@@ -1,5 +1,4 @@
 import React from 'react';
-import {Toast} from 'antd-mobile';
 import '../../css/homePage/header.less'
 
 var demeanor;
