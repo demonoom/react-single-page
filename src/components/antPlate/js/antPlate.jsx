@@ -633,56 +633,62 @@ export default class antPlate extends React.Component {
                         fileTypeLog = <img className="filePic" src={require('../imgs/icon_else.png')} alt="" />;
                         break;
                 }
+                headDivItem = <ul className="my_flex ul_list_del flex_align_center">
+                    <li className="flex_1" onClick={this.reNameAntFile.bind(this, rowData)}>
+                        <img className="icon_small_del" src={require('../imgs/icon_edit01.png')} alt="" />
+                    </li>
+                    <li className="flex_1" onClick={this.showAlert.bind(this, rowData)}>
+                        <img className="icon_small_del" src={require('../imgs/icon_delete01.png')} alt="" />
+                    </li>
 
+                </ul>;
                 //文件
-                headDiv = <div className="my_flex flex_align_center noomWidth"
-                    onClick={_this.fileClicked.bind(this, rowData)}>
-                    <span className="ant_list_title">{fileTypeLog}{rowData.name}</span>
-                    <span className="ant_list_time">
+                headDiv = <div className="am-accordion-item my_flex flex_align_center">
+                    <div className="noomWidth my_flex flex_align_center"
+                         onClick={_this.fileClicked.bind(this, rowData)}>
+                        <span className="ant_list_title">{fileTypeLog}{rowData.name}</span>
+                        <span className="ant_list_time">
                         {/*<span className="margin_right_8">{rowData.creator.userName}</span>*/}
-                        <span>{time}</span>
-                    </span>
-                </div>;
-                headDivItem = <ul className="my_flex ul_list_del flex_align_center">
-                    <li className="flex_1" onClick={this.showAlert.bind(this, rowData)}>
-                        <img className="icon_small_del" src={require('../imgs/icon_delet@3x.png')} alt="" />
-                        <div>删除</div>
-                    </li>
-                    <li className="flex_1" onClick={this.reNameAntFile.bind(this, rowData)}>
-                        <img className="icon_small_del" src={require('../imgs/icon_edit@3x.png')} alt="" />
-                        <div>重命名</div>
-                    </li>
-                </ul>;
+                            <span>{time}</span>
+                        </span>
+                    </div>
+                    <div className='option'>{headDivItem}</div>
+                </div>
+
             } else {
-                //文件夹
-                headDiv = <div className="my_flex flex_align_center noomWidth"
-                    onClick={_this.fileClicked.bind(this, rowData)}>
-                    <span className="ant_list_title"><img className="filePic" src={require('../imgs/file.png')}
-                        alt="" />{rowData.name}</span>
-                    <span className="ant_list_time">
-                        {/*<span className="margin_right_8">{rowData.creator.userName}</span>*/}
-                        <span>{time}</span>
-                    </span>
-                </div>;
                 headDivItem = <ul className="my_flex ul_list_del flex_align_center">
-                    <li className="flex_1" onClick={this.showAlert.bind(this, rowData)}>
-                        <img className="icon_small_del" src={require('../imgs/icon_delet@3x.png')} alt="" />
-                        <div>删除</div>
-                    </li>
                     <li className="flex_1" onClick={this.reNameAntFile.bind(this, rowData)}>
-                        <img className="icon_small_del" src={require('../imgs/icon_edit@3x.png')} alt="" />
-                        <div>重命名</div>
+                        <img className="icon_small_del" src={require('../imgs/icon_edit01.png')} alt="" />
+                    </li>
+                    <li className="flex_1" onClick={this.showAlert.bind(this, rowData)}>
+                        <img className="icon_small_del" src={require('../imgs/icon_delete01.png')} alt="" />
                     </li>
                 </ul>;
+                //文件夹
+                headDiv = <div className="am-accordion-item my_flex flex_align_center">
+                    <div className="my_flex flex_align_center noomWidth"
+                        onClick={_this.fileClicked.bind(this, rowData)}>
+                        <span className="ant_list_title"><img className="filePic" src={require('../imgs/file.png')}
+                            alt="" />{rowData.name}</span>
+                        <span className="ant_list_time">
+                            {/*<span className="margin_right_8">{rowData.creator.userName}</span>*/}
+                            <span>{time}</span>
+                        </span>
+                    </div>
+                    <div className='option'> {headDivItem}</div>
+                </div>;
             }
             return (
-                <div className="noom-accordion">
+                <div className="noom-accordion my_flex flex_align_center">
+                    {headDiv}
+                </div>
+               /* <div className="noom-accordion">
                     <Accordion accordion className="my-accordion">
                         <Accordion.Panel header={headDiv} key={id}>
                             {headDivItem}
                         </Accordion.Panel>
                     </Accordion>
-                </div>
+                </div>*/
             )
         };
 
@@ -719,7 +725,7 @@ export default class antPlate extends React.Component {
                     ref={el => this.lv = el}
                     dataSource={this.state.dataSource}    //数据类型是 ListViewDataSource
                     renderFooter={() => (
-                        <div style={{ paddingTop: 5, paddingBottom: 40, textAlign: 'center' }}>
+                        <div style={{ paddingTop: 5, textAlign: 'center' }}>
                             {this.state.isLoadingLeft ? '正在加载' : '已经全部加载完毕'}
                         </div>)}
                     renderRow={row}   //需要的参数包括一行数据等,会返回一个可渲染的组件为这行数据渲染  返回renderable
