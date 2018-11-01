@@ -7,6 +7,7 @@ import {
     Icon
 } from 'antd-mobile';
 import '../css/antPlate.less'
+import '../../../helpers/webServiceUtil'
 
 const prompt = Modal.prompt;
 
@@ -52,6 +53,7 @@ export default class antPlate extends React.Component {
             "ident": ident,
         };
         localStorage.setItem("loginUserTLibrary", JSON.stringify(loginUser));
+        this.getUserById(ident);
         this.getUserRootCloudSubjects()
         //添加对视窗大小的监听,在屏幕转换以及键盘弹起时重设各项高度
         window.addEventListener('resize', tLibrary.onWindowResize)
@@ -69,6 +71,32 @@ export default class antPlate extends React.Component {
         setTimeout(function () {
             tLibrary.setState({ clientHeight: document.body.clientHeight });
         }, 100)
+    }
+
+    /**
+     * 文件夹内部请求接口
+     * @param fileId
+     * @param clearFlag
+     */
+    getUserById(ident) {
+        var _this = this;
+        var param = {
+            "method": 'getUserById',
+            "ident": ident,
+        };
+
+        WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
+            onResponse: function (result) {
+                if (result.msg == '调用成功' || result.success == true) {
+                    _this.setState({
+                        users: result.response
+                    })
+                }
+            },
+            onError: function (error) {
+                // message.error(error);
+            }
+        });
     }
 
     /**
@@ -312,6 +340,12 @@ export default class antPlate extends React.Component {
      */
     upLoadQue = () => {
         var _this = this;
+        var maxFileSize = 157286400; //150M
+        var tipMessage="请勿上传超过150M的文件，谢谢!";
+        if(WebServiceUtil.AR_SCHOOL_ARRAY.indexOf(this.state.users.schoolId) != -1){
+            maxFileSize = 524288000;   //500M
+            tipMessage="请勿上传超过500M的文件，谢谢!";
+        }
         this.setState({ uploadPercent: 0 })
 
         $("#upload").click();
@@ -324,6 +358,11 @@ export default class antPlate extends React.Component {
             for (var i = 0; i < this.files.length; i++) {
                 formData.append("file" + 0, this.files[i]);
                 formData.append("name" + 0, this.files[i].name);
+                var fileSize = this.files[i].size;
+                if (fileSize >= parseInt(maxFileSize)) {
+                    Toast.fail(tipMessage, 2)
+                    return;
+                }
             }
 
             $.ajax({

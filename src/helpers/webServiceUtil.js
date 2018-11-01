@@ -322,6 +322,8 @@ WebServiceUtil.createUUID = function () {
 WebServiceUtil.SMALL_IMG = 'size=100x100';
 WebServiceUtil.MIDDLE_IMG = 'size=300x300';
 WebServiceUtil.LARGE_IMG = 'size=500x500';
+//ar上传权限 AR教材的schoolId
+WebServiceUtil.AR_SCHOOL_ARRAY = [7];
 
 
 
