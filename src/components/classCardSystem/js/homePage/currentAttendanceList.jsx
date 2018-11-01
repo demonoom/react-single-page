@@ -116,7 +116,7 @@ export default class currentAttendanceList extends React.Component {
                 }
                 var studentAvatar = studentOfAll.avatar;
                 if (studentAvatar == null || studentAvatar == undefined || studentAvatar == "") {
-                    studentAvatar = "../../img/maaee_face.png";
+                    studentAvatar = "../../imgs/maaee_face.png";
                 }
                 var studentHeaderTag = <div className="photoItem">
                     <div className={classFlag}><img src={studentAvatar}/></div>

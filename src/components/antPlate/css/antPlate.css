@@ -1,0 +1,291 @@
+#antPlate {
+  background-color: #ECEFF8;
+  font-family: "Microsoft YaHei", "Hiragino Sans GB", Helvetica, Arial;
+}
+#antPlate ul,
+#antPlate li {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+#antPlate .am-accordion .am-accordion-item .am-accordion-content .am-accordion-content-box {
+  border-bottom: 0;
+}
+#antPlate .my-accordion .pad .am-accordion-content-box {
+  padding: 10px;
+}
+#antPlate .noom-accordion {
+  box-sizing: border-box;
+  cursor: pointer;
+  height: 63px;
+  display: flex;
+  flex-flow: row nowrap;
+  position: relative;
+  align-items: center;
+  border-bottom: 1px #ebebeb solid;
+  padding-left: 0;
+  padding-right: 36px;
+}
+#antPlate .noom-accordion .am-accordion-item {
+  width: 100%;
+}
+#antPlate .noom-accordion .am-accordion-header i {
+  top: 27px;
+  right: 51px;
+}
+#antPlate .noom-accordion .filePic,
+#antPlate .noom-accordion .QuePic {
+  margin-right: 15px;
+  width: 30px;
+  height: auto;
+  vertical-align: middle;
+}
+#antPlate .noom-accordion .am-accordion {
+  border-top: none;
+}
+#antPlate .noom-accordion:last-child {
+  border-bottom: 0;
+}
+#antPlate .ant_title {
+  height: 34px;
+  line-height: 34px;
+  padding: 15px 20px 15px 30px;
+  color: #545454;
+  font-size: 14px;
+  overflow: hidden;
+  position: relative;
+}
+#antPlate .ant_title .btns {
+  float: right;
+}
+#antPlate .ant_title .am-icon-md {
+  color: #999;
+  width: 28px;
+  height: 28px;
+  margin-left: -9px;
+}
+#antPlate .ant_title .icon_back {
+  font-size: 22px;
+  color: #333;
+  font-weight: bold;
+}
+#antPlate .am-list-header {
+  padding: 0;
+}
+#antPlate .tableTitle {
+  background-color: #C4DAFF;
+  line-height: 46px;
+  color: #333;
+  font-size: 16px;
+  padding-right: 36px;
+}
+#antPlate .option {
+  width: 150px;
+}
+#antPlate .noomWidth {
+  padding-left: 30px;
+  width: calc(100% - 150px);
+  box-sizing: border-box;
+}
+#antPlate .noomWidth > span {
+  display: inline-block;
+}
+#antPlate .noomWidth > span:first-child {
+  width: 70%;
+}
+#antPlate .noomWidth > span:last-child {
+  width: 30%;
+}
+#antPlate .ant_btn_list {
+  display: inline-block;
+  line-height: 15px;
+  vertical-align: middle;
+  cursor: pointer;
+}
+#antPlate .ant_btn_list.add_file {
+  font-size: 14px;
+  padding: 0 9px 0 29px;
+  height: 34px;
+  line-height: 34px;
+  color: #fff;
+  background: #4285F4 url("../imgs/icon_add_course1.png") no-repeat 11px 11px;
+  background-size: 12px;
+  -webkit-border-radius: 17px;
+  -moz-border-radius: 17px;
+  border-radius: 4px;
+  margin-right: 20px;
+}
+#antPlate .ant_btn_list.upload_file {
+  font-size: 14px;
+  padding: 0 16px 0 36px;
+  height: 34px;
+  line-height: 34px;
+  color: #fff;
+  background: #4285F4 url("../imgs/icon_upload.png") no-repeat 16px 10px;
+  background-size: 12px;
+  -webkit-border-radius: 17px;
+  -moz-border-radius: 17px;
+  border-radius: 4px;
+}
+#antPlate .ant_btn_line {
+  margin: 0 15px;
+  position: relative;
+  width: 1px;
+}
+#antPlate .ant_btn_line:after {
+  content: "";
+  pointer-events: none;
+  box-sizing: border-box;
+  border: none;
+  width: 1px;
+  background: #c9c9c9;
+  -webkit-transform: scaleX(0.5);
+  /* for Chrome || Safari */
+  -moz-transform: scaleX(0.5);
+  /* for Firefox */
+  -ms-transform: scaleX(0.5);
+  /* for IE */
+  -o-transform: scaleX(0.5);
+  /* for Opera */
+  transform: scaleX(0.5);
+  transform-origin: 0 0;
+  -webkit-transform-origin: 0 0;
+  position: absolute;
+  height: 100%;
+  top: 0;
+  left: 0;
+}
+#antPlate .ant_btn_img {
+  width: 18px;
+  float: left;
+  margin-right: 4px;
+}
+#antPlate .title_wrap {
+  display: flex;
+  margin-bottom: 4px;
+}
+#antPlate .lineheight {
+  line-height: 1;
+}
+#antPlate .ant_list_title {
+  font-size: 15px;
+  color: #333;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+}
+#antPlate .ant_list_time {
+  color: #888;
+  font-size: 14px;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+}
+#antPlate .flex_align_center {
+  align-items: center;
+}
+#antPlate .margin_right_8 {
+  margin-right: 8px;
+}
+#antPlate .ul_list_del {
+  padding: 10px 0;
+  text-align: left;
+  color: #666;
+  font-size: 0;
+  width: 70px;
+}
+#antPlate .ul_list_del li {
+  padding: 5px 0;
+}
+#antPlate .icon_small_del {
+  height: 16px;
+}
+#antPlate .am-accordion .am-accordion-item .am-accordion-header::after,
+#antPlate .am-accordion .am-accordion-item .am-accordion-content .am-accordion-content-box::after {
+  height: 0;
+}
+#antPlate .ant_list_subject {
+  max-height: 38px;
+  overflow: hidden;
+  width: 65%;
+  position: absolute;
+  left: 95px;
+  top: 16px;
+  display: inline-block;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+#antPlate .ant_list_subject2 {
+  max-height: 58px;
+  overflow: hidden;
+  width: 65%;
+  position: absolute;
+  left: 95px;
+  top: 16px;
+  display: inline-block;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  padding-left: 10px;
+}
+#antPlate .ant_list_subject_no {
+  margin-bottom: 0;
+}
+#antPlate .ant_list_subject_no > div > div {
+  width: 100%;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  padding: 0 !important;
+}
+#antPlate .progress {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 100px;
+  text-align: center;
+  -webkit-transform: translate(-50%, -50%);
+  -moz-transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+  -o-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+  color: #fff;
+  font-size: 14px;
+  z-index: 20;
+  background: rgba(0, 0, 0, 0.6);
+  padding: 15px 15px;
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  border-radius: 5px;
+}
+#antPlate .progress img {
+  width: 35px;
+  margin-bottom: 10px;
+}
+#antPlate .progress span {
+  padding-left: 3px;
+}
+#antPlate .emptyCont {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  -webkit-transform: translate(-50%, -50%);
+  -moz-transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+  -o-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+  z-index: 10;
+  text-align: center;
+  color: #666;
+  width: 210px;
+  font-size: 14px;
+}
+#antPlate .emptyCont img {
+  width: 100%;
+  margin-bottom: 5px;
+}
+.termite_popover {
+  width: 200px;
+  top: 52px !important;
+}
+.termite_popover .am-popover-item-container {
+  justify-content: center;
+}
