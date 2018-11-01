@@ -14,7 +14,7 @@
 #antPlate .my-accordion .pad .am-accordion-content-box {
   padding: 10px;
 }
-#antPlate .noom-accordion .am-accordion-header {
+#antPlate .noom-accordion {
   box-sizing: border-box;
   cursor: pointer;
   height: 63px;
@@ -25,6 +25,9 @@
   border-bottom: 1px #ebebeb solid;
   padding-left: 0;
   padding-right: 36px;
+}
+#antPlate .noom-accordion .am-accordion-item {
+  width: 100%;
 }
 #antPlate .noom-accordion .am-accordion-header i {
   top: 27px;
@@ -40,13 +43,13 @@
 #antPlate .noom-accordion .am-accordion {
   border-top: none;
 }
-#antPlate .noom-accordion:last-child .am-accordion-header {
+#antPlate .noom-accordion:last-child {
   border-bottom: 0;
 }
 #antPlate .ant_title {
   height: 34px;
   line-height: 34px;
-  padding: 15px 36px 15px 40px;
+  padding: 15px 20px 15px 30px;
   color: #545454;
   font-size: 14px;
   overflow: hidden;
@@ -76,23 +79,22 @@
   font-size: 16px;
   padding-right: 36px;
 }
-#antPlate .tableTitle .option {
-  width: 50px;
-  text-align: center;
+#antPlate .option {
+  width: 150px;
 }
 #antPlate .noomWidth {
-  padding-left: 40px;
-  width: calc(100% - 50px);
+  padding-left: 30px;
+  width: calc(100% - 150px);
   box-sizing: border-box;
 }
 #antPlate .noomWidth > span {
   display: inline-block;
 }
 #antPlate .noomWidth > span:first-child {
-  width: 60%;
+  width: 70%;
 }
 #antPlate .noomWidth > span:last-child {
-  width: 40%;
+  width: 30%;
 }
 #antPlate .ant_btn_list {
   display: inline-block;
@@ -106,8 +108,8 @@
   height: 34px;
   line-height: 34px;
   color: #fff;
-  background: #4285F4 url("../imgs/icon_add_course1.png") no-repeat 11px 10px;
-  background-size: 14px;
+  background: #4285F4 url("../imgs/icon_add_course1.png") no-repeat 11px 11px;
+  background-size: 12px;
   -webkit-border-radius: 17px;
   -moz-border-radius: 17px;
   border-radius: 4px;
@@ -119,7 +121,7 @@
   height: 34px;
   line-height: 34px;
   color: #fff;
-  background: #4285F4 url("../imgs/icon_upload.png") no-repeat 15px 10px;
+  background: #4285F4 url("../imgs/icon_upload.png") no-repeat 16px 10px;
   background-size: 12px;
   -webkit-border-radius: 17px;
   -moz-border-radius: 17px;
@@ -186,15 +188,17 @@
   margin-right: 8px;
 }
 #antPlate .ul_list_del {
-  background: #f8f8f8;
   padding: 10px 0;
-  text-align: center;
+  text-align: left;
   color: #666;
-  font-size: 12px;
+  font-size: 0;
+  width: 70px;
+}
+#antPlate .ul_list_del li {
+  padding: 5px 0;
 }
 #antPlate .icon_small_del {
-  height: 15px;
-  margin-bottom: 4px;
+  height: 16px;
 }
 #antPlate .am-accordion .am-accordion-item .am-accordion-header::after,
 #antPlate .am-accordion .am-accordion-item .am-accordion-content .am-accordion-content-box::after {

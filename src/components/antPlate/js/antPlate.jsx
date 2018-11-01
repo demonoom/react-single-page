@@ -7,6 +7,7 @@ import {
     Icon
 } from 'antd-mobile';
 import '../css/antPlate.less'
+import '../../../helpers/webServiceUtil'
 
 const prompt = Modal.prompt;
 
@@ -52,6 +53,7 @@ export default class antPlate extends React.Component {
             "ident": ident,
         };
         localStorage.setItem("loginUserTLibrary", JSON.stringify(loginUser));
+        this.getUserById(ident);
         this.getUserRootCloudSubjects()
         //添加对视窗大小的监听,在屏幕转换以及键盘弹起时重设各项高度
         window.addEventListener('resize', tLibrary.onWindowResize)
@@ -69,6 +71,32 @@ export default class antPlate extends React.Component {
         setTimeout(function () {
             tLibrary.setState({ clientHeight: document.body.clientHeight });
         }, 100)
+    }
+
+    /**
+     * 文件夹内部请求接口
+     * @param fileId
+     * @param clearFlag
+     */
+    getUserById(ident) {
+        var _this = this;
+        var param = {
+            "method": 'getUserById',
+            "ident": ident,
+        };
+
+        WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
+            onResponse: function (result) {
+                if (result.msg == '调用成功' || result.success == true) {
+                    _this.setState({
+                        users: result.response
+                    })
+                }
+            },
+            onError: function (error) {
+                // message.error(error);
+            }
+        });
     }
 
     /**
@@ -312,6 +340,12 @@ export default class antPlate extends React.Component {
      */
     upLoadQue = () => {
         var _this = this;
+        var maxFileSize = 157286400; //150M
+        var tipMessage="请勿上传超过150M的文件，谢谢!";
+        if(WebServiceUtil.AR_SCHOOL_ARRAY.indexOf(this.state.users.schoolId) != -1){
+            maxFileSize = 524288000;   //500M
+            tipMessage="请勿上传超过500M的文件，谢谢!";
+        }
         this.setState({ uploadPercent: 0 })
 
         $("#upload").click();
@@ -324,6 +358,11 @@ export default class antPlate extends React.Component {
             for (var i = 0; i < this.files.length; i++) {
                 formData.append("file" + 0, this.files[i]);
                 formData.append("name" + 0, this.files[i].name);
+                var fileSize = this.files[i].size;
+                if (fileSize >= parseInt(maxFileSize)) {
+                    Toast.fail(tipMessage, 2)
+                    return;
+                }
             }
 
             $.ajax({
@@ -633,56 +672,62 @@ export default class antPlate extends React.Component {
                         fileTypeLog = <img className="filePic" src={require('../imgs/icon_else.png')} alt="" />;
                         break;
                 }
+                headDivItem = <ul className="my_flex ul_list_del flex_align_center">
+                    <li className="flex_1" onClick={this.reNameAntFile.bind(this, rowData)}>
+                        <img className="icon_small_del" src={require('../imgs/icon_edit01.png')} alt="" />
+                    </li>
+                    <li className="flex_1" onClick={this.showAlert.bind(this, rowData)}>
+                        <img className="icon_small_del" src={require('../imgs/icon_delete01.png')} alt="" />
+                    </li>
 
+                </ul>;
                 //文件
-                headDiv = <div className="my_flex flex_align_center noomWidth"
-                    onClick={_this.fileClicked.bind(this, rowData)}>
-                    <span className="ant_list_title">{fileTypeLog}{rowData.name}</span>
-                    <span className="ant_list_time">
+                headDiv = <div className="am-accordion-item my_flex flex_align_center">
+                    <div className="noomWidth my_flex flex_align_center"
+                         onClick={_this.fileClicked.bind(this, rowData)}>
+                        <span className="ant_list_title">{fileTypeLog}{rowData.name}</span>
+                        <span className="ant_list_time">
                         {/*<span className="margin_right_8">{rowData.creator.userName}</span>*/}
-                        <span>{time}</span>
-                    </span>
-                </div>;
-                headDivItem = <ul className="my_flex ul_list_del flex_align_center">
-                    <li className="flex_1" onClick={this.showAlert.bind(this, rowData)}>
-                        <img className="icon_small_del" src={require('../imgs/icon_delet@3x.png')} alt="" />
-                        <div>删除</div>
-                    </li>
-                    <li className="flex_1" onClick={this.reNameAntFile.bind(this, rowData)}>
-                        <img className="icon_small_del" src={require('../imgs/icon_edit@3x.png')} alt="" />
-                        <div>重命名</div>
-                    </li>
-                </ul>;
+                            <span>{time}</span>
+                        </span>
+                    </div>
+                    <div className='option'>{headDivItem}</div>
+                </div>
+
             } else {
-                //文件夹
-                headDiv = <div className="my_flex flex_align_center noomWidth"
-                    onClick={_this.fileClicked.bind(this, rowData)}>
-                    <span className="ant_list_title"><img className="filePic" src={require('../imgs/file.png')}
-                        alt="" />{rowData.name}</span>
-                    <span className="ant_list_time">
-                        {/*<span className="margin_right_8">{rowData.creator.userName}</span>*/}
-                        <span>{time}</span>
-                    </span>
-                </div>;
                 headDivItem = <ul className="my_flex ul_list_del flex_align_center">
-                    <li className="flex_1" onClick={this.showAlert.bind(this, rowData)}>
-                        <img className="icon_small_del" src={require('../imgs/icon_delet@3x.png')} alt="" />
-                        <div>删除</div>
-                    </li>
                     <li className="flex_1" onClick={this.reNameAntFile.bind(this, rowData)}>
-                        <img className="icon_small_del" src={require('../imgs/icon_edit@3x.png')} alt="" />
-                        <div>重命名</div>
+                        <img className="icon_small_del" src={require('../imgs/icon_edit01.png')} alt="" />
+                    </li>
+                    <li className="flex_1" onClick={this.showAlert.bind(this, rowData)}>
+                        <img className="icon_small_del" src={require('../imgs/icon_delete01.png')} alt="" />
                     </li>
                 </ul>;
+                //文件夹
+                headDiv = <div className="am-accordion-item my_flex flex_align_center">
+                    <div className="my_flex flex_align_center noomWidth"
+                        onClick={_this.fileClicked.bind(this, rowData)}>
+                        <span className="ant_list_title"><img className="filePic" src={require('../imgs/file.png')}
+                            alt="" />{rowData.name}</span>
+                        <span className="ant_list_time">
+                            {/*<span className="margin_right_8">{rowData.creator.userName}</span>*/}
+                            <span>{time}</span>
+                        </span>
+                    </div>
+                    <div className='option'> {headDivItem}</div>
+                </div>;
             }
             return (
-                <div className="noom-accordion">
+                <div className="noom-accordion my_flex flex_align_center">
+                    {headDiv}
+                </div>
+               /* <div className="noom-accordion">
                     <Accordion accordion className="my-accordion">
                         <Accordion.Panel header={headDiv} key={id}>
                             {headDivItem}
                         </Accordion.Panel>
                     </Accordion>
-                </div>
+                </div>*/
             )
         };
 
@@ -691,13 +736,13 @@ export default class antPlate extends React.Component {
                 style={{ height: this.state.clientHeight }}>
                 <div className="ant_title">
                     <span style={{ display: parentId === -1 ? '' : 'none' }} className="ant_btn_list icon_back"
-                    >我的资源</span>
+                    >我的课件</span>
                     <span style={{ display: parentId === -1 ? 'none' : '' }} className="ant_btn_list icon_back"
                         onClick={this.returnParentAtMoveModal}><Icon type='left' /></span>
                     <div className='btns'>
                         <span className="ant_btn_list add_file" onClick={this.creatNewFile}>新建文件夹</span>
                         <input style={{ display: 'none' }} type="file" id="upload" multiple="multiple" />
-                        <span className="ant_btn_list upload_file" onClick={this.upLoadQue}>本地上传</span>
+                        <span className="ant_btn_list upload_file" onClick={this.upLoadQue}>上传文件</span>
                     </div>
                 </div>
                 <div className='progress' style={{ display: this.state.progressState }}>
@@ -719,7 +764,7 @@ export default class antPlate extends React.Component {
                     ref={el => this.lv = el}
                     dataSource={this.state.dataSource}    //数据类型是 ListViewDataSource
                     renderFooter={() => (
-                        <div style={{ paddingTop: 5, paddingBottom: 40, textAlign: 'center' }}>
+                        <div style={{ paddingTop: 5, textAlign: 'center' }}>
                             {this.state.isLoadingLeft ? '正在加载' : '已经全部加载完毕'}
                         </div>)}
                     renderRow={row}   //需要的参数包括一行数据等,会返回一个可渲染的组件为这行数据渲染  返回renderable
