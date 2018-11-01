@@ -920,6 +920,13 @@ const antPlate = (location, cb) => {
     )
 }
 
+const KnowledgeStatic = (location, cb) => {
+    require.ensure([], require => {
+            cb(null, require("./components/KnowledgeStatic/js/KnowledgeStatic").default)
+        }
+    )
+}
+
 import './index.less';
 
 class Index extends React.Component {
@@ -1142,10 +1149,10 @@ class Index extends React.Component {
                         <Link
                             to="/courseRecListst" style={{fontSize: '24px'}}>课程推荐</Link>
                     </li>*/}
-                    {/* <li>
+                     <li>
                         <Link
-                            to="/studentList?clazzId=819" style={{fontSize: '24px'}}>学生列表</Link>
-                    </li> */}
+                            to="/KnowledgeStatic?userId=819" style={{fontSize: '24px'}}>统计</Link>
+                    </li>
 
                     {/* <li>
                         <Link
@@ -1322,6 +1329,7 @@ class Index extends React.Component {
                             <Route path="ringIntroduce" getComponent={ringIntroduce}/>
                             <Route path="chatLogin" getComponent={chatLogin}/>
                             <Route path="antPlate" getComponent={antPlate}/>
+                            <Route path="KnowledgeStatic" getComponent={KnowledgeStatic}/>
                         </Route>
                     </Router>
                     ,
