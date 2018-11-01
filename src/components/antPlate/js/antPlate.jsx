@@ -294,7 +294,7 @@ export default class antPlate extends React.Component {
             var str = '您确定要删除该题目吗?';
         }
         var _this = this;
-        const alertInstance = alert('删除', str, [
+        const alertInstance = alert(str, '', [
             { text: '取消', onPress: () => console.log('cancel'), style: 'default' },
             { text: '确定', onPress: () => _this.removeFile(data) },
         ], phone);
