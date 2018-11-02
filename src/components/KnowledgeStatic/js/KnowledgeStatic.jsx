@@ -14,7 +14,8 @@ export default class KnowledgeStatic extends React.Component {
             clientHeight: document.body.clientHeight,
             animating: false,
             defaultValue: ['第三项'],
-            nameArray:[]
+            nameArray:[],
+            isHidden:false,
         }
     }
 
@@ -97,7 +98,7 @@ export default class KnowledgeStatic extends React.Component {
                                 }
                             } },
                         ])
-                    }else{
+                    }else if(res.length > 0){
                         this.setState({
                             userType: res[0].colUtype,
                             userId: res[0].colUid,
@@ -106,6 +107,10 @@ export default class KnowledgeStatic extends React.Component {
                             if(callback){
                                 callback();
                             }
+                        })
+                    }else{
+                        this.setState({
+                            isHidden: true,
                         })
                     }
                 } else {
@@ -330,45 +335,51 @@ export default class KnowledgeStatic extends React.Component {
                 height: this.state.clientHeight + 'px',
                 overflow: 'auto',
             }}>
-                <Picker data={this.state.nameArray} cols={1} value={this.state.defaultValue} onOk={this.onChangeColor} className="forss">
-                    <List.Item arrow="horizontal">学生:</List.Item>
-                </Picker>
-                <DatePicker
-                    mode="date"
-                    // title="Select Date"
-                    extra={this.state.startDate}
-                    value={this.state.startDate}
-                    // onChange={date => this.setState({ date })}
-                    onOk={this.dateChange.bind(this)}
+                <div style={this.state.isHidden?{display:'block'}:{display:'none'}}>
+                    该微信号未绑定
+                </div>
+                <div style={this.state.isHidden?{display:'none'}:{display:'block'}}>
+                    <Picker data={this.state.nameArray} cols={1} value={this.state.defaultValue} onOk={this.onChangeColor} className="forss">
+                        <List.Item arrow="horizontal">学生:</List.Item>
+                    </Picker>
+                    <DatePicker
+                        mode="date"
+                        // title="Select Date"
+                        extra={this.state.startDate}
+                        value={this.state.startDate}
+                        // onChange={date => this.setState({ date })}
+                        onOk={this.dateChange.bind(this)}
 
-                >
-                    <List.Item arrow="horizontal" className="data_list">开始日期</List.Item>
-                </DatePicker>
-                <WhiteSpace size="lg"/>
-                <DatePicker
-                    mode="date"
-                    // title="Select Date"
-                    extra={this.state.endDate}
-                    value={this.state.endDate}
-                    // onChange={date => this.setState({ date })}
-                    onOk={this.endDateChange.bind(this)}
+                    >
+                        <List.Item arrow="horizontal" className="data_list">开始日期</List.Item>
+                    </DatePicker>
+                    <WhiteSpace size="lg"/>
+                    <DatePicker
+                        mode="date"
+                        // title="Select Date"
+                        extra={this.state.endDate}
+                        value={this.state.endDate}
+                        // onChange={date => this.setState({ date })}
+                        onOk={this.endDateChange.bind(this)}
 
-                >
-                    <List.Item arrow="horizontal" className="data_list">结束日期</List.Item>
-                </DatePicker>
-                <WhiteSpace size="lg"/>
+                    >
+                        <List.Item arrow="horizontal" className="data_list">结束日期</List.Item>
+                    </DatePicker>
+                    <WhiteSpace size="lg"/>
 
 
 
-                <div className="dom_cont">
-                    {this.state.domArray}
+                    <div className="dom_cont">
+                        {this.state.domArray}
+                    </div>
+
+                    <ActivityIndicator
+                        toast
+                        text="Loading..."
+                        animating={this.state.animating}
+                    />
                 </div>
 
-                <ActivityIndicator
-                    toast
-                    text="Loading..."
-                    animating={this.state.animating}
-                />
             </div>
         );
     }
