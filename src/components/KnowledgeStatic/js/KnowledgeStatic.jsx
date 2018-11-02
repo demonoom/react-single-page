@@ -16,6 +16,7 @@ export default class KnowledgeStatic extends React.Component {
             defaultValue: ['第三项'],
             nameArray:[],
             isHidden:false,
+            type:'学生',
         }
     }
 
@@ -38,11 +39,7 @@ export default class KnowledgeStatic extends React.Component {
                 console.log(this.state.userType,'userId')
                 console.log(this.state.userName,'userId')
                 this.setState({
-                    nameArray: [{
-                        label:this.state.userName,
-                        value:this.state.userId
-                    }],
-                    defaultValue:[this.state.userId]
+
                 },()=>{
                     console.log(this.state.nameArray,'nameArray')
                     console.log(this.state.defaultValue,'defaultValue')
@@ -71,9 +68,10 @@ export default class KnowledgeStatic extends React.Component {
                                 for(var k in res){
                                     if(res[k].colUtype == "TEAC"){
                                         this.setState({
-                                           userType: res[k].colUtype,
+                                           // userType: res[k].colUtype,
                                            userId: res[k].colUid,
-                                           userName:res[k].userName
+                                            type:'老师'
+                                           // userName:res[k].userName
                                         },()=>{
                                             if(callback){
                                                 callback();
@@ -86,9 +84,9 @@ export default class KnowledgeStatic extends React.Component {
                                 for(var k in res){
                                     if(res[k].colUtype == "PAREN"){
                                         this.setState({
-                                            userType: res[k].colUtype,
+                                            // userType: res[k].colUtype,
                                             userId: res[k].colUid,
-                                            userName:res[k].userName
+                                            // userName:res[k].userName
                                         },()=>{
                                             if(callback){
                                                 callback();
@@ -100,9 +98,9 @@ export default class KnowledgeStatic extends React.Component {
                         ])
                     }else if(res.length > 0){
                         this.setState({
-                            userType: res[0].colUtype,
+                            // userType: res[0].colUtype,
                             userId: res[0].colUid,
-                            userName:res[0].userName
+                            // userName:res[0].userName
                         },()=>{
                             if(callback){
                                 callback();
@@ -275,6 +273,21 @@ export default class KnowledgeStatic extends React.Component {
                 console.log(result,'图标数据');
                 if (result.success) {
                     this.getData(result.response);
+                    var newArray = result.users;
+                    console.log(newArray,'newArray')
+                    var newArray2=[];
+                    for(var k in newArray){
+                        newArray2.push({
+                            label:newArray[k].userName,
+                            value:newArray[k].colUid
+                        })
+                    }
+                    this.setState({
+                        nameArray: newArray2,
+                        defaultValue:[newArray2[0].value]
+                    },()=>{
+
+                    })
                 } else {
                     Toast.fail('请求出错');
                 }
@@ -339,8 +352,8 @@ export default class KnowledgeStatic extends React.Component {
                     该微信号未绑定
                 </div>
                 <div style={this.state.isHidden?{display:'none'}:{display:'block'}}>
-                    <Picker data={this.state.nameArray} cols={1} value={this.state.defaultValue} onOk={this.onChangeColor} className="forss">
-                        <List.Item arrow="horizontal">学生:</List.Item>
+                    <Picker disabled={this.state.type=='老师'?true:false} data={this.state.nameArray} cols={1} value={this.state.defaultValue} onOk={this.onChangeColor} className="forss">
+                        <List.Item arrow="horizontal">{this.state.type}:</List.Item>
                     </Picker>
                     <DatePicker
                         mode="date"
