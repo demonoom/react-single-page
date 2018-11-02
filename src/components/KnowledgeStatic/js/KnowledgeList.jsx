@@ -11,7 +11,8 @@ export default class KnowledgeList extends React.Component {
         super(props);
         this.state = {
             clientHeight: document.body.clientHeight,
-            ListData:[]
+            ListData:[],
+            text:'正在加载...'
         }
     }
 
@@ -47,6 +48,12 @@ export default class KnowledgeList extends React.Component {
                 if (result.success) {
                     this.setState({
                         ListData: result.response
+                    },()=>{
+                        if(result.response.length <= 0){
+                            this.setState({
+                                text:'暂无数据'
+                            })
+                        }
                     })
                     console.log(this.state.ListData);
                 } else {
@@ -72,21 +79,21 @@ export default class KnowledgeList extends React.Component {
                 overflow: 'auto',
             }}>
                 <div className="list_box">
-                    <div className="list_item">
-                        <span>课堂</span>
-                        <span>知识点</span>
-                        <span>正确率</span>
-                    </div>
                     {
                         this.state.ListData.map((value,index)=>{
                             return <div onClick={this.onItemClick.bind(this,value.tags.id)} className="list_item">
-                                <span>{value.course?value.course.name:'无数据'}</span>
-                                <span>{value.tags.tagTitle}</span>
-                                <span>{(value.rightCount/value.totalCount)*100+"%"}</span>
+                                <div>{value.tags.tagTitle}</div>
+                                <div>{value.course?value.course.name:'无'}</div>
+                                <div>{value.totalCount+"人提交"}</div>
+                                <div>{value.rightCount+"人回答正确"}</div>
+                                <div>{value.totalCount - value.rightCount+"回答错误"}</div>
+                                <div><span>正确率:</span>{(value.rightCount/value.totalCount)*100+"%"}</div>
                             </div>
                         })
                     }
+
                 </div>
+                <div style={this.state.ListData.length <=0 ?{display:'block'}:{display:'none'}}>{this.state.text}</div>
 
             </div>
         );
