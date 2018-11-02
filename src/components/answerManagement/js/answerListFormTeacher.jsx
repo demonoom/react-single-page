@@ -154,8 +154,6 @@ export default class answerListFormTeacher extends React.Component {
         } else {
             Toast.info('学生id不存在!');
         }
-
-
     }
 
     getData(data) {   //设置数据结构
