@@ -12,7 +12,7 @@ export default class KnowledgeList extends React.Component {
         this.state = {
             clientHeight: document.body.clientHeight,
             ListData:[],
-            text:'正在加载...'
+            text:'暂无数据'
         }
     }
 
@@ -76,7 +76,6 @@ export default class KnowledgeList extends React.Component {
         return (
             <div id="KnowledgeList" style={{
                 height: this.state.clientHeight + 'px',
-                overflow: 'auto',
             }}>
                 <div className="list_box">
                     {
