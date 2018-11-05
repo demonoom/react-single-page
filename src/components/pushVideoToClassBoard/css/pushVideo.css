@@ -1,3 +1,6 @@
+#pushVideo .am-list-view-scrollview-content {
+  width: 100%;
+}
 #pushVideo .emptyCont {
   position: absolute;
   top: 50%;
