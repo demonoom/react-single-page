@@ -968,6 +968,13 @@ const addClassTimingItem = (location, cb) => {
     )
 }
 
+const updateClassTimingItem = (location, cb) => {
+    require.ensure([], require => {
+            cb(null, require("./components/classCardTiming/js/updateClassTimingItem").default)
+        }
+    )
+}
+
 import './index.less';
 
 class Index extends React.Component {
@@ -982,6 +989,11 @@ class Index extends React.Component {
                         <Link
                             to="/KnowledgeStatic?unionid=o-w611I9nKqTHcT3P34srzwIrf6U"
                             style={{fontSize: '24px'}}>统计</Link>
+                    </li>
+                    <li>
+                        <Link
+                            to="/wxLogin?local=KnowledgeStatic"
+                            style={{fontSize: '24px'}}>统计(微信)</Link>
                     </li>
                     <li>
                         <Link
@@ -1391,6 +1403,7 @@ class Index extends React.Component {
                             <Route path="classTimingList" getComponent={ClassTimingList}/>
                             <Route path="ClassTimingItem" getComponent={ClassTimingItem}/>
                             <Route path="addClassTimingItem" getComponent={addClassTimingItem}/>
+                            <Route path="updateClassTimingItem" getComponent={updateClassTimingItem}/>
                         </Route>
                     </Router>
                     ,

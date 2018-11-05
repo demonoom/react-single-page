@@ -5,11 +5,11 @@ import {
     Checkbox,
     Toast
 } from 'antd-mobile';
-import '../css/addClassTimingItem.less'
+import '../css/updateClassTimingItem.less'
 
 var classBinding;
 
-export default class addClassTimingItem extends React.Component {
+export default class updateClassTimingItem extends React.Component {
 
     constructor(props) {
         super(props);
@@ -35,26 +35,32 @@ export default class addClassTimingItem extends React.Component {
         var locationHref = window.location.href;
         var locationSearch = locationHref.substr(locationHref.indexOf("?") + 1);
         var pid = locationSearch.split("&")[0].split("=")[1];
-        this.setState({pid})
-        this.getRemainingTime(pid)
+        var tid = locationSearch.split("&")[1].split("=")[1];
+        var regular = locationSearch.split("&")[2].split("=")[1];
+        var openTime = locationSearch.split("&")[3].split("=")[1];
+        var closeTime = locationSearch.split("&")[4].split("=")[1];
+        this.setState({pid, tid, regular, openTime, closeTime}, () => {
+            this.getUpdateRemainingTime(pid, tid)
+        })
     }
 
     /**
      * 返回剩余日期
      * @param pid
      */
-    getRemainingTime = (pid) => {
+    getUpdateRemainingTime = (pid, tid) => {
         var _this = this;
         var param = {
-            "method": 'getRemainingTime',
+            "method": 'getUpdateRemainingTime',
             "pid": pid,
+            "tid": tid,
         };
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
             onResponse: function (result) {
                 if (result.msg == '调用成功' && result.success == true) {
                     _this.setState({
                         data: _this.state.data.map((v) => {
-                            v.checked = !result.response.includes(v.label)
+                            v.checked = !result.response.includes(v.label) || _this.state.regular.split(',').includes(String(v.value))
                             v.disabled = !result.response.includes(v.label)
                             return v
                         })
@@ -245,7 +251,7 @@ export default class addClassTimingItem extends React.Component {
         ];
 
         return (
-            <div id="addClassTimingItem">
+            <div id="updateClassTimingItem">
                 <div className='mainCont'>
                     <div>
                         <div className='title positionDiv'>每周重复日期<i className="redStar">*</i></div>

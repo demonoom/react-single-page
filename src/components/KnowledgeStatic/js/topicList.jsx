@@ -75,7 +75,7 @@ export default class topicList extends React.Component {
                                 <div className='gray_text'>
                                     <span>{value.totalCount+"人提交"}</span>
                                     <span>{value.rightCount+"人回答正确"}</span>
-                                    <span>{value.totalCount - value.rightCount+"回答错误"}</span>
+                                    <span>{value.totalCount - value.rightCount+"人回答错误"}</span>
                                 </div>
                             </div>
                         })

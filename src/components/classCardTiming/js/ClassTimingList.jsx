@@ -37,8 +37,10 @@ export default class ClassTimingList extends React.Component {
         var locationHref = window.location.href;
         var locationSearch = locationHref.substr(locationHref.indexOf("?") + 1);
         var uid = locationSearch.split("&")[0].split("=")[1];
-        this.setState({"uid": uid});
-        this.viewCourseTablePage(uid);
+        var sid = locationSearch.split("&")[1].split("=")[1];
+        this.setState({uid, sid}, () => {
+            this.getClazzPlanListByUid();
+        });
         //添加对视窗大小的监听,在屏幕转换以及键盘弹起时重设各项高度
         window.addEventListener('resize', classBinding.onWindowResize)
     }
@@ -58,9 +60,9 @@ export default class ClassTimingList extends React.Component {
     }
 
     /**
-     * 查看教室的所有课表
+     * 根据管理员id获取开关机计划列表
      */
-    viewCourseTablePage(uid) {
+    getClazzPlanListByUid() {
         var _this = this;
         _this.initData.splice(0);
         _this.state.dataSource = [];
@@ -69,8 +71,10 @@ export default class ClassTimingList extends React.Component {
         });
         const dataBlob = {};
         var param = {
-            "method": 'viewCourseTablePage',
-            "rid": uid,
+            "method": 'getClazzPlanListByUid',
+            "uid": _this.state.uid,
+            "sid": _this.state.sid,
+            "pageNo": -1,
         };
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
             onResponse: function (result) {
@@ -97,7 +101,7 @@ export default class ClassTimingList extends React.Component {
      * 去课表列表
      **/
     turnToClassTableDetil(rowData) {
-        var currentAttendanceListUrl = encodeURI(WebServiceUtil.mobileServiceURL + "ClassTimingItem?clazzroomId=" + 166);
+        var currentAttendanceListUrl = encodeURI(WebServiceUtil.mobileServiceURL + "ClassTimingItem?pId=" + rowData.pid);
 
         var data = {
             method: 'openNewPage',
@@ -128,17 +132,16 @@ export default class ClassTimingList extends React.Component {
     }
 
     /**
-     *　更新教室某个课表状态
-     * @param ctId   课表id
-     * @param condition 课表状态 0 = 删除, 1 =　启用, 3 = 停用
-     * @throws Exception
+     *  删除定时任务计划
+     *  delClazzPlan(String uid,String pid)
+     * @param data
      */
     delTable(data) {
         var _this = this;
         var param = {
-            "method": 'changeCourseTableStatus',
-            "condition": 0,
-            "ctId": data.id,
+            "method": 'delClazzPlan',
+            "uid": _this.state.uid,
+            "pid": data.pid,
         };
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
             onResponse: (result) => {
@@ -149,7 +152,7 @@ export default class ClassTimingList extends React.Component {
                         rowHasChanged: (row1, row2) => row1 !== row2,
                     });
                     _this.initData.forEach(function (v, i) {
-                        if (data.id == v.id) {
+                        if (data.pid == v.pid) {
                             _this.initData.splice(i, 1);
                         }
                     });
@@ -184,23 +187,22 @@ export default class ClassTimingList extends React.Component {
     };
 
     /**
-     * 创建新课表
+     * 添加新的定时任务
+     * saveClazzPlan（String sid，String uid，String name
      **/
     creatNewT(value) {
         var _this = this;
         var param = {
-            "method": 'addCourseTable',
-            "courseTable": {
-                "name": value,
-                "roomId": this.state.uid,
-                "creatorId": 23836
-            },
+            "method": 'saveClazzPlan',
+            "sid": _this.state.sid,
+            "uid": _this.state.uid,
+            "name": value,
         };
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
             onResponse: (result) => {
                 if (result.msg == '调用成功' || result.success == true) {
                     Toast.success('新建成功', 1)
-                    _this.viewCourseTablePage(_this.state.uid)
+                    _this.getClazzPlanListByUid()
                 } else {
                     Toast.fail(result.msg, 2)
                 }
@@ -211,21 +213,27 @@ export default class ClassTimingList extends React.Component {
         });
     }
 
+    /**
+     * 启用，禁用计划
+     * updateClazzPlan(String uid,String sid,String pid,String state
+     **/
     changeStatus(checked, rowData) {
+        debugger
         var _this = this;
         var param = {
-            "method": 'changeCourseTableStatus',
-            "ctId": rowData.id,
+            "method": 'updateClazzPlan',
+            "uid": rowData.uid,
+            "sid": rowData.sid,
+            "pid": rowData.pid,
+            "state": checked ? '1' : '0',
         };
         var status,
             str;
         if (checked) {
-            param.condition = 1
             status = 1
             str = '启用成功'
         } else {
-            param.condition = 3
-            status = 3
+            status = 0
             str = '停用成功'
         }
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
@@ -237,8 +245,8 @@ export default class ClassTimingList extends React.Component {
                         rowHasChanged: (row1, row2) => row1 !== row2,
                     });
                     _this.initData.forEach(function (v, i) {
-                        if (rowData.id == v.id) {
-                            v.status = status;
+                        if (rowData.pid == v.pid) {
+                            v.state = status;
                         }
                     });
                     _this.setState({
@@ -251,8 +259,8 @@ export default class ClassTimingList extends React.Component {
                         rowHasChanged: (row1, row2) => row1 !== row2,
                     });
                     _this.initData.forEach(function (v, i) {
-                        if (rowData.id == v.id) {
-                            v.status = 3;
+                        if (rowData.pid == v.pid) {
+                            v.state = 0;
                         }
                     });
                     _this.setState({
@@ -279,7 +287,7 @@ export default class ClassTimingList extends React.Component {
                             <List.Item
                                 extra={<Switch
                                     {...getFieldProps('Switch8', {
-                                        initialValue: rowData.status == 3 ? false : true,
+                                        initialValue: rowData.state == 0 ? false : true,
                                         valuePropName: 'checked',
                                     })}
                                     platform="ios"
@@ -299,8 +307,9 @@ export default class ClassTimingList extends React.Component {
             SwitchExample = createForm()(SwitchExample);
 
             return (
-                <div className="classInfo line_public my_flex" onClick={this.turnToClassTableDetil.bind(this, rowData)}>
-                    <div className="am-list-content">{rowData.name}</div>
+                <div className="classInfo line_public my_flex">
+                    <div className="am-list-content"
+                         onClick={this.turnToClassTableDetil.bind(this, rowData)}>{rowData.planName}</div>
                     <div className="switchBtn">
                         <SwitchExample/>
                     </div>
