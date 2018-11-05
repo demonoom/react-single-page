@@ -32,9 +32,10 @@ export default class ClassTimingItem extends React.Component {
         document.title = '班牌定时';
         var locationHref = window.location.href;
         var locationSearch = locationHref.substr(locationHref.indexOf("?") + 1);
-        var uid = locationSearch.split("&")[0].split("=")[1];
-        this.setState({"uid": uid});
-        this.viewCourseTablePage(uid);
+        var pid = locationSearch.split("&")[0].split("=")[1];
+        this.setState({pid}, () => {
+            this.getClazzPlanList();
+        });
         //添加对视窗大小的监听,在屏幕转换以及键盘弹起时重设各项高度
         window.addEventListener('resize', classBinding.onWindowResize)
     }
@@ -56,7 +57,7 @@ export default class ClassTimingItem extends React.Component {
     /**
      * 查看教室的所有课表
      */
-    viewCourseTablePage(uid) {
+    getClazzPlanList() {
         var _this = this;
         _this.initData.splice(0);
         _this.state.dataSource = [];
@@ -65,11 +66,12 @@ export default class ClassTimingItem extends React.Component {
         });
         const dataBlob = {};
         var param = {
-            "method": 'viewCourseTablePage',
-            "rid": uid,
+            "method": 'getClazzPlanList',
+            "pid": _this.state.pid,
         };
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
             onResponse: function (result) {
+                console.log(result);
                 if (result.msg == '调用成功' && result.success == true) {
                     var arr = result.response;
                     for (let i = 0; i < arr.length; i++) {
