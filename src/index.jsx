@@ -926,6 +926,12 @@ const KnowledgeStatic = (location, cb) => {
         }
     )
 }
+const pushVideo = (location, cb) => {
+    require.ensure([], require => {
+            cb(null, require("./components/pushVideoToClassBoard/js/pushVideo").default)
+        }
+    )
+}
 
 const KnowledgeList = (location, cb) => {
     require.ensure([], require => {
@@ -958,6 +964,13 @@ const ClassTimingItem = (location, cb) => {
 const addClassTimingItem = (location, cb) => {
     require.ensure([], require => {
             cb(null, require("./components/classCardTiming/js/addClassTimingItem").default)
+        }
+    )
+}
+
+const updateClassTimingItem = (location, cb) => {
+    require.ensure([], require => {
+            cb(null, require("./components/classCardTiming/js/updateClassTimingItem").default)
         }
     )
 }
@@ -1195,6 +1208,15 @@ class Index extends React.Component {
                         <Link
                             to="/courseRecListst" style={{fontSize: '24px'}}>课程推荐</Link>
                     </li>*/}
+                     <li>
+                        <Link
+                            to="/KnowledgeStatic?unionid=o-w611I9nKqTHcT3P34srzwIrf6U" style={{fontSize: '24px'}}>统计</Link>
+                    </li>
+                     <li>
+                        <Link
+                            to="/pushVideo?schoolId=9" style={{fontSize: '24px'}}>推送视频</Link>
+                    </li>
+
                     {/* <li>
                         <Link
                             to="/litleantTeacher" style={{fontSize: '24px'}}>下载页老师</Link>
@@ -1370,11 +1392,13 @@ class Index extends React.Component {
                             <Route path="chatLogin" getComponent={chatLogin}/>
                             <Route path="antPlate" getComponent={antPlate}/>
                             <Route path="KnowledgeStatic" getComponent={KnowledgeStatic}/>
+                            <Route path="pushVideo" getComponent={pushVideo}/>
                             <Route path="KnowledgeList" getComponent={KnowledgeList}/>
                             <Route path="topicList" getComponent={topicList}/>
                             <Route path="classTimingList" getComponent={ClassTimingList}/>
                             <Route path="ClassTimingItem" getComponent={ClassTimingItem}/>
                             <Route path="addClassTimingItem" getComponent={addClassTimingItem}/>
+                            <Route path="updateClassTimingItem" getComponent={updateClassTimingItem}/>
                         </Route>
                     </Router>
                     ,

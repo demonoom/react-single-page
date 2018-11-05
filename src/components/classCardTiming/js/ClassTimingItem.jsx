@@ -94,9 +94,7 @@ export default class ClassTimingItem extends React.Component {
      * 去课表列表
      **/
     turnToClassTableDetil(rowData) {
-        console.log(rowData);
-        return
-        var currentAttendanceListUrl = encodeURI(WebServiceUtil.mobileServiceURL + "newCurriculumSchedule?clazzroomId=" + this.state.uid + "&classTableId=" + rowData.id + "&classTableName=" + rowData.name);
+        var currentAttendanceListUrl = encodeURI(WebServiceUtil.mobileServiceURL + "updateClassTimingItem?pid=" + rowData.pid + "&tid=" + rowData.tid + "&regular=" + rowData.regular + "&tartingUpTime=" + rowData.tartingUpTime.substr(0, rowData.tartingUpTime.length - 3) + "&powerOffTime=" + rowData.powerOffTime.substr(0, rowData.tartingUpTime.length - 3));
 
         var data = {
             method: 'openNewPage',
