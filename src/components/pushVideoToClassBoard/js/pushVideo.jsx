@@ -374,7 +374,7 @@ export default class pushVideo extends React.Component {
             <div id="pushVideo">
                 <div className='emptyCont' style={{ display: calm.state.dataNone ? 'none' : '' }}>
                     <img src={require("../img/icon_empty.png")} /><br/>
-                    暂无数据
+                    请点击“＋”添加视频
                 </div>
                 <ListView
                     ref={el => this.lv = el}
