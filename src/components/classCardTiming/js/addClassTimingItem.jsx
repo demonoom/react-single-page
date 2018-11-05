@@ -151,43 +151,56 @@ export default class addClassTimingItem extends React.Component {
 
         return (
             <div id="addClassTimingItem">
-                <div>
-                    <div className='title'>每周重复日期</div>
+                <div className='mainCont'>
                     <div>
-                        {data.map(i => (
-                            <Checkbox key={i.value} onChange={() => console.log(i.value)}>
-                                {i.label}
-                            </Checkbox>
-                        ))}
+                        <div className='title positionDiv'>每周重复日期<i className="redStar">*</i></div>
+                        <div>
+                            {data.map(i => (
+                                <Checkbox key={i.value} onChange={() => console.log(i.value)}>
+                                    {i.label}
+                                </Checkbox>
+                            ))}
+                        </div>
                     </div>
-                </div>
-                <div>
-                    <span>开启时间:</span>
-                    <Picker
-                        data={seasons}
-                        title="开启时间"
-                        cascade={false}
-                        onOk={v => {
-                            var openTime = v[0] + ':' + v[1]
-                            this.setState({openTime})
-                        }}
-                    >
-                        <span>{this.state.openTime}</span>
-                    </Picker>
-                </div>
-                <div>
-                    <span>关闭时间:</span>
-                    <Picker
-                        data={seasons}
-                        title="关闭时间"
-                        cascade={false}
-                        onOk={v => {
-                            var closeTime = v[0] + ':' + v[1]
-                            this.setState({closeTime})
-                        }}
-                    >
-                        <span>{this.state.closeTime}</span>
-                    </Picker>
+                    <div className="timeCont my_flex">
+                        <span className='positionDiv'>开启时间<i className="redStar">*</i></span>
+                        <Picker
+                            data={seasons}
+                            title="开启时间"
+                            cascade={false}
+                            extra="请选择"
+                            onOk={v => {
+                                var openTime = v[0] + ':' + v[1]
+                                this.setState({openTime})
+                            }}
+                        >
+                            <div className="am-list-item am-list-item-middle">
+                                <span>{this.state.openTime}</span>
+                                <div className="am-list-line">
+                                    <div className="am-list-arrow am-list-arrow-horizontal"></div>
+                                </div>
+                            </div>
+                        </Picker>
+                    </div>
+                    <div className="timeCont my_flex">
+                        <span className='positionDiv'>关闭时间<i className="redStar">*</i></span>
+                        <Picker
+                            data={seasons}
+                            title="关闭时间"
+                            cascade={false}
+                            onOk={v => {
+                                var closeTime = v[0] + ':' + v[1]
+                                this.setState({closeTime})
+                            }}
+                        >
+                            <div className="am-list-item am-list-item-middle">
+                                <span>{this.state.closeTime}</span>
+                                <div className="am-list-line">
+                                    <div className="am-list-arrow am-list-arrow-horizontal"></div>
+                                </div>
+                            </div>
+                        </Picker>
+                    </div>
                 </div>
                 <Button type="primary" size='small'>保存</Button>
             </div>

@@ -190,8 +190,8 @@ export default class ClassTimingItem extends React.Component {
                     </div>
                     <div onClick={this.turnToClassTableDetil.bind(this, rowData)}
                          className="am-list-content listTime">
-                        <span>开启时间9:30</span>
-                        <span>关闭时间18:40</span>
+                        <span>开启时间 9:30</span>
+                        <span>关闭时间 18:40</span>
                     </div>
                     <Button type="primary" size="small" className="btn_del deleteBtn_common"
                             onClick={this.showAlert.bind(this, rowData)}></Button>
