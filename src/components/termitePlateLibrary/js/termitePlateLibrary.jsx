@@ -187,6 +187,7 @@ export default class termitePlateLibrary extends React.Component {
      *  ListView数据全部渲染完毕的回调
      */
     onEndReached = (event) => {
+        debugger
         var _this = this;
         var currentPageNo = this.state.defaultPageNo;
         if (!this.state.isLoadingLeft && !this.state.hasMore) {
@@ -194,7 +195,14 @@ export default class termitePlateLibrary extends React.Component {
         }
         currentPageNo += 1;
         this.setState({isLoadingLeft: true, defaultPageNo: currentPageNo});
-        _this.getUserRootCloudSubjects();
+        // _this.getUserRootCloudSubjects();
+
+        if (this.state.parentCloudFileId == -1) {
+            this.getUserRootCloudSubjects();
+        } else {
+            this.listCloudSubject(this.state.parentCloudFileId);
+        }
+
         this.setState({
             dataSource: this.state.dataSource.cloneWithRows(this.initData),
             isLoadingLeft: true,

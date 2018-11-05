@@ -941,6 +941,27 @@ const topicList = (location, cb) => {
     )
 }
 
+const ClassTimingList = (location, cb) => {
+    require.ensure([], require => {
+            cb(null, require("./components/classCardTiming/js/ClassTimingList").default)
+        }
+    )
+}
+
+const ClassTimingItem = (location, cb) => {
+    require.ensure([], require => {
+            cb(null, require("./components/classCardTiming/js/ClassTimingItem").default)
+        }
+    )
+}
+
+const addClassTimingItem = (location, cb) => {
+    require.ensure([], require => {
+            cb(null, require("./components/classCardTiming/js/addClassTimingItem").default)
+        }
+    )
+}
+
 import './index.less';
 
 class Index extends React.Component {
@@ -950,8 +971,19 @@ class Index extends React.Component {
             <div className="body">
                 {/* <h1>Stages list</h1> */}
                 <ul role="nav">
+
+                    <li>
+                        <Link
+                            to="/KnowledgeStatic?unionid=o-w611I9nKqTHcT3P34srzwIrf6U"
+                            style={{fontSize: '24px'}}>统计</Link>
+                    </li>
+                    <li>
+                        <Link
+                            to="/classTimingList?clazzroomId=168" style={{fontSize: '24px'}}>班牌定时</Link>
+                    </li>
+
                     {/*<li><Link to="/antPlate?ident=23836&fileId=-1&title=蚁盘题目&phoneType=0"*/}
-                              {/*style={{fontSize: '24px'}}>蚁盘</Link>*/}
+                    {/*style={{fontSize: '24px'}}>蚁盘</Link>*/}
                     {/*</li>*/}
                     {/*<li><Link to="/s1">ListView + Carousel</Link></li>*/}
                     {/*<li><Link to="/s3">Form + ...</Link></li>*/}
@@ -962,9 +994,9 @@ class Index extends React.Component {
                     {/*<li><Link to="/analysisList?access_user=23836" style={{fontSize: '24px'}}>成绩分析</Link></li>*/}
                     {/*<li><Link to="/searchUserLocationInfo" style={{fontSize: '24px'}}>搜索查看用户位置信息</Link></li>*/}
                     {/*<li><Link to="/studentFaceStatistics" style={{fontSize: '24px'}}>学生脸部表情分析折线图</Link></li>*/}
-                    {/*<li><Link to="/termitePlateLibrary?ident=23836&fileId=-1&title=蚁盘题目&phoneType=0"
-                    style={{fontSize: '24px'}}>蚁盘题库</Link>
-                    </li>*/}
+                    {/*<li><Link to="/termitePlateLibrary?ident=23836&fileId=-1&title=蚁盘题目&phoneType=0"*/}
+                    {/*style={{fontSize: '24px'}}>蚁盘题库</Link>*/}
+                    {/*</li>*/}
                     {/*<li><Link to="/pushSubjectsFromTLibrary?ident=23836&fileId=-1"*/}
                     {/*style={{fontSize: '24px'}}>蚁盘推题</Link></li>*/}
                     {/*<li><Link to="/arrangementWork?ident=23836&fileId=-1"*/}
@@ -1163,11 +1195,6 @@ class Index extends React.Component {
                         <Link
                             to="/courseRecListst" style={{fontSize: '24px'}}>课程推荐</Link>
                     </li>*/}
-                     <li>
-                        <Link
-                            to="/KnowledgeStatic?unionid=o-w611I9nKqTHcT3P34srzwIrf6U" style={{fontSize: '24px'}}>统计</Link>
-                    </li>
-
                     {/* <li>
                         <Link
                             to="/litleantTeacher" style={{fontSize: '24px'}}>下载页老师</Link>
@@ -1345,6 +1372,9 @@ class Index extends React.Component {
                             <Route path="KnowledgeStatic" getComponent={KnowledgeStatic}/>
                             <Route path="KnowledgeList" getComponent={KnowledgeList}/>
                             <Route path="topicList" getComponent={topicList}/>
+                            <Route path="classTimingList" getComponent={ClassTimingList}/>
+                            <Route path="ClassTimingItem" getComponent={ClassTimingItem}/>
+                            <Route path="addClassTimingItem" getComponent={addClassTimingItem}/>
                         </Route>
                     </Router>
                     ,
