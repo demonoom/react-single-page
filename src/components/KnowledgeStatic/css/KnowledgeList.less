@@ -1,0 +1,78 @@
+#KnowledgeList{
+  height: 100%;
+  overflow-y: auto;
+  .item{
+    padding: 15px;
+    background-color: white;
+    font-size: 15px;
+    color: #333;
+    .topCont{
+      padding-bottom: 15px;
+      &.tagCont{
+        line-height: 20px;
+        .tag{
+          vertical-align: middle;
+        }
+        .text_hidden{
+          width: calc(~"100% - 90px");
+        }
+      }
+    }
+    .rate{
+      float: right;
+      width: 90px;
+      text-align: right;
+      span{
+        color: #199D5C;
+      }
+    }
+    .text{
+      color: #333;
+      width: calc(~"100% - 120px");
+    }
+    .tag{
+      font-size: 16px;
+      color: #333;
+      margin-left: 10px;
+    }
+    .course{
+      color: #fff;
+      background-color: #4285F4;
+      border-radius: 2px;
+      padding: 0 7px;
+      vertical-align: middle;
+      font-size: 12px;
+      line-height: initial;
+      display: inline-block;
+    }
+    .gray_text{
+      color: #666;
+      font-size: 14px;
+      span{
+        position: relative;
+        padding-left: 15px;
+        padding-right: 15px;
+        &:first-child{
+          padding-left: 0;
+          &::after{
+            display: none;
+          }
+        }
+        &::after{
+          position: absolute;
+          content: '';
+          top:50%;
+          left: 0;
+          width: 1px;
+          height: 100%;
+          background-color: #E5E5E5;
+          -webkit-transform: translateY(-50%);
+          -moz-transform: translateY(-50%);
+          -ms-transform: translateY(-50%);
+          -o-transform: translateY(-50%);
+          transform: translateY(-50%);
+        }
+      }
+    }
+  }
+}
