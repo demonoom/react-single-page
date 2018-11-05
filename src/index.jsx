@@ -955,6 +955,13 @@ const ClassTimingItem = (location, cb) => {
     )
 }
 
+const addClassTimingItem = (location, cb) => {
+    require.ensure([], require => {
+            cb(null, require("./components/classCardTiming/js/addClassTimingItem").default)
+        }
+    )
+}
+
 import './index.less';
 
 class Index extends React.Component {
@@ -1367,6 +1374,7 @@ class Index extends React.Component {
                             <Route path="topicList" getComponent={topicList}/>
                             <Route path="classTimingList" getComponent={ClassTimingList}/>
                             <Route path="ClassTimingItem" getComponent={ClassTimingItem}/>
+                            <Route path="addClassTimingItem" getComponent={addClassTimingItem}/>
                         </Route>
                     </Router>
                     ,

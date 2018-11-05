@@ -3,17 +3,13 @@ import {
     ListView,
     Modal,
     Toast,
-    Switch,
-    List,
     Button
 } from 'antd-mobile';
-import {createForm} from 'rc-form';
 
 
 import '../css/ClassTimingItem.less'
 
 var classBinding;
-const prompt = Modal.prompt;
 const alert = Modal.alert;
 
 export default class ClassTimingItem extends React.Component {
@@ -110,21 +106,16 @@ export default class ClassTimingItem extends React.Component {
     }
 
     creatNewTable() {
-        var phoneType = navigator.userAgent;
-        var phone;
-        if (phoneType.indexOf('iPhone') > -1 || phoneType.indexOf('iPad') > -1) {
-            phone = 'ios'
-        } else {
-            phone = 'android'
-        }
+        var currentAttendanceListUrl = encodeURI(WebServiceUtil.mobileServiceURL + "addClassTimingItem?clazzroomId=" + 166);
 
-        prompt('添加任务名称', '', [
-            {text: '取消'},
-            {text: '确定', onPress: value => classBinding.creatNewT(value)},
-        ], 'default', '', [], phone)
-        if (phone == 'ios') {
-            document.getElementsByClassName('am-modal-input')[0].getElementsByTagName('input')[0].focus();
-        }
+        var data = {
+            method: 'openNewPage',
+            url: currentAttendanceListUrl
+        };
+
+        Bridge.callHandler(data, null, function (error) {
+            window.location.href = currentAttendanceListUrl;
+        });
     }
 
     /**
@@ -183,89 +174,6 @@ export default class ClassTimingItem extends React.Component {
         ], phone);
     };
 
-    /**
-     * 创建新课表
-     **/
-    creatNewT(value) {
-        var _this = this;
-        var param = {
-            "method": 'addCourseTable',
-            "courseTable": {
-                "name": value,
-                "roomId": this.state.uid,
-                "creatorId": 23836
-            },
-        };
-        WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
-            onResponse: (result) => {
-                if (result.msg == '调用成功' || result.success == true) {
-                    Toast.success('新建成功', 1)
-                    _this.viewCourseTablePage(_this.state.uid)
-                } else {
-                    Toast.fail(result.msg, 2)
-                }
-            },
-            onError: function (error) {
-                Toast.warn('保存失败');
-            }
-        });
-    }
-
-    changeStatus(checked, rowData) {
-        var _this = this;
-        var param = {
-            "method": 'changeCourseTableStatus',
-            "ctId": rowData.id,
-        };
-        var status,
-            str;
-        if (checked) {
-            param.condition = 1
-            status = 1
-            str = '启用成功'
-        } else {
-            param.condition = 3
-            status = 3
-            str = '停用成功'
-        }
-        WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
-            onResponse: (result) => {
-                if (result.msg == '调用成功' || result.success == true) {
-                    Toast.success(str, 1)
-                    _this.state.dataSource = [];
-                    _this.state.dataSource = new ListView.DataSource({
-                        rowHasChanged: (row1, row2) => row1 !== row2,
-                    });
-                    _this.initData.forEach(function (v, i) {
-                        if (rowData.id == v.id) {
-                            v.status = status;
-                        }
-                    });
-                    _this.setState({
-                        dataSource: _this.state.dataSource.cloneWithRows(_this.initData)
-                    });
-                } else {
-                    Toast.fail(result.msg, 3)
-                    _this.state.dataSource = [];
-                    _this.state.dataSource = new ListView.DataSource({
-                        rowHasChanged: (row1, row2) => row1 !== row2,
-                    });
-                    _this.initData.forEach(function (v, i) {
-                        if (rowData.id == v.id) {
-                            v.status = 3;
-                        }
-                    });
-                    _this.setState({
-                        dataSource: _this.state.dataSource.cloneWithRows(_this.initData)
-                    });
-                }
-            },
-            onError: function (error) {
-                Toast.warn('修改失败');
-            }
-        });
-    }
-
     render() {
         var _this = this;
 
@@ -277,7 +185,8 @@ export default class ClassTimingItem extends React.Component {
                          className="am-list-content">周一 周二 周三
                     </div>
                     <div onClick={this.turnToClassTableDetil.bind(this, rowData)}
-                         className="am-list-content">开启时间9:30 关闭时间18:40</div>
+                         className="am-list-content">开启时间9:30 关闭时间18:40
+                    </div>
                     <Button type="primary" size="small" className="btn_del deleteBtn_common"
                             onClick={this.showAlert.bind(this, rowData)}></Button>
                 </div>
