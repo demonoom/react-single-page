@@ -1,3 +1,6 @@
+#pushVideo .am-list-view-scrollview-content {
+  width: 100%;
+}
 #pushVideo .emptyCont {
   position: absolute;
   top: 50%;
@@ -16,6 +19,9 @@
   margin-bottom: 40px;
 }
 #pushVideo .item {
+  cursor: pointer;
+  justify-content: space-between;
+  -webkit-justify-content: space-between;
   line-height: 53px;
   height: 53px;
   font-size: 16px;
@@ -35,7 +41,7 @@
 }
 #pushVideo .item .rightCont {
   position: relative;
-  padding-right: 20px;
+  padding-right: 25px;
 }
 #pushVideo .item .icon_arrow {
   position: absolute;
