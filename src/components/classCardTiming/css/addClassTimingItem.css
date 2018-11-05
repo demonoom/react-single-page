@@ -14,6 +14,7 @@
 #addClassTimingItem .title {
   line-height: 44px;
   font-size: 17px;
+  margin-bottom: 2px;
 }
 #addClassTimingItem .timeCont {
   font-size: 17px;
