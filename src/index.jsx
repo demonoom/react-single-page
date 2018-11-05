@@ -933,6 +933,20 @@ const pushVideo = (location, cb) => {
     )
 }
 
+const KnowledgeList = (location, cb) => {
+    require.ensure([], require => {
+            cb(null, require("./components/KnowledgeStatic/js/KnowledgeList").default)
+        }
+    )
+}
+
+const topicList = (location, cb) => {
+    require.ensure([], require => {
+            cb(null, require("./components/KnowledgeStatic/js/topicList").default)
+        }
+    )
+}
+
 import './index.less';
 
 class Index extends React.Component {
@@ -1157,7 +1171,7 @@ class Index extends React.Component {
                     </li>*/}
                      <li>
                         <Link
-                            to="/KnowledgeStatic?userId=819" style={{fontSize: '24px'}}>统计</Link>
+                            to="/KnowledgeStatic?unionid=o-w611I9nKqTHcT3P34srzwIrf6U" style={{fontSize: '24px'}}>统计</Link>
                     </li>
                      <li>
                         <Link
@@ -1332,7 +1346,6 @@ class Index extends React.Component {
                             <Route path="stuList" getComponent={stuList}/>
                             <Route path="courseRecListst" getComponent={courseRecListst}/>
                             <Route path="addRecCourse" getComponent={addRecCourse}/>
-
                             <Route path="litleantTeacher" getComponent={litleantTeacher}/>
                             <Route path="youyang" getComponent={youyang}/>
                             <Route path="yunxiao" getComponent={yunxiao}/>
@@ -1341,6 +1354,8 @@ class Index extends React.Component {
                             <Route path="antPlate" getComponent={antPlate}/>
                             <Route path="KnowledgeStatic" getComponent={KnowledgeStatic}/>
                             <Route path="pushVideo" getComponent={pushVideo}/>
+                            <Route path="KnowledgeList" getComponent={KnowledgeList}/>
+                            <Route path="topicList" getComponent={topicList}/>
                         </Route>
                     </Router>
                     ,
