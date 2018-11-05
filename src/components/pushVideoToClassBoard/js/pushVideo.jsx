@@ -4,7 +4,10 @@ import {
     Modal,
     Toast,
 } from 'antd-mobile';
-import { SimpleWebsocketConnection } from '../../../helpers/simple_websocket_connection';
+
+import { SimpleWebsocketConnection } from '../../../helpers/simple_websocket_connection'
+import '../css/pushVideo.less'
+
 var calm;
 window.simpleMS = null;
 const prompt = Modal.prompt;
@@ -195,6 +198,7 @@ export default class pushVideo extends React.Component {
                 display: 'block'
             })
 
+
         } else {
             $('.btnBox').eq(index).css({
                 display: 'none'
@@ -355,11 +359,13 @@ export default class pushVideo extends React.Component {
         const row = (rowData, sectionID, rowID) => {
             return (
                 <div>
-                    <div><span>{rowData.videoName}</span><span>{WebServiceUtil.formatYMD(rowData.createDate)}</span><span onClick={calm.showBtnBox.bind(this, rowID)}>上箭头</span></div>
+                    <div className="item line_public my_flex" onClick={calm.showBtnBox.bind(this, rowID)}><div className="text_hidden text">{rowData.videoName}</div><div className="rightCont"><span className="time">{WebServiceUtil.formatYMD(rowData.createDate)}</span><span className="icon_arrow down">上箭头</span></div></div>
                     <div className="btnBox" style={{ display: rowData.isPush == 1 ? "block" : "none" }}>
-                        <span onClick={calm.previewVideo.bind(this, rowData.videoPath)}>预览</span>
-                        <span onClick={calm.pushVideoToClassboard.bind(this, rowData.isPush, rowID, rowData.videoPath, rowData.screenVideoId)}>{rowData.isPush == 0 ? "推送" : "停止"}</span>
-                        <span onClick={calm.showAlert.bind(this, rowData)}>删除</span>
+                        <div className="my_flex inner">
+                            <div className="preview" onClick={calm.previewVideo.bind(this, rowData.videoPath)}><i></i>预览</div>
+                            <div  className={rowData.isPush == 0 ?"join":"quite" } onClick={calm.pushVideoToClassboard.bind(this, rowData.isPush, rowID, rowData.videoPath, rowData.screenVideoId)}><i></i>{rowData.isPush == 0 ? "加入班牌" : "退出班牌"}</div>
+                            <div className="del" onClick={calm.showAlert.bind(this, rowData)}><i></i>删除</div>
+                        </div>
                     </div>
                 </div>
             )
@@ -367,7 +373,8 @@ export default class pushVideo extends React.Component {
         return (
             <div id="pushVideo">
                 <div className='emptyCont' style={{ display: calm.state.dataNone ? 'none' : '' }}>
-                    暂无数据
+                    <img src={require("../img/icon_empty.png")} /><br/>
+                    请点击“＋”添加视频
                 </div>
                 <ListView
                     ref={el => this.lv = el}
@@ -386,11 +393,13 @@ export default class pushVideo extends React.Component {
                     initialListSize={30}   //指定在组件刚挂载的时候渲染多少行数据，用这个属性来确保首屏显示合适数量的数据
                     scrollEventThrottle={20}     //控制在滚动过程中，scroll事件被调用的频率
                     style={{
-                        height: this.state.clientHeight - 64 - 46,
+                        height: this.state.clientHeight,
                         display: calm.state.dataNone ? "" : "none"
                     }}
                 />
-                <button onClick={this.addVideo}>添加</button>
+                <div className='addBunton' onClick={this.addVideo}>
+                    <img src={require("../img/addBtn.png")} />
+                </div>
             </div>
         );
     }
