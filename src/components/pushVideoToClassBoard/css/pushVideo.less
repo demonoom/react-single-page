@@ -16,4 +16,92 @@
       margin-bottom: 40px;
     }
   }
+  .item{
+    line-height: 53px;
+    height: 53px;
+    font-size: 16px;
+    color: #333;
+    padding: 0 15px 0 45px;
+    background: url("../img/icon_item.png") no-repeat 15px center;
+    background-size: 20px;
+    .text{
+      width: calc(~"100% - 100px");
+    }
+    .time{
+      font-size: 14px;
+      color: #666;
+      overflow: hidden;
+      display: inline-block;
+    }
+    .rightCont{
+      position: relative;
+      padding-right: 20px;
+    }
+    .icon_arrow{
+      position: absolute;
+      right: 0;
+      top:50%;
+      background: url("../img/icon_arrow.png") no-repeat;
+      font-size: 0;
+      width: 13px;
+      height: 8px;
+      background-size: 100%;
+      display: inline-block;
+      -webkit-transform: translateY(-50%) rotate(180deg) ;
+      -moz-transform: translateY(-50%) rotate(180deg) ;
+      -ms-transform: translateY(-50%) rotate(180deg)  ;
+      -o-transform: translateY(-50%) rotate(180deg) ;
+      transform: translateY(-50%) rotate(180deg)  ;
+      -webkit-transition: -webkit-transform .2s ease;
+      transition: -webkit-transform .2s ease;
+      &.down{
+        -webkit-transform: translateY(-50%) rotate(0) ;
+        -moz-transform: translateY(-50%) rotate(0) ;
+        -ms-transform: translateY(-50%) rotate(0) ;
+        -o-transform: translateY(-50%) rotate(0) ;
+        transform: translateY(-50%) rotate(0) ;
+      }
+    }
+  }
+  .btnBox{
+    background-color: #F0F0F0;
+    font-size: 13px;
+    color: #666;
+    i{
+      display: block;
+      height: 17px;
+      margin-bottom: 6px;
+    }
+    .inner{
+      justify-content:space-around;
+      -webkit-justify-content: space-around;
+      &>div{
+        width: 33.3%;
+        padding: 10px 0;
+        text-align: center;
+      }
+    }
+    .preview{
+        i{
+          background: url("../img/icon_reload.png") no-repeat center center;
+          background-size: auto 16px;
+        }
+    }
+    .join{
+      i{
+        background: url("../img/icon_join.png") no-repeat center center;
+        background-size: auto 16px;
+      }
+    }
+    .quite i{
+      background: url("../img/icon_quite.png") no-repeat center center;
+      background-size: auto 16px;
+    }
+    .del{
+      i{
+        background: url("../img/icon_del.png") no-repeat center center;
+        background-size: auto 16px;
+      }
+    }
+  }
 }

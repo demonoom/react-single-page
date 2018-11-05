@@ -1,13 +1,13 @@
 import React from 'react';
 import {
     ListView,
-    Accordion,
     Modal,
     Toast,
-    Icon
 } from 'antd-mobile';
+
 import { SimpleWebsocketConnection } from '../../../helpers/simple_websocket_connection'
 import '../css/pushVideo.less'
+
 var calm;
 window.simpleMS = null;
 const prompt = Modal.prompt;
@@ -198,6 +198,7 @@ export default class pushVideo extends React.Component {
                 display: 'block'
             })
 
+
         } else {
             $('.btnBox').eq(index).css({
                 display: 'none'
@@ -358,15 +359,16 @@ export default class pushVideo extends React.Component {
         const row = (rowData, sectionID, rowID) => {
             return (
                 <div>
-                    <div><span>{rowData.videoName}</span><span onClick={calm.showBtnBox.bind(this, rowID)}>上箭头</span></div>
+                    <div className="item line_public my_flex" onClick={calm.showBtnBox.bind(this, rowID)}><div className="text_hidden text">{rowData.videoName}</div><div className="rightCont"><span className="time">{WebServiceUtil.formatYMD(rowData.createDate)}</span><span className="icon_arrow down">上箭头</span></div></div>
                     <div className="btnBox" style={{ display: rowData.isPush == 1 ? "block" : "none" }}>
-                        <span onClick={calm.previewVideo.bind(this, rowData.videoPath)}>预览</span>
-                        <span onClick={calm.pushVideoToClassboard.bind(this, rowData.isPush, rowID, rowData.videoPath, rowData.screenVideoId)}>{rowData.isPush == 0 ? "推送" : "停止"}</span>
-                        <span onClick={calm.showAlert.bind(this, rowData)}>删除</span>
+                        <div className="my_flex inner">
+                            <div className="preview" onClick={calm.previewVideo.bind(this, rowData.videoPath)}><i></i>预览</div>
+                            <div  className={rowData.isPush == 0 ?"join":"quite" } onClick={calm.pushVideoToClassboard.bind(this, rowData.isPush, rowID, rowData.videoPath, rowData.screenVideoId)}><i></i>{rowData.isPush == 0 ? "加入班牌" : "退出班牌"}</div>
+                            <div className="del" onClick={calm.showAlert.bind(this, rowData)}><i></i>删除</div>
+                        </div>
                     </div>
                 </div>
             )
-
         }
         return (
             <div id="pushVideo">
@@ -395,7 +397,9 @@ export default class pushVideo extends React.Component {
                         display: calm.state.dataNone ? "" : "none"
                     }}
                 />
-                <button onClick={this.addVideo}>添加</button>
+                <div className='addBunton' onClick={this.addVideo}>
+                    <img src={require("../img/addBtn.png")} />
+                </div>
             </div>
         );
     }
