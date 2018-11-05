@@ -44,7 +44,7 @@ module.exports = {
 
     output: {
         filename: '[name].js',
-        chunkFilename: '[id].chunk.js?v=0.0.7',   //匹配chunk
+        chunkFilename: '[id].chunk.js?v=0.0.8',   //匹配chunk
         path: path.join(__dirname, '/dist'), /*输出的文件路径*/
         publicPath: '/dist/'
     },
