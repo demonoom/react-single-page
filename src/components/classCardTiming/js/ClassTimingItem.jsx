@@ -32,9 +32,10 @@ export default class ClassTimingItem extends React.Component {
         document.title = '班牌定时';
         var locationHref = window.location.href;
         var locationSearch = locationHref.substr(locationHref.indexOf("?") + 1);
-        var uid = locationSearch.split("&")[0].split("=")[1];
-        this.setState({"uid": uid});
-        this.viewCourseTablePage(uid);
+        var pid = locationSearch.split("&")[0].split("=")[1];
+        this.setState({pid}, () => {
+            this.getClazzPlanList();
+        });
         //添加对视窗大小的监听,在屏幕转换以及键盘弹起时重设各项高度
         window.addEventListener('resize', classBinding.onWindowResize)
     }
@@ -56,7 +57,7 @@ export default class ClassTimingItem extends React.Component {
     /**
      * 查看教室的所有课表
      */
-    viewCourseTablePage(uid) {
+    getClazzPlanList() {
         var _this = this;
         _this.initData.splice(0);
         _this.state.dataSource = [];
@@ -65,8 +66,8 @@ export default class ClassTimingItem extends React.Component {
         });
         const dataBlob = {};
         var param = {
-            "method": 'viewCourseTablePage',
-            "rid": uid,
+            "method": 'getClazzPlanList',
+            "pid": _this.state.pid,
         };
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
             onResponse: function (result) {
@@ -93,8 +94,7 @@ export default class ClassTimingItem extends React.Component {
      * 去课表列表
      **/
     turnToClassTableDetil(rowData) {
-        return
-        var currentAttendanceListUrl = encodeURI(WebServiceUtil.mobileServiceURL + "newCurriculumSchedule?clazzroomId=" + this.state.uid + "&classTableId=" + rowData.id + "&classTableName=" + rowData.name);
+        var currentAttendanceListUrl = encodeURI(WebServiceUtil.mobileServiceURL + "updateClassTimingItem?pid=" + rowData.pid + "&tid=" + rowData.tid + "&regular=" + rowData.regular + "&tartingUpTime=" + rowData.tartingUpTime.substr(0, rowData.tartingUpTime.length - 3) + "&powerOffTime=" + rowData.powerOffTime.substr(0, rowData.tartingUpTime.length - 3));
 
         var data = {
             method: 'openNewPage',
@@ -106,8 +106,8 @@ export default class ClassTimingItem extends React.Component {
         });
     }
 
-    creatNewTable() {
-        var currentAttendanceListUrl = encodeURI(WebServiceUtil.mobileServiceURL + "addClassTimingItem?clazzroomId=" + 166);
+    creatNewTable = () => {
+        var currentAttendanceListUrl = encodeURI(WebServiceUtil.mobileServiceURL + "addClassTimingItem?pid=" + this.state.pid);
 
         var data = {
             method: 'openNewPage',
@@ -120,17 +120,16 @@ export default class ClassTimingItem extends React.Component {
     }
 
     /**
-     *　更新教室某个课表状态
-     * @param ctId   课表id
-     * @param condition 课表状态 0 = 删除, 1 =　启用, 3 = 停用
-     * @throws Exception
+     * 删除定时规则
+     * delClazzPlanTime(String pid,String tid)
+     * @param data
      */
     delTable(data) {
         var _this = this;
         var param = {
-            "method": 'changeCourseTableStatus',
-            "condition": 0,
-            "ctId": data.id,
+            "method": 'delClazzPlanTime',
+            "pid": data.pid,
+            "tid": data.tid,
         };
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
             onResponse: (result) => {
@@ -141,7 +140,7 @@ export default class ClassTimingItem extends React.Component {
                         rowHasChanged: (row1, row2) => row1 !== row2,
                     });
                     _this.initData.forEach(function (v, i) {
-                        if (data.id == v.id) {
+                        if (data.tid == v.tid) {
                             _this.initData.splice(i, 1);
                         }
                     });
@@ -179,19 +178,34 @@ export default class ClassTimingItem extends React.Component {
         var _this = this;
 
         const row = (rowData, sectionID, rowID) => {
-
             return (
                 <div className="classInfo line_public">
                     <div onClick={this.turnToClassTableDetil.bind(this, rowData)}
                          className="am-list-content">
-                        <span>周一</span>
-                        <span>周一</span>
-                        <span>周一</span>
+                        {
+                            rowData.regular.split(',').map((v) => {
+                                if (v == 0) {
+                                    return <span>周日</span>
+                                } else if (v == 1) {
+                                    return <span>周一</span>
+                                } else if (v == 2) {
+                                    return <span>周二</span>
+                                } else if (v == 3) {
+                                    return <span>周三</span>
+                                } else if (v == 4) {
+                                    return <span>周四</span>
+                                } else if (v == 5) {
+                                    return <span>周五</span>
+                                } else if (v == 6) {
+                                    return <span>周六</span>
+                                }
+                            })
+                        }
                     </div>
                     <div onClick={this.turnToClassTableDetil.bind(this, rowData)}
                          className="am-list-content listTime">
-                        <span>开启时间9:30</span>
-                        <span>关闭时间18:40</span>
+                        <span>开启时间 {rowData.tartingUpTime.substr(0, rowData.tartingUpTime.length - 3)}</span>
+                        <span>关闭时间 {rowData.powerOffTime.substr(0, rowData.tartingUpTime.length - 3)}</span>
                     </div>
                     <Button type="primary" size="small" className="btn_del deleteBtn_common"
                             onClick={this.showAlert.bind(this, rowData)}></Button>
