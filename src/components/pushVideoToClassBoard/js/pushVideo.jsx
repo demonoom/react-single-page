@@ -144,51 +144,82 @@ export default class pushVideo extends React.Component {
      */
     pushVideoToClassboard = (isPush, index, videoPath, screenVideoId) => {
         if (isPush == 0) {
-            calm.initData.forEach((v,i)=>{
-                if(v.screenVideoId == screenVideoId){
-                    calm.initData[i].isPush = 1;
+            
+            var p1 = new Promise((reslove) => {
+                calm.updatePushStatus(screenVideoId, 1,function(text){
+                    reslove(text);
+                });
+            })
+            Promise.all([p1]).then(function(res){
+                console.log(res,'111');
+                if(res == 'return'){
+                    return;
+                }else{
+                    calm.initData.forEach((v,i)=>{
+                        if(v.screenVideoId == screenVideoId){
+                            calm.initData[i].isPush = 1;
+                        }
+                    })
+                    calm.setState({
+                        dataSource:dataSource.cloneWithRows(calm.initData),
+                    },()=>{
+                       
+                    })
+                    var obj = {
+                        "command": "playPushVideo",
+                        "data": {
+                            "videoPath": videoPath,
+                            "schoolId": calm.state.schoolId
+                        }
+                    }
+                    simpleMS.send(obj)
                 }
             })
-            calm.setState({
-                dataSource:dataSource.cloneWithRows(calm.initData),
-            },()=>{
-                calm.updatePushStatus(screenVideoId, 1);
-            })
-            var obj = {
-                "command": "playPushVideo",
-                "data": {
-                    "videoPath": videoPath,
-                    "schoolId": calm.state.schoolId
-                }
-            }
-            simpleMS.send(obj)
+
+            
 
         }
         if (isPush == 1) {
-            calm.updatePushStatus(screenVideoId, 0);
-            calm.initData.forEach((v,i)=>{
-                if(v.screenVideoId == screenVideoId){
-                    calm.initData[i].isPush = 0;
+            var p1 = new Promise((reslove) => {
+                calm.updatePushStatus(screenVideoId, 0,function(text){
+                    reslove(text);
+                });
+            })
+            Promise.all([p1]).then(function(res){
+                if(res == 'return'){
+                    return;
+                }else{
+                    calm.initData.forEach((v,i)=>{
+                        if(v.screenVideoId == screenVideoId){
+                            calm.initData[i].isPush = 0;
+                        }
+                    },()=>{
+                    })
+                    calm.setState({
+                        dataSource: dataSource.cloneWithRows(calm.initData),
+                    })
+                    var obj = {
+                        "command": "stopPushVideo",
+                        "data": {
+                            "videoPath": videoPath,
+                            "schoolId": calm.state.schoolId
+                        }
+                    }
+                    simpleMS.send(obj)
                 }
             })
-            calm.setState({
-                dataSource: dataSource.cloneWithRows(calm.initData),
-            })
-            var obj = {
-                "command": "stopPushVideo",
-                "data": {
-                    "videoPath": videoPath,
-                    "schoolId": calm.state.schoolId
-                }
-            }
-            simpleMS.send(obj)
+
+
+
+            // calm.updatePushStatus(screenVideoId, 0);
+            
         }
     }
 
     /**
      * 点击推送按钮
      */
-    updatePushStatus = (videoScreenId, isPush) => {
+    updatePushStatus = (videoScreenId, isPush,reslove) => {
         var param = {
             "method": 'updatePushStatus',
             "videoScreenId": videoScreenId,
@@ -196,11 +227,11 @@ export default class pushVideo extends React.Component {
         };
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
             onResponse: function (result) {
-                if (result.success) {
-
-                } else {
-                    Toast.info(result.msg, 1)
-                }
+                if (!result.success) {
+                    Toast.info(result.msg, 1);
+                    reslove('return');
+                } 
+                reslove('no');
             },
             onError: function (error) {
             }
@@ -213,7 +244,6 @@ export default class pushVideo extends React.Component {
     showBtnBox = (index) => {
         console.log(index);
         if ($('.btnBox').eq(index).css("display") == "none") {
-           
             $(".btnBox").css({
                 display: 'none'
             })
