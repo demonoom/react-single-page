@@ -211,20 +211,23 @@ export default class pushVideo extends React.Component {
      * 显示操作按钮
      */
     showBtnBox = (index) => {
+        console.log(index);
         if ($('.btnBox').eq(index).css("display") == "none") {
-            $(".icon_arrow").removeClass("down");
+           
             $(".btnBox").css({
                 display: 'none'
             })
             $('.btnBox').eq(index).css({
                 display: 'block'
             })
+            $(".icon_arrow").removeClass("down");
+            $(".icon_arrow").eq(index).removeClass("down");
             $(".icon_arrow").eq(index).addClass("down");
         } else if($('.btnBox').eq(index).css("display") == "block"){
             $('.btnBox').eq(index).css({
                 display: 'none'
             })
-            $(".icon_arrow").addClass("down");
+            $(".icon_arrow").eq(index).addClass("down");
             $(".icon_arrow").eq(index).removeClass("down");
         }
     }
