@@ -2,9 +2,11 @@ import React from 'react';
 import {
     Picker,
     Button,
-    Checkbox
+    Checkbox,
+    Toast
 } from 'antd-mobile';
 import '../css/addClassTimingItem.less'
+
 var classBinding;
 
 export default class addClassTimingItem extends React.Component {
@@ -15,6 +17,15 @@ export default class addClassTimingItem extends React.Component {
         this.state = {
             openTime: '09:30',
             closeTime: '18:30',
+            data: [
+                {value: 1, label: '周一', checked: false, disabled: false},
+                {value: 2, label: '周二', checked: false, disabled: false},
+                {value: 3, label: '周三', checked: false, disabled: false},
+                {value: 4, label: '周四', checked: false, disabled: false},
+                {value: 5, label: '周五', checked: false, disabled: false},
+                {value: 6, label: '周六', checked: false, disabled: false},
+                {value: 0, label: '周日', checked: false, disabled: false},
+            ]
         };
     }
 
@@ -23,7 +34,101 @@ export default class addClassTimingItem extends React.Component {
         document.title = '班牌定时';
         var locationHref = window.location.href;
         var locationSearch = locationHref.substr(locationHref.indexOf("?") + 1);
-        // var uid = locationSearch.split("&")[0].split("=")[1];
+        var pid = locationSearch.split("&")[0].split("=")[1];
+        this.setState({pid})
+        this.getRemainingTime(pid)
+    }
+
+    /**
+     * 返回剩余日期
+     * @param pid
+     */
+    getRemainingTime = (pid) => {
+        var _this = this;
+        var param = {
+            "method": 'getRemainingTime',
+            "pid": pid,
+        };
+        WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
+            onResponse: function (result) {
+                if (result.msg == '调用成功' && result.success == true) {
+                    _this.setState({
+                        data: _this.state.data.map((v) => {
+                            v.checked = !result.response.includes(v.label)
+                            v.disabled = !result.response.includes(v.label)
+                            return v
+                        })
+                    })
+                } else {
+                    Toast.fail(result.msg, 2)
+                }
+            },
+            onError: function (error) {
+            }
+        });
+    }
+
+    /**
+     * 星期改变的回调
+     * @param data
+     */
+    dataOnChange = (data) => {
+        this.setState({
+            data: this.state.data.map((v) => {
+                if (v.value === data.value) {
+                    v.checked = !v.checked
+                }
+                return v
+            })
+        })
+    }
+
+    /**
+     * 添加定时规则
+     *  saveClazzPlanTime(String pid,String regular,String upTime,String offTime)
+     */
+    saveClazzPlanTime = () => {
+        var regular = ''
+        this.state.data.forEach((e) => {
+            if (!e.disabled) {
+                if (e.checked) {
+                    regular += e.value + ','
+                }
+            }
+        })
+        if (regular === '') {
+            Toast.fail('请选择每周重复周期', 2)
+            return
+        }
+        if (this.state.openTime === this.state.closeTime) {
+            Toast.fail('开启时间关闭时间不能相同', 2)
+            return
+        }
+        var param = {
+            "method": 'saveClazzPlanTime',
+            "pid": this.state.pid,
+            "regular": regular.substr(0, regular.length - 1),
+            "upTime": this.state.openTime + ':00',
+            "offTime": this.state.closeTime + ':00',
+        };
+        WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
+            onResponse: function (result) {
+                if (result.msg == '调用成功' && result.success == true) {
+                    Toast.success('添加成功', 2)
+                    setTimeout(function () {
+                        var data = {
+                            method: 'finishForRefresh',
+                        };
+                        Bridge.callHandler(data, null, function (error) {
+                        });
+                    }, 2000)
+                } else {
+                    Toast.fail(result.msg, 2)
+                }
+            },
+            onError: function (error) {
+            }
+        });
     }
 
     render() {
@@ -139,57 +244,62 @@ export default class addClassTimingItem extends React.Component {
             ],
         ];
 
-        const data = [
-            {value: 1, label: '周一'},
-            {value: 2, label: '周二'},
-            {value: 3, label: '周三'},
-            {value: 4, label: '周四'},
-            {value: 5, label: '周五'},
-            {value: 6, label: '周六'},
-            {value: 7, label: '周日'},
-        ];
-
         return (
             <div id="addClassTimingItem">
-                <div>
-                    <div className='title'>每周重复日期</div>
+                <div className='mainCont'>
                     <div>
-                        {data.map(i => (
-                            <Checkbox key={i.value} onChange={() => console.log(i.value)}>
-                                {i.label}
-                            </Checkbox>
-                        ))}
+                        <div className='title positionDiv'>每周重复日期<i className="redStar">*</i></div>
+                        <div>
+                            {this.state.data.map(i => (
+                                <Checkbox key={i.value} checked={i.checked}
+                                          disabled={i.disabled}
+                                          onChange={this.dataOnChange.bind(this, i)}>
+                                    {i.label}
+                                </Checkbox>
+                            ))}
+                        </div>
+                    </div>
+                    <div className="timeCont my_flex">
+                        <span className='positionDiv'>开启时间<i className="redStar">*</i></span>
+                        <Picker
+                            data={seasons}
+                            title="开启时间"
+                            cascade={false}
+                            extra="请选择"
+                            onOk={v => {
+                                var openTime = v[0] + ':' + v[1]
+                                this.setState({openTime})
+                            }}
+                        >
+                            <div className="am-list-item am-list-item-middle">
+                                <span>{this.state.openTime}</span>
+                                <div className="am-list-line">
+                                    <div className="am-list-arrow am-list-arrow-horizontal"></div>
+                                </div>
+                            </div>
+                        </Picker>
+                    </div>
+                    <div className="timeCont my_flex">
+                        <span className='positionDiv'>关闭时间<i className="redStar">*</i></span>
+                        <Picker
+                            data={seasons}
+                            title="关闭时间"
+                            cascade={false}
+                            onOk={v => {
+                                var closeTime = v[0] + ':' + v[1]
+                                this.setState({closeTime})
+                            }}
+                        >
+                            <div className="am-list-item am-list-item-middle">
+                                <span>{this.state.closeTime}</span>
+                                <div className="am-list-line">
+                                    <div className="am-list-arrow am-list-arrow-horizontal"></div>
+                                </div>
+                            </div>
+                        </Picker>
                     </div>
                 </div>
-                <div>
-                    <span>开启时间:</span>
-                    <Picker
-                        data={seasons}
-                        title="开启时间"
-                        cascade={false}
-                        onOk={v => {
-                            var openTime = v[0] + ':' + v[1]
-                            this.setState({openTime})
-                        }}
-                    >
-                        <span>{this.state.openTime}</span>
-                    </Picker>
-                </div>
-                <div>
-                    <span>关闭时间:</span>
-                    <Picker
-                        data={seasons}
-                        title="关闭时间"
-                        cascade={false}
-                        onOk={v => {
-                            var closeTime = v[0] + ':' + v[1]
-                            this.setState({closeTime})
-                        }}
-                    >
-                        <span>{this.state.closeTime}</span>
-                    </Picker>
-                </div>
-                <Button type="primary" size='small'>保存</Button>
+                <Button type="primary" size='small' onClick={this.saveClazzPlanTime}>保存</Button>
             </div>
         );
     }

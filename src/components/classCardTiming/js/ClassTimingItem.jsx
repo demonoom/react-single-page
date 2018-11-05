@@ -71,7 +71,6 @@ export default class ClassTimingItem extends React.Component {
         };
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
             onResponse: function (result) {
-                console.log(result);
                 if (result.msg == '调用成功' && result.success == true) {
                     var arr = result.response;
                     for (let i = 0; i < arr.length; i++) {
@@ -95,6 +94,7 @@ export default class ClassTimingItem extends React.Component {
      * 去课表列表
      **/
     turnToClassTableDetil(rowData) {
+        console.log(rowData);
         return
         var currentAttendanceListUrl = encodeURI(WebServiceUtil.mobileServiceURL + "newCurriculumSchedule?clazzroomId=" + this.state.uid + "&classTableId=" + rowData.id + "&classTableName=" + rowData.name);
 
@@ -108,8 +108,8 @@ export default class ClassTimingItem extends React.Component {
         });
     }
 
-    creatNewTable() {
-        var currentAttendanceListUrl = encodeURI(WebServiceUtil.mobileServiceURL + "addClassTimingItem?clazzroomId=" + 166);
+    creatNewTable = () => {
+        var currentAttendanceListUrl = encodeURI(WebServiceUtil.mobileServiceURL + "addClassTimingItem?pid=" + this.state.pid);
 
         var data = {
             method: 'openNewPage',
@@ -122,17 +122,16 @@ export default class ClassTimingItem extends React.Component {
     }
 
     /**
-     *　更新教室某个课表状态
-     * @param ctId   课表id
-     * @param condition 课表状态 0 = 删除, 1 =　启用, 3 = 停用
-     * @throws Exception
+     * 删除定时规则
+     * delClazzPlanTime(String pid,String tid)
+     * @param data
      */
     delTable(data) {
         var _this = this;
         var param = {
-            "method": 'changeCourseTableStatus',
-            "condition": 0,
-            "ctId": data.id,
+            "method": 'delClazzPlanTime',
+            "pid": data.pid,
+            "tid": data.tid,
         };
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
             onResponse: (result) => {
@@ -143,7 +142,7 @@ export default class ClassTimingItem extends React.Component {
                         rowHasChanged: (row1, row2) => row1 !== row2,
                     });
                     _this.initData.forEach(function (v, i) {
-                        if (data.id == v.id) {
+                        if (data.tid == v.tid) {
                             _this.initData.splice(i, 1);
                         }
                     });
@@ -181,19 +180,34 @@ export default class ClassTimingItem extends React.Component {
         var _this = this;
 
         const row = (rowData, sectionID, rowID) => {
-
             return (
                 <div className="classInfo line_public">
                     <div onClick={this.turnToClassTableDetil.bind(this, rowData)}
                          className="am-list-content">
-                        <span>周一</span>
-                        <span>周一</span>
-                        <span>周一</span>
+                        {
+                            rowData.regular.split(',').map((v) => {
+                                if (v == 0) {
+                                    return <span>周日</span>
+                                } else if (v == 1) {
+                                    return <span>周一</span>
+                                } else if (v == 2) {
+                                    return <span>周二</span>
+                                } else if (v == 3) {
+                                    return <span>周三</span>
+                                } else if (v == 4) {
+                                    return <span>周四</span>
+                                } else if (v == 5) {
+                                    return <span>周五</span>
+                                } else if (v == 6) {
+                                    return <span>周六</span>
+                                }
+                            })
+                        }
                     </div>
                     <div onClick={this.turnToClassTableDetil.bind(this, rowData)}
                          className="am-list-content listTime">
-                        <span>开启时间9:30</span>
-                        <span>关闭时间18:40</span>
+                        <span>开启时间 {rowData.tartingUpTime.substr(0, rowData.tartingUpTime.length - 3)}</span>
+                        <span>关闭时间 {rowData.powerOffTime.substr(0, rowData.tartingUpTime.length - 3)}</span>
                     </div>
                     <Button type="primary" size="small" className="btn_del deleteBtn_common"
                             onClick={this.showAlert.bind(this, rowData)}></Button>

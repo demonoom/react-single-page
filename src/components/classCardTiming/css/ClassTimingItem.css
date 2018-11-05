@@ -1,0 +1,86 @@
+#ClassTimingItem {
+  font-size: 17px;
+}
+#ClassTimingItem .whiteBack {
+  background-color: #fff;
+}
+#ClassTimingItem .am-pull-to-refresh-content-wrapper {
+  height: 100%;
+  overflow-y: auto;
+}
+#ClassTimingItem .am-pull-to-refresh-indicator {
+  font-size: 1rem !important;
+}
+#ClassTimingItem .am-list-body {
+  border: 0;
+}
+#ClassTimingItem .tableDiv {
+  position: relative;
+}
+#ClassTimingItem .tableDiv .am-card-body {
+  min-height: 1.5rem !important;
+  color: #888 !important;
+}
+#ClassTimingItem .tableDiv .am-card-footer {
+  margin-bottom: 1rem;
+}
+#ClassTimingItem .tableDiv .calmCardUnbind {
+  background: #f55d45;
+  color: #fff !important;
+  padding: 0 15px;
+  text-align: center;
+  -webkit-border-radius: 2px;
+  -moz-border-radius: 2px;
+  border-radius: 2px;
+  position: absolute;
+  right: 15px;
+  top: 15px;
+  font-size: 14px;
+  line-height: 24px;
+}
+#ClassTimingItem .tableDiv .classInfo {
+  position: relative;
+  padding: 15px;
+  line-height: 24px;
+}
+#ClassTimingItem .tableDiv .classInfo .textOver {
+  font-size: 16px;
+}
+#ClassTimingItem .tableDiv .classInfo .am-list-content {
+  line-height: 22px;
+}
+#ClassTimingItem .tableDiv .classInfo .am-list-content span {
+  margin-right: 10px;
+}
+#ClassTimingItem .tableDiv .classInfo .listTime {
+  padding-top: 12px;
+  font-size: 15px;
+  color: #666;
+  overflow: hidden;
+}
+#ClassTimingItem .tableDiv .classInfo .listTime span:last-child {
+  float: right;
+  margin-right: 0;
+}
+#ClassTimingItem .am-button-small {
+  background-color: #fff;
+  height: 22px;
+  line-height: 22px;
+  position: absolute;
+  right: 5px;
+  top: 15px;
+  border: none !important;
+}
+#ClassTimingItem .am-button-small:before {
+  border: 0;
+}
+#ClassTimingItem .am-list-body::before,
+#ClassTimingItem .am-list-body::after {
+  background: transparent;
+}
+#ClassTimingItem .am-list-body div:not(:last-child) .am-list-line {
+  border-bottom: 1px solid transparent;
+}
+#ClassTimingItem .am-list-view-scrollview-content {
+  width: 100%;
+}
