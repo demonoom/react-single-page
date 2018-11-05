@@ -91,7 +91,7 @@ export default class updateClassTimingItem extends React.Component {
 
     /**
      * 添加定时规则
-     *  saveClazzPlanTime(String pid,String regular,String upTime,String offTime)
+     *  updateClazzPlanTime(String tid,String pid,String regular,String upTime,String offTime)
      */
     saveClazzPlanTime = () => {
         var regular = ''
@@ -111,8 +111,9 @@ export default class updateClassTimingItem extends React.Component {
             return
         }
         var param = {
-            "method": 'saveClazzPlanTime',
+            "method": 'updateClazzPlanTime',
             "pid": this.state.pid,
+            "tid": this.state.tid,
             "regular": regular.substr(0, regular.length - 1),
             "upTime": this.state.openTime + ':00',
             "offTime": this.state.closeTime + ':00',
@@ -120,7 +121,7 @@ export default class updateClassTimingItem extends React.Component {
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
             onResponse: function (result) {
                 if (result.msg == '调用成功' && result.success == true) {
-                    Toast.success('添加成功', 2)
+                    Toast.success('更新成功', 2)
                     setTimeout(function () {
                         var data = {
                             method: 'finishForRefresh',
