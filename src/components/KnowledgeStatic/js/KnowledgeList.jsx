@@ -93,8 +93,7 @@ export default class KnowledgeList extends React.Component {
                     }
 
                 </div>
-                <div style={this.state.ListData.length <=0 ?{display:'block'}:{display:'none'}}>{this.state.text}</div>
-
+                <div className='emptyCont' style={this.state.ListData.length <=0 ?{display:'block'}:{display:'none'}}><img src={require('../img/weixin-empty.png')} alt="" /><br />{this.state.text}</div>
             </div>
         );
     }
