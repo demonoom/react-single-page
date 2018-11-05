@@ -61,11 +61,77 @@ export default class classHonor extends React.Component {
         };
         Bridge.callHandler(data, function (res) {
             //拿到图片地址,显示在页面等待上传
-            var arr = res.split(',');
-            demeanor.setState({ imgFromAndArr: demeanor.state.imgFromAndArr.concat(arr) });
+            var classDemeanors = res.split(',');
+            var promiseArray = [];
+            console.log(classDemeanors, '图片地址');
+            for (var k = 0; k < classDemeanors.length; k++) {
+                console.log(k);
+                if (classDemeanors[k].substr(classDemeanors[k].length - 3, 3) == 'mp4') {
+                    console.log(k, '视频k');
+                    var cut = new Promise(function (resolve, reject) {
+                        let t = k;
+                        let video = document.createElement("video");
+                        let canvas = document.createElement("canvas");
+                        video.src = classDemeanors[t];
+                        video.crossOrigin = 'Anonymous';
+                        video.addEventListener('loadeddata', function () {
+                            console.log('执行');
+                            canvas.width = video.videoWidth * 0.8;
+                            canvas.height = video.videoHeight * 0.8;
+                            canvas.getContext('2d').drawImage(video, 0, 0, canvas.width, canvas.height);
+                            // var $Blob = canvas.toDataURL("image/png");
+                            var $Blob = demeanor.getBlobBydataURI(canvas.toDataURL("image/png"),'image/jpeg');
+
+                            var formData = new FormData();
+                            formData.append("filePath", $Blob, "file_" + Date.parse(new Date()) + ".png");
+                            $.ajax({
+                                type: "POST",
+                                url: "https://jiaoxue.maaee.com:8890/Excoord_Upload_Server/file/upload",
+                                enctype: 'multipart/form-data',
+                                data: formData,
+                                // 告诉jQuery不要去处理发送的数据
+                                processData: false,
+                                // 告诉jQuery不要去设置Content-Type请求头
+                                contentType: false,
+                                success: function (res) {
+                                    classDemeanors[t] = classDemeanors[t] + '&' + res;
+                                    resolve('成功');
+                                },
+                                error:function(res){
+                                    $('body').html(res);
+                                }
+                            });
+                        });
+                    })
+                    promiseArray.push(cut);
+                }
+            }
+            // console.log(promiseArray,'promiseArray')
+            Promise.all(promiseArray).then(function (e) {
+                //     console.log(e,'promise');
+                console.log(classDemeanors, 'classDemeanors!!!!!!');
+                demeanor.setState({ imgFromAndArr: demeanor.state.imgFromAndArr.concat(classDemeanors) });
+                // return;
+            })
+
         }, function (error) {
             console.log(error);
         });
+    }
+
+    /**
+     * 首先需要 吧 base64 流转换成 blob 对象，文件对象都继承它
+     * @param dataURI
+     * @param type
+     * @returns {*}
+     */
+    getBlobBydataURI(dataURI, type) {
+        var binary = atob(dataURI.split(',')[1]);
+        var array = [];
+        for (var i = 0; i < binary.length; i++) {
+            array.push(binary.charCodeAt(i));
+        }
+        return new Blob([new Uint8Array(array)], {type: type});
     }
 
     /**

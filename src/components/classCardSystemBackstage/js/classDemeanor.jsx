@@ -1,5 +1,5 @@
 import React from 'react';
-import { Picker, List, WhiteSpace, WingBlank, Button, Toast, Modal } from 'antd-mobile';
+import {Picker, List, WhiteSpace, WingBlank, Button, Toast, Modal} from 'antd-mobile';
 import '../css/classDemeanor.less'
 
 var demeanor;
@@ -24,7 +24,7 @@ export default class classDemeanor extends React.Component {
         var ident = locationSearch.split("&")[0].split('=')[1];
         var className = locationSearch.split("&")[1].split('=')[1];
         document.title = className;
-        this.setState({ classId: ident });
+        this.setState({classId: ident});
         this.getClassDemeanorInfo(ident);
     }
 
@@ -37,7 +37,7 @@ export default class classDemeanor extends React.Component {
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
             onResponse: function (result) {
                 if (result.msg == '调用成功' || result.success == true) {
-                    demeanor.setState({ imgArr: result.response });
+                    demeanor.setState({imgArr: result.response});
                 }
             },
             onError: function (error) {
@@ -56,11 +56,79 @@ export default class classDemeanor extends React.Component {
 
         Bridge.callHandler(data, function (res) {
             //拿到图片地址,显示在页面等待上传
-            var arr = res.split(',');
-            demeanor.setState({ imgFromAndArr: demeanor.state.imgFromAndArr.concat(arr) });
+            var classDemeanors = res.split(',');
+            var promiseArray = [];
+            console.log(classDemeanors, '图片地址');
+            for (var k = 0; k < classDemeanors.length; k++) {
+                console.log(k);
+                if (classDemeanors[k].substr(classDemeanors[k].length - 3, 3) == 'mp4') {
+                    console.log(k, '视频k');
+                    var cut = new Promise(function (resolve, reject) {
+                        let t = k;
+                        let video = document.createElement("video");
+                        let canvas = document.createElement("canvas");
+                        video.src = classDemeanors[t];
+                        video.crossOrigin = 'Anonymous';
+                        video.addEventListener('loadeddata', function () {
+                            console.log('执行');
+                            canvas.width = video.videoWidth * 0.8;
+                            canvas.height = video.videoHeight * 0.8;
+                            canvas.getContext('2d').drawImage(video, 0, 0, canvas.width, canvas.height);
+                            // var $Blob = canvas.toDataURL("image/png");
+                            var $Blob = demeanor.getBlobBydataURI(canvas.toDataURL("image/png"),'image/jpeg');
+
+                            var formData = new FormData();
+                            formData.append("filePath", $Blob, "file_" + Date.parse(new Date()) + ".png");
+                            $.ajax({
+                                type: "POST",
+                                url: "https://jiaoxue.maaee.com:8890/Excoord_Upload_Server/file/upload",
+                                enctype: 'multipart/form-data',
+                                data: formData,
+                                // 告诉jQuery不要去处理发送的数据
+                                processData: false,
+                                // 告诉jQuery不要去设置Content-Type请求头
+                                contentType: false,
+                                success: function (res) {
+                                    console.log(res);
+                                    classDemeanors[t] = classDemeanors[t] + '&' + res;
+                                    resolve('成功');
+                                },
+                                error:function(res){
+                                    $('body').html(res);
+                                }
+                            });
+                        });
+                    });
+                    promiseArray.push(cut);
+                }
+            }
+            // console.log(promiseArray,'promiseArray')
+            Promise.all(promiseArray).then(function (e) {
+                //     console.log(e,'promise');
+                console.log(classDemeanors, 'classDemeanors!!!!!!');
+                demeanor.setState({imgFromAndArr: demeanor.state.imgFromAndArr.concat(classDemeanors)});
+                // return;
+            })
+            // }
+
         }, function (error) {
             console.log(error);
         });
+    }
+
+    /**
+     * 首先需要 吧 base64 流转换成 blob 对象，文件对象都继承它
+     * @param dataURI
+     * @param type
+     * @returns {*}
+     */
+    getBlobBydataURI(dataURI, type) {
+        var binary = atob(dataURI.split(',')[1]);
+        var array = [];
+        for (var i = 0; i < binary.length; i++) {
+            array.push(binary.charCodeAt(i));
+        }
+        return new Blob([new Uint8Array(array)], {type: type});
     }
 
     /**
@@ -111,7 +179,7 @@ export default class classDemeanor extends React.Component {
                                 arr.splice(i, 1);
                             }
                         })
-                        demeanor.setState({ imgArr: arr })
+                        demeanor.setState({imgArr: arr})
                     }
                 },
                 onError: function (error) {
@@ -135,17 +203,17 @@ export default class classDemeanor extends React.Component {
         const alertInstance = alert('确定删除吗?', '', [
             {
                 text: '取消', onPress: () => {
-                    if (cancel) {
-                        cancel();
-                    }
-                }, style: 'default'
+                if (cancel) {
+                    cancel();
+                }
+            }, style: 'default'
             },
             {
                 text: '确定', onPress: () => {
-                    if (success) {
-                        success()
-                    }
+                if (success) {
+                    success()
                 }
+            }
             },
         ], phone);
     }
@@ -158,12 +226,12 @@ export default class classDemeanor extends React.Component {
                 arr.splice(i, 1);
             }
         })
-        demeanor.setState({ imgFromAndArr: arr })
+        demeanor.setState({imgFromAndArr: arr})
     }
 
     render() {
         return (
-            <div id="classDemeanor" style={{ height: document.body.clientHeight }}>
+            <div id="classDemeanor" style={{height: document.body.clientHeight}}>
                 <div className="Img_cont">
                     <div className="classDemeanor_title">风采展示</div>
                     <div className='showImg my_flex my_flex_wrap'>
@@ -172,15 +240,17 @@ export default class classDemeanor extends React.Component {
                             var extra = arr[0].split('.');
                             return <div className="listImg flex_center">
                                 {
-                                    extra[extra.length - 1] == "mp4" ? <video style={{ width: "100%",height:"100%" }} src={v.imagePath}></video> : <img className='uploadImgBtn' src={v.imagePath} alt="" />
+                                    extra[extra.length - 1] == "mp4" ?
+                                        <video style={{width: "100%", height: "100%"}} src={v.imagePath}></video> :
+                                        <img className='uploadImgBtn' src={v.imagePath} alt=""/>
                                 }
 
                                 <img onClick={this.deleteClassDemeanorInfo.bind(this, v.id)} className='delImgBtn'
-                                    src={require('../imgs/delPic.png')} alt="" />
+                                     src={require('../imgs/delPic.png')} alt=""/>
                             </div>
                         })}
                     </div>
-                    <WhiteSpace size="lg" />
+                    <WhiteSpace size="lg"/>
                     <div className="classDemeanor_title">上传资源</div>
                     <div className='uploadImg my_flex my_flex_wrap'>
                         {this.state.imgFromAndArr.map((v, i) => {
@@ -188,12 +258,14 @@ export default class classDemeanor extends React.Component {
                             var extra = arr[0].split('.');
                             return <div className="listImg flex_center">
                                 {
-                                    extra[extra.length - 1] == "jpg" ? <img className='uploadImgBtn' src={v} alt="" /> :
-                                    extra[extra.length - 1] == "mp4" ? <video style={{ width: "100%",height:"100%" }} src={v}></video> : 
-                                    extra[extra.length - 1] == "JPG" ? <img className='uploadImgBtn' src={v} alt="" /> : ""
+                                    extra[extra.length - 1] == "jpg" ? <img className='uploadImgBtn' src={v} alt=""/> :
+                                        extra[extra.length - 1] == "mp4" ?
+                                            <video style={{width: "100%", height: "100%"}} src={v}></video> :
+                                            extra[extra.length - 1] == "JPG" ?
+                                                <img className='uploadImgBtn' src={v} alt=""/> : ""
                                 }
                                 <img onClick={this.deleteimgFromAndArr.bind(this, i)} className='delImgBtn'
-                                    src={require('../imgs/delPic.png')} alt="" />
+                                     src={require('../imgs/delPic.png')} alt=""/>
                             </div>
                         })}
                         <img
@@ -205,7 +277,7 @@ export default class classDemeanor extends React.Component {
                     </div>
                 </div>
                 <div className='addCourseButton'>
-                    <WhiteSpace size="lg" />
+                    <WhiteSpace size="lg"/>
                     <WingBlank>
                         <Button type="warning" onClick={this.uploadImg}>上传</Button>
                     </WingBlank>

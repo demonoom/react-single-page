@@ -282,6 +282,9 @@
   width: 100%;
   margin-bottom: 5px;
 }
+#antPlate .am-modal-mask {
+  background: none;
+}
 .termite_popover {
   width: 200px;
   top: 52px !important;
