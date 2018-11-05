@@ -7,6 +7,7 @@ import {
     Icon
 } from 'antd-mobile';
 import { SimpleWebsocketConnection } from '../../../helpers/simple_websocket_connection'
+import '../css/pushVideo.less'
 var calm;
 window.simpleMS = null;
 const prompt = Modal.prompt;
@@ -370,6 +371,7 @@ export default class pushVideo extends React.Component {
         return (
             <div id="pushVideo">
                 <div className='emptyCont' style={{ display: calm.state.dataNone ? 'none' : '' }}>
+                    <img src={require("../img/icon_empty.png")} /><br/>
                     暂无数据
                 </div>
                 <ListView
