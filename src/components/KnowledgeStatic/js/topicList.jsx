@@ -11,7 +11,7 @@ export default class topicList extends React.Component {
         this.state = {
             clientHeight: document.body.clientHeight,
             ListData:[],
-            text:'正在加载...'
+            text:'暂无数据'
         }
     }
 
@@ -63,14 +63,13 @@ export default class topicList extends React.Component {
         return (
             <div id="KnowledgeList" style={{
                 height: this.state.clientHeight + 'px',
-                overflow: 'auto',
             }}>
                 <div className="list_box">
                     {
                         this.state.ListData.map((value,index)=>{
                             return <div className="list_item item line_public">
                                 <div className='topCont tagCont my_flex'>
-                                    <div className="text_hidden" dangerouslySetInnerHTML={{__html: value.pushSubject.content}}></div>
+                                    <div className="htmlDiv text_hidden" dangerouslySetInnerHTML={{__html: value.pushSubject.content}}></div>
                                     <span className='rate'>正确率：<span>{(value.rightCount/value.totalCount)*100+"%"}</span></span>
                                 </div>
                                 <div className='gray_text'>
@@ -81,7 +80,7 @@ export default class topicList extends React.Component {
                             </div>
                         })
                     }
-                    <div style={this.state.ListData.length <=0 ?{display:'block'}:{display:'none'}}>{this.state.text}</div>
+                    <div className='emptyCont'  style={this.state.ListData.length <=0 ?{display:'block'}:{display:'none'}}><img src={require('../img/weixin-empty.png')} alt="" /><br />{this.state.text}</div>
                 </div>
 
             </div>

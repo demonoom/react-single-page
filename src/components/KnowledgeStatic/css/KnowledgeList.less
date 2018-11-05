@@ -1,6 +1,7 @@
 #KnowledgeList {
   height: 100%;
   overflow-y: auto;
+  position: relative;
   .item {
     padding: 15px;
     background-color: white;
@@ -14,22 +15,28 @@
           vertical-align: middle;
         }
         .text_hidden {
-          width: calc(~"100% - 90px");
+          width: calc(~"100% - 110px");
+        }
+        .htmlDiv{
+          max-height: 55px;
+          >div{
+            height: 100% !important;
+            img{
+              max-height: 100% !important;
+            }
+          }
         }
       }
     }
     .rate {
       float: right;
-      width: 90px;
+      width: 110px;
       text-align: right;
       span {
         color: #199D5C;
       }
     }
-    .text {
-      color: #333;
-      width: calc(~"100% - 120px");
-    }
+
     .tag {
       font-size: 16px;
       color: #333;
