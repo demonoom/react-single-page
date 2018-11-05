@@ -129,27 +129,37 @@ export default class KnowledgeStatic extends React.Component {
 
             },
             tooltip: {
-                trigger: 'axis'  //轴,
+                trigger: 'axis', //轴,
+                axisPointer: {            // 坐标轴指示器，坐标轴触发有效
+                    type: 'line',         // 默认为直线，可选为：'line' | 'shadow'
+                    lineStyle: {          // 直线指示器样式设置
+                        color: '#638BB7',
+                        width: 1,
+                        type: 'solid'
+                    },
+                },
             },
             legend: {
                 data: ['正确率'],
                 x: 'right',
+                right: '0',
                 textStyle: {
-                    fontSize: 14
+                    fontSize: 12,
+                    color:'#666',
                 }
 
             },
             grid:{
-                x:25,
-                y:33,
-                x2:25,
-                y2:80,
+                x:27,
+                y:50,
+                x2:0,
+                y2:30,
             },
             visualMap: {
                 show: false,
                 min: 0,
                 max: 1000,
-                color: ['red']   //折线颜色
+                color: ['#2B84EF']  , //折线颜色
             },
             xAxis: [
                 {
@@ -157,6 +167,24 @@ export default class KnowledgeStatic extends React.Component {
                     // name:'时间',
                     boundaryGap: true,
                     data: xClassArray,
+                    axisLine: {
+                        show: true,
+                        lineStyle: {
+                            color: '#C9C9C9',
+                            width: 1,
+                            type: 'solid'
+                        },
+                    },
+                    axisLabel: {
+                        textStyle: {
+                            color: '#666',
+                            fontSize: 12
+                        },
+                        //这个是倾斜角度，也是考虑到文字过多的时候，方式覆盖采用倾斜
+                        rotate: 0,
+                        //这里是考虑到x轴文件过多的时候设置的，如果文字太多，默认是间隔显示，设置为0，标示全部显示，当然，如果x轴都不显示，那也就没有意义了
+                        interval: 'auto',
+                    },
                 },
             ],
             yAxis: [
@@ -167,11 +195,37 @@ export default class KnowledgeStatic extends React.Component {
                     max: 100,
                     min: 0,
                     boundaryGap: [0, 0],  //边距
+                    axisLine: {
+                        show: true,
+                        lineStyle: {
+                            color: '#C9C9C9',
+                            width: 1,
+                            type: 'solid'
+                        },
+                    },
+                    splitLine: {
+                        show: true,
+                        lineStyle: {
+                            color: '#eee',
+                            width: 1,
+                            type: 'solid'
+                        }
+                    },
+                    axisLabel: {
+                        textStyle: {
+                            color: '#666',
+                            fontSize: 12
+                        },
+                        //这个是倾斜角度，也是考虑到文字过多的时候，方式覆盖采用倾斜
+                        rotate: 0,
+                        //这里是考虑到x轴文件过多的时候设置的，如果文字太多，默认是间隔显示，设置为0，标示全部显示，当然，如果x轴都不显示，那也就没有意义了
+                        interval: 'auto',
+                    },
                 },
             ],
             dataZoom: [
                 {
-                    show: true,
+                    show: false,
                     //开始位置的百分比，0 - 100
                     start: 0,
                     //结束位置的百分比，0 - 100
@@ -194,6 +248,14 @@ export default class KnowledgeStatic extends React.Component {
                             show: true,            //显示数字
                             position: 'top'        //这里可以自己选择位置
                         }
+                    },
+                    itemStyle: {
+                        //通常情况下：
+                        normal: {
+                            //每个柱子的颜色即为colorList数组里的每一项，如果柱子数目多于colorList的长度，则柱子颜色循环使用该数组
+                            color: '#2B84EF',
+                        },
+
                     },
                     // symbol: 'star',//节点形状
                 }

@@ -1,0 +1,287 @@
+#ClassTimingList {
+  font-size: 17px;
+}
+#ClassTimingList .whiteBack {
+  background-color: #fff;
+}
+#ClassTimingList .am-pull-to-refresh-content-wrapper {
+  height: 100%;
+  overflow-y: auto;
+}
+#ClassTimingList .am-pull-to-refresh-indicator {
+  font-size: 1rem !important;
+}
+#ClassTimingList .am-list-body {
+  border: 0;
+}
+#ClassTimingList .tableDiv {
+  position: relative;
+}
+#ClassTimingList .tableDiv .am-card-body {
+  min-height: 1.5rem !important;
+  color: #888 !important;
+}
+#ClassTimingList .tableDiv .am-card-footer {
+  margin-bottom: 1rem;
+}
+#ClassTimingList .tableDiv .calmCardUnbind {
+  background: #f55d45;
+  color: #fff !important;
+  padding: 0 15px;
+  text-align: center;
+  -webkit-border-radius: 2px;
+  -moz-border-radius: 2px;
+  border-radius: 2px;
+  position: absolute;
+  right: 15px;
+  top: 15px;
+  font-size: 14px;
+  line-height: 24px;
+}
+#ClassTimingList .tableDiv .classInfo {
+  position: relative;
+  padding: 10px 0;
+  line-height: 24px;
+}
+#ClassTimingList .tableDiv .classInfo .textOver {
+  font-size: 16px;
+}
+#ClassTimingList .tableDiv .classroom {
+  color: #666;
+}
+#ClassTimingList .tableDiv .grade {
+  color: #a9a9a9;
+  padding-left: 10px;
+  font-size: 15px;
+}
+#ClassTimingList .tableDiv .noomCardUnbind {
+  color: #ff144e;
+}
+#ClassTimingList .tableDiv .liName {
+  font-size: 30px;
+}
+#ClassTimingList .addModel {
+  box-sizing: border-box;
+  padding: 20px 0px;
+  position: relative;
+}
+#ClassTimingList .addModel .bindGrade {
+  padding: 4px 0;
+}
+#ClassTimingList .addModel .am-checkbox-inner {
+  -webkit-border-radius: 0;
+  -moz-border-radius: 0;
+  border-radius: 0;
+}
+#ClassTimingList .addModel .am-checkbox-agree .am-checkbox-agree-label {
+  line-height: 1.7;
+}
+#ClassTimingList .addModel .am-list .am-list-body::before {
+  display: none !important;
+}
+#ClassTimingList .addModel .am-list .am-list-body::after {
+  display: none !important;
+}
+#ClassTimingList .addModel .am-list .am-list-body {
+  background: transparent;
+}
+#ClassTimingList .addModel .am-list .am-list-body .macAddress {
+  margin-bottom: 1rem;
+}
+#ClassTimingList .addModel .am-list .am-list-body .chooseResult .am-list-item {
+  background: #e4e4e4;
+  padding: 0;
+}
+#ClassTimingList .addModel .am-list .am-list-body .chooseResult .am-list-item .am-list-line {
+  padding: 0 20px;
+}
+#ClassTimingList .addModel .am-list .am-list-body .chooseResult .am-list-item .am-list-line .am-list-content {
+  font-size: 17px;
+  padding: 1.5rem 1.5rem;
+  border-bottom: 1px solid #d5d5d5;
+  color: #676767;
+}
+#ClassTimingList .addModel .am-list .am-list-body .chooseResult .am-list-item .am-list-line .am-list-content .am-list-brief {
+  font-size: 1.4rem;
+  color: #a2a2a2;
+}
+#ClassTimingList .addModel .am-list .am-list-body .chooseResult .am-list-item .am-list-line .am-list-extra .am-radio.am-radio-checked {
+  height: 100%;
+}
+#ClassTimingList .addModel .am-list .am-list-body .chooseResult .am-list-item .am-list-line .am-list-extra .am-radio-inner {
+  top: 45%;
+  transform: translateY(-50%);
+}
+#ClassTimingList .addModel .am-list .am-list-body .am-list-item .am-input-label {
+  color: #3c3c3c;
+}
+#ClassTimingList .addModel .am-list .am-list-body .am-list-item .am-input-control {
+  line-height: 25px;
+}
+#ClassTimingList .addModel .am-list .am-list-body .am-list-item .am-input-control input {
+  color: #3c3c3c;
+}
+#ClassTimingList .addModel .am-list .am-list-body .am-list-line::after {
+  height: 0px;
+}
+#ClassTimingList .addModel .am-list .am-list-body .am-list-line .am-input-label.am-input-label-5 {
+  width: auto !important;
+  position: relative;
+  padding-right: 15px;
+}
+#ClassTimingList .addModel .am-list .am-list-body .am-list-line .am-input-control input {
+  width: 88% !important;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+#ClassTimingList .addModel .chooseResult {
+  height: 300px;
+  overflow: auto;
+}
+#ClassTimingList .addModel .close {
+  font-size: 1.5em;
+  background: #fff;
+  color: #e94f4f;
+}
+#ClassTimingList .addModel > h1 {
+  margin-bottom: 50px;
+}
+#ClassTimingList .addModel .macAddress {
+  position: relative;
+}
+#ClassTimingList .addModel .macAddress .scanIcon {
+  width: 30px;
+  height: 30px;
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+}
+#ClassTimingList .addModel .classroomName,
+#ClassTimingList .addModel .gradeName {
+  position: relative;
+}
+#ClassTimingList .addModel .classroomName .redStar,
+#ClassTimingList .addModel .gradeName .redStar {
+  color: red;
+  font-size: 22px;
+  position: absolute;
+  right: 2px;
+  top: 2px;
+}
+#ClassTimingList .addModel .classroomName .stIcon,
+#ClassTimingList .addModel .gradeName .stIcon {
+  width: 18px;
+  height: 28px;
+  position: absolute;
+  right: 15px;
+  top: 50%;
+  margin-top: -12px;
+}
+#ClassTimingList .addModel .classroomName .stIcon img,
+#ClassTimingList .addModel .gradeName .stIcon img {
+  width: 100%;
+}
+#ClassTimingList .addModel .bottomBox {
+  display: flex;
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+}
+#ClassTimingList .addModel .bottomBox span {
+  flex: 1;
+  text-align: center;
+  font-size: 17px;
+  padding: 1rem;
+  display: inline-block;
+}
+#ClassTimingList .addModel .bottomBox .bind {
+  background: #e94f4f;
+  color: #fff;
+}
+#ClassTimingList .addModel .bottomBox .bind:active {
+  color: rgba(255, 255, 255, 0.3);
+  background-color: #d24747;
+}
+#ClassTimingList .amList_cont {
+  height: 44px;
+  line-height: 44px;
+  padding-right: 15px;
+}
+#ClassTimingList .amList {
+  width: 170px;
+  display: inline-block;
+}
+#ClassTimingList .amList .am-list-item .am-list-line .am-list-extra {
+  text-align: left;
+}
+#ClassTimingList .amList .am-list-item .am-list-line .am-list-content {
+  color: #666 !important;
+}
+#ClassTimingList .am-list-line::after {
+  background: transparent;
+}
+#ClassTimingList .tableListDate {
+  color: #666;
+  padding-left: 15px;
+  width: 100%;
+  box-sizing: border-box;
+}
+#ClassTimingList .tableListDate span {
+  margin-top: 8px;
+}
+#ClassTimingList .am-button-small {
+  background-color: #fff;
+  height: 44px;
+  line-height: 44px;
+  border: none !important;
+}
+#ClassTimingList .am-button-small:before {
+  border: 0;
+}
+#ClassTimingList .am-list-body::before,
+#ClassTimingList .am-list-body::after {
+  background: transparent;
+}
+#ClassTimingList .am-switch .checkbox {
+  height: 23px;
+  width: 46px;
+}
+#ClassTimingList .am-switch .checkbox:after {
+  width: 21px ;
+  height: 21px;
+  top: 1px;
+}
+#ClassTimingList .am-switch .checkbox:before {
+  background: #e5e5e5;
+  height: 23px;
+  width: 44px;
+  top: 0;
+}
+#ClassTimingList .am-list-body div:not(:last-child) .am-list-line {
+  border-bottom: 1px solid transparent;
+}
+#ClassTimingList .open_text {
+  font-size: 16px;
+}
+#ClassTimingList .classroom_span {
+  width: 89px;
+  display: inline-block;
+}
+#ClassTimingList .am-list-view-scrollview-content {
+  width: 100%;
+}
+#ClassTimingList .attendanceCont .title {
+  color: #333;
+  font-size: 17px;
+  padding: 5px 15px 0;
+  box-sizing: border-box;
+}
+#ClassTimingList .attendanceCont .am-list-item {
+  min-height: 38px;
+}
+#ClassTimingList .attendanceCont .time span {
+  margin-top: 8px;
+}
