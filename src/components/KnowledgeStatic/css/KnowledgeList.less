@@ -1,0 +1,104 @@
+#KnowledgeList {
+  height: 100%;
+  overflow-y: auto;
+  position: relative;
+  .item {
+    padding: 15px;
+    background-color: white;
+    font-size: 15px;
+    color: #333;
+    .topCont {
+      padding-bottom: 15px;
+      &.tagCont {
+        line-height: 20px;
+        .tag {
+          vertical-align: middle;
+        }
+        .text_hidden {
+          width: calc(~"100% - 110px");
+        }
+        .htmlDiv{
+          max-height: 55px;
+          >div{
+            height: 100% !important;
+            img{
+              max-height: 100% !important;
+            }
+          }
+        }
+      }
+    }
+    .rate {
+      float: right;
+      width: 110px;
+      text-align: right;
+      span {
+        color: #199D5C;
+      }
+    }
+
+    .tag {
+      font-size: 16px;
+      color: #333;
+      margin-left: 10px;
+    }
+    .course {
+      color: #fff;
+      background-color: #4285F4;
+      border-radius: 2px;
+      padding: 0 7px;
+      vertical-align: middle;
+      font-size: 12px;
+      line-height: initial;
+      display: inline-block;
+    }
+    .gray_text {
+      color: #666;
+      font-size: 14px;
+      span {
+        position: relative;
+        padding-left: 15px;
+        padding-right: 15px;
+        &:first-child {
+          padding-left: 0;
+          &::after {
+            display: none;
+          }
+        }
+        &::after {
+          position: absolute;
+          content: '';
+          top: 50%;
+          left: 0;
+          width: 1px;
+          height: 100%;
+          background-color: #E5E5E5;
+          -webkit-transform: translateY(-50%);
+          -moz-transform: translateY(-50%);
+          -ms-transform: translateY(-50%);
+          -o-transform: translateY(-50%);
+          transform: translateY(-50%);
+        }
+      }
+    }
+  }
+  .emptyCont{
+    position: absolute;
+    left: 50%;
+    top:50%;
+    -webkit-transform: translate(-50%,-50%);
+    -moz-transform: translate(-50%,-50%);
+    -ms-transform: translate(-50%,-50%);
+    -o-transform: translate(-50%,-50%);
+    transform: translate(-50%,-50%);
+    z-index: 10;
+    text-align: center;
+    color: #666;
+    width: 134px;
+    font-size: 14px;
+    img{
+      width: 104px;
+      margin:0 auto 25px auto
+    }
+  }
+}

@@ -12,7 +12,7 @@ export default class KnowledgeList extends React.Component {
         this.state = {
             clientHeight: document.body.clientHeight,
             ListData:[],
-            text:'正在加载...'
+            text:'暂无数据'
         }
     }
 
@@ -70,31 +70,36 @@ export default class KnowledgeList extends React.Component {
     onItemClick(id){
         console.log(id);
         window.location.href = WebServiceUtil.mobileServiceURL + "topicList?tagId="+id;
+        // window.location.reload();
     }
 
     render() {
         return (
-            <div id="KnowledgeStatic" style={{
+            <div id="KnowledgeList" style={{
                 height: this.state.clientHeight + 'px',
-                overflow: 'auto',
             }}>
                 <div className="list_box">
                     {
                         this.state.ListData.map((value,index)=>{
-                            return <div onClick={this.onItemClick.bind(this,value.tags.id)} className="list_item">
-                                <div>{value.tags.tagTitle}</div>
-                                <div>{value.course?value.course.name:'无'}</div>
-                                <div>{value.totalCount+"人提交"}</div>
-                                <div>{value.rightCount+"人回答正确"}</div>
-                                <div>{value.totalCount - value.rightCount+"回答错误"}</div>
-                                <div><span>正确率:</span>{(value.rightCount/value.totalCount)*100+"%"}</div>
-                            </div>
+                            return <div onClick={this.onItemClick.bind(this,value.tags.id)}  className='list_item item line_public'>
+                                        <div className='topCont tagCont'>
+                                           <span className="text_hidden">
+                                                <span className='course'>{value.course?value.course.name:'无'}</span>
+                                                <span className='tag'>{value.tags.tagTitle}</span>
+                                           </span>
+                                            <span className='rate'>正确率：<span>{(value.rightCount/value.totalCount)*100+"%"}</span></span>
+                                        </div>
+                                        <div className='gray_text'>
+                                            <span>{value.totalCount+"人提交"}</span>
+                                            <span>{value.rightCount+"人回答正确"}</span>
+                                            <span>{value.totalCount - value.rightCount+"人回答错误"}</span>
+                                        </div>
+                                 </div>
                         })
                     }
 
                 </div>
-                <div style={this.state.ListData.length <=0 ?{display:'block'}:{display:'none'}}>{this.state.text}</div>
-
+                <div className='emptyCont' style={this.state.ListData.length <=0 ?{display:'block'}:{display:'none'}}><img src={require('../img/weixin-empty.png')} alt="" width="104" /><br />{this.state.text}</div>
             </div>
         );
     }

@@ -29,7 +29,7 @@ export default class KnowledgeStatic extends React.Component {
         var locationSearch = locationHref.substr(locationHref.indexOf("?") + 1);
         var searchArray = locationSearch.split("&");
         var openId = searchArray[0].split('=')[1];
-        var startDate = new Date('2015-01-01');
+        var startDate = new Date('2017-01-01');
         var endDate = new Date();
         this.setState({
             openId: openId,
@@ -116,6 +116,7 @@ export default class KnowledgeStatic extends React.Component {
                     }
                 } else {
                     Toast.fail('请求出错');
+                    this.hideToast();
                 }
             },
             onError: function (error) {
@@ -132,27 +133,37 @@ export default class KnowledgeStatic extends React.Component {
 
             },
             tooltip: {
-                trigger: 'axis'  //轴,
+                trigger: 'axis', //轴,
+                axisPointer: {            // 坐标轴指示器，坐标轴触发有效
+                    type: 'line',         // 默认为直线，可选为：'line' | 'shadow'
+                    lineStyle: {          // 直线指示器样式设置
+                        color: '#638BB7',
+                        width: 1,
+                        type: 'solid'
+                    },
+                },
             },
             legend: {
                 data: ['正确率'],
                 x: 'right',
+                right: '0',
                 textStyle: {
-                    fontSize: 14
+                    fontSize: 12,
+                    color:'#666',
                 }
 
             },
             grid:{
-                x:25,
-                y:33,
-                x2:25,
-                y2:80,
+                x:27,
+                y:55,
+                x2:0,
+                y2:30,
             },
             visualMap: {
                 show: false,
                 min: 0,
                 max: 1000,
-                color: ['red']   //折线颜色
+                color: ['#2B84EF']  , //折线颜色
             },
             xAxis: [
                 {
@@ -160,6 +171,24 @@ export default class KnowledgeStatic extends React.Component {
                     // name:'时间',
                     boundaryGap: true,
                     data: xClassArray,
+                    axisLine: {
+                        show: true,
+                        lineStyle: {
+                            color: '#C9C9C9',
+                            width: 1,
+                            type: 'solid'
+                        },
+                    },
+                    axisLabel: {
+                        textStyle: {
+                            color: '#666',
+                            fontSize: 12
+                        },
+                        //这个是倾斜角度，也是考虑到文字过多的时候，方式覆盖采用倾斜
+                        rotate: 0,
+                        //这里是考虑到x轴文件过多的时候设置的，如果文字太多，默认是间隔显示，设置为0，标示全部显示，当然，如果x轴都不显示，那也就没有意义了
+                        interval: 'auto',
+                    },
                 },
             ],
             yAxis: [
@@ -170,11 +199,37 @@ export default class KnowledgeStatic extends React.Component {
                     max: 100,
                     min: 0,
                     boundaryGap: [0, 0],  //边距
+                    axisLine: {
+                        show: true,
+                        lineStyle: {
+                            color: '#C9C9C9',
+                            width: 1,
+                            type: 'solid'
+                        },
+                    },
+                    splitLine: {
+                        show: true,
+                        lineStyle: {
+                            color: '#eee',
+                            width: 1,
+                            type: 'solid'
+                        }
+                    },
+                    axisLabel: {
+                        textStyle: {
+                            color: '#666',
+                            fontSize: 12
+                        },
+                        //这个是倾斜角度，也是考虑到文字过多的时候，方式覆盖采用倾斜
+                        rotate: 0,
+                        //这里是考虑到x轴文件过多的时候设置的，如果文字太多，默认是间隔显示，设置为0，标示全部显示，当然，如果x轴都不显示，那也就没有意义了
+                        interval: 'auto',
+                    },
                 },
             ],
             dataZoom: [
                 {
-                    show: true,
+                    show: false,
                     //开始位置的百分比，0 - 100
                     start: 0,
                     //结束位置的百分比，0 - 100
@@ -197,6 +252,14 @@ export default class KnowledgeStatic extends React.Component {
                             show: true,            //显示数字
                             position: 'top'        //这里可以自己选择位置
                         }
+                    },
+                    itemStyle: {
+                        //通常情况下：
+                        normal: {
+                            //每个柱子的颜色即为colorList数组里的每一项，如果柱子数目多于colorList的长度，则柱子颜色循环使用该数组
+                            color: '#2B84EF',
+                        },
+
                     },
                     // symbol: 'star',//节点形状
                 }
@@ -244,8 +307,12 @@ export default class KnowledgeStatic extends React.Component {
             // Toast.info('数据为空无法查看');
             window.location.href = WebServiceUtil.mobileServiceURL + "KnowLedgeList?uid=" + this.state.userId + '&currentTime=' + optional.name;
         }else{
+            var url = WebServiceUtil.mobileServiceURL + "KnowLedgeList?uid=" + this.state.userId + '&currentTime=' + optional.name;
+            console.log(url);
+            window.location.href = url;
+            // window.location.reload();
+            // window.location.href = "http://www.baidu.com";
             // window.open(WebServiceUtil.mobileServiceURL + "KnowLedgeList?uid=" + this.state.userId + '&currentTime=' + optional.name);
-            window.location.href = WebServiceUtil.mobileServiceURL + "KnowLedgeList?uid=" + this.state.userId + '&currentTime=' + optional.name;
         }
         // console.log(idArray[optional.dataIndex], '学生id');
         // if (idArray[optional.dataIndex]) {
@@ -282,10 +349,10 @@ export default class KnowledgeStatic extends React.Component {
                     }else{
                         var newArray = result.users;
                         console.log(newArray,'newArray');
-                        newArray.push({
-                            colUid: 24991,
-                            userName:'测试姓名',
-                        });
+                        // newArray.push({
+                        //     colUid: 24991,
+                        //     userName:'测试姓名',
+                        // });
                         var newArray2=[];
                         for(var k in newArray){
                             newArray2.push({
@@ -303,10 +370,13 @@ export default class KnowledgeStatic extends React.Component {
                     }
 
                 } else {
+                    this.hideToast();
                     Toast.fail('请求出错');
+
                 }
             },
             onError: function (error) {
+                this.hideToast();
                 Toast.fail(error, 1);
             }
         });
@@ -365,8 +435,9 @@ export default class KnowledgeStatic extends React.Component {
                 height: this.state.clientHeight + 'px',
                 overflow: 'auto',
             }}>
-                <div style={this.state.isHidden?{display:'block'}:{display:'none'}}>
-                    该微信号未绑定
+                <div className='emptyCont' style={this.state.isHidden?{display:'block'}:{display:'none'}}>
+                    <img src={require('../img/weixin-empty.png')} alt=""  width="104" /><br />
+                    该微信号还没有绑定
                 </div>
                 <div style={this.state.isHidden?{display:'none'}:{display:'block'}}>
                     <Picker disabled={this.state.type=='老师'?true:false} data={this.state.nameArray} cols={1} value={this.state.defaultValue} onOk={this.onChangeColor} className="forss">
