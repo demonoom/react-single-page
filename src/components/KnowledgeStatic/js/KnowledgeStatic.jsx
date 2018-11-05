@@ -17,6 +17,8 @@ export default class KnowledgeStatic extends React.Component {
             nameArray:[],
             isHidden:false,
             type:'学生',
+            //不再更新学生列表
+            noUpdata: false,
         }
     }
 
@@ -27,7 +29,7 @@ export default class KnowledgeStatic extends React.Component {
         var locationSearch = locationHref.substr(locationHref.indexOf("?") + 1);
         var searchArray = locationSearch.split("&");
         var openId = searchArray[0].split('=')[1];
-        var startDate = new Date('2010-01-01');
+        var startDate = new Date('2017-01-01');
         var endDate = new Date();
         this.setState({
             openId: openId,
@@ -35,9 +37,9 @@ export default class KnowledgeStatic extends React.Component {
             endDate:endDate,
         }, function () {
             this.getUsersByOpenId(()=>{
-                console.log(this.state.userId,'userId')
-                console.log(this.state.userType,'userId')
-                console.log(this.state.userName,'userId')
+                // console.log(this.state.userId,'userId')
+                // console.log(this.state.userType,'userId')
+                // console.log(this.state.userName,'userId')
                 this.setState({
 
                 },()=>{
@@ -99,6 +101,7 @@ export default class KnowledgeStatic extends React.Component {
                     }else if(res.length > 0){
                         this.setState({
                             // userType: res[0].colUtype,
+                            //设置默认选中的学生
                             userId: res[0].colUid,
                             // userName:res[0].userName
                         },()=>{
@@ -113,6 +116,7 @@ export default class KnowledgeStatic extends React.Component {
                     }
                 } else {
                     Toast.fail('请求出错');
+                    this.hideToast();
                 }
             },
             onError: function (error) {
@@ -300,10 +304,15 @@ export default class KnowledgeStatic extends React.Component {
         console.log(optional.name,'onChartClick_name');
         console.log(optional.data,'onChartClick_data');
         if(optional.data <= 0){
-            Toast.info('数据为空无法查看');
-        }else{
-            // window.open(WebServiceUtil.mobileServiceURL + "KnowLedgeList?uid=" + this.state.userId + '&currentTime=' + optional.name);
+            // Toast.info('数据为空无法查看');
             window.location.href = WebServiceUtil.mobileServiceURL + "KnowLedgeList?uid=" + this.state.userId + '&currentTime=' + optional.name;
+        }else{
+            var url = WebServiceUtil.mobileServiceURL + "KnowLedgeList?uid=" + this.state.userId + '&currentTime=' + optional.name;
+            console.log(url);
+            window.location.href = url;
+            // window.location.reload();
+            // window.location.href = "http://www.baidu.com";
+            // window.open(WebServiceUtil.mobileServiceURL + "KnowLedgeList?uid=" + this.state.userId + '&currentTime=' + optional.name);
         }
         // console.log(idArray[optional.dataIndex], '学生id');
         // if (idArray[optional.dataIndex]) {
@@ -335,26 +344,39 @@ export default class KnowledgeStatic extends React.Component {
                 console.log(result,'图标数据');
                 if (result.success) {
                     this.getData(result.response);
-                    var newArray = result.users;
-                    console.log(newArray,'newArray')
-                    var newArray2=[];
-                    for(var k in newArray){
-                        newArray2.push({
-                            label:newArray[k].userName,
-                            value:newArray[k].colUid
+                    if(this.state.noUpdata){
+                        return;
+                    }else{
+                        var newArray = result.users;
+                        console.log(newArray,'newArray');
+                        // newArray.push({
+                        //     colUid: 24991,
+                        //     userName:'测试姓名',
+                        // });
+                        var newArray2=[];
+                        for(var k in newArray){
+                            newArray2.push({
+                                label:newArray[k].userName,
+                                value:newArray[k].colUid
+                            })
+                        }
+                        this.setState({
+                            nameArray: newArray2,
+                            defaultValue:[newArray2[0].value],
+                            noUpdata:true,
+                        },()=>{
+
                         })
                     }
-                    this.setState({
-                        nameArray: newArray2,
-                        defaultValue:[newArray2[0].value]
-                    },()=>{
 
-                    })
                 } else {
+                    this.hideToast();
                     Toast.fail('请求出错');
+
                 }
             },
             onError: function (error) {
+                this.hideToast();
                 Toast.fail(error, 1);
             }
         });
@@ -386,9 +408,12 @@ export default class KnowledgeStatic extends React.Component {
     }
 
     onChangeColor = (params) => {
-        console.log(params,'OKOKOKOK')
+        console.log(params[0],'OKOKOKOK')
         this.setState({
             defaultValue: params,
+            userId:params[0]
+        },()=>{
+            this.getAvgMasteryAccuaryLineChartData();
         });
     };
 
@@ -410,8 +435,9 @@ export default class KnowledgeStatic extends React.Component {
                 height: this.state.clientHeight + 'px',
                 overflow: 'auto',
             }}>
-                <div style={this.state.isHidden?{display:'block'}:{display:'none'}}>
-                    该微信号未绑定
+                <div className='emptyCont' style={this.state.isHidden?{display:'block'}:{display:'none'}}>
+                    <img src={require('../img/weixin-empty.png')} alt=""  width="104" /><br />
+                    该微信号还没有绑定
                 </div>
                 <div style={this.state.isHidden?{display:'none'}:{display:'block'}}>
                     <Picker disabled={this.state.type=='老师'?true:false} data={this.state.nameArray} cols={1} value={this.state.defaultValue} onOk={this.onChangeColor} className="forss">

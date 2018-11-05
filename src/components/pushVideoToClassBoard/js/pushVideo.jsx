@@ -4,7 +4,10 @@ import {
     Modal,
     Toast,
 } from 'antd-mobile';
-import { SimpleWebsocketConnection } from '../../../helpers/simple_websocket_connection';
+
+import { SimpleWebsocketConnection } from '../../../helpers/simple_websocket_connection'
+import '../css/pushVideo.less'
+
 var calm;
 window.simpleMS = null;
 const prompt = Modal.prompt;
@@ -194,11 +197,15 @@ export default class pushVideo extends React.Component {
             $('.btnBox').eq(index).css({
                 display: 'block'
             })
+            $(".icon_arrow").eq(index).removeClass("up");
+            $(".icon_arrow").eq(index).addClass("down");
 
         } else {
             $('.btnBox').eq(index).css({
                 display: 'none'
             })
+            $(".icon_arrow").eq(index).removeClass("down");
+            $(".icon_arrow").eq(index).addClass("up");
         }
     }
 
@@ -238,7 +245,12 @@ export default class pushVideo extends React.Component {
             onResponse: function (result) {
                 if (result.msg == '调用成功' || result.success == true) {
                     Toast.info("删除成功",1);
-                    calm.initData= [];
+                    // calm.initData.forEach((v,i)=>{
+                    //     if(data.screenVideoId == v.screenVideoId){
+                    //         calm.initData.splice(i,1);
+                    //     }
+                    // })
+                    calm.initData = []
                     calm.setState({
                         dataSource: calm.state.dataSource.cloneWithRows(calm.initData),
                     })
@@ -355,11 +367,13 @@ export default class pushVideo extends React.Component {
         const row = (rowData, sectionID, rowID) => {
             return (
                 <div>
-                    <div><span>{rowData.videoName}</span><span>{WebServiceUtil.formatYMD(rowData.createDate)}</span><span onClick={calm.showBtnBox.bind(this, rowID)}>上箭头</span></div>
+                    <div className="item line_public my_flex" onClick={calm.showBtnBox.bind(this, rowID)}><div className="text_hidden text">{rowData.videoName}</div><div className="rightCont"><span className="time">{WebServiceUtil.formatYMD(rowData.createDate)}</span><span className="icon_arrow up">上箭头</span></div></div>
                     <div className="btnBox" style={{ display: rowData.isPush == 1 ? "block" : "none" }}>
-                        <span onClick={calm.previewVideo.bind(this, rowData.videoPath)}>预览</span>
-                        <span onClick={calm.pushVideoToClassboard.bind(this, rowData.isPush, rowID, rowData.videoPath, rowData.screenVideoId)}>{rowData.isPush == 0 ? "推送" : "停止"}</span>
-                        <span onClick={calm.showAlert.bind(this, rowData)}>删除</span>
+                        <div className="my_flex inner">
+                            <div className="preview" onClick={calm.previewVideo.bind(this, rowData.videoPath)}><i></i>预览</div>
+                            <div  className={rowData.isPush == 0 ?"join":"quite" } onClick={calm.pushVideoToClassboard.bind(this, rowData.isPush, rowID, rowData.videoPath, rowData.screenVideoId)}><i></i>{rowData.isPush == 0 ? "加入班牌" : "退出班牌"}</div>
+                            <div className="del" onClick={calm.showAlert.bind(this, rowData)}><i></i>删除</div>
+                        </div>
                     </div>
                 </div>
             )
@@ -367,6 +381,7 @@ export default class pushVideo extends React.Component {
         return (
             <div id="pushVideo">
                 <div className='emptyCont' style={{ display: calm.state.dataNone ? 'none' : '' }}>
+                    <img src={require("../img/icon_empty.png")} /><br/>
                     暂无数据
                 </div>
                 <ListView
@@ -390,7 +405,9 @@ export default class pushVideo extends React.Component {
                         display: calm.state.dataNone ? "" : "none"
                     }}
                 />
-                <button onClick={this.addVideo}>添加</button>
+                <div className='addBunton' onClick={this.addVideo}>
+                    <img src={require("../img/addBtn.png")} />
+                </div>
             </div>
         );
     }
