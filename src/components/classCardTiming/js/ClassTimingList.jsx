@@ -299,9 +299,11 @@ export default class ClassTimingList extends React.Component {
             SwitchExample = createForm()(SwitchExample);
 
             return (
-                <div className="classInfo line_public" onClick={this.turnToClassTableDetil.bind(this, rowData)}>
+                <div className="classInfo line_public my_flex" onClick={this.turnToClassTableDetil.bind(this, rowData)}>
                     <div className="am-list-content">{rowData.name}</div>
-                    <SwitchExample/>
+                    <div className="switchBtn">
+                        <SwitchExample/>
+                    </div>
                 </div>
             )
         };

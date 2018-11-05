@@ -4,7 +4,7 @@ import {
     Button,
     Checkbox
 } from 'antd-mobile';
-
+import '../css/addClassTimingItem.less'
 var classBinding;
 
 export default class addClassTimingItem extends React.Component {
@@ -152,7 +152,7 @@ export default class addClassTimingItem extends React.Component {
         return (
             <div id="addClassTimingItem">
                 <div>
-                    <span>每周重复日期</span>
+                    <div className='title'>每周重复日期</div>
                     <div>
                         {data.map(i => (
                             <Checkbox key={i.value} onChange={() => console.log(i.value)}>

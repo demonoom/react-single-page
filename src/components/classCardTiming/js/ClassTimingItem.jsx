@@ -183,10 +183,15 @@ export default class ClassTimingItem extends React.Component {
             return (
                 <div className="classInfo line_public">
                     <div onClick={this.turnToClassTableDetil.bind(this, rowData)}
-                         className="am-list-content">周一 周二 周三
+                         className="am-list-content">
+                        <span>周一</span>
+                        <span>周一</span>
+                        <span>周一</span>
                     </div>
                     <div onClick={this.turnToClassTableDetil.bind(this, rowData)}
-                         className="am-list-content">开启时间9:30 关闭时间18:40
+                         className="am-list-content listTime">
+                        <span>开启时间9:30</span>
+                        <span>关闭时间18:40</span>
                     </div>
                     <Button type="primary" size="small" className="btn_del deleteBtn_common"
                             onClick={this.showAlert.bind(this, rowData)}></Button>

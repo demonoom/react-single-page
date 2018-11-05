@@ -2,6 +2,7 @@
   .whiteBack {
     background-color: #fff;
   }
+
   .am-pull-to-refresh-content-wrapper {
     height: 100%;
     overflow-y: auto;
@@ -45,10 +46,21 @@
     }
     .classInfo {
       position: relative;
-      padding: 10px 0;
-      line-height: 24px;
+      padding:15px;
+      -webkit-align-items: center;
+      -moz-align-items: center;
+      -ms-align-items: center;
+      -o-align-items: center;
+      -khtml-align-items: center;
+      align-items: center;
       .textOver {
         font-size: 16px;
+      }
+      .am-list-item,.am-list-line{
+        display: inline-block !important;
+      }
+      .am-list-content{
+          width: calc(~"100% - 60px");
       }
     }
     .classroom {
@@ -233,16 +245,15 @@
     }
 
   }
-  .amList_cont{
-    height: 44px;
-    line-height: 44px;
-    padding-right: 15px;
-  }
+
   .amList{
-      width: 170px;
+      width: 60px;
+      height: 21px;
       display: inline-block;
     .am-list-item .am-list-line .am-list-extra{
       text-align: left;
+      padding: 0;
+      line-height: 1;
     }
   }
   .amList .am-list-item .am-list-line .am-list-content{
@@ -260,11 +271,25 @@
       margin-top: 8px;
     }
   }
+  .switchBtn{
+    padding-right: 30px;
+    .am-list-item{
+      min-height: auto !important;
+    }
+  }
   .am-button-small{
     background-color: #fff;
-    height: 44px;
-    line-height: 44px;
+    position: absolute;
+    right: 5px;
+    top:50%;
+    -webkit-transform: translateY(-50%);
+    -moz-transform: translateY(-50%);
+    -ms-transform: translateY(-50%);
+    -o-transform: translateY(-50%);
+    transform: translateY(-50%);
     border: none !important;
+    width: 18px;
+    background-size: 16px;
     &:before{
       border: 0;
     }
@@ -273,18 +298,18 @@
     background: transparent;
   }
   .am-switch .checkbox{
-    height: 23px;
-    width:46px;
+    height: 21px;
+    width: 43px;
   }
   .am-switch .checkbox:after{
-    width:21px ;
-    height: 21px;
+    width:19px ;
+    height: 19px;
     top: 1px;
   }
   .am-switch .checkbox:before{
     background: #e5e5e5;
-    height: 23px;
-    width:44px;
+    height: 20px;
+    width:38px;
     top: 0;
   }
   .am-list-body div:not(:last-child) .am-list-line{
