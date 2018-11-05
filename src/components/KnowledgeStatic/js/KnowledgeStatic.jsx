@@ -151,7 +151,7 @@ export default class KnowledgeStatic extends React.Component {
             },
             grid:{
                 x:27,
-                y:50,
+                y:55,
                 x2:0,
                 y2:30,
             },

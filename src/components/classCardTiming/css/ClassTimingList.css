@@ -40,11 +40,23 @@
 }
 #ClassTimingList .tableDiv .classInfo {
   position: relative;
-  padding: 10px 0;
-  line-height: 24px;
+  padding: 15px;
+  -webkit-align-items: center;
+  -moz-align-items: center;
+  -ms-align-items: center;
+  -o-align-items: center;
+  -khtml-align-items: center;
+  align-items: center;
 }
 #ClassTimingList .tableDiv .classInfo .textOver {
   font-size: 16px;
+}
+#ClassTimingList .tableDiv .classInfo .am-list-item,
+#ClassTimingList .tableDiv .classInfo .am-list-line {
+  display: inline-block !important;
+}
+#ClassTimingList .tableDiv .classInfo .am-list-content {
+  width: calc(100% - 60px);
 }
 #ClassTimingList .tableDiv .classroom {
   color: #666;
@@ -205,17 +217,15 @@
   color: rgba(255, 255, 255, 0.3);
   background-color: #d24747;
 }
-#ClassTimingList .amList_cont {
-  height: 44px;
-  line-height: 44px;
-  padding-right: 15px;
-}
 #ClassTimingList .amList {
-  width: 170px;
+  width: 60px;
+  height: 21px;
   display: inline-block;
 }
 #ClassTimingList .amList .am-list-item .am-list-line .am-list-extra {
   text-align: left;
+  padding: 0;
+  line-height: 1;
 }
 #ClassTimingList .amList .am-list-item .am-list-line .am-list-content {
   color: #666 !important;
@@ -232,11 +242,25 @@
 #ClassTimingList .tableListDate span {
   margin-top: 8px;
 }
+#ClassTimingList .switchBtn {
+  padding-right: 30px;
+}
+#ClassTimingList .switchBtn .am-list-item {
+  min-height: auto !important;
+}
 #ClassTimingList .am-button-small {
   background-color: #fff;
-  height: 44px;
-  line-height: 44px;
+  position: absolute;
+  right: 5px;
+  top: 50%;
+  -webkit-transform: translateY(-50%);
+  -moz-transform: translateY(-50%);
+  -ms-transform: translateY(-50%);
+  -o-transform: translateY(-50%);
+  transform: translateY(-50%);
   border: none !important;
+  width: 18px;
+  background-size: 16px;
 }
 #ClassTimingList .am-button-small:before {
   border: 0;
@@ -246,18 +270,18 @@
   background: transparent;
 }
 #ClassTimingList .am-switch .checkbox {
-  height: 23px;
-  width: 46px;
+  height: 21px;
+  width: 43px;
 }
 #ClassTimingList .am-switch .checkbox:after {
-  width: 21px ;
-  height: 21px;
+  width: 19px ;
+  height: 19px;
   top: 1px;
 }
 #ClassTimingList .am-switch .checkbox:before {
   background: #e5e5e5;
-  height: 23px;
-  width: 44px;
+  height: 20px;
+  width: 38px;
   top: 0;
 }
 #ClassTimingList .am-list-body div:not(:last-child) .am-list-line {
