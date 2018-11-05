@@ -1,12 +1,10 @@
 import React from 'react';
 import {
     ListView,
-    Accordion,
     Modal,
     Toast,
-    Icon
 } from 'antd-mobile';
-import { SimpleWebsocketConnection } from '../../../helpers/simple_websocket_connection'
+import { SimpleWebsocketConnection } from '../../../helpers/simple_websocket_connection';
 var calm;
 window.simpleMS = null;
 const prompt = Modal.prompt;
@@ -357,7 +355,7 @@ export default class pushVideo extends React.Component {
         const row = (rowData, sectionID, rowID) => {
             return (
                 <div>
-                    <div><span>{rowData.videoName}</span><span onClick={calm.showBtnBox.bind(this, rowID)}>上箭头</span></div>
+                    <div><span>{rowData.videoName}</span><span>{WebServiceUtil.formatYMD(rowData.createDate)}</span><span onClick={calm.showBtnBox.bind(this, rowID)}>上箭头</span></div>
                     <div className="btnBox" style={{ display: rowData.isPush == 1 ? "block" : "none" }}>
                         <span onClick={calm.previewVideo.bind(this, rowData.videoPath)}>预览</span>
                         <span onClick={calm.pushVideoToClassboard.bind(this, rowData.isPush, rowID, rowData.videoPath, rowData.screenVideoId)}>{rowData.isPush == 0 ? "推送" : "停止"}</span>
@@ -365,7 +363,6 @@ export default class pushVideo extends React.Component {
                     </div>
                 </div>
             )
-
         }
         return (
             <div id="pushVideo">
