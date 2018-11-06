@@ -4,22 +4,25 @@ import {
     Modal,
     Toast,
 } from 'antd-mobile';
-import { SimpleWebsocketConnection } from '../../../helpers/simple_websocket_connection';
+
+import { SimpleWebsocketConnection } from '../../../helpers/simple_websocket_connection'
+import '../css/pushVideo.less'
+
 var calm;
 window.simpleMS = null;
 const prompt = Modal.prompt;
 const alert = Modal.alert;
 
-
+const dataSource = new ListView.DataSource({
+    rowHasChanged: (row1, row2) => row1 !== row2,
+});
 export default class pushVideo extends React.Component {
 
     constructor(props) {
         super(props);
         calm = this;
 
-        const dataSource = new ListView.DataSource({
-            rowHasChanged: (row1, row2) => row1 !== row2,
-        });
+       
 
         this.initData = [];
         this.state = {
@@ -42,13 +45,18 @@ export default class pushVideo extends React.Component {
         var locationHref = window.location.href;
         var locationSearch = locationHref.substr(locationHref.indexOf("?") + 1);
         var schoolId = locationSearch.split("&")[0].split("=")[1];
+        var userId = locationSearch.split("&")[1].split("=")[1];
+        console.log(userId,"userId")
         calm.setState({
-            schoolId: schoolId
+            schoolId: schoolId,
+            userId:userId
+        },()=>{
+            calm.getPushScreenVideoByUserId();
         })
         this.simpleListener();
         //添加对视窗大小的监听,在屏幕转换以及键盘弹起时重设各项高度
         window.addEventListener('resize', calm.onWindowResize)
-        calm.getPushScreenVideoByUserId();
+       
     }
 
     componentWillUnmount() {
@@ -85,15 +93,12 @@ export default class pushVideo extends React.Component {
      * 上传视频
      */
     addVideo = () => {
-        console.log("dianjile")
         var data = {
             method: 'selectOnlyVideo',
         };
         Bridge.callHandler(data, function (res) {
-            console.log(res, "res")
             //拿到视频地址,显示在页面等待上传
             var arr = res.split(',');
-            console.log(arr, "pathArr")
             let newArr = [];
             let pathArr = [];
             var videoPath;
@@ -113,14 +118,15 @@ export default class pushVideo extends React.Component {
                 // })
                 calm.savePushScreenVideo(videoPath, videoName)
             })
-            console.log(newArr, "newArr")
-            // calm.setState({
-            //     videoArr: newArr
-            // })
+           
         }, function (error) {
             console.log(error);
         });
     }
+
+    /**
+     * 预览视频
+     */
     previewVideo = (src) => {
         //视频预览
         var data = {
@@ -131,14 +137,23 @@ export default class pushVideo extends React.Component {
 
         });
     }
+
+
+    /**
+     * 推送视频
+     */
     pushVideoToClassboard = (isPush, index, videoPath, screenVideoId) => {
         if (isPush == 0) {
-            calm.updatePushStatus(screenVideoId, 1);
-            calm.initData = [];
-            calm.setState({
-                dataSource: calm.state.dataSource.cloneWithRows(calm.initData),
+            calm.initData.forEach((v,i)=>{
+                if(v.screenVideoId == screenVideoId){
+                    calm.initData[i].isPush = 1;
+                }
             })
-            calm.getPushScreenVideoByUserId();
+            calm.setState({
+                dataSource:dataSource.cloneWithRows(calm.initData),
+            },()=>{
+                calm.updatePushStatus(screenVideoId, 1);
+            })
             var obj = {
                 "command": "playPushVideo",
                 "data": {
@@ -151,11 +166,14 @@ export default class pushVideo extends React.Component {
         }
         if (isPush == 1) {
             calm.updatePushStatus(screenVideoId, 0);
-            calm.initData = [];
-            calm.setState({
-                dataSource: calm.state.dataSource.cloneWithRows(calm.initData),
+            calm.initData.forEach((v,i)=>{
+                if(v.screenVideoId == screenVideoId){
+                    calm.initData[i].isPush = 0;
+                }
             })
-            calm.getPushScreenVideoByUserId();
+            calm.setState({
+                dataSource: dataSource.cloneWithRows(calm.initData),
+            })
             var obj = {
                 "command": "stopPushVideo",
                 "data": {
@@ -167,6 +185,9 @@ export default class pushVideo extends React.Component {
         }
     }
 
+    /**
+     * 点击推送按钮
+     */
     updatePushStatus = (videoScreenId, isPush) => {
         var param = {
             "method": 'updatePushStatus',
@@ -175,7 +196,6 @@ export default class pushVideo extends React.Component {
         };
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
             onResponse: function (result) {
-                console.log(result, "calmre")
                 if (result.success) {
 
                 } else {
@@ -186,22 +206,28 @@ export default class pushVideo extends React.Component {
             }
         });
     }
+
+    /**
+     * 显示操作按钮
+     */
     showBtnBox = (index) => {
         if ($('.btnBox').eq(index).css("display") == "none") {
+            $(".icon_arrow").removeClass("down");
             $(".btnBox").css({
                 display: 'none'
             })
             $('.btnBox').eq(index).css({
                 display: 'block'
             })
-
-        } else {
+            $(".icon_arrow").eq(index).addClass("down");
+        } else if($('.btnBox').eq(index).css("display") == "block"){
             $('.btnBox').eq(index).css({
                 display: 'none'
             })
+            $(".icon_arrow").addClass("down");
+            $(".icon_arrow").eq(index).removeClass("down");
         }
     }
-
 
     /**
      * 删除弹出框
@@ -238,9 +264,9 @@ export default class pushVideo extends React.Component {
             onResponse: function (result) {
                 if (result.msg == '调用成功' || result.success == true) {
                     Toast.info("删除成功",1);
-                    calm.initData= [];
+                    calm.initData = [];
                     calm.setState({
-                        dataSource: calm.state.dataSource.cloneWithRows(calm.initData),
+                        dataSource: dataSource.cloneWithRows(calm.initData),
                     })
                     calm.getPushScreenVideoByUserId();
                 }
@@ -259,13 +285,12 @@ export default class pushVideo extends React.Component {
         var PageNo = this.state.defaultPageNo;
         var param = {
             "method": 'getPushScreenVideoByUserId',
-            "userId": 23836,
+            "userId": calm.state.userId,
             "pageNo": PageNo,
         };
 
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
             onResponse: function (result) {
-                console.log("result111", result)
                 if (result.msg == '调用成功' || result.success == true) {
                     if (result.response.length === 0 && result.pager.rsCount === 0) {
                         calm.setState({ dataNone: false })
@@ -310,7 +335,7 @@ export default class pushVideo extends React.Component {
             "method": 'savePushScreenVideo',
             "classPushScreenJson": {
                 schoolId: 9,
-                userId: 23836,
+                userId: calm.state.userId,
                 videoPath: path,
                 videoName: name,
                 isPush: 0
@@ -346,7 +371,7 @@ export default class pushVideo extends React.Component {
         calm.setState({ isLoadingLeft: true, defaultPageNo: currentPageNo });
         calm.getPushScreenVideoByUserId()
         calm.setState({
-            dataSource: calm.state.dataSource.cloneWithRows(calm.initData),
+            dataSource: dataSource.cloneWithRows(calm.initData),
             isLoadingLeft: true,
         });
     };
@@ -355,11 +380,13 @@ export default class pushVideo extends React.Component {
         const row = (rowData, sectionID, rowID) => {
             return (
                 <div>
-                    <div><span>{rowData.videoName}</span><span>{WebServiceUtil.formatYMD(rowData.createDate)}</span><span onClick={calm.showBtnBox.bind(this, rowID)}>上箭头</span></div>
-                    <div className="btnBox" style={{ display: rowData.isPush == 1 ? "block" : "none" }}>
-                        <span onClick={calm.previewVideo.bind(this, rowData.videoPath)}>预览</span>
-                        <span onClick={calm.pushVideoToClassboard.bind(this, rowData.isPush, rowID, rowData.videoPath, rowData.screenVideoId)}>{rowData.isPush == 0 ? "推送" : "停止"}</span>
-                        <span onClick={calm.showAlert.bind(this, rowData)}>删除</span>
+                    <div className="item line_public my_flex" onClick={calm.showBtnBox.bind(this, rowID)}><div className="text_hidden text">{rowData.videoName}</div><div className="rightCont"><span className="time">{WebServiceUtil.formatYMD(rowData.createDate)}</span><span className="icon_arrow">上箭头</span></div></div>
+                    <div className="btnBox" style={{ display:"none" }}>
+                        <div className="my_flex inner">
+                            <div className="preview" onClick={calm.previewVideo.bind(this, rowData.videoPath)}><i></i>预览</div>
+                            <div  className={rowData.isPush == 0 ?"join":"quite" } onClick={calm.pushVideoToClassboard.bind(this, rowData.isPush, rowID, rowData.videoPath, rowData.screenVideoId)}><i></i>{rowData.isPush == 0 ? "加入班牌" : "退出班牌"}</div>
+                            <div className="del" onClick={calm.showAlert.bind(this, rowData)}><i></i>删除</div>
+                        </div>
                     </div>
                 </div>
             )
@@ -367,7 +394,8 @@ export default class pushVideo extends React.Component {
         return (
             <div id="pushVideo">
                 <div className='emptyCont' style={{ display: calm.state.dataNone ? 'none' : '' }}>
-                    暂无数据
+                    <img src={require("../img/icon_empty.png")} /><br/>
+                    请点击“＋”添加视频
                 </div>
                 <ListView
                     ref={el => this.lv = el}
@@ -386,11 +414,13 @@ export default class pushVideo extends React.Component {
                     initialListSize={30}   //指定在组件刚挂载的时候渲染多少行数据，用这个属性来确保首屏显示合适数量的数据
                     scrollEventThrottle={20}     //控制在滚动过程中，scroll事件被调用的频率
                     style={{
-                        height: this.state.clientHeight - 64 - 46,
+                        height: this.state.clientHeight,
                         display: calm.state.dataNone ? "" : "none"
                     }}
                 />
-                <button onClick={this.addVideo}>添加</button>
+                <div className='addBunton' onClick={this.addVideo}>
+                    <img src={require("../img/addBtn.png")} />
+                </div>
             </div>
         );
     }
