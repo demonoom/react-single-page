@@ -240,9 +240,9 @@ export default class KnowledgeLogin extends React.Component {
             <div id='KnowledgeLogin' style={{textAlign: 'center'}}>
                 <div className='topDiv'>
                     <div className="logo">
-                        <img src={require("../img/loginlogo.png")}/>
+                        <img src={require("../img/knowledeg-logo.png")}/>
                     </div>
-                    <div className='text'>用户登录</div>
+                    <div className='text'>智慧校园公众号</div>
                     <div className='grayText'>小蚂蚁移动教学绑定微信号</div>
                 </div>
                 <div>
