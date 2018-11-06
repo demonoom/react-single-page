@@ -1004,7 +1004,7 @@ class Index extends React.Component {
                     </li>
                     <li>
                         <Link
-                            to="/classTimingList?clazzroomId=168" style={{fontSize: '24px'}}>班牌定时</Link>
+                            to="/classTimingList?uid=23836&sid=9" style={{fontSize: '24px'}}>班牌定时</Link>
                     </li>
 
                     {/*<li><Link to="/antPlate?ident=23836&fileId=-1&title=蚁盘题目&phoneType=0"*/}

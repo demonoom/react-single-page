@@ -115,8 +115,10 @@ export default class updateClassTimingItem extends React.Component {
             "pid": this.state.pid,
             "tid": this.state.tid,
             "regular": regular.substr(0, regular.length - 1),
-            "upTime": this.state.openTime + ':00',
-            "offTime": this.state.closeTime + ':00',
+            // "upTime": this.state.openTime + ':00',
+            "upTime": '15:35:00',
+            "offTime": '15:30:00',
+            // "offTime": this.state.closeTime + ':00',
         };
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
             onResponse: function (result) {
