@@ -160,14 +160,14 @@ export default class KnowledgeLogin extends React.Component {
             this.bindUserToPar(function (obj) {
                 resolve(obj);
             });
-        })
+        });
 
         if (this.state.teaBind && !this.state.parBind) {
             Promise.all([tea]).then((result) => {
                 if (result[0].success) {
                     location.replace(encodeURI(WebServiceUtil.mobileServiceURL + 'KnowledgeStatic?unionid=' + _this.state.unionid))
                 } else {
-                    Toast.fail(result[0].msg, 2)
+                    Toast.fail(result[0].msg, 2);
                 }
             })
         } else if (!this.state.teaBind && this.state.parBind) {
