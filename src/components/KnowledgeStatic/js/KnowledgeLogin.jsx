@@ -21,7 +21,7 @@ export default class KnowledgeLogin extends React.Component {
     }
 
     componentWillMount() {
-        document.title = "蚁信";   //设置title
+        document.title = "微信绑定";   //设置title
         var locationHref = window.location.href;
         var locationSearch = locationHref.substr(locationHref.indexOf("?") + 1);
         var searchArray = locationSearch.split("&");
