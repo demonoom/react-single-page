@@ -190,8 +190,6 @@ export default class KnowledgeLogin extends React.Component {
                     Toast.fail(result[0].msg, 2)
                 }
             })
-        } else {
-
         }
     }
 
