@@ -240,28 +240,29 @@ export default class KnowledgeLogin extends React.Component {
             <div id='KnowledgeLogin' style={{textAlign: 'center'}}>
                 <div className='topDiv'>
                     <div className="logo">
-                        <img src={require("../img/knowledeg-logo.png")}/>
+                        <img src={require("../img/loginlogo.png")}/>
                     </div>
-                    <div className='text'>智慧校园公众号</div>
-                    <div className='grayText'>小蚂蚁移动教学绑定微信号</div>
+                    <div className='text'>小蚂蚁移动教学</div>
                 </div>
                 <div>
-                    <List>
-                        <InputItem
-                            placeholder="请输入绑定的手机号"
-                            phoneValue={this.state.phoneValue}
-                            onChange={this.phoneOnChange.bind(this)}
-                        />
-                        <img style={{
-                            display: (this.state.telSuccess == 'success' || this.state.telSuccess == 'error') && (!this.state.pending) ? 'block' : 'none'
-                        }} id="telImg"
-                             src={this.state.telSuccess == 'success' ? require("../img/success1.png") : require('../img/error.png')}
-                             alt=""/>
-                        <div style={{
-                            display: (this.state.pending) ? 'block' : 'none'
-                        }} className="telLoad">验证中...
-                        </div>
-                    </List>
+                    <div className='inputDiv'>
+                        <List>
+                            <InputItem
+                                placeholder="请输入绑定的手机号"
+                                phoneValue={this.state.phoneValue}
+                                onChange={this.phoneOnChange.bind(this)}
+                            />
+                            <img style={{
+                                display: (this.state.telSuccess == 'success' || this.state.telSuccess == 'error') && (!this.state.pending) ? 'block' : 'none'
+                            }} id="telImg"
+                                 src={this.state.telSuccess == 'success' ? require("../img/success1.png") : require('../img/error.png')}
+                                 alt=""/>
+                            <div style={{
+                                display: (this.state.pending) ? 'block' : 'none'
+                            }} className="telLoad">验证中...
+                            </div>
+                        </List>
+                    </div>
                     <div className='inputDiv'>
                         <List>
                             <InputItem

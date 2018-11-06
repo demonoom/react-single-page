@@ -383,7 +383,7 @@ export default class KnowledgeStatic extends React.Component {
             }}>
                 <div className='emptyCont' style={this.state.isHidden?{display:'block'}:{display:'none'}}>
                     <img src={require('../img/weixin-empty.png')} alt=""  width="104" /><br />
-                    该微信号还没有绑定,请前往<span className="toBind" onClick={this.toBindHTML.bind(this)}>绑定</span>
+                    该微信号还没有绑定,请<span className="toBind" onClick={this.toBindHTML.bind(this)}>前往绑定</span>
                 </div>
                 <div style={this.state.isHidden?{display:'none'}:{display:'block'}}>
                     <Picker disabled={this.state.type=='老师'?true:false} data={this.state.nameArray} cols={1} value={this.state.defaultValue} onOk={this.onChangeColor} className="forss">
