@@ -975,6 +975,13 @@ const updateClassTimingItem = (location, cb) => {
     )
 }
 
+const KnowledgeLogin = (location, cb) => {
+    require.ensure([], require => {
+            cb(null, require("./components/KnowledgeStatic/js/KnowledgeLogin").default)
+        }
+    )
+}
+
 import './index.less';
 
 class Index extends React.Component {
@@ -1404,6 +1411,7 @@ class Index extends React.Component {
                             <Route path="ClassTimingItem" getComponent={ClassTimingItem}/>
                             <Route path="addClassTimingItem" getComponent={addClassTimingItem}/>
                             <Route path="updateClassTimingItem" getComponent={updateClassTimingItem}/>
+                            <Route path="KnowledgeLogin" getComponent={KnowledgeLogin}/>
                         </Route>
                     </Router>
                     ,

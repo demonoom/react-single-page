@@ -23,13 +23,13 @@ export default class KnowledgeStatic extends React.Component {
     }
 
     componentDidMount() {
-        // Bridge.setShareAble("false");
         document.title = '知识点统计';
         var locationHref = window.location.href;
         var locationSearch = locationHref.substr(locationHref.indexOf("?") + 1);
         var searchArray = locationSearch.split("&");
         var openId = searchArray[0].split('=')[1];
-        var startDate = new Date('2017-01-01');
+        //获取前一个月的日期
+        var startDate = new Date(WebServiceUtil.formatYMD(new Date().setMonth(new Date().getMonth() - 1)));
         var endDate = new Date();
         this.setState({
             openId: openId,
@@ -37,16 +37,7 @@ export default class KnowledgeStatic extends React.Component {
             endDate:endDate,
         }, function () {
             this.getUsersByOpenId(()=>{
-                // console.log(this.state.userId,'userId')
-                // console.log(this.state.userType,'userId')
-                // console.log(this.state.userName,'userId')
-                this.setState({
-
-                },()=>{
-                    console.log(this.state.nameArray,'nameArray')
-                    console.log(this.state.defaultValue,'defaultValue')
-                    this.getAvgMasteryAccuaryLineChartData();
-                })
+                this.getAvgMasteryAccuaryLineChartData();
             })
         }.bind(this))
     }
@@ -58,7 +49,6 @@ export default class KnowledgeStatic extends React.Component {
             "method": 'getUsersByOpenId',
             "openId" :this.state.openId
         };
-
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
             onResponse: result => {
                 console.log(result,'用户信息');
@@ -70,10 +60,8 @@ export default class KnowledgeStatic extends React.Component {
                                 for(var k in res){
                                     if(res[k].colUtype == "TEAC"){
                                         this.setState({
-                                           // userType: res[k].colUtype,
                                            userId: res[k].colUid,
-                                            type:'老师'
-                                           // userName:res[k].userName
+                                            type:'老师',
                                         },()=>{
                                             if(callback){
                                                 callback();
@@ -86,9 +74,7 @@ export default class KnowledgeStatic extends React.Component {
                                 for(var k in res){
                                     if(res[k].colUtype == "PAREN"){
                                         this.setState({
-                                            // userType: res[k].colUtype,
                                             userId: res[k].colUid,
-                                            // userName:res[k].userName
                                         },()=>{
                                             if(callback){
                                                 callback();
@@ -100,10 +86,8 @@ export default class KnowledgeStatic extends React.Component {
                         ])
                     }else if(res.length > 0){
                         this.setState({
-                            // userType: res[0].colUtype,
                             //设置默认选中的学生
                             userId: res[0].colUid,
-                            // userName:res[0].userName
                         },()=>{
                             if(callback){
                                 callback();
@@ -130,7 +114,6 @@ export default class KnowledgeStatic extends React.Component {
             title: {
                 // text: '知识点',   //标题  建议使用自定义
                 // fontSize:'12px'
-
             },
             tooltip: {
                 trigger: 'axis', //轴,
@@ -168,7 +151,6 @@ export default class KnowledgeStatic extends React.Component {
             xAxis: [
                 {
                     type: 'category',
-                    // name:'时间',
                     boundaryGap: true,
                     data: xClassArray,
                     axisLine: {
@@ -301,32 +283,8 @@ export default class KnowledgeStatic extends React.Component {
 
 
     onChartClick(optional) {
-        console.log(optional.name,'onChartClick_name');
-        console.log(optional.data,'onChartClick_data');
-        if(optional.data <= 0){
-            // Toast.info('数据为空无法查看');
-            window.location.href = WebServiceUtil.mobileServiceURL + "KnowLedgeList?uid=" + this.state.userId + '&currentTime=' + optional.name;
-        }else{
-            var url = WebServiceUtil.mobileServiceURL + "KnowLedgeList?uid=" + this.state.userId + '&currentTime=' + optional.name;
-            console.log(url);
-            window.location.href = url;
-            // window.location.reload();
-            // window.location.href = "http://www.baidu.com";
-            // window.open(WebServiceUtil.mobileServiceURL + "KnowLedgeList?uid=" + this.state.userId + '&currentTime=' + optional.name);
-        }
-        // console.log(idArray[optional.dataIndex], '学生id');
-        // if (idArray[optional.dataIndex]) {
-        //     var analysisUrl = WebServiceUtil.mobileServiceURL + "answerFormStudent?studentId=" + idArray[optional.dataIndex] + "&topicId=" + this.state.topicId;
-        //     var data = {
-        //         method: 'openNewPage',
-        //         url: analysisUrl,
-        //     };
-        //     Bridge.callHandler(data, null, function (error) {
-        //         window.location.href = analysisUrl;
-        //     });
-        // } else {
-        //     Toast.info('学生id不存在!');
-        // }
+        var url = WebServiceUtil.mobileServiceURL + "KnowLedgeList?uid=" + this.state.userId + '&currentTime=' + optional.name;
+        window.location.href = url;
     }
 
 
@@ -348,11 +306,6 @@ export default class KnowledgeStatic extends React.Component {
                         return;
                     }else{
                         var newArray = result.users;
-                        console.log(newArray,'newArray');
-                        // newArray.push({
-                        //     colUid: 24991,
-                        //     userName:'测试姓名',
-                        // });
                         var newArray2=[];
                         for(var k in newArray){
                             newArray2.push({
@@ -364,8 +317,6 @@ export default class KnowledgeStatic extends React.Component {
                             nameArray: newArray2,
                             defaultValue:[newArray2[0].value],
                             noUpdata:true,
-                        },()=>{
-
                         })
                     }
 
@@ -408,7 +359,6 @@ export default class KnowledgeStatic extends React.Component {
     }
 
     onChangeColor = (params) => {
-        console.log(params[0],'OKOKOKOK')
         this.setState({
             defaultValue: params,
             userId:params[0]
@@ -417,19 +367,15 @@ export default class KnowledgeStatic extends React.Component {
         });
     };
 
+    toBindHTML(){
+        console.log('toBindHTML');
+        var url = WebServiceUtil.mobileServiceURL + "KnowledgeLogin?unid=" + this.state.openId;
+        window.location.href = url;
+    }
+
 
 
     render() {
-        const colors = [{
-            label: '第一项',
-            value: '第一项',
-        },{
-                label: '第二项',
-                value: '第二项',
-        },{
-                label: '第三项',
-                value: '第三项',
-        }];
         return (
             <div id="KnowledgeStatic" style={{
                 height: this.state.clientHeight + 'px',
@@ -437,7 +383,7 @@ export default class KnowledgeStatic extends React.Component {
             }}>
                 <div className='emptyCont' style={this.state.isHidden?{display:'block'}:{display:'none'}}>
                     <img src={require('../img/weixin-empty.png')} alt=""  width="104" /><br />
-                    该微信号还没有绑定
+                    该微信号还没有绑定,请前往<span className="toBind" onClick={this.toBindHTML.bind(this)}>绑定</span>
                 </div>
                 <div style={this.state.isHidden?{display:'none'}:{display:'block'}}>
                     <Picker disabled={this.state.type=='老师'?true:false} data={this.state.nameArray} cols={1} value={this.state.defaultValue} onOk={this.onChangeColor} className="forss">
@@ -445,35 +391,25 @@ export default class KnowledgeStatic extends React.Component {
                     </Picker>
                     <DatePicker
                         mode="date"
-                        // title="Select Date"
                         extra={this.state.startDate}
                         value={this.state.startDate}
-                        // onChange={date => this.setState({ date })}
                         onOk={this.dateChange.bind(this)}
-
                     >
                         <List.Item arrow="horizontal" className="data_list">开始日期</List.Item>
                     </DatePicker>
                     <WhiteSpace size="lg"/>
                     <DatePicker
                         mode="date"
-                        // title="Select Date"
                         extra={this.state.endDate}
                         value={this.state.endDate}
-                        // onChange={date => this.setState({ date })}
                         onOk={this.endDateChange.bind(this)}
-
                     >
                         <List.Item arrow="horizontal" className="data_list">结束日期</List.Item>
                     </DatePicker>
                     <WhiteSpace size="lg"/>
-
-
-
                     <div className="dom_cont">
                         {this.state.domArray}
                     </div>
-
                     <ActivityIndicator
                         toast
                         text="Loading..."
