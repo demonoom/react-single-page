@@ -101,7 +101,7 @@ export default class ClassTimingList extends React.Component {
      * 去课表列表
      **/
     turnToClassTableDetil(rowData) {
-        var currentAttendanceListUrl = encodeURI(WebServiceUtil.mobileServiceURL + "ClassTimingItem?pId=" + rowData.pid);
+        var currentAttendanceListUrl = encodeURI(WebServiceUtil.mobileServiceURL + "ClassTimingItem?pId=" + rowData.pid + "&itemName=" + rowData.planName);
 
         var data = {
             method: 'openNewPage',
