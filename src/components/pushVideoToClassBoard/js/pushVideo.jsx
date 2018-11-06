@@ -173,6 +173,7 @@ export default class pushVideo extends React.Component {
                         }
                     }
                     simpleMS.send(obj)
+                    calm.sendBraceletPushVideoStatus(videoPath,"open")
                 }
             })
 
@@ -206,6 +207,8 @@ export default class pushVideo extends React.Component {
                         }
                     }
                     simpleMS.send(obj)
+                    calm.sendBraceletPushVideoStatus(videoPath,"close")
+
                 }
             })
 
@@ -215,7 +218,23 @@ export default class pushVideo extends React.Component {
             
         }
     }
-
+    /**
+     * 推送班牌
+     */
+    sendBraceletPushVideoStatus=(videoPath,playStatus)=>{
+        var param = {
+            "method": 'sendBraceletPushVideoStatus',
+            "videoPath": videoPath,
+            "schoolId": calm.state.schoolId,
+            "playStatus": playStatus
+        };
+        WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
+            onResponse: function (result) {
+            },
+            onError: function (error) {
+            }
+        });
+    }
     /**
      * 点击推送按钮
      */
