@@ -1074,10 +1074,13 @@ class Index extends React.Component {
                         // to="/wxLogin?local=chatLogin"
                         to="/chatLogin?unionid=o-w611I9nKqTHcT3P34srzwIrf6U"
                         style={{fontSize: '24px'}}>chatLogin</Link></li> */}
-                    {/*<li>*/}
-                    {/*<Link*/}
-                    {/*to="/wxLogin?local=contactsList" style={{fontSize: '24px'}}>聊天</Link>*/}
-                    {/*</li>*/}
+                    <li>
+                    <Link
+                    to="/wxLogin?local=contactsList" style={{fontSize: '24px'}}>聊天(微信)</Link>
+                    </li>
+                    <li><Link
+                        to="/wxLogin?local=wxBindIndex"
+                        style={{fontSize: '24px'}}>微信绑定</Link></li>
                     {/* <li><Link
                         to="/contactsList?unionid=o-w611I9nKqTHcT3P34srzwIrf6U"
                         style={{fontSize: '24px'}}>疑心</Link></li>
