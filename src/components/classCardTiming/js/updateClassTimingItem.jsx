@@ -32,13 +32,15 @@ export default class updateClassTimingItem extends React.Component {
     componentDidMount() {
         Bridge.setShareAble("false");
         document.title = '班牌定时';
-        var locationHref = window.location.href;
+        var locationHref = decodeURI(window.location.href);
         var locationSearch = locationHref.substr(locationHref.indexOf("?") + 1);
         var pid = locationSearch.split("&")[0].split("=")[1];
         var tid = locationSearch.split("&")[1].split("=")[1];
         var regular = locationSearch.split("&")[2].split("=")[1];
         var openTime = locationSearch.split("&")[3].split("=")[1];
         var closeTime = locationSearch.split("&")[4].split("=")[1];
+        var itemName = locationSearch.split("&")[5].split("=")[1];
+        document.title = itemName;
         this.setState({pid, tid, regular, openTime, closeTime}, () => {
             this.getUpdateRemainingTime(pid, tid)
         })
@@ -115,10 +117,8 @@ export default class updateClassTimingItem extends React.Component {
             "pid": this.state.pid,
             "tid": this.state.tid,
             "regular": regular.substr(0, regular.length - 1),
-            // "upTime": this.state.openTime + ':00',
-            "upTime": '15:35:00',
-            "offTime": '15:30:00',
-            // "offTime": this.state.closeTime + ':00',
+            "upTime": this.state.openTime + ':00',
+            "offTime": this.state.closeTime + ':00',
         };
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
             onResponse: function (result) {

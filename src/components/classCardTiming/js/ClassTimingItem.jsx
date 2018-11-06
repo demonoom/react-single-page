@@ -29,11 +29,12 @@ export default class ClassTimingItem extends React.Component {
 
     componentDidMount() {
         Bridge.setShareAble("false");
-        document.title = '班牌定时';
-        var locationHref = window.location.href;
+        var locationHref = decodeURI(window.location.href);
         var locationSearch = locationHref.substr(locationHref.indexOf("?") + 1);
         var pid = locationSearch.split("&")[0].split("=")[1];
-        this.setState({pid}, () => {
+        var itemName = locationSearch.split("&")[1].split("=")[1];
+        document.title = itemName;
+        this.setState({pid, itemName}, () => {
             this.getClazzPlanList();
         });
         //添加对视窗大小的监听,在屏幕转换以及键盘弹起时重设各项高度
@@ -94,7 +95,7 @@ export default class ClassTimingItem extends React.Component {
      * 去课表列表
      **/
     turnToClassTableDetil(rowData) {
-        var currentAttendanceListUrl = encodeURI(WebServiceUtil.mobileServiceURL + "updateClassTimingItem?pid=" + rowData.pid + "&tid=" + rowData.tid + "&regular=" + rowData.regular + "&tartingUpTime=" + rowData.tartingUpTime.substr(0, rowData.tartingUpTime.length - 3) + "&powerOffTime=" + rowData.powerOffTime.substr(0, rowData.tartingUpTime.length - 3));
+        var currentAttendanceListUrl = encodeURI(WebServiceUtil.mobileServiceURL + "updateClassTimingItem?pid=" + rowData.pid + "&tid=" + rowData.tid + "&regular=" + rowData.regular + "&tartingUpTime=" + rowData.tartingUpTime.substr(0, rowData.tartingUpTime.length - 3) + "&powerOffTime=" + rowData.powerOffTime.substr(0, rowData.tartingUpTime.length - 3) + "&itemName=" + this.state.itemName);
 
         var data = {
             method: 'openNewPage',
@@ -107,7 +108,7 @@ export default class ClassTimingItem extends React.Component {
     }
 
     creatNewTable = () => {
-        var currentAttendanceListUrl = encodeURI(WebServiceUtil.mobileServiceURL + "addClassTimingItem?pid=" + this.state.pid);
+        var currentAttendanceListUrl = encodeURI(WebServiceUtil.mobileServiceURL + "addClassTimingItem?pid=" + this.state.pid + "&itemName=" + this.state.itemName);
 
         var data = {
             method: 'openNewPage',
