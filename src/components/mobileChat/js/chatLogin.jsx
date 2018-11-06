@@ -246,6 +246,7 @@ export default class chatLogin extends React.Component {
                     <div className='grayText'>小蚂蚁移动教学快捷通讯录</div>
                 </div>
                 <div>
+                    <div className="inputDiv">
                     <List>
                         <InputItem
                             placeholder="请输入绑定的手机号"
@@ -262,6 +263,7 @@ export default class chatLogin extends React.Component {
                         }} className="telLoad">验证中...
                         </div>
                     </List>
+                    </div>
                     <div className='inputDiv'>
                         <List>
                             <InputItem
