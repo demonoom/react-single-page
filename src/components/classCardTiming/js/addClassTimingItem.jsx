@@ -32,9 +32,11 @@ export default class addClassTimingItem extends React.Component {
     componentDidMount() {
         Bridge.setShareAble("false");
         document.title = '班牌定时';
-        var locationHref = window.location.href;
+        var locationHref = decodeURI(window.location.href);
         var locationSearch = locationHref.substr(locationHref.indexOf("?") + 1);
         var pid = locationSearch.split("&")[0].split("=")[1];
+        var itemName = locationSearch.split("&")[1].split("=")[1];
+        document.title = itemName;
         this.setState({pid})
         this.getRemainingTime(pid)
     }

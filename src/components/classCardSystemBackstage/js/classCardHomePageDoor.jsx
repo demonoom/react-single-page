@@ -1,5 +1,5 @@
 import React from 'react';
-import { Icon, Toast } from 'antd-mobile';
+import {Icon, Toast} from 'antd-mobile';
 import '../css/classCardHomePageDoor.less'
 
 export default class classCardHomePageDoor extends React.Component {
@@ -14,7 +14,7 @@ export default class classCardHomePageDoor extends React.Component {
         var locationSearch = locationHref.substr(locationHref.indexOf("?") + 1);
         var searchArray = locationSearch.split("&");
         var ident = searchArray[0].split('=')[1];
-        this.setState({ ident })
+        this.setState({ident})
         this.getUserByAccount(ident)
     }
 
@@ -32,7 +32,7 @@ export default class classCardHomePageDoor extends React.Component {
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
             onResponse: (result) => {
                 if (result.msg == '调用成功' || result.success == true) {
-                    _this.setState({ schoolId: result.response.schoolId })
+                    _this.setState({schoolId: result.response.schoolId})
                 }
             },
             onError: function (error) {
@@ -96,7 +96,7 @@ export default class classCardHomePageDoor extends React.Component {
             } else {
                 url = WebServiceUtil.mobileServiceURL + "classHonorList?ident=" + this.state.ident;
             }
-    
+
             var data = {
                 method: 'openNewPage',
                 url: url
@@ -109,8 +109,6 @@ export default class classCardHomePageDoor extends React.Component {
         }
 
 
-
-      
     }
 
     /**
@@ -215,12 +213,12 @@ export default class classCardHomePageDoor extends React.Component {
             window.location.href = url;
         });
     }
-    
+
     /**
      * 考勤时段设置
      */
     turnToAttendanceTime = () => {
-        var url = WebServiceUtil.mobileServiceURL + "attendanceTime?uid="+ this.state.ident;
+        var url = WebServiceUtil.mobileServiceURL + "attendanceTime?uid=" + this.state.ident;
         var data = {
             method: 'openNewPage',
             url: url
@@ -228,13 +226,13 @@ export default class classCardHomePageDoor extends React.Component {
         Bridge.callHandler(data, null, function (error) {
             window.location.href = url;
         });
-    
+
     }
     /**
      * 半拍皮肤设置
      */
     turnToSetSkin = () => {
-        var url = WebServiceUtil.mobileServiceURL + "classBrandTemplateSkin?uid="+ this.state.schoolId;
+        var url = WebServiceUtil.mobileServiceURL + "classBrandTemplateSkin?uid=" + this.state.schoolId;
         var data = {
             method: 'openNewPage',
             url: url
@@ -242,30 +240,66 @@ export default class classCardHomePageDoor extends React.Component {
         Bridge.callHandler(data, null, function (error) {
             window.location.href = url;
         });
-    
+
+    }
+
+    turnToSetTime = () => {
+        var url = WebServiceUtil.mobileServiceURL + "classTimingList?uid=" + this.state.ident + "&sid=" + this.state.schoolId;
+        var data = {
+            method: 'openNewPage',
+            url: url
+        };
+        Bridge.callHandler(data, null, function (error) {
+            window.location.href = url;
+        });
     }
 
     render() {
         return (
-            <div id="classCardHomePageDoor" style={{height: document.body.clientHeight , overflow: 'auto'}}>
+            <div id="classCardHomePageDoor" style={{height: document.body.clientHeight, overflow: 'auto'}}>
                 <ul className="classCardHomePageDoor my_flex">
-                    <li onClick={this.turnToClassroomManage}><i className="icon icon_ClassroomManagement"></i><div>教室管理</div></li>
-                    <li onClick={this.turnToRingBinding}><i className="icon icon_bracelet"></i><div>手环/班牌绑定管理</div></li>
+                    <li onClick={this.turnToClassroomManage}><i className="icon icon_ClassroomManagement"></i>
+                        <div>教室管理</div>
+                    </li>
+                    <li onClick={this.turnToRingBinding}><i className="icon icon_bracelet"></i>
+                        <div>手环/班牌绑定管理</div>
+                    </li>
                     <li onClick={this.turnToCurriculumSchedule.bind(this, 1)}><i
-                        className="icon icon_course"></i><div>课程表管理</div></li>
-                    <li onClick={this.turnToNotifyBack}><i className="icon icon_notify"></i><div>通知管理</div></li>
+                        className="icon icon_course"></i>
+                        <div>课程表管理</div>
+                    </li>
+                    <li onClick={this.turnToNotifyBack}><i className="icon icon_notify"></i>
+                        <div>通知管理</div>
+                    </li>
                     {/*<li onClick={this.turnToCurriculumSchedule.bind(this, 2)}><i className="icon icon_publiCourse"></i><div>公共教室课程表</div></li>*/}
-                    <li onClick={this.turnToClassDemeanor.bind(this, 1)}><i className="icon icon_classDemeanor"></i><div>班级风采管理</div></li>
-                    <li onClick={this.turnToClassDemeanor.bind(this, 2)}><i className="icon icon_honor"></i><div>班级荣誉管理</div></li>
-                    <li onClick={this.turnToStudentDutyList}><i className="icon icon_studentOnDuty"></i><div>班级值日表管理</div></li>
-                    <li onClick={this.turnToMoralEducation}><i className="icon icon_moralEducationScore"></i><div>德育评价管理</div></li>
+                    <li onClick={this.turnToClassDemeanor.bind(this, 1)}><i className="icon icon_classDemeanor"></i>
+                        <div>班级风采管理</div>
+                    </li>
+                    <li onClick={this.turnToClassDemeanor.bind(this, 2)}><i className="icon icon_honor"></i>
+                        <div>班级荣誉管理</div>
+                    </li>
+                    <li onClick={this.turnToStudentDutyList}><i className="icon icon_studentOnDuty"></i>
+                        <div>班级值日表管理</div>
+                    </li>
+                    <li onClick={this.turnToMoralEducation}><i className="icon icon_moralEducationScore"></i>
+                        <div>德育评价管理</div>
+                    </li>
                     {/*<li onClick={this.turnToWarnList}><i className="icon icon_earlyWarning"></i><div>课堂预警</div></li>
                     <li onClick={this.turnToStudentMovement}><i className="icon icon_exercise"></i><div>学生运动轨迹</div></li>*/}
-                    <li onClick={this.turnWarningAdminList}><i className="icon icon_warning"></i><div>预警人员管理</div></li>
-                    <li onClick={this.turnToAttendanceTime}><i className="icon icon_attendanceTime"></i><div>考勤时段设置</div></li>
+                    <li onClick={this.turnWarningAdminList}><i className="icon icon_warning"></i>
+                        <div>预警人员管理</div>
+                    </li>
+                    <li onClick={this.turnToAttendanceTime}><i className="icon icon_attendanceTime"></i>
+                        <div>考勤时段设置</div>
+                    </li>
                     {/*<li onClick={this.toAttendanceStatistical}><i className="icon icon_moralEducationScore"></i><div>出勤率统计(饼图)</div></li>
                     <li onClick={this.toAttendanceSatisticaForClass}><i className="icon icon_moralEducationScore"></i><div>出勤率统计(柱状图)</div></li>*/}
-                    <li onClick={this.turnToSetSkin}><i className="icon icon_skin"></i><div>班牌皮肤设置</div></li>
+                    <li onClick={this.turnToSetSkin}><i className="icon icon_skin"></i>
+                        <div>班牌皮肤设置</div>
+                    </li>
+                    <li onClick={this.turnToSetTime}><i className="icon icon_time"></i>
+                        <div>定时开关机</div>
+                    </li>
                 </ul>
             </div>
         );

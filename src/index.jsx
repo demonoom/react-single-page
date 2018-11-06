@@ -1002,10 +1002,6 @@ class Index extends React.Component {
                             to="/wxLogin?local=KnowledgeStatic"
                             style={{fontSize: '24px'}}>统计(微信)</Link>
                     </li>
-                    <li>
-                        <Link
-                            to="/classTimingList?clazzroomId=168" style={{fontSize: '24px'}}>班牌定时</Link>
-                    </li>
 
                     {/*<li><Link to="/antPlate?ident=23836&fileId=-1&title=蚁盘题目&phoneType=0"*/}
                     {/*style={{fontSize: '24px'}}>蚁盘</Link>*/}
@@ -1074,10 +1070,13 @@ class Index extends React.Component {
                         // to="/wxLogin?local=chatLogin"
                         to="/chatLogin?unionid=o-w611I9nKqTHcT3P34srzwIrf6U"
                         style={{fontSize: '24px'}}>chatLogin</Link></li> */}
-                    {/*<li>*/}
-                    {/*<Link*/}
-                    {/*to="/wxLogin?local=contactsList" style={{fontSize: '24px'}}>聊天</Link>*/}
-                    {/*</li>*/}
+                    <li>
+                    <Link
+                    to="/wxLogin?local=contactsList" style={{fontSize: '24px'}}>聊天(微信)</Link>
+                    </li>
+                    <li><Link
+                        to="/wxBindIndex"
+                        style={{fontSize: '24px'}}>微信绑定</Link></li>
                     {/* <li><Link
                         to="/contactsList?unionid=o-w611I9nKqTHcT3P34srzwIrf6U"
                         style={{fontSize: '24px'}}>疑心</Link></li>
@@ -1114,9 +1113,9 @@ class Index extends React.Component {
                     {/*<li><Link*/}
                     {/*to="/comments?access_user=23836&sid=1021&stype=1&access_user=6075"*/}
                     {/*style={{fontSize: '24px'}}>评论列表</Link></li>*/}
-                    {/* <li><Link
+                        <li><Link
                         to="/classCardHomePageDoor?access_user=23836"
-                        style={{fontSize: '24px'}}>后台总入口</Link></li> */}
+                        style={{fontSize: '24px'}}>后台总入口</Link></li>
                     {/*<li><Link
                     {/*to="/dashboard?destId=9&areaType=0"*/}
                     {/*style={{fontSize: '24px'}}>管理驾驶舱</Link></li>*/}
@@ -1220,16 +1219,16 @@ class Index extends React.Component {
                         <Link
                             to="/courseRecListst" style={{fontSize: '24px'}}>课程推荐</Link>
                     </li>*/}
-                     <li>
+                        <li>
                         <Link
-                            to="/KnowledgeStatic?unionid=o-w611I9nKqTHcT3P34srzwIrf6U" style={{fontSize: '24px'}}>统计</Link>
-                    </li>
-                     <li>
+                        to="/KnowledgeStatic?unionid=o-w611I9nKqTHcT3P34srzwIrf6U" style={{fontSize: '24px'}}>统计</Link>
+                        </li>
+                        <li>
                         <Link
-                            to="/pushVideo?schoolId=9" style={{fontSize: '24px'}}>推送视频</Link>
-                    </li>
+                        to="/pushVideo?schoolId=9" style={{fontSize: '24px'}}>推送视频</Link>
+                        </li>
 
-                    {/* <li>
+                        {/* <li>
                         <Link
                             to="/litleantTeacher" style={{fontSize: '24px'}}>下载页老师</Link>
                     </li>

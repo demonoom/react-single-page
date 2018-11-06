@@ -21,7 +21,7 @@ export default class KnowledgeLogin extends React.Component {
     }
 
     componentWillMount() {
-        document.title = "蚁信";   //设置title
+        document.title = "微信绑定";   //设置title
         var locationHref = window.location.href;
         var locationSearch = locationHref.substr(locationHref.indexOf("?") + 1);
         var searchArray = locationSearch.split("&");
@@ -160,14 +160,14 @@ export default class KnowledgeLogin extends React.Component {
             this.bindUserToPar(function (obj) {
                 resolve(obj);
             });
-        })
+        });
 
         if (this.state.teaBind && !this.state.parBind) {
             Promise.all([tea]).then((result) => {
                 if (result[0].success) {
                     location.replace(encodeURI(WebServiceUtil.mobileServiceURL + 'KnowledgeStatic?unionid=' + _this.state.unionid))
                 } else {
-                    Toast.fail(result[0].msg, 2)
+                    Toast.fail(result[0].msg, 2);
                 }
             })
         } else if (!this.state.teaBind && this.state.parBind) {
@@ -190,8 +190,6 @@ export default class KnowledgeLogin extends React.Component {
                     Toast.fail(result[0].msg, 2)
                 }
             })
-        } else {
-
         }
     }
 
@@ -242,26 +240,27 @@ export default class KnowledgeLogin extends React.Component {
                     <div className="logo">
                         <img src={require("../img/loginlogo.png")}/>
                     </div>
-                    <div className='text'>蚁信</div>
-                    <div className='grayText'>小蚂蚁移动教学快捷通讯录</div>
+                    <div className='text'>小蚂蚁移动教学</div>
                 </div>
                 <div>
-                    <List>
-                        <InputItem
-                            placeholder="请输入绑定的手机号"
-                            phoneValue={this.state.phoneValue}
-                            onChange={this.phoneOnChange.bind(this)}
-                        />
-                        <img style={{
-                            display: (this.state.telSuccess == 'success' || this.state.telSuccess == 'error') && (!this.state.pending) ? 'block' : 'none'
-                        }} id="telImg"
-                             src={this.state.telSuccess == 'success' ? require("../img/success1.png") : require('../img/error.png')}
-                             alt=""/>
-                        <div style={{
-                            display: (this.state.pending) ? 'block' : 'none'
-                        }} className="telLoad">验证中...
-                        </div>
-                    </List>
+                    <div className='inputDiv'>
+                        <List>
+                            <InputItem
+                                placeholder="请输入绑定的手机号"
+                                phoneValue={this.state.phoneValue}
+                                onChange={this.phoneOnChange.bind(this)}
+                            />
+                            <img style={{
+                                display: (this.state.telSuccess == 'success' || this.state.telSuccess == 'error') && (!this.state.pending) ? 'block' : 'none'
+                            }} id="telImg"
+                                 src={this.state.telSuccess == 'success' ? require("../img/success1.png") : require('../img/error.png')}
+                                 alt=""/>
+                            <div style={{
+                                display: (this.state.pending) ? 'block' : 'none'
+                            }} className="telLoad">验证中...
+                            </div>
+                        </List>
+                    </div>
                     <div className='inputDiv'>
                         <List>
                             <InputItem
@@ -277,7 +276,6 @@ export default class KnowledgeLogin extends React.Component {
                 </div>
                 <div className='btn'>
                     <Button type="warning" onClick={this.bindUser}>确定</Button>
-                    <div className='text'>支持教师端和家长端快捷通讯录同步使用</div>
                 </div>
             </div>
         );
