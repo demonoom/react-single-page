@@ -285,6 +285,7 @@ export default class KnowledgeStatic extends React.Component {
     onChartClick(optional) {
         var url = WebServiceUtil.mobileServiceURL + "KnowLedgeList?uid=" + this.state.userId + '&currentTime=' + optional.name;
         window.location.href = url;
+        window.location.reload();
     }
 
 
