@@ -242,8 +242,8 @@ export default class KnowledgeLogin extends React.Component {
                     <div className="logo">
                         <img src={require("../img/loginlogo.png")}/>
                     </div>
-                    <div className='text'>蚁信</div>
-                    <div className='grayText'>小蚂蚁移动教学快捷通讯录</div>
+                    <div className='text'>用户登录</div>
+                    <div className='grayText'>小蚂蚁移动教学绑定微信号</div>
                 </div>
                 <div>
                     <List>
@@ -277,7 +277,6 @@ export default class KnowledgeLogin extends React.Component {
                 </div>
                 <div className='btn'>
                     <Button type="warning" onClick={this.bindUser}>确定</Button>
-                    <div className='text'>支持教师端和家长端快捷通讯录同步使用</div>
                 </div>
             </div>
         );
