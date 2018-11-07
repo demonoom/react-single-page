@@ -46,7 +46,6 @@ export default class pushVideo extends React.Component {
         var locationSearch = locationHref.substr(locationHref.indexOf("?") + 1);
         var schoolId = locationSearch.split("&")[0].split("=")[1];
         var userId = locationSearch.split("&")[1].split("=")[1];
-        console.log(userId,"userId")
         calm.setState({
             schoolId: schoolId,
             userId:userId
@@ -110,12 +109,6 @@ export default class pushVideo extends React.Component {
                 videoPath = item[0];
                 videoName = item[1].split("=")[1];
                 videoExtra = (item[1].split("=")[1]).split(".")[1];
-                // newArr.push({
-                //     videoPath: item[0],
-                //     videoName: item[1].split("=")[1],
-                //     videoExtra: (item[1].split("=")[1]).split(".")[1],
-                //     pushValue: "推送"
-                // })
                 calm.savePushScreenVideo(videoPath, videoName)
             })
            
@@ -151,7 +144,6 @@ export default class pushVideo extends React.Component {
                 });
             })
             Promise.all([p1]).then(function(res){
-                console.log(res,'111');
                 if(res == 'return'){
                     return;
                 }else{
@@ -261,7 +253,6 @@ export default class pushVideo extends React.Component {
      * 显示操作按钮
      */
     showBtnBox = (index) => {
-        console.log(index);
         if ($('.btnBox').eq(index).css("display") == "none") {
             $(".btnBox").css({
                 display: 'none'
