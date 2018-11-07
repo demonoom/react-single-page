@@ -19,6 +19,7 @@ export default class KnowledgeStatic extends React.Component {
             type:'学生',
             //不再更新学生列表
             noUpdata: false,
+            stuId:null,
         }
     }
 
@@ -283,11 +284,15 @@ export default class KnowledgeStatic extends React.Component {
 
 
     onChartClick(optional) {
-        var url = WebServiceUtil.mobileServiceURL + "KnowLedgeList?uid=" + this.state.userId + '&currentTime=' + optional.name;
+        // console.log(this.state.stuId,'this.state.stuId')
+        // return;
+        var url = WebServiceUtil.mobileServiceURL + "KnowLedgeList?uid=" + (this.state.stuId?this.state.stuId:this.state.userId) + '&currentTime=' + optional.name;
         window.location.href = url;
         // window.location.reload();
         // window.open(url);
-        location.reload();
+        setTimeout(function(){
+            location.reload();
+        },300)
     }
 
 
@@ -319,6 +324,7 @@ export default class KnowledgeStatic extends React.Component {
                         this.setState({
                             nameArray: newArray2,
                             defaultValue:[newArray2[0].value],
+                            stuId: newArray2[0].value,
                             noUpdata:true,
                         })
                     }
