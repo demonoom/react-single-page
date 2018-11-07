@@ -992,7 +992,7 @@ class Index extends React.Component {
                 {/* <h1>Stages list</h1> */}
                 <ul role="nav">
 
-                    {/*<li>
+                    <li>
                         <Link
                             to="/KnowledgeStatic?unionid=o-w611I9nKqTHcT3P34srzwIrf6U"
                             style={{fontSize: '24px'}}>统计</Link>
@@ -1019,7 +1019,7 @@ class Index extends React.Component {
                     </li>
                     <li><Link
                         to="/classCardHomePageDoor?access_user=23836"
-                        style={{fontSize: '24px'}}>后台总入口</Link></li>*/}
+                        style={{fontSize: '24px'}}>后台总入口</Link></li>
 
                     {/*<li><Link to="/antPlate?ident=23836&fileId=-1&title=蚁盘题目&phoneType=0"*/}
                     {/*style={{fontSize: '24px'}}>蚁盘</Link>*/}
