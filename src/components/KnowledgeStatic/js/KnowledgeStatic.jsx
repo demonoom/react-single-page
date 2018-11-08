@@ -5,10 +5,12 @@ import {
 } from 'antd-mobile';
 import '../css/KnowledgeStatic.less'
 const alert = Modal.alert;
+var that;
 export default class KnowledgeStatic extends React.Component {
 
     constructor(props) {
         super(props);
+        that = this;
         this.state = {
             domArray: [],
             clientHeight: document.body.clientHeight,
@@ -264,7 +266,7 @@ export default class KnowledgeStatic extends React.Component {
         }
         var columnarChartOption = this.buildChartOption(xArray,yArray);
         let onEvents = {
-            'click': this.onChartClick.bind(this),
+            'click': this.onChartClick,
         }
         // columnarChartOption.getZr().click(function(event){
         //     if(!event.target){ console.log("点击空白处"); }
@@ -284,16 +286,34 @@ export default class KnowledgeStatic extends React.Component {
 
 
     onChartClick(optional) {
-        console.log(this.state.stuId,'this.state.stuId')
-        return;
-        var url = WebServiceUtil.mobileServiceURL + "KnowLedgeList?uid=" + (this.state.stuId?this.state.stuId:this.state.userId) + '&currentTime=' + optional.name;
-        window.location.href = url;
-        // window.location.reload();
-        // window.open(url);
-        setTimeout(function(){
-            location.reload();
-        },300)
+            console.log(that.state.stuId,'this.state.stuId')
+            // return;
+            var url = WebServiceUtil.mobileServiceURL + "KnowLedgeList?uid=" + (that.state.stuId?that.state.stuId:that.state.userId) + '&currentTime=' + optional.name;
+            window.location.href = url;
+            // return;
+            // var url = WebServiceUtil.mobileServiceURL + "ringBinding?ident=" + this.state.ident;
+            // var data = {
+            //     method: 'openNewPage',
+            //     url: url
+            // };
+            // that.toUrl(url);
+            // Bridge.callHandler(data, function(){
+            //     window.location.href = url;
+            // }, function (error) {
+            //     window.location.href = url;
+            // });
+            // window.location.reload();
+            // window.open(url);
+            setTimeout(function(){
+                location.reload();
+            },300)
+
     }
+
+    // toUrl(url){
+    //     window.location.href = url;
+    //     return;
+    // }
 
 
     getAvgMasteryAccuaryLineChartData() {

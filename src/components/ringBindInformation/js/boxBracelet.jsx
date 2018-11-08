@@ -17,6 +17,7 @@ import '../css/boxBracelet.less'
 const alert = Modal.alert;
 const RadioItem = Radio.RadioItem;
 var bindDing;
+var timer;
 
 export default class boxBracelet extends React.Component {
 
@@ -81,6 +82,7 @@ export default class boxBracelet extends React.Component {
             "aid": loginUser.ident,
             "cid": -2,
             "rid": -1,
+            "searchKeyWords": this.input.value,
             "pn": -1,
         };
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
@@ -334,6 +336,16 @@ export default class boxBracelet extends React.Component {
         this.viewAndroidBoxPage(this.state.loginUser);
     }
 
+    searchInput = ()=>{
+        clearTimeout(timer);
+        timer = setTimeout(()=>{
+            console.log(this.input.value,'index');
+            this.initData = [];
+            this.viewAndroidBoxPage(this.state.loginUser);
+        },400);
+
+    }
+
     render() {
 
         var _this = this;
@@ -365,6 +377,9 @@ export default class boxBracelet extends React.Component {
 
         return (
             <div id="bindingBracelet" style={{height: bindDing.state.clientHeight}}>
+                <div className="nav">
+                    <input type="text" ref={input => this.input = input} onInput={this.searchInput.bind(this)} placeholder="请输入搜索内容"/>
+                </div>
                 <div className='tableDiv' style={{height: bindDing.state.clientHeight}}>
                     {/*这是列表数据,包括添加按钮*/}
                     <ListView

@@ -22,6 +22,7 @@ const AgreeItem = Checkbox.AgreeItem;
 const alert = Modal.alert;
 const RadioItem = Radio.RadioItem;
 var classBinding;
+var timer;
 
 export default class classroomManage extends React.Component {
 
@@ -85,6 +86,7 @@ export default class classroomManage extends React.Component {
         var param = {
             "method": 'viewClassRoomPage',
             "uid": uid,
+            "searchKeyWords": this.input.value,
             "pn": PageNo,
         };
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
@@ -253,6 +255,15 @@ export default class classroomManage extends React.Component {
         });
     }
 
+    searchInput = ()=>{
+        clearTimeout(timer);
+        timer = setTimeout(()=>{
+            console.log(this.input.value,'index');
+            this.viewClassRoomPage(this.state.uid,true);
+        },400);
+
+    }
+
     render() {
         var _this = this;
         const row = (rowData, sectionID, rowID) => {
@@ -298,6 +309,9 @@ export default class classroomManage extends React.Component {
 
         return (
             <div id="classroomManage" style={{height: classBinding.state.clientHeight}}>
+                <div className="nav">
+                    <input type="text" ref={input => this.input = input} onInput={this.searchInput.bind(this)} placeholder="请输入搜索内容"/>
+                </div>
                 <div className='tableDiv' style={{height: classBinding.state.clientHeight}}>
                     <li className="edit_coordinateLi line_public"><span onClick={_this.bindCoordinates}
                                                                         className="edit_coordinate">批量编辑教室坐标</span></li>

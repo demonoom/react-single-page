@@ -17,6 +17,7 @@ import '../css/bindingBracelet.less'
 const alert = Modal.alert;
 const RadioItem = Radio.RadioItem;
 var bindDing;
+var timer;
 
 /**
  * 字符串两两切割
@@ -91,6 +92,7 @@ export default class bindingBracelet extends React.Component {
             "method": 'viewWatchPage',
             "aid": loginUser.ident,
             "cid": -1,
+            "searchKeyWords": this.input.value,
             "pn": PageNo,
         };
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
@@ -363,6 +365,16 @@ export default class bindingBracelet extends React.Component {
         this.viewWatchPage(this.state.loginUser);
     }
 
+    searchInput = ()=>{
+        clearTimeout(timer);
+        timer = setTimeout(()=>{
+            console.log(this.input.value,'index');
+            this.initData = [];
+            this.viewWatchPage(this.state.loginUser);
+        },400);
+
+    }
+
     render() {
 
         var _this = this;
@@ -400,6 +412,9 @@ export default class bindingBracelet extends React.Component {
 
         return (
             <div id="bindingBracelet" style={{height: bindDing.state.clientHeight}}>
+                <div className="nav">
+                    <input type="text" ref={input => this.input = input} onInput={this.searchInput.bind(this)} placeholder="请输入搜索内容"/>
+                </div>
                 <div className='tableDiv' style={{height: bindDing.state.clientHeight}}>
                     {/*这是列表数据,包括添加按钮*/}
                     <ListView
