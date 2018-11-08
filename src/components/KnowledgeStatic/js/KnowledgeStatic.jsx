@@ -284,8 +284,8 @@ export default class KnowledgeStatic extends React.Component {
 
 
     onChartClick(optional) {
-        // console.log(this.state.stuId,'this.state.stuId')
-        // return;
+        console.log(this.state.stuId,'this.state.stuId')
+        return;
         var url = WebServiceUtil.mobileServiceURL + "KnowLedgeList?uid=" + (this.state.stuId?this.state.stuId:this.state.userId) + '&currentTime=' + optional.name;
         window.location.href = url;
         // window.location.reload();
@@ -370,7 +370,8 @@ export default class KnowledgeStatic extends React.Component {
     onChangeColor = (params) => {
         this.setState({
             defaultValue: params,
-            userId:params[0]
+            userId:params[0],
+            stuId: params[0]
         },()=>{
             this.getAvgMasteryAccuaryLineChartData();
         });
@@ -378,6 +379,7 @@ export default class KnowledgeStatic extends React.Component {
 
     toBindHTML(){
         console.log('toBindHTML');
+
         var url = WebServiceUtil.mobileServiceURL + "KnowledgeLogin?unid=" + this.state.openId;
         window.location.href = url;
     }
