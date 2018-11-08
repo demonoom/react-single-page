@@ -309,12 +309,12 @@ export default class classroomManage extends React.Component {
 
         return (
             <div id="classroomManage" style={{height: classBinding.state.clientHeight}}>
-                <div className="nav">
-                    <input type="text" ref={input => this.input = input} onInput={this.searchInput.bind(this)} placeholder="请输入搜索内容"/>
+
+                <div className="nav search-nav">
+                    <i></i><input type="text" ref={input => this.input = input} onInput={this.searchInput.bind(this)} placeholder="请输入搜索内容"/><span className="close"></span>
                 </div>
-                <div className='tableDiv' style={{height: classBinding.state.clientHeight}}>
-                    <li className="edit_coordinateLi line_public"><span onClick={_this.bindCoordinates}
-                                                                        className="edit_coordinate">批量编辑教室坐标</span></li>
+                <div className='tableDiv' style={{height: classBinding.state.clientHeight - 52}}>
+                    <li className="edit_coordinateLi line_public"><span onClick={_this.bindCoordinates} className="edit_coordinate">批量编辑教室坐标</span></li>
                     {/*这是列表数据,包括添加按钮*/}
                     <ListView
                         ref={el => this.lv = el}

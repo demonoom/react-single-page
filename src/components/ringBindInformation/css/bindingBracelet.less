@@ -18,6 +18,11 @@
   }
   .tableDiv {
     position: relative;
+    .am-list-body{
+      .am-wingblank.am-wingblank-lg:first-child .am-whitespace{
+        display: none;
+      }
+    }
     .am-card{
       padding: 0 15px;
       .am-card-header{
@@ -271,5 +276,49 @@
       }
 
     }
+  }
+  .search-nav{
+    background: #efeff4;
+    padding:9px 15px;
+    position: relative;
+    & i{
+      background: url("../imgs/icon_search.png") no-repeat center center #fff;
+      font-size: 0;
+      width: 20px;
+      height: 34px;
+      background-size: 15px 19px;
+      float: left;
+      padding-left: 8px;
+    }
+    & input{
+      z-index: 2;
+      width: calc(~"100% - 58px");
+      text-align: left;
+      display: block;
+      color: #000;
+      font-size: 15px;
+      background-color: #fff;
+      border: 0;
+      padding: 0 30px 0 0px;
+      height: 34px;
+    }
+    & .close{
+      position: absolute;
+      background: url("../imgs/icon-close.png") no-repeat;
+      width: 16px;
+      height: 16px;
+      right: 22px;
+      top: 18px;
+      background-size: 16px;
+    }
+  }
+  ::-moz-placeholder{
+    color: #bfbfbf;
+  }
+  input:-ms-input-placeholder{
+    color: #bfbfbf;
+  }
+  input::-webkit-input-placeholder {
+    color: #bfbfbf;
   }
 }

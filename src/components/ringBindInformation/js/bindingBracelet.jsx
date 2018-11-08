@@ -412,10 +412,10 @@ export default class bindingBracelet extends React.Component {
 
         return (
             <div id="bindingBracelet" style={{height: bindDing.state.clientHeight}}>
-                <div className="nav">
-                    <input type="text" ref={input => this.input = input} onInput={this.searchInput.bind(this)} placeholder="请输入搜索内容"/>
+                <div className="nav search-nav">
+                    <i></i><input type="text" ref={input => this.input = input} onInput={this.searchInput.bind(this)} placeholder="请输入搜索内容"/><span className="close"></span>
                 </div>
-                <div className='tableDiv' style={{height: bindDing.state.clientHeight}}>
+                <div className='tableDiv' style={{height: bindDing.state.clientHeight - 52}}>
                     {/*这是列表数据,包括添加按钮*/}
                     <ListView
                         ref={el => this.lv = el}
