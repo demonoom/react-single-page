@@ -5,12 +5,13 @@ import {
 } from 'antd-mobile';
 import '../css/KnowledgeStatic.less'
 const alert = Modal.alert;
-var that;
+var that,win;
 export default class KnowledgeStatic extends React.Component {
 
     constructor(props) {
         super(props);
         that = this;
+        win = window;
         this.state = {
             domArray: [],
             clientHeight: document.body.clientHeight,
@@ -128,6 +129,11 @@ export default class KnowledgeStatic extends React.Component {
                         type: 'solid'
                     },
                 },
+                showContent:false,
+                show:false,
+            },
+            tooltipContent:{
+               show:false,
             },
             legend: {
                 data: ['正确率'],
@@ -254,6 +260,7 @@ export default class KnowledgeStatic extends React.Component {
     };
 
 
+
     getData(data) {   //设置数据结构
         console.log(data);
         if (!data) {
@@ -265,7 +272,7 @@ export default class KnowledgeStatic extends React.Component {
             yArray.push(data[k].y);
         }
         var columnarChartOption = this.buildChartOption(xArray,yArray);
-        let onEvents = {
+        var onEvent = {
             'click': this.onChartClick,
         }
         // columnarChartOption.getZr().click(function(event){
@@ -276,8 +283,8 @@ export default class KnowledgeStatic extends React.Component {
                           option={columnarChartOption}
                           style={{height: this.state.clientHeight / 2 + 50, width: '100%'}}
                           // theme='macarons'
-                          onEvents={onEvents}
-                          className=''/>
+                          onEvents={onEvent}
+                          />
         this.setState({
             domArray: reactDom,
         });
@@ -289,8 +296,8 @@ export default class KnowledgeStatic extends React.Component {
             console.log(that.state.stuId,'this.state.stuId')
             // return;
             var url = WebServiceUtil.mobileServiceURL + "KnowLedgeList?uid=" + (that.state.stuId?that.state.stuId:that.state.userId) + '&currentTime=' + optional.name;
-            window.location.href = url;
-            // return;
+            win.location.href = url;
+            // top.location.href = url;
             // var url = WebServiceUtil.mobileServiceURL + "ringBinding?ident=" + this.state.ident;
             // var data = {
             //     method: 'openNewPage',
@@ -310,10 +317,6 @@ export default class KnowledgeStatic extends React.Component {
 
     }
 
-    // toUrl(url){
-    //     window.location.href = url;
-    //     return;
-    // }
 
 
     getAvgMasteryAccuaryLineChartData() {
@@ -399,7 +402,6 @@ export default class KnowledgeStatic extends React.Component {
 
     toBindHTML(){
         console.log('toBindHTML');
-
         var url = WebServiceUtil.mobileServiceURL + "KnowledgeLogin?unid=" + this.state.openId;
         window.location.href = url;
     }
@@ -438,7 +440,7 @@ export default class KnowledgeStatic extends React.Component {
                         <List.Item arrow="horizontal" className="data_list">结束日期</List.Item>
                     </DatePicker>
                     <WhiteSpace size="lg"/>
-                    <div className="dom_cont">
+                    <div className="dom_cont" id="dom_cont">
                         {this.state.domArray}
                     </div>
                     <ActivityIndicator
@@ -447,7 +449,6 @@ export default class KnowledgeStatic extends React.Component {
                         animating={this.state.animating}
                     />
                 </div>
-
             </div>
         );
     }
