@@ -316,8 +316,12 @@
   text-indent: 15px;
 }
 #classroomManage .search-nav {
-  background: #efeff4;
-  padding: 9px 15px;
+  background: #fff;
+  border-top: 9px #efeff4 solid;
+  border-right: 15px solid #efeff4;
+  border-bottom: 9px solid #efeff4;
+  border-left: 15px solid #efeff4;
+  position: relative;
 }
 #classroomManage .search-nav i {
   background: url("../imgs/search-icon.png") no-repeat center center #fff;
@@ -337,16 +341,18 @@
   font-size: 15px;
   background-color: #fff;
   border: 0;
-  padding: 0 30px 0 0;
-  height: 34px;
+  padding: 8px 30px 6px 0px;
+  height: 20px;
+  line-height: 20px;
+  border-radius: 0 !important;
 }
 #classroomManage .search-nav .close {
   position: absolute;
   background: url("../imgs/icon-close.png") no-repeat;
   width: 16px;
   height: 16px;
-  right: 22px;
-  top: 18px;
+  right: 4px;
+  top: 9px;
   background-size: 16px;
 }
 #classroomManage ::-moz-placeholder {
