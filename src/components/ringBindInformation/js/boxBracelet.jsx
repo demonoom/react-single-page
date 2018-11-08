@@ -39,6 +39,7 @@ export default class boxBracelet extends React.Component {
             stNameValue: '',
             searchData: [],
             boxTypeValue: 1,
+            showClear: false
         };
     }
 
@@ -336,14 +337,24 @@ export default class boxBracelet extends React.Component {
         this.viewAndroidBoxPage(this.state.loginUser);
     }
 
-    searchInput = ()=>{
+    searchInput = () => {
         clearTimeout(timer);
-        timer = setTimeout(()=>{
-            console.log(this.input.value,'index');
+        timer = setTimeout(() => {
+            console.log(this.input.value, 'index');
             this.initData = [];
             this.viewAndroidBoxPage(this.state.loginUser);
-        },400);
+        }, 400);
+        this.setState({
+            showClear: (this.input.value != '')
+        })
 
+    }
+
+    clearSearch = () => {
+        this.input.value = '';
+        this.initData = [];
+        this.setState({showClear: false})
+        this.viewAndroidBoxPage(this.state.loginUser);
     }
 
     render() {
@@ -378,7 +389,10 @@ export default class boxBracelet extends React.Component {
         return (
             <div id="bindingBracelet" style={{height: bindDing.state.clientHeight}}>
                 <div className="nav search-nav">
-                    <i></i><input type="text" ref={input => this.input = input} onInput={this.searchInput.bind(this)} placeholder="请输入搜索内容"/><span className="close"></span>
+                    <i></i><input type="text" ref={input => this.input = input} onInput={this.searchInput.bind(this)}
+                                  placeholder="请输入搜索内容"/><span style={
+                    this.state.showClear ? {display: 'block'} : {display: 'none'}
+                } onClick={this.clearSearch} className="close"></span>
                 </div>
                 <div className='tableDiv' style={{height: bindDing.state.clientHeight - 52}}>
                     {/*这是列表数据,包括添加按钮*/}

@@ -38,6 +38,7 @@ export default class classroomManage extends React.Component {
             defaultPageNo: 1,
             clientHeight: document.body.clientHeight,
             selectData: [],
+            showClear:false,
         };
     }
 
@@ -261,7 +262,16 @@ export default class classroomManage extends React.Component {
             console.log(this.input.value,'index');
             this.viewClassRoomPage(this.state.uid,true);
         },400);
+        this.setState({
+            showClear: (this.input.value != '')
+        })
 
+    }
+
+    clearSearch = ()=>{
+        this.input.value = '';
+        this.setState({showClear:false})
+        this.viewClassRoomPage(this.state.uid,true);
     }
 
     render() {
@@ -311,10 +321,14 @@ export default class classroomManage extends React.Component {
             <div id="classroomManage" style={{height: classBinding.state.clientHeight}}>
 
                 <div className="nav search-nav">
-                    <i></i><input type="text" ref={input => this.input = input} onInput={this.searchInput.bind(this)} placeholder="请输入搜索内容"/><span className="close"></span>
+                    <i></i><input type="text" ref={input => this.input = input} onInput={this.searchInput.bind(this)} placeholder="请输入搜索内容"/><span style={
+                    this.state.showClear?{display:'block'}:{display:'none'}
+                } onClick={this.clearSearch} className="close"></span>
                 </div>
                 <div className='tableDiv' style={{height: classBinding.state.clientHeight - 52}}>
-                    <li className="edit_coordinateLi line_public"><span onClick={_this.bindCoordinates} className="edit_coordinate">批量编辑教室坐标</span></li>
+                    <li style={
+                        this.input && this.input.value != ''?{display:'none'}:{display:'block'}
+                    } className="edit_coordinateLi line_public"><span onClick={_this.bindCoordinates} className="edit_coordinate">批量编辑教室坐标</span></li>
                     {/*这是列表数据,包括添加按钮*/}
                     <ListView
                         ref={el => this.lv = el}
