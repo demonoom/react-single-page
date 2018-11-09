@@ -172,6 +172,9 @@ export default class boxBracelet extends React.Component {
      */
     addRing = () => {
         $('.tableDiv').hide("fast");
+        console.log('开启')
+        $('.nav').css({display:'none'});
+
     };
 
     /**
@@ -179,6 +182,7 @@ export default class boxBracelet extends React.Component {
      */
     cancelAddModel = () => {
         $('.tableDiv').show("fast");
+        $('.nav').css({display:'block'});
         this.state.macId = '';
         this.state.stNameValue = '';
         this.setState({chooseResultDiv: 'none'});
@@ -230,6 +234,7 @@ export default class boxBracelet extends React.Component {
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
             onResponse: function (result) {
                 if (result.msg == '调用成功' && result.success == true) {
+                    $('.nav').css({display:'block'});
                     Toast.success('绑定成功', 1);
                     $('.tableDiv').show("fast");
                     _this.state.macId = '';
@@ -353,7 +358,7 @@ export default class boxBracelet extends React.Component {
     clearSearch = () => {
         this.input.value = '';
         this.initData = [];
-        this.setState({showClear: false})
+        this.setState({showClear: false});
         this.viewAndroidBoxPage(this.state.loginUser);
     }
 

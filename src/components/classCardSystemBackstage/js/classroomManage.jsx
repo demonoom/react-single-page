@@ -322,8 +322,8 @@ export default class classroomManage extends React.Component {
 
                 <div className="nav search-nav">
                     <i></i><input type="text" ref={input => this.input = input} onInput={this.searchInput.bind(this)} placeholder="请输入搜索内容"/><span style={
-                    this.state.showClear?{display:'block'}:{display:'none'}
-                } onClick={this.clearSearch} className="close"></span>
+                this.state.showClear?{display:'block'}:{display:'none'}
+            } onClick={this.clearSearch} className="close"></span>
                 </div>
                 <div className='tableDiv' style={{height: classBinding.state.clientHeight - 52}}>
                     <li style={
@@ -347,7 +347,7 @@ export default class classroomManage extends React.Component {
                         initialListSize={30}   //指定在组件刚挂载的时候渲染多少行数据，用这个属性来确保首屏显示合适数量的数据
                         scrollEventThrottle={20}     //控制在滚动过程中，scroll事件被调用的频率
                         style={{
-                            height: classBinding.state.clientHeight - 47,
+                            height: classBinding.state.clientHeight - 99,
                         }}
                         pullToRefresh={<PullToRefresh
                             onRefresh={this.onRefresh}

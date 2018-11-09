@@ -189,6 +189,7 @@ export default class bindingBracelet extends React.Component {
      */
     addRing = () => {
         $('.tableDiv').hide("fast");
+        $('.nav').css({display:'none'});
     };
 
     /**
@@ -199,6 +200,7 @@ export default class bindingBracelet extends React.Component {
         this.state.macId = '';
         this.state.stNameValue = '';
         this.setState({chooseResultDiv: 'none'});
+        $('.nav').css({display:'block'});
     };
 
     /**
@@ -253,6 +255,7 @@ export default class bindingBracelet extends React.Component {
             onResponse: function (result) {
                 if (result.msg == '调用成功' && result.success == true) {
                     Toast.success('绑定成功', 1);
+                    $('.nav').css({display:'block'});
                     $('.tableDiv').show("fast");
                     _this.state.macId = '';
                     _this.state.stNameValue = '';
