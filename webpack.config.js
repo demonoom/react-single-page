@@ -44,7 +44,7 @@ module.exports = {
 
     output: {
         filename: '[name].js',
-        chunkFilename: '[id].chunk.js?v=0.1.1',   //匹配chunk
+        chunkFilename: '[id].chunk.js?v=0.1.2',   //匹配chunk
         path: path.join(__dirname, '/dist'), /*输出的文件路径*/
         publicPath: '/dist/'
     },
@@ -105,11 +105,11 @@ module.exports = {
         new webpack.optimize.ModuleConcatenationPlugin(),
         // new webpack.optimize.CommonsChunkPlugin('shared.js'),
         //分离第三方应用的插件
-        new webpack.optimize.CommonsChunkPlugin({
+        /*new webpack.optimize.CommonsChunkPlugin({
             // minChunks: 2,
             name: 'vendor',
             filename: 'shared.js'
-        }),
+        }),*/
 
         // new webpack.optimize.UglifyJsPlugin({
         //     //压缩插件,使用npm 安装, cnpm会报错
