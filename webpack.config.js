@@ -1,5 +1,6 @@
 const path = require('path');  //引入path模块
 const webpack = require('webpack');
+var HtmlWebpackPlugin = require('html-webpack-plugin');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const autoprefixer = require('autoprefixer');
 const pxtorem = require('postcss-pxtorem');
@@ -39,14 +40,15 @@ module.exports = {
 
     entry: {
         "index": path.resolve(__dirname, 'src/index'),
-        vendor: ['react', 'react-dom', 'react-router', 'redux']   //提取react、redux第三方的库文件
+        vendor: ['react', 'react-dom', 'react-router', 'redux'],   //提取react、redux第三方的库文件,
     }, /*指向spa应用的入口文件*/
 
     output: {
         filename: '[name].js',
         chunkFilename: '[id].chunk.js?v=0.1.2',   //匹配chunk
         path: path.join(__dirname, '/dist'), /*输出的文件路径*/
-        publicPath: '/dist/'
+        //publicPath: '/dist/' 修改的地方
+        publicPath: '/'
     },
 
     resolve: {
@@ -98,18 +100,18 @@ module.exports = {
         ]
     },
     externals: {
-        "react": "React",
-        "react-dom": "ReactDOM"
+        //"react": "React", 修改的地方
+        //"react-dom": "ReactDOM" 修改的地方
     },
     plugins: [
         new webpack.optimize.ModuleConcatenationPlugin(),
-        // new webpack.optimize.CommonsChunkPlugin('shared.js'),
+        new webpack.optimize.CommonsChunkPlugin('shared'),
         //分离第三方应用的插件
-        /*new webpack.optimize.CommonsChunkPlugin({
-            // minChunks: 2,
-            name: 'vendor',
-            filename: 'shared.js'
-        }),*/
+        // new webpack.optimize.CommonsChunkPlugin({
+        //     // minChunks: 2,
+        //     name: 'vendor',
+        //     filename: 'shared.js'
+        // }),
 
         // new webpack.optimize.UglifyJsPlugin({
         //     //压缩插件,使用npm 安装, cnpm会报错
@@ -137,6 +139,23 @@ module.exports = {
         }),
         //抽取CSS文件插件
         new ExtractTextPlugin({filename: '[name].css', allChunks: true}),
-        ...otherPlugins
+        // new HtmlWebpackPlugin({
+        //     hash: true,
+        //     filename: 'index.html'
+        // })
+
+        new HtmlWebpackPlugin({
+            title: "HtmlPlugin",
+            // filename :"index.html",
+            template: path.join(__dirname, "./index_deploy.html"),
+            // template:(useDefinedHtml ? useDefinedHtml : defaultHtml),
+            //we must use html-loader here instead of file-loader
+            inject: "body",
+            cache: false,
+            xhtml: false
+        })
+
+
+        //...otherPlugins
     ]
 }
