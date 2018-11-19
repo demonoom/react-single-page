@@ -52,6 +52,7 @@
   font-size: 14px;
   overflow: hidden;
   position: relative;
+  height: 34px;
 }
 #antPlate .ant_title .btns {
   float: right;
