@@ -33,7 +33,8 @@ export default class antPlate extends React.Component {
             isLoadingLeft: true,
             parentId: -1,
             progressState: 'none',
-            dataNone: ""
+            dataNone: "",
+            fileName: ''
         };
     }
 
@@ -104,8 +105,8 @@ export default class antPlate extends React.Component {
      * @param fileId
      * @param clearFlag
      */
-    listCloudSubject(fileId, clearFlag) {
-        this.setState({parentCloudFileId: fileId});
+    listCloudSubject(fileId, clearFlag, fileName) {
+        this.setState({parentCloudFileId: fileId, fileName});
         var loginUser = JSON.parse(localStorage.getItem('loginUserTLibrary'));
         var _this = this;
         const dataBlob = {};
@@ -127,7 +128,15 @@ export default class antPlate extends React.Component {
                         _this.setState({dataNone: true})
                     }
                     if (result.response[0]) {
-                        _this.setState({parentId: result.response[0].parent.parentId})
+                        _this.setState({
+                            parentId: result.response[0].parent.parentId,
+                            parentName: result.response[0].parent.name
+                        })
+                    }
+                    if (!fileName) {
+                        _this.setState({fileName: result.response[0].parent.name})
+                    } else {
+                        _this.setState({fileName})
                     }
                     var response = result.response;
                     var pager = result.pager;
@@ -278,7 +287,7 @@ export default class antPlate extends React.Component {
         } else {
             _this.setState({defaultPageNo: 1}, () => {
                 this.setState({parentId: obj.parentId}, () => {
-                    _this.listCloudSubject(obj.id, true)
+                    _this.listCloudSubject(obj.id, true, obj.name)
                 })
             })
         }
@@ -623,7 +632,7 @@ export default class antPlate extends React.Component {
             this.getUserRootCloudSubjects(true)
             this.setState({parentId: -1})
         } else {
-            this.listCloudSubject(this.state.parentId, true)
+            this.listCloudSubject(this.state.parentId, true, false)
         }
     }
 
@@ -752,6 +761,8 @@ export default class antPlate extends React.Component {
                     >我的课件</span>
                     <span style={{display: parentId === -1 ? 'none' : ''}} className="ant_btn_list icon_back"
                           onClick={this.returnParentAtMoveModal}><Icon type='left'/></span>
+                    <span style={{display: parentId === -1 ? 'none' : ''}} className="ant_btn_list icon_back"
+                    >{this.state.fileName}</span>
                     <div className='btns'>
                         <span className="ant_btn_list add_file" onClick={this.creatNewFile}>新建文件夹</span>
                         <input style={{display: 'none'}} type="file" id="upload" multiple="multiple"/>
