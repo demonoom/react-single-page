@@ -39,6 +39,7 @@ export default class boxBracelet extends React.Component {
             stNameValue: '',
             searchData: [],
             boxTypeValue: 1,
+            showClear: false
         };
     }
 
@@ -171,6 +172,9 @@ export default class boxBracelet extends React.Component {
      */
     addRing = () => {
         $('.tableDiv').hide("fast");
+        console.log('开启')
+        $('.nav').css({display:'none'});
+
     };
 
     /**
@@ -178,6 +182,7 @@ export default class boxBracelet extends React.Component {
      */
     cancelAddModel = () => {
         $('.tableDiv').show("fast");
+        $('.nav').css({display:'block'});
         this.state.macId = '';
         this.state.stNameValue = '';
         this.setState({chooseResultDiv: 'none'});
@@ -229,6 +234,7 @@ export default class boxBracelet extends React.Component {
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
             onResponse: function (result) {
                 if (result.msg == '调用成功' && result.success == true) {
+                    $('.nav').css({display:'block'});
                     Toast.success('绑定成功', 1);
                     $('.tableDiv').show("fast");
                     _this.state.macId = '';
@@ -336,14 +342,24 @@ export default class boxBracelet extends React.Component {
         this.viewAndroidBoxPage(this.state.loginUser);
     }
 
-    searchInput = ()=>{
+    searchInput = () => {
         clearTimeout(timer);
-        timer = setTimeout(()=>{
-            console.log(this.input.value,'index');
+        timer = setTimeout(() => {
+            console.log(this.input.value, 'index');
             this.initData = [];
             this.viewAndroidBoxPage(this.state.loginUser);
-        },400);
+        }, 400);
+        this.setState({
+            showClear: (this.input.value != '')
+        })
 
+    }
+
+    clearSearch = () => {
+        this.input.value = '';
+        this.initData = [];
+        this.setState({showClear: false});
+        this.viewAndroidBoxPage(this.state.loginUser);
     }
 
     render() {
@@ -377,10 +393,13 @@ export default class boxBracelet extends React.Component {
 
         return (
             <div id="bindingBracelet" style={{height: bindDing.state.clientHeight}}>
-                <div className="nav">
-                    <input type="text" ref={input => this.input = input} onInput={this.searchInput.bind(this)} placeholder="请输入搜索内容"/>
+                <div className="nav search-nav">
+                    <i></i><input type="text" ref={input => this.input = input} onInput={this.searchInput.bind(this)}
+                                  placeholder="请输入搜索内容"/><span style={
+                    this.state.showClear ? {display: 'block'} : {display: 'none'}
+                } onClick={this.clearSearch} className="close"></span>
                 </div>
-                <div className='tableDiv' style={{height: bindDing.state.clientHeight}}>
+                <div className='tableDiv' style={{height: bindDing.state.clientHeight - 52}}>
                     {/*这是列表数据,包括添加按钮*/}
                     <ListView
                         ref={el => this.lv = el}
