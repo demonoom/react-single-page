@@ -759,9 +759,9 @@ export default class antPlate extends React.Component {
                 <div className="ant_title">
                     <span style={{display: parentId === -1 ? '' : 'none'}} className="ant_btn_list icon_back"
                     >我的课件</span>
-                    <span style={{display: parentId === -1 ? 'none' : ''}} className="ant_btn_list icon_back"
+                    <span style={{display: parentId === -1 ? 'none' : ''}} className="ant_btn_list icon_back icon_arrow"
                           onClick={this.returnParentAtMoveModal}><Icon type='left'/></span>
-                    <span style={{display: parentId === -1 ? 'none' : ''}} className="ant_btn_list icon_back"
+                    <span style={{display: parentId === -1 ? 'none' : ''}} className="ant_btn_list icon_back ant_text"
                     >{this.state.fileName}</span>
                     <div className='btns'>
                         <span className="ant_btn_list add_file" onClick={this.creatNewFile}>新建文件夹</span>

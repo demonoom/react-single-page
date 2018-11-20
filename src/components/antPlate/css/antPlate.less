@@ -69,6 +69,18 @@
       line-height: 1;
       font-weight: bold;
       padding-top: 7px;
+      &.icon_arrow{
+        padding-top: 4px;
+      }
+      &.ant_text{
+        font-weight: normal;
+        font-size: 17px;
+        padding-top: 10px;
+        text-overflow: ellipsis;
+        overflow: hidden;
+        white-space: nowrap;
+        max-width: calc(~"100% - 350px");
+      }
     }
   }
   .am-list-header {
@@ -314,7 +326,6 @@
     height: calc(~"100% - 38px");
   }
   .text_hidden {
-
     text-align: center;
     line-height: 38px;
     margin: 0;

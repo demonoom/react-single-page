@@ -72,6 +72,18 @@
   font-weight: bold;
   padding-top: 7px;
 }
+#antPlate .ant_title .icon_back.icon_arrow {
+  padding-top: 4px;
+}
+#antPlate .ant_title .icon_back.ant_text {
+  font-weight: normal;
+  font-size: 17px;
+  padding-top: 10px;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+  max-width: calc(100% - 350px);
+}
 #antPlate .am-list-header {
   padding: 0;
 }
