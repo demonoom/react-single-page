@@ -589,10 +589,7 @@ video::-webkit-media-controls-fullscreen-button {
 
 /* 公共空页面图end */
 
-::-webkit-scrollbar {
-  width: 6px !important;
-  height: 6px!important;
-}
+
 
 /* 这是针对缺省样式 (必须的) */
 ::-webkit-scrollbar-thumb {
@@ -605,7 +602,18 @@ video::-webkit-media-controls-fullscreen-button {
 ::-webkit-scrollbar-button {
   background-color: initial;
 }
-
+@media only screen and (max-width: 768px){
+  ::-webkit-scrollbar {
+    width: 6px !important;
+    height: 6px!important;
+  }
+}
+@media only screen and (min-width: 768px){
+  ::-webkit-scrollbar {
+    width: 8px !important;
+    height: 12px!important;
+  }
+}
 /*班牌屏幕适配*/
 @media only screen and (min-width: 768px) and (max-width: 799px) {
   html {
