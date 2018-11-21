@@ -275,9 +275,9 @@ export default class antPlate extends React.Component {
             document.getElementsByClassName("iframeTitle")[0].innerHTML = obj.name;
 
             if (type == 'mp4') {
-                var url = 'http://www.maaee.com/Excoord_PhoneService/cloudFile/cloudFileShow/' + obj.uuid + '/' + obj.id;
+                var url = 'https://www.maaee.com/Excoord_PhoneService/cloudFile/cloudFileShow/' + obj.uuid + '/' + obj.id;
             } else {
-                var url = "http://www.maaee.com/Excoord_PhoneService/cloudFile/cloudFileShow/" + obj.id + "/" + obj.createUid;
+                var url = "https://www.maaee.com/Excoord_PhoneService/cloudFile/cloudFileShow/" + obj.id + "/" + obj.createUid;
             }
 
             setTimeout(() => {
