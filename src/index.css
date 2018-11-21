@@ -504,6 +504,20 @@ video::-webkit-media-controls-fullscreen-button {
   background-size: 100%;
 }
 /* 公共空页面图end */
+::-webkit-scrollbar {
+  width: 6px !important;
+  height: 6px!important;
+}
+/* 这是针对缺省样式 (必须的) */
+::-webkit-scrollbar-thumb {
+  background-color: #ccc;
+  border-radius: 9px;
+  -webkit-border-radius: 9px;
+}
+/* 滑块颜色 */
+::-webkit-scrollbar-button {
+  background-color: initial;
+}
 /*班牌屏幕适配*/
 @media only screen and (min-width: 768px) and (max-width: 799px) {
   html {
@@ -529,24 +543,6 @@ video::-webkit-media-controls-fullscreen-button {
   html {
     font-size: 36px !important;
   }
-  ::-webkit-scrollbar {
-    width: 8px;
-    height: 12px;
-  }
-  /* 这是针对缺省样式 (必须的) */
-  ::-webkit-scrollbar-thumb {
-    background-color: #ccc;
-    border-radius: 9px;
-    -webkit-border-radius: 9px;
-  }
-  /* 滑块颜色 */
-  ::-webkit-scrollbar-button {
-    background-color: initial;
-  }
-  /* 滑轨两头的监听按钮颜色 */
-  /* ::-webkit-scrollbar-corner {
-        background-color: none;
-  } 横向滚动条和纵向滚动条相交处尖角的颜色 */
 }
 .icon_pointer {
   cursor: pointer;

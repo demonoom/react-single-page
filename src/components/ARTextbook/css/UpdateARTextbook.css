@@ -9,8 +9,8 @@
   /* 滑块颜色 */
 }
 #UpdateARTextbook ::-webkit-scrollbar {
-  width: 8px;
-  height: 12px;
+  width: 6px;
+  height: 6px;
 }
 #UpdateARTextbook ::-webkit-scrollbar-thumb {
   background-color: #ccc;
@@ -184,7 +184,7 @@
   padding: 11px 0 13px 0;
 }
 #UpdateARTextbook .tabCont ul::-webkit-scrollbar {
-  width: 8px;
+  width: 6px;
   height: 6px;
 }
 #UpdateARTextbook .tabCont ul::-webkit-scrollbar-thumb {

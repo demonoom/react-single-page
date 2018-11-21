@@ -1,12 +1,11 @@
-(node) util.print is deprecated. Use console.log instead.
 #inAndOutSchool {
   position: relative;
   /* 这是针对缺省样式 (必须的) */
   /* 滑块颜色 */
 }
 #inAndOutSchool ::-webkit-scrollbar {
-  width: 8px;
-  height: 12px;
+  width: 6px;
+  height: 6px;
 }
 #inAndOutSchool ::-webkit-scrollbar-thumb {
   background-color: #ccc;
