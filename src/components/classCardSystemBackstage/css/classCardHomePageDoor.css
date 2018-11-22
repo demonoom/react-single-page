@@ -98,3 +98,7 @@
   background: url("../imgs/icon_skin.png") no-repeat center center;
   background-size: contain;
 }
+#classCardHomePageDoor .icon_time {
+  background: url("../imgs/icon_time.png") no-repeat center center;
+  background-size: contain;
+}

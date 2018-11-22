@@ -95,7 +95,7 @@ export default class ClassTimingItem extends React.Component {
      * 去课表列表
      **/
     turnToClassTableDetil(rowData) {
-        var currentAttendanceListUrl = encodeURI(WebServiceUtil.mobileServiceURL + "updateClassTimingItem?pid=" + rowData.pid + "&tid=" + rowData.tid + "&regular=" + rowData.regular + "&tartingUpTime=" + rowData.tartingUpTime.substr(0, rowData.tartingUpTime.length - 3) + "&powerOffTime=" + rowData.powerOffTime.substr(0, rowData.tartingUpTime.length - 3) + "&itemName=" + this.state.itemName);
+        var currentAttendanceListUrl = encodeURI(WebServiceUtil.mobileServiceURL + "updateClassTimingItem?pid=" + rowData.pid + "&tid=" + rowData.tid + "&regular=" + rowData.regular + "&tartingUpTime=" + rowData.tartingUpTime.substr(0, rowData.tartingUpTime.length - 3) + "&powerOffTime=" + rowData.powerOffTime.substr(0, rowData.tartingUpTime.length - 3) + "&itemName=" + this.state.itemName + "&morrow=" + rowData.morrow);
 
         var data = {
             method: 'openNewPage',
@@ -179,6 +179,22 @@ export default class ClassTimingItem extends React.Component {
         var _this = this;
 
         const row = (rowData, sectionID, rowID) => {
+            var dayStr = ''
+            if (rowData.morrow == '0') {
+                dayStr = '当日'
+            } else if (rowData.morrow == '1') {
+                dayStr = '次日'
+            } else if (rowData.morrow == '2') {
+                dayStr = '后日'
+            } else if (rowData.morrow == '3') {
+                dayStr = '3日后'
+            } else if (rowData.morrow == '4') {
+                dayStr = '4日后'
+            } else if (rowData.morrow == '5') {
+                dayStr = '5日后'
+            } else if (rowData.morrow == '6') {
+                dayStr = '6日后'
+            }
             return (
                 <div className="classInfo line_public">
                     <div onClick={this.turnToClassTableDetil.bind(this, rowData)}
@@ -205,8 +221,8 @@ export default class ClassTimingItem extends React.Component {
                     </div>
                     <div onClick={this.turnToClassTableDetil.bind(this, rowData)}
                          className="am-list-content listTime">
-                        <span>开启时间 {rowData.tartingUpTime.substr(0, rowData.tartingUpTime.length - 3)}</span>
-                        <span>关闭时间 {rowData.powerOffTime.substr(0, rowData.tartingUpTime.length - 3)}</span>
+                        <span>{dayStr}开启时间 {rowData.tartingUpTime.substr(0, rowData.tartingUpTime.length - 3)}</span>
+                        <span>当日关闭时间 {rowData.powerOffTime.substr(0, rowData.tartingUpTime.length - 3)}</span>
                     </div>
                     <Button type="primary" size="small" className="btn_del deleteBtn_common"
                             onClick={this.showAlert.bind(this, rowData)}></Button>

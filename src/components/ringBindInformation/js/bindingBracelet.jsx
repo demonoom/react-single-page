@@ -17,6 +17,7 @@ import '../css/bindingBracelet.less'
 const alert = Modal.alert;
 const RadioItem = Radio.RadioItem;
 var bindDing;
+var timer;
 
 /**
  * 字符串两两切割
@@ -48,6 +49,7 @@ export default class bindingBracelet extends React.Component {
             chooseResultDiv: 'none',
             stNameValue: '',
             searchData: [],
+            showClear:false
         };
     }
 
@@ -91,6 +93,7 @@ export default class bindingBracelet extends React.Component {
             "method": 'viewWatchPage',
             "aid": loginUser.ident,
             "cid": -1,
+            "searchKeyWords": this.input.value,
             "pn": PageNo,
         };
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
@@ -186,6 +189,7 @@ export default class bindingBracelet extends React.Component {
      */
     addRing = () => {
         $('.tableDiv').hide("fast");
+        $('.nav').css({display:'none'});
     };
 
     /**
@@ -196,6 +200,7 @@ export default class bindingBracelet extends React.Component {
         this.state.macId = '';
         this.state.stNameValue = '';
         this.setState({chooseResultDiv: 'none'});
+        $('.nav').css({display:'block'});
     };
 
     /**
@@ -250,6 +255,7 @@ export default class bindingBracelet extends React.Component {
             onResponse: function (result) {
                 if (result.msg == '调用成功' && result.success == true) {
                     Toast.success('绑定成功', 1);
+                    $('.nav').css({display:'block'});
                     $('.tableDiv').show("fast");
                     _this.state.macId = '';
                     _this.state.stNameValue = '';
@@ -363,6 +369,26 @@ export default class bindingBracelet extends React.Component {
         this.viewWatchPage(this.state.loginUser);
     }
 
+    searchInput = ()=>{
+        clearTimeout(timer);
+        timer = setTimeout(()=>{
+            console.log(this.input.value,'index');
+            this.initData = [];
+            this.viewWatchPage(this.state.loginUser);
+        },400);
+        this.setState({
+            showClear: (this.input.value != '')
+        })
+
+    }
+
+    clearSearch = ()=>{
+        this.input.value = '';
+        this.initData = [];
+        this.setState({showClear:false})
+        this.viewWatchPage(this.state.loginUser);
+    }
+
     render() {
 
         var _this = this;
@@ -400,7 +426,12 @@ export default class bindingBracelet extends React.Component {
 
         return (
             <div id="bindingBracelet" style={{height: bindDing.state.clientHeight}}>
-                <div className='tableDiv' style={{height: bindDing.state.clientHeight}}>
+                <div className="nav search-nav">
+                    <i></i><input type="text" ref={input => this.input = input} onInput={this.searchInput.bind(this)} placeholder="请输入搜索内容"/><span style={
+                    this.state.showClear?{display:'block'}:{display:'none'}
+                } onClick={this.clearSearch} className="close"></span>
+                </div>
+                <div className='tableDiv' style={{height: bindDing.state.clientHeight - 52}}>
                     {/*这是列表数据,包括添加按钮*/}
                     <ListView
                         ref={el => this.lv = el}

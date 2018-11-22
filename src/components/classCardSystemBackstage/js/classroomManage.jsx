@@ -22,6 +22,7 @@ const AgreeItem = Checkbox.AgreeItem;
 const alert = Modal.alert;
 const RadioItem = Radio.RadioItem;
 var classBinding;
+var timer;
 
 export default class classroomManage extends React.Component {
 
@@ -37,6 +38,7 @@ export default class classroomManage extends React.Component {
             defaultPageNo: 1,
             clientHeight: document.body.clientHeight,
             selectData: [],
+            showClear:false,
         };
     }
 
@@ -44,6 +46,7 @@ export default class classroomManage extends React.Component {
         Bridge.setShareAble("false");
         document.title = '绑定教室信息';
         var locationHref = window.location.href;
+        // Toast.info(locationHref, 10)
         var locationSearch = locationHref.substr(locationHref.indexOf("?") + 1);
         console.log(locationSearch);
         var uid = locationSearch.split("&")[0].split("=")[1];
@@ -84,6 +87,7 @@ export default class classroomManage extends React.Component {
         var param = {
             "method": 'viewClassRoomPage',
             "uid": uid,
+            "searchKeyWords": this.input.value,
             "pn": PageNo,
         };
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
@@ -252,10 +256,28 @@ export default class classroomManage extends React.Component {
         });
     }
 
+    searchInput = ()=>{
+        clearTimeout(timer);
+        timer = setTimeout(()=>{
+            console.log(this.input.value,'index');
+            this.viewClassRoomPage(this.state.uid,true);
+        },400);
+        this.setState({
+            showClear: (this.input.value != '')
+        })
+
+    }
+
+    clearSearch = ()=>{
+        this.input.value = '';
+        this.setState({showClear:false})
+        this.viewClassRoomPage(this.state.uid,true);
+    }
+
     render() {
         var _this = this;
         const row = (rowData, sectionID, rowID) => {
-             console.log(rowData);
+            console.log(rowData);
             return (<div>
                     {
                         <div className="classInfo line_public">
@@ -297,9 +319,16 @@ export default class classroomManage extends React.Component {
 
         return (
             <div id="classroomManage" style={{height: classBinding.state.clientHeight}}>
-                <div className='tableDiv' style={{height: classBinding.state.clientHeight}}>
-                    <li className="edit_coordinateLi line_public"><span onClick={_this.bindCoordinates}
-                                                                        className="edit_coordinate">批量编辑教室坐标</span></li>
+
+                <div className="nav search-nav">
+                    <i></i><input type="text" ref={input => this.input = input} onInput={this.searchInput.bind(this)} placeholder="请输入搜索内容"/><span style={
+                this.state.showClear?{display:'block'}:{display:'none'}
+            } onClick={this.clearSearch} className="close"></span>
+                </div>
+                <div className='tableDiv' style={{height: classBinding.state.clientHeight - 52}}>
+                    <li style={
+                        this.input && this.input.value != ''?{display:'none'}:{display:'block'}
+                    } className="edit_coordinateLi line_public"><span onClick={_this.bindCoordinates} className="edit_coordinate">批量编辑教室坐标</span></li>
                     {/*这是列表数据,包括添加按钮*/}
                     <ListView
                         ref={el => this.lv = el}
@@ -318,7 +347,7 @@ export default class classroomManage extends React.Component {
                         initialListSize={30}   //指定在组件刚挂载的时候渲染多少行数据，用这个属性来确保首屏显示合适数量的数据
                         scrollEventThrottle={20}     //控制在滚动过程中，scroll事件被调用的频率
                         style={{
-                            height: classBinding.state.clientHeight-47,
+                            height: classBinding.state.clientHeight - 99,
                         }}
                         pullToRefresh={<PullToRefresh
                             onRefresh={this.onRefresh}
@@ -334,6 +363,6 @@ export default class classroomManage extends React.Component {
             </div>
         );
     }
-    
+
 }
 

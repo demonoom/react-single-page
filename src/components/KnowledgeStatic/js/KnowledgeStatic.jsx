@@ -5,10 +5,13 @@ import {
 } from 'antd-mobile';
 import '../css/KnowledgeStatic.less'
 const alert = Modal.alert;
+var that,win;
 export default class KnowledgeStatic extends React.Component {
 
     constructor(props) {
         super(props);
+        that = this;
+        win = window;
         this.state = {
             domArray: [],
             clientHeight: document.body.clientHeight,
@@ -19,6 +22,7 @@ export default class KnowledgeStatic extends React.Component {
             type:'学生',
             //不再更新学生列表
             noUpdata: false,
+            stuId:null,
         }
     }
 
@@ -125,6 +129,11 @@ export default class KnowledgeStatic extends React.Component {
                         type: 'solid'
                     },
                 },
+                showContent:false,
+                show:false,
+            },
+            tooltipContent:{
+               show:false,
             },
             legend: {
                 data: ['正确率'],
@@ -251,6 +260,7 @@ export default class KnowledgeStatic extends React.Component {
     };
 
 
+
     getData(data) {   //设置数据结构
         console.log(data);
         if (!data) {
@@ -262,8 +272,8 @@ export default class KnowledgeStatic extends React.Component {
             yArray.push(data[k].y);
         }
         var columnarChartOption = this.buildChartOption(xArray,yArray);
-        let onEvents = {
-            'click': this.onChartClick.bind(this),
+        var onEvent = {
+            'click': this.onChartClick,
         }
         // columnarChartOption.getZr().click(function(event){
         //     if(!event.target){ console.log("点击空白处"); }
@@ -273,8 +283,8 @@ export default class KnowledgeStatic extends React.Component {
                           option={columnarChartOption}
                           style={{height: this.state.clientHeight / 2 + 50, width: '100%'}}
                           // theme='macarons'
-                          onEvents={onEvents}
-                          className=''/>
+                          onEvents={onEvent}
+                          />
         this.setState({
             domArray: reactDom,
         });
@@ -283,12 +293,30 @@ export default class KnowledgeStatic extends React.Component {
 
 
     onChartClick(optional) {
-        var url = WebServiceUtil.mobileServiceURL + "KnowLedgeList?uid=" + this.state.userId + '&currentTime=' + optional.name;
-        window.location.href = url;
-        // window.location.reload();
-        // window.open(url);
-        location.reload();
+            console.log(that.state.stuId,'this.state.stuId')
+            // return;
+            var url = WebServiceUtil.mobileServiceURL + "KnowLedgeList?uid=" + (that.state.stuId?that.state.stuId:that.state.userId) + '&currentTime=' + optional.name;
+            win.location.href = url;
+            // top.location.href = url;
+            // var url = WebServiceUtil.mobileServiceURL + "ringBinding?ident=" + this.state.ident;
+            // var data = {
+            //     method: 'openNewPage',
+            //     url: url
+            // };
+            // that.toUrl(url);
+            // Bridge.callHandler(data, function(){
+            //     window.location.href = url;
+            // }, function (error) {
+            //     window.location.href = url;
+            // });
+            // window.location.reload();
+            // window.open(url);
+            setTimeout(function(){
+                location.reload();
+            },300)
+
     }
+
 
 
     getAvgMasteryAccuaryLineChartData() {
@@ -319,6 +347,7 @@ export default class KnowledgeStatic extends React.Component {
                         this.setState({
                             nameArray: newArray2,
                             defaultValue:[newArray2[0].value],
+                            stuId: newArray2[0].value,
                             noUpdata:true,
                         })
                     }
@@ -364,7 +393,8 @@ export default class KnowledgeStatic extends React.Component {
     onChangeColor = (params) => {
         this.setState({
             defaultValue: params,
-            userId:params[0]
+            userId:params[0],
+            stuId: params[0]
         },()=>{
             this.getAvgMasteryAccuaryLineChartData();
         });
@@ -410,7 +440,7 @@ export default class KnowledgeStatic extends React.Component {
                         <List.Item arrow="horizontal" className="data_list">结束日期</List.Item>
                     </DatePicker>
                     <WhiteSpace size="lg"/>
-                    <div className="dom_cont">
+                    <div className="dom_cont" id="dom_cont">
                         {this.state.domArray}
                     </div>
                     <ActivityIndicator
@@ -419,7 +449,6 @@ export default class KnowledgeStatic extends React.Component {
                         animating={this.state.animating}
                     />
                 </div>
-
             </div>
         );
     }

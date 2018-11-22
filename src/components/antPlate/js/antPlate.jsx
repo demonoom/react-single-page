@@ -33,7 +33,8 @@ export default class antPlate extends React.Component {
             isLoadingLeft: true,
             parentId: -1,
             progressState: 'none',
-            dataNone: ""
+            dataNone: "",
+            fileName: ''
         };
     }
 
@@ -46,9 +47,9 @@ export default class antPlate extends React.Component {
         var fileId = searchArray[1].split('=')[1];
         var fileName = searchArray[2].split('=')[1];
         var phoneType = searchArray[3].split('=')[1];
-        this.setState({ phoneType });     //phoneType = 0 安卓,  phoneType = -1 ios,
+        this.setState({phoneType});     //phoneType = 0 安卓,  phoneType = -1 ios,
         document.title = fileName;   //设置title
-        this.setState({ parentCloudFileId: fileId });
+        this.setState({parentCloudFileId: fileId});
         var loginUser = {
             "ident": ident,
         };
@@ -69,7 +70,7 @@ export default class antPlate extends React.Component {
      */
     onWindowResize() {
         setTimeout(function () {
-            tLibrary.setState({ clientHeight: document.body.clientHeight });
+            tLibrary.setState({clientHeight: document.body.clientHeight});
         }, 100)
     }
 
@@ -104,8 +105,8 @@ export default class antPlate extends React.Component {
      * @param fileId
      * @param clearFlag
      */
-    listCloudSubject(fileId, clearFlag) {
-        this.setState({ parentCloudFileId: fileId });
+    listCloudSubject(fileId, clearFlag, fileName) {
+        this.setState({parentCloudFileId: fileId, fileName});
         var loginUser = JSON.parse(localStorage.getItem('loginUserTLibrary'));
         var _this = this;
         const dataBlob = {};
@@ -122,12 +123,20 @@ export default class antPlate extends React.Component {
             onResponse: function (result) {
                 if (result.msg == '调用成功' || result.success == true) {
                     if (result.response.length === 0) {
-                        _this.setState({ dataNone: false })
+                        _this.setState({dataNone: false})
                     } else {
-                        _this.setState({ dataNone: true })
+                        _this.setState({dataNone: true})
                     }
                     if (result.response[0]) {
-                        _this.setState({ parentId: result.response[0].parent.parentId })
+                        _this.setState({
+                            parentId: result.response[0].parent.parentId,
+                            parentName: result.response[0].parent.name
+                        })
+                    }
+                    if (!fileName) {
+                        _this.setState({fileName: result.response[0].parent.name})
+                    } else {
+                        _this.setState({fileName})
                     }
                     var response = result.response;
                     var pager = result.pager;
@@ -171,7 +180,7 @@ export default class antPlate extends React.Component {
      * 点"我的题目"时调用的接口
      */
     getUserRootCloudSubjects(clearFlag) {
-        this.setState({ parentCloudFileId: -1 });
+        this.setState({parentCloudFileId: -1});
         var loginUser = JSON.parse(localStorage.getItem('loginUserTLibrary'));
         var _this = this;
         const dataBlob = {};
@@ -187,9 +196,9 @@ export default class antPlate extends React.Component {
             onResponse: function (result) {
                 if (result.msg == '调用成功' || result.success == true) {
                     if (result.response.length === 0 && result.pager.rsCount === 0) {
-                        _this.setState({ dataNone: false })
+                        _this.setState({dataNone: false})
                     } else {
-                        _this.setState({ dataNone: true })
+                        _this.setState({dataNone: true})
                     }
                     var response = result.response;
                     var pager = result.pager;
@@ -238,7 +247,7 @@ export default class antPlate extends React.Component {
             return;
         }
         currentPageNo += 1;
-        _this.setState({ isLoadingLeft: true, defaultPageNo: currentPageNo });
+        _this.setState({isLoadingLeft: true, defaultPageNo: currentPageNo});
 
         if (_this.state.parentCloudFileId == -1) {
             _this.getUserRootCloudSubjects()
@@ -261,18 +270,24 @@ export default class antPlate extends React.Component {
         if (obj.fileType === 0) {
             var type = obj.suffix
 
+            $(".mask").show();
+            $(".iframeDiv").slideDown(300)
+            document.getElementsByClassName("iframeTitle")[0].innerHTML = obj.name;
+
             if (type == 'mp4') {
-                var url = 'http://www.maaee.com/Excoord_PhoneService/cloudFile/cloudFileShow/' + obj.uuid + '/' + obj.id;
-                window.open(url)
+                var url = 'https://www.maaee.com/Excoord_PhoneService/cloudFile/cloudFileShow/' + obj.uuid + '/' + obj.id;
             } else {
-                var url = "http://www.maaee.com/Excoord_PhoneService/cloudFile/cloudFileShow/" + obj.id + "/" + obj.createUid;
-                window.open(url)
+                var url = "https://www.maaee.com/Excoord_PhoneService/cloudFile/cloudFileShow/" + obj.id + "/" + obj.createUid;
             }
 
+            setTimeout(() => {
+                $("<iframe class='iframeBox' src=" + url + "></iframe>").prependTo($(".calm"))
+            }, 300)
+
         } else {
-            _this.setState({ defaultPageNo: 1 }, () => {
-                this.setState({ parentId: obj.parentId }, () => {
-                    _this.listCloudSubject(obj.id, true)
+            _this.setState({defaultPageNo: 1}, () => {
+                this.setState({parentId: obj.parentId}, () => {
+                    _this.listCloudSubject(obj.id, true, obj.name)
                 })
             })
         }
@@ -295,8 +310,8 @@ export default class antPlate extends React.Component {
         }
         var _this = this;
         const alertInstance = alert(str, '', [
-            { text: '取消', onPress: () => console.log('cancel'), style: 'default' },
-            { text: '确定', onPress: () => _this.removeFile(data) },
+            {text: '取消', onPress: () => console.log('cancel'), style: 'default'},
+            {text: '确定', onPress: () => _this.removeFile(data)},
         ], phone);
     };
 
@@ -341,12 +356,12 @@ export default class antPlate extends React.Component {
     upLoadQue = () => {
         var _this = this;
         var maxFileSize = 157286400; //150M
-        var tipMessage="请勿上传超过150M的文件，谢谢!";
-        if(WebServiceUtil.AR_SCHOOL_ARRAY.indexOf(this.state.users.schoolId) != -1){
+        var tipMessage = "请勿上传超过150M的文件，谢谢!";
+        if (WebServiceUtil.AR_SCHOOL_ARRAY.indexOf(this.state.users.schoolId) != -1) {
             maxFileSize = 524288000;   //500M
-            tipMessage="请勿上传超过500M的文件，谢谢!";
+            tipMessage = "请勿上传超过500M的文件，谢谢!";
         }
-        this.setState({ uploadPercent: 0 })
+        this.setState({uploadPercent: 0})
 
         $("#upload").click();
         //取消加绑定change事件解决change事件无法控制
@@ -377,12 +392,12 @@ export default class antPlate extends React.Component {
                 xhr: function () {        //这是关键  获取原生的xhr对象  做以前做的所有事情
                     var xhr = jQuery.ajaxSettings.xhr();
                     xhr.upload.onload = function () {
-                        _this.setState({ progressState: 'none' });
+                        _this.setState({progressState: 'none'});
                     }
                     xhr.upload.onprogress = function (ev) {
                         if (ev.lengthComputable) {
                             var percent = 100 * ev.loaded / ev.total;
-                            _this.setState({ uploadPercent: Math.round(percent), progressState: 'block' });
+                            _this.setState({uploadPercent: Math.round(percent), progressState: 'block'});
                         }
                     }
                     return xhr;
@@ -530,8 +545,8 @@ export default class antPlate extends React.Component {
             var phone = 'android'
         }
         prompt('请输入文件夹名称', '', [
-            { text: '取消' },
-            { text: '确定', onPress: value => tLibrary.creatFile(value) },
+            {text: '取消'},
+            {text: '确定', onPress: value => tLibrary.creatFile(value)},
         ], 'default', '新建文件夹', [], phone)
         if (tLibrary.state.phoneType == '-1') {
             document.getElementsByClassName('am-modal-input')[0].getElementsByTagName('input')[0].focus();
@@ -550,8 +565,8 @@ export default class antPlate extends React.Component {
             var phone = 'android'
         }
         prompt('请输入您修改的名称', '', [
-            { text: '取消' },
-            { text: '确定', onPress: value => tLibrary.renameFile(value, rowData) },
+            {text: '取消'},
+            {text: '确定', onPress: value => tLibrary.renameFile(value, rowData)},
         ], 'default', '', [], phone)
         if (tLibrary.state.phoneType == '-1') {
             document.getElementsByClassName('am-modal-input')[0].getElementsByTagName('input')[0].focus();
@@ -615,10 +630,17 @@ export default class antPlate extends React.Component {
             return
         } else if (this.state.parentId === 0) {
             this.getUserRootCloudSubjects(true)
-            this.setState({ parentId: -1 })
+            this.setState({parentId: -1})
         } else {
-            this.listCloudSubject(this.state.parentId, true)
+            this.listCloudSubject(this.state.parentId, true, false)
         }
+    }
+
+    closeIframe = () => {
+        $(".iframeDiv").slideUp()
+        $(".mask").hide()
+        document.getElementsByClassName("calm")[0].innerHTML = "";
+        document.getElementsByClassName("iframeTitle")[0].innerHTML = "";
     }
 
     render() {
@@ -636,48 +658,48 @@ export default class antPlate extends React.Component {
                 var fileTypeLog;
                 switch (fileType) {
                     case "png":
-                        fileTypeLog = <img className="filePic" src={require('../imgs/icon_png.png')} alt="" />;
+                        fileTypeLog = <img className="filePic" src={require('../imgs/icon_png.png')} alt=""/>;
                         break;
                     case "jpg":
-                        fileTypeLog = <img className="filePic" src={require('../imgs/icon_jpg.png')} alt="" />;
+                        fileTypeLog = <img className="filePic" src={require('../imgs/icon_jpg.png')} alt=""/>;
                         break;
                     case "mp3":
-                        fileTypeLog = <img className="filePic" src={require('../imgs/icon_mp3.png')} alt="" />;
+                        fileTypeLog = <img className="filePic" src={require('../imgs/icon_mp3.png')} alt=""/>;
                         break;
                     case "mp4":
-                        fileTypeLog = <img className="filePic" src={require('../imgs/icon_mp4.png')} alt="" />;
+                        fileTypeLog = <img className="filePic" src={require('../imgs/icon_mp4.png')} alt=""/>;
                         break;
                     case "apk":
-                        fileTypeLog = <img className="filePic" src={require('../imgs/icon_apk.png')} alt="" />;
+                        fileTypeLog = <img className="filePic" src={require('../imgs/icon_apk.png')} alt=""/>;
                         break;
                     case "pdf":
-                        fileTypeLog = <img className="filePic" src={require('../imgs/icon_pdf.png')} alt="" />;
+                        fileTypeLog = <img className="filePic" src={require('../imgs/icon_pdf.png')} alt=""/>;
                         break;
                     case "ppt":
                     case "pptx":
-                        fileTypeLog = <img className="filePic" src={require('../imgs/icon_ppt.png')} alt="" />;
+                        fileTypeLog = <img className="filePic" src={require('../imgs/icon_ppt.png')} alt=""/>;
                         break;
                     case "doc":
                     case "docx":
-                        fileTypeLog = <img className="filePic" src={require('../imgs/icon_doc.png')} alt="" />;
+                        fileTypeLog = <img className="filePic" src={require('../imgs/icon_doc.png')} alt=""/>;
                         break;
                     case "xls":
                     case "xlsx":
-                        fileTypeLog = <img className="filePic" src={require('../imgs/icon_xls.png')} alt="" />;
+                        fileTypeLog = <img className="filePic" src={require('../imgs/icon_xls.png')} alt=""/>;
                         break;
                     case "wps":
-                        fileTypeLog = <img className="filePic" src={require('../imgs/icon_wps.png')} alt="" />;
+                        fileTypeLog = <img className="filePic" src={require('../imgs/icon_wps.png')} alt=""/>;
                         break;
                     default:
-                        fileTypeLog = <img className="filePic" src={require('../imgs/icon_else.png')} alt="" />;
+                        fileTypeLog = <img className="filePic" src={require('../imgs/icon_else.png')} alt=""/>;
                         break;
                 }
                 headDivItem = <ul className="my_flex ul_list_del flex_align_center">
                     <li className="flex_1" onClick={this.reNameAntFile.bind(this, rowData)}>
-                        <img className="icon_small_del" src={require('../imgs/icon_edit01.png')} alt="" />
+                        <img className="icon_small_del" src={require('../imgs/icon_edit01.png')} alt=""/>
                     </li>
                     <li className="flex_1" onClick={this.showAlert.bind(this, rowData)}>
-                        <img className="icon_small_del" src={require('../imgs/icon_delete01.png')} alt="" />
+                        <img className="icon_small_del" src={require('../imgs/icon_delete01.png')} alt=""/>
                     </li>
 
                 </ul>;
@@ -697,18 +719,18 @@ export default class antPlate extends React.Component {
             } else {
                 headDivItem = <ul className="my_flex ul_list_del flex_align_center">
                     <li className="flex_1" onClick={this.reNameAntFile.bind(this, rowData)}>
-                        <img className="icon_small_del" src={require('../imgs/icon_edit01.png')} alt="" />
+                        <img className="icon_small_del" src={require('../imgs/icon_edit01.png')} alt=""/>
                     </li>
                     <li className="flex_1" onClick={this.showAlert.bind(this, rowData)}>
-                        <img className="icon_small_del" src={require('../imgs/icon_delete01.png')} alt="" />
+                        <img className="icon_small_del" src={require('../imgs/icon_delete01.png')} alt=""/>
                     </li>
                 </ul>;
                 //文件夹
                 headDiv = <div className="am-accordion-item my_flex flex_align_center">
                     <div className="my_flex flex_align_center noomWidth"
-                        onClick={_this.fileClicked.bind(this, rowData)}>
+                         onClick={_this.fileClicked.bind(this, rowData)}>
                         <span className="ant_list_title"><img className="filePic" src={require('../imgs/file.png')}
-                            alt="" />{rowData.name}</span>
+                                                              alt=""/>{rowData.name}</span>
                         <span className="ant_list_time">
                             {/*<span className="margin_right_8">{rowData.creator.userName}</span>*/}
                             <span>{time}</span>
@@ -721,36 +743,38 @@ export default class antPlate extends React.Component {
                 <div className="noom-accordion my_flex flex_align_center">
                     {headDiv}
                 </div>
-               /* <div className="noom-accordion">
-                    <Accordion accordion className="my-accordion">
-                        <Accordion.Panel header={headDiv} key={id}>
-                            {headDivItem}
-                        </Accordion.Panel>
-                    </Accordion>
-                </div>*/
+                /* <div className="noom-accordion">
+                     <Accordion accordion className="my-accordion">
+                         <Accordion.Panel header={headDiv} key={id}>
+                             {headDivItem}
+                         </Accordion.Panel>
+                     </Accordion>
+                 </div>*/
             )
         };
 
         return (
             <div id="antPlate" className={this.state.phoneType == '0' ? 'Android_wrap' : ''}
-                style={{ height: this.state.clientHeight }}>
+                 style={{height: this.state.clientHeight}}>
                 <div className="ant_title">
-                    <span style={{ display: parentId === -1 ? '' : 'none' }} className="ant_btn_list icon_back"
+                    <span style={{display: parentId === -1 ? '' : 'none'}} className="ant_btn_list icon_back"
                     >我的课件</span>
-                    <span style={{ display: parentId === -1 ? 'none' : '' }} className="ant_btn_list icon_back"
-                        onClick={this.returnParentAtMoveModal}><Icon type='left' /></span>
+                    <span style={{display: parentId === -1 ? 'none' : ''}} className="ant_btn_list icon_back icon_arrow"
+                          onClick={this.returnParentAtMoveModal}><Icon type='left'/></span>
+                    <span style={{display: parentId === -1 ? 'none' : ''}} className="ant_btn_list icon_back ant_text"
+                    >{this.state.fileName}</span>
                     <div className='btns'>
                         <span className="ant_btn_list add_file" onClick={this.creatNewFile}>新建文件夹</span>
-                        <input style={{ display: 'none' }} type="file" id="upload" multiple="multiple" />
+                        <input style={{display: 'none'}} type="file" id="upload" multiple="multiple"/>
                         <span className="ant_btn_list upload_file" onClick={this.upLoadQue}>上传文件</span>
                     </div>
                 </div>
-                <div className='progress' style={{ display: this.state.progressState }}>
-                    <img src={require('../imgs/icon_loading.gif')} /><br />
+                <div className='progress' style={{display: this.state.progressState}}>
+                    <img src={require('../imgs/icon_loading.gif')}/><br/>
                     正在上传 <span>{this.state.uploadPercent}%</span>
                 </div>
-                <div className='emptyCont' style={{ display: _this.state.dataNone ? 'none' : '' }}>
-                    <img src={require('../imgs/icon_empty.png')} alt="" /><br />
+                <div className='emptyCont' style={{display: _this.state.dataNone ? 'none' : ''}}>
+                    <img src={require('../imgs/icon_empty.png')} alt=""/><br/>
                     暂无数据
                 </div>
                 <div className='tableTitle my_flex'>
@@ -764,7 +788,7 @@ export default class antPlate extends React.Component {
                     ref={el => this.lv = el}
                     dataSource={this.state.dataSource}    //数据类型是 ListViewDataSource
                     renderFooter={() => (
-                        <div style={{ paddingTop: 5, textAlign: 'center' }}>
+                        <div style={{paddingTop: 5, textAlign: 'center'}}>
                             {this.state.isLoadingLeft ? '正在加载' : '已经全部加载完毕'}
                         </div>)}
                     renderRow={row}   //需要的参数包括一行数据等,会返回一个可渲染的组件为这行数据渲染  返回renderable
@@ -781,6 +805,15 @@ export default class antPlate extends React.Component {
                         display: _this.state.dataNone ? "" : "none"
                     }}
                 />
+                <div className="mask"></div>
+                <div className="iframeDiv" style={{display: "none"}}>
+                    <span id="closeIframe" className="closeIframe" onClick={this.closeIframe}>关闭</span>
+                    <div className="text_hidden">
+                        <h3 className="iframeTitle"></h3>
+                    </div>
+
+                    <div className="iframeBox calm"></div>
+                </div>
             </div>
         );
     }
