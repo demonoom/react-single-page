@@ -1,6 +1,20 @@
 #antPlate {
   background-color: #ECEFF8;
   font-family: "Microsoft YaHei", "Hiragino Sans GB", Helvetica, Arial;
+  /*  @media only screen and (max-width: 768px) {
+    .iframeDiv {
+      top: auto;
+      bottom:0;
+      left: 0;
+      width: 100%;
+      height: 90%;
+      -webkit-transform: none;
+      -moz-transform: none;
+      -ms-transform: none;
+      -o-transform: none;
+      transform: none;
+    }
+  }*/
 }
 #antPlate ul,
 #antPlate li {
@@ -306,8 +320,8 @@
   top: 50%;
   left: 50%;
   background: white;
-  width: 600px;
-  height: 90%;
+  width: 500px;
+  height: 80%;
   z-index: 1001;
   -webkit-transform: translate(-50%, -50%);
   -moz-transform: translate(-50%, -50%);
@@ -363,20 +377,6 @@
   top: 0;
   display: none;
   z-index: 1000;
-}
-@media only screen and (max-width: 768px) {
-  #antPlate .iframeDiv {
-    top: auto;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    height: 90%;
-    -webkit-transform: none;
-    -moz-transform: none;
-    -ms-transform: none;
-    -o-transform: none;
-    transform: none;
-  }
 }
 .termite_popover {
   width: 200px;
