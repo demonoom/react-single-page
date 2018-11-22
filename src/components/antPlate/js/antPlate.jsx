@@ -271,8 +271,11 @@ export default class antPlate extends React.Component {
             var type = obj.suffix
 
             $(".mask").show();
-            // $(".iframeDiv").slideDown(300);
-            $(".iframeDiv").show();
+            if(document.body.clientWidth > 768){
+                $(".iframeDiv").show();
+            }else{
+                $(".iframeDiv").slideDown(300);
+            }
             document.getElementsByClassName("iframeTitle")[0].innerHTML = obj.name;
 
             if (type == 'mp4') {
@@ -638,8 +641,12 @@ export default class antPlate extends React.Component {
     }
 
     closeIframe = () => {
-        // $(".iframeDiv").slideUp()
-        $(".iframeDiv").hide();
+
+        if(document.body.clientWidth > 768){
+            $(".iframeDiv").hide();
+        }else{
+            $(".iframeDiv").slideUp()
+        }
         $(".mask").hide()
         document.getElementsByClassName("calm")[0].innerHTML = "";
         document.getElementsByClassName("iframeTitle")[0].innerHTML = "";
