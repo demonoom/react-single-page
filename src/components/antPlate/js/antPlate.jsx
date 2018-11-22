@@ -271,7 +271,8 @@ export default class antPlate extends React.Component {
             var type = obj.suffix
 
             $(".mask").show();
-            $(".iframeDiv").slideDown(300)
+            // $(".iframeDiv").slideDown(300);
+            $(".iframeDiv").show();
             document.getElementsByClassName("iframeTitle")[0].innerHTML = obj.name;
 
             if (type == 'mp4') {
@@ -637,7 +638,8 @@ export default class antPlate extends React.Component {
     }
 
     closeIframe = () => {
-        $(".iframeDiv").slideUp()
+        // $(".iframeDiv").slideUp()
+        $(".iframeDiv").hide();
         $(".mask").hide()
         document.getElementsByClassName("calm")[0].innerHTML = "";
         document.getElementsByClassName("iframeTitle")[0].innerHTML = "";
