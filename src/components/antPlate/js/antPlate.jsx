@@ -268,22 +268,11 @@ export default class antPlate extends React.Component {
         var _this = this
         event.stopPropagation();
         if (obj.fileType === 0) {
-            var type = obj.suffix
-
-            $(".mask").show();
-            $(".iframeDiv").slideDown(300)
-            document.getElementsByClassName("iframeTitle")[0].innerHTML = obj.name;
-
-            if (type == 'mp4') {
-                var url = 'https://www.maaee.com/Excoord_PhoneService/cloudFile/cloudFileShow/' + obj.uuid + '/' + obj.id;
-            } else {
-                var url = "https://www.maaee.com/Excoord_PhoneService/cloudFile/cloudFileShow/" + obj.id + "/" + obj.createUid;
+            var data = {
+                method: 'watchFiles',
+                data: obj
             }
-
-            setTimeout(() => {
-                $("<iframe class='iframeBox' src=" + url + "></iframe>").prependTo($(".calm"))
-            }, 300)
-
+            window.parent.postMessage(data, '*');
         } else {
             _this.setState({defaultPageNo: 1}, () => {
                 this.setState({parentId: obj.parentId}, () => {
@@ -637,7 +626,8 @@ export default class antPlate extends React.Component {
     }
 
     closeIframe = () => {
-        $(".iframeDiv").slideUp()
+        // $(".iframeDiv").slideUp()
+        $(".iframeDiv").hide();
         $(".mask").hide()
         document.getElementsByClassName("calm")[0].innerHTML = "";
         document.getElementsByClassName("iframeTitle")[0].innerHTML = "";
