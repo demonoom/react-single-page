@@ -626,7 +626,6 @@ export default class antPlate extends React.Component {
     }
 
     closeIframe = () => {
-        // $(".iframeDiv").slideUp()
         $(".iframeDiv").hide();
         $(".mask").hide()
         document.getElementsByClassName("calm")[0].innerHTML = "";
