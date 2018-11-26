@@ -15,6 +15,7 @@ export default class teachingSpaceTeacher extends React.Component {
         this.setState({
             ident
         })
+        this.getUserById(ident)
         var phoneType = navigator.userAgent;
         if (phoneType.indexOf('iPhone') > -1 || phoneType.indexOf('iPad') > -1) {
             this.setState({ phone: 'IOS' })
@@ -22,7 +23,29 @@ export default class teachingSpaceTeacher extends React.Component {
             this.setState({ phone: 'Android' })
         }
     }
+    /**
+     * 获取用户信息
+     */
+    getUserById(ident) {
+        var _this = this;
+        var param = {
+            "method": 'getUserById',
+            "ident": ident,
+        };
 
+        WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
+            onResponse: function (result) {
+                if (result.msg == '调用成功' || result.success == true) {
+                    _this.setState({
+                        schoolId:result.response.schoolId
+                    })
+                }
+            },
+            onError: function (error) {
+                // message.error(error);
+            }
+        });
+    }
     /**
      * 跳转客户端
      */
@@ -47,7 +70,7 @@ export default class teachingSpaceTeacher extends React.Component {
 
         }else if(type == "Approval"){
             // 审批页面
-            url = "http://jiaoxue.maaee.com:8093/#/cloudSchoolClassesStatistical?ident="+this.state.ident
+            url = "http://www.maaee.com:80/Excoord_PhoneService/flowGroup/getAllFlowGroupBySchoolId/"+this.state.schoolId+"/"+this.state.ident
 
         }else if (type == "Attendance"){
             // 考勤页面
@@ -62,7 +85,6 @@ export default class teachingSpaceTeacher extends React.Component {
         Bridge.callHandler(data, null, function (error) {
             window.location.href = url;
         });
-
     }
     
     render() {
@@ -98,15 +120,15 @@ export default class teachingSpaceTeacher extends React.Component {
                         <li onClick={this.toClient.bind(this, "openNativePage_FamousTeacherSpace")}
                             style={{ display: this.state.phone == "Android" ? "block" : "none" }}>名师空间</li>
                         <li onClick={this.toClient.bind(this, "openNativePage_RecordingVideo")}
-                            style={{ display: this.state.phone == "Android" ? "block" : "none" }}>录制课件视频</li>
-                        <li onClick={this.toClient.bind(this, "openNativePage_MicroClassRecord")}>录制微课</li>
+                            style={{ display: this.state.phone == "Android" ? "block" : "none" }}>录制微课</li>
                     </ul>
                 </div>
                 <div className="teacher-item">
                     <h1>数据中心</h1>
                     <ul className="my_flex teacherUl">
                         <li onClick={this.toPage.bind(this, "ReviewStatistics")}  >课堂回顾统计</li>
-                        <li onClick={this.toClient.bind(this, "openNativePage_RingDataStatistics")} >手环数据统计</li>
+                        <li style={{ display: this.state.phone == "Android" ? "block" : "none" }} 
+                        onClick={this.toClient.bind(this, "openNativePage_RingDataStatistics")} >手环数据统计</li>
                     </ul>
                 </div>
                 <div className="teacher-item">
@@ -114,8 +136,10 @@ export default class teachingSpaceTeacher extends React.Component {
                     <ul className="my_flex teacherUl">
                         <li onClick={this.toClient.bind(this, "openNativePage_HomeworkAssignment")}>布置作业</li>
                         <li onClick={this.toClient.bind(this, "openNativePage_HomeworkStatistics")}>作业统计</li>
-                        <li onClick={this.toClient.bind(this, "openNativePage_HomeworkFaceStatistics")}>作业表情统计</li>
-                        <li onClick={this.toClient.bind(this, "openNativePage_HomeworkCorrecting")}
+                        <li style={{ display: this.state.phone == "Android" ? "block" : "none" }} 
+                        onClick={this.toClient.bind(this, "openNativePage_HomeworkFaceStatistics")}>作业表情统计</li>
+                        <li  style={{ display: this.state.phone == "Android" ? "block" : "none" }}
+                        onClick={this.toClient.bind(this, "openNativePage_HomeworkCorrecting")}
                             style={{ display: this.state.phone == "Android" ? "block" : "none" }}>批改作业</li>
                     </ul>
                 </div>

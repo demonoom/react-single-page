@@ -55,23 +55,27 @@ export default class teachingSpaceStudent extends React.Component {
                     <h1>考试作业</h1>
                     <div>
                         <span onClick={this.toClient.bind(this, "openNativePage_HomeworkToDo_Stu")}>待做作业</span>
-                        <span onClick={this.toClient.bind(this, "openNativePage_MyTestPaper_Stu")}>我的试卷</span>
+                        <span style={{ display: this.state.phone == "Android" ? "block" : "none" }}
+                              onClick={this.toClient.bind(this, "openNativePage_MyTestPaper_Stu")}>我的试卷</span>
                         <span onClick={this.toClient.bind(this, "openNativePage_HomeworkStatistics_Stu")}>作业统计</span>
                     </div>
                 </div>
                   <div>
                     <h1>学习资源</h1>
                     <div>
-                        <span onClick={this.toClient.bind(this, "openNativePage_DoExercises_Stu")}>玩转习题</span>
+                        <span style={{ display: this.state.phone == "Android" ? "block" : "none" }}
+                        onClick={this.toClient.bind(this, "openNativePage_DoExercises_Stu")}>玩转习题</span>
                         <span onClick={this.toClient.bind(this, "openNativePage_ResourceLibrary_Stu")}>资源库</span>
-                        <span onClick={this.toClient.bind(this, "openNativePage_FamousTeacherSpace_Stu")}>名师空间</span>
+                        <span  style={{ display: this.state.phone == "Android" ? "block" : "none" }}
+                        onClick={this.toClient.bind(this, "openNativePage_FamousTeacherSpace_Stu")}>名师空间</span>
                     </div>
                 </div>
                   <div>
                     <h1>更多</h1>
                     <div>
                         <span onClick={this.toClient.bind(this, "openNativePage_QuestionnaireSurvey_Stu")}>问卷调查</span>
-                        <span onClick={this.toClient.bind(this, "openNativePage_AdmissionStatistics_Stu")}>出入校统计</span>
+                        <span  style={{ display: this.state.phone == "Android" ? "block" : "none" }}
+                        onClick={this.toClient.bind(this, "openNativePage_AdmissionStatistics_Stu")}>出入校统计</span>
                     </div>
                 </div>
             </div>
