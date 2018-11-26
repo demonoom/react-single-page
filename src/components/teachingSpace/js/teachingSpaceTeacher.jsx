@@ -37,12 +37,25 @@ export default class teachingSpaceTeacher extends React.Component {
     }
 
     /**
-     * 跳转网页的分析
+     * 跳转网页
      */
-    toPage=(method)=>{
-        var url = "http://jiaoxue.maaee.com:8093/#/cloudSchoolClassesStatistical?ident="+this.state.ident
+    toPage=(type)=>{
+        var url;
+        // 回顾页面
+        if(type == "ReviewStatistics"){
+            url = "http://jiaoxue.maaee.com:8093/#/cloudSchoolClassesStatistical?ident="+this.state.ident
+
+        }else if(type == "Approval"){
+            // 审批页面
+            url = "http://jiaoxue.maaee.com:8093/#/cloudSchoolClassesStatistical?ident="+this.state.ident
+
+        }else if (type == "Attendance"){
+            // 考勤页面
+            url = "http://jiaoxue.maaee.com:8093/#/cloudSchoolClassesStatistical?ident="+this.state.ident
+
+        }
         var data = {
-            method: method,
+            method: "openNewPage",
             url: url
         };
         console.log(data,"data")
@@ -51,17 +64,18 @@ export default class teachingSpaceTeacher extends React.Component {
         });
 
     }
+    
     render() {
         return (
             <div id="teachingSpaceTeacher">
                 <div className="teacher-item">
                     <h1>常用</h1>
                     <ul className="my_flex teacherUl">
-                        <li onClick={this.toClient.bind(this, "openNativePage_Approval")}>
+                        <li onClick={this.toPage.bind(this, "Approval")}>
                             <i className="Icon-teacher Icon-teacher-approval"></i>
                             <div>审批</div>
                         </li>
-                        <li onClick={this.toClient.bind(this, "openNativePage_Attendance")}>考勤</li>
+                        <li onClick={this.toPage.bind(this, "Attendance")} >考勤</li>
                         <li onClick={this.toClient.bind(this, "openNativePage_AntPlate")}>蚁盘</li>
                     </ul>
                 </div>
@@ -91,7 +105,7 @@ export default class teachingSpaceTeacher extends React.Component {
                 <div className="teacher-item">
                     <h1>数据中心</h1>
                     <ul className="my_flex teacherUl">
-                        <li onClick={this.toPage.bind(this, "openNewPage")}  >课堂回顾统计</li>
+                        <li onClick={this.toPage.bind(this, "ReviewStatistics")}  >课堂回顾统计</li>
                         <li onClick={this.toClient.bind(this, "openNativePage_RingDataStatistics")} >手环数据统计</li>
                     </ul>
                 </div>

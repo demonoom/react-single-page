@@ -42,7 +42,7 @@ export default class teachingSpaceStudent extends React.Component {
         return (
             <div id="teachingSpaceStudent">
                   <div>
-                    课堂
+                    <h1>课堂</h1>
                     <div>
                         <span onClick={this.toClient.bind(this, "openNativePage_TheSchoolClassroom_Stu")}>本校课堂</span>
                         <span onClick={this.toClient.bind(this, "openNativePage_LiveClass_Stu")}>直播课堂</span>
@@ -52,7 +52,7 @@ export default class teachingSpaceStudent extends React.Component {
                     </div>
                 </div>
                   <div>
-                    考试作业
+                    <h1>考试作业</h1>
                     <div>
                         <span onClick={this.toClient.bind(this, "openNativePage_HomeworkToDo_Stu")}>待做作业</span>
                         <span onClick={this.toClient.bind(this, "openNativePage_MyTestPaper_Stu")}>我的试卷</span>
@@ -60,7 +60,7 @@ export default class teachingSpaceStudent extends React.Component {
                     </div>
                 </div>
                   <div>
-                    学习资源
+                    <h1>学习资源</h1>
                     <div>
                         <span onClick={this.toClient.bind(this, "openNativePage_DoExercises_Stu")}>玩转习题</span>
                         <span onClick={this.toClient.bind(this, "openNativePage_ResourceLibrary_Stu")}>资源库</span>
@@ -68,7 +68,7 @@ export default class teachingSpaceStudent extends React.Component {
                     </div>
                 </div>
                   <div>
-                    更多
+                    <h1>更多</h1>
                     <div>
                         <span onClick={this.toClient.bind(this, "openNativePage_QuestionnaireSurvey_Stu")}>问卷调查</span>
                         <span onClick={this.toClient.bind(this, "openNativePage_AdmissionStatistics_Stu")}>出入校统计</span>
