@@ -7,20 +7,6 @@ export default class teachingSpaceTeacher extends React.Component {
             phone: 'IOS'
         };
     }
-
-    /**
-     * 跳转客户端
-     */
-    toClient = (method) => {
-        var data = {
-            method: method,
-            ident: this.state.ident
-        };
-        console.log(data,"data")
-        Bridge.callHandler(data, null, function (error) {
-        });
-    }
-
     componentDidMount() {
         var locationHref = decodeURI(window.location.href);
         var locationSearch = locationHref.substr(locationHref.indexOf("?") + 1);
@@ -35,6 +21,35 @@ export default class teachingSpaceTeacher extends React.Component {
         } else {
             this.setState({ phone: 'Android' })
         }
+    }
+
+    /**
+     * 跳转客户端
+     */
+    toClient = (method) => {
+        var data = {
+            method: method,
+            ident: this.state.ident
+        };
+        console.log(data,"data")
+        Bridge.callHandler(data, null, function (error) {
+        });
+    }
+
+    /**
+     * 跳转网页的分析
+     */
+    toPage=(method)=>{
+        var url = "http://jiaoxue.maaee.com:8093/#/cloudSchoolClassesStatistical?ident="+this.state.ident
+        var data = {
+            method: method,
+            url: url
+        };
+        console.log(data,"data")
+        Bridge.callHandler(data, null, function (error) {
+            window.location.href = url;
+        });
+
     }
     render() {
         return (
@@ -73,7 +88,7 @@ export default class teachingSpaceTeacher extends React.Component {
                 <div>
                     数据中心
                     <div>
-                        <span onClick={this.toClient.bind(this, "openNativePage_ClassReview")} >课堂回顾统计</span>
+                        <span onClick={this.toPage.bind(this, "openNewPage")} >课堂回顾统计</span>
                         <span onClick={this.toClient.bind(this, "openNativePage_RingDataStatistics")} >手环数据统计</span>
                     </div>
                 </div>
