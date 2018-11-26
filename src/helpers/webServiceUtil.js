@@ -1,6 +1,6 @@
 var isDebug = false;
 var localDomain = "localhost";   //请求地址
-var isDebugLocal = false;
+var isDebugLocal = true;
 var localUrl = "localhost";    //跳转地址http:
 
 //云校本地测试webService地址
