@@ -4,7 +4,7 @@
   overflow-y: auto;
   .topDiv{
     padding-top: 22px;
-    padding-bottom: 50px;
+    padding-bottom: 30px;
     .logo{
       height: 83px;
       img{
@@ -18,8 +18,11 @@
       padding: 14px 0 14px;
     }
     .grayText{
-      color: #666666;
-      font-size: 13px;
+      color: #333;
+      font-size: 15px;
+      padding: 0 15px;
+      text-align: left;
+      line-height: 1.4;
     }
   }
   .am-list-body::before,.am-list-body::after{
@@ -64,6 +67,14 @@
   }
   .inputDiv{
     position: relative;
+    &.phone .am-list-line{
+      background: url("../img/icon_phone.png")  no-repeat left center;
+      background-size: auto 20px;
+    }
+    &.code .am-list-line{
+      background: url("../img/icon_code.png")  no-repeat left center;
+      background-size: auto 18px;
+    }
     .am-button{
       padding: 0 9px;
       display: inline-block;
@@ -83,7 +94,9 @@
         display: none;
       }
     }
-
+    .am-list-line{
+      padding-left: 30px;
+    }
     .am-list-line::after{
       content: '';
       position: absolute;

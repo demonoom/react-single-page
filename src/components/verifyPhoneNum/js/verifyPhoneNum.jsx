@@ -152,12 +152,12 @@ export default class verifyPhoneNum extends React.Component {
 
     render() {
         return (
-            <div id='chatLogin' style={{textAlign: 'center'}}>
+            <div id='verifyPhoneNum' style={{textAlign: 'center'}}>
                 <div className='topDiv'>
-                    <div className='grayText'>为验证是本人登录,请输入注册手机号,并通过验证码再次确认.同设备上,该验证只需一次</div>
+                    <div className='grayText'>为验证是本人登录，请输入注册手机号，并通过验证码再次确认。同设备上，该验证只需一次。</div>
                 </div>
                 <div>
-                    <div className="inputDiv">
+                    <div className="inputDiv phone">
                         <List>
                             <InputItem
                                 placeholder="请输入绑定的手机号"
@@ -175,7 +175,7 @@ export default class verifyPhoneNum extends React.Component {
                             </div>
                         </List>
                     </div>
-                    <div className='inputDiv'>
+                    <div className='inputDiv code'>
                         <List>
                             <InputItem
                                 placeholder="请输入收到的验证码"

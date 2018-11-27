@@ -1,4 +1,3 @@
-(node) util.print is deprecated. Use console.log instead.
 #verifyPhoneNum {
   background-color: white;
   height: 100%;
@@ -6,7 +5,7 @@
 }
 #verifyPhoneNum .topDiv {
   padding-top: 22px;
-  padding-bottom: 50px;
+  padding-bottom: 30px;
 }
 #verifyPhoneNum .topDiv .logo {
   height: 83px;
@@ -20,8 +19,11 @@
   padding: 14px 0 14px;
 }
 #verifyPhoneNum .topDiv .grayText {
-  color: #666666;
-  font-size: 13px;
+  color: #333;
+  font-size: 15px;
+  padding: 0 15px;
+  text-align: left;
+  line-height: 1.4;
 }
 #verifyPhoneNum .am-list-body::before,
 #verifyPhoneNum .am-list-body::after {
@@ -67,6 +69,14 @@
 #verifyPhoneNum .inputDiv {
   position: relative;
 }
+#verifyPhoneNum .inputDiv.phone .am-list-line {
+  background: url("../img/icon_phone.png") no-repeat left center;
+  background-size: auto 20px;
+}
+#verifyPhoneNum .inputDiv.code .am-list-line {
+  background: url("../img/icon_code.png") no-repeat left center;
+  background-size: auto 18px;
+}
 #verifyPhoneNum .inputDiv .am-button {
   padding: 0 9px;
   display: inline-block;
@@ -85,6 +95,9 @@
 }
 #verifyPhoneNum .inputDiv .am-button::before {
   display: none;
+}
+#verifyPhoneNum .inputDiv .am-list-line {
+  padding-left: 30px;
 }
 #verifyPhoneNum .inputDiv .am-list-line::after {
   content: '';
