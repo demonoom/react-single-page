@@ -999,6 +999,13 @@ const teachingSpaceStudent = (location, cb) => {
     )
 }
 
+const verifyPhoneNum = (location, cb) => {
+    require.ensure([], require => {
+            cb(null, require("./components/verifyPhoneNum/js/verifyPhoneNum").default)
+        }
+    )
+}
+
 
 import './index.less';
 
@@ -1017,6 +1024,11 @@ class Index extends React.Component {
                     </li>
                     <li>
                         <Link
+                            to="/verifyPhoneNum?userId=23836&mac=2345"
+                            style={{fontSize: '24px'}}>欢迎登录</Link>
+                    </li>
+                    <li>
+                        <Link
                             to="/wxLogin?local=KnowledgeStatic"
                             style={{fontSize: '24px'}}>统计(微信)</Link>
                     </li>
@@ -1029,7 +1041,8 @@ class Index extends React.Component {
                         style={{fontSize: '24px'}}>微信绑定</Link></li>
                     <li>
                         <Link
-                            to="/KnowledgeStatic?unionid=o-w611I9nKqTHcT3P34srzwIrf6U" style={{fontSize: '24px'}}>统计</Link>
+                            to="/KnowledgeStatic?unionid=o-w611I9nKqTHcT3P34srzwIrf6U"
+                            style={{fontSize: '24px'}}>统计</Link>
                     </li>
                     <li>
                         <Link
@@ -1251,7 +1264,7 @@ class Index extends React.Component {
                         <Link
                             to="/courseRecListst" style={{fontSize: '24px'}}>课程推荐</Link>
                     </li>*/}
-                        {/* <li>
+                    {/* <li>
                         <Link
                             to="/litleantTeacher" style={{fontSize: '24px'}}>下载页老师</Link>
                     </li>
@@ -1436,6 +1449,7 @@ class Index extends React.Component {
                             <Route path="KnowledgeLogin" getComponent={KnowledgeLogin}/>
                             <Route path="teachingSpaceTeacher" getComponent={teachingSpaceTeacher}/>
                             <Route path="teachingSpaceStudent" getComponent={teachingSpaceStudent}/>
+                            <Route path="verifyPhoneNum" getComponent={verifyPhoneNum}/>
                         </Route>
                     </Router>
                     ,
