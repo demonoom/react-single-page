@@ -1067,7 +1067,7 @@ class Index extends React.Component {
                         style={{fontSize: '24px'}}>教学空间老师</Link></li>
                     <li><Link
                         to="/teachingSpaceStudent?access_user=23836"
-                        style={{fontSize: '24px'}}>教学空学生</Link></li> */}
+                        style={{fontSize: '24px'}}>教学空学生</Link></li>
 
                     {/*<li><Link to="/antPlate?ident=23836&fileId=-1&title=蚁盘题目&phoneType=0"*/}
                     {/*style={{fontSize: '24px'}}>蚁盘</Link>*/}
