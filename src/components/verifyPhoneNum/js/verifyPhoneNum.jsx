@@ -141,14 +141,7 @@ export default class verifyPhoneNum extends React.Component {
                 if (result.success) {
                     Toast.success('验证成功');
                     setTimeout(function () {
-                        var data = {
-                            method: 'finish',
-                        };
-
-                        Bridge.callHandler(data, null, function (error) {
-                            // Toast.fail(error);
-                            console.log(error);
-                        });
+                        phone.finish()
                     }, 1000)
                 } else {
                     Toast.fail(result.msg, 2)
