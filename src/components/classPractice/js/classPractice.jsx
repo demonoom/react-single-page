@@ -37,8 +37,6 @@ export default class classPractice extends React.Component {
     }
 
 
-
-
     /**
      * 根据用户id和虚拟课堂vid查询当前课堂上的答题情况,进行题目统计
      */
