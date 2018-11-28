@@ -1,5 +1,5 @@
 import React from 'react';
-
+import '../css/teachingSpaceTeacher.less'
 export default class teachingSpaceStudent extends React.Component {
     constructor(props) {
         super(props);
@@ -8,9 +8,8 @@ export default class teachingSpaceStudent extends React.Component {
         };
     }
 
-
     componentDidMount() {
-        Bridge.setRefreshAble("true");
+        Bridge.setRefreshAble("false");
         var locationHref = decodeURI(window.location.href);
         var locationSearch = locationHref.substr(locationHref.indexOf("?") + 1);
         var locationSearchArray = locationSearch.split("&");
