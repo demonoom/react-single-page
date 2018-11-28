@@ -33,50 +33,89 @@ export default class teachingSpaceStudent extends React.Component {
             method: method,
             ident: this.state.ident
         };
-        console.log(data,"data")
+        console.log(data, "data")
         Bridge.callHandler(data, null, function (error) {
         });
     }
     render() {
 
         return (
-            <div id="teachingSpaceStudent">
-                  <div>
+            <div id="teachingSpaceTeacher">
+                <div className="teacher-item">
                     <h1>课堂</h1>
-                    <div>
-                        <span onClick={this.toClient.bind(this, "openNativePage_TheSchoolClassroom_Stu")}>本校课堂</span>
-                        <span onClick={this.toClient.bind(this, "openNativePage_LiveClass_Stu")}>直播课堂</span>
-                        <span onClick={this.toClient.bind(this, "openNativePage_AntCloudClass_Stu")}>小蚂蚁云课堂</span>
-                        <span onClick={this.toClient.bind(this, "openNativePage_ClassReview_Stu")}>课堂回顾</span>
-                        <span onClick={this.toClient.bind(this, "openNativePage_LiveReview_Stu")}>直播回顾</span>
-                    </div>
+                    <ul className="my_flex teacherUl">
+                        <li onClick={this.toClient.bind(this, "openNativePage_TheSchoolClassroom_Stu")}>
+                            <i className="Icon-teacher Icon-teacher-classroom"></i>
+                            <div>班级课堂</div>
+                        </li>
+                        <li onClick={this.toClient.bind(this, "openNativePage_LiveClass_Stu")}>
+                            <i className="Icon-teacher Icon-teacher-live"></i>
+                            <div>直播课堂</div>
+                        </li>
+                        <li onClick={this.toClient.bind(this, "openNativePage_AntCloudClass_Stu")}>
+                            <i className="Icon-teacher Icon-teacher-eSchool"></i>
+                            <div>小蚂蚁云课堂</div>
+                        </li>
+                        <li onClick={this.toClient.bind(this, "openNativePage_ClassReview_Stu")}>
+                            <i className="Icon-teacher Icon-student-ClassReview"></i>
+                            <div>课堂回顾</div>
+                        </li>
+                        <li onClick={this.toClient.bind(this, "openNativePage_LiveReview_Stu")}>
+                            <i className="Icon-teacher Icon-student-live"></i>
+                            <div>直播回顾</div>
+                        </li>
+                    </ul>
                 </div>
-                  <div>
-                    <h1>考试作业</h1>
-                    <div>
-                        <span onClick={this.toClient.bind(this, "openNativePage_HomeworkToDo_Stu")}>待做作业</span>
-                        <span style={{ display: this.state.phone == "Android" ? "block" : "none" }}
-                              onClick={this.toClient.bind(this, "openNativePage_MyTestPaper_Stu")}>我的试卷</span>
-                        <span onClick={this.toClient.bind(this, "openNativePage_HomeworkStatistics_Stu")}>作业统计</span>
-                    </div>
+                <div className="teacher-item">
+                    <h1>作业/考试</h1>
+                    <ul className="my_flex teacherUl">
+                        <li onClick={this.toClient.bind(this, "openNativePage_HomeworkToDo_Stu")}>
+                            <i className="Icon-teacher Icon-teacher-homeworkCorrecting"></i>
+                            <div>作业</div>
+                        </li>
+                        <li style={{ display: this.state.phone == "Android" ? "block" : "none" }}
+                            onClick={this.toClient.bind(this, "openNativePage_MyTestPaper_Stu")}>
+                            <i className="Icon-teacher Icon-teacher-testPaper"></i>
+                            <div>考试</div>
+                        </li>
+                        <li onClick={this.toClient.bind(this, "openNativePage_HomeworkStatistics_Stu")}>
+                            <i className="Icon-teacher Icon-teacher-homeworkStatistics"></i>
+                            <div>作业统计</div>
+                        </li>
+                    </ul>
                 </div>
-                  <div>
+                <div className="teacher-item">
                     <h1>学习资源</h1>
-                    <div>
-                        <span style={{ display: this.state.phone == "Android" ? "block" : "none" }}
-                        onClick={this.toClient.bind(this, "openNativePage_DoExercises_Stu")}>玩转习题</span>
-                        <span onClick={this.toClient.bind(this, "openNativePage_ResourceLibrary_Stu")}>资源库</span>
-                        <span  style={{ display: this.state.phone == "Android" ? "block" : "none" }}
-                        onClick={this.toClient.bind(this, "openNativePage_FamousTeacherSpace_Stu")}>名师空间</span>
-                    </div>
+                    <ul className="my_flex teacherUl">
+                        <li style={{ display: this.state.phone == "Android" ? "block" : "none" }}
+                            onClick={this.toClient.bind(this, "openNativePage_DoExercises_Stu")}>
+                            <i className="Icon-teacher Icon-teacher-questionBank"></i>
+                            <div>玩转习题</div>
+                        </li>
+                        <li onClick={this.toClient.bind(this, "openNativePage_ResourceLibrary_Stu")}>
+                            <i className="Icon-teacher Icon-teacher-repository"></i>
+                            <div>资源库</div>
+                        </li>
+                        <li   style={{ display: this.state.phone == "Android" ? "block" : "none" }}
+                              onClick={this.toClient.bind(this, "openNativePage_FamousTeacherSpace_Stu")}>
+                            <i className="Icon-teacher Icon-teacher-famousTeacher"></i>
+                            <div>名师空间</div>
+                        </li>
+                    </ul>
                 </div>
-                  <div>
+                <div className="teacher-item">
                     <h1>更多</h1>
-                    <div>
-                        <span onClick={this.toClient.bind(this, "openNativePage_QuestionnaireSurvey_Stu")}>问卷调查</span>
-                        <span  style={{ display: this.state.phone == "Android" ? "block" : "none" }}
-                        onClick={this.toClient.bind(this, "openNativePage_AdmissionStatistics_Stu")}>出入校统计</span>
-                    </div>
+                    <ul className="my_flex teacherUl">
+                        <li onClick={this.toClient.bind(this, "openNativePage_QuestionnaireSurvey_Stu")}>
+                            <i className="Icon-teacher Icon-student-Survey"></i>
+                            <div>问卷调查</div>
+                        </li>
+                        <li style={{ display: this.state.phone == "Android" ? "block" : "none" }}
+                            onClick={this.toClient.bind(this, "openNativePage_AdmissionStatistics_Stu")}>
+                            <i className="Icon-teacher Icon-student-turnover"></i>
+                            <div>出入校统计</div>
+                        </li>
+                    </ul>
                 </div>
             </div>
         );
