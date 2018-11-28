@@ -233,16 +233,18 @@ export default class classPractice extends React.Component {
 
     render() {
         return (
-            <div className='classPractice'>
+            <div id="classPractice" className='classPractice'>
 
-                <div style={{overflow:'hidden'}}>
-                    <div style={{float:'left'}}>{this.state.className}</div><button style={this.state.userType == 'TEAC'?{display:'block',float:'right'}:{display:'none'}} onClick={this.publishedAnswer.bind(this)}>公布答案</button>
+                <div className="classPractice-class" style={{overflow:'hidden'}}>
+                    <div className="classPractice-bottom">
+                        <div className="classPractice-title">{this.state.className}</div>
+                        <button className="classPractice-btn classPractice-btnBlue" style={this.state.userType == 'TEAC'?{display:'block',float:'right'}:{display:'none'}} onClick={this.publishedAnswer.bind(this)}>公布答案</button>
+                    </div>
+                    <div className="classPractice-bottom">
+                        <span>题目总数: {this.state.subjectCount}</span>
+                        <span className="summary-left">练习时间: {this.state.pushDate}</span>
+                    </div>
                 </div>
-                <div>
-                    <div>题目总数: {this.state.subjectCount}</div>
-                    <div>练习时间: {this.state.pushDate}</div>
-                </div>
-
                 <Tabs tabs={tabs}
                       initialPage={0}
                       // onChange={(tab, index) => { console.log('onChange', index, tab); }}
@@ -253,26 +255,26 @@ export default class classPractice extends React.Component {
                         {this.state.topicData.map((value,index)=>{
                             return <div className="topic_item">
                                 <div className="topicTitle" >
-                                    {/*<span>{index+1}</span>.*/}
-                                    <div dangerouslySetInnerHTML={{__html: value.shortContent}}></div>
+                                    <span>{index+1}.</span>
+                                    <div className="title" dangerouslySetInnerHTML={{__html: value.shortContent}}></div>
                                 </div>
                                 <div className="topicAnswer">
-                                    <span className="topicAnswer_left">正确答案: {value.answer}</span>
-                                    <span className="topicAnswer_right">正确率: {value.rightPercent}%</span>
+                                    <span className="topicAnswer_left">正确答案:<span>{value.answer}</span></span>
+                                    <span className="topicAnswer_right">正确率:<span>{value.rightPercent}%</span></span>
                                 </div>
                                 <div className="topic_table">
                                     {value.choosenes.map((value,index)=>{
                                         return <div className="table_item">
-                                            <span>选项: {value.serial}</span>
-                                            <span>选择率: {value.selectPercent}%</span>
-                                            <span onClick={this.showNames.bind(this,value.chooseUserNames,'countAll')}>人数: {value.selectCount}</span>
+                                            <span>选项:<span>{value.serial}</span></span>
+                                            <span className="center">选择率:<span>{value.selectPercent}%</span></span>
+                                            <span onClick={this.showNames.bind(this,value.chooseUserNames,'countAll')}>人数:<span>{value.selectCount}</span></span>
                                         </div>
                                     })}
                                 </div>
                                 <div className="list_item_bottom">
-                                    <span className="topic_submit" onClick={this.showNames.bind(this,value.submitNames,'submit')}>提交:{value.submit}</span>
-                                    <span className="topic_right" onClick={this.showNames.bind(this,value.rightNames,'right')}>正确:{value.right}</span>
-                                    <span className="topic_wrong" onClick={this.showNames.bind(this,value.wrongNames,'wrong')}>答错:{value.wrong}</span>
+                                    <span className="topic_submit classPractice-btn classPractice-btn-blue" onClick={this.showNames.bind(this,value.submitNames,'submit')}>提交:{value.submit}</span>
+                                    <span className="topic_right classPractice-btn classPractice-btn-green" onClick={this.showNames.bind(this,value.rightNames,'right')}>正确:{value.right}</span>
+                                    <span className="topic_wrong classPractice-btn classPractice-btn-red" onClick={this.showNames.bind(this,value.wrongNames,'wrong')}>答错:{value.wrong}</span>
                                 </div>
                             </div>
                         })}
@@ -280,8 +282,8 @@ export default class classPractice extends React.Component {
                         {this.state.topicDataInStu.map((value,index)=>{
                             return <div className="topic_item">
                                 <div className="topicTitle" >
-                                    {/*<span>{index+1}</span>.*/}
-                                    <div dangerouslySetInnerHTML={{__html: value.shortContent}}></div>
+                                    <span>{index+1}.</span>
+                                    <div className="title" dangerouslySetInnerHTML={{__html: value.shortContent}}></div>
                                 </div>
                                 {/*<div>*/}
                                     {/*<span>A:</span>*/}
@@ -289,54 +291,56 @@ export default class classPractice extends React.Component {
                                     {/*<span>C:</span>*/}
                                     {/*<span>D:</span>*/}
                                 {/*</div>*/}
-                                <div>
-                                    <div>正确答案:{value.rightAnswer}</div>
-                                    <div style={value.result == '错误'?{color:'red'}:{color:'green'}}>我的答案:{value.answer}</div>
+                                <div className="answer-student">
+                                    <div className="right">正确答案:{value.rightAnswer}</div>
+                                    <div style={value.result == '错误'?{color:'#EF6E58'}:{color:'#3AB669'}}>我的答案:{value.answer}</div>
                                 </div>
                             </div>
                         })}
                     </div>
-                    <div>
-                        <div style={this.state.correctData.length > 0?{display:'block'}:{display:'none'}}>
-                            <span>编号</span>
-                            <span>姓名</span>
+                    <div className="performance-list">
+                        <div className="title" style={this.state.correctData.length > 0?{display:'block'}:{display:'none'}}>
+                            <span className="number">编号</span>
+                            <span className="name">姓名</span>
                             <span>正确数</span>
                             <span>正确率</span>
                         </div>
                         {/*正确率*/}
-                        {this.state.correctData.map((value,index)=>{
-                            return <div>
-                                <span>{index+1}</span>
-                                <span>{value.userName}</span>
-                                <span>{value.right}</span>
-                                <span>{(value.right/value.total)*100}%</span>
-                            </div>
-                        })}
+                        <div className="performance-cont">
+                            {this.state.correctData.map((value,index)=>{
+                                return <div className="performance-item">
+                                    <span className="number">{index+1}</span>
+                                    <span className="name">{value.userName}</span>
+                                    <span>{value.right}</span>
+                                    <span>{(value.right/value.total)*100}%</span>
+                                </div>
+                            })}
+                        </div>
                     </div>
-                    <div>
+                    <div className="performance-list">
                         {/*答题时间*/}
-                        <div style={this.state.answerTime.length > 0?{display:'block'}:{display:'none'}}>
-                            <span>编号</span>
-                            <span>姓名</span>
-                            <span>提交数目</span>
-                            <span>花费时间</span>
+                        <div className="title" style={this.state.answerTime.length > 0?{display:'block'}:{display:'none'}}>
+                            <span className="number2">编号</span>
+                            <span className="name">姓名</span>
+                            <span className="number">提交数目</span>
+                            <span className="time">花费时间</span>
                         </div>
                         {/*正确率*/}
-                        {this.state.answerTime.map((value,index)=>{
-                            return <div>
-                                <span>{index+1}</span>
-                                <span>{value.userName}</span>
-                                <span>{value.score}</span>
-                                <span>{value.userTimeFormat}</span>
-                            </div>
-                        })}
+                        <div className="performance-cont">
+                            {this.state.answerTime.map((value,index)=>{
+                                return <div className="performance-item">
+                                    <span className="number2">{index+1}</span>
+                                    <span className="name">{value.userName}</span>
+                                    <span className="number">{value.score}</span>
+                                    <span className="time">{value.userTimeFormat}</span>
+                                </div>
+                            })}
+                        </div>
                     </div>
                 </Tabs>
-                <div className="names_box" style={this.state.showNamesBox?{transform:'translate(0%,0%)'}:{transform:'translate(0%,100%)'}}>
-                    <div>
-                        <div>此项选择的学生<span onClick={this.maskClick.bind(this)}>X</span></div>
-                        {this.state.namesHtml}
-                    </div>
+                <div className="names_box" style={this.state.showNamesBox?{transform:'translate(0%,0%)'}:{transform:'translate(0%,150%)'}}>
+                    <div className="header">此项选择的学生<span onClick={this.maskClick.bind(this)} className="close"></span></div>
+                    <div className="names-cont"><span>{this.state.namesHtml}</span></div>
                 </div>
                 <div className="mask" onClick={this.maskClick.bind(this)} style={this.state.showNamesBox?{display:'block',height: document.body.clientHeight}:{display:'none',height: document.body.clientHeight}}></div>
             </div>
