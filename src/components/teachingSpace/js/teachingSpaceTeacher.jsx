@@ -8,6 +8,7 @@ export default class teachingSpaceTeacher extends React.Component {
         };
     }
     componentDidMount() {
+        Bridge.setRefreshAble("true");
         var locationHref = decodeURI(window.location.href);
         var locationSearch = locationHref.substr(locationHref.indexOf("?") + 1);
         var locationSearchArray = locationSearch.split("&");
