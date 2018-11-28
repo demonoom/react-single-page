@@ -79,6 +79,8 @@ export default class teachingSpaceTeacher extends React.Component {
         }else if (type == "HomeworkFaceStatistics"){
             // 作业表情分析
             url="http://jiaoxue.maaee.com:8093/#/HomeWorkUnderstandAnalysisGuideByNoom?access_user="+this.state.ident
+        }else if(type == "openNativePage_RingDataStatistics"){
+            url="http://jiaoxue.maaee.com:8093/#/analysisHomePage"
         }
         var data = {
             method: "openNewPage",
@@ -155,7 +157,7 @@ export default class teachingSpaceTeacher extends React.Component {
                             <i className="Icon-teacher Icon-teacher-famousTeacher"></i>
                             <div>名师空间</div>
                         </li>
-                        <li onClick={this.toClient.bind(this, "openNativePage_RecordingVideo")}
+                        <li onClick={this.toClient.bind(this, "openNativePage_MicroClassRecord")}
                             style={{ display: this.state.phone == "Android" ? "block" : "none" }}>
                             <i className="Icon-teacher Icon-teacher-SmallClass"></i>
                             <div>录制微课</div>
@@ -170,7 +172,7 @@ export default class teachingSpaceTeacher extends React.Component {
                             <div>课堂回顾统计</div>
                         </li>
                         <li  style={{ display: this.state.phone == "Android" ? "block" : "none" }}
-                        onClick={this.toClient.bind(this, "openNativePage_RingDataStatistics")} >
+                        onClick={this.toPage.bind(this, "openNativePage_RingDataStatistics")} >
                             <i className="Icon-teacher Icon-teacher-braceletData"></i>
                             <div>手环数据统计</div>
                         </li>

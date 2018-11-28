@@ -24,12 +24,13 @@ export default class classDemeanorList extends React.Component {
 
     /**
      * 获取此用户所在班级
+     * public List<PBClazz> searchClazzByUserId(String userId, String keyWord)
      */
     getClazzesByUserId(ident) {
         var _this = this;
         var param = {
-            "method": 'searchClazz',
-            "aid": ident,
+            "method": 'searchClazzByUserId',
+            "userId": ident,
             "keyWord": "",
         };
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
@@ -49,10 +50,10 @@ export default class classDemeanorList extends React.Component {
     }
 
 
-    toClassDetail(id,name) {
+    toClassDetail(id, name) {
         let url;
         if (id) {
-            url = encodeURI(WebServiceUtil.mobileServiceURL + "classDemeanor?ident=" + id +"&className="+name);
+            url = encodeURI(WebServiceUtil.mobileServiceURL + "classDemeanor?ident=" + id + "&className=" + name);
         } else {
 
         }
@@ -70,14 +71,16 @@ export default class classDemeanorList extends React.Component {
         let items = [];
         let item = this.state.listData;
         for (var k in item) {
-            items.push(<li className="am-list-item am-list-item-middle" onClick={this.toClassDetail.bind(this,item[k].id,item[k].name)}>
+            items.push(<li className="am-list-item am-list-item-middle"
+                           onClick={this.toClassDetail.bind(this, item[k].id, item[k].name)}>
                 <div className="am-list-line">
                     <div className="am-list-content">
                         {item[k].name}
                     </div>
                     <div className="am-list-arrow am-list-arrow-horizontal"></div>
 
-                </div></li>);
+                </div>
+            </li>);
         }
         return (
             <div id="classDemeanorList" style={{height: document.body.clientHeight}}>

@@ -215,7 +215,6 @@ export default class chatLogin extends React.Component {
     }
 
     bindUserToPar = (resolve) => {
-        debugger
         var param = {
             "method": 'saveUserOpenId',
             "phoneNumber": this.state.phoneValue,
