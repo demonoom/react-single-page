@@ -3,7 +3,8 @@ const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const autoprefixer = require('autoprefixer');
-const version = new Date().getTime();
+// const version = new Date().getTime();
+const version = '1.0.0';
 
 const postcssOpts = {
     ident: 'postcss', // https://webpack.js.org/guides/migrating/#complex-options
@@ -33,7 +34,7 @@ module.exports = {
 
     output: {
         filename: '[name].js?v=' + version,
-        chunkFilename: '[id].chunk.js?v=' + version,   //匹配chunk
+        chunkFilename: '[name]_chunk.js?v=' + version,   //匹配chunk
         path: path.join(__dirname, '/dist'), /*输出的文件路径*/
         publicPath: '/'
     },
