@@ -1,0 +1,16 @@
+CACHE MANIFEST
+# version v1.0.0
+
+CACHE:
+/src/helpers/jquery-3.2.1.min.js
+/src/helpers/webServiceUtil.js
+/index\*.css
+/shared\*.js
+/index\*.js
+/144.chunk\*.js
+/index.html
+
+NETWORK:
+*
+
+FALLBACK:
