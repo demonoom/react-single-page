@@ -1006,6 +1006,14 @@ const verifyPhoneNum = (location, cb) => {
     )
 }
 
+//课堂练习统计
+const classPractice = (location, cb) => {
+    require.ensure([], require => {
+            cb(null, require("./components/classPractice/js/classPractice").default)
+        }
+    )
+}
+
 
 import './index.less';
 
@@ -1051,12 +1059,15 @@ class Index extends React.Component {
                     <li><Link
                         to="/classCardHomePageDoor?access_user=23836"
                         style={{fontSize: '24px'}}>后台总入口</Link></li>
+                    <li><Link
+                        to="/classPractice?userId=23836&vid=35153"
+                        style={{fontSize: '24px'}}>课堂统计页面</Link></li>
                     {/* <li><Link
                         to="/teachingSpaceTeacher?access_user=23836"
                         style={{fontSize: '24px'}}>教学空间老师</Link></li>
                     <li><Link
                         to="/teachingSpaceStudent?access_user=23836"
-                        style={{fontSize: '24px'}}>教学空学生</Link></li> */}
+                        style={{fontSize: '24px'}}>教学空学生</Link></li>
 
                     {/*<li><Link to="/antPlate?ident=23836&fileId=-1&title=蚁盘题目&phoneType=0"*/}
                     {/*style={{fontSize: '24px'}}>蚁盘</Link>*/}
@@ -1450,6 +1461,7 @@ class Index extends React.Component {
                             <Route path="teachingSpaceTeacher" getComponent={teachingSpaceTeacher}/>
                             <Route path="teachingSpaceStudent" getComponent={teachingSpaceStudent}/>
                             <Route path="verifyPhoneNum" getComponent={verifyPhoneNum}/>
+                            <Route path="classPractice" getComponent={classPractice}/>
                         </Route>
                     </Router>
                     ,
