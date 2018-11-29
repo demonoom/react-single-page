@@ -146,6 +146,62 @@ export default class getClassRoomList extends React.Component {
         });
     }
 
+    addMoreClassTable=()=>{
+        var data = {
+            method: 'selectOnlyExcel',
+        };
+        var _this= this;
+        console.log(data)
+        Bridge.callHandler(data, function (res) {
+            //拿到视频地址,显示在页面等待上传
+            var arr = res.split(',');
+            let newArr = [];
+            let pathArr = [];
+            var videoPath;
+            var videoName;
+            var videoExtra;
+            arr.forEach((v, i) => {
+                let item = v.split("?");
+                pathArr.push(item[0])
+                videoPath = item[0];
+                videoName = item[1].split("=")[1];
+                videoExtra = (item[1].split("=")[1]).split(".")[1];
+                newArr.push({
+                    "filePath":videoPath,
+                    "fileName":videoName
+                })
+            })
+            console.log(newArr,"newArr")
+
+            _this.batchAddCourseTable(newArr)
+
+           
+        }, function (error) {
+            console.log(error);
+        });
+    }
+
+
+    /**
+     * 保存上传的课程表
+     */
+    batchAddCourseTable=(arr)=> {
+        var param = {
+            "method": 'batchAddCourseTable',
+            "fileJson": JSON.stringify(arr)
+        };
+        WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
+            onResponse: function (result) {
+                if (result.msg == '调用成功' || result.success == true) {
+                    Toast.info("保存成功", 1);
+                }
+            },
+            onError: function (error) {
+                // message.error(error);
+            }
+        });
+    }
+
     render() {
         var _this = this;
         const row = (rowData, sectionID, rowID) => {
@@ -173,6 +229,7 @@ export default class getClassRoomList extends React.Component {
         };
         return (
             <div id="getClassRoomList" style={{height: classBinding.state.clientHeight}}>
+                <div onClick={this.addMoreClassTable}>批量上传课程表</div>
                 <div className='tableDiv' style={{height: classBinding.state.clientHeight}}>
                     {/*这是列表数据,包括添加按钮*/}
                     <ListView
