@@ -2,7 +2,8 @@
   font-size: 13px;
   color: #666;
   height: 100%;
-  overflow: hidden;
+  overflow-y: hidden;
+  overflow-x: hidden;
   .am-tabs-default-bar-tab{
     height: 48px;
     line-height: 48px;
@@ -10,6 +11,9 @@
   .classPractice-class{
     padding: 12px 15px 0px 15px;
     background: #fff;
+  }
+  .classPractice-class + div.am-tabs{
+    height: calc(~"100% - 86px");
   }
   .classPractice-title{
     color: #333;
@@ -47,8 +51,8 @@
     margin-left: 38px;
   }
   .topic_list{
-    overflow: auto;
-    height: calc(~"100% - 86px");
+    /*overflow: auto;
+    height: calc(~"100% - 86px");*/
     .topic_item{
       margin: 15px;
       background: #fff;
@@ -197,7 +201,7 @@
   }
   .performance-list{
     margin: 15px;
-    height: calc(~"100% - 117px");
+    height: calc(~"100% - 30px");
     overflow: hidden;
     .title{
       padding: 13px 0;
@@ -206,9 +210,10 @@
     }
     .performance-cont{
       background: #fff;
-      height: calc(~"100% - 40px");
+      height: 100%;
       overflow-x: hidden;
       overflow-y: auto;
+      position: relative;
     }
     span{
       width: 25%;
@@ -262,4 +267,17 @@
       padding-bottom: 0;
     }
   }
+  .classPractice-empty{
+    width: 141px;
+    height: 110px;
+    background: url("../img/classPractice-empty.png") no-repeat;
+    background-size: 100% 100%;
+  }
+  .classPractice-emptyText{
+    text-align: center;
+    font-size: 12px;
+    color: #999;
+    margin-top: 30px;
+  }
+  
 }
