@@ -285,7 +285,7 @@ export default class classPractice extends React.Component {
                         })}
                         {/*答题情况*/}
                         {this.state.topicDataInStu.length==0?
-                            <div className="empty_center" style={{display:this.state.topicDataInStu.length==0?"":'none'}}>
+                            <div className="empty_center" style={{display:this.state.topicDataInStu.length==0?"none":'none'}}>
                                 <div className="classPractice-empty"></div>
                                 <div className="classPractice-emptyText">暂无数据</div>
                             </div>:
@@ -318,7 +318,7 @@ export default class classPractice extends React.Component {
                         {/*正确率*/}
                         <div className="performance-cont">
                             {this.state.correctData.length==0?
-                                <div className="empty_center" style={{display:this.state.correctData.length==0?"":'none'}}>
+                                <div className="empty_center" style={{display:this.state.correctData.length==0?"none":'none'}}>
                                     <div className="classPractice-empty"></div>
                                     <div className="classPractice-emptyText">暂无数据</div>
                                 </div>:
@@ -345,7 +345,7 @@ export default class classPractice extends React.Component {
                         {/*正确率*/}
                         <div className="performance-cont">
                             {this.state.answerTime.length==0?
-                                <div className="empty_center" style={{display:this.state.answerTime.length==0?"":'none'}}>
+                                <div className="empty_center" style={{display:this.state.answerTime.length==0?"none":'none'}}>
                                     <div className="classPractice-empty"></div>
                                     <div className="classPractice-emptyText">暂无数据</div>
                                 </div>:
