@@ -1,0 +1,15 @@
+CACHE MANIFEST
+# version v1.0.5
+
+CACHE:
+/index.css?v=1.0.0
+/shared.js?v=1.0.0
+/index.js?v=1.0.0
+/teachingSpaceStudent_chunk.js?v=1.0.0
+/teachingSpaceTeacher_chunk.js?v=1.0.0
+/index.html
+
+NETWORK:
+*
+
+FALLBACK:
