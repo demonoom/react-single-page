@@ -3,7 +3,8 @@
   font-size: 13px;
   color: #666;
   height: 100%;
-  overflow: hidden;
+  overflow-y: hidden;
+  overflow-x: hidden;
 }
 #classPractice .am-tabs-default-bar-tab {
   height: 48px;
@@ -12,6 +13,9 @@
 #classPractice .classPractice-class {
   padding: 12px 15px 0px 15px;
   background: #fff;
+}
+#classPractice .classPractice-class + div.am-tabs {
+  height: calc(100% - 86px);
 }
 #classPractice .classPractice-title {
   color: #333;
@@ -49,8 +53,8 @@
   margin-left: 38px;
 }
 #classPractice .topic_list {
-  overflow: auto;
-  height: calc(100% - 86px);
+  /*overflow: auto;
+    height: calc(~"100% - 86px");*/
 }
 #classPractice .topic_list .topic_item {
   margin: 15px;
@@ -202,7 +206,7 @@
 }
 #classPractice .performance-list {
   margin: 15px;
-  height: calc(100% - 117px);
+  height: calc(100% - 30px);
   overflow: hidden;
 }
 #classPractice .performance-list .title {
@@ -212,9 +216,10 @@
 }
 #classPractice .performance-list .performance-cont {
   background: #fff;
-  height: calc(100% - 40px);
+  height: 100%;
   overflow-x: hidden;
   overflow-y: auto;
+  position: relative;
 }
 #classPractice .performance-list span {
   width: 25%;
@@ -266,4 +271,16 @@
 }
 #classPractice .answer-student div:last-child {
   padding-bottom: 0;
+}
+#classPractice .classPractice-empty {
+  width: 141px;
+  height: 110px;
+  background: url("../img/classPractice-empty.png") no-repeat;
+  background-size: 100% 100%;
+}
+#classPractice .classPractice-emptyText {
+  text-align: center;
+  font-size: 12px;
+  color: #999;
+  margin-top: 30px;
 }
