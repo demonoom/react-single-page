@@ -1,5 +1,6 @@
 import React from 'react';
 import '../css/teachingSpaceTeacher.less'
+
 export default class teachingSpaceStudent extends React.Component {
     constructor(props) {
         super(props);
@@ -9,7 +10,11 @@ export default class teachingSpaceStudent extends React.Component {
     }
 
     componentDidMount() {
-        Bridge.setRefreshAble("false");
+        try {
+            Bridge.setRefreshAble("false");
+        } catch (e) {
+            console.log(e, 'teachingSpaceStudent');
+        }
         var locationHref = decodeURI(window.location.href);
         var locationSearch = locationHref.substr(locationHref.indexOf("?") + 1);
         var locationSearchArray = locationSearch.split("&");
@@ -19,10 +24,30 @@ export default class teachingSpaceStudent extends React.Component {
         })
         var phoneType = navigator.userAgent;
         if (phoneType.indexOf('iPhone') > -1 || phoneType.indexOf('iPad') > -1) {
-            this.setState({ phone: 'IOS' })
+            this.setState({phone: 'IOS'})
         } else {
-            this.setState({ phone: 'Android' })
+            this.setState({phone: 'Android'})
         }
+        this.applicationCacheChange()
+    }
+
+    /**
+     * 更新离线数据缓存
+     * 此页面设置为离线缓存页面,当内容更新时触发此方法可避免两次才能更新页面的问题
+     */
+    applicationCacheChange = () => {
+        // Check if a new cache is available on page load.
+
+        window.applicationCache.addEventListener('updateready', function (e) {
+            if (window.applicationCache.status == window.applicationCache.UPDATEREADY) {
+                window.applicationCache.swapCache();
+                setTimeout(function () {
+                    window.location.reload();
+                }, 500)
+            } else {
+
+            }
+        }, false);
     }
 
     /**
@@ -37,6 +62,7 @@ export default class teachingSpaceStudent extends React.Component {
         Bridge.callHandler(data, null, function (error) {
         });
     }
+
     render() {
 
         return (
@@ -73,7 +99,7 @@ export default class teachingSpaceStudent extends React.Component {
                             <i className="Icon-teacher Icon-teacher-homeworkCorrecting"></i>
                             <div>作业</div>
                         </li>
-                        <li style={{ display: this.state.phone == "Android" ? "block" : "none" }}
+                        <li style={{display: this.state.phone == "Android" ? "block" : "none"}}
                             onClick={this.toClient.bind(this, "openNativePage_MyTestPaper_Stu")}>
                             <i className="Icon-teacher Icon-teacher-testPaper"></i>
                             <div>考试</div>
@@ -87,7 +113,7 @@ export default class teachingSpaceStudent extends React.Component {
                 <div className="teacher-item">
                     <h1>学习资源</h1>
                     <ul className="my_flex teacherUl">
-                        <li style={{ display: this.state.phone == "Android" ? "block" : "none" }}
+                        <li style={{display: this.state.phone == "Android" ? "block" : "none"}}
                             onClick={this.toClient.bind(this, "openNativePage_DoExercises_Stu")}>
                             <i className="Icon-teacher Icon-teacher-questionBank"></i>
                             <div>玩转习题</div>
@@ -96,8 +122,8 @@ export default class teachingSpaceStudent extends React.Component {
                             <i className="Icon-teacher Icon-teacher-repository"></i>
                             <div>资源库</div>
                         </li>
-                        <li   style={{ display: this.state.phone == "Android" ? "block" : "none" }}
-                              onClick={this.toClient.bind(this, "openNativePage_FamousTeacherSpace_Stu")}>
+                        <li style={{display: this.state.phone == "Android" ? "block" : "none"}}
+                            onClick={this.toClient.bind(this, "openNativePage_FamousTeacherSpace_Stu")}>
                             <i className="Icon-teacher Icon-teacher-famousTeacher"></i>
                             <div>名师空间</div>
                         </li>
@@ -110,7 +136,7 @@ export default class teachingSpaceStudent extends React.Component {
                             <i className="Icon-teacher Icon-student-Survey"></i>
                             <div>问卷调查</div>
                         </li>
-                        <li style={{ display: this.state.phone == "Android" ? "block" : "none" }}
+                        <li style={{display: this.state.phone == "Android" ? "block" : "none"}}
                             onClick={this.toClient.bind(this, "openNativePage_AdmissionStatistics_Stu")}>
                             <i className="Icon-teacher Icon-student-turnover"></i>
                             <div>出入校统计</div>

@@ -252,7 +252,12 @@ export default class classPractice extends React.Component {
                 >
                     <div className="topic_list">
                        {/*题目统计*/}
-                        {this.state.topicData.map((value,index)=>{
+                        {this.state.topicData.length==0?
+                            <div className="empty_center">
+                                <div className="classPractice-empty"></div>
+                                <div className="classPractice-emptyText">暂无数据</div>
+                            </div>
+                            :this.state.topicData.map((value,index)=>{
                             return <div className="topic_item">
                                 <div className="topicTitle" >
                                     <span>{index+1}.</span>
@@ -264,10 +269,10 @@ export default class classPractice extends React.Component {
                                 </div>
                                 <div className="topic_table">
                                     {value.choosenes.map((value,index)=>{
-                                        return <div className="table_item">
+                                        return <div className="table_item" onClick={this.showNames.bind(this,value.chooseUserNames,'countAll')}>
                                             <span>选项:<span>{value.serial}</span></span>
                                             <span className="center">选择率:<span>{value.selectPercent}%</span></span>
-                                            <span onClick={this.showNames.bind(this,value.chooseUserNames,'countAll')}>人数:<span>{value.selectCount}</span></span>
+                                            <span>人数:<span>{value.selectCount}</span></span>
                                         </div>
                                     })}
                                 </div>
@@ -279,7 +284,12 @@ export default class classPractice extends React.Component {
                             </div>
                         })}
                         {/*答题情况*/}
-                        {this.state.topicDataInStu.map((value,index)=>{
+                        {this.state.topicDataInStu.length==0?
+                            <div className="empty_center">
+                                <div className="classPractice-empty"></div>
+                                <div className="classPractice-emptyText">暂无数据</div>
+                            </div>:
+                            this.state.topicDataInStu.map((value,index)=>{
                             return <div className="topic_item">
                                 <div className="topicTitle" >
                                     <span>{index+1}.</span>
@@ -307,7 +317,12 @@ export default class classPractice extends React.Component {
                         </div>
                         {/*正确率*/}
                         <div className="performance-cont">
-                            {this.state.correctData.map((value,index)=>{
+                            {this.state.correctData.length==0?
+                                <div className="empty_center">
+                                    <div className="classPractice-empty"></div>
+                                    <div className="classPractice-emptyText">暂无数据</div>
+                                </div>:
+                                this.state.correctData.map((value,index)=>{
                                 return <div className="performance-item">
                                     <span className="number">{index+1}</span>
                                     <span className="name">{value.userName}</span>
@@ -327,7 +342,12 @@ export default class classPractice extends React.Component {
                         </div>
                         {/*正确率*/}
                         <div className="performance-cont">
-                            {this.state.answerTime.map((value,index)=>{
+                            {this.state.answerTime.length==0?
+                                <div className="empty_center">
+                                    <div className="classPractice-empty"></div>
+                                    <div className="classPractice-emptyText">暂无数据</div>
+                                </div>:
+                                this.state.answerTime.map((value,index)=>{
                                 return <div className="performance-item">
                                     <span className="number2">{index+1}</span>
                                     <span className="name">{value.userName}</span>
