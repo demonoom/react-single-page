@@ -253,7 +253,7 @@ export default class classPractice extends React.Component {
                     <div className="topic_list">
                        {/*题目统计*/}
                         {this.state.topicData.length==0?
-                            <div className="empty_center">
+                            <div className="empty_center" style={{display:this.state.topicData.length==0?"":'none'}}>
                                 <div className="classPractice-empty"></div>
                                 <div className="classPractice-emptyText">暂无数据</div>
                             </div>
@@ -285,7 +285,7 @@ export default class classPractice extends React.Component {
                         })}
                         {/*答题情况*/}
                         {this.state.topicDataInStu.length==0?
-                            <div className="empty_center">
+                            <div className="empty_center" style={{display:this.state.topicData.length==0?"":'none'}}>
                                 <div className="classPractice-empty"></div>
                                 <div className="classPractice-emptyText">暂无数据</div>
                             </div>:
@@ -311,23 +311,25 @@ export default class classPractice extends React.Component {
                     <div className="performance-list">
                         <div className="title" style={this.state.correctData.length > 0?{display:'block'}:{display:'none'}}>
                             <span className="number">编号</span>
-                            <span className="name">姓名</span>
+                            <span className="name textOver">姓名</span>
                             <span>正确数</span>
                             <span>正确率</span>
                         </div>
                         {/*正确率*/}
                         <div className="performance-cont">
                             {this.state.correctData.length==0?
-                                <div className="empty_center">
+                                <div className="empty_center" style={{display:this.state.topicData.length==0?"":'none'}}>
                                     <div className="classPractice-empty"></div>
                                     <div className="classPractice-emptyText">暂无数据</div>
                                 </div>:
                                 this.state.correctData.map((value,index)=>{
                                 return <div className="performance-item">
                                     <span className="number">{index+1}</span>
-                                    <span className="name">{value.userName}</span>
+                                    <span className="name textOver">{value.userName}</span>
                                     <span>{value.right}</span>
-                                    <span>{(value.right/value.total)*100}%</span>
+                                    <span>{
+                                        isNaN((value.right/value.total)*100)?0:(value.right/value.total)*100
+                                    }%</span>
                                 </div>
                             })}
                         </div>
@@ -336,21 +338,21 @@ export default class classPractice extends React.Component {
                         {/*答题时间*/}
                         <div className="title" style={this.state.answerTime.length > 0?{display:'block'}:{display:'none'}}>
                             <span className="number2">编号</span>
-                            <span className="name">姓名</span>
+                            <span className="name textOver">姓名</span>
                             <span className="number">提交数目</span>
                             <span className="time">花费时间</span>
                         </div>
                         {/*正确率*/}
                         <div className="performance-cont">
                             {this.state.answerTime.length==0?
-                                <div className="empty_center">
+                                <div className="empty_center" style={{display:this.state.topicData.length==0?"":'none'}}>
                                     <div className="classPractice-empty"></div>
                                     <div className="classPractice-emptyText">暂无数据</div>
                                 </div>:
                                 this.state.answerTime.map((value,index)=>{
                                 return <div className="performance-item">
                                     <span className="number2">{index+1}</span>
-                                    <span className="name">{value.userName}</span>
+                                    <span className="name textOver">{value.userName}</span>
                                     <span className="number">{value.score}</span>
                                     <span className="time">{value.userTimeFormat}</span>
                                 </div>
@@ -360,7 +362,7 @@ export default class classPractice extends React.Component {
                 </Tabs>
                 <div className="names_box" style={this.state.showNamesBox?{transform:'translate(0%,0%)'}:{transform:'translate(0%,150%)'}}>
                     <div className="header">此项选择的学生<span onClick={this.maskClick.bind(this)} className="close"></span></div>
-                    <div className="names-cont"><span>{this.state.namesHtml}</span></div>
+                    <div className="names-cont"><span className="textOver">{this.state.namesHtml}</span></div>
                 </div>
                 <div className="mask" onClick={this.maskClick.bind(this)} style={this.state.showNamesBox?{display:'block',height: document.body.clientHeight}:{display:'none',height: document.body.clientHeight}}></div>
             </div>
