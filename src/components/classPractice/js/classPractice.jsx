@@ -271,6 +271,7 @@ export default class classPractice extends React.Component {
 
 
     render() {
+        var valueHTML = `<div class="pic"><img src="http://60.205.86.217/upload5/2017-08-28/14/2c8b5fd0-42ef-4268-b95b-a8dc2306a78f.webp" style="max-width:100%;  width:auto;  height:auto; text-align:left ; display:block; padding-bottom:10px;"/></div>`;
         return (
             <div id="classPractice" className='classPractice'>
 
@@ -303,9 +304,9 @@ export default class classPractice extends React.Component {
                                     <div className="title" dangerouslySetInnerHTML={{__html: value.shortContent}}></div>
                                 </div>
                                 <div className="topicAnswer">
-                                    <span className="topicAnswer_left" style={value.colType == 'C'?{display:'inline-block'}:{display:'none'}}>正确答案:<span>{value.answer}</span></span>
-                                    <span className="topicAnswer_left" style={value.colType == 'C'?{display:'none'}:{display:'inline-block'}}>正确答案:<span dangerouslySetInnerHTML={{__html: value.answer}}></span></span>
-                                    <span className="topicAnswer_right" style={value.colType == 'C'?{display:'inline-block'}:{display:'none'}}>正确率:<span>{value.rightPercent}%</span></span>
+                                    <div className="topicAnswer_left" style={value.colType == 'C'?{display:'inline-block'}:{display:'none'}}>正确答案:<span>{value.answer}</span></div>
+                                    <div className="right-answer" style={value.colType == 'C'?{display:'none'}:{display:'inline-block'}}><span>正确答案:</span><span dangerouslySetInnerHTML={{__html: value.answer}}></span></div>
+                                    <div className="topicAnswer_right" style={value.colType == 'C'?{display:'inline-block'}:{display:'none'}}>正确率:<span>{value.rightPercent}%</span></div>
                                 </div>
                                 <div className="topic_table" style={value.colType == 'C'?{display:'block'}:{display:'none'}}>
                                     {value.choosenes.map((value,index)=>{
@@ -319,6 +320,7 @@ export default class classPractice extends React.Component {
                                 <div className="list_item_bottom">
                                     <span className="topic_submit classPractice-btn classPractice-btn-blue" onClick={this.showNames.bind(this,value.submitNames,'submit')}>提交:{value.submit}</span>
                                     <span className="topic_submit classPractice-btn classPractice-btn-blue" onClick={this.showNames.bind(this,value.id,'showAnswer')} style={value.colType == 'C'?{display:'none'}:{display:'block'}}>查看学生作答</span>
+                                    <span className="topic_submit classPractice-btn classPractice-btn-blue classPractice-btn-empty"  style={value.colType == 'C'?{display:'none'}:{display:'block'}}></span>
                                     <span className="topic_right classPractice-btn classPractice-btn-green" onClick={this.showNames.bind(this,value.rightNames,'right')} style={value.colType == 'C'?{display:'block'}:{display:'none'}}>正确:{value.right}</span>
                                     <span className="topic_wrong classPractice-btn classPractice-btn-red" onClick={this.showNames.bind(this,value.wrongNames,'wrong')} style={value.colType == 'C'?{display:'block'}:{display:'none'}}>答错:{value.wrong}</span>
                                 </div>
@@ -343,8 +345,15 @@ export default class classPractice extends React.Component {
                                     {/*<span>D:</span>*/}
                                 {/*</div>*/}
                                 <div className="answer-student">
-                                    <div className="right">正确答案:{value.rightAnswer}</div>
-                                    <div style={value.result == '错误'?{color:'#EF6E58'}:{color:'#3AB669'}}>我的答案:{value.answer}</div>
+                                    <div className="right-answer">正确答案:<span className={value.rightAnswer == '待公布' || value.rightAnswer == '待公布'?"right-red":"dasd"} dangerouslySetInnerHTML={{__html:value.rightAnswer}}></span></div>
+
+                                    <div style={value.colType == 'C'?{display:'block'}:{display:'none'}}>
+                                        <div style={value.result == '错误'?{color:'#EF6E58'}:{color:'#3AB669'}}>我的答案: <span dangerouslySetInnerHTML={{__html:value.answer}}></span> </div>
+                                    </div>
+                                    <div style={value.colType == 'C'?{display:'none'}:{display:'block'}}>
+                                        <div className="asda" style={value.result == '错误'?{color:'black'}:{color:'#333',padding:0}}>我的答案: <span dangerouslySetInnerHTML={{__html:value.answer}}></span> </div>
+                                    </div>
+
                                 </div>
                             </div>
                         })}
@@ -405,25 +414,23 @@ export default class classPractice extends React.Component {
                     <div className="header">此项选择的学生<span onClick={this.maskClick.bind(this)} className="close"></span></div>
                     <div className="names-cont">
                         <span className="textOver" style={this.state.namesHtml != ''?{display:'block'}:{display:'none'}}>{this.state.namesHtml}</span>
-                        <div className="textOver" style={this.state.namesHtml != ''?{display:'none'}:{display:'block'}}>
-                            <div>
-                                <div dangerouslySetInnerHTML={{__html: this.state.imageHtml.subject.content}}></div>
-                                <div>正确答案: <span dangerouslySetInnerHTML={{__html: this.state.imageHtml.subject.answer}}></span></div>
-                                <div className="answer_list">
+                        <div style={this.state.namesHtml != ''?{display:'none'}:{display:'block'}}>
+                                {/*<div dangerouslySetInnerHTML={{__html: this.state.imageHtml.subject.content}}></div>
+                                <div>正确答案: <span dangerouslySetInnerHTML={{__html: this.state.imageHtml.subject.answer}}></span></div>*/}
+                                <div className="">
                                     {this.state.imageHtml.answers.map((value,index)=>{
-                                        return <div className="answer_item">
-                                            <div>
+                                        return <div className="Short-Answer">
+                                            <div className="topicTitle">
                                                 <span>{index + 1}</span>
-                                                <span>{value.userName}</span>
-                                                <span>{value.result}</span>
+                                                <div className="title">{value.userName}</div>
+                                                {/*<span>{value.result}</span>*/}
                                             </div>
-                                            <div>您的答案: <span dangerouslySetInnerHTML={{__html: value.answer}}></span></div>
-                                            <div>老师点评: <span dangerouslySetInnerHTML={{__html: value.dianping}}></span></div>
+                                            <div className="Short-AnswerCont"><div className="Short-AnswerCont1" dangerouslySetInnerHTML={{__html: value.answer}}></div></div>
+                                            {/*<div className="Short-AnswerCont"><div className="Short-AnswerCont1" dangerouslySetInnerHTML={{__html: value.dianping}}></div></div>*/}
                                         </div>
                                     })}
                                 </div>
                             </div>
-                        </div>
                     </div>
                 </div>
                 <div className="mask" onClick={this.maskClick.bind(this)} style={this.state.showNamesBox?{display:'block',height: document.body.clientHeight}:{display:'none',height: document.body.clientHeight}}></div>
