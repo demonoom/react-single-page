@@ -253,7 +253,7 @@ export default class classPractice extends React.Component {
                     <div className="topic_list">
                        {/*题目统计*/}
                         {this.state.topicData.length==0?
-                            <div className="empty_center" style={{display:this.state.topicData.length==0?"":'none'}}>
+                            <div className="empty_center" style={{display:this.state.userType == 'TEAC'&& this.state.topicData.length==0?"":'none'}}>
                                 <div className="classPractice-empty"></div>
                                 <div className="classPractice-emptyText">暂无数据</div>
                             </div>
@@ -285,8 +285,7 @@ export default class classPractice extends React.Component {
                         })}
                         {/*答题情况*/}
                         {this.state.topicDataInStu.length==0?
-
-                            <div className="empty_center" style={{display:this.state.topicDataInStu.length==0?"none":'none'}}>
+                            <div className="empty_center" style={{display:this.state.userType != 'TEAC'&&this.state.topicDataInStu.length==0?"none":'none'}}>
                                 <div className="classPractice-empty"></div>
                                 <div className="classPractice-emptyText">暂无数据</div>
                             </div>:
