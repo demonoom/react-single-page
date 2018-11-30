@@ -175,9 +175,6 @@ export default class getClassRoomList extends React.Component {
 
             })
             console.log(newArr, "newArr")
-
-
-
         }, function (error) {
             console.log(error);
         });
@@ -190,7 +187,8 @@ export default class getClassRoomList extends React.Component {
     batchAddCourseTable = (path) => {
         var param = {
             "method": 'batchAddCourseTable',
-            "url": path
+            "url": path,
+            "userId":this.state.uid
         };
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
             onResponse: function (result) {

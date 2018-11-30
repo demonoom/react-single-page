@@ -29,26 +29,6 @@ export default class teachingSpaceTeacher extends React.Component {
         } else {
             this.setState({phone: 'Android'})
         }
-        this.applicationCacheChange()
-    }
-
-    /**
-     * 更新离线数据缓存
-     * 此页面设置为离线缓存页面,当内容更新时触发此方法可避免两次才能更新页面的问题
-     */
-    applicationCacheChange = () => {
-        // Check if a new cache is available on page load.
-
-        window.applicationCache.addEventListener('updateready', function (e) {
-            if (window.applicationCache.status == window.applicationCache.UPDATEREADY) {
-                window.applicationCache.swapCache();
-                setTimeout(function () {
-                    window.location.reload();
-                }, 500)
-            } else {
-
-            }
-        }, false);
     }
 
     /**

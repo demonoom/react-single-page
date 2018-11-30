@@ -719,7 +719,6 @@ const originationList = (location, cb) => {
     )
 }
 
-
 /**
  * 老人健康手环绑定---start
  * bindPeopleList---列表页
@@ -1463,7 +1462,5 @@ class Index extends React.Component {
                         <Route path="verifyPhoneNum" getComponent={verifyPhoneNum}/>
                         <Route path="classPractice" getComponent={classPractice}/>
                         </Route>
-                        </Router>
-                        ,
-                        document.getElementById('example'));
-
+                        </Router>,document.getElementById('example')
+                        );
