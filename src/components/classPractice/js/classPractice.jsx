@@ -16,7 +16,11 @@ export default class classPractice extends React.Component {
             topicDataInStu:[],
             showNamesBox:false,
             namesHtml:'',
-            userType:'TEAC'
+            userType:'TEAC',
+            imageHtml:{
+                subject: {},
+                answers:[]
+            }
         }
     }
 
@@ -186,18 +190,53 @@ export default class classPractice extends React.Component {
 
     //展示姓名半屏
     showNames(html,type){
-        this.setState({
-            showNamesBox:true,
-        })
-        console.log(html);
-        this.setState({
-            namesHtml: html
-        })
-        console.log(type);
-        // switch(type){
-        //     case 'countAll':
-        //         break;
-        // }
+        if(type == 'showAnswer'){
+            this.setState({
+                showNamesBox:true,
+            })
+            var param = {
+                "method": 'doClassSubjectAnswers',
+                "sid": html,
+                "vid": this.state.vid,
+            };
+
+            WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
+                onResponse:  (result) => {
+                    if (result.success == true && result.msg == '调用成功') {
+                        var response = result.response;
+                        console.log(response,'学生答题情况1');
+                        //简答题
+                        // var html = " <div>" +
+                        //      <div dangerouslySetInnerHTML={{__html: response.subject.content}}></div>
+                        //      <div>正确答案: <div dangerouslySetInnerHTML={{__html: response.subject.answer}}> </div></div>
+                        //      <div>
+                        //         {answers.map((value,index)=>{
+                        //             return <div>
+                        //                 <div className=""><span>{index+1}</span> <span>{value.userName}</span> <span>{value.result}</span> </div>
+                        //             </div>
+                        //         })}
+                        //     </div>
+                        //     "</div>  ";
+                        // console.log(html);
+                        this.setState({
+                            imageHtml: response,
+                            namesHtml: '',
+                        })
+                    } else {
+                        Toast.fail(result.msg, 1);
+                    }
+                },
+                onError: function (error) {}
+            });
+        }else{
+            this.setState({
+                showNamesBox:true,
+            })
+            console.log(html);
+            this.setState({
+                namesHtml: html,
+            })
+        }
     }
 
 
@@ -264,10 +303,11 @@ export default class classPractice extends React.Component {
                                     <div className="title" dangerouslySetInnerHTML={{__html: value.shortContent}}></div>
                                 </div>
                                 <div className="topicAnswer">
-                                    <span className="topicAnswer_left">正确答案:<span>{value.answer}</span></span>
-                                    <span className="topicAnswer_right">正确率:<span>{value.rightPercent}%</span></span>
+                                    <span className="topicAnswer_left" style={value.colType == 'C'?{display:'inline-block'}:{display:'none'}}>正确答案:<span>{value.answer}</span></span>
+                                    <span className="topicAnswer_left" style={value.colType == 'C'?{display:'none'}:{display:'inline-block'}}>正确答案:<span dangerouslySetInnerHTML={{__html: value.answer}}></span></span>
+                                    <span className="topicAnswer_right" style={value.colType == 'C'?{display:'inline-block'}:{display:'none'}}>正确率:<span>{value.rightPercent}%</span></span>
                                 </div>
-                                <div className="topic_table">
+                                <div className="topic_table" style={value.colType == 'C'?{display:'block'}:{display:'none'}}>
                                     {value.choosenes.map((value,index)=>{
                                         return <div className="table_item" onClick={this.showNames.bind(this,value.chooseUserNames,'countAll')}>
                                             <span>选项:<span>{value.serial}</span></span>
@@ -278,8 +318,9 @@ export default class classPractice extends React.Component {
                                 </div>
                                 <div className="list_item_bottom">
                                     <span className="topic_submit classPractice-btn classPractice-btn-blue" onClick={this.showNames.bind(this,value.submitNames,'submit')}>提交:{value.submit}</span>
-                                    <span className="topic_right classPractice-btn classPractice-btn-green" onClick={this.showNames.bind(this,value.rightNames,'right')}>正确:{value.right}</span>
-                                    <span className="topic_wrong classPractice-btn classPractice-btn-red" onClick={this.showNames.bind(this,value.wrongNames,'wrong')}>答错:{value.wrong}</span>
+                                    <span className="topic_submit classPractice-btn classPractice-btn-blue" onClick={this.showNames.bind(this,value.id,'showAnswer')} style={value.colType == 'C'?{display:'none'}:{display:'block'}}>查看学生作答</span>
+                                    <span className="topic_right classPractice-btn classPractice-btn-green" onClick={this.showNames.bind(this,value.rightNames,'right')} style={value.colType == 'C'?{display:'block'}:{display:'none'}}>正确:{value.right}</span>
+                                    <span className="topic_wrong classPractice-btn classPractice-btn-red" onClick={this.showNames.bind(this,value.wrongNames,'wrong')} style={value.colType == 'C'?{display:'block'}:{display:'none'}}>答错:{value.wrong}</span>
                                 </div>
                             </div>
                         })}
@@ -362,7 +403,28 @@ export default class classPractice extends React.Component {
                 </Tabs>
                 <div className="names_box" style={this.state.showNamesBox?{transform:'translate(0%,0%)'}:{transform:'translate(0%,150%)'}}>
                     <div className="header">此项选择的学生<span onClick={this.maskClick.bind(this)} className="close"></span></div>
-                    <div className="names-cont"><span className="textOver">{this.state.namesHtml}</span></div>
+                    <div className="names-cont">
+                        <span className="textOver" style={this.state.namesHtml != ''?{display:'block'}:{display:'none'}}>{this.state.namesHtml}</span>
+                        <div className="textOver" style={this.state.namesHtml != ''?{display:'none'}:{display:'block'}}>
+                            <div>
+                                <div dangerouslySetInnerHTML={{__html: this.state.imageHtml.subject.content}}></div>
+                                <div>正确答案: <span dangerouslySetInnerHTML={{__html: this.state.imageHtml.subject.answer}}></span></div>
+                                <div className="answer_list">
+                                    {this.state.imageHtml.answers.map((value,index)=>{
+                                        return <div className="answer_item">
+                                            <div>
+                                                <span>{index + 1}</span>
+                                                <span>{value.userName}</span>
+                                                <span>{value.result}</span>
+                                            </div>
+                                            <div>您的答案: <span dangerouslySetInnerHTML={{__html: value.answer}}></span></div>
+                                            <div>老师点评: <span dangerouslySetInnerHTML={{__html: value.dianping}}></span></div>
+                                        </div>
+                                    })}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
                 <div className="mask" onClick={this.maskClick.bind(this)} style={this.state.showNamesBox?{display:'block',height: document.body.clientHeight}:{display:'none',height: document.body.clientHeight}}></div>
             </div>
