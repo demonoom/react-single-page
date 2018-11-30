@@ -67,7 +67,7 @@ export default class classPractice extends React.Component {
                             ];
                             this.setState({
                                 subjectCount: response.subjectCount,
-                                pushDate: WebServiceUtil.formatHM(response.pushDate),
+                                pushDate: response.pushDate?WebServiceUtil.formatHM(response.pushDate):'',
                                 topicData: response.subjectInfoList || [],
                                 className: response.clazzInfo?response.clazzInfo.clazzName:'暂无班级',
                                 topicDataInStu:[]
@@ -82,7 +82,8 @@ export default class classPractice extends React.Component {
                             ];
                             this.setState({
                                 subjectCount: response.subjectCount,
-                                pushDate: WebServiceUtil.formatYMD(response.pushDate),
+                                // pushDate: WebServiceUtil.formatYMD(response.pushDate),
+                                pushDate: response.pushDate?WebServiceUtil.formatYMD(response.pushDate):'',
                                 // topicDataInStu: response.subjectInfoList || [],
                                 className: response.user.userName,
                                 topicData:[]
