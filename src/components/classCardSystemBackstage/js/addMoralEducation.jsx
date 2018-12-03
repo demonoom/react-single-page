@@ -66,11 +66,11 @@ export default class addMoralEducation extends React.Component {
             return
         }
         if (addMoralEdu.state.health.trim() == '') {
-            Toast.fail('请填写健康评分')
+            Toast.fail('请填写卫生评分')
             return
         }
         if(addMoralEdu.state.health.trim() > 100 || addMoralEdu.state.health.trim() < 0){
-            Toast.fail('请填写有效的健康评分')
+            Toast.fail('请填写有效的卫生评分')
             return
         }
         const param = {
@@ -168,7 +168,7 @@ export default class addMoralEducation extends React.Component {
                                     })
                                 }}
                                 ref={el => this.autoFocusInst = el}
-                            >班级健康评分</InputItem>
+                            >班级卫生评分</InputItem>
                         </List>
                     </div>
                 </div>
