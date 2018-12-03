@@ -150,8 +150,7 @@
   position: absolute;
   bottom: 0;
   left: 0;
-  min-height: 251px;
-  max-height: 80%;
+  height: 70%;
   box-shadow: 0px 7px 79px 0px rgba(0, 0, 0, 0.55);
   background: white;
   width: 100%;
@@ -186,13 +185,13 @@
   overflow-x: hidden;
 }
 #classPractice .names_box .names-cont span {
-  width: 25%;
+  width: 100%;
   display: inline-block;
-  text-align: center;
   font-size: 16px;
   color: #333;
   padding: 12px 4px;
   box-sizing: border-box;
+  line-height: 30px;
 }
 #classPractice .mask {
   position: absolute;
@@ -269,10 +268,10 @@
 #classPractice .answer-student {
   margin: 8px 0 0 0;
 }
-#classPractice .answer-student div {
+#classPractice .answer-student > div {
   padding: 10px 0 10px 30px;
 }
-#classPractice .answer-student div .right {
+#classPractice .answer-student > div .right {
   color: #333;
 }
 #classPractice .answer-student div:last-child {
@@ -330,8 +329,17 @@
   color: #EF6E58;
 }
 #classPractice .right-answer span {
+  display: block;
+  margin-top: 12px;
+}
+#classPractice .right-answer span p {
+  margin: 0;
+  padding: 0;
+}
+#classPractice .right-answer span.ABC {
   display: inline-block;
   vertical-align: top;
+  margin-top: 0;
 }
 #classPractice .right-answer .right-red {
   color: #EF6E58;
