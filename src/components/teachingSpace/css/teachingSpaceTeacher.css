@@ -1,0 +1,170 @@
+(node) util.print is deprecated. Use console.log instead.
+#teachingSpaceTeacher {
+  height: 100%;
+  overflow-y: auto;
+  /*审批*/
+  /*考勤*/
+  /*蚁盘*/
+  /*开启班级课堂*/
+  /*开启直播*/
+  /*开启云课堂*/
+  /*备课计划*/
+  /*资源库*/
+  /*题库*/
+  /*调查*/
+  /*手环户外助手*/
+  /*名师空间*/
+  /*录制微课*/
+  /*课堂回顾统计*/
+  /*手环数据统计*/
+  /*布置作业*/
+  /*作业统计*/
+  /*作业表情统计*/
+  /*批改作业*/
+  /*组卷*/
+  /*考试*/
+  /*教务管理*/
+  /*学生课堂回顾*/
+  /*学生问卷调查*/
+  /*学生直播回顾*/
+  /*学生出入学校*/
+}
+#teachingSpaceTeacher .teacher-item {
+  margin: 0;
+  padding: 0;
+}
+#teachingSpaceTeacher h1 {
+  font-size: 14px;
+  margin: 0;
+  padding: 0 15px;
+  color: #333;
+  font-weight: normal;
+  height: 30px;
+  line-height: 30px;
+  background: #f5f5f5;
+}
+#teachingSpaceTeacher ul.teacherUl {
+  background: #fff;
+  padding: 0 15px 15px 15px;
+  -webkit-flex-wrap: wrap;
+  -ms-flex-wrap: wrap;
+  flex-wrap: wrap;
+}
+#teachingSpaceTeacher ul.teacherUl li {
+  width: 25%;
+  text-align: center;
+  line-height: 1;
+  margin: 15px 0 0 0;
+  font-size: 13px;
+  color: #666;
+}
+#teachingSpaceTeacher .Icon-teacher {
+  width: 52px;
+  height: 42px;
+  display: block;
+  margin: 0 auto 12px auto;
+}
+#teachingSpaceTeacher .Icon-teacher-approval {
+  background: url("../images/icon-approval.png") no-repeat;
+  background-size: 100% 100%;
+}
+#teachingSpaceTeacher .Icon-teacher-attendance {
+  background: url("../images/icon-attendance.png") no-repeat;
+  background-size: 100% 100%;
+}
+#teachingSpaceTeacher .Icon-teacher-antDisk {
+  background: url("../images/icon-antDisk.png") no-repeat;
+  background-size: 100% 100%;
+}
+#teachingSpaceTeacher .Icon-teacher-classroom {
+  background: url("../images/icon-classroom.png") no-repeat;
+  background-size: 100% 100%;
+}
+#teachingSpaceTeacher .Icon-teacher-live {
+  background: url("../images/icon-live.png") no-repeat;
+  background-size: 100% 100%;
+}
+#teachingSpaceTeacher .Icon-teacher-eSchool {
+  background: url("../images/icon-eSchool.png") no-repeat;
+  background-size: 100% 100%;
+}
+#teachingSpaceTeacher .Icon-teacher-plan {
+  background: url("../images/icon-plan.png") no-repeat;
+  background-size: 100% 100%;
+}
+#teachingSpaceTeacher .Icon-teacher-repository {
+  background: url("../images/icon-repository.png") no-repeat;
+  background-size: 100% 100%;
+}
+#teachingSpaceTeacher .Icon-teacher-questionBank {
+  background: url("../images/icon-questionBank.png") no-repeat;
+  background-size: 100% 100%;
+}
+#teachingSpaceTeacher .Icon-teacher-survey {
+  background: url("../images/icon-survey.png") no-repeat;
+  background-size: 100% 100%;
+}
+#teachingSpaceTeacher .Icon-teacher-bracelet {
+  background: url("../images/icon-bracelet.png") no-repeat;
+  background-size: 100% 100%;
+}
+#teachingSpaceTeacher .Icon-teacher-famousTeacher {
+  background: url("../images/icon-famousTeacher.png") no-repeat;
+  background-size: 100% 100%;
+}
+#teachingSpaceTeacher .Icon-teacher-SmallClass {
+  background: url("../images/icon-SmallClass.png") no-repeat;
+  background-size: 100% 100%;
+}
+#teachingSpaceTeacher .Icon-teacher-ClassReview {
+  background: url("../images/icon-ClassReview.png") no-repeat;
+  background-size: 100% 100%;
+}
+#teachingSpaceTeacher .Icon-teacher-braceletData {
+  background: url("../images/icon-braceletData.png") no-repeat;
+  background-size: 100% 100%;
+}
+#teachingSpaceTeacher .Icon-teacher-AssignHomework {
+  background: url("../images/icon-AssignHomework.png") no-repeat;
+  background-size: 100% 100%;
+}
+#teachingSpaceTeacher .Icon-teacher-homeworkStatistics {
+  background: url("../images/icon-homeworkStatistics.png") no-repeat;
+  background-size: 100% 100%;
+}
+#teachingSpaceTeacher .Icon-teacher-expression {
+  background: url("../images/icon-expression.png") no-repeat;
+  background-size: 100% 100%;
+}
+#teachingSpaceTeacher .Icon-teacher-homeworkCorrecting {
+  background: url("../images/icon-homeworkCorrecting.png") no-repeat;
+  background-size: 100% 100%;
+}
+#teachingSpaceTeacher .Icon-teacher-testPaper {
+  background: url("../images/icon-testPaper.png") no-repeat;
+  background-size: 100% 100%;
+}
+#teachingSpaceTeacher .Icon-teacher-examination {
+  background: url("../images/icon-examination.png") no-repeat;
+  background-size: 100% 100%;
+}
+#teachingSpaceTeacher .Icon-teacher-EducationManage {
+  background: url("../images/icon-EducationManage.png") no-repeat;
+  background-size: 100% 100%;
+}
+#teachingSpaceTeacher .Icon-student-ClassReview {
+  background: url("../images/icon-studentClassReview.png") no-repeat;
+  background-size: 100% 100%;
+}
+#teachingSpaceTeacher .Icon-student-Survey {
+  background: url("../images/icon-studentSurvey.png") no-repeat;
+  background-size: 100% 100%;
+}
+#teachingSpaceTeacher .Icon-student-live {
+  background: url("../images/icon-studentLive.png") no-repeat;
+  background-size: 100% 100%;
+}
+#teachingSpaceTeacher .Icon-student-turnover {
+  background: url("../images/icon-studenttTurnover.png") no-repeat;
+  background-size: 100% 100%;
+}

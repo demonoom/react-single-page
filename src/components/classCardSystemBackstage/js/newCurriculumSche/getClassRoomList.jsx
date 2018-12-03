@@ -32,7 +32,7 @@ export default class getClassRoomList extends React.Component {
         var locationHref = window.location.href;
         var locationSearch = locationHref.substr(locationHref.indexOf("?") + 1);
         var uid = locationSearch.split("&")[0].split("=")[1];
-        this.setState({"uid": uid});
+        this.setState({ "uid": uid });
         var uidKey = {
             "colUid": uid
         }
@@ -52,7 +52,7 @@ export default class getClassRoomList extends React.Component {
      */
     onWindowResize() {
         setTimeout(function () {
-            classBinding.setState({clientHeight: document.body.clientHeight});
+            classBinding.setState({ clientHeight: document.body.clientHeight });
         }, 100)
     }
 
@@ -118,7 +118,7 @@ export default class getClassRoomList extends React.Component {
             return;
         }
         currentPageNo += 1;
-        this.setState({isLoadingLeft: true, defaultPageNo: currentPageNo});
+        this.setState({ isLoadingLeft: true, defaultPageNo: currentPageNo });
         _this.viewClassRoomPage(_this.state.uid, true);
         this.setState({
             dataSource: this.state.dataSource.cloneWithRows(this.initData),
@@ -129,7 +129,7 @@ export default class getClassRoomList extends React.Component {
     onRefresh = () => {
         var divPull = document.getElementsByClassName('am-pull-to-refresh-content');
         divPull[0].style.transform = "translate3d(0px, 30px, 0px)";   //设置拉动后回到的位置
-        this.setState({defaultPageNo: 1, refreshing: true, isLoadingLeft: true});
+        this.setState({ defaultPageNo: 1, refreshing: true, isLoadingLeft: true });
         this.viewClassRoomPage(this.state.uid, false);
     }
 
@@ -146,6 +146,65 @@ export default class getClassRoomList extends React.Component {
         });
     }
 
+
+    addMoreClassTable = () => {
+        var data = {
+            method: 'selectOnlyExcel',
+        };
+        var _this = this;
+        console.log(data)
+        Bridge.callHandler(data, function (res) {
+            //拿到视频地址,显示在页面等待上传
+            var arr = res.split(',');
+            let newArr = [];
+            let pathArr = [];
+            var videoPath;
+            var videoName;
+            var videoExtra;
+            arr.forEach((v, i) => {
+                let item = v.split("?");
+                pathArr.push(item[0])
+                videoPath = item[0];
+                videoName = item[1].split("=")[1];
+                videoExtra = (item[1].split("=")[1]).split(".")[1];
+                newArr.push({
+                    "filePath": videoPath,
+                    "fileName": videoName
+                })
+                _this.batchAddCourseTable(videoPath)
+
+            })
+            console.log(newArr, "newArr")
+        }, function (error) {
+            console.log(error);
+        });
+    }
+
+
+    /**
+     * 保存上传的课程表
+     */
+    batchAddCourseTable = (path) => {
+        var param = {
+            "method": 'batchAddCourseTable',
+            "url": path,
+            "userId":this.state.uid
+        };
+        WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
+            onResponse: function (result) {
+                console.log(result,"rere")
+                if (result.success == true) {
+                    Toast.info("上传成功", 1);
+                }else {
+                    Toast.info(result.msg)
+                }
+            },
+            onError: function (error) {
+                // message.error(error);
+            }
+        });
+    }
+
     render() {
         var _this = this;
         const row = (rowData, sectionID, rowID) => {
@@ -159,27 +218,42 @@ export default class getClassRoomList extends React.Component {
                                     <div className="am-list-arrow am-list-arrow-horizontal"></div>
                                 </div>
                             </div>
-                            <div className="classroom_subject textOver" style={{width: '100%'}}>
+                            <div className="classroom_subject textOver" style={{ width: '100%' }}>
+                                <span className="grade grade-left grade-letter1">教室ID：</span><span className="grade grade-right">{rowData.id}</span>
+                            </div>
+                            <div className="classroom_subject textOver" style={{ width: '100%' }}>
                                 {
                                     rowData.defaultBindedClazz ?
-                                        <span className="grade">绑定班级：{rowData.defaultBindedClazz.name}</span> :
+                                    <div><span className="grade grade-left">绑定班级：</span><span className="grade grade-right">{rowData.defaultBindedClazz.name}</span> </div>:
                                         <span className="grade"></span>
                                 }
                             </div>
+                            <div className="classroom_subject textOver" style={{ width: '100%' }}>
+                                {
+                                    rowData.defaultBindedClazz ?
+                                    <div><span className="grade grade-left grade-letter1">班级ID：</span><span className="grade grade-right">{rowData.defaultBindedClazz.id}</span></div>:
+                                        <span className="grade"></span>
+                                }
+                                
+                            </div>
+                           
                         </div>
                     }
                 </div>
             )
         };
         return (
-            <div id="getClassRoomList" style={{height: classBinding.state.clientHeight}}>
-                <div className='tableDiv' style={{height: classBinding.state.clientHeight}}>
+            <div id="getClassRoomList" style={{ height: classBinding.state.clientHeight }}>
+                <div  className="edit_coordinateLi line_public" onClick={this.addMoreClassTable}>
+                    <span className="edit_coordinate">批量上传课程表</span>
+                </div>
+                <div className='tableDiv' style={{ height: classBinding.state.clientHeight }}>
                     {/*这是列表数据,包括添加按钮*/}
                     <ListView
                         ref={el => this.lv = el}
                         dataSource={this.state.dataSource}    //数据类型是 ListViewDataSource
                         renderFooter={() => (
-                            <div style={{paddingTop: 5, paddingBottom: 40, textAlign: 'center'}}>
+                            <div style={{ paddingTop: 5, paddingBottom: 40, textAlign: 'center' }}>
                                 {this.state.isLoadingLeft ? '正在加载' : '已经全部加载完毕'}
                             </div>)}
                         renderRow={row}   //需要的参数包括一行数据等,会返回一个可渲染的组件为这行数据渲染  返回renderable

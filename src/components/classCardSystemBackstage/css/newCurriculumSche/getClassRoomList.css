@@ -1,4 +1,3 @@
-(node) util.print is deprecated. Use console.log instead.
 #getClassRoomList {
   font-size: 17px;
 }
@@ -226,4 +225,32 @@
 }
 #getClassRoomList .am-list-body div:not(:last-child) .am-list-line {
   border-bottom: transparent;
+}
+#getClassRoomList .edit_coordinateLi {
+  background: #F5F5F5;
+  padding: 15px 0 13px 15px;
+}
+#getClassRoomList .edit_coordinate {
+  border-radius: 4px;
+  padding: 0 10px;
+  color: #3672ed;
+  text-align: center;
+  font-size: 16px;
+  display: inline-block;
+  background: url("../../imgs/edit_coordinate.png") no-repeat;
+  background-size: 18px ;
+  text-indent: 15px;
+}
+#getClassRoomList .grade-left {
+  width: 72px;
+  display: inline-block;
+  color: #666 !important;
+}
+#getClassRoomList .grade-right {
+  width: calc(100% - 72px);
+  display: inline-block;
+  color: #666 !important;
+}
+#getClassRoomList .grade-letter1 {
+  letter-spacing: 4px;
 }

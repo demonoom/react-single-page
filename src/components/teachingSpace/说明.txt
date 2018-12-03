@@ -1,0 +1,50 @@
+教师端
+openNativePage_Approval            ---审批
+openNativePage_Attendance          ---考勤
+openNativePage_AntPlate            ---蚁盘
+
+openNativePage_OpenClassRoom       ---开启班级课堂
+openNativePage_OpenLiveBroadcast   ---开启直播
+openNativePage_OpenCloudClass      ---开启云课堂
+
+openNativePage_LessonPlan          ---备课计划
+openNativePage_ResourceLibrary     ---资源库
+openNativePage_TopicLibrary        ---题库
+openNativePage_Examine             ---调查
+openNativePage_BraceletOutdoorHelper  ---手环户外助手
+openNativePage_FamousTeacherSpace     ---名师空间
+openNativePage_RecordingVideo         ---录制课件视频
+openNativePage_MicroClassRecord       ---录制微课
+
+openNativePage_ClassReview            ---课堂回顾统计
+openNativePage_RingDataStatistics     ---手环数据统计
+
+openNativePage_HomeworkAssignment     ---布置作业
+openNativePage_HomeworkStatistics     ---作业统计
+openNativePage_HomeworkFaceStatistics ---作业表情统计
+openNativePage_HomeworkCorrecting     ---批改作业
+
+openNativePage_TestPaper      ---组卷
+openNativePage_Examination    ---考试
+
+openNativePage_EducationalAdministration  ---教务管理
+
+
+
+学生端
+openNativePage_TheSchoolClassroom_Stu   ---本校课堂
+openNativePage_LiveClass_Stu            ---直播课堂
+openNativePage_AntCloudClass_Stu        ---小蚂蚁云课堂
+openNativePage_ClassReview_Stu          ---课堂回顾
+openNativePage_LiveReview_Stu           ---直播回顾
+
+openNativePage_HomeworkToDo_Stu         ---待做作业
+openNativePage_MyTestPaper_Stu          ---我的试卷
+openNativePage_HomeworkStatistics_Stu   ---作业统计
+
+openNativePage_DoExercises_Stu          ---玩转习题
+openNativePage_ResourceLibrary_Stu      ---资源库
+openNativePage_FamousTeacherSpace_Stu   ---名师空间
+
+openNativePage_QuestionnaireSurvey_Stu  ---问卷调查
+openNativePage_AdmissionStatistics_Stu  ---出入校统计

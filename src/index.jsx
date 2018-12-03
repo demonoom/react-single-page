@@ -102,7 +102,6 @@ const chatMsg = (location, cb) => {
         cb(null, require("./components/chatSettings/js/chatMsg").default)
     }, "chatMsg")
 }
-
 const longList = (location, cb) => {
     require.ensure([], require => {
             cb(null, require("./components/chatSettings/js/longList").default)
@@ -720,7 +719,6 @@ const originationList = (location, cb) => {
     )
 }
 
-
 /**
  * 老人健康手环绑定---start
  * bindPeopleList---列表页
@@ -982,6 +980,40 @@ const KnowledgeLogin = (location, cb) => {
     )
 }
 
+/**
+ * 教学空间
+ */
+
+const teachingSpaceTeacher = (location, cb) => {
+    require.ensure([], require => {
+            cb(null, require("./components/teachingSpace/js/teachingSpaceTeacher").default)
+        }, 'teachingSpaceTeacher'
+    )
+}
+
+const teachingSpaceStudent = (location, cb) => {
+    require.ensure([], require => {
+            cb(null, require("./components/teachingSpace/js/teachingSpaceStudent").default)
+        }, 'teachingSpaceStudent'
+    )
+}
+
+const verifyPhoneNum = (location, cb) => {
+    require.ensure([], require => {
+            cb(null, require("./components/verifyPhoneNum/js/verifyPhoneNum").default)
+        }
+    )
+}
+
+//课堂练习统计
+const classPractice = (location, cb) => {
+    require.ensure([], require => {
+            cb(null, require("./components/classPractice/js/classPractice").default)
+        }
+    )
+}
+
+
 import './index.less';
 
 class Index extends React.Component {
@@ -999,6 +1031,11 @@ class Index extends React.Component {
                     </li>
                     <li>
                         <Link
+                            to="/verifyPhoneNum?userId=23836&mac=2345"
+                            style={{fontSize: '24px'}}>欢迎登录</Link>
+                    </li>
+                    <li>
+                        <Link
                             to="/wxLogin?local=KnowledgeStatic"
                             style={{fontSize: '24px'}}>统计(微信)</Link>
                     </li>
@@ -1011,7 +1048,8 @@ class Index extends React.Component {
                         style={{fontSize: '24px'}}>微信绑定</Link></li>
                     <li>
                         <Link
-                            to="/KnowledgeStatic?unionid=o-w611I9nKqTHcT3P34srzwIrf6U" style={{fontSize: '24px'}}>统计</Link>
+                            to="/KnowledgeStatic?unionid=o-w611I9nKqTHcT3P34srzwIrf6U"
+                            style={{fontSize: '24px'}}>统计</Link>
                     </li>
                     <li>
                         <Link
@@ -1020,6 +1058,15 @@ class Index extends React.Component {
                     <li><Link
                         to="/classCardHomePageDoor?access_user=23836"
                         style={{fontSize: '24px'}}>后台总入口</Link></li>
+                    <li><Link
+                        to="/classPractice?userId=23836&vid=35153"
+                        style={{fontSize: '24px'}}>课堂统计页面</Link></li>
+                    {/* <li><Link
+                        to="/teachingSpaceTeacher?access_user=23836"
+                        style={{fontSize: '24px'}}>教学空间老师</Link></li>
+                    <li><Link
+                        to="/teachingSpaceStudent?access_user=23836"
+                        style={{fontSize: '24px'}}>教学空学生</Link></li>
 
                     {/*<li><Link to="/antPlate?ident=23836&fileId=-1&title=蚁盘题目&phoneType=0"*/}
                     {/*style={{fontSize: '24px'}}>蚁盘</Link>*/}
@@ -1227,7 +1274,7 @@ class Index extends React.Component {
                         <Link
                             to="/courseRecListst" style={{fontSize: '24px'}}>课程推荐</Link>
                     </li>*/}
-                        {/* <li>
+                    {/* <li>
                         <Link
                             to="/litleantTeacher" style={{fontSize: '24px'}}>下载页老师</Link>
                     </li>
@@ -1249,169 +1296,171 @@ class Index extends React.Component {
                         }
                         }
 
-                    ReactDOM.render(
-                    <Router history={hashHistory}>
+                        ReactDOM.render(
+                        <Router history={hashHistory}>
                         <Route path="/" component={App}>
-                            <IndexRoute component={Index}/>
-                            {/*<Route path="s1" component={Stage1}/>*/}
-                            {/*<Route path="s3" component={Stage3}/>*/}
-                            {/*<Route path="s4" component={Stage4}/>*/}
-                            {/*<Route path="s5" component={Stage5}/>*/}
-                            <Route path="questionBank" getComponent={questionBank}/>
-                            <Route path="questionDetil" getComponent={questionDetil}/>
-                            <Route path="analysisList" getComponent={analysisList}/>
-                            <Route path="resultAnalysis" getComponent={resultAnalysis}/>
-                            <Route path="classReaultAnalysis" getComponent={classReaultAnalysis}/>
-                            <Route path="searchUserLocationInfo" getComponent={searchUserLocationInfo}/>
-                            <Route path="studentFaceStatistics" getComponent={studentFaceStatistics}/>
-                            <Route path="termitePlateLibrary" getComponent={termitePlateLibrary}/>
-                            <Route path="pushSubjectsFromTLibrary" getComponent={pushSubjectsFromTLibrary}/>
-                            <Route path="arrangementWork" getComponent={arrangementWork}/>
-                            <Route path="fileShareLink" getComponent={fileShareLink}/>
-                            <Route path="webMiddlePage" getComponent={webMiddlePage}/>
-                            <Route path="previewFile" getComponent={previewFile}/>
-                            <Route path="ringBinding" getComponent={ringBinding}/>
-                            <Route path="bindingBracelet" getComponent={bindingBracelet}/>
-                            <Route path="boxBracelet" getComponent={boxBracelet}/>
-                            <Route path="personalSettings" getComponent={personalSettings}/>
-                            <Route path="groupSetting" getComponent={groupSetting}/>
-                            <Route path="chatMsg" getComponent={chatMsg}/>
-                            <Route path="longList" getComponent={longList}/>
-                            <Route path="homeWorkUnderstandAnalysisByClass"
-                                   getComponent={homeWorkUnderstandAnalysisByClass}/>
-                            <Route path="homeWorkUnderstandAnalysisByStudent"
-                                   getComponent={homeWorkUnderstandAnalysisByStudent}/>
-                            <Route path="homeWorkUnderstandAnalysisByClassSubject"
-                                   getComponent={homeWorkUnderstandAnalysisByClassSubject}/>
-                            <Route path="homeWorkUnderstandAnalysisGuide"
-                                   getComponent={homeWorkUnderstandAnalysisGuide}/>
-                            <Route path="m3u8Player" getComponent={m3u8Player}/>
-                            <Route path="HomeWorkUnderstandAnalysisGuideByNoom"
-                                   getComponent={HomeWorkUnderstandAnalysisGuideByNoom}/>
-                            <Route path="brotherXu" getComponent={brotherXu}/>
-                            <Route path="homeworkModule" getComponent={homeworkModule}/>
-                            <Route path="curriculumSchedule" getComponent={curriculumSchedule}/>
-                            <Route path="workAttendance" getComponent={workAttendance}/>
-                            <Route path="noticeReadMore" getComponent={noticeReadMore}/>
-                            <Route path="classroomManage" getComponent={classroomManage}/>
-                            <Route path="addClassroomManage" getComponent={addClassroomManage}/>
-                            <Route path="addTeachBuild" getComponent={addTeachBuild}/>
-                            <Route path="workAttendance" getComponent={workAttendance}/>
-                            <Route path="noticeReadMore" getComponent={noticeReadMore}/>
-                            <Route path="addCurriculumSchedule" getComponent={addCurriculumSchedule}/>
-                            <Route path="updateCurriculumSchedule" getComponent={updateCurriculumSchedule}/>
-                            <Route path="definedTerm" getComponent={definedTerm}/>
-                            <Route path="classDemeanor" getComponent={classDemeanor}/>
-                            <Route path="classCardHomePage" getComponent={classCardHomePage}/>
-                            <Route path="publicClassCardHomePage" getComponent={publicClassCardHomePage}/>
-                            <Route path="moralEducation" getComponent={moralEducation}/>
-                            <Route path="addMoralEducation" getComponent={addMoralEducation}/>
-                            <Route path="updateMoralEducation" getComponent={updateMoralEducation}/>
-                            <Route path="assessMoralEducation" getComponent={assessMoralEducation}/>
-                            <Route path="updateClassroom" getComponent={updateClassroom}/>
-                            <Route path="notifyBack" getComponent={notifyBack}/>
-                            <Route path="addNotify" getComponent={addNotify}/>
-                            <Route path="notifyDetail" getComponent={notifyDetail}/>
-                            <Route path="studentDutyList" getComponent={studentDutyList}/>
-                            <Route path="addStudentDuty" getComponent={addStudentDuty}/>
-                            <Route path="editStudentDuty" getComponent={editStudentDuty}/>
-                            <Route path="currentAttendanceList" getComponent={currentAttendanceList}/>
-                            <Route path="classHonor" getComponent={classHonor}/>
-                            <Route path="tableItemDetil" getComponent={tableItemDetil}/>
-                            <Route path="comments" getComponent={comments}/>
-                            <Route path="classCardHomePageDoor" getComponent={classCardHomePageDoor}/>
-                            <Route path="fileAnalysis" getComponent={fileAnalysis}/>
-                            <Route path="studentSelectCourse" getComponent={studentSelectCourse}/>
-                            <Route path="getClassRoomList" getComponent={getClassRoomList}/>
-                            <Route path="getClassTableList" getComponent={getClassTableList}/>
-                            <Route path="newCurriculumSchedule" getComponent={newCurriculumSchedule}/>
-                            <Route path="newAddCurriculumSchedule" getComponent={newAddCurriculumSchedule}/>
-                            <Route path="newUpdateCurriculumSchedule" getComponent={newUpdateCurriculumSchedule}/>
-                            <Route path="classDemeanorList" getComponent={classDemeanorList}/>
-                            <Route path="classHonorList" getComponent={classHonorList}/>
-                            <Route path="clazzDutyList" getComponent={clazzDutyList}/>
-                            <Route path="particlePath" getComponent={particlePath}/>
-                            <Route path="dashboard" getComponent={dashboard}/>
-                            <Route path="dashboardByCity" getComponent={dashboardByCity}/>
-                            <Route path="healthList" getComponent={healthList}/>
-                            <Route path="warning" getComponent={warning}/>
-                            <Route path="health" getComponent={health}/>
-                            <Route path="warnList" getComponent={warnList}/>
-                            <Route path="studentMovement" getComponent={studentMovement}/>
-                            <Route path="schoolPlan" getComponent={schoolPlan}/>
-                            <Route path="littleAntPolicy" getComponent={littleAntPolicy}/>
-                            <Route path="wxLogin" getComponent={wxLogin}/>
-                            <Route path="warningAdminList" getComponent={warningAdminList}/>
-                            <Route path="addWarnAdmin" getComponent={addWarnAdmin}/>
-                            <Route path="waterWork" getComponent={waterWork}/>
-                            <Route path="attendanceTime" getComponent={attendanceTime}/>
-                            <Route path="newAttendanceTime" getComponent={newAttendanceTime}/>
-                            <Route path="updateAttendanceTime" getComponent={updateAttendanceTime}/>
-                            <Route path="answerFormStudent" getComponent={answerFormStudent}/>
-                            <Route path="answerListFormTeacher" getComponent={answerListFormTeacher}/>
-                            <Route path="lookAtTheAnswer" getComponent={LookAtTheAnswer}/>
-                            <Route path="waterWork" getComponent={waterWork}/>
-                            <Route path="attendanceStatistical" getComponent={attendanceStatistical}/>
-                            <Route path="attendanceSatisticaForClass" getComponent={attendanceSatisticaForClass}/>
-                            <Route path="inAndOutSchool" getComponent={inAndOutSchool}/>
-                            <Route path="classAttendance" getComponent={classAttendance}/>
-                            <Route path="wxTemplate" getComponent={wxTemplate}/>
-                            <Route path="ARTextbookList" getComponent={ARTextbookList}/>
-                            <Route path="addARTextbook" getComponent={addARTextbook}/>
-                            <Route path="UpdateARTextbook" getComponent={UpdateARTextbook}/>
-                            <Route path="groupList" getComponent={groupList}/>
-                            <Route path="ArIndex" getComponent={ArIndex}/>
-                            <Route path="wxBindIndex" getComponent={wxBindIndex}/>
-                            <Route path="contactsList" getComponent={contactsList}/>
-                            <Route path="chatDetil" getComponent={chatDetil}/>
-                            <Route path="arDoor" getComponent={arDoor}/>
-                            <Route path="excellentStu" getComponent={excellentStu}/>
-                            <Route path="classBrandTemplateList" getComponent={classBrandTemplateList}/>
-                            <Route path="addClassBrandTemplate" getComponent={addClassBrandTemplate}/>
-                            <Route path="updateClassBrandTemplate" getComponent={updateClassBrandTemplate}/>
-                            <Route path="classBrandTemplateSkin" getComponent={classBrandTemplateSkin}/>
-                            <Route path="bindPeopleList" getComponent={bindPeopleList}/>
-                            <Route path="addOldPeople" getComponent={addOldPeople}/>
-                            <Route path="healthDetail" getComponent={healthDetail}/>
-                            <Route path="friendList" getComponent={friendList}/>
-                            <Route path="classList" getComponent={classList}/>
-                            <Route path="groupChatList" getComponent={groupChatList}/>
-                            <Route path="originationList" getComponent={originationList}/>
-                            <Route path="searchFromOrigination" getComponent={searchFromOrigination}/>
-                            <Route path="newUpdateARTextbook" getComponent={newUpdateARTextbook}/>
-                            <Route path="weArrPayment" getComponent={weArrPayment}/>
-                            <Route path="ARTagList" getComponent={ARTagList}/>
-                            <Route path="updateARTag" getComponent={updateARTag}/>
-                            <Route path="addARTag" getComponent={addARTag}/>
-                            <Route path="New" getComponent={New}/>
-                            <Route path="wxBindProperly" getComponent={wxBindProperly}/>
-                            <Route path="classListMobile" getComponent={classListMobile}/>
-                            <Route path="studentList" getComponent={studentList}/>
-                            <Route path="classListDetail" getComponent={classListDetail}/>
-                            <Route path="studentDetail" getComponent={studentDetail}/>
-                            <Route path="stuAttendance" getComponent={stuAttendance}/>
-                            <Route path="stuState" getComponent={stuState}/>
-                            <Route path="stuRanking" getComponent={stuRanking}/>
-                            <Route path="stuList" getComponent={stuList}/>
-                            <Route path="courseRecListst" getComponent={courseRecListst}/>
-                            <Route path="addRecCourse" getComponent={addRecCourse}/>
-                            <Route path="litleantTeacher" getComponent={litleantTeacher}/>
-                            <Route path="youyang" getComponent={youyang}/>
-                            <Route path="yunxiao" getComponent={yunxiao}/>
-                            <Route path="ringIntroduce" getComponent={ringIntroduce}/>
-                            <Route path="chatLogin" getComponent={chatLogin}/>
-                            <Route path="antPlate" getComponent={antPlate}/>
-                            <Route path="KnowledgeStatic" getComponent={KnowledgeStatic}/>
-                            <Route path="pushVideo" getComponent={pushVideo}/>
-                            <Route path="KnowledgeList" getComponent={KnowledgeList}/>
-                            <Route path="topicList" getComponent={topicList}/>
-                            <Route path="classTimingList" getComponent={ClassTimingList}/>
-                            <Route path="ClassTimingItem" getComponent={ClassTimingItem}/>
-                            <Route path="addClassTimingItem" getComponent={addClassTimingItem}/>
-                            <Route path="updateClassTimingItem" getComponent={updateClassTimingItem}/>
-                            <Route path="KnowledgeLogin" getComponent={KnowledgeLogin}/>
+                        <IndexRoute component={Index}/>
+                    {/*<Route path="s1" component={Stage1}/>*/}
+                    {/*<Route path="s3" component={Stage3}/>*/}
+                    {/*<Route path="s4" component={Stage4}/>*/}
+                    {/*<Route path="s5" component={Stage5}/>*/}
+                        <Route path="teachingSpaceStudent" getComponent={teachingSpaceStudent}/>
+                        <Route path="questionBank" getComponent={questionBank}/>
+                        <Route path="questionDetil" getComponent={questionDetil}/>
+                        <Route path="analysisList" getComponent={analysisList}/>
+                        <Route path="resultAnalysis" getComponent={resultAnalysis}/>
+                        <Route path="classReaultAnalysis" getComponent={classReaultAnalysis}/>
+                        <Route path="searchUserLocationInfo" getComponent={searchUserLocationInfo}/>
+                        <Route path="studentFaceStatistics" getComponent={studentFaceStatistics}/>
+                        <Route path="termitePlateLibrary" getComponent={termitePlateLibrary}/>
+                        <Route path="pushSubjectsFromTLibrary" getComponent={pushSubjectsFromTLibrary}/>
+                        <Route path="arrangementWork" getComponent={arrangementWork}/>
+                        <Route path="fileShareLink" getComponent={fileShareLink}/>
+                        <Route path="webMiddlePage" getComponent={webMiddlePage}/>
+                        <Route path="previewFile" getComponent={previewFile}/>
+                        <Route path="ringBinding" getComponent={ringBinding}/>
+                        <Route path="bindingBracelet" getComponent={bindingBracelet}/>
+                        <Route path="boxBracelet" getComponent={boxBracelet}/>
+                        <Route path="personalSettings" getComponent={personalSettings}/>
+                        <Route path="groupSetting" getComponent={groupSetting}/>
+                        <Route path="chatMsg" getComponent={chatMsg}/>
+                        <Route path="longList" getComponent={longList}/>
+                        <Route path="homeWorkUnderstandAnalysisByClass"
+                        getComponent={homeWorkUnderstandAnalysisByClass}/>
+                        <Route path="homeWorkUnderstandAnalysisByStudent"
+                        getComponent={homeWorkUnderstandAnalysisByStudent}/>
+                        <Route path="homeWorkUnderstandAnalysisByClassSubject"
+                        getComponent={homeWorkUnderstandAnalysisByClassSubject}/>
+                        <Route path="homeWorkUnderstandAnalysisGuide"
+                        getComponent={homeWorkUnderstandAnalysisGuide}/>
+                        <Route path="m3u8Player" getComponent={m3u8Player}/>
+                        <Route path="HomeWorkUnderstandAnalysisGuideByNoom"
+                        getComponent={HomeWorkUnderstandAnalysisGuideByNoom}/>
+                        <Route path="brotherXu" getComponent={brotherXu}/>
+                        <Route path="homeworkModule" getComponent={homeworkModule}/>
+                        <Route path="curriculumSchedule" getComponent={curriculumSchedule}/>
+                        <Route path="workAttendance" getComponent={workAttendance}/>
+                        <Route path="noticeReadMore" getComponent={noticeReadMore}/>
+                        <Route path="classroomManage" getComponent={classroomManage}/>
+                        <Route path="addClassroomManage" getComponent={addClassroomManage}/>
+                        <Route path="addTeachBuild" getComponent={addTeachBuild}/>
+                        <Route path="workAttendance" getComponent={workAttendance}/>
+                        <Route path="noticeReadMore" getComponent={noticeReadMore}/>
+                        <Route path="addCurriculumSchedule" getComponent={addCurriculumSchedule}/>
+                        <Route path="updateCurriculumSchedule" getComponent={updateCurriculumSchedule}/>
+                        <Route path="definedTerm" getComponent={definedTerm}/>
+                        <Route path="classDemeanor" getComponent={classDemeanor}/>
+                        <Route path="classCardHomePage" getComponent={classCardHomePage}/>
+                        <Route path="publicClassCardHomePage" getComponent={publicClassCardHomePage}/>
+                        <Route path="moralEducation" getComponent={moralEducation}/>
+                        <Route path="addMoralEducation" getComponent={addMoralEducation}/>
+                        <Route path="updateMoralEducation" getComponent={updateMoralEducation}/>
+                        <Route path="assessMoralEducation" getComponent={assessMoralEducation}/>
+                        <Route path="updateClassroom" getComponent={updateClassroom}/>
+                        <Route path="notifyBack" getComponent={notifyBack}/>
+                        <Route path="addNotify" getComponent={addNotify}/>
+                        <Route path="notifyDetail" getComponent={notifyDetail}/>
+                        <Route path="studentDutyList" getComponent={studentDutyList}/>
+                        <Route path="addStudentDuty" getComponent={addStudentDuty}/>
+                        <Route path="editStudentDuty" getComponent={editStudentDuty}/>
+                        <Route path="currentAttendanceList" getComponent={currentAttendanceList}/>
+                        <Route path="classHonor" getComponent={classHonor}/>
+                        <Route path="tableItemDetil" getComponent={tableItemDetil}/>
+                        <Route path="comments" getComponent={comments}/>
+                        <Route path="classCardHomePageDoor" getComponent={classCardHomePageDoor}/>
+                        <Route path="fileAnalysis" getComponent={fileAnalysis}/>
+                        <Route path="studentSelectCourse" getComponent={studentSelectCourse}/>
+                        <Route path="getClassRoomList" getComponent={getClassRoomList}/>
+                        <Route path="getClassTableList" getComponent={getClassTableList}/>
+                        <Route path="newCurriculumSchedule" getComponent={newCurriculumSchedule}/>
+                        <Route path="newAddCurriculumSchedule" getComponent={newAddCurriculumSchedule}/>
+                        <Route path="newUpdateCurriculumSchedule" getComponent={newUpdateCurriculumSchedule}/>
+                        <Route path="classDemeanorList" getComponent={classDemeanorList}/>
+                        <Route path="classHonorList" getComponent={classHonorList}/>
+                        <Route path="clazzDutyList" getComponent={clazzDutyList}/>
+                        <Route path="particlePath" getComponent={particlePath}/>
+                        <Route path="dashboard" getComponent={dashboard}/>
+                        <Route path="dashboardByCity" getComponent={dashboardByCity}/>
+                        <Route path="healthList" getComponent={healthList}/>
+                        <Route path="warning" getComponent={warning}/>
+                        <Route path="health" getComponent={health}/>
+                        <Route path="warnList" getComponent={warnList}/>
+                        <Route path="studentMovement" getComponent={studentMovement}/>
+                        <Route path="schoolPlan" getComponent={schoolPlan}/>
+                        <Route path="littleAntPolicy" getComponent={littleAntPolicy}/>
+                        <Route path="wxLogin" getComponent={wxLogin}/>
+                        <Route path="warningAdminList" getComponent={warningAdminList}/>
+                        <Route path="addWarnAdmin" getComponent={addWarnAdmin}/>
+                        <Route path="waterWork" getComponent={waterWork}/>
+                        <Route path="attendanceTime" getComponent={attendanceTime}/>
+                        <Route path="newAttendanceTime" getComponent={newAttendanceTime}/>
+                        <Route path="updateAttendanceTime" getComponent={updateAttendanceTime}/>
+                        <Route path="answerFormStudent" getComponent={answerFormStudent}/>
+                        <Route path="answerListFormTeacher" getComponent={answerListFormTeacher}/>
+                        <Route path="lookAtTheAnswer" getComponent={LookAtTheAnswer}/>
+                        <Route path="waterWork" getComponent={waterWork}/>
+                        <Route path="attendanceStatistical" getComponent={attendanceStatistical}/>
+                        <Route path="attendanceSatisticaForClass" getComponent={attendanceSatisticaForClass}/>
+                        <Route path="inAndOutSchool" getComponent={inAndOutSchool}/>
+                        <Route path="classAttendance" getComponent={classAttendance}/>
+                        <Route path="wxTemplate" getComponent={wxTemplate}/>
+                        <Route path="ARTextbookList" getComponent={ARTextbookList}/>
+                        <Route path="addARTextbook" getComponent={addARTextbook}/>
+                        <Route path="UpdateARTextbook" getComponent={UpdateARTextbook}/>
+                        <Route path="groupList" getComponent={groupList}/>
+                        <Route path="ArIndex" getComponent={ArIndex}/>
+                        <Route path="wxBindIndex" getComponent={wxBindIndex}/>
+                        <Route path="contactsList" getComponent={contactsList}/>
+                        <Route path="chatDetil" getComponent={chatDetil}/>
+                        <Route path="arDoor" getComponent={arDoor}/>
+                        <Route path="excellentStu" getComponent={excellentStu}/>
+                        <Route path="classBrandTemplateList" getComponent={classBrandTemplateList}/>
+                        <Route path="addClassBrandTemplate" getComponent={addClassBrandTemplate}/>
+                        <Route path="updateClassBrandTemplate" getComponent={updateClassBrandTemplate}/>
+                        <Route path="classBrandTemplateSkin" getComponent={classBrandTemplateSkin}/>
+                        <Route path="bindPeopleList" getComponent={bindPeopleList}/>
+                        <Route path="addOldPeople" getComponent={addOldPeople}/>
+                        <Route path="healthDetail" getComponent={healthDetail}/>
+                        <Route path="friendList" getComponent={friendList}/>
+                        <Route path="classList" getComponent={classList}/>
+                        <Route path="groupChatList" getComponent={groupChatList}/>
+                        <Route path="originationList" getComponent={originationList}/>
+                        <Route path="searchFromOrigination" getComponent={searchFromOrigination}/>
+                        <Route path="newUpdateARTextbook" getComponent={newUpdateARTextbook}/>
+                        <Route path="weArrPayment" getComponent={weArrPayment}/>
+                        <Route path="ARTagList" getComponent={ARTagList}/>
+                        <Route path="updateARTag" getComponent={updateARTag}/>
+                        <Route path="addARTag" getComponent={addARTag}/>
+                        <Route path="New" getComponent={New}/>
+                        <Route path="wxBindProperly" getComponent={wxBindProperly}/>
+                        <Route path="classListMobile" getComponent={classListMobile}/>
+                        <Route path="studentList" getComponent={studentList}/>
+                        <Route path="classListDetail" getComponent={classListDetail}/>
+                        <Route path="studentDetail" getComponent={studentDetail}/>
+                        <Route path="stuAttendance" getComponent={stuAttendance}/>
+                        <Route path="stuState" getComponent={stuState}/>
+                        <Route path="stuRanking" getComponent={stuRanking}/>
+                        <Route path="stuList" getComponent={stuList}/>
+                        <Route path="courseRecListst" getComponent={courseRecListst}/>
+                        <Route path="addRecCourse" getComponent={addRecCourse}/>
+                        <Route path="litleantTeacher" getComponent={litleantTeacher}/>
+                        <Route path="youyang" getComponent={youyang}/>
+                        <Route path="yunxiao" getComponent={yunxiao}/>
+                        <Route path="ringIntroduce" getComponent={ringIntroduce}/>
+                        <Route path="chatLogin" getComponent={chatLogin}/>
+                        <Route path="antPlate" getComponent={antPlate}/>
+                        <Route path="KnowledgeStatic" getComponent={KnowledgeStatic}/>
+                        <Route path="pushVideo" getComponent={pushVideo}/>
+                        <Route path="KnowledgeList" getComponent={KnowledgeList}/>
+                        <Route path="topicList" getComponent={topicList}/>
+                        <Route path="classTimingList" getComponent={ClassTimingList}/>
+                        <Route path="ClassTimingItem" getComponent={ClassTimingItem}/>
+                        <Route path="addClassTimingItem" getComponent={addClassTimingItem}/>
+                        <Route path="updateClassTimingItem" getComponent={updateClassTimingItem}/>
+                        <Route path="KnowledgeLogin" getComponent={KnowledgeLogin}/>
+                        <Route path="teachingSpaceTeacher" getComponent={teachingSpaceTeacher}/>
+                        <Route path="verifyPhoneNum" getComponent={verifyPhoneNum}/>
+                        <Route path="classPractice" getComponent={classPractice}/>
                         </Route>
-                    </Router>
-                    ,
-                    document.getElementById('example'));
-
+                        </Router>,document.getElementById('example')
+                        );
