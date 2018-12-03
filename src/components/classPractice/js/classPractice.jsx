@@ -305,11 +305,11 @@ export default class classPractice extends React.Component {
                                     <div className="title" dangerouslySetInnerHTML={{__html: value.shortContent}}></div>
                                 </div>
                                 <div className="topicAnswer">
-                                    <div className="topicAnswer_left" style={value.colType == 'C'?{display:'inline-block'}:{display:'none'}}>正确答案:<span>{value.answer}</span></div>
-                                    <div className="right-answer" style={value.colType == 'C'?{display:'none'}:{display:'inline-block'}}><span>正确答案:</span><span dangerouslySetInnerHTML={{__html: value.answer}}></span></div>
-                                    <div className="topicAnswer_right" style={value.colType == 'C'?{display:'inline-block'}:{display:'none'}}>正确率:<span>{value.rightPercent}%</span></div>
+                                    <div className="topicAnswer_left" style={value.colType != 'S'?{display:'inline-block'}:{display:'none'}}>正确答案:<span>{value.answer}</span></div>
+                                    <div className="right-answer" style={value.colType != 'S'?{display:'none'}:{display:'inline-block'}}><span>正确答案:</span><span dangerouslySetInnerHTML={{__html: value.answer}}></span></div>
+                                    <div className="topicAnswer_right" style={value.colType != 'S'?{display:'inline-block'}:{display:'none'}}>正确率:<span>{value.rightPercent}%</span></div>
                                 </div>
-                                <div className="topic_table" style={value.colType == 'C'?{display:'block'}:{display:'none'}}>
+                                <div className="topic_table" style={value.colType != 'S'?{display:'block'}:{display:'none'}}>
                                     {value.choosenes.map((value,index)=>{
                                         return <div className="table_item" onClick={this.showNames.bind(this,value.chooseUserNames,'countAll')}>
                                             <span>选项:<span>{value.serial}</span></span>
@@ -320,10 +320,10 @@ export default class classPractice extends React.Component {
                                 </div>
                                 <div className="list_item_bottom">
                                     <span className="topic_submit classPractice-btn classPractice-btn-blue" onClick={this.showNames.bind(this,value.submitNames,'submit')}>提交:{value.submit}</span>
-                                    <span className="topic_submit classPractice-btn classPractice-btn-blue" onClick={this.showNames.bind(this,value.id,'showAnswer')} style={value.colType == 'C'?{display:'none'}:{display:'block'}}>查看学生作答</span>
-                                    <span className="topic_submit classPractice-btn classPractice-btn-blue classPractice-btn-empty"  style={value.colType == 'C'?{display:'none'}:{display:'block'}}></span>
-                                    <span className="topic_right classPractice-btn classPractice-btn-green" onClick={this.showNames.bind(this,value.rightNames,'right')} style={value.colType == 'C'?{display:'block'}:{display:'none'}}>正确:{value.right}</span>
-                                    <span className="topic_wrong classPractice-btn classPractice-btn-red" onClick={this.showNames.bind(this,value.wrongNames,'wrong')} style={value.colType == 'C'?{display:'block'}:{display:'none'}}>答错:{value.wrong}</span>
+                                    <span className="topic_submit classPractice-btn classPractice-btn-blue" onClick={this.showNames.bind(this,value.id,'showAnswer')} style={value.colType != 'S'?{display:'none'}:{display:'block'}}>查看学生作答</span>
+                                    <span className="topic_submit classPractice-btn classPractice-btn-blue classPractice-btn-empty"  style={value.colType != 'S'?{display:'none'}:{display:'block'}}></span>
+                                    <span className="topic_right classPractice-btn classPractice-btn-green" onClick={this.showNames.bind(this,value.rightNames,'right')} style={value.colType != 'S'?{display:'block'}:{display:'none'}}>正确:{value.right}</span>
+                                    <span className="topic_wrong classPractice-btn classPractice-btn-red" onClick={this.showNames.bind(this,value.wrongNames,'wrong')} style={value.colType != 'S'?{display:'block'}:{display:'none'}}>答错:{value.wrong}</span>
                                 </div>
                             </div>
                         })}
@@ -346,12 +346,17 @@ export default class classPractice extends React.Component {
                                     {/*<span>D:</span>*/}
                                 {/*</div>*/}
                                 <div className="answer-student">
-                                    <div className="right-answer">正确答案:<span className={value.rightAnswer == '待公布' || value.rightAnswer == '待公布'?"right-red":"dasd"} dangerouslySetInnerHTML={{__html:value.rightAnswer}}></span></div>
+                                    {
+                                        value.type != 'S'?
+                                            <div className="right-answer">正确答案:<span className={value.rightAnswer == '待公布' || value.rightAnswer == '待公布'?"right-red":"dasd ABC"} dangerouslySetInnerHTML={{__html:value.rightAnswer}}></span></div>
+                                            :
+                                            <div className="right-answer">正确答案:<span className={value.rightAnswer == '待公布' || value.rightAnswer == '待公布'?"right-red":"dasd"} dangerouslySetInnerHTML={{__html:value.rightAnswer}}></span></div>
+                                    }
 
-                                    <div style={value.colType == 'C'?{display:'block'}:{display:'none'}}>
+                                    <div style={value.colType != 'S'?{display:'block'}:{display:'none'}}>
                                         <div style={value.result == '错误'?{color:'#EF6E58'}:{color:'#3AB669'}}>我的答案: <span dangerouslySetInnerHTML={{__html:value.answer}}></span> </div>
                                     </div>
-                                    <div style={value.colType == 'C'?{display:'none'}:{display:'block'}}>
+                                    <div style={value.colType != 'S'?{display:'none'}:{display:'block'}}>
                                         <div className="asda" style={value.result == '错误'?{color:'black'}:{color:'#333',padding:0}}>我的答案: <span dangerouslySetInnerHTML={{__html:value.answer}}></span> </div>
                                     </div>
 
@@ -379,7 +384,7 @@ export default class classPractice extends React.Component {
                                     <span className="name textOver">{value.userName}</span>
                                     <span>{value.right}</span>
                                     <span>{
-                                        isNaN((value.right/value.total)*100)?0:(value.right/value.total)*100
+                                        isNaN((value.right/value.total)*100)?0:((value.right/value.total).toFixed(2))*100
                                     }%</span>
                                 </div>
                             })}
@@ -414,7 +419,7 @@ export default class classPractice extends React.Component {
                 <div className="names_box" style={this.state.showNamesBox?{transform:'translate(0%,0%)'}:{transform:'translate(0%,150%)'}}>
                     <div className="header">此项选择的学生<span onClick={this.maskClick.bind(this)} className="close"></span></div>
                     <div className="names-cont">
-                        <span className="textOver" style={this.state.namesHtml != ''?{display:'block'}:{display:'none'}}>{this.state.namesHtml}</span>
+                        <span style={this.state.namesHtml != ''?{display:'block'}:{display:'none'}}>{this.state.namesHtml}</span>
                         <div style={this.state.namesHtml != ''?{display:'none'}:{display:'block'}}>
                                 {/*<div dangerouslySetInnerHTML={{__html: this.state.imageHtml.subject.content}}></div>
                                 <div>正确答案: <span dangerouslySetInnerHTML={{__html: this.state.imageHtml.subject.answer}}></span></div>*/}
