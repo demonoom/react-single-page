@@ -8,6 +8,9 @@ CACHE:
 /teachingSpaceStudent_chunk.js?v=1.0.0
 /teachingSpaceTeacher_chunk.js?v=1.0.0
 /index.html
+/src/helpers/jquery-3.2.1.min.js
+/src/helpers/webServiceUtil.js
+/src/jsBridge.js
 
 NETWORK:
 *
