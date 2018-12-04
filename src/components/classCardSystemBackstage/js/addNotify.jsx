@@ -1,5 +1,5 @@
 import React from 'react';
-import {List, Picker, InputItem, TextareaItem, Button, WhiteSpace, Toast} from 'antd-mobile';
+import { List, Picker, InputItem, TextareaItem, Button, WhiteSpace, Toast } from 'antd-mobile';
 import '../css/notify.less'
 
 var calm;
@@ -14,7 +14,7 @@ export default class addNotify extends React.Component {
             asyncValue: [],
             title: '',
             content: '',
-            classroomId: ''  //所选班级id
+            classroomId: 'test'  //所选班级id／
         };
     }
 
@@ -22,7 +22,7 @@ export default class addNotify extends React.Component {
         var locationHref = window.location.href;
         var locationSearch = locationHref.substr(locationHref.indexOf("?") + 1);
         var ident = locationSearch.split("&")[0].split('=')[1];
-        this.setState({ident});
+        this.setState({ ident });
     }
 
     componentDidMount() {
@@ -34,9 +34,9 @@ export default class addNotify extends React.Component {
         //解除监听
         window.removeEventListener('resize', calm.onWindowResize)
     }
-      /**
-     * 视窗改变时改变高度
-     */
+    /**
+   * 视窗改变时改变高度
+   */
     onWindowResize() {
         setTimeout(function () {
             calm.setState({
@@ -44,26 +44,28 @@ export default class addNotify extends React.Component {
             });
         }, 100)
     }
-    getClassRoomId(){
+    getClassRoomId() {
         var _this = this;
         //获取班级选择项
         var param = {
-            "method": 'viewClassRoomPage',
+            "method": 'viewClassRoomPageByClass',
             "uid": calm.state.ident,
-            "pn":-1
+            "pn": -1
         };
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
             onResponse: (result) => {
                 if (result.msg == '调用成功' || result.success == true) {
                     if (WebServiceUtil.isEmpty(result.response) == false) {
-                        var arr = [];
+                        var arr = [{
+                            value: 0, label: "全校"
+                        }];
                         result.response.forEach(function (v, i) {
                             arr.push({
                                 value: v.id, label: v.name
                             })
                         })
-                        calm.setState({pickerData: arr});
-                    }else {
+                        calm.setState({ pickerData: arr });
+                    } else {
                         Toast.fail(result.msg, 1);
                     }
                 }
@@ -95,25 +97,36 @@ export default class addNotify extends React.Component {
 
     //提交
     submitClass = () => {
-        let warn = '', classInfo = this.state;
+        let warn = '',
+            classInfo = this.state;
         var _this = this;
-        if (classInfo.classroomId == '') {
-            warn = '请选择班级';
+        if (classInfo.classroomId == 'test') {
+            warn = '请选择教室';
         } else if (classInfo.title == '') {
             warn = '请输入标题'
         } else if (classInfo.content == '') {
             warn = '请输入内容'
         }
-
         if (warn == '') {
+            let classObject
             // 通过验证,开始提交
-            let classObject = {
-                uid:calm.state.ident,
-                noticeContent:classInfo.content,
-                classroomId:classInfo.classroomId,
-                noticeTitle:classInfo.title,
-                type:1
-            };
+            if (classInfo.classroomId == 0) {
+                classObject = {
+                    uid: calm.state.ident,
+                    noticeContent: classInfo.content,
+                    classroomId: classInfo.classroomId,
+                    noticeTitle: classInfo.title,
+                    type: 2
+                };
+            } else {
+                classObject = {
+                    uid: calm.state.ident,
+                    noticeContent: classInfo.content,
+                    classroomId: classInfo.classroomId,
+                    noticeTitle: classInfo.title,
+                    type: 1
+                };
+            }
             var param = {
                 "method": 'saveClassBrandNotice',
                 "classBrandNoticeJson": classObject,
@@ -128,40 +141,40 @@ export default class addNotify extends React.Component {
                         Bridge.callHandler(data, null, function (error) {
                             console.log(error);
                         });
-                    }else {
+                    } else {
                         Toast.fail(result.msg, 1);
                     }
                 },
                 onError: function (error) {
-                   Toast.warn('保存失败');
+                    Toast.warn('保存失败');
                 }
             });
         } else {
-            Toast.info(warn,1);
+            Toast.info(warn, 1);
         }
     };
     //标题双向绑定
     titleHandleChange = event => {
-        this.setState({title: event});
+        this.setState({ title: event });
     }
     //内容双向绑定
     contentHandleChange = event => {
-        this.setState({content: event});
+        this.setState({ content: event });
     }
-   
+
     render() {
         return (
-            <div id="notify" style={{height: document.body.clientHeight}}>
-                <WhiteSpace size="lg"/>
+            <div id="notify" style={{ height: document.body.clientHeight }}>
+                <WhiteSpace size="lg" />
                 <Picker data={this.state.pickerData}
-                        cols={1}
-                        className="forss"
-                        value={this.state.asyncValue}
-                        onPickerChange={this.onPickerChange}
-                        onOk={v => this.viewCourseTableItemPage(v)}>
+                    cols={1}
+                    className="forss"
+                    value={this.state.asyncValue}
+                    onPickerChange={this.onPickerChange}
+                    onOk={v => this.viewCourseTableItemPage(v)}>
                     <List.Item arrow="horizontal" onClick={this.getClassRoomId}>选择教室</List.Item>
                 </Picker>
-                <WhiteSpace size="lg"/>
+                <WhiteSpace size="lg" />
                 <InputItem
                     placeholder="请输入标题"
                     clear
@@ -170,7 +183,7 @@ export default class addNotify extends React.Component {
                     maxLength={100}
                     onChange={this.titleHandleChange}
                 >输入标题</InputItem>
-                <WhiteSpace size="lg"/>
+                <WhiteSpace size="lg" />
                 <List>
                     <div className="import_title">输入内容</div>
                     <TextareaItem

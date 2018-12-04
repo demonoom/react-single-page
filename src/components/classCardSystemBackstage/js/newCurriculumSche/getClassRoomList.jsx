@@ -148,6 +148,11 @@ export default class getClassRoomList extends React.Component {
 
 
     addMoreClassTable = () => {
+        var phoneType = navigator.userAgent;
+        if (phoneType.indexOf('iPhone') > -1 || phoneType.indexOf('iPad') > -1 || phoneType.indexOf('Android') > -1) {
+            Toast.info('请在浏览器中的小蚂蚁教师端完成该功能', 3)
+            return
+        }
         var data = {
             method: 'selectOnlyExcel',
         };

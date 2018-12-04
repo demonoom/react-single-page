@@ -1,5 +1,5 @@
 import React from 'react';
-import {List, Icon, Toast, Picker, WhiteSpace, ListView, Modal,} from 'antd-mobile';
+import { List, Icon, Toast, Picker, WhiteSpace, ListView, Modal, } from 'antd-mobile';
 import '../css/notify.less'
 
 const Item = List.Item;
@@ -20,7 +20,7 @@ export default class notifyBack extends React.Component {
             dataSource: dataSource.cloneWithRows(this.initData),
             clientHeight: document.body.clientHeight,
             // data: [],
-            Icon: <Icon type='cross-circle-o'/>,
+            Icon: <Icon type='cross-circle-o' />,
             pickerData: [],  //选择项容器
             asyncValue: [],
             defaultPageNo: 1,
@@ -32,7 +32,7 @@ export default class notifyBack extends React.Component {
         var locationHref = window.location.href;
         var locationSearch = locationHref.substr(locationHref.indexOf("?") + 1);
         var ident = locationSearch.split("&")[0].split('=')[1];
-        this.setState({ident});
+        this.setState({ ident });
         this.getClassBrandNoticeListByUserId(ident);
     }
 
@@ -96,6 +96,7 @@ export default class notifyBack extends React.Component {
 
     //通过教室id获取通知列表
     getClassBrandNoticeListByClassId(classroomId) {
+        console.log(classroomId, "classroomid")
         var _this = this;
         _this.state.dataSource = [];
         _this.state.dataSource = new ListView.DataSource({
@@ -104,11 +105,12 @@ export default class notifyBack extends React.Component {
         var dataBlob = {};
         var PageNo = this.state.defaultPageNo;
         var param;
-        if (classroomId) {
+        if (classroomId || classroomId == 0) {
             _this.initData = [];
             param = {
                 "method": 'getClassBrandNoticeListByClassId',
                 "classroomId": classroomId,
+                "userId": _this.state.ident,
                 "pageNo": PageNo,
             }
         }
@@ -186,8 +188,8 @@ export default class notifyBack extends React.Component {
         }
         var _this = this;
         const alertInstance = alert('您确定要删除吗?', '', [
-            {text: '取消', onPress: () => console.log('cancel'), style: 'default'},
-            {text: '确定', onPress: () => _this.deleteNotify(sId)},
+            { text: '取消', onPress: () => console.log('cancel'), style: 'default' },
+            { text: '确定', onPress: () => _this.deleteNotify(sId) },
 
         ], phone);
 
@@ -242,6 +244,7 @@ export default class notifyBack extends React.Component {
 
     //选择器确定事件
     viewCourseTableItemPage = (val) => {
+        console.log(val, "vvv")
         const d = [...this.state.pickerData];
         const asyncValue = [...val];
         this.setState({
@@ -249,7 +252,7 @@ export default class notifyBack extends React.Component {
             asyncValue,
             classroomId: val[0]
         });
-        if (val[0]) {
+        if (val[0] == 0 || val[0]) {
             this.getClassBrandNoticeListByClassId(val[0]);
         }
     };
@@ -265,7 +268,7 @@ export default class notifyBack extends React.Component {
             return;
         }
         currentPageNo += 1;
-        this.setState({isLoadingLeft: true, defaultPageNo: currentPageNo});
+        this.setState({ isLoadingLeft: true, defaultPageNo: currentPageNo });
         // _this.getClassBrandNoticeListByClassId(_this.state.classroomId);
         _this.getClassBrandNoticeListByUserId(_this.state.ident);
         this.setState({
@@ -279,7 +282,7 @@ export default class notifyBack extends React.Component {
         var _this = this;
         //获取班级选择项
         var param = {
-            "method": 'viewClassRoomPage',
+            "method": 'viewClassRoomPageByClass',
             "uid": classBinding.state.ident,
             "pn": -1
         };
@@ -287,13 +290,15 @@ export default class notifyBack extends React.Component {
             onResponse: (result) => {
                 if (result.msg == '调用成功' || result.success == true) {
                     if (WebServiceUtil.isEmpty(result.response) == false) {
-                        var arr = [];
+                        var arr = [{
+                            value: 0, label: "全校"
+                        }];
                         result.response.forEach(function (v, i) {
                             arr.push({
                                 value: v.id, label: v.name
                             })
                         })
-                        classBinding.setState({pickerData: arr});
+                        classBinding.setState({ pickerData: arr });
                     }
                 }
             },
@@ -309,39 +314,47 @@ export default class notifyBack extends React.Component {
             return (
                 <div className="listCont">
                     <Item onClick={this.toNotifyDetail.bind(this, item.id)} align="top"
-                          multipleLine>
+                        multipleLine>
                         <div className="clear">
                             <span className="title text_hidden">{item.noticeTitle}</span>
                             <span className="time">{item.createTime}</span>
                         </div>
                         <Brief>{item.noticeContent}</Brief>
-                        <div
-                            className="classroom_label textOver">{WebServiceUtil.isEmpty(item.classRoom) == true ? '' : item.classRoom.name}</div>
+                        {
+                            item.type == 1 ?
+                                <div
+                                    className="classroom_label textOver">{WebServiceUtil.isEmpty(item.classRoom) == true ? '' : item.classRoom.name}
+                                </div>
+                                :
+                                <div
+                                    className="classroom_label textOver">全校通知
+                                </div>
+                        }
                     </Item>
                     {/* <Icon onClick={this.deleteNotify.bind(this, item.id)} type='cross-circle-o'
                           className="deleteNoifty"></Icon>*/}
                     <div onClick={this.showAlert.bind(this, item.id)} type='cross-circle-o'
-                         className="deleteNoifty deleteBtn_common"></div>
-                    <img src={require("../imgs/icon_notifyList.png")} alt="头像" className="headPic"/>
+                        className="deleteNoifty deleteBtn_common"></div>
+                    <img src={require("../imgs/icon_notifyList.png")} alt="头像" className="headPic" />
                 </div>
             )
         };
         return (
-            <div id="notify" style={{height: document.body.clientHeight}}>
+            <div id="notify" style={{ height: document.body.clientHeight }}>
                 <List className="my-list">
                     <Picker data={this.state.pickerData}
-                            cols={1}
-                            className="forss"
-                            value={this.state.asyncValue}
-                            onPickerChange={this.onPickerChange}
-                            onOk={v => this.viewCourseTableItemPage(v)}>
+                        cols={1}
+                        className="forss"
+                        value={this.state.asyncValue}
+                        onPickerChange={this.onPickerChange}
+                        onOk={v => this.viewCourseTableItemPage(v)}>
                         <Item arrow="horizontal" onClick={this.getClassRoomId}>选择教室</Item>
                     </Picker>
                     <ListView
                         ref={el => this.lv = el}
                         dataSource={this.state.dataSource}    //数据类型是 ListViewDataSource
                         renderFooter={() => (
-                            <div style={{paddingTop: 5, paddingBottom: 40, textAlign: 'center'}}>
+                            <div style={{ paddingTop: 5, paddingBottom: 40, textAlign: 'center' }}>
                                 {this.state.isLoadingLeft ? '正在加载' : '已经全部加载完毕'}
                             </div>)}
                         renderRow={row}   //需要的参数包括一行数据等,会返回一个可渲染的组件为这行数据渲染  返回renderable
@@ -360,7 +373,7 @@ export default class notifyBack extends React.Component {
 
                 </List>
                 <div className="addBunton" onClick={this.toAddNotify}>
-                    <img src={require("../../ringBindInformation/imgs/addBtn.png")}/>
+                    <img src={require("../../ringBindInformation/imgs/addBtn.png")} />
                 </div>
             </div>
         );
