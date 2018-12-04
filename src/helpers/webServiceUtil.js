@@ -1,7 +1,8 @@
-var isDebug = true;
+var isDebug = false;
 var localDomain = "192.168.50.15";   //请求地址
-var isDebugLocal = true;
+var isDebugLocal = false;
 var localUrl = "192.168.50.188";    //跳转地址http:
+
 
 //云校本地测试webService地址
 var elearningWebserviceURLOfLocal = "http://" + localDomain + ":9007/elearning/elearningControl/";
@@ -318,6 +319,17 @@ WebServiceUtil.createUUID = function () {
 
     var uuid = s.join("");
     return uuid;
+};
+
+WebServiceUtil.getQueryString = function (name) {
+    var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
+    var index = window.location.href.indexOf('?') + 1;
+    var str = window.location.href.substr(index, window.location.href.length - 1);
+    var r = str.match(reg);
+    if (r != null) {
+        return unescape(r[2]);
+    }
+    return null;
 };
 
 WebServiceUtil.SMALL_IMG = 'size=100x100';

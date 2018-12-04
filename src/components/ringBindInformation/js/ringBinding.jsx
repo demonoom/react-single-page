@@ -25,8 +25,24 @@ export default class ringBinding extends React.Component {
     /**
      * 跳转至绑定手环界面
      */
-    braceletOnclick() {
+/*    braceletOnclick() {
         var url = WebServiceUtil.mobileServiceURL + "bindingBracelet";
+        var data = {
+            method: 'openNewPage',
+            url: url
+        };
+
+        Bridge.callHandler(data, null, function (error) {
+            window.location.href = url;
+        });
+    }*/
+
+    /**
+     * 跳转至绑定手环界面
+     */
+    braceletOnclick() {
+        var loginUserRingBind = JSON.parse(localStorage.getItem("loginUserRingBind"))
+        var url = WebServiceUtil.mobileServiceURL + "clazzOfRingBinding?ident="+loginUserRingBind.ident;
         var data = {
             method: 'openNewPage',
             url: url

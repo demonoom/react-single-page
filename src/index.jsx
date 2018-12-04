@@ -77,6 +77,14 @@ const ringBinding = (location, cb) => {
         cb(null, require('./components/ringBindInformation/js/ringBinding').default)
     }, 'ringBinding')
 };
+
+//手环绑定的班级列表页
+const clazzOfRingBinding = (location, cb) => {
+    require.ensure([], require => {
+        cb(null, require('./components/classCardSystemBackstage/js/clazzOfRingBinding').default)
+    }, 'clazzOfRingBinding')
+};
+
 const bindingBracelet = (location, cb) => {
     require.ensure([], require => {
         cb(null, require('./components/ringBindInformation/js/bindingBracelet').default)
@@ -1319,6 +1327,7 @@ class Index extends React.Component {
                         <Route path="webMiddlePage" getComponent={webMiddlePage}/>
                         <Route path="previewFile" getComponent={previewFile}/>
                         <Route path="ringBinding" getComponent={ringBinding}/>
+                        <Route path="clazzOfRingBinding" getComponent={clazzOfRingBinding}/>
                         <Route path="bindingBracelet" getComponent={bindingBracelet}/>
                         <Route path="boxBracelet" getComponent={boxBracelet}/>
                         <Route path="personalSettings" getComponent={personalSettings}/>

@@ -39,6 +39,7 @@ export default class bindingBracelet extends React.Component {
             rowHasChanged: (row1, row2) => row1 !== row2,
         });
         this.initData = [];
+        var clazzId = WebServiceUtil.getQueryString("clazzId");
         this.state = {
             dataSource: dataSource.cloneWithRows(this.initData),
             defaultPageNo: 1,
@@ -49,7 +50,8 @@ export default class bindingBracelet extends React.Component {
             chooseResultDiv: 'none',
             stNameValue: '',
             searchData: [],
-            showClear:false
+            showClear:false,
+            clazzId:clazzId
         };
     }
 
@@ -92,7 +94,8 @@ export default class bindingBracelet extends React.Component {
         var param = {
             "method": 'viewWatchPage',
             "aid": loginUser.ident,
-            "cid": -1,
+            // "cid": -1,
+            "cid": _this.state.clazzId,
             "searchKeyWords": this.input.value,
             "pn": PageNo,
         };
