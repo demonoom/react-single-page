@@ -1,4 +1,5 @@
 import React from 'react';
+import {Toast} from 'antd-mobile';
 import '../css/teachingSpaceTeacher.less'
 
 export default class teachingSpaceTeacher extends React.Component {
@@ -13,7 +14,7 @@ export default class teachingSpaceTeacher extends React.Component {
         try {
             Bridge.setRefreshAble("false");
         } catch (e) {
-            console.log(e, 'teachingSpaceTeacher');
+            Toast.info(e);
         }
         var locationHref = decodeURI(window.location.href);
         var locationSearch = locationHref.substr(locationHref.indexOf("?") + 1);
@@ -91,12 +92,14 @@ export default class teachingSpaceTeacher extends React.Component {
         } else if (type == "openNativePage_RingDataStatistics") {
             url = "http://jiaoxue.maaee.com:8093/#/analysisHomePage"
         }
+        Toast.info('openNewPage');
         var data = {
             method: "openNewPage",
             url: url
         };
-        console.log(data, "data1111")
+        console.log(data, "data1111");
         Bridge.callHandler(data, null, function (error) {
+            Toast.info('openNewPageError');
             window.location.href = url;
         });
     }

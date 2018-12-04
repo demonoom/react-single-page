@@ -47,6 +47,7 @@ Bridge.callHandler = function (data, callback, errorcallback) {
 Bridge.isPhone = function () {
     var sUserAgent = navigator.userAgent.toLowerCase();
     var isIphone = sUserAgent.match(/iphone/i) == "iphone";
+    isIphone = sUserAgent.match(/ipad/i) == "ipad";
     var isAndroid = sUserAgent.match(/android/i) == "android";
     return isIphone || isAndroid;
 };
