@@ -220,7 +220,11 @@ export default class bindingBracelet extends React.Component {
             //     Toast.fail('mac地址超过最大字节数', 2)
             //     return
             // }
-
+            //判断返回的ｍａｃ地址是否是以MAC:开头的,如果是,则将原内容的MAC:截掉
+            var compareMes = mes.toUpperCase();
+            if(compareMes.indexOf("MAC:")==0){
+                mes = mes.substr(4,mes.length-1);
+            }
             if (mes.indexOf(":") == -1) {
                 var string = splitStrTo2(mes).join(":");
                 mes = string.substr(0, string.length - 1)
