@@ -1,4 +1,5 @@
 import React from 'react';
+import {Toast} from 'antd-mobile';
 import '../css/teachingSpaceTeacher.less'
 
 export default class teachingSpaceTeacher extends React.Component {
@@ -13,7 +14,7 @@ export default class teachingSpaceTeacher extends React.Component {
         try {
             Bridge.setRefreshAble("false");
         } catch (e) {
-            console.log(e, 'teachingSpaceTeacher');
+            console.log(e);
         }
         var locationHref = decodeURI(window.location.href);
         var locationSearch = locationHref.substr(locationHref.indexOf("?") + 1);
@@ -95,8 +96,8 @@ export default class teachingSpaceTeacher extends React.Component {
             method: "openNewPage",
             url: url
         };
-        console.log(data, "data1111")
-        Bridge.callHandler(data, null, function (error) {
+        // console.log(data, "data1111");
+        Bridge.callHandler(data,null, function (error) {
             window.location.href = url;
         });
     }
