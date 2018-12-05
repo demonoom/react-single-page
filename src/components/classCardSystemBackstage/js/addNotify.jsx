@@ -184,7 +184,7 @@ export default class addNotify extends React.Component {
         var _this = this;
         var arr = []
         data.forEach(function (v, i) {
-            arr.push(<li className='line_public noomPowerList' onClick={(e) => {
+            arr.push(<li className='line_public noomPowerList textOver' onClick={(e) => {
                 _this.setState({selectedClassroomId: v.id,selectedRoomName:v.name})
                 for (var i = 0; i < $('.noomPowerList').length; i++) {
                     $('.noomPowerList').eq(i).removeClass("active");
@@ -246,10 +246,12 @@ export default class addNotify extends React.Component {
         return (
             <div id="notify" style={{ height: document.body.clientHeight }}>
                 <WhiteSpace size="lg" />
-                <div className='addBtn sameBack' onClick={this.showAddPower}>
-                <span>选择教室
-                <span>{this.state.addRoomName}</span>
-                <Icon type="plus"/></span>
+                <div className='am-list-item am-list-item-middle' onClick={this.showAddPower}>
+                    <div className="am-list-line">
+                        <div className="am-list-content">选择教室</div>
+                        <div className="am-list-extra">{this.state.addRoomName}</div>
+                        <div className="am-list-arrow am-list-arrow-horizontal"></div>
+                    </div>
                 </div>
                 <WhiteSpace size="lg"/>
                 <InputItem
@@ -275,21 +277,19 @@ export default class addNotify extends React.Component {
                 <div className="submitBtn">
                     <Button type="primary" onClick={this.submitClass}>提交</Button>
                 </div>
-
+                <div className="mask"  style={{display: 'none'}}></div>
                 <div className='updateModel' style={{display: 'none'}}>
-                    <div>
-                        <div className='searchDiv'>
-                            <input type="text" value={this.state.inputValue} onChange={this.inputOnChang} placeholder='请输入搜索内容'/>
-                            <span onClick={this.searchUserByKeyWord}>搜索</span>
-                        </div>
+                    <div className='searchDiv'>
+                        <input type="text" value={this.state.inputValue} onChange={this.inputOnChang} placeholder='请输入搜索内容'/>
+                        <span onClick={this.searchUserByKeyWord}>搜索</span>
                     </div>
                     <div className='cont'>
                         {this.state.responseList}
                     </div>
-                    <div className="bottomBox">
+                    {/*<div className="bottomBox">
                         <span className="close" onClick={this.exitAddTags}>取消</span>
                         <span className="bind" onClick={this.addTagsForSure}>确定</span>
-                    </div>
+                    </div>*/}
                 </div>
                 <div className="tagAddPanel_bg"></div>
             </div>
