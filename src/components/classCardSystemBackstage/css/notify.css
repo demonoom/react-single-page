@@ -1,4 +1,3 @@
-(node) util.print is deprecated. Use console.log instead.
 #notify .headPic {
   position: absolute;
   top: 34%;
@@ -120,4 +119,88 @@
 #notify .clear {
   overflow: hidden;
   height: 25px;
+}
+#notify .updateModel {
+  position: absolute;
+  width: 100%;
+  height: 70%;
+  left: 0;
+  bottom: 0;
+  background: white;
+  z-index: 101;
+}
+#notify .updateModel .searchDiv {
+  height: 28px;
+  padding: 8px;
+  background-color: #F1F1F1;
+  overflow: hidden;
+  line-height: 28px;
+}
+#notify .updateModel .searchDiv input {
+  height: 28px;
+  background-color: white;
+  border-radius: 2px;
+  padding: 0 9px;
+  box-sizing: border-box;
+  width: calc(100% - 50px);
+  border: 0;
+}
+#notify .updateModel .searchDiv span {
+  color: #108ee9;
+  font-size: 16px;
+  float: right;
+  padding-right: 4px;
+  cursor: pointer;
+}
+#notify .updateModel .cont {
+  padding: 0 8px;
+  overflow-y: auto;
+  height: calc(100% - 44px);
+}
+#notify .updateModel .cont .noomPowerList {
+  line-height: 42px;
+  font-size: 14px;
+  color: #333;
+  cursor: pointer;
+}
+#notify .updateModel .bottomBox {
+  display: flex;
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+}
+#notify .updateModel .bottomBox span {
+  flex: 1;
+  text-align: center;
+  font-size: 15px;
+  padding: 0;
+  line-height: 40px;
+  height: 40px;
+  display: inline-block;
+  -webkit-border-radius: 2px;
+  -moz-border-radius: 2px;
+  border-radius: 2px;
+  border: 1px #F56A55 solid;
+  color: #F56A55;
+}
+#notify .updateModel .bottomBox span.bind {
+  background: #F56A55;
+  color: #fff;
+}
+#notify .updateModel .bottomBox span.bind:active {
+  color: rgba(255, 255, 255, 0.3);
+  background-color: #F56A55;
+}
+#notify .active {
+  color: red;
+}
+#notify .mask {
+  position: absolute;
+  top: 0;
+  left: 0;
+  background-color: rgba(0, 0, 0, 0.4);
+  width: 100%;
+  height: 100%;
+  z-index: 100;
 }
