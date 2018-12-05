@@ -17,7 +17,8 @@ export default class addNotify extends React.Component {
             asyncValue: [],
             title: '',
             content: '',
-            classroomId: 'test'  //所选班级id／
+            classroomId: 'test',  //所选班级id／
+            inputValue:''
         };
     }
 
@@ -170,29 +171,46 @@ export default class addNotify extends React.Component {
     }
 
     showAddPower=()=> {
+        this.searchUserByKeyWord();
         $('.updateModel').slideDown();
         $('.tagAddPanel_bg').show();
+        $('.mask').show();
+        console.log($('.mask').show());
     }
 
     exitAddTags = () => {
-        $('.updateModel').slideUp()
-        $('.tagAddPanel_bg').hide()
+        $('.updateModel').slideUp();
+        $('.tagAddPanel_bg').hide();
+        $('.mask').hide();
         this.setState(({responseList: [], selectedClassroomId: '',selectedRoomName:'', inputValue: ''}))
     }
 
     buildResponseList = (data) => {
         var _this = this;
-        var arr = []
+        var arr = [];
+        // console.log(data,'构建的数据');
         data.forEach(function (v, i) {
+            var buildName = v.building?v.building.name:'';
+            // console.log(buildName,'buildName')
             arr.push(<li className='line_public noomPowerList textOver' onClick={(e) => {
-                _this.setState({selectedClassroomId: v.id,selectedRoomName:v.name})
                 for (var i = 0; i < $('.noomPowerList').length; i++) {
                     $('.noomPowerList').eq(i).removeClass("active");
                 }
+                e.target.className = 'active line_public noomPowerList';
+                // if (WebServiceUtil.isEmpty(_this.state.selectedClassroomId)) {
+                //     Toast.fail('请选择要添加的教室', 2)
+                //     return
+                // }
+                _this.setState({selectedClassroomId: v.id,selectedRoomName:v.name},()=>{
+                    $('.updateModel').hide();
+                    $('.tagAddPanel_bg').hide();
+                    $('.mask').hide();
+                    _this.setState(({responseList: [],inputValue:''}));
+                    _this.setState({classroomId: _this.state.selectedClassroomId, addRoomName: _this.state.selectedRoomName});
+                });
 
-                e.target.className = 'active line_public noomPowerList'
 
-            }}>{v.name+"("+v.building.name+")"}</li>)
+            }}>{v.name+"("+buildName+")"}</li>)
         })
         this.setState({responseList: arr})
     }
@@ -200,7 +218,6 @@ export default class addNotify extends React.Component {
     searchUserByKeyWord = () => {
 
         this.setState(({responseList: []}))
-
         var _this = this;
         var PageNo = this.state.defaultPageNo;
         var param = {
@@ -249,7 +266,7 @@ export default class addNotify extends React.Component {
                 <div className='am-list-item am-list-item-middle' onClick={this.showAddPower}>
                     <div className="am-list-line">
                         <div className="am-list-content">选择教室</div>
-                        <div className="am-list-extra">{this.state.addRoomName}</div>
+                        <div className="am-list-extra">{this.state.addRoomName == ''?'请选择':this.state.addRoomName}</div>
                         <div className="am-list-arrow am-list-arrow-horizontal"></div>
                     </div>
                 </div>
@@ -277,7 +294,7 @@ export default class addNotify extends React.Component {
                 <div className="submitBtn">
                     <Button type="primary" onClick={this.submitClass}>提交</Button>
                 </div>
-                <div className="mask"  style={{display: 'none'}}></div>
+                <div className="mask" onClick={this.exitAddTags}  style={{display: 'none'}}></div>
                 <div className='updateModel' style={{display: 'none'}}>
                     <div className='searchDiv'>
                         <input type="text" value={this.state.inputValue} onChange={this.inputOnChang} placeholder='请输入搜索内容'/>
