@@ -1,5 +1,5 @@
 import React from 'react';
-import {List, Picker, InputItem, TextareaItem, Button, WhiteSpace, Toast} from 'antd-mobile';
+import {List, Picker, InputItem, TextareaItem, Button, WhiteSpace, Toast,Icon} from 'antd-mobile';
 import '../css/notify.less'
 
 var calm;
@@ -10,6 +10,7 @@ export default class addNotify extends React.Component {
         super(props);
         calm = this;
         this.state = {
+            defaultPageNo:1,
             pickerData: [],  //选择项容器
             asyncValue: [],
             title: '',
@@ -148,19 +149,99 @@ export default class addNotify extends React.Component {
     contentHandleChange = event => {
         this.setState({content: event});
     }
-   
+
+    inputOnChang = (e) => {
+        this.setState({inputValue: e.target.value})
+    }
+
+    showAddPower=()=> {
+        $('.updateModel').slideDown();
+        $('.tagAddPanel_bg').show();
+    }
+
+    exitAddTags = () => {
+        $('.updateModel').slideUp()
+        $('.tagAddPanel_bg').hide()
+        this.setState(({responseList: [], selectedClassroomId: '',selectedRoomName:'', inputValue: ''}))
+    }
+
+    buildResponseList = (data) => {
+        var _this = this;
+        var arr = []
+        data.forEach(function (v, i) {
+            arr.push(<li className='line_public noomPowerList' onClick={(e) => {
+                _this.setState({selectedClassroomId: v.id,selectedRoomName:v.name})
+                for (var i = 0; i < $('.noomPowerList').length; i++) {
+                    $('.noomPowerList').eq(i).removeClass("active");
+                }
+
+                e.target.className = 'active line_public noomPowerList'
+
+            }}>{v.name+"("+v.building.name+")"}</li>)
+        })
+        this.setState({responseList: arr})
+    }
+
+    searchUserByKeyWord = () => {
+
+        this.setState(({responseList: []}))
+
+        var _this = this;
+        var PageNo = this.state.defaultPageNo;
+        var param = {
+            "method": 'viewClassRoomPage',
+            "uid": calm.state.ident,
+            "searchKeyWords": this.state.inputValue,
+            "pn": PageNo,
+        };
+
+        WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
+            onResponse: result => {
+                if (result.msg == '调用成功' && result.success == true) {
+                    if (!WebServiceUtil.isEmpty(result.response)) {
+                        _this.buildResponseList(result.response);
+                    } else {
+                        Toast.fail('未找到该用户', 1)
+                    }
+                } else {
+                    Toast.fail(result.msg)
+                }
+
+            },
+            onError: function (error) {
+                Toast.fail(error, 1);
+            }
+        });
+    }
+
+    addTagsForSure = () => {
+        if (WebServiceUtil.isEmpty(this.state.selectedClassroomId)) {
+            Toast.fail('请选择要添加的教室', 2)
+            return
+        }
+        $('.updateModel').hide();
+        $('.tagAddPanel_bg').hide();
+        this.setState(({responseList: [],inputValue:''}));
+        this.setState({classroomId: this.state.selectedClassroomId, addRoomName: this.state.selectedRoomName});
+    }
+
     render() {
         return (
             <div id="notify" style={{height: document.body.clientHeight}}>
                 <WhiteSpace size="lg"/>
-                <Picker data={this.state.pickerData}
+                {/*<Picker data={this.state.pickerData}
                         cols={1}
                         className="forss"
                         value={this.state.asyncValue}
                         onPickerChange={this.onPickerChange}
                         onOk={v => this.viewCourseTableItemPage(v)}>
                     <List.Item arrow="horizontal" onClick={this.getClassRoomId}>选择教室</List.Item>
-                </Picker>
+                </Picker>*/}
+                <div className='addBtn sameBack' onClick={this.showAddPower}>
+                    <span>选择教室
+                        <span>{this.state.addRoomName}</span>
+                        <Icon type="plus"/></span>
+                </div>
                 <WhiteSpace size="lg"/>
                 <InputItem
                     placeholder="请输入标题"
@@ -185,6 +266,23 @@ export default class addNotify extends React.Component {
                 <div className="submitBtn">
                     <Button type="primary" onClick={this.submitClass}>提交</Button>
                 </div>
+
+                <div className='updateModel' style={{display: 'none'}}>
+                    <div>
+                        <div className='searchDiv'>
+                            <input type="text" value={this.state.inputValue} onChange={this.inputOnChang} placeholder='请输入搜索内容'/>
+                            <span onClick={this.searchUserByKeyWord}>搜索</span>
+                        </div>
+                    </div>
+                    <div className='cont'>
+                        {this.state.responseList}
+                    </div>
+                    <div className="bottomBox">
+                        <span className="close" onClick={this.exitAddTags}>取消</span>
+                        <span className="bind" onClick={this.addTagsForSure}>确定</span>
+                    </div>
+                </div>
+                <div className="tagAddPanel_bg"></div>
             </div>
         );
     }
