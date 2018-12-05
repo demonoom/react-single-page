@@ -1,5 +1,5 @@
 import React from 'react';
-import {Toast} from 'antd-mobile';
+import { Toast } from 'antd-mobile';
 import '../css/teachingSpaceTeacher.less'
 
 export default class teachingSpaceTeacher extends React.Component {
@@ -26,9 +26,9 @@ export default class teachingSpaceTeacher extends React.Component {
         this.getUserById(ident)
         var phoneType = navigator.userAgent;
         if (phoneType.indexOf('iPhone') > -1 || phoneType.indexOf('iPad') > -1) {
-            this.setState({phone: 'IOS'})
+            this.setState({ phone: 'IOS' })
         } else {
-            this.setState({phone: 'Android'})
+            this.setState({ phone: 'Android' })
         }
     }
 
@@ -81,16 +81,38 @@ export default class teachingSpaceTeacher extends React.Component {
         } else if (type == "Approval") {
             // 审批页面
             url = "http://www.maaee.com:80/Excoord_PhoneService/flowGroup/getAllFlowGroupBySchoolId/" + this.state.schoolId + "/" + this.state.ident
-
         } else if (type == "Attendance") {
             // 考勤页面
             url = "https://www.maaee.com/Excoord_PhoneService/attendance/recordCard/" + this.state.ident
-
         } else if (type == "HomeworkFaceStatistics") {
             // 作业表情分析
             url = "http://jiaoxue.maaee.com:8093/#/HomeWorkUnderstandAnalysisGuideByNoom?access_user=" + this.state.ident
         } else if (type == "openNativePage_RingDataStatistics") {
             url = "http://jiaoxue.maaee.com:8093/#/analysisHomePage"
+        } else if (type == "honorManage") {
+            //  荣誉管理
+            Toast.info('请在浏览器中的小蚂蚁教师端完成该功能', 3)
+            return
+            // var phoneType = navigator.userAgent;
+            // if (phoneType.indexOf('iPhone') > -1 || phoneType.indexOf('iPad') > -1 || phoneType.indexOf('Android') > -1) {
+            //     Toast.info('请在浏览器中的小蚂蚁教师端完成该功能', 3)
+            //     return
+            // }
+        } else if (type == "demeanorManage") {
+            //  风采管理
+            Toast.info('请在浏览器中的小蚂蚁教师端完成该功能', 3)
+            return
+            // var phoneType = navigator.userAgent;
+            // if (phoneType.indexOf('iPhone') > -1 || phoneType.indexOf('iPad') > -1 || phoneType.indexOf('Android') > -1) {
+            //     Toast.info('请在浏览器中的小蚂蚁教师端完成该功能', 3)
+            //     return
+            // }
+        } else if (type == "dutyManage") {
+            //  值日管理
+            url = "http://jiaoxue.maaee.com:8091/#/clazzDutyList?access_user=" + this.state.ident
+        } else if (type == "notifyManage") {
+            //  通知管理
+            url = "http://jiaoxue.maaee.com:8091/#/notifyBack?access_user=" + this.state.ident
         }
         var data = {
             method: "openNewPage",
@@ -163,12 +185,12 @@ export default class teachingSpaceTeacher extends React.Component {
                             <div>手环户外助手</div>
                         </li>
                         <li onClick={this.toClient.bind(this, "openNativePage_FamousTeacherSpace")}
-                            style={{display: this.state.phone == "Android" ? "block" : "none"}}>
+                            style={{ display: this.state.phone == "Android" ? "block" : "none" }}>
                             <i className="Icon-teacher Icon-teacher-famousTeacher"></i>
                             <div>名师空间</div>
                         </li>
                         <li onClick={this.toClient.bind(this, "openNativePage_MicroClassRecord")}
-                            style={{display: this.state.phone == "Android" ? "block" : "none"}}>
+                            style={{ display: this.state.phone == "Android" ? "block" : "none" }}>
                             <i className="Icon-teacher Icon-teacher-SmallClass"></i>
                             <div>录制微课</div>
                         </li>
@@ -181,7 +203,7 @@ export default class teachingSpaceTeacher extends React.Component {
                             <i className="Icon-teacher Icon-teacher-ClassReview"></i>
                             <div>课堂回顾统计</div>
                         </li>
-                        <li style={{display: this.state.phone == "Android" ? "block" : "none"}}
+                        <li style={{ display: this.state.phone == "Android" ? "block" : "none" }}
                             onClick={this.toPage.bind(this, "openNativePage_RingDataStatistics")}>
                             <i className="Icon-teacher Icon-teacher-braceletData"></i>
                             <div>手环数据统计</div>
@@ -195,7 +217,7 @@ export default class teachingSpaceTeacher extends React.Component {
                             <i className="Icon-teacher Icon-teacher-AssignHomework"></i>
                             <div>布置作业</div>
                         </li>
-                        <li style={{display: this.state.phone == "Android" ? "block" : "none"}}
+                        <li style={{ display: this.state.phone == "Android" ? "block" : "none" }}
                             onClick={this.toClient.bind(this, "openNativePage_HomeworkStatistics")}>
                             <i className="Icon-teacher Icon-teacher-homeworkStatistics"></i>
                             <div>作业统计</div>
@@ -205,13 +227,13 @@ export default class teachingSpaceTeacher extends React.Component {
                             <div>作业表情统计</div>
                         </li>
                         <li onClick={this.toClient.bind(this, "openNativePage_HomeworkCorrecting")}
-                            style={{display: this.state.phone == "Android" ? "block" : "none"}}>
+                            style={{ display: this.state.phone == "Android" ? "block" : "none" }}>
                             <i className="Icon-teacher Icon-teacher-homeworkCorrecting"></i>
                             <div>批改作业</div>
                         </li>
                     </ul>
                 </div>
-                <div className="teacher-item" style={{display: this.state.phone == "Android" ? "block" : "none"}}>
+                <div className="teacher-item" style={{ display: this.state.phone == "Android" ? "block" : "none" }}>
                     <h1>考试系统</h1>
                     <ul className="my_flex teacherUl">
                         <li onClick={this.toClient.bind(this, "openNativePage_TestPaper")}>
@@ -231,6 +253,27 @@ export default class teachingSpaceTeacher extends React.Component {
                             <i className="Icon-teacher Icon-teacher-EducationManage"></i>
                             <div>教务管理</div>
                         </li>
+                        <li onClick={this.toPage.bind(this, "honorManage")}>
+                            <i className="Icon-teacher Icon-teacher-honorManage"></i>
+                            <div>班牌荣誉管理</div>
+                        </li>
+                        <li onClick={this.toPage.bind(this, "demeanorManage")}>
+                            <i className="Icon-teacher Icon-teacher-demeanorManage"></i>
+                            <div>班牌风采管理</div>
+                        </li>
+                       
+                        <li onClick={this.toPage.bind(this, "notifyManage")}>
+                            <i className="Icon-teacher Icon-teacher-notifyManage"></i>
+                            <div>班牌通知管理</div>
+                        </li>
+
+                        <li onClick={this.toPage.bind(this, "dutyManage")}>
+                            <i className="Icon-teacher Icon-teacher-dutyManage"></i>
+                            <div>班牌值日管理</div>
+                        </li>
+
+                       
+
                     </ul>
                 </div>
             </div>
