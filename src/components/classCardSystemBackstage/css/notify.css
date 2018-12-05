@@ -130,14 +130,14 @@
   z-index: 101;
 }
 #notify .updateModel .searchDiv {
-  height: 26px;
+  height: 28px;
   padding: 8px;
   background-color: #F1F1F1;
   overflow: hidden;
-  line-height: 26px;
+  line-height: 28px;
 }
 #notify .updateModel .searchDiv input {
-  height: 26px;
+  height: 28px;
   background-color: white;
   border-radius: 2px;
   padding: 0 9px;
@@ -149,17 +149,19 @@
   color: #108ee9;
   font-size: 16px;
   float: right;
-  padding-right: 5px;
+  padding-right: 4px;
+  cursor: pointer;
 }
 #notify .updateModel .cont {
   padding: 0 8px;
   overflow-y: auto;
-  height: calc(100% - 42px);
+  height: calc(100% - 44px);
 }
 #notify .updateModel .cont .noomPowerList {
   line-height: 42px;
   font-size: 14px;
   color: #333;
+  cursor: pointer;
 }
 #notify .updateModel .bottomBox {
   display: flex;
