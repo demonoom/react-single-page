@@ -23,6 +23,10 @@
   /*组卷*/
   /*考试*/
   /*教务管理*/
+  /*荣誉管理*/
+  /*风采管理*/
+  /*值日管理*/
+  /*通知管理*/
   /*学生课堂回顾*/
   /*学生问卷调查*/
   /*学生直播回顾*/
@@ -149,6 +153,22 @@
 }
 #teachingSpaceTeacher .Icon-teacher-EducationManage {
   background: url("../images/icon-EducationManage.png") no-repeat;
+  background-size: 100% 100%;
+}
+#teachingSpaceTeacher .Icon-teacher-honorManage {
+  background: url("../images/icon_honor.png") no-repeat;
+  background-size: 100% 100%;
+}
+#teachingSpaceTeacher .Icon-teacher-demeanorManage {
+  background: url("../images/icon_demeanor.png") no-repeat;
+  background-size: 100% 100%;
+}
+#teachingSpaceTeacher .Icon-teacher-dutyManage {
+  background: url("../images/icon_duty.png") no-repeat;
+  background-size: 100% 100%;
+}
+#teachingSpaceTeacher .Icon-teacher-notifyManage {
+  background: url("../images/icon_notify.png") no-repeat;
   background-size: 100% 100%;
 }
 #teachingSpaceTeacher .Icon-student-ClassReview {

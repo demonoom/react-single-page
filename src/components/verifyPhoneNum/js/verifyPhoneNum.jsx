@@ -139,7 +139,10 @@ export default class verifyPhoneNum extends React.Component {
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
             onResponse: (result) => {
                 if (result.success) {
-                    console.log(result);
+                    Toast.success('验证成功');
+                    setTimeout(function () {
+                        phone.finish()
+                    }, 1000)
                 } else {
                     Toast.fail(result.msg, 2)
                 }

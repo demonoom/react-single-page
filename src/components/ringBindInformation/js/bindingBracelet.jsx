@@ -39,6 +39,7 @@ export default class bindingBracelet extends React.Component {
             rowHasChanged: (row1, row2) => row1 !== row2,
         });
         this.initData = [];
+        var clazzId = WebServiceUtil.getQueryString("clazzId");
         this.state = {
             dataSource: dataSource.cloneWithRows(this.initData),
             defaultPageNo: 1,
@@ -49,7 +50,8 @@ export default class bindingBracelet extends React.Component {
             chooseResultDiv: 'none',
             stNameValue: '',
             searchData: [],
-            showClear:false
+            showClear:false,
+            clazzId:clazzId
         };
     }
 
@@ -92,7 +94,8 @@ export default class bindingBracelet extends React.Component {
         var param = {
             "method": 'viewWatchPage',
             "aid": loginUser.ident,
-            "cid": -1,
+            // "cid": -1,
+            "cid": _this.state.clazzId,
             "searchKeyWords": this.input.value,
             "pn": PageNo,
         };
@@ -217,7 +220,11 @@ export default class bindingBracelet extends React.Component {
             //     Toast.fail('mac地址超过最大字节数', 2)
             //     return
             // }
-
+            //判断返回的ｍａｃ地址是否是以MAC:开头的,如果是,则将原内容的MAC:截掉
+            var compareMes = mes.toUpperCase();
+            if(compareMes.indexOf("MAC:")==0){
+                mes = mes.substr(4,mes.length-1);
+            }
             if (mes.indexOf(":") == -1) {
                 var string = splitStrTo2(mes).join(":");
                 mes = string.substr(0, string.length - 1)

@@ -1,0 +1,349 @@
+(node) util.print is deprecated. Use console.log instead.
+#classPractice {
+  font-size: 13px;
+  color: #666;
+  height: 100%;
+  overflow-y: hidden;
+  overflow-x: hidden;
+}
+#classPractice .am-tabs-default-bar-tab {
+  height: 48px;
+  line-height: 48px;
+}
+#classPractice .classPractice-class {
+  padding: 12px 15px 0px 15px;
+  background: #fff;
+}
+#classPractice .classPractice-class + div.am-tabs {
+  height: calc(100% - 86px);
+}
+#classPractice .classPractice-title {
+  color: #333;
+  font-size: 15px;
+  line-height: 30px;
+  display: inline-block;
+}
+#classPractice .classPractice-btn {
+  font-size: 12px;
+  line-height: 1;
+  padding: 9px 18px;
+  border-radius: 4px;
+}
+#classPractice .classPractice-btnBlue {
+  background: #5091FE;
+  color: #fff;
+  border: none;
+}
+#classPractice .classPractice-btn-blue {
+  color: #0768AC;
+  border: 1px solid #3672ED;
+}
+#classPractice .classPractice-btn-green {
+  color: #20954C;
+  border: 1px solid #3AB669;
+}
+#classPractice .classPractice-btn-red {
+  color: #CB4B4B;
+  border: 1px solid #F26F7C;
+}
+#classPractice .classPractice-bottom {
+  margin-bottom: 15px;
+}
+#classPractice .summary-left {
+  margin-left: 38px;
+}
+#classPractice .topic_list {
+  /*overflow: auto;
+    height: calc(~"100% - 86px");*/
+}
+#classPractice .topic_list .topic_item {
+  margin: 15px;
+  background: #fff;
+  padding: 20px 15px;
+}
+#classPractice .topic_list .topic_item .topicTitle {
+  font-size: 15px;
+  color: #333;
+}
+#classPractice .topic_list .topic_item .topicTitle span {
+  width: 30px;
+  display: inline-block;
+  text-align: center;
+  vertical-align: top;
+}
+#classPractice .topic_list .topic_item .topicTitle div.title {
+  width: calc(100% - 30px);
+  display: inline-block;
+}
+#classPractice .topic_list .topic_item .topicTitle div {
+  margin: 0 !important;
+  padding: 0 !important;
+  line-height: 20px !important;
+}
+#classPractice .topic_list .topic_item .topicTitle div p {
+  margin: 0 !important;
+  padding-bottom: 6px;
+}
+#classPractice .topic_list .topic_item .topicTitle div p > span {
+  display: block;
+  width: 100%;
+  text-align: left;
+}
+#classPractice .topic_list .topic_item .topicTitle div img {
+  max-width: 100%;
+  max-height: 100%;
+}
+#classPractice .topic_list .table_item {
+  border: 1px solid #005FFF;
+  padding: 12px 8px;
+  border-radius: 4px;
+  margin-bottom: 12px;
+}
+#classPractice .topic_list .table_item span.center {
+  width: 40%;
+}
+#classPractice .topic_list .table_item span {
+  width: 30%;
+  display: inline-block;
+}
+#classPractice .topic_list .table_item span > span {
+  color: #333;
+  margin-left: 15px !important;
+}
+#classPractice .topic_list .table_item span:first-child {
+  margin-left: 0;
+}
+#classPractice .topic_list .topicAnswer {
+  margin: 15px 0 18px 0;
+  padding-left: 30px;
+}
+#classPractice .topic_list .topicAnswer .topicAnswer_left,
+#classPractice .topic_list .topicAnswer .topicAnswer_right {
+  width: 50%;
+  display: inline-block;
+}
+#classPractice .topic_list .topicAnswer .topicAnswer_left span,
+#classPractice .topic_list .topicAnswer .topicAnswer_right span {
+  color: #333;
+  font-size: 15px;
+  margin-left: 15px;
+}
+#classPractice .topic_list .topicAnswer .topicAnswer_right {
+  text-align: right;
+}
+#classPractice .topic_list .topic_table,
+#classPractice .topic_list .list_item_bottom {
+  padding-left: 30px;
+}
+#classPractice .topic_list .list_item_bottom {
+  margin-top: 23px;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+  -webkit-justify-content: space-between;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
+}
+#classPractice .names_box {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  height: 70%;
+  box-shadow: 0px 7px 79px 0px rgba(0, 0, 0, 0.55);
+  background: white;
+  width: 100%;
+  z-index: 3;
+  transition: 0.2s;
+  overflow: hidden;
+  transform: translate(0, 150%);
+}
+#classPractice .names_box .header {
+  text-align: center;
+  font-size: 15px;
+  color: #333;
+  background: #F5F5F5;
+  padding: 11px 0;
+  line-height: 1;
+  position: relative;
+}
+#classPractice .names_box .header span.close {
+  width: 11px;
+  height: 11px;
+  display: inline-block;
+  position: absolute;
+  right: 13px;
+  top: 12px;
+  background: url("../img/close-mask.png") no-repeat;
+  background-size: 100% 100%;
+}
+#classPractice .names_box .names-cont {
+  padding: 15px;
+  height: calc(100% - 37px);
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+#classPractice .names_box .names-cont span {
+  width: 100%;
+  display: inline-block;
+  font-size: 16px;
+  color: #333;
+  padding: 12px 4px;
+  box-sizing: border-box;
+  line-height: 30px;
+}
+#classPractice .mask {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 2;
+}
+#classPractice .am-tabs-default-bar-tab-active {
+  color: #0066FF;
+}
+#classPractice .am-tabs-default-bar-underline {
+  border-color: #0066FF ;
+  width: 3.3333% !important;
+  margin: 0px 15%;
+}
+#classPractice .performance-list {
+  margin: 15px;
+  height: calc(100% - 30px);
+  overflow: hidden;
+}
+#classPractice .performance-list .title {
+  padding: 13px 0;
+  background: #E6E6E6;
+  border-radius: 10px 10px 0 0;
+}
+#classPractice .performance-list .performance-cont {
+  background: #fff;
+  height: 100%;
+  overflow-x: hidden;
+  overflow-y: auto;
+  position: relative;
+}
+#classPractice .performance-list span {
+  width: 25%;
+  display: inline-block;
+  text-align: center;
+}
+#classPractice .performance-list span.number {
+  width: 20%;
+}
+#classPractice .performance-list span.number2 {
+  width: 15%;
+}
+#classPractice .performance-list span.name {
+  width: 30%;
+}
+#classPractice .performance-list span.time {
+  width: 35%;
+}
+#classPractice .performance-item {
+  padding: 13px 0;
+  position: relative;
+}
+#classPractice .performance-item span {
+  color: #333;
+  font-size: 15px;
+}
+#classPractice .performance-item:after {
+  content: '';
+  position: absolute;
+  background-color: #eee;
+  display: block;
+  z-index: 1;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 1PX;
+  -webkit-transform: scaleY(0.5);
+  -ms-transform: scaleY(0.5);
+  transform: scaleY(0.5);
+}
+#classPractice .answer-student {
+  margin: 8px 0 0 0;
+}
+#classPractice .answer-student > div {
+  padding: 10px 0 10px 30px;
+}
+#classPractice .answer-student > div .right {
+  color: #333;
+}
+#classPractice .answer-student div:last-child {
+  padding-bottom: 0;
+}
+#classPractice .classPractice-empty {
+  width: 141px;
+  height: 110px;
+  background: url("../img/classPractice-empty.png") no-repeat;
+  background-size: 100% 100%;
+}
+#classPractice .classPractice-emptyText {
+  text-align: center;
+  font-size: 12px;
+  color: #999;
+  margin-top: 30px;
+}
+#classPractice .Short-Answer .topicTitle {
+  font-size: 15px;
+  color: #333;
+}
+#classPractice .Short-Answer .topicTitle span {
+  width: 30px;
+  display: inline-block;
+  text-align: center;
+  vertical-align: top;
+  padding: 0;
+}
+#classPractice .Short-Answer .topicTitle .title {
+  width: calc(100% - 30px);
+  display: inline-block;
+}
+#classPractice .Short-Answer .Short-AnswerCont {
+  padding-left: 30px;
+}
+#classPractice .Short-Answer .Short-AnswerCont .Short-AnswerCont1 {
+  padding: 12px 0;
+}
+#classPractice .Short-Answer .Short-AnswerCont .pic {
+  width: 80px;
+  height: 80px;
+  margin-right: 16px;
+  display: inline-block;
+}
+#classPractice .Short-Answer .Short-AnswerCont img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+#classPractice .right-answer {
+  width: 100%;
+  color: #333;
+}
+#classPractice .right-answer .btn-answer {
+  color: #EF6E58;
+}
+#classPractice .right-answer span {
+  display: block;
+  margin-top: 12px;
+}
+#classPractice .right-answer span p {
+  margin: 0;
+  padding: 0;
+}
+#classPractice .right-answer span.ABC {
+  display: inline-block;
+  vertical-align: top;
+  margin-top: 0;
+}
+#classPractice .right-answer .right-red {
+  color: #EF6E58;
+}
+#classPractice .classPractice-btn-empty {
+  border: none;
+}

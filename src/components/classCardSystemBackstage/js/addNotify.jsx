@@ -1,5 +1,7 @@
 import React from 'react';
-import {List, Picker, InputItem, TextareaItem, Button, WhiteSpace, Toast} from 'antd-mobile';
+
+import {List, Picker, InputItem, TextareaItem, Button, WhiteSpace, Toast,Icon} from 'antd-mobile';
+
 import '../css/notify.less'
 
 var calm;
@@ -10,11 +12,12 @@ export default class addNotify extends React.Component {
         super(props);
         calm = this;
         this.state = {
+            defaultPageNo:1,
             pickerData: [],  //选择项容器
             asyncValue: [],
             title: '',
             content: '',
-            classroomId: ''  //所选班级id
+            classroomId: 'test'  //所选班级id／
         };
     }
 
@@ -22,7 +25,7 @@ export default class addNotify extends React.Component {
         var locationHref = window.location.href;
         var locationSearch = locationHref.substr(locationHref.indexOf("?") + 1);
         var ident = locationSearch.split("&")[0].split('=')[1];
-        this.setState({ident});
+        this.setState({ ident });
     }
 
     componentDidMount() {
@@ -34,9 +37,9 @@ export default class addNotify extends React.Component {
         //解除监听
         window.removeEventListener('resize', calm.onWindowResize)
     }
-      /**
-     * 视窗改变时改变高度
-     */
+    /**
+   * 视窗改变时改变高度
+   */
     onWindowResize() {
         setTimeout(function () {
             calm.setState({
@@ -44,26 +47,28 @@ export default class addNotify extends React.Component {
             });
         }, 100)
     }
-    getClassRoomId(){
+    getClassRoomId() {
         var _this = this;
         //获取班级选择项
         var param = {
-            "method": 'viewClassRoomPage',
+            "method": 'viewClassRoomPageByClass',
             "uid": calm.state.ident,
-            "pn":-1
+            "pn": -1
         };
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
             onResponse: (result) => {
                 if (result.msg == '调用成功' || result.success == true) {
                     if (WebServiceUtil.isEmpty(result.response) == false) {
-                        var arr = [];
+                        var arr = [{
+                            value: 0, label: "全校"
+                        }];
                         result.response.forEach(function (v, i) {
                             arr.push({
                                 value: v.id, label: v.name
                             })
                         })
-                        calm.setState({pickerData: arr});
-                    }else {
+                        calm.setState({ pickerData: arr });
+                    } else {
                         Toast.fail(result.msg, 1);
                     }
                 }
@@ -95,25 +100,36 @@ export default class addNotify extends React.Component {
 
     //提交
     submitClass = () => {
-        let warn = '', classInfo = this.state;
+        let warn = '',
+            classInfo = this.state;
         var _this = this;
-        if (classInfo.classroomId == '') {
-            warn = '请选择班级';
+        if (classInfo.classroomId == 'test') {
+            warn = '请选择教室';
         } else if (classInfo.title == '') {
             warn = '请输入标题'
         } else if (classInfo.content == '') {
             warn = '请输入内容'
         }
-
         if (warn == '') {
+            let classObject
             // 通过验证,开始提交
-            let classObject = {
-                uid:calm.state.ident,
-                noticeContent:classInfo.content,
-                classroomId:classInfo.classroomId,
-                noticeTitle:classInfo.title,
-                type:1
-            };
+            if (classInfo.classroomId == 0) {
+                classObject = {
+                    uid: calm.state.ident,
+                    noticeContent: classInfo.content,
+                    classroomId: classInfo.classroomId,
+                    noticeTitle: classInfo.title,
+                    type: 2
+                };
+            } else {
+                classObject = {
+                    uid: calm.state.ident,
+                    noticeContent: classInfo.content,
+                    classroomId: classInfo.classroomId,
+                    noticeTitle: classInfo.title,
+                    type: 1
+                };
+            }
             var param = {
                 "method": 'saveClassBrandNotice',
                 "classBrandNoticeJson": classObject,
@@ -128,39 +144,113 @@ export default class addNotify extends React.Component {
                         Bridge.callHandler(data, null, function (error) {
                             console.log(error);
                         });
-                    }else {
+                    } else {
                         Toast.fail(result.msg, 1);
                     }
                 },
                 onError: function (error) {
-                   Toast.warn('保存失败');
+                    Toast.warn('保存失败');
                 }
             });
         } else {
-            Toast.info(warn,1);
+            Toast.info(warn, 1);
         }
     };
     //标题双向绑定
     titleHandleChange = event => {
-        this.setState({title: event});
+        this.setState({ title: event });
     }
     //内容双向绑定
     contentHandleChange = event => {
-        this.setState({content: event});
+        this.setState({ content: event });
     }
-   
+
+    inputOnChang = (e) => {
+        this.setState({inputValue: e.target.value})
+    }
+
+    showAddPower=()=> {
+        $('.updateModel').slideDown();
+        $('.tagAddPanel_bg').show();
+    }
+
+    exitAddTags = () => {
+        $('.updateModel').slideUp()
+        $('.tagAddPanel_bg').hide()
+        this.setState(({responseList: [], selectedClassroomId: '',selectedRoomName:'', inputValue: ''}))
+    }
+
+    buildResponseList = (data) => {
+        var _this = this;
+        var arr = []
+        data.forEach(function (v, i) {
+            arr.push(<li className='line_public noomPowerList' onClick={(e) => {
+                _this.setState({selectedClassroomId: v.id,selectedRoomName:v.name})
+                for (var i = 0; i < $('.noomPowerList').length; i++) {
+                    $('.noomPowerList').eq(i).removeClass("active");
+                }
+
+                e.target.className = 'active line_public noomPowerList'
+
+            }}>{v.name+"("+v.building.name+")"}</li>)
+        })
+        this.setState({responseList: arr})
+    }
+
+    searchUserByKeyWord = () => {
+
+        this.setState(({responseList: []}))
+
+        var _this = this;
+        var PageNo = this.state.defaultPageNo;
+        var param = {
+            "method": 'viewClassRoomPage',
+            "uid": calm.state.ident,
+            "searchKeyWords": this.state.inputValue,
+            "pn": PageNo,
+        };
+
+        WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
+            onResponse: result => {
+                if (result.msg == '调用成功' && result.success == true) {
+                    if (!WebServiceUtil.isEmpty(result.response)) {
+                        _this.buildResponseList(result.response);
+                    } else {
+                        Toast.fail('未找到该用户', 1)
+                    }
+                } else {
+                    Toast.fail(result.msg)
+                }
+
+            },
+            onError: function (error) {
+                Toast.fail(error, 1);
+            }
+        });
+    }
+
+    addTagsForSure = () => {
+        if (WebServiceUtil.isEmpty(this.state.selectedClassroomId)) {
+            Toast.fail('请选择要添加的教室', 2)
+            return
+        }
+        $('.updateModel').hide();
+        $('.tagAddPanel_bg').hide();
+        this.setState(({responseList: [],inputValue:''}));
+        this.setState({classroomId: this.state.selectedClassroomId, addRoomName: this.state.selectedRoomName});
+    }
+
+
+
     render() {
         return (
-            <div id="notify" style={{height: document.body.clientHeight}}>
-                <WhiteSpace size="lg"/>
-                <Picker data={this.state.pickerData}
-                        cols={1}
-                        className="forss"
-                        value={this.state.asyncValue}
-                        onPickerChange={this.onPickerChange}
-                        onOk={v => this.viewCourseTableItemPage(v)}>
-                    <List.Item arrow="horizontal" onClick={this.getClassRoomId}>选择教室</List.Item>
-                </Picker>
+            <div id="notify" style={{ height: document.body.clientHeight }}>
+                <WhiteSpace size="lg" />
+                <div className='addBtn sameBack' onClick={this.showAddPower}>
+                <span>选择教室
+                <span>{this.state.addRoomName}</span>
+                <Icon type="plus"/></span>
+                </div>
                 <WhiteSpace size="lg"/>
                 <InputItem
                     placeholder="请输入标题"
@@ -170,7 +260,7 @@ export default class addNotify extends React.Component {
                     maxLength={100}
                     onChange={this.titleHandleChange}
                 >输入标题</InputItem>
-                <WhiteSpace size="lg"/>
+                <WhiteSpace size="lg" />
                 <List>
                     <div className="import_title">输入内容</div>
                     <TextareaItem
@@ -185,6 +275,23 @@ export default class addNotify extends React.Component {
                 <div className="submitBtn">
                     <Button type="primary" onClick={this.submitClass}>提交</Button>
                 </div>
+
+                <div className='updateModel' style={{display: 'none'}}>
+                    <div>
+                        <div className='searchDiv'>
+                            <input type="text" value={this.state.inputValue} onChange={this.inputOnChang} placeholder='请输入搜索内容'/>
+                            <span onClick={this.searchUserByKeyWord}>搜索</span>
+                        </div>
+                    </div>
+                    <div className='cont'>
+                        {this.state.responseList}
+                    </div>
+                    <div className="bottomBox">
+                        <span className="close" onClick={this.exitAddTags}>取消</span>
+                        <span className="bind" onClick={this.addTagsForSure}>确定</span>
+                    </div>
+                </div>
+                <div className="tagAddPanel_bg"></div>
             </div>
         );
     }
