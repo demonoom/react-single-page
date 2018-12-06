@@ -236,6 +236,9 @@
   height: 38px;
   padding: 8px 12px;
   border-radius: 4px;
+  position: absolute;
+  left: 0;
+  bottom: 0;
 }
 #chatDetil .input_message .am-textarea-item {
   border: 1px solid #ddd;
