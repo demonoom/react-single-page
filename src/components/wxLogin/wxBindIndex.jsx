@@ -5,8 +5,8 @@ import {List, Toast, ListView, Button, InputItem, Radio, WhiteSpace, Modal} from
 const RadioItem = Radio.RadioItem;
 const Item = List.Item;
 const data = [
-    {value: 1, label: '教师'},
     {value: 2, label: '家长'},
+    {value: 1, label: '教师'},
 ];
 var timer = null;
 const prompt = Modal.prompt;
@@ -17,7 +17,7 @@ export default class wxBindIndex extends React.Component {
         this.state = {
             openid: '',
             testText: '',
-            value: 1,  // 1 教师  2  家长
+            value: 2,  // 1 教师  2  家长
             tel: '',
             sendButton: true,
             code: '',
@@ -30,6 +30,7 @@ export default class wxBindIndex extends React.Component {
             colAccount: '',
             phoneNumber: '',
             stuLis: [],
+            userName:''
         };
 
     }
@@ -63,6 +64,7 @@ export default class wxBindIndex extends React.Component {
                             openidFlag: true,
                             phoneNumber: result.response.users.phoneNumber,
                             colAccount: result.response.users.colAccount,
+                            userName: result.response.users.userName,
                             col_id: result.response.col_id,
                             col_obj: result.response,
                             col_uid: result.response.col_uid
@@ -322,20 +324,22 @@ export default class wxBindIndex extends React.Component {
     }
 
     showBindModel = () => {
-        var phoneType = navigator.userAgent;
-        var phone;
-        if (phoneType.indexOf('iPhone') > -1 || phoneType.indexOf('iPad') > -1) {
-            phone = 'ios'
-        } else {
-            phone = 'android'
-        }
-        prompt('请输入学生ID', '', [
-            {text: '取消'},
-            {text: '确定', onPress: value => this.weChatParentBindStudent(value)},
-        ], 'default', '', [], phone)
-        if (phone == 'ios') {
-            document.getElementsByClassName('am-modal-input')[0].getElementsByTagName('input')[0].focus();
-        }
+        $('.mask').show();
+        $('.bindStu_modal').show();
+        // var phoneType = navigator.userAgent;
+        // var phone;
+        // if (phoneType.indexOf('iPhone') > -1 || phoneType.indexOf('iPad') > -1) {
+        //     phone = 'ios'
+        // } else {
+        //     phone = 'android'
+        // }
+        // prompt('请输入学生ID', '', [
+        //     {text: '取消'},
+        //     {text: '确定', onPress: value => this.weChatParentBindStudent(value)},
+        // ], 'default', '', [], phone)
+        // if (phone == 'ios') {
+        //     document.getElementsByClassName('am-modal-input')[0].getElementsByTagName('input')[0].focus();
+        // }
     }
 
     //家长绑定学生帐号
@@ -377,10 +381,70 @@ export default class wxBindIndex extends React.Component {
     }
 
 
+    editorUserName = ()=>{
+        var phoneType = navigator.userAgent;
+        var phone;
+        if (phoneType.indexOf('iPhone') > -1 || phoneType.indexOf('iPad') > -1) {
+            phone = 'ios';
+        } else {
+            phone = 'android';
+        }
+        prompt('请修改用户姓名', '', [
+            {text: '取消'},
+            {text: '确定', onPress: value => console.log(value,'更改')},
+        ], 'default', this.state.userName, [], phone);
+        if (phone == 'ios') {
+            document.getElementsByClassName('am-modal-input')[0].getElementsByTagName('input')[0].focus();
+        }
+    }
+
+    childCancel = ()=>{
+        console.log('取消');
+        $('.mask').hide();
+        $('.bindStu_modal').hide();
+        $('#childName').val('');
+        $('#childID').val('');
+    }
+
+    childBind = ()=>{
+        console.log('确定绑定');
+        console.log($('#childName').val(),'学生姓名');
+        console.log($('#childID').val(),'学生ID');
+    }
+
+
     render() {
         const {value} = this.state;
         return (
             <div id="wxBindIndex">
+
+                <div className="mask" style={{height:document.body.clientHeight,position: 'absolute',
+                    top:0,
+                    left:0,
+                    width: '100%',
+                    background: 'black',
+                    opacity: 0.5,
+                zIndex:10}}></div>
+                <div className="bindStu_modal" style={{
+                    position:'absolute',
+                    top:'50%',
+                    left:'50%',
+                    width:'300px',
+                    height:'300px',
+                    transform: 'translate(-50%,-50%)',
+                    zIndex:11,
+                    background:'white'
+                }}>
+                    <div>添加绑定学生</div>
+                    <div><span>姓名:</span><input id="childName" type="text"/></div>
+                    <div><span>ID:</span><input id="childID" type="text"/></div>
+                    <div>
+                        <button className="childCancel" onClick={this.childCancel}>取消</button>
+                        <button className="childBind" onClick={this.childBind}>确定</button>
+                    </div>
+                </div>
+
+
                 <div style={{
                     display: this.state.textFlag ? 'block' : 'none'
                 }} className="isDangerArea">
@@ -444,6 +508,7 @@ export default class wxBindIndex extends React.Component {
                         <div className="line_public number-title">您的微信已绑定以下账号</div>
                         <div className="mumber-cont" >
                             <span className="left text_hidden"><i className="i-icon i-phone"></i>{this.state.colAccount}</span>
+                            <span className="left text_hidden"><i className="i-icon i-phone"></i>{this.state.userName} <span onClick={this.editorUserName}>修改</span> </span>
                             <span className="right text_hidden" style={{display: this.state.value == 2 ? 'none' : 'inline-block'}}><i
                                 className="i-icon i-tel"></i>{this.state.phoneNumber}</span>
                             <Button onClick={this.unBindAccount}>解绑</Button>
