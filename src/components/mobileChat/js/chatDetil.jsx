@@ -125,6 +125,7 @@ export default class chat_Detil extends React.Component {
     }
 
     componentDidMount() {
+        var _this = this;
         const hei = this.state.height - ReactDOM.findDOMNode(this.ptr).offsetTop;
         setTimeout(() => this.setState({
             height: hei,
@@ -137,6 +138,19 @@ export default class chat_Detil extends React.Component {
             this.getChatGroupMessages(false, true)
         }
         this.msListener()
+        //添加对视窗大小的监听,在屏幕转换以及键盘弹起时重设各项高度
+        window.addEventListener('resize', _this.onWindowResize)
+    }
+
+    /**
+     * 视窗改变时改变高度
+     */
+    onWindowResize = () => {
+        Toast.info('123')
+        var _this = this;
+        setTimeout(function () {
+            _this.setState({height: document.body.clientHeight});
+        }, 100)
     }
 
     /**

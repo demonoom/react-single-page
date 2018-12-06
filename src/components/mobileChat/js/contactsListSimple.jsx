@@ -204,6 +204,7 @@ export default class contacts_ListS extends React.Component {
      * 去我的班级
      */
     turnToClass() {
+        debugger
         var colPasswd = contactsList.state.userData[0].colPasswd
         var unionid = contactsList.state.unionid
         window.location.href = encodeURI(WebServiceUtil.mobileServiceURL + 'classList?fromId=' + contactsList.state.userId + '&colPasswd=' + colPasswd + '&unionid=' + unionid)
