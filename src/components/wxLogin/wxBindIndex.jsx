@@ -343,26 +343,57 @@ export default class wxBindIndex extends React.Component {
     }
 
     //家长绑定学生帐号
-    weChatParentBindStudent(value) {
+    weChatParentBindStudent(value,userName) {
         var _this = this;
         var param = {
             "method": 'weChatParentBindStudent',
             "pId": this.state.col_obj.col_uid,
             "studAccount": value,
+            "userName":userName
         };
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
             onResponse: (result) => {
                 if (result.success && result.response) {
                     Toast.success('绑定成功');
+                    $('.mask').hide();
+                    $('.bindStu_modal').hide();
+                    $('#childName').val('');
+                    $('#childID').val('');
                     _this.getBindedChildren(this.state.col_obj)
                 } else {
-                    Toast.fail('绑定失败');
+                    Toast.fail(result.msg);
                 }
             },
             onError: function (error) {
                 Toast.info('请求失败');
             }
         });
+    }
+
+    changeUserNick = (nickName)=>{
+        this.setState({
+            userName: nickName
+        },()=>{
+            var _this = this;
+            var param = {
+                "method": 'changeUserNick',
+                "ident": this.state.col_obj.col_uid,
+                "nick": nickName,
+            };
+            WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
+                onResponse: (result) => {
+                    if (result.success && result.response) {
+
+                    } else {
+                        Toast.fail(result.msg);
+                    }
+                },
+                onError: function (error) {
+                    Toast.info('请求失败');
+                }
+            });
+        })
+
     }
 
     toDetail(toThere,type){
@@ -391,7 +422,7 @@ export default class wxBindIndex extends React.Component {
         }
         prompt('请修改用户姓名', '', [
             {text: '取消'},
-            {text: '确定', onPress: value => console.log(value,'更改')},
+            {text: '确定', onPress: value => this.changeUserNick(value)},
         ], 'default', this.state.userName, [], phone);
         if (phone == 'ios') {
             document.getElementsByClassName('am-modal-input')[0].getElementsByTagName('input')[0].focus();
@@ -410,6 +441,12 @@ export default class wxBindIndex extends React.Component {
         console.log('确定绑定');
         console.log($('#childName').val(),'学生姓名');
         console.log($('#childID').val(),'学生ID');
+        if($('#childName').val() == '' || $('#childName').val() == ''){
+            Toast.info('ID或姓名不能为空!');
+        }else{
+            this.weChatParentBindStudent($('#childID').val(),$('#childName').val());
+
+        }
     }
 
 
