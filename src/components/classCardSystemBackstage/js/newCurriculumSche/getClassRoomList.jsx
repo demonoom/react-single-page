@@ -2,13 +2,14 @@ import React from 'react';
 import {
     ListView,
     PullToRefresh,
-    Toast
+    Toast,
+    SearchBar, Button, WhiteSpace, WingBlank
 } from 'antd-mobile';
 
 import '../../css/newCurriculumSche/getClassRoomList.less'
 
 var classBinding;
-
+var timer;
 export default class getClassRoomList extends React.Component {
 
     constructor(props) {
@@ -22,9 +23,10 @@ export default class getClassRoomList extends React.Component {
             dataSource: dataSource.cloneWithRows(this.initData),
             defaultPageNo: 1,
             clientHeight: document.body.clientHeight,
-            chooseResultDiv: 'none',
+            showClear: false,
         };
     }
+
 
     componentDidMount() {
         Bridge.setShareAble("false");
@@ -37,7 +39,7 @@ export default class getClassRoomList extends React.Component {
             "colUid": uid
         }
         localStorage.setItem("classTableIdent", JSON.stringify(uidKey));
-        this.viewClassRoomPage(uid, false);
+        this.viewClassRoomPage(uid, true);
         //添加对视窗大小的监听,在屏幕转换以及键盘弹起时重设各项高度
         window.addEventListener('resize', classBinding.onWindowResize)
     }
@@ -59,9 +61,9 @@ export default class getClassRoomList extends React.Component {
     /**
      * 查看教室信息
      */
-    viewClassRoomPage(uid, flag) {
+    viewClassRoomPage = (uid, flag) => {
         var _this = this;
-        if (!flag) {
+        if (flag) {
             _this.initData.splice(0);
             _this.state.dataSource = [];
             _this.state.dataSource = new ListView.DataSource({
@@ -73,11 +75,11 @@ export default class getClassRoomList extends React.Component {
         var param = {
             "method": 'viewClassRoomPage',
             "uid": uid,
+            "searchKeyWords": this.input.value,
             "pn": PageNo,
         };
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
             onResponse: function (result) {
-                console.log(result);
                 if (result.msg == '调用成功' && result.success == true) {
                     var arr = result.response;
                     var pager = result.pager;
@@ -119,7 +121,7 @@ export default class getClassRoomList extends React.Component {
         }
         currentPageNo += 1;
         this.setState({ isLoadingLeft: true, defaultPageNo: currentPageNo });
-        _this.viewClassRoomPage(_this.state.uid, true);
+        _this.viewClassRoomPage(_this.state.uid, false);
         this.setState({
             dataSource: this.state.dataSource.cloneWithRows(this.initData),
             isLoadingLeft: true,
@@ -130,7 +132,7 @@ export default class getClassRoomList extends React.Component {
         var divPull = document.getElementsByClassName('am-pull-to-refresh-content');
         divPull[0].style.transform = "translate3d(0px, 30px, 0px)";   //设置拉动后回到的位置
         this.setState({ defaultPageNo: 1, refreshing: true, isLoadingLeft: true });
-        this.viewClassRoomPage(this.state.uid, false);
+        this.viewClassRoomPage(this.state.uid, true);
     }
 
     turnToClassTable(rowData) {
@@ -157,7 +159,6 @@ export default class getClassRoomList extends React.Component {
             method: 'selectOnlyExcel',
         };
         var _this = this;
-        console.log(data)
         Bridge.callHandler(data, function (res) {
             //拿到视频地址,显示在页面等待上传
             var arr = res.split(',');
@@ -179,7 +180,6 @@ export default class getClassRoomList extends React.Component {
                 _this.batchAddCourseTable(videoPath)
 
             })
-            console.log(newArr, "newArr")
         }, function (error) {
             console.log(error);
         });
@@ -193,14 +193,13 @@ export default class getClassRoomList extends React.Component {
         var param = {
             "method": 'batchAddCourseTable',
             "url": path,
-            "userId":this.state.uid
+            "userId": this.state.uid
         };
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
             onResponse: function (result) {
-                console.log(result,"rere")
                 if (result.success == true) {
                     Toast.info("上传成功", 1);
-                }else {
+                } else {
                     Toast.info(result.msg)
                 }
             },
@@ -209,7 +208,28 @@ export default class getClassRoomList extends React.Component {
             }
         });
     }
+    /**
+     * 搜索框
+     */
+    searchInput = () => {
+        clearTimeout(timer);
+        this.state.defaultPageNo = 1;
+        timer = setTimeout(() => {
+            this.viewClassRoomPage(this.state.uid, true);
+        }, 400);
+        this.setState({
+            showClear: (this.input.value != '')
+        })
 
+    }
+    /**
+     * 删除按钮
+     */
+    clearSearch = () => {
+        this.input.value = '';
+        this.setState({ showClear: false })
+        this.viewClassRoomPage(this.state.uid, true);
+    }
     render() {
         var _this = this;
         const row = (rowData, sectionID, rowID) => {
@@ -229,19 +249,19 @@ export default class getClassRoomList extends React.Component {
                             <div className="classroom_subject textOver" style={{ width: '100%' }}>
                                 {
                                     rowData.defaultBindedClazz ?
-                                    <div><span className="grade grade-left">绑定班级：</span><span className="grade grade-right">{rowData.defaultBindedClazz.name}</span> </div>:
+                                        <div><span className="grade grade-left">绑定班级：</span><span className="grade grade-right">{rowData.defaultBindedClazz.name}</span> </div> :
                                         <span className="grade"></span>
                                 }
                             </div>
                             <div className="classroom_subject textOver" style={{ width: '100%' }}>
                                 {
                                     rowData.defaultBindedClazz ?
-                                    <div><span className="grade grade-left grade-letter1">班级ID：</span><span className="grade grade-right">{rowData.defaultBindedClazz.id}</span></div>:
+                                        <div><span className="grade grade-left grade-letter1">班级ID：</span><span className="grade grade-right">{rowData.defaultBindedClazz.id}</span></div> :
                                         <span className="grade"></span>
                                 }
-                                
+
                             </div>
-                           
+
                         </div>
                     }
                 </div>
@@ -249,7 +269,14 @@ export default class getClassRoomList extends React.Component {
         };
         return (
             <div id="getClassRoomList" style={{ height: classBinding.state.clientHeight }}>
-                <div  className="edit_coordinateLi line_public" onClick={this.addMoreClassTable}>
+                <div className="nav search-nav">
+                    <i></i><input type="text" ref={input => this.input = input} onInput={this.searchInput.bind(this)} placeholder="请输入搜索内容" /><span style={
+                        this.state.showClear ? { display: 'block' } : { display: 'none' }
+                    } onClick={this.clearSearch} className="close"></span>
+                </div>
+                <div style={
+                    this.input && this.input.value != '' ? { display: 'none' } : { display: 'block' }
+                } className="edit_coordinateLi line_public" onClick={this.addMoreClassTable}>
                     <span className="edit_coordinate">批量上传课程表</span>
                 </div>
                 <div className='tableDiv' style={{ height: classBinding.state.clientHeight }}>
@@ -271,7 +298,7 @@ export default class getClassRoomList extends React.Component {
                         initialListSize={15}   //指定在组件刚挂载的时候渲染多少行数据，用这个属性来确保首屏显示合适数量的数据
                         scrollEventThrottle={20}     //控制在滚动过程中，scroll事件被调用的频率
                         style={{
-                            height: classBinding.state.clientHeight,
+                            height: classBinding.state.clientHeight - 52,
                         }}
                         pullToRefresh={<PullToRefresh
                             onRefresh={this.onRefresh}

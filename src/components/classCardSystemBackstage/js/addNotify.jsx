@@ -1,6 +1,6 @@
 import React from 'react';
 
-import {List, Picker, InputItem, TextareaItem, Button, WhiteSpace, Toast,Icon} from 'antd-mobile';
+import { List, Picker, InputItem, TextareaItem, Button, WhiteSpace, Toast, Icon } from 'antd-mobile';
 
 import '../css/notify.less'
 
@@ -12,13 +12,14 @@ export default class addNotify extends React.Component {
         super(props);
         calm = this;
         this.state = {
-            defaultPageNo:1,
+            defaultPageNo: 1,
             pickerData: [],  //选择项容器
             asyncValue: [],
             title: '',
             content: '',
             classroomId: 'test',  //所选班级id／
-            inputValue:''
+            inputValue: '',
+            addRoomName:''
         };
     }
 
@@ -167,30 +168,35 @@ export default class addNotify extends React.Component {
     }
 
     inputOnChang = (e) => {
-        this.setState({inputValue: e.target.value})
+        this.setState({ inputValue: e.target.value })
     }
 
-    showAddPower=()=> {
-        this.searchUserByKeyWord();
-        $('.updateModel').slideDown();
-        $('.tagAddPanel_bg').show();
-        $('.mask').show();
-        console.log($('.mask').show());
+    showAddPower = () => {
+        // this.setState({
+        //     responseList: []
+        // }, () => {
+            this.UserByKeyWord();
+            $('.updateModel').slideDown();
+            $('.tagAddPanel_bg').show();
+            $('.mask').show();
+            console.log($('.mask').show());
+        // })
+
     }
 
     exitAddTags = () => {
         $('.updateModel').slideUp();
         $('.tagAddPanel_bg').hide();
         $('.mask').hide();
-        this.setState(({responseList: [], selectedClassroomId: '',selectedRoomName:'', inputValue: ''}))
+        this.setState(({ responseList: [], selectedClassroomId: '', selectedRoomName: '', inputValue: '' }))
     }
 
     buildResponseList = (data) => {
         var _this = this;
         var arr = [];
-        // console.log(data,'构建的数据');
+        console.log(data, '构建的数据');
         data.forEach(function (v, i) {
-            var buildName = v.building?v.building.name:'';
+            var buildName = v.building ? v.building.name : '';
             // console.log(buildName,'buildName')
             arr.push(<li className='line_public noomPowerList textOver' onClick={(e) => {
                 for (var i = 0; i < $('.noomPowerList').length; i++) {
@@ -201,23 +207,64 @@ export default class addNotify extends React.Component {
                 //     Toast.fail('请选择要添加的教室', 2)
                 //     return
                 // }
-                _this.setState({selectedClassroomId: v.id,selectedRoomName:v.name},()=>{
+                _this.setState({ selectedClassroomId: v.id, selectedRoomName: v.name }, () => {
                     $('.updateModel').hide();
                     $('.tagAddPanel_bg').hide();
                     $('.mask').hide();
-                    _this.setState(({responseList: [],inputValue:''}));
-                    _this.setState({classroomId: _this.state.selectedClassroomId, addRoomName: _this.state.selectedRoomName});
+                    _this.setState(({ responseList: [], inputValue: '' }));
+                    _this.setState({ classroomId: _this.state.selectedClassroomId, addRoomName: _this.state.selectedRoomName });
                 });
 
 
-            }}>{v.name+"("+buildName+")"}</li>)
+            }}>{v.name + (buildName == ''?'':"(" + buildName + ")")}</li>)
         })
-        this.setState({responseList: arr})
+        this.setState({ responseList: arr })
     }
 
     searchUserByKeyWord = () => {
+        this.setState({
+            responseList: []
+        }, () => {
+            var _this = this;
+            var PageNo = this.state.defaultPageNo;
+            var param = {
+                "method": 'viewClassRoomPage',
+                "uid": calm.state.ident,
+                "searchKeyWords": this.state.inputValue,
+                "pn": PageNo,
+            };
 
-        this.setState(({responseList: []}))
+            WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
+                onResponse: result => {
+                    if (result.msg == '调用成功' && result.success == true) {
+                        if (!WebServiceUtil.isEmpty(result.response)) {
+                            var res = result.response;
+                            var listData = this.state.responseList;
+                            for (var k in res) {
+                                listData.push(res[k]);
+                            }
+                            // this.setState({
+                            //     responseList: 
+                            // })
+                            _this.buildResponseList(listData);
+                        } else {
+                            Toast.fail('未找到该用户', 1)
+                        }
+                    } else {
+                        Toast.fail(result.msg)
+                    }
+
+                },
+                onError: function (error) {
+                    Toast.fail(error, 1);
+                }
+            });
+        });
+
+    }
+
+
+    UserByKeyWord = () => {
         var _this = this;
         var PageNo = this.state.defaultPageNo;
         var param = {
@@ -231,7 +278,32 @@ export default class addNotify extends React.Component {
             onResponse: result => {
                 if (result.msg == '调用成功' && result.success == true) {
                     if (!WebServiceUtil.isEmpty(result.response)) {
-                        _this.buildResponseList(result.response);
+                        var res = result.response;
+                        var listData = this.state.responseList;
+                        listData = [{
+                            building: {
+                                dangerArea: false,
+                                id: 97,
+                                name: "",
+                                normal: false,
+                                punch: true,
+                                type: 3,
+                                valid: true,
+                            },
+                            createTime: 1543312979000,
+                            defaultBindedClazz: {
+                                id: 3487,
+                                name: "产品诗词班",
+                                schoolId: 0,
+                            },
+                            id: 0,
+                            name: "全校",
+                            valid: true,
+                        }];
+                        for (var k in res) {
+                            listData.push(res[k]);
+                        }
+                        _this.buildResponseList(listData);
                     } else {
                         Toast.fail('未找到该用户', 1)
                     }
@@ -253,8 +325,8 @@ export default class addNotify extends React.Component {
         }
         $('.updateModel').hide();
         $('.tagAddPanel_bg').hide();
-        this.setState(({responseList: [],inputValue:''}));
-        this.setState({classroomId: this.state.selectedClassroomId, addRoomName: this.state.selectedRoomName});
+        this.setState(({ responseList: [], inputValue: '' }));
+        this.setState({ classroomId: this.state.selectedClassroomId, addRoomName: this.state.selectedRoomName });
     }
 
 
@@ -266,11 +338,11 @@ export default class addNotify extends React.Component {
                 <div className='am-list-item am-list-item-middle' onClick={this.showAddPower}>
                     <div className="am-list-line">
                         <div className="am-list-content">选择教室</div>
-                        <div className="am-list-extra">{this.state.addRoomName == ''?'请选择':this.state.addRoomName}</div>
+                        <div className="am-list-extra">{this.state.addRoomName == '' ? '请选择' : this.state.addRoomName}</div>
                         <div className="am-list-arrow am-list-arrow-horizontal"></div>
                     </div>
                 </div>
-                <WhiteSpace size="lg"/>
+                <WhiteSpace size="lg" />
                 <InputItem
                     placeholder="请输入标题"
                     clear
@@ -294,10 +366,10 @@ export default class addNotify extends React.Component {
                 <div className="submitBtn">
                     <Button type="primary" onClick={this.submitClass}>提交</Button>
                 </div>
-                <div className="mask" onClick={this.exitAddTags}  style={{display: 'none'}}></div>
-                <div className='updateModel' style={{display: 'none'}}>
+                <div className="mask" onClick={this.exitAddTags} style={{ display: 'none' }}></div>
+                <div className='updateModel' style={{ display: 'none' }}>
                     <div className='searchDiv'>
-                        <input type="text" value={this.state.inputValue} onChange={this.inputOnChang} placeholder='请输入搜索内容'/>
+                        <input type="text" value={this.state.inputValue} onChange={this.inputOnChang} placeholder='请输入搜索内容' />
                         <span onClick={this.searchUserByKeyWord}>搜索</span>
                     </div>
                     <div className='cont'>
