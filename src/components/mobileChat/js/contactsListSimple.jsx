@@ -93,6 +93,10 @@ export default class contacts_ListS extends React.Component {
                                     <Item onClick={contactsList.turnToFriend}>
                                         <i className='userImg message_friend'></i>
                                         <span>我的好友</span>
+                                    </Item>,
+                                    <Item onClick={contactsList.turnToClass}>
+                                        <i className='userImg stu_class'></i>
+                                        <span>学生班级</span>
                                     </Item>],
                                 indexType: 'parent'
                             })
@@ -305,6 +309,10 @@ export default class contacts_ListS extends React.Component {
                 <Item onClick={contactsList.turnToFriend}>
                     <i className='userImg message_friend'></i>
                     <span>我的好友</span>
+                </Item>,
+                <Item onClick={contactsList.turnToClass}>
+                    <i className='userImg stu_class'></i>
+                    <span>学生班级</span>
                 </Item>]
         })
         contactsList.state.userData.forEach(function (v, i) {

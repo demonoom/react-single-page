@@ -1,3 +1,4 @@
+(node) util.print is deprecated. Use console.log instead.
 #getClassRoomList {
   font-size: 17px;
 }
@@ -10,7 +11,7 @@
   position: relative;
 }
 #getClassRoomList .search-nav i {
-  background: url("../../imgs/search-icon.png") no-repeat center center #fff;
+  background: url("../../imgs/search-icon.png") no-repeat center center #ffffff;
   font-size: 0;
   width: 20px;
   height: 34px;

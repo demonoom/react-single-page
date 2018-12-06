@@ -176,7 +176,12 @@ export default class wxBindIndex extends React.Component {
                     pending: true,
                 }, () => {
                     //验证手机号码
-                    this.validationTel();
+                    // this.validationTel();
+                    this.setState({
+                        telSuccess: 'success',
+                        sendButton: false,
+                        pending: false,
+                    })
                 })
             }
         });
@@ -438,11 +443,11 @@ export default class wxBindIndex extends React.Component {
     }
 
     childBind = ()=>{
-        console.log('确定绑定');
-        console.log($('#childName').val(),'学生姓名');
-        console.log($('#childID').val(),'学生ID');
+        // console.log('确定绑定');
+        // console.log($('#childName').val(),'学生姓名');
+        // console.log($('#childID').val(),'学生ID');
         if($('#childName').val() == '' || $('#childName').val() == ''){
-            Toast.info('ID或姓名不能为空!');
+            Toast.info('账号和姓名不能为空!');
         }else{
             this.weChatParentBindStudent($('#childID').val(),$('#childName').val());
 
@@ -467,7 +472,7 @@ export default class wxBindIndex extends React.Component {
                     <div className="textCont line_public">
                         <div className="nameTitle">添加绑定学生</div>
                         <div className="inputDiv"><input id="childName" type="text" placeholder="请输入学生姓名"/></div>
-                        <div className="inputDiv"><input id="childID" type="text" placeholder="请输入ID"/></div>
+                        <div className="inputDiv"><input id="childID" type="text" placeholder="请输入学生账号"/></div>
                     </div>
 
                     <div className="bottom_btns">
