@@ -94,7 +94,7 @@ export default class contacts_ListS extends React.Component {
                                         <i className='userImg message_friend'></i>
                                         <span>我的好友</span>
                                     </Item>,
-                                    <Item onClick={contactsList.turnToClass}>
+                                    <Item onClick={contactsList.turnToStuClass}>
                                         <i className='userImg stu_class'></i>
                                         <span>学生班级</span>
                                     </Item>],
@@ -204,10 +204,9 @@ export default class contacts_ListS extends React.Component {
      * 去我的班级
      */
     turnToClass() {
-        debugger
         var colPasswd = contactsList.state.userData[0].colPasswd
         var unionid = contactsList.state.unionid
-        window.location.href = encodeURI(WebServiceUtil.mobileServiceURL + 'classList?fromId=' + contactsList.state.userId + '&colPasswd=' + colPasswd + '&unionid=' + unionid)
+        window.location.href = encodeURI(WebServiceUtil.mobileServiceURL + 'classList?fromId=' + contactsList.state.userId + '&colPasswd=' + colPasswd + '&unionid=' + unionid + '&type=te')
     }
 
     /**
@@ -223,7 +222,9 @@ export default class contacts_ListS extends React.Component {
      * 去学生班级
      */
     turnToStuClass() {
-        console.log('turnToStuClass');
+        var colPasswd = contactsList.state.userData[0].colPasswd
+        var unionid = contactsList.state.unionid
+        window.location.href = encodeURI(WebServiceUtil.mobileServiceURL + 'classList?fromId=' + contactsList.state.userId + '&colPasswd=' + colPasswd + '&unionid=' + unionid + '&type=pe')
     }
 
     /**
@@ -311,7 +312,7 @@ export default class contacts_ListS extends React.Component {
                     <i className='userImg message_friend'></i>
                     <span>我的好友</span>
                 </Item>,
-                <Item onClick={contactsList.turnToClass}>
+                <Item onClick={contactsList.turnToStuClass}>
                     <i className='userImg stu_class'></i>
                     <span>学生班级</span>
                 </Item>]
