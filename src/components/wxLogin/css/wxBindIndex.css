@@ -1,8 +1,18 @@
+(node) util.print is deprecated. Use console.log instead.
 #wxBindIndex {
   background: #f0eff5;
   height: 100%;
   overflow-y: auto;
   overflow-x: hidden;
+}
+#wxBindIndex .mask {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: black;
+  opacity: 0.5;
 }
 #wxBindIndex .am-list-item .am-input-label.am-input-label-5 {
   width: 85px;
