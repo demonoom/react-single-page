@@ -542,7 +542,7 @@ export default class wxBindIndex extends React.Component {
                                     <span className="left text_hidden parentAccount" style={
                                         this.state.value == 2?{display:'block'}:{display:'none'}
                                     }><i className="i-icon i-phone"></i>{this.state.userName} <Button onClick={this.editorUserName}>修改</Button> </span>
-                            <span className="left text_hidden"><i className="i-icon i-tel"></i>{this.state.colAccount}</span>
+                            <span className="left text_hidden"><i className={this.state.value == 2? "i-icon i-tel" : "i-icon i-phone"}></i>{this.state.colAccount}</span>
 
                             <span className="right text_hidden" style={{display: this.state.value == 2 ? 'none' : 'inline-block'}}><i
                                 className="i-icon i-tel"></i>{this.state.phoneNumber}</span>
