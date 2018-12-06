@@ -271,9 +271,6 @@ export default class teachingSpaceTeacher extends React.Component {
                             <i className="Icon-teacher Icon-teacher-dutyManage"></i>
                             <div>班牌值日管理</div>
                         </li>
-
-                       
-
                     </ul>
                 </div>
             </div>
