@@ -460,22 +460,17 @@ export default class wxBindIndex extends React.Component {
                     left:0,
                     width: '100%',
                     background: 'black',
-                    opacity: 0.5,
-                zIndex:10}}></div>
-                <div className="bindStu_modal" style={{
-                    position:'absolute',
-                    top:'50%',
-                    left:'50%',
-                    width:'300px',
-                    height:'300px',
-                    transform: 'translate(-50%,-50%)',
-                    zIndex:11,
-                    background:'white'
-                }}>
-                    <div>添加绑定学生</div>
-                    <div><span>姓名:</span><input id="childName" type="text"/></div>
-                    <div><span>ID:</span><input id="childID" type="text"/></div>
-                    <div>
+                    opacity: 0.4,
+                    display:'none',
+                zIndex:14}}></div>
+                <div className="bindStu_modal" style={{display:'none'}}>
+                    <div className="textCont line_public">
+                        <div className="nameTitle">添加绑定学生</div>
+                        <div className="inputDiv"><input id="childName" type="text" placeholder="请输入学生姓名"/></div>
+                        <div className="inputDiv"><input id="childID" type="text" placeholder="请输入ID"/></div>
+                    </div>
+
+                    <div className="bottom_btns">
                         <button className="childCancel" onClick={this.childCancel}>取消</button>
                         <button className="childBind" onClick={this.childBind}>确定</button>
                     </div>
@@ -544,11 +539,14 @@ export default class wxBindIndex extends React.Component {
                     <div>
                         <div className="line_public number-title">您的微信已绑定以下账号</div>
                         <div className="mumber-cont" >
-                            <span className="left text_hidden"><i className="i-icon i-phone"></i>{this.state.colAccount}</span>
-                            <span className="left text_hidden"><i className="i-icon i-phone"></i>{this.state.userName} <span onClick={this.editorUserName}>修改</span> </span>
+                                    <span className="left text_hidden parentAccount" style={
+                                        this.state.value == 2?{display:'block'}:{display:'none'}
+                                    }><i className="i-icon i-phone"></i>{this.state.userName} <Button onClick={this.editorUserName}>修改</Button> </span>
+                            <span className="left text_hidden"><i className="i-icon i-tel"></i>{this.state.colAccount}</span>
+
                             <span className="right text_hidden" style={{display: this.state.value == 2 ? 'none' : 'inline-block'}}><i
                                 className="i-icon i-tel"></i>{this.state.phoneNumber}</span>
-                            <Button onClick={this.unBindAccount}>解绑</Button>
+                            <Button className={this.state.value == 2?'top54':"top15"} onClick={this.unBindAccount}>解绑</Button>
                         </div>
                     </div>
                 </div>
