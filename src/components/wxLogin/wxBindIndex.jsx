@@ -461,12 +461,16 @@ export default class wxBindIndex extends React.Component {
                     width: '100%',
                     background: 'black',
                     opacity: 0.4,
-                zIndex:10}}></div>
-                <div className="bindStu_modal">
-                    <div>添加绑定学生</div>
-                    <div><span>姓名:</span><input id="childName" type="text"/></div>
-                    <div><span>ID:</span><input id="childID" type="text"/></div>
-                    <div>
+                    display:'none',
+                zIndex:14}}></div>
+                <div className="bindStu_modal" style={{display:'none'}}>
+                    <div className="textCont line_public">
+                        <div className="nameTitle">添加绑定学生</div>
+                        <div className="inputDiv"><input id="childName" type="text" placeholder="请输入学生姓名"/></div>
+                        <div className="inputDiv"><input id="childID" type="text" placeholder="请输入ID"/></div>
+                    </div>
+
+                    <div className="bottom_btns">
                         <button className="childCancel" onClick={this.childCancel}>取消</button>
                         <button className="childBind" onClick={this.childBind}>确定</button>
                     </div>
