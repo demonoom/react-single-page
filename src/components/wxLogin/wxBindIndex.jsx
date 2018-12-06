@@ -176,7 +176,12 @@ export default class wxBindIndex extends React.Component {
                     pending: true,
                 }, () => {
                     //验证手机号码
-                    this.validationTel();
+                    // this.validationTel();
+                    this.setState({
+                        telSuccess: 'success',
+                        sendButton: false,
+                        pending: false,
+                    })
                 })
             }
         });
