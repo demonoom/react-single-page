@@ -38,7 +38,7 @@ export default class contacts_ListS extends React.Component {
                     <i className='userImg message_class'></i>
                     <span>我的班级</span>
                 </Item>,
-                <Item onClick={this.turnToFriend}>
+                <Item onClick={this.turnToFriend.bind(this, 'te')}>
                     <i className='userImg message_friend'></i>
                     <span>我的好友</span>
                 </Item>]
@@ -90,7 +90,7 @@ export default class contacts_ListS extends React.Component {
                                         <i className='userImg message_group'></i>
                                         <span>我的群组</span>
                                     </Item>,
-                                    <Item onClick={contactsList.turnToFriend}>
+                                    <Item onClick={contactsList.turnToFriend.bind(this, 'pe')}>
                                         <i className='userImg message_friend'></i>
                                         <span>我的好友</span>
                                     </Item>,
@@ -212,7 +212,8 @@ export default class contacts_ListS extends React.Component {
     /**
      * 去我的好友
      */
-    turnToFriend() {
+    turnToFriend(type) {
+        localStorage.setItem("userType", type)
         var colPasswd = contactsList.state.userData[0].colPasswd
         var unionid = contactsList.state.unionid
         window.location.href = encodeURI(WebServiceUtil.mobileServiceURL + 'friendList?fromId=' + contactsList.state.userId + '&colPasswd=' + colPasswd + '&unionid=' + unionid)
@@ -275,7 +276,7 @@ export default class contacts_ListS extends React.Component {
                     <span>组织架构</span></Item>,
                 <Item onClick={contactsList.turnToClass}><i className='userImg message_class'></i>
                     <span>我的班级</span></Item>,
-                <Item onClick={contactsList.turnToFriend}><i className='userImg message_friend'></i>
+                <Item onClick={contactsList.turnToFriend.bind(this, 'te')}><i className='userImg message_friend'></i>
                     <span>我的好友</span></Item>]
         })
         contactsList.state.userData.forEach(function (v, i) {
@@ -308,7 +309,7 @@ export default class contacts_ListS extends React.Component {
                     <i className='userImg message_group'></i>
                     <span>我的群组</span>
                 </Item>,
-                <Item onClick={contactsList.turnToFriend}>
+                <Item onClick={contactsList.turnToFriend.bind(this, 'pe')}>
                     <i className='userImg message_friend'></i>
                     <span>我的好友</span>
                 </Item>,

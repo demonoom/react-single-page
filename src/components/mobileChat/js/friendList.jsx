@@ -31,7 +31,12 @@ export default class friendList extends React.Component {
         var userId = searchArray[0].split('=')[1];
         var colPasswd = searchArray[1].split('=')[1];
         var unionid = searchArray[2].split('=')[1];
-        var userType = searchArray[5].split('=')[1];
+        if (!!searchArray[5]) {
+            var userType = searchArray[5].split('=')[1];
+        } else {
+            //为了我区分老师与家长直接点无得好友
+            var userType = localStorage.getItem('userType')
+        }
         if (WebServiceUtil.isEmpty(searchArray[3]) == false) {
             var clazzId = searchArray[3].split('=')[1];
             var clazzName = searchArray[4].split('=')[1];
