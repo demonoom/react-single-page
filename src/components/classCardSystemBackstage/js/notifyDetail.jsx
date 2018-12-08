@@ -50,7 +50,7 @@ export default class notifyDetail extends React.Component {
                     <p className="createDate">{this.state.data.createTime}</p>
                     <div className="content" style={{maxHeight: document.body.clientHeight - 85}}>
                         <p className="title">{this.state.data.noticeTitle}</p>
-                        <div className="text">{this.state.data.noticeContent}</div>
+                        <div className="text"><pre>{this.state.data.noticeContent}</pre></div>
                     </div>
                 </Card>
             </div>
