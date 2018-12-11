@@ -146,7 +146,6 @@ export default class chat_Detil extends React.Component {
      * 视窗改变时改变高度
      */
     onWindowResize = () => {
-        Toast.info('123')
         var _this = this;
         setTimeout(function () {
             _this.setState({height: document.body.clientHeight});
