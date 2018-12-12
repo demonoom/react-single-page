@@ -1,7 +1,10 @@
 import React from 'react';
-import {Icon, Toast} from 'antd-mobile';
-import '../css/classCardHomePageDoor.less'
+import {Icon, Toast,Modal} from 'antd-mobile';
+import '../css/classCardHomePageDoor.less';
+import { SimpleWebsocketConnection } from '../../../helpers/simple_websocket_connection'
+const alert = Modal.alert;
 
+window.simpleMS = null;
 export default class classCardHomePageDoor extends React.Component {
 
     constructor(props) {
@@ -16,11 +19,32 @@ export default class classCardHomePageDoor extends React.Component {
         var ident = searchArray[0].split('=')[1];
         this.setState({ident})
         this.getUserByAccount(ident)
+        simpleMS = new SimpleWebsocketConnection();
+        simpleMS.connect();
     }
 
     componentDidMount() {
         Bridge.setShareAble("false");
-        document.title = '班牌系统'
+        document.title = '班牌系统';
+        this.simpleListener();
+    }
+
+    /**
+     * 消息监听
+     */
+    simpleListener() {
+        simpleMS.msgWsListener = {
+            onError: function (errorMsg) {
+                console.log("班牌管理Error:",errorMsg);
+            }, onWarn: function (warnMsg) {
+                console.log("班牌管理warnMsg:",warnMsg);
+            }, onMessage: function (info) {
+                console.log("班牌管理info:",info);
+                if(info.command=="refreshClassCardPage"){
+                    Toast.success("班牌刷新成功!");
+                }
+            }
+        };
     }
 
     getUserByAccount(ident) {
@@ -254,7 +278,39 @@ export default class classCardHomePageDoor extends React.Component {
         });
     }
 
+    /**
+     * 刷新班牌页面
+     * 给所有的班牌发送一个command,用来主动去刷新班牌app嵌入的网页
+     * 以解决每次发布网页后,班牌无法及时刷新到最新网页的问题
+     */
+    refreshClassCardPage=()=>{
+        alert('', '确定要刷新所有班牌?', [
+            { text: '取消', onPress: () => console.log('cancel') },
+            { text: '确定', onPress: () => {
+                var obj = {
+                    "command": "refreshClassCardPage",
+                    "data": {
+
+                    }
+                }
+                console.log("sendObj",obj);
+                simpleMS.send(obj);
+            } },
+        ])
+
+    }
+
     render() {
+        var _this = this;
+        //判断是否是具有班牌刷新管理员权限的用户
+        var isManager = false;
+        for(var i=0;i<WebServiceUtil.refreshClassCardUserArray.length;i++){
+            var defineUser = WebServiceUtil.refreshClassCardUserArray[i];
+            if(defineUser == _this.state.ident){
+                isManager = true;
+                break;
+            }
+        }
         return (
             <div id="classCardHomePageDoor" style={{height: document.body.clientHeight, overflow: 'auto'}}>
                 <ul className="classCardHomePageDoor my_flex">
@@ -300,6 +356,11 @@ export default class classCardHomePageDoor extends React.Component {
                     <li onClick={this.turnToSetTime}><i className="icon icon_time"></i>
                         <div>定时开关机</div>
                     </li>
+                    {
+                        isManager == true?<li onClick={this.refreshClassCardPage}><i className="icon icon_time"></i>
+                            <div>刷新所有班牌</div>
+                        </li>:null
+                    }
                 </ul>
             </div>
         );
