@@ -319,7 +319,7 @@ export default class notifyBack extends React.Component {
                             <span className="title text_hidden" dangerouslySetInnerHTML={{ __html: item.noticeTitle }}></span>
                             <span className="time">{item.createTime}</span>
                         </div>
-                        <div dangerouslySetInnerHTML={{ __html: item.noticeContent }}></div>
+                        <div className="brief_text" dangerouslySetInnerHTML={{ __html: item.noticeContent }}></div>
                         {/* <Brief >{item.noticeContent}</Brief> */}
                         {
                             item.type == 1 ?
