@@ -1,4 +1,44 @@
 #getClassRoomList {
+  .search-nav{
+    background: #fff;
+    border-top: 9px #efeff4 solid;
+    border-right: 15px solid #efeff4;
+    border-bottom: 9px solid #efeff4;
+    border-left: 15px solid #efeff4;
+    position: relative;
+      & i{
+        background: url("../../imgs/search-icon.png") no-repeat center center #fff;
+        font-size: 0;
+        width: 20px;
+        height: 34px;
+        background-size: 15px 19px;
+        float: left;
+        padding-left: 8px;
+      }
+      & input{
+        z-index: 2;
+        width: calc(~"100% - 58px");
+        text-align: left;
+        display: block;
+        color: #000;
+        font-size: 15px;
+        background-color: #fff;
+        border: 0;
+        padding: 8px 30px 6px 0px;
+        height: 20px;
+        line-height: 20px;
+        border-radius: 0 !important;
+      }
+      & .close{
+        position: absolute;
+        background: url("../../imgs/icon-close.png") no-repeat;
+        width: 16px;
+        height: 16px;
+        right: 4px;
+        top: 9px;
+        background-size: 16px;
+      }
+  }
   .textOver {
     overflow: hidden;
     white-space: nowrap;
@@ -254,4 +294,33 @@
   .am-list-body div:not(:last-child) .am-list-line{
     border-bottom:transparent;
   }
+  .edit_coordinateLi{
+    background: #F5F5F5;
+    padding: 15px 0 13px 15px;
+  }
+  .edit_coordinate{
+    border-radius: 4px;
+    padding: 0 10px;
+    color: #3672ed;
+    text-align: center;
+    font-size:16px;
+    display: inline-block;
+    background: url("../../imgs/edit_coordinate.png") no-repeat;
+    background-size: 18px ;
+    text-indent: 15px;
+  }
+  .grade-left{
+    width: 72px;
+    display: inline-block;
+    color: #666 !important;
+  }
+  .grade-right{
+    width: calc(~"100% - 72px");
+    display: inline-block;
+    color: #666 !important;
+  }
+  .grade-letter1{
+    letter-spacing: 4px;
+  }
+
 }

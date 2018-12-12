@@ -31,6 +31,12 @@ export default class friendList extends React.Component {
         var userId = searchArray[0].split('=')[1];
         var colPasswd = searchArray[1].split('=')[1];
         var unionid = searchArray[2].split('=')[1];
+        if (!!searchArray[5]) {
+            var userType = searchArray[5].split('=')[1];
+        } else {
+            //为了我区分老师与家长直接点无得好友
+            var userType = localStorage.getItem('userType')
+        }
         if (WebServiceUtil.isEmpty(searchArray[3]) == false) {
             var clazzId = searchArray[3].split('=')[1];
             var clazzName = searchArray[4].split('=')[1];
@@ -40,7 +46,7 @@ export default class friendList extends React.Component {
             document.title = "我的好友";   //设置title
         }
 
-        this.setState({userId, colPasswd, unionid});
+        this.setState({userId, colPasswd, unionid, userType});
         var phoneType = navigator.userAgent;
         var phone;
         if (phoneType.indexOf('iPhone') > -1 || phoneType.indexOf('iPad') > -1) {
@@ -150,7 +156,7 @@ export default class friendList extends React.Component {
 
     itemOnClick(rowData) {
         return () => {
-            window.location.href = encodeURI(WebServiceUtil.mobileServiceURL + 'chatDetil?fromId=' + this.state.userId + '&toId=' + rowData.colUid + '&choosePos=te&unionid=' + this.state.unionid + '&colPasswd=' + this.state.colPasswd + '&toName=' + rowData.userName + '&mesType=0')
+            window.location.href = encodeURI(WebServiceUtil.mobileServiceURL + 'chatDetil?fromId=' + this.state.userId + '&toId=' + rowData.colUid + '&choosePos=' + this.state.userType + '&unionid=' + this.state.unionid + '&colPasswd=' + this.state.colPasswd + '&toName=' + rowData.userName + '&mesType=0')
         }
     }
 

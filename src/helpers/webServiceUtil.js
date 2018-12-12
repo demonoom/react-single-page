@@ -320,6 +320,17 @@ WebServiceUtil.createUUID = function () {
     return uuid;
 };
 
+WebServiceUtil.getQueryString = function (name) {
+    var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
+    var index = window.location.href.indexOf('?') + 1;
+    var str = window.location.href.substr(index, window.location.href.length - 1);
+    var r = str.match(reg);
+    if (r != null) {
+        return unescape(r[2]);
+    }
+    return null;
+};
+
 WebServiceUtil.SMALL_IMG = 'size=100x100';
 WebServiceUtil.MIDDLE_IMG = 'size=300x300';
 WebServiceUtil.LARGE_IMG = 'size=500x500';

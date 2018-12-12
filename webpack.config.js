@@ -3,7 +3,8 @@ const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const autoprefixer = require('autoprefixer');
-const version=new Date().getTime();
+// const version = new Date().getTime();
+const version = '1.1.6';
 
 const postcssOpts = {
     ident: 'postcss', // https://webpack.js.org/guides/migrating/#complex-options
@@ -32,8 +33,8 @@ module.exports = {
     }, /*指向spa应用的入口文件*/
 
     output: {
-        filename: '[name].js?v='+version,
-        chunkFilename: '[id].chunk.js?v='+version,   //匹配chunk
+        filename: '[name].js?v=' + version,
+        chunkFilename: '[name]_chunk.js?v=' + version,   //匹配chunk
         path: path.join(__dirname, '/dist'), /*输出的文件路径*/
         publicPath: '/'
     },
@@ -96,7 +97,7 @@ module.exports = {
         //分离第三方应用的插件
         new webpack.optimize.CommonsChunkPlugin({
             name: 'vendor',
-            filename: 'shared.js?v='+version
+            filename: 'shared.js?v=' + version
         }),
 
         //将开发模式变为生产模式
@@ -106,7 +107,7 @@ module.exports = {
             },
         }),
         //抽取CSS文件插件
-        new ExtractTextPlugin({filename: '[name].css?v='+version, allChunks: true}),
+        new ExtractTextPlugin({filename: '[name].css?v=' + version, allChunks: true}),
 
         new HtmlWebpackPlugin({
             title: "HtmlPlugin",

@@ -162,6 +162,10 @@
   background: url("../img/message_class.png") no-repeat;
   background-size: 100% 100%;
 }
+#contactsListSimple .stu_class {
+  background: url("../img/stuClassList.png") no-repeat;
+  background-size: 100% 100%;
+}
 #contactsListSimple .message_friend {
   background: url("../img/message_friend.png") no-repeat;
   background-size: 100% 100%;

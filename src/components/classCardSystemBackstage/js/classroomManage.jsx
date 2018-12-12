@@ -13,7 +13,7 @@ import {
     Flex,
 } from 'antd-mobile';
 import '../css/classroomManage.less'
-import {ucs2} from 'punycode';
+import { ucs2 } from 'punycode';
 
 const Item = List.Item;
 const Brief = Item.Brief;
@@ -38,7 +38,7 @@ export default class classroomManage extends React.Component {
             defaultPageNo: 1,
             clientHeight: document.body.clientHeight,
             selectData: [],
-            showClear:false,
+            showClear: false,
         };
     }
 
@@ -50,7 +50,7 @@ export default class classroomManage extends React.Component {
         var locationSearch = locationHref.substr(locationHref.indexOf("?") + 1);
         console.log(locationSearch);
         var uid = locationSearch.split("&")[0].split("=")[1];
-        this.setState({"uid": uid});
+        this.setState({ "uid": uid });
         this.viewClassRoomPage(uid, true);
         window.addEventListener('resize', classBinding.onWindowResize)
     }
@@ -65,7 +65,7 @@ export default class classroomManage extends React.Component {
      */
     onWindowResize() {
         setTimeout(function () {
-            classBinding.setState({clientHeight: document.body.clientHeight});
+            classBinding.setState({ clientHeight: document.body.clientHeight });
         }, 100)
     }
 
@@ -152,7 +152,7 @@ export default class classroomManage extends React.Component {
             return;
         }
         currentPageNo += 1;
-        this.setState({isLoadingLeft: true, defaultPageNo: currentPageNo});
+        this.setState({ isLoadingLeft: true, defaultPageNo: currentPageNo });
         _this.viewClassRoomPage(_this.state.uid, false);
         this.setState({
             dataSource: this.state.dataSource.cloneWithRows(this.initData),
@@ -163,7 +163,7 @@ export default class classroomManage extends React.Component {
     onRefresh = () => {
         var divPull = document.getElementsByClassName('am-pull-to-refresh-content');
         divPull[0].style.transform = "translate3d(0px, 30px, 0px)";   //设置拉动后回到的位置
-        this.setState({defaultPageNo: 1, refreshing: true, isLoadingLeft: true});
+        this.setState({ defaultPageNo: 1, refreshing: true, isLoadingLeft: true });
         this.viewClassRoomPage(this.state.uid, true);
     }
 
@@ -233,8 +233,8 @@ export default class classroomManage extends React.Component {
         }
         var _this = this;
         const alertInstance = alert('您确定要删除吗?', '', [
-            {text: '取消', onPress: () => console.log('cancel'), style: 'default'},
-            {text: '确定', onPress: () => _this.delClassroom(sId)},
+            { text: '取消', onPress: () => console.log('cancel'), style: 'default' },
+            { text: '确定', onPress: () => _this.delClassroom(sId) },
 
         ], phone);
     };
@@ -256,22 +256,23 @@ export default class classroomManage extends React.Component {
         });
     }
 
-    searchInput = ()=>{
+    searchInput = () => {
         clearTimeout(timer);
-        timer = setTimeout(()=>{
-            console.log(this.input.value,'index');
-            this.viewClassRoomPage(this.state.uid,true);
-        },400);
+        this.state.defaultPageNo = 1;
+        timer = setTimeout(() => {
+            console.log(this.input.value, 'index');
+            this.viewClassRoomPage(this.state.uid, true);
+        }, 400);
         this.setState({
             showClear: (this.input.value != '')
         })
 
     }
 
-    clearSearch = ()=>{
+    clearSearch = () => {
         this.input.value = '';
-        this.setState({showClear:false})
-        this.viewClassRoomPage(this.state.uid,true);
+        this.setState({ showClear: false })
+        this.viewClassRoomPage(this.state.uid, true);
     }
 
     render() {
@@ -279,62 +280,62 @@ export default class classroomManage extends React.Component {
         const row = (rowData, sectionID, rowID) => {
             console.log(rowData);
             return (<div>
-                    {
-                        <div className="classInfo line_public">
-                            <div className="textOver">
-                                <span className="classroom">教室名称：{rowData.name}</span>
-                            </div>
+                {
+                    <div className="classInfo line_public">
+                        <div className="textOver">
+                            <span className="classroom">教室名称：{rowData.name}</span>
+                        </div>
 
-                            <div className="textOver">
-                                {
-                                    rowData.defaultBindedClazz ?
-                                        <span className="grade">绑定班级：{rowData.defaultBindedClazz.name}</span> :
-                                        <span className="grade"></span>
-                                }
+                        <div className="textOver">
+                            {
+                                rowData.defaultBindedClazz ?
+                                    <span className="grade">绑定班级：{rowData.defaultBindedClazz.name}</span> :
+                                    <span className="grade"></span>
+                            }
 
-                            </div>
-                            <div className="div_creatTime">
+                        </div>
+                        <div className="div_creatTime">
                             <span className="creatTime">
                                 所处位置：
                                 {
                                     rowData.building ?
                                         <span>{rowData.building.name}
-                                    </span>
+                                        </span>
                                         :
                                         "暂未选择位置"
                                 }
                             </span>
-                                <Button className="modifyBtn_common" type="primary" size="small"
-                                        onClick={this.toUpdatePage.bind(this, rowData)}></Button>
-                                <Button type="primary" size="small" className="btn_del deleteBtn_common"
-                                        onClick={this.showAlert.bind(this, rowData.id)}
-                                ></Button>
-                            </div>
+                            <Button className="modifyBtn_common" type="primary" size="small"
+                                onClick={this.toUpdatePage.bind(this, rowData)}></Button>
+                            <Button type="primary" size="small" className="btn_del deleteBtn_common"
+                                onClick={this.showAlert.bind(this, rowData.id)}
+                            ></Button>
                         </div>
-                    }
-                </div>
+                    </div>
+                }
+            </div>
 
             )
         };
 
         return (
-            <div id="classroomManage" style={{height: classBinding.state.clientHeight}}>
+            <div id="classroomManage" style={{ height: classBinding.state.clientHeight }}>
 
                 <div className="nav search-nav">
-                    <i></i><input type="text" ref={input => this.input = input} onInput={this.searchInput.bind(this)} placeholder="请输入搜索内容"/><span style={
-                this.state.showClear?{display:'block'}:{display:'none'}
-            } onClick={this.clearSearch} className="close"></span>
+                    <i></i><input type="text" ref={input => this.input = input} onInput={this.searchInput.bind(this)} placeholder="请输入搜索内容" /><span style={
+                        this.state.showClear ? { display: 'block' } : { display: 'none' }
+                    } onClick={this.clearSearch} className="close"></span>
                 </div>
-                <div className='tableDiv' style={{height: classBinding.state.clientHeight - 52}}>
+                <div className='tableDiv' style={{ height: classBinding.state.clientHeight - 52 }}>
                     <li style={
-                        this.input && this.input.value != ''?{display:'none'}:{display:'block'}
+                        this.input && this.input.value != '' ? { display: 'none' } : { display: 'block' }
                     } className="edit_coordinateLi line_public"><span onClick={_this.bindCoordinates} className="edit_coordinate">批量编辑教室坐标</span></li>
                     {/*这是列表数据,包括添加按钮*/}
                     <ListView
                         ref={el => this.lv = el}
                         dataSource={this.state.dataSource}    //数据类型是 ListViewDataSource
                         renderFooter={() => (
-                            <div style={{paddingTop: 5, paddingBottom: 40, textAlign: 'center'}}>
+                            <div style={{ paddingTop: 5, paddingBottom: 40, textAlign: 'center' }}>
                                 {this.state.isLoadingLeft ? '正在加载' : '已经全部加载完毕'}
                             </div>)}
                         renderRow={row}   //需要的参数包括一行数据等,会返回一个可渲染的组件为这行数据渲染  返回renderable
@@ -356,7 +357,7 @@ export default class classroomManage extends React.Component {
                         }
                     />
                     <div className='addBunton' onClick={this.addClassroomM}>
-                        <img src={require("../imgs/addBtn.png")}/>
+                        <img src={require("../imgs/addBtn.png")} />
                     </div>
                 </div>
 

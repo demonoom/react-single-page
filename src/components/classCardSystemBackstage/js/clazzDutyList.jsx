@@ -32,8 +32,8 @@ export default class clazzDutyList extends React.Component {
     getClazzesByUserId(ident) {
         var _this = this;
         var param = {
-            "method": 'searchClazz',
-            "aid": ident,
+            "method": 'searchClazzByUserId',
+            "userId": ident,
             "keyWord": "",
         };
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
