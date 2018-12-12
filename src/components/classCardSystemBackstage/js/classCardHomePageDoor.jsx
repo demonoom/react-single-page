@@ -284,7 +284,7 @@ export default class classCardHomePageDoor extends React.Component {
      * 以解决每次发布网页后,班牌无法及时刷新到最新网页的问题
      */
     refreshClassCardPage=()=>{
-        alert('', '确定要刷新所有班牌?', [
+        alert( '确定要刷新所有班牌?','', [
             { text: '取消', onPress: () => console.log('cancel') },
             { text: '确定', onPress: () => {
                 var obj = {
