@@ -56,7 +56,7 @@ export default class stuList extends React.Component {
     }
 
     //设置心率阀值
-    updateBindedChildrenAndHeartRate(id,value) {
+    updateBindedChildrenAndHeartRate(id, value) {
         var param = {
             "method": 'updateBindedChildrenAndHeartRate',
             "userId": id,
@@ -75,15 +75,17 @@ export default class stuList extends React.Component {
         });
     }
 
-    showModal(childrenHeartRate,colUid) {
+    showModal(childrenHeartRate, colUid) {
         console.log('弹窗');
         console.log(colUid);
         prompt('请输入心率阀值', '', [
             {text: '取消'},
-            {text: '确定', onPress: value => {
+            {
+                text: '确定', onPress: value => {
                 console.log(`输入的内容:${value}`);
-                this.updateBindedChildrenAndHeartRate(colUid,value);
-            }},
+                this.updateBindedChildrenAndHeartRate(colUid, value);
+            }
+            },
         ], 'default', childrenHeartRate)
     }
 
@@ -103,7 +105,8 @@ export default class stuList extends React.Component {
                         <div>
                             <span>心率阀值：</span>
                             <span className="gray">{v.childrenHeartRate}</span>
-                            <span className="i-change" onClick={_this.showModal.bind(_this,v.childrenHeartRate,v.user.colUid)}></span>
+                            <span className="i-change"
+                                  onClick={_this.showModal.bind(_this, v.childrenHeartRate, v.user.colUid)}></span>
                         </div>
                     </li>
                 )
@@ -126,7 +129,7 @@ export default class stuList extends React.Component {
                     Toast.success('解绑成功', 1)
                     var arr = _this.state.stuArr;
                     arr.forEach(function (v, i) {
-                        if (v.colUid == stu.colUid) {
+                        if (v.user.colUid == stu.colUid) {
                             arr.splice(i, 1)
                         }
                     })

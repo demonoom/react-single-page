@@ -1,12 +1,13 @@
 import React from 'react';
-import { Toast } from 'antd-mobile';
+import {Toast} from 'antd-mobile';
 import '../css/teachingSpaceTeacher.less'
 
 export default class teachingSpaceTeacher extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            phone: 'IOS'
+            phone: 'IOS',
+            classTeacher: false,
         };
     }
 
@@ -24,12 +25,44 @@ export default class teachingSpaceTeacher extends React.Component {
             ident
         })
         this.getUserById(ident)
+        this.getStructureRoleUserByUserId(ident)
         var phoneType = navigator.userAgent;
         if (phoneType.indexOf('iPhone') > -1 || phoneType.indexOf('iPad') > -1) {
-            this.setState({ phone: 'IOS' })
+            this.setState({phone: 'IOS'})
         } else {
-            this.setState({ phone: 'Android' })
+            this.setState({phone: 'Android'})
         }
+    }
+
+    /**
+     * 获取该用户下的用户角色
+     * public List<StructureRoleUser>  getStructureRoleUserByUserId(String userId)
+     * @param ident
+     */
+    getStructureRoleUserByUserId = (ident) => {
+        var _this = this;
+        var param = {
+            "method": 'getStructureRoleUserByUserId',
+            "userId": ident,
+        };
+
+        WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
+            onResponse: function (result) {
+                if (result.msg == '调用成功' || result.success == true) {
+                    var res = result.response.filter((e) => {
+                        return e.type == 6
+                    })
+
+                    if (res.length !== 0) {
+                        _this.setState({classTeacher: true})
+                    }
+
+                }
+            },
+            onError: function (error) {
+                // message.error(error);
+            }
+        });
     }
 
     /**
@@ -119,7 +152,7 @@ export default class teachingSpaceTeacher extends React.Component {
             url: url
         };
         // console.log(data, "data1111");
-        Bridge.callHandler(data,null, function (error) {
+        Bridge.callHandler(data, null, function (error) {
             window.location.href = url;
         });
     }
@@ -185,12 +218,12 @@ export default class teachingSpaceTeacher extends React.Component {
                             <div>手环户外助手</div>
                         </li>
                         <li onClick={this.toClient.bind(this, "openNativePage_FamousTeacherSpace")}
-                            style={{ display: this.state.phone == "Android" ? "block" : "none" }}>
+                            style={{display: this.state.phone == "Android" ? "block" : "none"}}>
                             <i className="Icon-teacher Icon-teacher-famousTeacher"></i>
                             <div>名师空间</div>
                         </li>
                         <li onClick={this.toClient.bind(this, "openNativePage_MicroClassRecord")}
-                            style={{ display: this.state.phone == "Android" ? "block" : "none" }}>
+                            style={{display: this.state.phone == "Android" ? "block" : "none"}}>
                             <i className="Icon-teacher Icon-teacher-SmallClass"></i>
                             <div>录制微课</div>
                         </li>
@@ -203,7 +236,7 @@ export default class teachingSpaceTeacher extends React.Component {
                             <i className="Icon-teacher Icon-teacher-ClassReview"></i>
                             <div>课堂回顾统计</div>
                         </li>
-                        <li style={{ display: this.state.phone == "Android" ? "block" : "none" }}
+                        <li style={{display: this.state.phone == "Android" ? "block" : "none"}}
                             onClick={this.toPage.bind(this, "openNativePage_RingDataStatistics")}>
                             <i className="Icon-teacher Icon-teacher-braceletData"></i>
                             <div>手环数据统计</div>
@@ -217,7 +250,7 @@ export default class teachingSpaceTeacher extends React.Component {
                             <i className="Icon-teacher Icon-teacher-AssignHomework"></i>
                             <div>布置作业</div>
                         </li>
-                        <li style={{ display: this.state.phone == "Android" ? "block" : "none" }}
+                        <li style={{display: this.state.phone == "Android" ? "block" : "none"}}
                             onClick={this.toClient.bind(this, "openNativePage_HomeworkStatistics")}>
                             <i className="Icon-teacher Icon-teacher-homeworkStatistics"></i>
                             <div>作业统计</div>
@@ -227,13 +260,13 @@ export default class teachingSpaceTeacher extends React.Component {
                             <div>作业表情统计</div>
                         </li>
                         <li onClick={this.toClient.bind(this, "openNativePage_HomeworkCorrecting")}
-                            style={{ display: this.state.phone == "Android" ? "block" : "none" }}>
+                            style={{display: this.state.phone == "Android" ? "block" : "none"}}>
                             <i className="Icon-teacher Icon-teacher-homeworkCorrecting"></i>
                             <div>批改作业</div>
                         </li>
                     </ul>
                 </div>
-                <div className="teacher-item" style={{ display: this.state.phone == "Android" ? "block" : "none" }}>
+                <div className="teacher-item" style={{display: this.state.phone == "Android" ? "block" : "none"}}>
                     <h1>考试系统</h1>
                     <ul className="my_flex teacherUl">
                         <li onClick={this.toClient.bind(this, "openNativePage_TestPaper")}>
@@ -253,21 +286,25 @@ export default class teachingSpaceTeacher extends React.Component {
                             <i className="Icon-teacher Icon-teacher-EducationManage"></i>
                             <div>教务管理</div>
                         </li>
-                        <li onClick={this.toPage.bind(this, "honorManage")}>
+                        <li style={{display: this.state.classTeacher ? '' : 'none'}}
+                            onClick={this.toPage.bind(this, "honorManage")}>
                             <i className="Icon-teacher Icon-teacher-honorManage"></i>
                             <div>班牌荣誉管理</div>
                         </li>
-                        <li onClick={this.toPage.bind(this, "demeanorManage")}>
+                        <li style={{display: this.state.classTeacher ? '' : 'none'}}
+                            onClick={this.toPage.bind(this, "demeanorManage")}>
                             <i className="Icon-teacher Icon-teacher-demeanorManage"></i>
                             <div>班牌风采管理</div>
                         </li>
-                       
-                        <li onClick={this.toPage.bind(this, "notifyManage")}>
+
+                        <li style={{display: this.state.classTeacher ? '' : 'none'}}
+                            onClick={this.toPage.bind(this, "notifyManage")}>
                             <i className="Icon-teacher Icon-teacher-notifyManage"></i>
                             <div>班牌通知管理</div>
                         </li>
 
-                        <li onClick={this.toPage.bind(this, "dutyManage")}>
+                        <li style={{display: this.state.classTeacher ? '' : 'none'}}
+                            onClick={this.toPage.bind(this, "dutyManage")}>
                             <i className="Icon-teacher Icon-teacher-dutyManage"></i>
                             <div>班牌值日管理</div>
                         </li>

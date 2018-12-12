@@ -130,7 +130,6 @@ export default class stuAttendance extends React.Component {
         var param = {
             "method": 'getBraceletStudentInfoAttendByParentId',
             "userId": this.state.userId,
-            "pageNo": this.state.defaultPageNo
         };
 
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {

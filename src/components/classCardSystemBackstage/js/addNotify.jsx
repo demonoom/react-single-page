@@ -3,6 +3,7 @@ import React from 'react';
 import { List, Picker, InputItem, TextareaItem, Button, WhiteSpace, Toast, Icon } from 'antd-mobile';
 
 import '../css/notify.less'
+import Editor from "react-umeditor"
 
 var calm;
 
@@ -19,7 +20,8 @@ export default class addNotify extends React.Component {
             content: '',
             classroomId: 'test',  //所选班级id／
             inputValue: '',
-            addRoomName:''
+            addRoomName: '',
+            editorContent: ""
         };
     }
 
@@ -175,11 +177,11 @@ export default class addNotify extends React.Component {
         // this.setState({
         //     responseList: []
         // }, () => {
-            this.UserByKeyWord();
-            $('.updateModel').slideDown();
-            $('.tagAddPanel_bg').show();
-            $('.mask').show();
-            console.log($('.mask').show());
+        this.UserByKeyWord();
+        $('.updateModel').slideDown();
+        $('.tagAddPanel_bg').show();
+        $('.mask').show();
+        console.log($('.mask').show());
         // })
 
     }
@@ -216,7 +218,7 @@ export default class addNotify extends React.Component {
                 });
 
 
-            }}>{v.name + (buildName == ''?'':"(" + buildName + ")")}</li>)
+            }}>{v.name + (buildName == '' ? '' : "(" + buildName + ")")}</li>)
         })
         this.setState({ responseList: arr })
     }
@@ -331,7 +333,38 @@ export default class addNotify extends React.Component {
 
 
 
+    handleChange=(content) =>{
+        console.log(content,"cccc")
+        this.setState({
+            editorContent: content
+        },()=>{
+            console.log(this.state.editorContent,"ed")
+        })
+    }
+    getIcons=() =>{
+        var icons = [
+            "source | undo redo | bold italic underline strikethrough fontborder emphasis | ",
+            "paragraph fontfamily fontsize | superscript subscript | ",
+            "forecolor backcolor | removeformat | insertorderedlist insertunorderedlist | selectall | ",
+            "cleardoc  | indent outdent | justifyleft justifycenter justifyright | touppercase tolowercase | ",
+            "horizontal date time  | image emotion spechars | inserttable"
+        ]
+        return icons;
+    }
+    getPlugins=()=> {
+        return {
+            "image": {
+                "uploader": {
+                    "name": "file",
+                    "url": "/api/upload"
+                }
+            }
+        }
+    }
+
     render() {
+        var icons = this.getIcons();
+        var plugins = this.getPlugins();
         return (
             <div id="notify" style={{ height: document.body.clientHeight }}>
                 <WhiteSpace size="lg" />
@@ -381,6 +414,7 @@ export default class addNotify extends React.Component {
                     </div>*/}
                 </div>
                 <div className="tagAddPanel_bg"></div>
+                
             </div>
         );
     }

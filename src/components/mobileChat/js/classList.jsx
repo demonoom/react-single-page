@@ -32,7 +32,8 @@ export default class classList extends React.Component {
         var userId = searchArray[0].split('=')[1];
         var colPasswd = searchArray[1].split('=')[1];
         var unionid = searchArray[2].split('=')[1];
-        this.setState({userId, colPasswd, unionid});
+        var userType = searchArray[3].split('=')[1];
+        this.setState({userId, colPasswd, unionid, userType});
         var phoneType = navigator.userAgent;
         var phone;
         if (phoneType.indexOf('iPhone') > -1 || phoneType.indexOf('iPad') > -1) {
@@ -94,7 +95,7 @@ export default class classList extends React.Component {
             var colPasswd = class_List.state.colPasswd
             var unionid = class_List.state.unionid
 
-            window.location.href = encodeURI(WebServiceUtil.mobileServiceURL + 'friendList?fromId=' + class_List.state.userId + '&colPasswd=' + colPasswd + '&unionid=' + unionid + '&clazzId=' + rowData.id + '&clazzName=' + rowData.name)
+            window.location.href = encodeURI(WebServiceUtil.mobileServiceURL + 'friendList?fromId=' + class_List.state.userId + '&colPasswd=' + colPasswd + '&unionid=' + unionid + '&clazzId=' + rowData.id + '&clazzName=' + rowData.name + '&type=' + this.state.userType)
         }
     }
 
