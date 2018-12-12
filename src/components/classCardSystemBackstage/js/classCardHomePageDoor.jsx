@@ -357,8 +357,8 @@ export default class classCardHomePageDoor extends React.Component {
                         <div>定时开关机</div>
                     </li>
                     {
-                        isManager == true?<li onClick={this.refreshClassCardPage}><i className="icon icon_time"></i>
-                            <div>刷新所有班牌</div>
+                        isManager == true?<li onClick={this.refreshClassCardPage}><i className="icon icon_refresh"></i>
+                            <div>班牌统一刷新</div>
                         </li>:null
                     }
                 </ul>

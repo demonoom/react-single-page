@@ -102,3 +102,7 @@
   background: url("../imgs/icon_time.png") no-repeat center center;
   background-size: contain;
 }
+#classCardHomePageDoor .icon_refresh {
+  background: url("../imgs/icon_refresh.png") no-repeat center center;
+  background-size: contain;
+}
