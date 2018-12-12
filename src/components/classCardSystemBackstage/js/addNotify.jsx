@@ -3,7 +3,6 @@ import React from 'react';
 import { List, Picker, InputItem, TextareaItem, Button, WhiteSpace, Toast, Icon } from 'antd-mobile';
 
 import '../css/notify.less'
-import Editor from "react-umeditor"
 
 var calm;
 
@@ -21,7 +20,6 @@ export default class addNotify extends React.Component {
             classroomId: 'test',  //所选班级id／
             inputValue: '',
             addRoomName: '',
-            editorContent: ""
         };
     }
 
@@ -331,40 +329,7 @@ export default class addNotify extends React.Component {
         this.setState({ classroomId: this.state.selectedClassroomId, addRoomName: this.state.selectedRoomName });
     }
 
-
-
-    handleChange=(content) =>{
-        console.log(content,"cccc")
-        this.setState({
-            editorContent: content
-        },()=>{
-            console.log(this.state.editorContent,"ed")
-        })
-    }
-    getIcons=() =>{
-        var icons = [
-            "source | undo redo | bold italic underline strikethrough fontborder emphasis | ",
-            "paragraph fontfamily fontsize | superscript subscript | ",
-            "forecolor backcolor | removeformat | insertorderedlist insertunorderedlist | selectall | ",
-            "cleardoc  | indent outdent | justifyleft justifycenter justifyright | touppercase tolowercase | ",
-            "horizontal date time  | image emotion spechars | inserttable"
-        ]
-        return icons;
-    }
-    getPlugins=()=> {
-        return {
-            "image": {
-                "uploader": {
-                    "name": "file",
-                    "url": "/api/upload"
-                }
-            }
-        }
-    }
-
     render() {
-        var icons = this.getIcons();
-        var plugins = this.getPlugins();
         return (
             <div id="notify" style={{ height: document.body.clientHeight }}>
                 <WhiteSpace size="lg" />

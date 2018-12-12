@@ -156,8 +156,6 @@ export default class contacts_ListS extends React.Component {
                         }
                     })
 
-                    console.log(response, 'response');
-
                     _this.setState({newContactLists: response});
 
                     for (let i = 0; i < response.length; i++) {
@@ -335,7 +333,6 @@ export default class contacts_ListS extends React.Component {
     }
 
     unBindAccount = (id) => {
-        console.log(id);
 
         var param = {
             "method": 'unbindUserOpenId',

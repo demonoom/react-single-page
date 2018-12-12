@@ -149,8 +149,8 @@ export default class notifyBack extends React.Component {
     }
 
     //新打开添加课程页
-    toAddNotify() {
-        var url = WebServiceUtil.mobileServiceURL + "addNotify?ident=" + classBinding.state.ident;
+    toAddNotify=()=> {
+        var url = "http://localhost:6443/richTextEditor/?access_user="+this.state.ident;
         var data = {
             method: 'openNewPage',
             url: url
@@ -316,10 +316,11 @@ export default class notifyBack extends React.Component {
                     <Item onClick={this.toNotifyDetail.bind(this, item.id)} align="top"
                         multipleLine>
                         <div className="clear">
-                            <span className="title text_hidden">{item.noticeTitle}</span>
+                            <span className="title text_hidden" dangerouslySetInnerHTML={{ __html: item.noticeTitle }}></span>
                             <span className="time">{item.createTime}</span>
                         </div>
-                        <Brief>{item.noticeContent}</Brief>
+                        <div dangerouslySetInnerHTML={{ __html: item.noticeContent }}></div>
+                        {/* <Brief >{item.noticeContent}</Brief> */}
                         {
                             item.type == 1 ?
                                 <div

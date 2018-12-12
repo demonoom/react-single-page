@@ -49,8 +49,8 @@ export default class notifyDetail extends React.Component {
                 <Card title={"卡片标题"} className="card">
                     <p className="createDate">{this.state.data.createTime}</p>
                     <div className="content" style={{maxHeight: document.body.clientHeight - 85}}>
-                        <p className="title">{this.state.data.noticeTitle}</p>
-                        <div className="text"><pre>{this.state.data.noticeContent}</pre></div>
+                        <p className="title" dangerouslySetInnerHTML={{ __html: this.state.data.noticeTitle }}></p>
+                        <div className="text" dangerouslySetInnerHTML={{ __html: this.state.data.noticeContent }}></div>
                     </div>
                 </Card>
             </div>
