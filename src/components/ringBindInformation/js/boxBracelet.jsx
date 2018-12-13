@@ -173,7 +173,7 @@ export default class boxBracelet extends React.Component {
     addRing = () => {
         $('.tableDiv').hide("fast");
         console.log('开启')
-        $('.nav').css({display:'none'});
+        $('.nav').css({display: 'none'});
 
     };
 
@@ -182,7 +182,7 @@ export default class boxBracelet extends React.Component {
      */
     cancelAddModel = () => {
         $('.tableDiv').show("fast");
-        $('.nav').css({display:'block'});
+        $('.nav').css({display: 'block'});
         this.state.macId = '';
         this.state.stNameValue = '';
         this.setState({chooseResultDiv: 'none'});
@@ -234,7 +234,7 @@ export default class boxBracelet extends React.Component {
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
             onResponse: function (result) {
                 if (result.msg == '调用成功' && result.success == true) {
-                    $('.nav').css({display:'block'});
+                    $('.nav').css({display: 'block'});
                     Toast.success('绑定成功', 1);
                     $('.tableDiv').show("fast");
                     _this.state.macId = '';
@@ -384,7 +384,15 @@ export default class boxBracelet extends React.Component {
                                          onClick={_this.showAlert.bind(this, rowData)}>解绑</span>}
                         />
                         <Card.Body>
-                            MAC：{rowData.macAddress}
+                            <div>
+                                MAC：{rowData.macAddress}
+                            </div>
+                            <div style={{wordWrap: 'break-word'}}>
+                                {
+                                    !!rowData.room.defaultBindedClazz ? `URL：https://jiaoxue.maaee.com:9092/home/?clazzId=${rowData.room.defaultBindedClazz.id}&roomId=${rowData.room.id}&mac=${rowData.macAddress}&schoolId=${rowData.operator.schoolId}` :
+                                        '还未绑定班级'
+                                }
+                            </div>
                         </Card.Body>
                     </Card>
                 </WingBlank>
