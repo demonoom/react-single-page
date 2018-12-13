@@ -70,13 +70,15 @@ export default class boxBracelet extends React.Component {
     /**
      * 查看绑定的设备
      */
-    viewAndroidBoxPage(loginUser) {
+    viewAndroidBoxPage(loginUser, flag) {
         var _this = this;
-        _this.initData.splice(0);
-        _this.state.dataSource = [];
-        _this.state.dataSource = new ListView.DataSource({
-            rowHasChanged: (row1, row2) => row1 !== row2,
-        });
+        if (!flag) {
+            _this.initData.splice(0);
+            _this.state.dataSource = [];
+            _this.state.dataSource = new ListView.DataSource({
+                rowHasChanged: (row1, row2) => row1 !== row2,
+            });
+        }
         const dataBlob = {};
         var param = {
             "method": 'viewAndroidBoxPage',
@@ -89,7 +91,10 @@ export default class boxBracelet extends React.Component {
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
             onResponse: function (result) {
                 if (result.msg == '调用成功' && result.success == true) {
-                    var arr = result.response;
+                    var arr = result.response.filter((e) => {
+                        return e.room != null
+                    })
+                    console.log(arr);
                     var pager = result.pager;
                     for (let i = 0; i < arr.length; i++) {
                         var topic = arr[i];
@@ -321,6 +326,7 @@ export default class boxBracelet extends React.Component {
      *  ListView数据全部渲染完毕的回调
      */
     onEndReached = (event) => {
+        debugger
         var _this = this;
         var currentPageNo = this.state.defaultPageNo;
         if (!this.state.isLoadingLeft && !this.state.hasMore) {
@@ -328,7 +334,7 @@ export default class boxBracelet extends React.Component {
         }
         currentPageNo += 1;
         this.setState({isLoadingLeft: true, defaultPageNo: currentPageNo});
-        _this.viewAndroidBoxPage(_this.state.loginUser);
+        _this.viewAndroidBoxPage(_this.state.loginUser, true);
         this.setState({
             dataSource: this.state.dataSource.cloneWithRows(this.initData),
             isLoadingLeft: true,
