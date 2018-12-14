@@ -1,16 +1,3 @@
-<<<<<<< HEAD
-.topic_list {
-  overflow: auto;
-  height: 400px;
-}
-.names_box {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  height: 200px;
-  box-shadow: 10px 10px 10px #ccc;
-=======
-(node) util.print is deprecated. Use console.log instead.
 #classPractice {
   font-size: 13px;
   color: #666;
@@ -164,15 +151,10 @@
   left: 0;
   height: 70%;
   box-shadow: 0px 7px 79px 0px rgba(0, 0, 0, 0.55);
->>>>>>> 74978c8684c315a39b6b0e2a425c300a4ef8eafb
   background: white;
   width: 100%;
   z-index: 3;
   transition: 0.2s;
-<<<<<<< HEAD
-}
-.mask {
-=======
   overflow: hidden;
   transform: translate(0, 150%);
 }
@@ -211,7 +193,6 @@
   line-height: 30px;
 }
 #classPractice .mask {
->>>>>>> 74978c8684c315a39b6b0e2a425c300a4ef8eafb
   position: absolute;
   top: 0;
   left: 0;
@@ -219,13 +200,11 @@
   height: 100%;
   z-index: 2;
 }
-<<<<<<< HEAD
-=======
 #classPractice .am-tabs-default-bar-tab-active {
   color: #0066FF;
 }
 #classPractice .am-tabs-default-bar-underline {
-  border-color: #0066FF ;
+  border-color: #0066FF;
   width: 3.3333% !important;
   margin: 0px 15%;
 }
@@ -368,4 +347,3 @@
 #classPractice .classPractice-btn-empty {
   border: none;
 }
->>>>>>> 74978c8684c315a39b6b0e2a425c300a4ef8eafb
