@@ -288,6 +288,9 @@ export default class classPractice extends React.Component {
                 </div>
                 <Tabs tabs={tabs}
                       initialPage={0}
+                      animated={false}
+                      swipeable={false}
+                      useOnPan={false}
                       // onChange={(tab, index) => { console.log('onChange', index, tab); }}
                       // onTabClick={(tab, index) => { console.log('onTabClick', index, tab); }}
                 >
