@@ -1,7 +1,8 @@
 var isDebug = false;
-var localDomain = "192.168.50.139";   //请求地址
-var isDebugLocal = true;
-var localUrl = "192.168.50.163";    //跳转地址http:
+var localDomain = "192.168.50.15";   //请求地址
+var isDebugLocal = false;
+var localUrl = "192.168.50.29";    //跳转地址http:
+
 
 //云校本地测试webService地址
 var elearningWebserviceURLOfLocal = "http://" + localDomain + ":9007/elearning/elearningControl/";
@@ -32,7 +33,7 @@ var ArPaymentURL = isDebug ? ArPaymentURLOfLocals : ArPaymentURLOfRemote;
 const wxBindURLOfLocals = "http://" + localDomain + ":6012/Excoord_LittleVideoApiServer/webservice";
 const wxBindURLOfRemote = "http://www.maaee.com:6012/Excoord_LittleVideoApiServer/webservice";
 //24491:邹长亮  129530:10下的管理员(家宽用)  119665:王鹏飞  6075:牛旭东  54208:赵家宽 9732:成旭 23836:王丹
-WebServiceUtil.refreshClassCardUserArray=[24491,129530,119665,6075,54208,9732,23836];
+WebServiceUtil.refreshClassCardUserArray = [24491, 129530, 119665, 6075, 54208, 9732, 23836];
 
 var wxBindURL = isDebug ? wxBindURLOfLocals : wxBindURLOfRemote;
 
