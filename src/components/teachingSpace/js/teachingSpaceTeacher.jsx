@@ -289,24 +289,24 @@ export default class teachingSpaceTeacher extends React.Component {
                         <li style={{display: this.state.classTeacher ? '' : 'none'}}
                             onClick={this.toPage.bind(this, "honorManage")}>
                             <i className="Icon-teacher Icon-teacher-honorManage"></i>
-                            <div>班牌荣誉管理</div>
+                            <div>班牌荣誉</div>
                         </li>
                         <li style={{display: this.state.classTeacher ? '' : 'none'}}
                             onClick={this.toPage.bind(this, "demeanorManage")}>
                             <i className="Icon-teacher Icon-teacher-demeanorManage"></i>
-                            <div>班牌风采管理</div>
+                            <div>班牌风采</div>
                         </li>
 
                         <li style={{display: this.state.classTeacher ? '' : 'none'}}
                             onClick={this.toPage.bind(this, "notifyManage")}>
                             <i className="Icon-teacher Icon-teacher-notifyManage"></i>
-                            <div>班牌通知管理</div>
+                            <div>班牌通知</div>
                         </li>
 
                         <li style={{display: this.state.classTeacher ? '' : 'none'}}
                             onClick={this.toPage.bind(this, "dutyManage")}>
                             <i className="Icon-teacher Icon-teacher-dutyManage"></i>
-                            <div>班牌值日管理</div>
+                            <div>班牌值日</div>
                         </li>
                     </ul>
                 </div>
