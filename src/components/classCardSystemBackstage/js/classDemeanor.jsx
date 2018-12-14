@@ -75,7 +75,7 @@ export default class classDemeanor extends React.Component {
                             canvas.height = video.videoHeight * 0.8;
                             canvas.getContext('2d').drawImage(video, 0, 0, canvas.width, canvas.height);
                             // var $Blob = canvas.toDataURL("image/png");
-                            var $Blob = demeanor.getBlobBydataURI(canvas.toDataURL("image/png"),'image/jpeg');
+                            var $Blob = demeanor.getBlobBydataURI(canvas.toDataURL("image/png"), 'image/jpeg');
 
                             var formData = new FormData();
                             formData.append("filePath", $Blob, "file_" + Date.parse(new Date()) + ".png");
@@ -90,10 +90,14 @@ export default class classDemeanor extends React.Component {
                                 contentType: false,
                                 success: function (res) {
                                     console.log(res);
+                                    if (res == '') {
+                                        Toast.fail('请转成标准视频格式')
+                                        return
+                                    }
                                     classDemeanors[t] = classDemeanors[t] + '&' + res;
                                     resolve('成功');
                                 },
-                                error:function(res){
+                                error: function (res) {
                                     $('body').html(res);
                                 }
                             });

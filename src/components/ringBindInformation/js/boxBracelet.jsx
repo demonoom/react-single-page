@@ -70,13 +70,15 @@ export default class boxBracelet extends React.Component {
     /**
      * 查看绑定的设备
      */
-    viewAndroidBoxPage(loginUser) {
+    viewAndroidBoxPage(loginUser, flag) {
         var _this = this;
-        _this.initData.splice(0);
-        _this.state.dataSource = [];
-        _this.state.dataSource = new ListView.DataSource({
-            rowHasChanged: (row1, row2) => row1 !== row2,
-        });
+        if (!flag) {
+            _this.initData.splice(0);
+            _this.state.dataSource = [];
+            _this.state.dataSource = new ListView.DataSource({
+                rowHasChanged: (row1, row2) => row1 !== row2,
+            });
+        }
         const dataBlob = {};
         var param = {
             "method": 'viewAndroidBoxPage',
@@ -89,7 +91,10 @@ export default class boxBracelet extends React.Component {
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
             onResponse: function (result) {
                 if (result.msg == '调用成功' && result.success == true) {
-                    var arr = result.response;
+                    var arr = result.response.filter((e) => {
+                        return e.room != null
+                    })
+                    console.log(arr);
                     var pager = result.pager;
                     for (let i = 0; i < arr.length; i++) {
                         var topic = arr[i];
@@ -173,7 +178,7 @@ export default class boxBracelet extends React.Component {
     addRing = () => {
         $('.tableDiv').hide("fast");
         console.log('开启')
-        $('.nav').css({display:'none'});
+        $('.nav').css({display: 'none'});
 
     };
 
@@ -182,7 +187,7 @@ export default class boxBracelet extends React.Component {
      */
     cancelAddModel = () => {
         $('.tableDiv').show("fast");
-        $('.nav').css({display:'block'});
+        $('.nav').css({display: 'block'});
         this.state.macId = '';
         this.state.stNameValue = '';
         this.setState({chooseResultDiv: 'none'});
@@ -234,7 +239,7 @@ export default class boxBracelet extends React.Component {
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
             onResponse: function (result) {
                 if (result.msg == '调用成功' && result.success == true) {
-                    $('.nav').css({display:'block'});
+                    $('.nav').css({display: 'block'});
                     Toast.success('绑定成功', 1);
                     $('.tableDiv').show("fast");
                     _this.state.macId = '';
@@ -321,6 +326,7 @@ export default class boxBracelet extends React.Component {
      *  ListView数据全部渲染完毕的回调
      */
     onEndReached = (event) => {
+        debugger
         var _this = this;
         var currentPageNo = this.state.defaultPageNo;
         if (!this.state.isLoadingLeft && !this.state.hasMore) {
@@ -328,7 +334,7 @@ export default class boxBracelet extends React.Component {
         }
         currentPageNo += 1;
         this.setState({isLoadingLeft: true, defaultPageNo: currentPageNo});
-        _this.viewAndroidBoxPage(_this.state.loginUser);
+        _this.viewAndroidBoxPage(_this.state.loginUser, true);
         this.setState({
             dataSource: this.state.dataSource.cloneWithRows(this.initData),
             isLoadingLeft: true,
@@ -384,7 +390,15 @@ export default class boxBracelet extends React.Component {
                                          onClick={_this.showAlert.bind(this, rowData)}>解绑</span>}
                         />
                         <Card.Body>
-                            MAC：{rowData.macAddress}
+                            <div>
+                                MAC：{rowData.macAddress}
+                            </div>
+                            <div style={{wordWrap: 'break-word'}}>
+                                {
+                                    !!rowData.room.defaultBindedClazz ? `URL：https://jiaoxue.maaee.com:9092/home/?clazzId=${rowData.room.defaultBindedClazz.id}&roomId=${rowData.room.id}&mac=${rowData.macAddress}&schoolId=${rowData.operator.schoolId}` :
+                                        '还未绑定班级'
+                                }
+                            </div>
                         </Card.Body>
                     </Card>
                 </WingBlank>
