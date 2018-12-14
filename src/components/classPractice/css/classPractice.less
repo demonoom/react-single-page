@@ -4,6 +4,7 @@
   height: 100%;
   overflow-y: hidden;
   overflow-x: hidden;
+
   .am-tabs-default-bar-tab{
     height: 48px;
     line-height: 48px;
@@ -11,9 +12,10 @@
   .classPractice-class{
     padding: 12px 15px 0px 15px;
     background: #fff;
+    margin-bottom: 15px;
   }
   .classPractice-class + div.am-tabs{
-    height: calc(~"100% - 86px");
+    height: calc(~"100% - 101px");
   }
   .classPractice-title{
     color: #333;
@@ -57,6 +59,7 @@
       margin: 15px;
       background: #fff;
       padding: 20px 15px;
+      border-radius: 10px;
       .topicTitle{
         font-size: 15px;
         color: #333;
@@ -208,17 +211,20 @@
     margin: 15px;
     height: calc(~"100% - 30px");
     overflow: hidden;
+    border-radius: 10px;
     .title{
       padding: 13px 0;
       background: #E6E6E6;
       border-radius:10px 10px 0 0;
+      line-height: 1;
     }
     .performance-cont{
       background: #fff;
-      height: 100%;
+      height: calc(~"100% - 39px");
       overflow-x: hidden;
       overflow-y: auto;
       position: relative;
+      border-radius: 10px;
     }
     span{
       width: 25%;
@@ -233,6 +239,7 @@
     }
     span.name{
       width: 30%;
+      vertical-align: bottom;
     }
     span.time{
       width: 35%
@@ -241,6 +248,10 @@
   .performance-item{
     padding: 13px 0;
     position: relative;
+    line-height: 1;
+    &:last-child:after{
+      display: none;
+    }
     span{
       color: #333;
       font-size: 15px;
@@ -346,5 +357,63 @@
   .classPractice-btn-empty{
     border: none;
   }
-  
+  @media only screen and (max-width: 600px) {
+   /* .am-tabs-default-bar-top::after{
+      content: '';
+      position: absolute;
+      background-color: #ddd;
+      display: block;
+      z-index: 1;
+      top: auto;
+      right: auto;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 1PX;
+      -webkit-transform-origin: 50% 100%;
+      -ms-transform-origin: 50% 100%;
+      transform-origin: 50% 100%;
+      -webkit-transform: scaleY(0.5);
+      -ms-transform: scaleY(0.5);
+      transform: scaleY(0.5);
+    }*/
+    .am-tabs-default-bar-content{
+      justify-content: space-between;
+      padding: 0 15px;
+      .am-tabs-default-bar-tab{
+        position: relative;
+        width: auto !important;
+        &:first-child{
+          justify-content: flex-start;
+        }
+        &:last-child{
+          justify-content: flex-end;
+        }
+        &::after{
+          display: none;
+        }
+        &.am-tabs-default-bar-tab-active::before{
+          content: '';
+          position: absolute;
+          background-color: #0066FF;
+          display: block;
+          z-index: 1;
+          top: auto;
+          right: auto;
+          bottom: 0;
+          left: 50%;
+          width: 19px;
+          height: 2PX;
+          -webkit-transform: translateX(-50%);
+          -moz-transform: translateX(-50%);
+          -ms-transform: translateX(-50%);
+          -o-transform: translateX(-50%);
+          transform: translateX(-50%);
+        }
+      }
+      .am-tabs-default-bar-underline{
+        display: none;
+      }
+    }
+  }
 }
