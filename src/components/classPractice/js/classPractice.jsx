@@ -31,6 +31,7 @@ export default class classPractice extends React.Component {
         var searchArray = locationSearch.split("&");
         var colUid = searchArray[0].split('=')[1];
         var vid = searchArray[1].split('=')[1];
+        Bridge.setRefreshAble("true");
         this.setState({
             userId : colUid,
             vid: vid,
