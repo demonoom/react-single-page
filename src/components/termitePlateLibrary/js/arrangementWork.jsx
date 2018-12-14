@@ -208,6 +208,7 @@ export default class arrangementWork extends React.Component {
      * 布置作业,交给客户端
      */
     arrangementWork() {
+        debugger
         //向客户端发送id,交给客户端处理
         if (tLibrary.state.arrangementWorkArr.length == 0) {
             Toast.fail('请选择要布置的题目', 2);
@@ -313,7 +314,7 @@ export default class arrangementWork extends React.Component {
                     }}
                 />
                 <div className="pushSubjects_cont">
-                    <div className="pushSubjects" onClick={this.arrangementWork}>确定</div>
+                    <div className="pushSubjects" onClick={_this.arrangementWork}>确定</div>
                 </div>
             </div>
         );

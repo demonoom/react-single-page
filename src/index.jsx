@@ -5,7 +5,7 @@ import App from './components/App';
 // import Stage1 from './components/Stage1';
 // import Stage3 from './components/Stage3';
 // import Stage4 from './components/Stage4';
-// import Stage5 from './components/Stage5';
+// import Stage5 from '.arrangementWork/components/Stage5';
 
 const questionBank = (location, cb) => {
     require.ensure([], require => {
