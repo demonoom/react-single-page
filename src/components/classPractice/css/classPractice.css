@@ -168,11 +168,11 @@
   position: relative;
 }
 #classPractice .names_box .header span.close {
-  width: 11px;
-  height: 11px;
+  width: 15px;
+  height: 15px;
   display: inline-block;
   position: absolute;
-  right: 13px;
+  right: 17px;
   top: 12px;
   background: url("../img/close-mask.png") no-repeat;
   background-size: 100% 100%;
