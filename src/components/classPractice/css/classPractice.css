@@ -1,10 +1,10 @@
-(node) util.print is deprecated. Use console.log instead.
 #classPractice {
   font-size: 13px;
   color: #666;
   height: 100%;
   overflow-y: hidden;
   overflow-x: hidden;
+  position: relative;
 }
 #classPractice .am-tabs-default-bar-tab {
   height: 48px;
@@ -19,20 +19,25 @@
 }
 #classPractice .classPractice-title {
   color: #333;
-  font-size: 15px;
+  font-size: 16px;
   line-height: 30px;
   display: inline-block;
 }
 #classPractice .classPractice-btn {
-  font-size: 12px;
-  line-height: 1;
-  padding: 9px 18px;
-  border-radius: 4px;
+  font-size: 13px;
+  line-height: 16px;
+  padding: 3px 16px;
+  border-radius: 50%;
 }
 #classPractice .classPractice-btnBlue {
-  background: #5091FE;
+  background: #EF6E58;
   color: #fff;
   border: none;
+  width: 60px;
+  height: 60px;
+  position: absolute;
+  right: 15px;
+  bottom: 35px;
 }
 #classPractice .classPractice-btn-blue {
   color: #0768AC;
@@ -47,10 +52,41 @@
   border: 1px solid #F26F7C;
 }
 #classPractice .classPractice-bottom {
-  margin-bottom: 15px;
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  margin-bottom: 12px;
+}
+#classPractice .classPractice-bottom .tal {
+  position: absolute;
+  left: 0;
+  top: 0;
+  max-width: 100px;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+#classPractice .classPractice-bottom span {
+  display: inline-block;
+  height: 30px;
+  line-height: 30px;
+}
+#classPractice .classPractice-bottom .tac {
+  width: 100%;
+  box-sizing: border-box;
+  text-align: center;
+  padding: 0px 60px 0 90px;
+}
+#classPractice .classPractice-bottom .tar {
+  position: absolute;
+  right: 0;
+  top: 0;
 }
 #classPractice .summary-left {
-  margin-left: 38px;
+  margin-left: 40px;
+}
+#classPractice .theamSum {
+  margin-left: 22px;
 }
 #classPractice .topic_list {
   /*overflow: auto;
@@ -205,7 +241,7 @@
   color: #0066FF;
 }
 #classPractice .am-tabs-default-bar-underline {
-  border-color: #0066FF ;
+  border-color: #0066FF;
   width: 3.3333% !important;
   margin: 0px 15%;
 }
