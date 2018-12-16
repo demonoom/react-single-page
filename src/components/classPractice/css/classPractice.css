@@ -4,7 +4,6 @@
   height: 100%;
   overflow-y: hidden;
   overflow-x: hidden;
-  position: relative;
 }
 #classPractice .am-tabs-default-bar-tab {
   height: 48px;
@@ -13,31 +12,27 @@
 #classPractice .classPractice-class {
   padding: 12px 15px 0px 15px;
   background: #fff;
+  margin-bottom: 15px;
 }
 #classPractice .classPractice-class + div.am-tabs {
-  height: calc(100% - 86px);
+  height: calc(100% - 101px);
 }
 #classPractice .classPractice-title {
   color: #333;
-  font-size: 16px;
+  font-size: 15px;
   line-height: 30px;
   display: inline-block;
 }
 #classPractice .classPractice-btn {
-  font-size: 13px;
-  line-height: 16px;
-  padding: 3px 16px;
-  border-radius: 50%;
+  font-size: 12px;
+  line-height: 1;
+  padding: 9px 18px;
+  border-radius: 4px;
 }
 #classPractice .classPractice-btnBlue {
-  background: #EF6E58;
+  background: #5091FE;
   color: #fff;
   border: none;
-  width: 60px;
-  height: 60px;
-  position: absolute;
-  right: 15px;
-  bottom: 35px;
 }
 #classPractice .classPractice-btn-blue {
   color: #0768AC;
@@ -52,50 +47,20 @@
   border: 1px solid #F26F7C;
 }
 #classPractice .classPractice-bottom {
-  position: relative;
-  overflow: hidden;
-  display: flex;
-  margin-bottom: 12px;
-}
-#classPractice .classPractice-bottom .tal {
-  position: absolute;
-  left: 0;
-  top: 0;
-  max-width: 100px;
-  overflow: hidden;
-  white-space: nowrap;
-  text-overflow: ellipsis;
-}
-#classPractice .classPractice-bottom span {
-  display: inline-block;
-  height: 30px;
-  line-height: 30px;
-}
-#classPractice .classPractice-bottom .tac {
-  width: 100%;
-  box-sizing: border-box;
-  text-align: center;
-  padding: 0px 60px 0 90px;
-}
-#classPractice .classPractice-bottom .tar {
-  position: absolute;
-  right: 0;
-  top: 0;
+  margin-bottom: 15px;
 }
 #classPractice .summary-left {
-  margin-left: 40px;
-}
-#classPractice .theamSum {
-  margin-left: 22px;
+  margin-left: 38px;
 }
 #classPractice .topic_list {
   /*overflow: auto;
-    height: calc(~"100% - 86px");*/
+      height: calc(~"100% - 86px");*/
 }
 #classPractice .topic_list .topic_item {
   margin: 15px;
   background: #fff;
   padding: 20px 15px;
+  border-radius: 10px;
 }
 #classPractice .topic_list .topic_item .topicTitle {
   font-size: 15px;
@@ -205,11 +170,11 @@
   position: relative;
 }
 #classPractice .names_box .header span.close {
-  width: 11px;
-  height: 11px;
+  width: 15px;
+  height: 15px;
   display: inline-block;
   position: absolute;
-  right: 13px;
+  right: 17px;
   top: 12px;
   background: url("../img/close-mask.png") no-repeat;
   background-size: 100% 100%;
@@ -241,7 +206,7 @@
   color: #0066FF;
 }
 #classPractice .am-tabs-default-bar-underline {
-  border-color: #0066FF;
+  border-color: #0066FF ;
   width: 3.3333% !important;
   margin: 0px 15%;
 }
@@ -249,18 +214,21 @@
   margin: 15px;
   height: calc(100% - 30px);
   overflow: hidden;
+  border-radius: 10px;
 }
 #classPractice .performance-list .title {
   padding: 13px 0;
   background: #E6E6E6;
   border-radius: 10px 10px 0 0;
+  line-height: 1;
 }
 #classPractice .performance-list .performance-cont {
   background: #fff;
-  height: 100%;
+  height: calc(100% - 39px);
   overflow-x: hidden;
   overflow-y: auto;
   position: relative;
+  border-radius: 10px;
 }
 #classPractice .performance-list span {
   width: 25%;
@@ -275,6 +243,7 @@
 }
 #classPractice .performance-list span.name {
   width: 30%;
+  vertical-align: bottom;
 }
 #classPractice .performance-list span.time {
   width: 35%;
@@ -282,6 +251,10 @@
 #classPractice .performance-item {
   padding: 13px 0;
   position: relative;
+  line-height: 1;
+}
+#classPractice .performance-item:last-child:after {
+  display: none;
 }
 #classPractice .performance-item span {
   color: #333;
@@ -383,4 +356,65 @@
 }
 #classPractice .classPractice-btn-empty {
   border: none;
+}
+@media only screen and (max-width: 600px) {
+  #classPractice {
+    /* .am-tabs-default-bar-top::after{
+        content: '';
+        position: absolute;
+        background-color: #ddd;
+        display: block;
+        z-index: 1;
+        top: auto;
+        right: auto;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        height: 1PX;
+        -webkit-transform-origin: 50% 100%;
+        -ms-transform-origin: 50% 100%;
+        transform-origin: 50% 100%;
+        -webkit-transform: scaleY(0.5);
+        -ms-transform: scaleY(0.5);
+        transform: scaleY(0.5);
+      }*/
+  }
+  #classPractice .am-tabs-default-bar-content {
+    justify-content: space-between;
+    padding: 0 15px;
+  }
+  #classPractice .am-tabs-default-bar-content .am-tabs-default-bar-tab {
+    position: relative;
+    width: auto !important;
+  }
+  #classPractice .am-tabs-default-bar-content .am-tabs-default-bar-tab:first-child {
+    justify-content: flex-start;
+  }
+  #classPractice .am-tabs-default-bar-content .am-tabs-default-bar-tab:last-child {
+    justify-content: flex-end;
+  }
+  #classPractice .am-tabs-default-bar-content .am-tabs-default-bar-tab::after {
+    display: none;
+  }
+  #classPractice .am-tabs-default-bar-content .am-tabs-default-bar-tab.am-tabs-default-bar-tab-active::before {
+    content: '';
+    position: absolute;
+    background-color: #0066FF;
+    display: block;
+    z-index: 1;
+    top: auto;
+    right: auto;
+    bottom: 0;
+    left: 50%;
+    width: 19px;
+    height: 2PX;
+    -webkit-transform: translateX(-50%);
+    -moz-transform: translateX(-50%);
+    -ms-transform: translateX(-50%);
+    -o-transform: translateX(-50%);
+    transform: translateX(-50%);
+  }
+  #classPractice .am-tabs-default-bar-content .am-tabs-default-bar-underline {
+    display: none;
+  }
 }

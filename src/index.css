@@ -641,3 +641,6 @@ video::-webkit-media-controls-fullscreen-button {
 .classReward .slick-list {
   height: 100% !important;
 }
+.am-list-view-scrollview-content {
+  width: 100%;
+}

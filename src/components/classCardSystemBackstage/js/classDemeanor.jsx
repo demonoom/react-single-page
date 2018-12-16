@@ -59,8 +59,12 @@ export default class classDemeanor extends React.Component {
             var classDemeanors = res.split(',');
             var promiseArray = [];
             console.log(classDemeanors, '图片地址');
+            Toast.loading('正在加载...', 60, () => {
+                console.log('Load complete !!!');
+            });
             for (var k = 0; k < classDemeanors.length; k++) {
                 console.log(k);
+                
                 if (classDemeanors[k].substr(classDemeanors[k].length - 3, 3) == 'mp4') {
                     console.log(k, '视频k');
                     var cut = new Promise(function (resolve, reject) {
@@ -76,7 +80,6 @@ export default class classDemeanor extends React.Component {
                             canvas.getContext('2d').drawImage(video, 0, 0, canvas.width, canvas.height);
                             // var $Blob = canvas.toDataURL("image/png");
                             var $Blob = demeanor.getBlobBydataURI(canvas.toDataURL("image/png"), 'image/jpeg');
-
                             var formData = new FormData();
                             formData.append("filePath", $Blob, "file_" + Date.parse(new Date()) + ".png");
                             $.ajax({
@@ -91,6 +94,7 @@ export default class classDemeanor extends React.Component {
                                 success: function (res) {
                                     console.log(res);
                                     if (res == '') {
+                                        Toast.hide();
                                         Toast.fail('请转成标准视频格式')
                                         return
                                     }
@@ -109,9 +113,10 @@ export default class classDemeanor extends React.Component {
             // console.log(promiseArray,'promiseArray')
             Promise.all(promiseArray).then(function (e) {
                 //     console.log(e,'promise');
-                console.log(classDemeanors, 'classDemeanors!!!!!!');
+                // console.log(classDemeanors, 'classDemeanors!!!!!!');
                 demeanor.setState({imgFromAndArr: demeanor.state.imgFromAndArr.concat(classDemeanors)});
                 // return;
+                Toast.hide();
             })
             // }
 
