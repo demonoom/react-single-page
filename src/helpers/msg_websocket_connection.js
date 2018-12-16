@@ -1,7 +1,7 @@
 import React from 'react';
 
-var isDebug = true;
-var isDebugLocal = true;
+var isDebug = false;
+var isDebugLocal = false;
 
 export function MsgConnection() {
     this.msgWsListener = null;
