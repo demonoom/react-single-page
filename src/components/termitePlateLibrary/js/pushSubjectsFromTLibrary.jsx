@@ -224,11 +224,14 @@ export default class pushSubjectsFromTLibrary extends React.Component {
         Bridge.callHandler(data, null, function (error) {
             Toast.fail(error, 5);
         });
-        tLibrary.state.pushSubjectsArr.splice(0);
-        var arr = document.getElementsByClassName('am-checkbox');
-        for (var i = 0; i < arr.length; i++) {
-            arr[i].classList.remove("am-checkbox-checked");
-        }
+        // tLibrary.state.pushSubjectsArr.splice(0);
+        // var arr = document.getElementsByClassName('am-checkbox');
+        // for (var i = 0; i < arr.length; i++) {
+        //     arr[i].classList.remove("am-checkbox-checked");
+        // }
+        setTimeout(function () {
+            window.location.reload()
+        },200)
     }
 
     /**
