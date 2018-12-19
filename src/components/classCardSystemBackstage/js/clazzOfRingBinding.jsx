@@ -1,7 +1,10 @@
 import React from 'react';
-import {Icon, Toast} from 'antd-mobile';
+import {Icon, Toast, Modal} from 'antd-mobile';
 
 import "../css/clazzDutyList.less"
+import {ListView} from "antd-mobile/lib/index";
+
+const alert = Modal.alert;
 
 var classD;
 var timer;
@@ -40,6 +43,7 @@ export default class clazzOfRingBinding extends React.Component {
      */
     getClazzesByUserId(ident) {
         this.state.page = 1;
+        this.state.hasMoreClass = true;
         var _this = this;
         var param = {
             // "method": 'searchClazz',
@@ -82,7 +86,7 @@ export default class clazzOfRingBinding extends React.Component {
     clearSearch = () => {
         this.input.value = '';
         this.setState({showClear: false})
-        this.viewWatchPage(this.state.loginUser);
+        this.getClazzesByUserId(this.state.ident);
     }
 
     searchInput = () => {
@@ -121,7 +125,6 @@ export default class clazzOfRingBinding extends React.Component {
                         dataType: 2,
                         listData: _this.state.listData.concat(result.response),
                         isLoadingMore: false,
-                        page: _this.state.page + 1,
                     })
                 }
             },
@@ -132,7 +135,51 @@ export default class clazzOfRingBinding extends React.Component {
     }
 
     loadMoreHandle = () => {
-        console.log(1);
+        this.setState({page: this.state.page + 1}, () => {
+            this.viewWatchPage(this.state.ident);
+        })
+    }
+
+    /**
+     * 解绑弹出框
+     */
+    showAlert = (data) => {
+        var _this = this;
+        const alertInstance = alert('您确定要解除绑定吗?', '', [
+            {text: '取消', onPress: () => console.log('cancel'), style: 'default'},
+            {text: '确定', onPress: () => _this.unbindWatch(data)},
+        ], 'android');
+    };
+
+    /**
+     * 解绑
+     * @param obj
+     */
+    unbindWatch(obj) {
+        var _this = this;
+        var param = {
+            "method": 'unbindWatch',
+            "wid": obj.macAddress,
+        };
+        WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
+            onResponse: function (result) {
+                if (result.msg == '调用成功' && result.success == true) {
+                    Toast.success('解绑成功', 1);
+                    var arr = _this.state.listData;
+                    arr.forEach(function (v, i) {
+                        if (obj.id == v.id) {
+                            arr.splice(i, 1);
+                        }
+                    });
+                    _this.setState({listData: arr})
+                } else {
+                    Toast.fail(result.msg, 1);
+                }
+            },
+            onError: function (error) {
+                // message.error(error);
+            }
+        });
     }
 
     render() {
@@ -158,14 +205,16 @@ export default class clazzOfRingBinding extends React.Component {
                             <img src={item[k].bindingUser.avatar} alt=""/>
                             {item[k].name}
                         </div>
-                        <div className="am-card-header-extra"><span className="noomCardUnbind">解绑</span></div>
+                        <div className="am-card-header-extra"><span className="noomCardUnbind"
+                                                                    onClick={this.showAlert.bind(this, item[k])}>解绑</span>
+                        </div>
                     </div>
                     <div className="am-card-body">
                         <div className="student_list text_hidden">
                             MAC:{item[k].macAddress}
                         </div>
                         <div className="student_list2 text_hidden">
-                            ID:{item[k].colAccount}
+                            ID:{item[k].bindingUser.colAccount}
                         </div>
                     </div>
 
@@ -181,7 +230,7 @@ export default class clazzOfRingBinding extends React.Component {
                 } onClick={this.clearSearch} className="close"></span>
                 </div>
                 <div className="noticeMsg_common">请在列表中选择班级进行设置</div>
-                <div  className="listCont">
+                <div className="listCont">
                     <ul>
                         {items}
                     </ul>
@@ -189,7 +238,7 @@ export default class clazzOfRingBinding extends React.Component {
                     {
 
                         this.state.hasMoreClass ? this.state.isLoadingMore ? <span>加载中...</span> :
-                            <span onClick={this.loadMoreHandle}>加载更多</span> : <span>没有更多了</span>
+                            <span onClick={this.loadMoreHandle}>点击加载更多</span> : <span>没有更多了</span>
                     }
                 </span>
                 </div>
