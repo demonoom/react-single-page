@@ -10,13 +10,13 @@
 
   .search-nav{
     background: #fff;
-    border-top: 9px #efeff4 solid;
-    border-right: 15px solid #efeff4;
-    border-bottom: 9px solid #efeff4;
-    border-left: 15px solid #efeff4;
+    border-top: 9px #fff solid;
+    border-right: 15px solid #fff;
+    border-bottom: 9px solid #fff;
+    border-left: 15px solid #fff;
     position: relative;
     & i{
-      background: url("../imgs/icon_search.png") no-repeat center center #fff;
+      background: url("../imgs/icon_search.png") no-repeat center center #efeff4;
       font-size: 0;
       width: 20px;
       height: 34px;
@@ -31,7 +31,7 @@
       display: block;
       color: #000;
       font-size: 15px;
-      background-color: #fff;
+      background-color:#efeff4;
       border: 0;
       padding: 8px 30px 6px 0px;
       height: 20px;
@@ -46,6 +46,85 @@
       right: 4px;
       top: 9px;
       background-size: 16px;
+    }
+  }
+  .listCont{
+    height: calc(~"100% - 92px");
+    overflow-y: auto;
+  }
+  .am-card{
+    padding: 0 15px;
+    margin-bottom: 15px;
+    &::before{
+      display: none;
+    }
+    &:last-child{
+      margin-bottom: 0;
+    }
+  }
+  .am-card .am-card-header {
+    height: 48px;
+    line-height: 48px;
+    padding: 11px 0!important
+  }
+  .noomCardHeader .am-card-header-content{
+    color: #333;
+    width: calc(~"100% - 70px");
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    display: inline-block;
+    -webkit-flex: inherit;
+    -moz-flex: inherit;
+    -ms-flex: inherit;
+    -webkit-box-flex: inherit;
+    flex: inherit;
+    height: 100%;
+    -webkit-box-align: center;
+    align-items: center;
+    img{
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      margin-right: 15px;
+      margin-top: 2px;
+    }
+  }
+  .am-card-header-extra{
+    width: 70px;
+    -webkit-flex: inherit;
+    -moz-flex: inherit;
+    -ms-flex: inherit;
+    -webkit-box-flex: inherit;
+    flex: inherit;
+  }
+  .noomCardUnbind{
+    background: #F56A55;
+    color: #fff !important;
+    width: 55px;
+    height: 23px;
+    line-height: 23px;
+    text-align: center;
+    border-radius: 3px;
+    font-size: 15px;
+    display: inline-block;
+  }
+  .am-card-body {
+    color: #666 !important;
+    padding: 15px 0;
+    min-height: 20px;
+    overflow: hidden;
+    &>div{
+      display: inline-block;
+    }
+    .student_list{
+      width: 60%;
+
+    }
+    .student_list2 {
+      width: calc(~"40% - 15px");
+      margin-left: 15px;
+      float: right;
     }
   }
 

@@ -140,26 +140,29 @@ export default class clazzOfRingBinding extends React.Component {
                     </div>
                 </li>);
             } else {
-                items.push(<li className="am-list-item am-list-item-middle">
-                    <div className="am-list-line">
-                        <img src={item[k].bindingUser.avatar} alt=""/>
-                        <div className="am-list-content">
+                items.push(<li className="am-card">
+                    <div className="am-card-header noomCardHeader">
+                        <div className="am-card-header-content">
+                            <img src={item[k].bindingUser.avatar} alt=""/>
                             {item[k].name}
                         </div>
-                        <div>
+                        <div className="am-card-header-extra"><span className="noomCardUnbind">解绑</span></div>
+                    </div>
+                    <div className="am-card-body">
+                        <div className="student_list text_hidden">
                             MAC:{item[k].macAddress}
                         </div>
-                        <div>
+                        <div className="student_list2 text_hidden">
                             ID:{item[k].colAccount}
                         </div>
-                        <div>解绑</div>
                     </div>
+
                 </li>);
             }
 
         }
         return (
-            <div id="clazzDutyList" style={{height: document.body.clientHeight, overflow: "auto"}}>
+            <div id="clazzDutyList" style={{height: document.body.clientHeight}}>
                 <div className="nav search-nav">
                     <i></i><input type="text" ref={input => this.input = input} onInput={this.searchInput.bind(this)}
                                   placeholder="请搜索不存在于班级内的学生"/><span style={
@@ -167,7 +170,7 @@ export default class clazzOfRingBinding extends React.Component {
                 } onClick={this.clearSearch} className="close"></span>
                 </div>
                 <div className="noticeMsg_common">请在列表中选择班级进行设置</div>
-                <ul>
+                <ul className="listCont">
                     {items}
                 </ul>
             </div>
