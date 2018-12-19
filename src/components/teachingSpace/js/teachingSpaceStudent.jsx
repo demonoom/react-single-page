@@ -149,7 +149,7 @@ export default class teachingSpaceStudent extends React.Component {
                             <i className="Icon-teacher Icon-student-Survey"></i>
                             <div>问卷调查</div>
                         </li>
-                        <li style={{display: this.state.phone == "Android" ? "block" : "none"}}
+                        <li style={{display: "none"}}
                             onClick={this.inAndOutSchool}>
                             <i className="Icon-teacher Icon-student-turnover"></i>
                             <div>出入校统计</div>
