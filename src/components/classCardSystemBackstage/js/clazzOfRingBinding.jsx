@@ -15,6 +15,9 @@ export default class clazzOfRingBinding extends React.Component {
         classD = this;
         this.state = {
             dataType: 1,  //1是班级2是学生
+            page: 1,
+            isLoadingMore: true,
+            hasMoreClass: true,
         };
     }
 
@@ -36,6 +39,7 @@ export default class clazzOfRingBinding extends React.Component {
      * 获取此用户所在班级
      */
     getClazzesByUserId(ident) {
+        this.state.page = 1;
         var _this = this;
         var param = {
             // "method": 'searchClazz',
@@ -93,12 +97,6 @@ export default class clazzOfRingBinding extends React.Component {
 
     viewWatchPage = (loginUser) => {
         var _this = this;
-        // _this.state.dataSource = [];
-        // _this.state.dataSource = new ListView.DataSource({
-        //     rowHasChanged: (row1, row2) => row1 !== row2,
-        // });
-        // const dataBlob = {};
-        // var PageNo = this.state.defaultPageNo;
         if (this.input.value === '') {
             this.getClazzesByUserId(this.state.ident);
             return
@@ -108,13 +106,23 @@ export default class clazzOfRingBinding extends React.Component {
             "aid": loginUser,
             "cid": '-1',
             "searchKeyWords": this.input.value,
-            "pn": 1,
+            "pn": this.state.page,
         };
+        if (this.state.page == 1) {
+            this.state.listData = []
+        }
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
             onResponse: function (result) {
                 if (result.msg == '调用成功' && result.success == true) {
-                    var arr = result.response;
-                    _this.setState({listData: arr, dataType: 2})
+                    if (_this.state.page === result.pager.pageCount) {
+                        _this.setState({hasMoreClass: false})
+                    }
+                    _this.setState({
+                        dataType: 2,
+                        listData: _this.state.listData.concat(result.response),
+                        isLoadingMore: false,
+                        page: _this.state.page + 1,
+                    })
                 }
             },
             onError: function (error) {
@@ -123,10 +131,14 @@ export default class clazzOfRingBinding extends React.Component {
         });
     }
 
+    loadMoreHandle = () => {
+        console.log(1);
+    }
+
     render() {
         let items = [];
         let item = this.state.listData;
-        console.log(item);
+        console.log(item, 'item');
         for (var k in item) {
             if (this.state.dataType == 1) {
                 items.push(<li className="am-list-item am-list-item-middle"
@@ -156,7 +168,6 @@ export default class clazzOfRingBinding extends React.Component {
                     </div>
                 </li>);
             }
-
         }
         return (
             <div id="clazzDutyList" style={{height: document.body.clientHeight, overflow: "auto"}}>
@@ -170,6 +181,13 @@ export default class clazzOfRingBinding extends React.Component {
                 <ul>
                     {items}
                 </ul>
+                <span style={{display: this.state.dataType == 1 ? 'none' : ''}}>
+                    {
+
+                        this.state.hasMoreClass ? this.state.isLoadingMore ? <span>加载中...</span> :
+                            <span onClick={this.loadMoreHandle}>加载更多</span> : <span>没有更多了</span>
+                    }
+                </span>
             </div>
         );
     }
