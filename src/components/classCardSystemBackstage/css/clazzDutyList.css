@@ -52,6 +52,14 @@
   height: calc(100% - 92px);
   overflow-y: auto;
 }
+#clazzDutyList .am-card-header,
+#clazzDutyList .am-card-header-content {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+  align-items: center;
+}
 #clazzDutyList .am-card {
   padding: 0 15px;
   margin-bottom: 15px;
@@ -79,16 +87,13 @@
   -ms-flex: inherit;
   -webkit-box-flex: inherit;
   flex: inherit;
-  height: 100%;
-  -webkit-box-align: center;
-  align-items: center;
 }
 #clazzDutyList .noomCardHeader .am-card-header-content img {
   width: 44px;
   height: 44px;
   border-radius: 50%;
   margin-right: 15px;
-  margin-top: 2px;
+  vertical-align: middle;
 }
 #clazzDutyList .am-card-header-extra {
   width: 70px;
@@ -125,4 +130,9 @@
   width: calc(40% - 15px);
   margin-left: 15px;
   float: right;
+}
+#clazzDutyList .am-list-footer {
+  text-align: center;
+  display: block;
+  padding: 15px;
 }

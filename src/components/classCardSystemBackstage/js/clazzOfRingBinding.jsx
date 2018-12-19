@@ -181,16 +181,19 @@ export default class clazzOfRingBinding extends React.Component {
                 } onClick={this.clearSearch} className="close"></span>
                 </div>
                 <div className="noticeMsg_common">请在列表中选择班级进行设置</div>
-                <ul className="listCont">
-                    {items}
-                </ul>
-                <span style={{display: this.state.dataType == 1 ? 'none' : ''}}>
+                <div  className="listCont">
+                    <ul>
+                        {items}
+                    </ul>
+                    <span className="am-list-footer" style={{display: this.state.dataType == 1 ? 'none' : ''}}>
                     {
 
                         this.state.hasMoreClass ? this.state.isLoadingMore ? <span>加载中...</span> :
                             <span onClick={this.loadMoreHandle}>加载更多</span> : <span>没有更多了</span>
                     }
                 </span>
+                </div>
+
             </div>
         );
     }
