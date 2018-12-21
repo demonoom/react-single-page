@@ -9,7 +9,6 @@ var heatmapOverlay = null;
 export default class baiduMap extends React.Component {
 
     constructor(props) {
-        alert("111");
         super(props);
         demeanor = this;
         this.state = {
