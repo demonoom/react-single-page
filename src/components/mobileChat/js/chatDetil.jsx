@@ -847,8 +847,7 @@ export default class chat_Detil extends React.Component {
                     window.clearInterval(timer);
                 }
             }, 10)
-        }
-        else {
+        } else {
             window.clearInterval(timer);
             $("#" + `${id}` + '_audio').attr("class", 'audio' + direction);
             music.pause();
@@ -1149,6 +1148,20 @@ export default class chat_Detil extends React.Component {
         }, 400);
     }
 
+    /**
+     * 解决IOS12并且微信版本6.7.4页面bug
+     * @constructor
+     */
+    TextareaOnBlur() {
+        setTimeout(() => {
+
+            const scrollHeight = document.documentElement.scrollTop || document.body.scrollTop || 0;
+
+            window.scrollTo(0, Math.max(scrollHeight - 1, 0));
+
+        }, 100);
+    }
+
     render() {
 
         return (<div id='chatDetil'>
@@ -1182,6 +1195,7 @@ export default class chat_Detil extends React.Component {
                         onChange={this.TextareaOnKeyChange}
                         count={60}
                         onFocus={this.TextareaOnFocus}
+                        onBlur={this.TextareaOnBlur}
                     />
 
                     <button className="submit" onClick={this.sendMessage}>发送</button>

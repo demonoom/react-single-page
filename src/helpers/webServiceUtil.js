@@ -1,7 +1,7 @@
 var isDebug = false;
 var localDomain = "192.168.43.210";   //请求地址
 var isDebugLocal = true;
-var localUrl = "192.168.88.102";    //跳转地址http:
+var localUrl = "192.168.43.169";    //跳转地址http:
 
 
 //云校本地测试webService地址
