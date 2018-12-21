@@ -1,5 +1,5 @@
 import React from 'react';
-import { } from 'antd-mobile';
+import { Toast } from 'antd-mobile';
 export default class yunxiao extends React.Component {
     constructor(props) {
         super(props);
@@ -29,8 +29,30 @@ export default class yunxiao extends React.Component {
         if (phone == 'IOS') {
             window.open('https://itunes.apple.com/cn/app/apple-store/id1268534857?mt=8')
         } else {
-            window.open('http://60.205.86.217/upload7_app/2018-08-02/19/3c09e2df-fd58-4f81-8b5f-7deb38748000.apk')
+            // window.open('http://60.205.86.217/upload7_app/2018-08-02/19/3c09e2df-fd58-4f81-8b5f-7deb38748000.apk')
+            this.getAppEwmPath();
         }
+    }
+
+    /**
+     * 获取最新地址
+     * @param fileType
+     */
+    getAppEwmPath = () => {
+        var type = 12;
+        var url = "https://www.maaee.com/Excoord_For_Education/webservice";
+        $.post(url, {
+            params: JSON.stringify({"type": type, "method": "checkForUpdates2"})
+        }, function (result, status) {
+            if (status == "success") {
+                var appPath = result.response.webPath;
+                if(WebServiceUtil.isEmpty(appPath)==true){
+                    Toast.fail("下载出错,请稍后重试!");
+                }else{
+                    window.open(appPath);
+                }
+            }
+        }, "json");
     }
 
     render() {
