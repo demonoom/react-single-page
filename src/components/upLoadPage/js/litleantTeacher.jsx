@@ -1,5 +1,5 @@
 import React from 'react';
-import { Tabs, WhiteSpace } from 'antd-mobile';
+import { Tabs, WhiteSpace,Toast } from 'antd-mobile';
 import { StickyContainer, Sticky } from 'react-sticky';
 import '../css/downApp.less'
 const tabs = [
@@ -37,28 +37,54 @@ export default class litleantTeacher extends React.Component {
         }
     }
 
+    /**
+     * 获取最新地址
+     * @param fileType
+     */
+    getAppEwmPath = (fileType) => {
+        var type;
+        if (fileType === 'youyang') {
+            type = 15
+        } else if (fileType === 'littleAntFa') {
+            type = 9
+        } else if (fileType === 'littleAntSt') {
+            type = 2
+        } else if (fileType === 'littleAntTe') {
+            type = 3
+        } else if (fileType === 'elearning') {
+            type = 12
+        } else if (fileType === 'classCard') {
+            type = 16
+        }
+        var url = "https://www.maaee.com/Excoord_For_Education/webservice";
+        $.post(url, {
+            params: JSON.stringify({"type": type, "method": "checkForUpdates2"})
+        }, function (result, status) {
+            if (status == "success") {
+                var appPath = result.response.webPath;
+                if(WebServiceUtil.isEmpty(appPath)==true){
+                    Toast.fail("下载出错,请稍后重试!");
+                }else{
+                    window.open(appPath);
+                }
+            }
+        }, "json");
+    }
+
     downLoadFile = (fileType) => {
         var phone = this.state.phone
-        if (fileType == 'littleAntTe') {
-            if (phone == 'IOS') {
+        if(phone == 'IOS'){
+            if (fileType == 'littleAntTe') {
                 window.open('https://itunes.apple.com/cn/app/apple-store/id1049156218?mt=8')
-            } else {
-                window.open('http://60.205.86.217/upload7_app/2018-07-16/19/4e303b59-f115-49e9-9705-d38b5f649c52.apk')
-            }
-        } else if (fileType == 'littleAntSt') {
-            if (phone == 'IOS') {
+            } else if (fileType == 'littleAntSt') {
                 window.open('https://itunes.apple.com/cn/app/apple-store/id1049156218?mt=8')
-            } else {
-                window.open('http://60.205.86.217/upload7_app/2018-07-19/9/93d48c33-cda5-4784-97f9-9f132bbc63e8.apk')
-            }
-        } else if (fileType == 'littleAntFa') {
-            if (phone == 'IOS') {
+            } else if (fileType == 'littleAntFa') {
                 window.open('https://itunes.apple.com/cn/app/apple-store/id1395849263?mt=8')
-            } else {
-                window.open('http://60.205.86.217/upload7_app/2018-06-28/21/f500639a-e8e5-43e2-b813-be6ffbf2f10a.apk')
             }
+        }else{
+            this.getAppEwmPath(fileType);
         }
-        }
+    }
     render() {
         return (
             <div id='fileDownload' className='down_tab'>
