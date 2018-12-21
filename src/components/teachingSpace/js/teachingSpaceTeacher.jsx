@@ -110,7 +110,7 @@ export default class teachingSpaceTeacher extends React.Component {
         // 回顾页面
         if (type == "ReviewStatistics") {
             // url = "http://jiaoxue.maaee.com:8093/#/cloudSchoolClassesStatistical?ident=" + this.state.ident
-            url = "http://172.20.10.6:7093/#/cloudSchoolClassesStatistical?ident=" + this.state.ident+"&judgelag=1"
+            url = "http://192.168.88.102:7093/#/cloudSchoolClassesStatistical?ident=" + this.state.ident+"&judgelag=1"
 
         } else if (type == "Approval") {
             // 审批页面
