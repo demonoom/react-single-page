@@ -1,12 +1,12 @@
 CACHE MANIFEST
-# version v1.2.3
+# version v1.2.4
 
 CACHE:
-/index.css?v=1.2.3
-/shared.js?v=1.2.3
-/index.js?v=1.2.3
-/teachingSpaceStudent_chunk.js?v=1.2.3
-/teachingSpaceTeacher_chunk.js?v=1.2.3
+/index.css?v=1.2.4
+/shared.js?v=1.2.4
+/index.js?v=1.2.4
+/teachingSpaceStudent_chunk.js?v=1.2.4
+/teachingSpaceTeacher_chunk.js?v=1.2.4
 /index.html
 /src/helpers/jquery-3.2.1.min.js
 /src/helpers/webServiceUtil.js
