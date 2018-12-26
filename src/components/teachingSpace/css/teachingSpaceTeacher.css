@@ -20,6 +20,7 @@
   /*作业统计*/
   /*作业表情统计*/
   /*批改作业*/
+  /*批改作业*/
   /*组卷*/
   /*考试*/
   /*教务管理*/
@@ -148,6 +149,10 @@
 }
 #teachingSpaceTeacher .Icon-teacher-homeworkCorrecting {
   background: url("../images/icon-homeworkCorrecting.png") no-repeat;
+  background-size: 100% 100%;
+}
+#teachingSpaceTeacher .Icon-teacher-wrongBook {
+  background: url("../images/icon-wrongBook.png") no-repeat;
   background-size: 100% 100%;
 }
 #teachingSpaceTeacher .Icon-teacher-testPaper {
