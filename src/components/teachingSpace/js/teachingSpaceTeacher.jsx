@@ -93,13 +93,19 @@ export default class teachingSpaceTeacher extends React.Component {
      * 跳转客户端
      */
     toClient = (method) => {
-        var data = {
-            method: method,
-            ident: this.state.ident
-        };
-        console.log(data, "data")
-        Bridge.callHandler(data, null, function (error) {
-        });
+        if(method == "openWrongTopic"){
+            var url = "http://192.168.50.188:7094/#/topicWrongList?userId=53";
+            window.location.href = url;
+        }else{
+            var data = {
+                method: method,
+                ident: this.state.ident
+            };
+            console.log(data, "data")
+            Bridge.callHandler(data, null, function (error) {
+            });
+        }
+
     }
 
     /**
@@ -227,6 +233,10 @@ export default class teachingSpaceTeacher extends React.Component {
                             <i className="Icon-teacher Icon-teacher-SmallClass"></i>
                             <div>录制微课</div>
                         </li>
+                        <li onClick={this.toClient.bind(this, "openWrongTopic")}>
+                            <i className="Icon-teacher Icon-teacher-SmallClass"></i>
+                            <div>错题本</div>
+                        </li>
                     </ul>
                 </div>
                 <div className="teacher-item">
@@ -236,8 +246,7 @@ export default class teachingSpaceTeacher extends React.Component {
                             <i className="Icon-teacher Icon-teacher-ClassReview"></i>
                             <div>课堂回顾统计</div>
                         </li>
-                        <li style={{display: this.state.phone == "Android" ? "block" : "none"}}
-                            onClick={this.toPage.bind(this, "openNativePage_RingDataStatistics")}>
+                        <li onClick={this.toPage.bind(this, "openNativePage_RingDataStatistics")}>
                             <i className="Icon-teacher Icon-teacher-braceletData"></i>
                             <div>手环数据统计</div>
                         </li>
@@ -250,8 +259,7 @@ export default class teachingSpaceTeacher extends React.Component {
                             <i className="Icon-teacher Icon-teacher-AssignHomework"></i>
                             <div>布置作业</div>
                         </li>
-                        <li style={{display: this.state.phone == "Android" ? "block" : "none"}}
-                            onClick={this.toClient.bind(this, "openNativePage_HomeworkStatistics")}>
+                        <li onClick={this.toClient.bind(this, "openNativePage_HomeworkStatistics")}>
                             <i className="Icon-teacher Icon-teacher-homeworkStatistics"></i>
                             <div>作业统计</div>
                         </li>
