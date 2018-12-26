@@ -111,6 +111,7 @@ export default class classDemeanor extends React.Component {
                 //     console.log(e,'promise');
                 console.log(classDemeanors, 'classDemeanors!!!!!!');
                 demeanor.setState({imgFromAndArr: demeanor.state.imgFromAndArr.concat(classDemeanors)});
+
                 // return;
             })
             // }
