@@ -233,10 +233,7 @@ export default class teachingSpaceTeacher extends React.Component {
                             <i className="Icon-teacher Icon-teacher-SmallClass"></i>
                             <div>录制微课</div>
                         </li>
-                        <li onClick={this.toClient.bind(this, "openWrongTopic")}>
-                            <i className="Icon-teacher Icon-teacher-SmallClass"></i>
-                            <div>错题本</div>
-                        </li>
+
                     </ul>
                 </div>
                 <div className="teacher-item">
@@ -271,6 +268,10 @@ export default class teachingSpaceTeacher extends React.Component {
                             style={{display: this.state.phone == "Android" ? "block" : "none"}}>
                             <i className="Icon-teacher Icon-teacher-homeworkCorrecting"></i>
                             <div>批改作业</div>
+                        </li>
+                        <li onClick={this.toClient.bind(this, "openWrongTopic")}>
+                            <i className="Icon-teacher Icon-teacher-wrongBook"></i>
+                            <div>错题本</div>
                         </li>
                     </ul>
                 </div>
