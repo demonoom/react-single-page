@@ -93,18 +93,16 @@ export default class teachingSpaceTeacher extends React.Component {
      * 跳转客户端
      */
     toClient = (method) => {
-        if(method == "openWrongTopic"){
-            var url = "http://192.168.50.188:7094/#/topicWrongList?userId=53";
-            window.location.href = url;
-        }else{
-            var data = {
-                method: method,
-                ident: this.state.ident
-            };
-            console.log(data, "data")
-            Bridge.callHandler(data, null, function (error) {
-            });
+        var data = {
+            method: method,
+            ident: this.state.ident
+        };
+        if (method == "openNativePage_Errorbook") {
+            data.href = 'http://192.168.50.29:7094/#/topicWrongList?userId='
         }
+        console.log(data, "data")
+        Bridge.callHandler(data, null, function (error) {
+        });
 
     }
 
@@ -115,7 +113,7 @@ export default class teachingSpaceTeacher extends React.Component {
         var url;
         // 回顾页面
         if (type == "ReviewStatistics") {
-            url = "http://jiaoxue.maaee.com:8093/#/cloudSchoolClassesStatistical?ident=" + this.state.ident+"&judgelag=1"
+            url = "http://jiaoxue.maaee.com:8093/#/cloudSchoolClassesStatistical?ident=" + this.state.ident + "&judgelag=1"
             // url = "http://192.168.43.169:7093/#/cloudSchoolClassesStatistical?ident=" + this.state.ident+"&judgelag=1"
         } else if (type == "Approval") {
             // 审批页面
@@ -233,7 +231,7 @@ export default class teachingSpaceTeacher extends React.Component {
                             <i className="Icon-teacher Icon-teacher-SmallClass"></i>
                             <div>录制微课</div>
                         </li>
-                        <li onClick={this.toClient.bind(this, "openWrongTopic")}>
+                        <li onClick={this.toClient.bind(this, "openNativePage_Errorbook")}>
                             <i className="Icon-teacher Icon-teacher-SmallClass"></i>
                             <div>错题本</div>
                         </li>
