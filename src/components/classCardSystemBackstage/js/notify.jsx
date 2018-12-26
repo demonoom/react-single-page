@@ -150,7 +150,7 @@ export default class notifyBack extends React.Component {
 
     //新打开添加课程页
     toAddNotify=()=> {
-        // var url = "http://192.168.50.72:6443/richTextEditor/index.html?access_user="+this.state.ident;
+        // var url = "http://192.168.43.169:6443/richTextEditor/index.html?access_user="+this.state.ident;
         var url = "https://www.maaee.com:6443/richTextEditor/index.html?access_user="+this.state.ident;
         var data = {
             method: 'openNewPage',

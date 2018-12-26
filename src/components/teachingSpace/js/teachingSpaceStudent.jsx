@@ -43,6 +43,39 @@ export default class teachingSpaceStudent extends React.Component {
         });
     }
 
+    cloudSchoolClassesStatistical = () => {
+        var url = 'http://jiaoxue.maaee.com:8093/#/cloudSchoolClassesStatistical?access_user=' + this.state.ident
+        var data = {
+            method: 'openNewPage',
+            url: url,
+        };
+        Bridge.callHandler(data, null, function (error) {
+            window.location.href = url;
+        });
+    }
+
+    liveReview = () => {
+        var url = 'http://jiaoxue.maaee.com:8093/#/liveReview?access_user=' + this.state.ident
+        var data = {
+            method: 'openNewPage',
+            url: url,
+        };
+        Bridge.callHandler(data, null, function (error) {
+            window.location.href = url;
+        });
+    }
+
+    inAndOutSchool = () => {
+        var url = 'http://jiaoxue.maaee.com:8093/#/inAndOutSchool?access_user=' + this.state.ident
+        var data = {
+            method: 'openNewPage',
+            url: url,
+        };
+        Bridge.callHandler(data, null, function (error) {
+            window.location.href = url;
+        });
+    }
+
     render() {
 
         return (
@@ -62,11 +95,11 @@ export default class teachingSpaceStudent extends React.Component {
                             <i className="Icon-teacher Icon-teacher-eSchool"></i>
                             <div>小蚂蚁云课堂</div>
                         </li>
-                        <li onClick={this.toClient.bind(this, "openNativePage_ClassReview_Stu")}>
+                        <li onClick={this.cloudSchoolClassesStatistical}>
                             <i className="Icon-teacher Icon-student-ClassReview"></i>
                             <div>课堂回顾</div>
                         </li>
-                        <li onClick={this.toClient.bind(this, "openNativePage_LiveReview_Stu")}>
+                        <li onClick={this.liveReview}>
                             <i className="Icon-teacher Icon-student-live"></i>
                             <div>直播回顾</div>
                         </li>
@@ -116,8 +149,8 @@ export default class teachingSpaceStudent extends React.Component {
                             <i className="Icon-teacher Icon-student-Survey"></i>
                             <div>问卷调查</div>
                         </li>
-                        <li style={{display: this.state.phone == "Android" ? "block" : "none"}}
-                            onClick={this.toClient.bind(this, "openNativePage_AdmissionStatistics_Stu")}>
+                        <li style={{display: "none"}}
+                            onClick={this.inAndOutSchool}>
                             <i className="Icon-teacher Icon-student-turnover"></i>
                             <div>出入校统计</div>
                         </li>

@@ -54,7 +54,7 @@
 }
 #classPractice .topic_list {
   /*overflow: auto;
-    height: calc(~"100% - 86px");*/
+      height: calc(~"100% - 86px");*/
 }
 #classPractice .topic_list .topic_item {
   margin: 15px;
@@ -360,24 +360,24 @@
 @media only screen and (max-width: 600px) {
   #classPractice {
     /* .am-tabs-default-bar-top::after{
-      content: '';
-      position: absolute;
-      background-color: #ddd;
-      display: block;
-      z-index: 1;
-      top: auto;
-      right: auto;
-      bottom: 0;
-      left: 0;
-      width: 100%;
-      height: 1PX;
-      -webkit-transform-origin: 50% 100%;
-      -ms-transform-origin: 50% 100%;
-      transform-origin: 50% 100%;
-      -webkit-transform: scaleY(0.5);
-      -ms-transform: scaleY(0.5);
-      transform: scaleY(0.5);
-    }*/
+        content: '';
+        position: absolute;
+        background-color: #ddd;
+        display: block;
+        z-index: 1;
+        top: auto;
+        right: auto;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        height: 1PX;
+        -webkit-transform-origin: 50% 100%;
+        -ms-transform-origin: 50% 100%;
+        transform-origin: 50% 100%;
+        -webkit-transform: scaleY(0.5);
+        -ms-transform: scaleY(0.5);
+        transform: scaleY(0.5);
+      }*/
   }
   #classPractice .am-tabs-default-bar-content {
     justify-content: space-between;

@@ -109,8 +109,8 @@ export default class teachingSpaceTeacher extends React.Component {
         var url;
         // 回顾页面
         if (type == "ReviewStatistics") {
-            url = "http://jiaoxue.maaee.com:8093/#/cloudSchoolClassesStatistical?ident=" + this.state.ident
-
+            url = "http://jiaoxue.maaee.com:8093/#/cloudSchoolClassesStatistical?ident=" + this.state.ident+"&judgelag=1"
+            // url = "http://192.168.43.169:7093/#/cloudSchoolClassesStatistical?ident=" + this.state.ident+"&judgelag=1"
         } else if (type == "Approval") {
             // 审批页面
             url = "http://www.maaee.com:80/Excoord_PhoneService/flowGroup/getAllFlowGroupBySchoolId/" + this.state.schoolId + "/" + this.state.ident
