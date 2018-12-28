@@ -24,9 +24,9 @@ export default class teachingSpaceStudent extends React.Component {
         })
         var phoneType = navigator.userAgent;
         if (phoneType.indexOf('iPhone') > -1 || phoneType.indexOf('iPad') > -1) {
-            this.setState({phone: 'IOS'})
+            this.setState({ phone: 'IOS' })
         } else {
-            this.setState({phone: 'Android'})
+            this.setState({ phone: 'Android' })
         }
     }
 
@@ -38,6 +38,10 @@ export default class teachingSpaceStudent extends React.Component {
             method: method,
             ident: this.state.ident
         };
+        if (method == "openNativePage_Errorbook_Stu") {
+            data.href = 'http://jiaoxue.maaee.com:8094/#/topicWrongList?userId='
+            // data.href = 'http://192.168.50.72:7094/#/topicWrongList?userId='
+        }
         console.log(data, "data")
         Bridge.callHandler(data, null, function (error) {
         });
@@ -81,7 +85,7 @@ export default class teachingSpaceStudent extends React.Component {
         return (
             <div id="teachingSpaceTeacher">
                 <div className="teacher-item">
-                    <h1>课堂123</h1>
+                    <h1>课堂</h1>
                     <ul className="my_flex teacherUl">
                         <li onClick={this.toClient.bind(this, "openNativePage_TheSchoolClassroom_Stu")}>
                             <i className="Icon-teacher Icon-teacher-classroom"></i>
@@ -112,7 +116,7 @@ export default class teachingSpaceStudent extends React.Component {
                             <i className="Icon-teacher Icon-teacher-homeworkCorrecting"></i>
                             <div>作业</div>
                         </li>
-                        <li style={{display: this.state.phone == "Android" ? "block" : "none"}}
+                        <li style={{ display: this.state.phone == "Android" ? "block" : "none" }}
                             onClick={this.toClient.bind(this, "openNativePage_MyTestPaper_Stu")}>
                             <i className="Icon-teacher Icon-teacher-testPaper"></i>
                             <div>考试</div>
@@ -121,12 +125,18 @@ export default class teachingSpaceStudent extends React.Component {
                             <i className="Icon-teacher Icon-teacher-homeworkStatistics"></i>
                             <div>作业统计</div>
                         </li>
+                        <li
+                            style={{ display: this.state.phone == "Android" ? "block" : "none" }}
+                            onClick={this.toClient.bind(this, "openNativePage_Errorbook_Stu")}>
+                            <i className="Icon-teacher Icon-teacher-wrongBook"></i>
+                            <div>错题本</div>
+                        </li>
                     </ul>
                 </div>
                 <div className="teacher-item">
                     <h1>学习资源</h1>
                     <ul className="my_flex teacherUl">
-                        <li style={{display: this.state.phone == "Android" ? "block" : "none"}}
+                        <li style={{ display: this.state.phone == "Android" ? "block" : "none" }}
                             onClick={this.toClient.bind(this, "openNativePage_DoExercises_Stu")}>
                             <i className="Icon-teacher Icon-teacher-questionBank"></i>
                             <div>玩转习题</div>
@@ -135,7 +145,7 @@ export default class teachingSpaceStudent extends React.Component {
                             <i className="Icon-teacher Icon-teacher-repository"></i>
                             <div>资源库</div>
                         </li>
-                        <li style={{display: this.state.phone == "Android" ? "block" : "none"}}
+                        <li style={{ display: this.state.phone == "Android" ? "block" : "none" }}
                             onClick={this.toClient.bind(this, "openNativePage_FamousTeacherSpace_Stu")}>
                             <i className="Icon-teacher Icon-teacher-famousTeacher"></i>
                             <div>名师空间</div>
@@ -149,7 +159,7 @@ export default class teachingSpaceStudent extends React.Component {
                             <i className="Icon-teacher Icon-student-Survey"></i>
                             <div>问卷调查</div>
                         </li>
-                        <li style={{display: "none"}}
+                        <li style={{ display: "none" }}
                             onClick={this.inAndOutSchool}>
                             <i className="Icon-teacher Icon-student-turnover"></i>
                             <div>出入校统计</div>

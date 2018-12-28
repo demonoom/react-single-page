@@ -1072,10 +1072,10 @@ class Index extends React.Component {
                     <li><Link
                         to="/wxBindIndex?unionid=o-w611I9nKqTHcT3P34srzwIrf6U"
                         style={{fontSize: '24px'}}>绑定账号s</Link></li>
-                    {/* <li><Link
+                     <li><Link
                         to="/teachingSpaceTeacher?access_user=23836"
                         style={{fontSize: '24px'}}>教学空间老师</Link></li>
-                    <li><Link
+                    {/*<li><Link
                         to="/teachingSpaceStudent?access_user=23836"
                         style={{fontSize: '24px'}}>教学空学生</Link></li>
 

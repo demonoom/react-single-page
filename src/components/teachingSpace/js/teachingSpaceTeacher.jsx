@@ -97,9 +97,14 @@ export default class teachingSpaceTeacher extends React.Component {
             method: method,
             ident: this.state.ident
         };
+        if (method == "openNativePage_Errorbook") {
+            data.href = 'http://jiaoxue.maaee.com:8094/#/topicWrongList?userId='
+            // data.href = 'http://192.168.50.72:7094/#/topicWrongList?userId='
+        }
         console.log(data, "data")
         Bridge.callHandler(data, null, function (error) {
         });
+
     }
 
     /**
@@ -109,7 +114,7 @@ export default class teachingSpaceTeacher extends React.Component {
         var url;
         // 回顾页面
         if (type == "ReviewStatistics") {
-            url = "http://jiaoxue.maaee.com:8093/#/cloudSchoolClassesStatistical?ident=" + this.state.ident+"&judgelag=1"
+            url = "http://jiaoxue.maaee.com:8093/#/cloudSchoolClassesStatistical?ident=" + this.state.ident + "&judgelag=1"
             // url = "http://192.168.43.169:7093/#/cloudSchoolClassesStatistical?ident=" + this.state.ident+"&judgelag=1"
         } else if (type == "Approval") {
             // 审批页面
@@ -236,8 +241,7 @@ export default class teachingSpaceTeacher extends React.Component {
                             <i className="Icon-teacher Icon-teacher-ClassReview"></i>
                             <div>课堂回顾统计</div>
                         </li>
-                        <li style={{display: this.state.phone == "Android" ? "block" : "none"}}
-                            onClick={this.toPage.bind(this, "openNativePage_RingDataStatistics")}>
+                        <li onClick={this.toPage.bind(this, "openNativePage_RingDataStatistics")}>
                             <i className="Icon-teacher Icon-teacher-braceletData"></i>
                             <div>手环数据统计</div>
                         </li>
@@ -250,8 +254,7 @@ export default class teachingSpaceTeacher extends React.Component {
                             <i className="Icon-teacher Icon-teacher-AssignHomework"></i>
                             <div>布置作业</div>
                         </li>
-                        <li style={{display: this.state.phone == "Android" ? "block" : "none"}}
-                            onClick={this.toClient.bind(this, "openNativePage_HomeworkStatistics")}>
+                        <li onClick={this.toClient.bind(this, "openNativePage_HomeworkStatistics")}>
                             <i className="Icon-teacher Icon-teacher-homeworkStatistics"></i>
                             <div>作业统计</div>
                         </li>
@@ -264,9 +267,18 @@ export default class teachingSpaceTeacher extends React.Component {
                             <i className="Icon-teacher Icon-teacher-homeworkCorrecting"></i>
                             <div>批改作业</div>
                         </li>
+                        <li 
+                        style={{display: this.state.phone == "Android" ? "block" : "none"}}
+                        // style={{display: (this.state.ident == 23836 || this.state.ident == 54208 || this.state.ident == 119665) ? '' : 'none'}}
+                            onClick={this.toClient.bind(this, "openNativePage_Errorbook")}>
+                            <i className="Icon-teacher Icon-teacher-wrongBook"></i>
+                            <div>错题本</div>
+                        </li>
                     </ul>
                 </div>
-                <div className="teacher-item" style={{display: this.state.phone == "Android" ? "block" : "none"}}>
+                <div className="teacher-item" 
+                    style={{display: this.state.phone == "Android" ? "block" : "none"}}
+                    >
                     <h1>考试系统</h1>
                     <ul className="my_flex teacherUl">
                         <li onClick={this.toClient.bind(this, "openNativePage_TestPaper")}>
