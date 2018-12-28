@@ -81,7 +81,7 @@ export default class teachingSpaceStudent extends React.Component {
         return (
             <div id="teachingSpaceTeacher">
                 <div className="teacher-item">
-                    <h1>课堂</h1>
+                    <h1>课堂123</h1>
                     <ul className="my_flex teacherUl">
                         <li onClick={this.toClient.bind(this, "openNativePage_TheSchoolClassroom_Stu")}>
                             <i className="Icon-teacher Icon-teacher-classroom"></i>
