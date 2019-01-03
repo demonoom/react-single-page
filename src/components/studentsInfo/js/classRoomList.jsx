@@ -110,7 +110,7 @@ export default class classRoomList extends React.Component {
                                     v.clazz.grade.name + v.clazz.name
                                 }</span></div>
                                 <div>
-                                    心率：<span  className="gray">
+                                    心率阀值：<span  className="gray">
                                         {v.clazzHeartRate}
                                     </span>
                                     <span className="i-change" onClick={this.showModal.bind(this, v.clazzHeartRate, v.clazz.id,i)}></span>
