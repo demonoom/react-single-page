@@ -867,6 +867,12 @@ const stuList = (location, cb) => {
         }
     )
 }
+const classRoomList = (location, cb) => {
+    require.ensure([], require => {
+            cb(null, require("./components/studentsInfo/js/classRoomList").default)
+        }
+    )
+}
 /**
  * 云校课程推荐
  */
@@ -1453,6 +1459,7 @@ class Index extends React.Component {
                         <Route path="stuState" getComponent={stuState}/>
                         <Route path="stuRanking" getComponent={stuRanking}/>
                         <Route path="stuList" getComponent={stuList}/>
+                        <Route path="classRoomList" getComponent={classRoomList}/>
                         <Route path="courseRecListst" getComponent={courseRecListst}/>
                         <Route path="addRecCourse" getComponent={addRecCourse}/>
                         <Route path="litleantTeacher" getComponent={litleantTeacher}/>

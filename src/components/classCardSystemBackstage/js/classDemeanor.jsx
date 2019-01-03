@@ -1,5 +1,5 @@
 import React from 'react';
-import {Picker, List, WhiteSpace, WingBlank, Button, Toast, Modal} from 'antd-mobile';
+import { Picker, List, WhiteSpace, WingBlank, Button, Toast, Modal } from 'antd-mobile';
 import '../css/classDemeanor.less'
 
 var demeanor;
@@ -24,7 +24,7 @@ export default class classDemeanor extends React.Component {
         var ident = locationSearch.split("&")[0].split('=')[1];
         var className = locationSearch.split("&")[1].split('=')[1];
         document.title = className;
-        this.setState({classId: ident});
+        this.setState({ classId: ident });
         this.getClassDemeanorInfo(ident);
     }
 
@@ -37,7 +37,7 @@ export default class classDemeanor extends React.Component {
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
             onResponse: function (result) {
                 if (result.msg == '调用成功' || result.success == true) {
-                    demeanor.setState({imgArr: result.response});
+                    demeanor.setState({ imgArr: result.response });
                 }
             },
             onError: function (error) {
@@ -53,8 +53,17 @@ export default class classDemeanor extends React.Component {
         var data = {
             method: 'selectImgAndVideo',
         };
-
         Bridge.callHandler(data, function (res) {
+            var newArr = res.split('.');
+            if(newArr[newArr.length-1] == "JPG"){
+                res = res.replace(/JPG/g,"jpg");;
+            }
+            if(newArr[newArr.length-1] == "JPEG"){
+                res = res.replace(/JPEG/g,"jpeg");;
+            }
+            if(newArr[newArr.length-1] == "MP4"){
+                res = res.replace(/MP4/g,"mp4");;
+            }
             //拿到图片地址,显示在页面等待上传
             var classDemeanors = res.split(',');
             var promiseArray = [];
@@ -64,9 +73,8 @@ export default class classDemeanor extends React.Component {
             });
             for (var k = 0; k < classDemeanors.length; k++) {
                 console.log(k);
-                
                 if (classDemeanors[k].substr(classDemeanors[k].length - 3, 3) == 'mp4') {
-                    console.log(k, '视频k');
+                    console.log(k, '视频');
                     var cut = new Promise(function (resolve, reject) {
                         let t = k;
                         let video = document.createElement("video");
@@ -114,7 +122,7 @@ export default class classDemeanor extends React.Component {
             Promise.all(promiseArray).then(function (e) {
                 //     console.log(e,'promise');
                 // console.log(classDemeanors, 'classDemeanors!!!!!!');
-                demeanor.setState({imgFromAndArr: demeanor.state.imgFromAndArr.concat(classDemeanors)});
+                demeanor.setState({ imgFromAndArr: demeanor.state.imgFromAndArr.concat(classDemeanors) });
 
                 // return;
                 Toast.hide();
@@ -138,7 +146,7 @@ export default class classDemeanor extends React.Component {
         for (var i = 0; i < binary.length; i++) {
             array.push(binary.charCodeAt(i));
         }
-        return new Blob([new Uint8Array(array)], {type: type});
+        return new Blob([new Uint8Array(array)], { type: type });
     }
 
     /**
@@ -189,7 +197,7 @@ export default class classDemeanor extends React.Component {
                                 arr.splice(i, 1);
                             }
                         })
-                        demeanor.setState({imgArr: arr})
+                        demeanor.setState({ imgArr: arr })
                     }
                 },
                 onError: function (error) {
@@ -213,17 +221,17 @@ export default class classDemeanor extends React.Component {
         const alertInstance = alert('确定删除吗?', '', [
             {
                 text: '取消', onPress: () => {
-                if (cancel) {
-                    cancel();
-                }
-            }, style: 'default'
+                    if (cancel) {
+                        cancel();
+                    }
+                }, style: 'default'
             },
             {
                 text: '确定', onPress: () => {
-                if (success) {
-                    success()
+                    if (success) {
+                        success()
+                    }
                 }
-            }
             },
         ], phone);
     }
@@ -236,12 +244,12 @@ export default class classDemeanor extends React.Component {
                 arr.splice(i, 1);
             }
         })
-        demeanor.setState({imgFromAndArr: arr})
+        demeanor.setState({ imgFromAndArr: arr })
     }
 
     render() {
         return (
-            <div id="classDemeanor" style={{height: document.body.clientHeight}}>
+            <div id="classDemeanor" style={{ height: document.body.clientHeight }}>
                 <div className="Img_cont">
                     <div className="classDemeanor_title">风采展示</div>
                     <div className='showImg my_flex my_flex_wrap'>
@@ -251,31 +259,36 @@ export default class classDemeanor extends React.Component {
                             return <div className="listImg flex_center">
                                 {
                                     extra[extra.length - 1] == "mp4" ?
-                                        <video style={{width: "100%", height: "100%"}} src={v.imagePath}></video> :
-                                        <img className='uploadImgBtn' src={v.imagePath} alt=""/>
+                                        <video style={{ width: "100%", height: "100%" }} src={v.imagePath}></video> :
+                                        <img className='uploadImgBtn' src={v.imagePath} alt="" />
                                 }
 
                                 <img onClick={this.deleteClassDemeanorInfo.bind(this, v.id)} className='delImgBtn'
-                                     src={require('../imgs/delPic.png')} alt=""/>
+                                    src={require('../imgs/delPic.png')} alt="" />
                             </div>
                         })}
                     </div>
-                    <WhiteSpace size="lg"/>
+                    <WhiteSpace size="lg" />
                     <div className="classDemeanor_title">上传资源</div>
                     <div className='uploadImg my_flex my_flex_wrap'>
                         {this.state.imgFromAndArr.map((v, i) => {
                             var arr = v.split('?');
                             var extra = arr[0].split('.');
                             return <div className="listImg flex_center">
-                                {
+                                {/* {
                                     extra[extra.length - 1] == "jpg" ? <img className='uploadImgBtn' src={v} alt=""/> :
                                         extra[extra.length - 1] == "mp4" ?
                                             <video style={{width: "100%", height: "100%"}} src={v}></video> :
                                             extra[extra.length - 1] == "JPG" ?
                                                 <img className='uploadImgBtn' src={v} alt=""/> : ""
+                                } */}
+                                {
+                                    extra[extra.length - 1] == "mp4" ?
+                                        <video style={{ width: "100%", height: "100%" }} src={v}></video> :
+                                        <img className='uploadImgBtn' src={v} alt="" />
                                 }
                                 <img onClick={this.deleteimgFromAndArr.bind(this, i)} className='delImgBtn'
-                                     src={require('../imgs/delPic.png')} alt=""/>
+                                    src={require('../imgs/delPic.png')} alt="" />
                             </div>
                         })}
                         <img
@@ -287,7 +300,7 @@ export default class classDemeanor extends React.Component {
                     </div>
                 </div>
                 <div className='addCourseButton'>
-                    <WhiteSpace size="lg"/>
+                    <WhiteSpace size="lg" />
                     <WingBlank>
                         <Button type="warning" onClick={this.uploadImg}>上传</Button>
                     </WingBlank>

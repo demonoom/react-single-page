@@ -60,6 +60,16 @@ export default class classHonor extends React.Component {
             method: 'selectImgAndVideo',
         };
         Bridge.callHandler(data, function (res) {
+            var newArr = res.split('.');
+            if(newArr[newArr.length-1] == "JPG"){
+                res = res.replace(/JPG/g,"jpg");;
+            }
+            if(newArr[newArr.length-1] == "JPEG"){
+                res = res.replace(/JPEG/g,"jpeg");;
+            }
+            if(newArr[newArr.length-1] == "MP4"){
+                res = res.replace(/MP4/g,"mp4");;
+            }
             //拿到图片地址,显示在页面等待上传
             var classDemeanors = res.split(',');
             var promiseArray = [];
@@ -262,15 +272,19 @@ export default class classHonor extends React.Component {
                     <div className="classDemeanor_title">上传资源</div>
                     <div className='uploadImg my_flex my_flex_wrap'>
                         {this.state.imgFromAndArr.map((v, i) => {
-                            console.log(v, "vvvv")
+                            console.log(v, "v")
                             var arr = v.split('?');
                             var extra = arr[0].split('.');
-                            console.log(extra[extra.length - 1], "arr")
+                            console.log(extra[extra.length - 1], "arr111")
                             return <div className="listImg flex_center">
-                                {
+                                {/* {
                                     extra[extra.length - 1] == "jpg" ? <img className='uploadImgBtn' src={v} alt="" /> :
                                         extra[extra.length - 1] == "mp4" ? <video style={{ width: "100%",height:"100%" }} src={v}></video> : 
                                         extra[extra.length - 1] == "JPG" ? <img className='uploadImgBtn' src={v} alt="" /> : ""
+                                } */}
+                                {
+                                        extra[extra.length - 1] == "mp4" ? <video style={{ width: "100%",height:"100%" }} src={v}></video> : 
+                                        <img className='uploadImgBtn' src={v} alt="" />
                                 }
                                 <img onClick={this.deleteimgFromAndArr.bind(this, i)} className='delImgBtn'
                                     src={require('../imgs/delPic.png')} alt="" />

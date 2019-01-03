@@ -75,8 +75,8 @@ export default class wxBindIndex extends React.Component {
                         }
                     } else {   //openid 未绑定
                         this.setState({
-                            openidFlag: false,
-                            // openidFlag: true, //debug
+                            // openidFlag: false,
+                            openidFlag: true, //debug
                         })
                     }
                 } else {
@@ -563,6 +563,7 @@ export default class wxBindIndex extends React.Component {
                             <div onClick={this.toDetail.bind(this,'stuAttendance','TEAC')}><i className="student-status"></i><span>学生考勤</span></div>
                             <div onClick={this.toDetail.bind(this,'stuState','TEAC')}><i className="Class-attendance"></i><span>学生状态</span></div>
                             <div onClick={this.toDetail.bind(this,'stuRanking','TEAC')}><i className="Sports-rankings"></i><span>运动排名</span></div>
+                            <div onClick={this.toDetail.bind(this,'classRoomList','TEAC')}><i className="Sports-rankings"></i><span>班级列表</span></div>
                         </div>
                     </div>
                 <div className="bindingNumber" style={{display: !this.state.openidFlag ? 'none' : this.state.value != 2 ? 'none' : 'block'}}>
