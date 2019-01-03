@@ -1,4 +1,3 @@
-(node) util.print is deprecated. Use console.log instead.
 #wxBindIndex {
   background: #f0eff5;
   height: 100%;
@@ -443,5 +442,9 @@
 }
 #wxBindIndex .Student-info .student-list {
   background: url("../imgs/student-list.png") no-repeat;
+  background-size: 100% 100%;
+}
+#wxBindIndex .Student-info .class-list {
+  background: url("../imgs/class-list.png") no-repeat;
   background-size: 100% 100%;
 }

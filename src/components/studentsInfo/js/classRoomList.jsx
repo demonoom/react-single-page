@@ -6,6 +6,7 @@ import {
     Modal,
     Button
 } from 'antd-mobile';
+import '../css/classRoomList.less';
 const alert = Modal.alert;
 const prompt = Modal.prompt;
 export default class classRoomList extends React.Component {
@@ -99,20 +100,20 @@ export default class classRoomList extends React.Component {
 
     render() {
         return (
-            <div>
+            <div id='classRoomList'>
                 {
                     this.state.initData.map((v, i) => {
                         console.log(v, "vvv")
                         return (
-                            <div>
-                                <div>班级：<span> {
+                            <div className="StudentList">
+                                <div className="line_public textOver">班级：<span className="gray"> {
                                     v.clazz.grade.name + v.clazz.name
                                 }</span></div>
                                 <div>
-                                    心率：<span>
+                                    心率：<span  className="gray">
                                         {v.clazzHeartRate}
                                     </span>
-                                    <span onClick={this.showModal.bind(this, v.clazzHeartRate, v.clazz.id,i)}> 编辑</span>
+                                    <span className="i-change" onClick={this.showModal.bind(this, v.clazzHeartRate, v.clazz.id,i)}></span>
                                 </div>
                             </div>
                         )
