@@ -126,7 +126,6 @@ export default class teachingSpaceStudent extends React.Component {
                             <div>作业统计</div>
                         </li>
                         <li
-                            style={{ display: (this.state.phone == "Android" && (this.state.ident == 23991 || this.state.ident == 23993)) ? "block" : "none" }}
                             onClick={this.toClient.bind(this, "openNativePage_Errorbook_Stu")}>
                             <i className="Icon-teacher Icon-teacher-wrongBook"></i>
                             <div>错题本</div>
