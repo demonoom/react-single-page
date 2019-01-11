@@ -75,8 +75,8 @@ export default class wxBindIndex extends React.Component {
                         }
                     } else {   //openid 未绑定
                         this.setState({
-                            openidFlag: false,
-                            // openidFlag: true, //debug
+                            // openidFlag: false,
+                            openidFlag: true, //debug
                         })
                     }
                 } else {
