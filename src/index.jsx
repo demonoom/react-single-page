@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import {Router, Route, hashHistory, IndexRoute, Link} from 'react-router';
+import { Router, Route, hashHistory, IndexRoute, Link } from 'react-router';
 import App from './components/App';
 // import Stage1 from './components/Stage1';
 // import Stage3 from './components/Stage3';
@@ -112,81 +112,81 @@ const chatMsg = (location, cb) => {
 }
 const longList = (location, cb) => {
     require.ensure([], require => {
-            cb(null, require("./components/chatSettings/js/longList").default)
-        }
+        cb(null, require("./components/chatSettings/js/longList").default)
+    }
     )
 }
 // 家庭作业统计 -- 按班级进行统计
 const homeWorkUnderstandAnalysisByClass = (location, cb) => {
     require.ensure([], require => {
-            cb(null, require("./components/charts/homeWorkAnalysis/HomeWorkUnderstandAnalysisByClass").default)
-        }
+        cb(null, require("./components/charts/homeWorkAnalysis/HomeWorkUnderstandAnalysisByClass").default)
+    }
     )
 }
 
 // 家庭作业统计 -- 按学生进行统计
 const homeWorkUnderstandAnalysisByStudent = (location, cb) => {
     require.ensure([], require => {
-            cb(null, require("./components/charts/homeWorkAnalysis/HomeWorkUnderstandAnalysisByStudent").default)
-        }
+        cb(null, require("./components/charts/homeWorkAnalysis/HomeWorkUnderstandAnalysisByStudent").default)
+    }
     )
 }
 
 // 家庭作业统计 -- 以班级作业为单位，计算每个题目的每个学生的时长和理解度
 const homeWorkUnderstandAnalysisByClassSubject = (location, cb) => {
     require.ensure([], require => {
-            cb(null, require("./components/charts/homeWorkAnalysis/HomeWorkUnderstandAnalysisByClassSubject").default)
-        }
+        cb(null, require("./components/charts/homeWorkAnalysis/HomeWorkUnderstandAnalysisByClassSubject").default)
+    }
     )
 }
 
 // 家庭作业统计 -- 以班级作业为单位，计算每个题目的每个学生的时长和理解度
 const homeWorkUnderstandAnalysisGuide = (location, cb) => {
     require.ensure([], require => {
-            cb(null, require("./components/charts/homeWorkAnalysis/HomeWorkUnderstandAnalysisGuide").default)
-        }
+        cb(null, require("./components/charts/homeWorkAnalysis/HomeWorkUnderstandAnalysisGuide").default)
+    }
     )
 }
 
 const m3u8Player = (location, cb) => {
     require.ensure([], require => {
-            cb(null, require("./components/m3u8Player/js/m3u8Player").default)
-        }
+        cb(null, require("./components/m3u8Player/js/m3u8Player").default)
+    }
     )
 }
 
 const HomeWorkUnderstandAnalysisGuideByNoom = (location, cb) => {
     require.ensure([], require => {
-            cb(null, require("./components/charts/homeWorkAnalysis/HomeWorkUnderstandAnalysisGuideByNoom").default)
-        }
+        cb(null, require("./components/charts/homeWorkAnalysis/HomeWorkUnderstandAnalysisGuideByNoom").default)
+    }
     )
 }
 
 const brotherXu = (location, cb) => {
     require.ensure([], require => {
-            cb(null, require("./components/charts/homeWorkAnalysis/brotherXu").default)
-        }
+        cb(null, require("./components/charts/homeWorkAnalysis/brotherXu").default)
+    }
     )
 }
 
 const homeworkModule = (location, cb) => {
     require.ensure([], require => {
-            cb(null, require("./components/classCardSystem/js/homeworkModule").default)
-        }
+        cb(null, require("./components/classCardSystem/js/homeworkModule").default)
+    }
     )
 }
 
 const curriculumSchedule = (location, cb) => {
     require.ensure([], require => {
-            cb(null, require("./components/classCardSystemBackstage/js/curriculumSchedule").default)
-        }
+        cb(null, require("./components/classCardSystemBackstage/js/curriculumSchedule").default)
+    }
     )
 }
 
 const workAttendance = (location, cb) => {
     require.ensure([], require => {
-            cb(null, require("./components/classCardSystem/js/workAttendance").default)
-        }
+        cb(null, require("./components/classCardSystem/js/workAttendance").default)
+    }
     )
 }
 // 通知查看
@@ -295,71 +295,71 @@ const updateClassroom = (location, cb) => {
 
 const studentDutyList = (location, cb) => {
     require.ensure([], require => {
-            cb(null, require("./components/classCardSystemBackstage/js/studentDutyList").default)
-        }
+        cb(null, require("./components/classCardSystemBackstage/js/studentDutyList").default)
+    }
     )
 }
 
 const clazzDutyList = (location, cb) => {
     require.ensure([], require => {
-            cb(null, require("./components/classCardSystemBackstage/js/clazzDutyList").default)
-        }
+        cb(null, require("./components/classCardSystemBackstage/js/clazzDutyList").default)
+    }
     )
 }
 
 const addStudentDuty = (location, cb) => {
     require.ensure([], require => {
-            cb(null, require("./components/classCardSystemBackstage/js/addStudentDuty").default)
-        }
+        cb(null, require("./components/classCardSystemBackstage/js/addStudentDuty").default)
+    }
     )
 }
 
 const editStudentDuty = (location, cb) => {
     require.ensure([], require => {
-            cb(null, require("./components/classCardSystemBackstage/js/editStudentDuty").default)
-        }
+        cb(null, require("./components/classCardSystemBackstage/js/editStudentDuty").default)
+    }
     )
 }
 
 const currentAttendanceList = (location, cb) => {
     require.ensure([], require => {
-            cb(null, require("./components/classCardSystem/js/homePage/currentAttendanceList").default)
-        }
+        cb(null, require("./components/classCardSystem/js/homePage/currentAttendanceList").default)
+    }
     )
 }
 
 const classHonor = (location, cb) => {
     require.ensure([], require => {
-            cb(null, require("./components/classCardSystemBackstage/js/classHonor").default)
-        }
+        cb(null, require("./components/classCardSystemBackstage/js/classHonor").default)
+    }
     )
 }
 
 const tableItemDetil = (location, cb) => {
     require.ensure([], require => {
-            cb(null, require("./components/classCardSystem/js/tableItemDetil").default)
-        }
+        cb(null, require("./components/classCardSystem/js/tableItemDetil").default)
+    }
     )
 }
 
 const comments = (location, cb) => {
     require.ensure([], require => {
-            cb(null, require("./components/commentsModule/js/comments").default)
-        }
+        cb(null, require("./components/commentsModule/js/comments").default)
+    }
     )
 }
 
 const classCardHomePageDoor = (location, cb) => {
     require.ensure([], require => {
-            cb(null, require("./components/classCardSystemBackstage/js/classCardHomePageDoor").default)
-        }
+        cb(null, require("./components/classCardSystemBackstage/js/classCardHomePageDoor").default)
+    }
     )
 }
 
 const fileAnalysis = (location, cb) => {
     require.ensure([], require => {
-            cb(null, require("./components/charts/fileAnalysis/js/fileAnalysis").default)
-        }
+        cb(null, require("./components/charts/fileAnalysis/js/fileAnalysis").default)
+    }
     )
 }
 
@@ -370,8 +370,8 @@ const fileAnalysis = (location, cb) => {
  */
 const studentSelectCourse = (location, cb) => {
     require.ensure([], require => {
-            cb(null, require("./components/classCardSystemBackstage/js/studentSelectCourse").default)
-        }
+        cb(null, require("./components/classCardSystemBackstage/js/studentSelectCourse").default)
+    }
     )
 }
 
@@ -384,29 +384,29 @@ const getClassRoomList = (location, cb) => {
 
 const classDemeanorList = (location, cb) => {
     require.ensure([], require => {
-            cb(null, require("./components/classCardSystemBackstage/js/classDemeanorList").default)
-        }
+        cb(null, require("./components/classCardSystemBackstage/js/classDemeanorList").default)
+    }
     )
 }
 
 const getClassTableList = (location, cb) => {
     require.ensure([], require => {
-            cb(null, require("./components/classCardSystemBackstage/js/newCurriculumSche/getClassTableList").default)
-        }
+        cb(null, require("./components/classCardSystemBackstage/js/newCurriculumSche/getClassTableList").default)
+    }
     )
 }
 
 const newCurriculumSchedule = (location, cb) => {
     require.ensure([], require => {
-            cb(null, require("./components/classCardSystemBackstage/js/newCurriculumSche/curriculumSchedule").default)
-        }
+        cb(null, require("./components/classCardSystemBackstage/js/newCurriculumSche/curriculumSchedule").default)
+    }
     )
 }
 
 const newAddCurriculumSchedule = (location, cb) => {
     require.ensure([], require => {
-            cb(null, require("./components/classCardSystemBackstage/js/newCurriculumSche/addCurriculumSchedule").default)
-        }
+        cb(null, require("./components/classCardSystemBackstage/js/newCurriculumSche/addCurriculumSchedule").default)
+    }
     )
 }
 
@@ -419,17 +419,17 @@ const newUpdateCurriculumSchedule = (location, cb) => {
 
 const classHonorList = (location, cb) => {
     require.ensure([], require => {
-            cb(null, require("./components/classCardSystemBackstage/js/classHonorList").default)
+        cb(null, require("./components/classCardSystemBackstage/js/classHonorList").default)
 
-        }
+    }
     )
 }
 
 const particlePath = (location, cb) => {
     require.ensure([], require => {
-            cb(null, require("./components/particlePath/js/particlePath").default)
+        cb(null, require("./components/particlePath/js/particlePath").default)
 
-        }
+    }
     )
 }
 
@@ -448,24 +448,24 @@ const dashboardByCity = (location, cb) => {
 
 const warning = (location, cb) => {
     require.ensure([], require => {
-            cb(null, require("./components/warnAndHealthModule/js/warning").default)
-        }
+        cb(null, require("./components/warnAndHealthModule/js/warning").default)
+    }
     )
 }
 
 const healthList = (location, cb) => {
     require.ensure([], require => {
-            cb(null, require("./components/warnAndHealthModule/js/healthList").default)
+        cb(null, require("./components/warnAndHealthModule/js/healthList").default)
 
-        }
+    }
     )
 }
 
 const health = (location, cb) => {
     require.ensure([], require => {
-            cb(null, require("./components/warnAndHealthModule/js/health").default)
+        cb(null, require("./components/warnAndHealthModule/js/health").default)
 
-        }
+    }
     )
 }
 
@@ -477,28 +477,28 @@ const warnList = (location, cb) => {
 
 const studentMovement = (location, cb) => {
     require.ensure([], require => {
-            cb(null, require("./components/charts/heatmap/js/studentMovement").default)
-        }
+        cb(null, require("./components/charts/heatmap/js/studentMovement").default)
+    }
     )
 }
 
 const schoolPlan = (location, cb) => {
     require.ensure([], require => {
-            cb(null, require("./components/classCardSystemBackstage/js/schoolPlan").default)
-        }
+        cb(null, require("./components/classCardSystemBackstage/js/schoolPlan").default)
+    }
     )
 }
 
 const attendanceTime = (location, cb) => {
     require.ensure([], require => {
-            cb(null, require("./components/classCardSystemBackstage/js/attendanceTime").default)
-        }
+        cb(null, require("./components/classCardSystemBackstage/js/attendanceTime").default)
+    }
     )
 }
 const newAttendanceTime = (location, cb) => {
     require.ensure([], require => {
-            cb(null, require("./components/classCardSystemBackstage/js/newAttendanceTime").default)
-        }
+        cb(null, require("./components/classCardSystemBackstage/js/newAttendanceTime").default)
+    }
     )
 }
 const updateAttendanceTime = (location, cb) => {
@@ -508,29 +508,29 @@ const updateAttendanceTime = (location, cb) => {
 }
 const littleAntPolicy = (location, cb) => {
     require.ensure([], require => {
-            cb(null, require("./components/littleAntPolicy/littleAntPolicy").default)
-        }
+        cb(null, require("./components/littleAntPolicy/littleAntPolicy").default)
+    }
     )
 }
 //微信授权登录
 const wxLogin = (location, cb) => {
     require.ensure([], require => {
-            cb(null, require("./components/wxLogin/wxLogin").default)
-        }
+        cb(null, require("./components/wxLogin/wxLogin").default)
+    }
     )
 }
 
 const warningAdminList = (location, cb) => {
     require.ensure([], require => {
-            cb(null, require("./components/warningAdmin/js/warningAdminList").default)
-        }
+        cb(null, require("./components/warningAdmin/js/warningAdminList").default)
+    }
     )
 }
 
 const addWarnAdmin = (location, cb) => {
     require.ensure([], require => {
-            cb(null, require("./components/warningAdmin/js/addWarnAdmin").default)
-        }
+        cb(null, require("./components/warningAdmin/js/addWarnAdmin").default)
+    }
     )
 }
 
@@ -542,8 +542,8 @@ const answerFormStudent = (location, cb) => {
 }
 const LookAtTheAnswer = (location, cb) => {
     require.ensure([], require => {
-            cb(null, require("./components/LookAtTheAnswer/js/LookAtTheAnswer").default)
-        }
+        cb(null, require("./components/LookAtTheAnswer/js/LookAtTheAnswer").default)
+    }
     )
 }
 
@@ -556,44 +556,44 @@ const answerListFormTeacher = (location, cb) => {
 
 const waterWork = (location, cb) => {
     require.ensure([], require => {
-            cb(null, require("./components/waterWork/waterWork").default)
-        }
+        cb(null, require("./components/waterWork/waterWork").default)
+    }
     )
 }
 
 const attendanceSatisticaForClass = (location, cb) => {
     require.ensure([], require => {
-            cb(null, require("./components/attendance/js/attendanceSatisticaForClass").default)
-        }
+        cb(null, require("./components/attendance/js/attendanceSatisticaForClass").default)
+    }
     )
 }
 
 const attendanceStatistical = (location, cb) => {
     require.ensure([], require => {
-            cb(null, require("./components/attendance/js/attendanceStatistical").default)
-        }
+        cb(null, require("./components/attendance/js/attendanceStatistical").default)
+    }
     )
 }
 
 const inAndOutSchool = (location, cb) => {
     require.ensure([], require => {
-            cb(null, require("./components/attendance/js/inAndOutSchool").default)
-        }
+        cb(null, require("./components/attendance/js/inAndOutSchool").default)
+    }
     )
 }
 
 const classAttendance = (location, cb) => {
     require.ensure([], require => {
-            cb(null, require("./components/attendance/js/classAttendance").default)
-        }
+        cb(null, require("./components/attendance/js/classAttendance").default)
+    }
     )
 }
 
 //发送模板消息 至 微信
 const wxTemplate = (location, cb) => {
     require.ensure([], require => {
-            cb(null, require("./components/wxLogin/wxTempalte").default)
-        }
+        cb(null, require("./components/wxLogin/wxTempalte").default)
+    }
     )
 }
 
@@ -602,47 +602,47 @@ const wxTemplate = (location, cb) => {
  */
 const ARTextbookList = (location, cb) => {
     require.ensure([], require => {
-            cb(null, require("./components/ARTextbook/js/ARTextbookList").default)
-        }
+        cb(null, require("./components/ARTextbook/js/ARTextbookList").default)
+    }
     )
 }
 const addARTextbook = (location, cb) => {
     require.ensure([], require => {
-            cb(null, require("./components/ARTextbook/js/addARTextbook").default)
-        }
+        cb(null, require("./components/ARTextbook/js/addARTextbook").default)
+    }
     )
 }
 const UpdateARTextbook = (location, cb) => {
     require.ensure([], require => {
-            cb(null, require("./components/ARTextbook/js/UpdateARTextbook").default)
-        }
+        cb(null, require("./components/ARTextbook/js/UpdateARTextbook").default)
+    }
     )
 }
 const groupList = (location, cb) => {
     require.ensure([], require => {
-            cb(null, require("./components/ARTextbook/js/groupList").default)
-        }
+        cb(null, require("./components/ARTextbook/js/groupList").default)
+    }
     )
 }
 const ArIndex = (location, cb) => {
     require.ensure([], require => {
-            cb(null, require("./components/ARTextbook/js/ArIndex").default)
-        }
+        cb(null, require("./components/ARTextbook/js/ArIndex").default)
+    }
     )
 }
 //微信绑定页面
 const wxBindIndex = (location, cb) => {
     require.ensure([], require => {
-            cb(null, require("./components/wxLogin/wxBindIndex").default)
-        }
+        cb(null, require("./components/wxLogin/wxBindIndex").default)
+    }
     )
 }
 
 //微信绑定页面
 const contactsList = (location, cb) => {
     require.ensure([], require => {
-            cb(null, require("./components/mobileChat/js/contactsListSimple").default)
-        }
+        cb(null, require("./components/mobileChat/js/contactsListSimple").default)
+    }
     )
 }
 
@@ -650,24 +650,24 @@ const contactsList = (location, cb) => {
 //微信绑定页面
 const chatDetil = (location, cb) => {
     require.ensure([], require => {
-            cb(null, require("./components/mobileChat/js/chatDetil").default)
-        }
+        cb(null, require("./components/mobileChat/js/chatDetil").default)
+    }
     )
 }
 
 //微信绑定页面
 const arDoor = (location, cb) => {
     require.ensure([], require => {
-            cb(null, require("./components/arDoor/js/arDoor").default)
-        }
+        cb(null, require("./components/arDoor/js/arDoor").default)
+    }
     )
 }
 
 
 const excellentStu = (location, cb) => {
     require.ensure([], require => {
-            cb(null, require("./components/classCardSystemBackstage/js/excellentStu").default)
-        }
+        cb(null, require("./components/classCardSystemBackstage/js/excellentStu").default)
+    }
     )
 }
 /**
@@ -676,54 +676,54 @@ const excellentStu = (location, cb) => {
 
 const classBrandTemplateList = (location, cb) => {
     require.ensure([], require => {
-            cb(null, require("./components/classBrandTemplate/js/classBrandTemplateList").default)
-        }
+        cb(null, require("./components/classBrandTemplate/js/classBrandTemplateList").default)
+    }
     )
 }
 const addClassBrandTemplate = (location, cb) => {
     require.ensure([], require => {
-            cb(null, require("./components/classBrandTemplate/js/addClassBrandTemplate").default)
-        }
+        cb(null, require("./components/classBrandTemplate/js/addClassBrandTemplate").default)
+    }
     )
 }
 const updateClassBrandTemplate = (location, cb) => {
     require.ensure([], require => {
-            cb(null, require("./components/classBrandTemplate/js/updateClassBrandTemplate").default)
-        }
+        cb(null, require("./components/classBrandTemplate/js/updateClassBrandTemplate").default)
+    }
     )
 }
 
 const classBrandTemplateSkin = (location, cb) => {
     require.ensure([], require => {
-            cb(null, require("./components/classCardSystemBackstage/js/classBrandTemplateSkin").default)
-        }
+        cb(null, require("./components/classCardSystemBackstage/js/classBrandTemplateSkin").default)
+    }
     )
 }
 
 const friendList = (location, cb) => {
     require.ensure([], require => {
-            cb(null, require("./components/mobileChat/js/friendList").default)
-        }
+        cb(null, require("./components/mobileChat/js/friendList").default)
+    }
     )
 }
 const classList = (location, cb) => {
     require.ensure([], require => {
-            cb(null, require("./components/mobileChat/js/classList").default)
-        }
+        cb(null, require("./components/mobileChat/js/classList").default)
+    }
     )
 }
 
 const groupChatList = (location, cb) => {
     require.ensure([], require => {
-            cb(null, require("./components/mobileChat/js/groupList").default)
-        }
+        cb(null, require("./components/mobileChat/js/groupList").default)
+    }
     )
 }
 
 const originationList = (location, cb) => {
     require.ensure([], require => {
-            cb(null, require("./components/mobileChat/js/originationList").default)
-        }
+        cb(null, require("./components/mobileChat/js/originationList").default)
+    }
     )
 }
 
@@ -735,22 +735,22 @@ const originationList = (location, cb) => {
  */
 const bindPeopleList = (location, cb) => {
     require.ensure([], require => {
-            cb(null, require("./components/oldPeopleHealthRing/js/bindPeopleList").default)
-        }
+        cb(null, require("./components/oldPeopleHealthRing/js/bindPeopleList").default)
+    }
     )
 }
 
 const addOldPeople = (location, cb) => {
     require.ensure([], require => {
-            cb(null, require("./components/oldPeopleHealthRing/js/addOldPeople").default)
-        }
+        cb(null, require("./components/oldPeopleHealthRing/js/addOldPeople").default)
+    }
     )
 }
 
 const healthDetail = (location, cb) => {
     require.ensure([], require => {
-            cb(null, require("./components/oldPeopleHealthRing/js/healthDetail").default)
-        }
+        cb(null, require("./components/oldPeopleHealthRing/js/healthDetail").default)
+    }
     )
 }
 /**
@@ -758,24 +758,24 @@ const healthDetail = (location, cb) => {
  */
 const searchFromOrigination = (location, cb) => {
     require.ensure([], require => {
-            cb(null, require("./components/mobileChat/js/searchFromOrigination").default)
-        }
+        cb(null, require("./components/mobileChat/js/searchFromOrigination").default)
+    }
     )
 }
 
 
 const newUpdateARTextbook = (location, cb) => {
     require.ensure([], require => {
-            cb(null, require("./components/ARTextbook/js/newUpdateARTextbook").default)
-        }
+        cb(null, require("./components/ARTextbook/js/newUpdateARTextbook").default)
+    }
     )
 }
 
 //微信绑定有样账号
 const wxBindProperly = (location, cb) => {
     require.ensure([], require => {
-            cb(null, require("./components/wxBindProperly/js/wxBindProperly").default)
-        }
+        cb(null, require("./components/wxBindProperly/js/wxBindProperly").default)
+    }
     )
 }
 
@@ -785,35 +785,35 @@ const wxBindProperly = (location, cb) => {
  */
 const ARTagList = (location, cb) => {
     require.ensure([], require => {
-            cb(null, require("./components/ARTag/js/ARTagList").default)
-        }
+        cb(null, require("./components/ARTag/js/ARTagList").default)
+    }
     )
 }
 
 const updateARTag = (location, cb) => {
     require.ensure([], require => {
-            cb(null, require("./components/ARTag/js/updateARTag").default)
-        }
+        cb(null, require("./components/ARTag/js/updateARTag").default)
+    }
     )
 }
 const addARTag = (location, cb) => {
     require.ensure([], require => {
-            cb(null, require("./components/ARTag/js/addARTag").default)
-        }
+        cb(null, require("./components/ARTag/js/addARTag").default)
+    }
     )
 }
 
 const weArrPayment = (location, cb) => {
     require.ensure([], require => {
-            cb(null, require("./components/weArrPayment/js/weArrPayment").default)
-        }
+        cb(null, require("./components/weArrPayment/js/weArrPayment").default)
+    }
     )
 }
 
 const New = (location, cb) => {
     require.ensure([], require => {
-            cb(null, require("./components/ARTextbook/js/New").default)
-        }
+        cb(null, require("./components/ARTextbook/js/New").default)
+    }
     )
 }
 
@@ -821,56 +821,56 @@ const New = (location, cb) => {
 /**班级列表 */
 const classListMobile = (location, cb) => {
     require.ensure([], require => {
-            cb(null, require("./components/classListMobile/js/classListMobile").default)
-        }
+        cb(null, require("./components/classListMobile/js/classListMobile").default)
+    }
     )
 }
 const studentList = (location, cb) => {
     require.ensure([], require => {
-            cb(null, require("./components/classListMobile/js/studentList").default)
-        }
+        cb(null, require("./components/classListMobile/js/studentList").default)
+    }
     )
 }
 const classListDetail = (location, cb) => {
     require.ensure([], require => {
-            cb(null, require("./components/classListMobile/js/classListDetail").default)
-        }
+        cb(null, require("./components/classListMobile/js/classListDetail").default)
+    }
     )
 }
 const studentDetail = (location, cb) => {
     require.ensure([], require => {
-            cb(null, require("./components/classListMobile/js/studentDetail").default)
-        }
+        cb(null, require("./components/classListMobile/js/studentDetail").default)
+    }
     )
 }
 const stuAttendance = (location, cb) => {
     require.ensure([], require => {
-            cb(null, require("./components/studentsInfo/js/stuAttendance").default)
-        }
+        cb(null, require("./components/studentsInfo/js/stuAttendance").default)
+    }
     )
 }
 const stuState = (location, cb) => {
     require.ensure([], require => {
-            cb(null, require("./components/studentsInfo/js/stuState").default)
-        }
+        cb(null, require("./components/studentsInfo/js/stuState").default)
+    }
     )
 }
 const stuRanking = (location, cb) => {
     require.ensure([], require => {
-            cb(null, require("./components/studentsInfo/js/stuRanking").default)
-        }
+        cb(null, require("./components/studentsInfo/js/stuRanking").default)
+    }
     )
 }
 const stuList = (location, cb) => {
     require.ensure([], require => {
-            cb(null, require("./components/studentsInfo/js/stuList").default)
-        }
+        cb(null, require("./components/studentsInfo/js/stuList").default)
+    }
     )
 }
 const classRoomList = (location, cb) => {
     require.ensure([], require => {
-            cb(null, require("./components/studentsInfo/js/classRoomList").default)
-        }
+        cb(null, require("./components/studentsInfo/js/classRoomList").default)
+    }
     )
 }
 /**
@@ -878,14 +878,14 @@ const classRoomList = (location, cb) => {
  */
 const courseRecListst = (location, cb) => {
     require.ensure([], require => {
-            cb(null, require("./components/courseRec/js/courseRecList").default)
-        }
+        cb(null, require("./components/courseRec/js/courseRecList").default)
+    }
     )
 }
 const addRecCourse = (location, cb) => {
     require.ensure([], require => {
-            cb(null, require("./components/courseRec/js/addRecCourse").default)
-        }
+        cb(null, require("./components/courseRec/js/addRecCourse").default)
+    }
     )
 }
 
@@ -895,102 +895,102 @@ const addRecCourse = (location, cb) => {
  */
 const litleantTeacher = (location, cb) => {
     require.ensure([], require => {
-            cb(null, require("./components/upLoadPage/js/litleantTeacher").default)
-        }
+        cb(null, require("./components/upLoadPage/js/litleantTeacher").default)
+    }
     )
 }
 const youyang = (location, cb) => {
     require.ensure([], require => {
-            cb(null, require("./components/upLoadPage/js/youyang").default)
-        }
+        cb(null, require("./components/upLoadPage/js/youyang").default)
+    }
     )
 }
 const yunxiao = (location, cb) => {
     require.ensure([], require => {
-            cb(null, require("./components/upLoadPage/js/yunxiao").default)
-        }
+        cb(null, require("./components/upLoadPage/js/yunxiao").default)
+    }
     )
 }
 const ringIntroduce = (location, cb) => {
     require.ensure([], require => {
-            cb(null, require("./components/upLoadPage/js/ringIntroduce").default)
-        }
+        cb(null, require("./components/upLoadPage/js/ringIntroduce").default)
+    }
     )
 }
 
 const chatLogin = (location, cb) => {
     require.ensure([], require => {
-            cb(null, require("./components/mobileChat/js/chatLogin").default)
-        }
+        cb(null, require("./components/mobileChat/js/chatLogin").default)
+    }
     )
 }
 
 const antPlate = (location, cb) => {
     require.ensure([], require => {
-            cb(null, require("./components/antPlate/js/antPlate").default)
-        }
+        cb(null, require("./components/antPlate/js/antPlate").default)
+    }
     )
 }
 
 const KnowledgeStatic = (location, cb) => {
     require.ensure([], require => {
-            cb(null, require("./components/KnowledgeStatic/js/KnowledgeStatic").default)
-        }
+        cb(null, require("./components/KnowledgeStatic/js/KnowledgeStatic").default)
+    }
     )
 }
 const pushVideo = (location, cb) => {
     require.ensure([], require => {
-            cb(null, require("./components/pushVideoToClassBoard/js/pushVideo").default)
-        }
+        cb(null, require("./components/pushVideoToClassBoard/js/pushVideo").default)
+    }
     )
 }
 
 const KnowledgeList = (location, cb) => {
     require.ensure([], require => {
-            cb(null, require("./components/KnowledgeStatic/js/KnowledgeList").default)
-        }
+        cb(null, require("./components/KnowledgeStatic/js/KnowledgeList").default)
+    }
     )
 }
 
 const topicList = (location, cb) => {
     require.ensure([], require => {
-            cb(null, require("./components/KnowledgeStatic/js/topicList").default)
-        }
+        cb(null, require("./components/KnowledgeStatic/js/topicList").default)
+    }
     )
 }
 
 const ClassTimingList = (location, cb) => {
     require.ensure([], require => {
-            cb(null, require("./components/classCardTiming/js/ClassTimingList").default)
-        }
+        cb(null, require("./components/classCardTiming/js/ClassTimingList").default)
+    }
     )
 }
 
 const ClassTimingItem = (location, cb) => {
     require.ensure([], require => {
-            cb(null, require("./components/classCardTiming/js/ClassTimingItem").default)
-        }
+        cb(null, require("./components/classCardTiming/js/ClassTimingItem").default)
+    }
     )
 }
 
 const addClassTimingItem = (location, cb) => {
     require.ensure([], require => {
-            cb(null, require("./components/classCardTiming/js/addClassTimingItem").default)
-        }
+        cb(null, require("./components/classCardTiming/js/addClassTimingItem").default)
+    }
     )
 }
 
 const updateClassTimingItem = (location, cb) => {
     require.ensure([], require => {
-            cb(null, require("./components/classCardTiming/js/updateClassTimingItem").default)
-        }
+        cb(null, require("./components/classCardTiming/js/updateClassTimingItem").default)
+    }
     )
 }
 
 const KnowledgeLogin = (location, cb) => {
     require.ensure([], require => {
-            cb(null, require("./components/KnowledgeStatic/js/KnowledgeLogin").default)
-        }
+        cb(null, require("./components/KnowledgeStatic/js/KnowledgeLogin").default)
+    }
     )
 }
 
@@ -1000,32 +1000,65 @@ const KnowledgeLogin = (location, cb) => {
 
 const teachingSpaceTeacher = (location, cb) => {
     require.ensure([], require => {
-            cb(null, require("./components/teachingSpace/js/teachingSpaceTeacher").default)
-        }, 'teachingSpaceTeacher'
+        cb(null, require("./components/teachingSpace/js/teachingSpaceTeacher").default)
+    }, 'teachingSpaceTeacher'
     )
 }
 
 const teachingSpaceStudent = (location, cb) => {
     require.ensure([], require => {
-            cb(null, require("./components/teachingSpace/js/teachingSpaceStudent").default)
-        }, 'teachingSpaceStudent'
+        cb(null, require("./components/teachingSpace/js/teachingSpaceStudent").default)
+    }, 'teachingSpaceStudent'
     )
 }
 
 const verifyPhoneNum = (location, cb) => {
     require.ensure([], require => {
-            cb(null, require("./components/verifyPhoneNum/js/verifyPhoneNum").default)
-        }
+        cb(null, require("./components/verifyPhoneNum/js/verifyPhoneNum").default)
+    }
     )
 }
 
 //课堂练习统计
 const classPractice = (location, cb) => {
     require.ensure([], require => {
-            cb(null, require("./components/classPractice/js/classPractice").default)
-        }
+        cb(null, require("./components/classPractice/js/classPractice").default)
+    }
     )
 }
+
+//课堂登录
+const classLogin = (location, cb) => {
+    require.ensure([], require => {
+        cb(null, require("./components/classLogin/js/classLogin").default)
+    }
+    )
+}
+const classSortPage = (location, cb) => {
+    require.ensure([], require => {
+        cb(null, require("./components/classLogin/js/classSortPage").default)
+    }
+    )
+}
+const fileDetail = (location, cb) => {
+    require.ensure([], require => {
+        cb(null, require("./components/classLogin/js/fileDetail").default)
+    }
+    )
+}
+const moreReview = (location, cb) => {
+    require.ensure([], require => {
+        cb(null, require("./components/classLogin/js/moreReview").default)
+    }
+    )
+}
+const joinClass = (location, cb) => {
+    require.ensure([], require => {
+        cb(null, require("./components/classLogin/js/joinClass").default)
+    }
+    )
+}
+
 
 
 import './index.less';
@@ -1041,46 +1074,49 @@ class Index extends React.Component {
                     <li>
                         <Link
                             to="/KnowledgeStatic?unionid=o-w611I9nKqTHcT3P34srzwIrf6U"
-                            style={{fontSize: '24px'}}>统计</Link>
+                            style={{ fontSize: '24px' }}>统计</Link>
                     </li>
                     <li>
                         <Link
                             to="/verifyPhoneNum?userId=23836&mac=2345"
-                            style={{fontSize: '24px'}}>欢迎登录</Link>
+                            style={{ fontSize: '24px' }}>欢迎登录</Link>
                     </li>
                     <li>
                         <Link
                             to="/wxLogin?local=KnowledgeStatic"
-                            style={{fontSize: '24px'}}>统计(微信)</Link>
+                            style={{ fontSize: '24px' }}>统计(微信)</Link>
                     </li>
                     <li>
                         <Link
-                            to="/wxLogin?local=contactsList" style={{fontSize: '24px'}}>聊天(微信)</Link>
+                            to="/wxLogin?local=contactsList" style={{ fontSize: '24px' }}>聊天(微信)</Link>
                     </li>
                     <li><Link
                         to="/wxBindIndex"
-                        style={{fontSize: '24px'}}>微信绑定</Link></li>
+                        style={{ fontSize: '24px' }}>微信绑定</Link></li>
                     <li>
                         <Link
                             to="/KnowledgeStatic?unionid=o-w611I9nKqTHcT3P34srzwIrf6U"
-                            style={{fontSize: '24px'}}>统计</Link>
+                            style={{ fontSize: '24px' }}>统计</Link>
                     </li>
                     <li>
                         <Link
-                            to="/pushVideo?schoolId=9" style={{fontSize: '24px'}}>推送视频</Link>
+                            to="/pushVideo?schoolId=9" style={{ fontSize: '24px' }}>推送视频</Link>
                     </li>
                     <li><Link
                         to="/classCardHomePageDoor?access_user=23836"
-                        style={{fontSize: '24px'}}>后台总入口</Link></li>
+                        style={{ fontSize: '24px' }}>后台总入口</Link></li>
                     <li><Link
                         to="/classPractice?userId=23836&vid=35153"
-                        style={{fontSize: '24px'}}>课堂统计页面</Link></li>
+                        style={{ fontSize: '24px' }}>课堂统计页面</Link></li>
                     <li><Link
                         to="/wxBindIndex?unionid=o-w611I9nKqTHcT3P34srzwIrf6U"
-                        style={{fontSize: '24px'}}>绑定账号s</Link></li>
-                     <li><Link
+                        style={{ fontSize: '24px' }}>绑定账号s</Link></li>
+                    <li><Link
                         to="/teachingSpaceTeacher?access_user=23836"
-                        style={{fontSize: '24px'}}>教学空间老师</Link></li>
+                        style={{ fontSize: '24px' }}>教学空间老师</Link></li>
+                    <li><Link
+                        to="/classLogin"
+                        style={{ fontSize: '24px' }}>课堂登录</Link></li>
                     {/*<li><Link
                         to="/teachingSpaceStudent?access_user=23836"
                         style={{fontSize: '24px'}}>教学空学生</Link></li>
@@ -1307,179 +1343,184 @@ class Index extends React.Component {
                         <Link
                             to="/ringIntroduce" style={{fontSize: '24px'}}>手环介绍</Link>
                     </li> */}
-                        </ul>
-                        </div>
-                        );
-                        }
-                        }
+                </ul>
+            </div>
+        );
+    }
+}
 
-                        ReactDOM.render(
-                        <Router history={hashHistory}>
-                        <Route path="/" component={App}>
-                        <IndexRoute component={Index}/>
-                    {/*<Route path="s1" component={Stage1}/>*/}
-                    {/*<Route path="s3" component={Stage3}/>*/}
-                    {/*<Route path="s4" component={Stage4}/>*/}
-                    {/*<Route path="s5" component={Stage5}/>*/}
-                        <Route path="teachingSpaceStudent" getComponent={teachingSpaceStudent}/>
-                        <Route path="questionBank" getComponent={questionBank}/>
-                        <Route path="questionDetil" getComponent={questionDetil}/>
-                        <Route path="analysisList" getComponent={analysisList}/>
-                        <Route path="resultAnalysis" getComponent={resultAnalysis}/>
-                        <Route path="classReaultAnalysis" getComponent={classReaultAnalysis}/>
-                        <Route path="searchUserLocationInfo" getComponent={searchUserLocationInfo}/>
-                        <Route path="studentFaceStatistics" getComponent={studentFaceStatistics}/>
-                        <Route path="termitePlateLibrary" getComponent={termitePlateLibrary}/>
-                        <Route path="pushSubjectsFromTLibrary" getComponent={pushSubjectsFromTLibrary}/>
-                        <Route path="arrangementWork" getComponent={arrangementWork}/>
-                        <Route path="fileShareLink" getComponent={fileShareLink}/>
-                        <Route path="webMiddlePage" getComponent={webMiddlePage}/>
-                        <Route path="previewFile" getComponent={previewFile}/>
-                        <Route path="ringBinding" getComponent={ringBinding}/>
-                        <Route path="clazzOfRingBinding" getComponent={clazzOfRingBinding}/>
-                        <Route path="bindingBracelet" getComponent={bindingBracelet}/>
-                        <Route path="boxBracelet" getComponent={boxBracelet}/>
-                        <Route path="personalSettings" getComponent={personalSettings}/>
-                        <Route path="groupSetting" getComponent={groupSetting}/>
-                        <Route path="chatMsg" getComponent={chatMsg}/>
-                        <Route path="longList" getComponent={longList}/>
-                        <Route path="homeWorkUnderstandAnalysisByClass"
-                        getComponent={homeWorkUnderstandAnalysisByClass}/>
-                        <Route path="homeWorkUnderstandAnalysisByStudent"
-                        getComponent={homeWorkUnderstandAnalysisByStudent}/>
-                        <Route path="homeWorkUnderstandAnalysisByClassSubject"
-                        getComponent={homeWorkUnderstandAnalysisByClassSubject}/>
-                        <Route path="homeWorkUnderstandAnalysisGuide"
-                        getComponent={homeWorkUnderstandAnalysisGuide}/>
-                        <Route path="m3u8Player" getComponent={m3u8Player}/>
-                        <Route path="HomeWorkUnderstandAnalysisGuideByNoom"
-                        getComponent={HomeWorkUnderstandAnalysisGuideByNoom}/>
-                        <Route path="brotherXu" getComponent={brotherXu}/>
-                        <Route path="homeworkModule" getComponent={homeworkModule}/>
-                        <Route path="curriculumSchedule" getComponent={curriculumSchedule}/>
-                        <Route path="workAttendance" getComponent={workAttendance}/>
-                        <Route path="noticeReadMore" getComponent={noticeReadMore}/>
-                        <Route path="classroomManage" getComponent={classroomManage}/>
-                        <Route path="addClassroomManage" getComponent={addClassroomManage}/>
-                        <Route path="addTeachBuild" getComponent={addTeachBuild}/>
-                        <Route path="workAttendance" getComponent={workAttendance}/>
-                        <Route path="noticeReadMore" getComponent={noticeReadMore}/>
-                        <Route path="addCurriculumSchedule" getComponent={addCurriculumSchedule}/>
-                        <Route path="updateCurriculumSchedule" getComponent={updateCurriculumSchedule}/>
-                        <Route path="definedTerm" getComponent={definedTerm}/>
-                        <Route path="classDemeanor" getComponent={classDemeanor}/>
-                        <Route path="classCardHomePage" getComponent={classCardHomePage}/>
-                        <Route path="publicClassCardHomePage" getComponent={publicClassCardHomePage}/>
-                        <Route path="moralEducation" getComponent={moralEducation}/>
-                        <Route path="addMoralEducation" getComponent={addMoralEducation}/>
-                        <Route path="updateMoralEducation" getComponent={updateMoralEducation}/>
-                        <Route path="assessMoralEducation" getComponent={assessMoralEducation}/>
-                        <Route path="updateClassroom" getComponent={updateClassroom}/>
-                        <Route path="notifyBack" getComponent={notifyBack}/>
-                        <Route path="addNotify" getComponent={addNotify}/>
-                        <Route path="notifyDetail" getComponent={notifyDetail}/>
-                        <Route path="studentDutyList" getComponent={studentDutyList}/>
-                        <Route path="addStudentDuty" getComponent={addStudentDuty}/>
-                        <Route path="editStudentDuty" getComponent={editStudentDuty}/>
-                        <Route path="currentAttendanceList" getComponent={currentAttendanceList}/>
-                        <Route path="classHonor" getComponent={classHonor}/>
-                        <Route path="tableItemDetil" getComponent={tableItemDetil}/>
-                        <Route path="comments" getComponent={comments}/>
-                        <Route path="classCardHomePageDoor" getComponent={classCardHomePageDoor}/>
-                        <Route path="fileAnalysis" getComponent={fileAnalysis}/>
-                        <Route path="studentSelectCourse" getComponent={studentSelectCourse}/>
-                        <Route path="getClassRoomList" getComponent={getClassRoomList}/>
-                        <Route path="getClassTableList" getComponent={getClassTableList}/>
-                        <Route path="newCurriculumSchedule" getComponent={newCurriculumSchedule}/>
-                        <Route path="newAddCurriculumSchedule" getComponent={newAddCurriculumSchedule}/>
-                        <Route path="newUpdateCurriculumSchedule" getComponent={newUpdateCurriculumSchedule}/>
-                        <Route path="classDemeanorList" getComponent={classDemeanorList}/>
-                        <Route path="classHonorList" getComponent={classHonorList}/>
-                        <Route path="clazzDutyList" getComponent={clazzDutyList}/>
-                        <Route path="particlePath" getComponent={particlePath}/>
-                        <Route path="dashboard" getComponent={dashboard}/>
-                        <Route path="dashboardByCity" getComponent={dashboardByCity}/>
-                        <Route path="healthList" getComponent={healthList}/>
-                        <Route path="warning" getComponent={warning}/>
-                        <Route path="health" getComponent={health}/>
-                        <Route path="warnList" getComponent={warnList}/>
-                        <Route path="studentMovement" getComponent={studentMovement}/>
-                        <Route path="schoolPlan" getComponent={schoolPlan}/>
-                        <Route path="littleAntPolicy" getComponent={littleAntPolicy}/>
-                        <Route path="wxLogin" getComponent={wxLogin}/>
-                        <Route path="warningAdminList" getComponent={warningAdminList}/>
-                        <Route path="addWarnAdmin" getComponent={addWarnAdmin}/>
-                        <Route path="waterWork" getComponent={waterWork}/>
-                        <Route path="attendanceTime" getComponent={attendanceTime}/>
-                        <Route path="newAttendanceTime" getComponent={newAttendanceTime}/>
-                        <Route path="updateAttendanceTime" getComponent={updateAttendanceTime}/>
-                        <Route path="answerFormStudent" getComponent={answerFormStudent}/>
-                        <Route path="answerListFormTeacher" getComponent={answerListFormTeacher}/>
-                        <Route path="lookAtTheAnswer" getComponent={LookAtTheAnswer}/>
-                        <Route path="waterWork" getComponent={waterWork}/>
-                        <Route path="attendanceStatistical" getComponent={attendanceStatistical}/>
-                        <Route path="attendanceSatisticaForClass" getComponent={attendanceSatisticaForClass}/>
-                        <Route path="inAndOutSchool" getComponent={inAndOutSchool}/>
-                        <Route path="classAttendance" getComponent={classAttendance}/>
-                        <Route path="wxTemplate" getComponent={wxTemplate}/>
-                        <Route path="ARTextbookList" getComponent={ARTextbookList}/>
-                        <Route path="addARTextbook" getComponent={addARTextbook}/>
-                        <Route path="UpdateARTextbook" getComponent={UpdateARTextbook}/>
-                        <Route path="groupList" getComponent={groupList}/>
-                        <Route path="ArIndex" getComponent={ArIndex}/>
-                        <Route path="wxBindIndex" getComponent={wxBindIndex}/>
-                        <Route path="contactsList" getComponent={contactsList}/>
-                        <Route path="chatDetil" getComponent={chatDetil}/>
-                        <Route path="arDoor" getComponent={arDoor}/>
-                        <Route path="excellentStu" getComponent={excellentStu}/>
-                        <Route path="classBrandTemplateList" getComponent={classBrandTemplateList}/>
-                        <Route path="addClassBrandTemplate" getComponent={addClassBrandTemplate}/>
-                        <Route path="updateClassBrandTemplate" getComponent={updateClassBrandTemplate}/>
-                        <Route path="classBrandTemplateSkin" getComponent={classBrandTemplateSkin}/>
-                        <Route path="bindPeopleList" getComponent={bindPeopleList}/>
-                        <Route path="addOldPeople" getComponent={addOldPeople}/>
-                        <Route path="healthDetail" getComponent={healthDetail}/>
-                        <Route path="friendList" getComponent={friendList}/>
-                        <Route path="classList" getComponent={classList}/>
-                        <Route path="groupChatList" getComponent={groupChatList}/>
-                        <Route path="originationList" getComponent={originationList}/>
-                        <Route path="searchFromOrigination" getComponent={searchFromOrigination}/>
-                        <Route path="newUpdateARTextbook" getComponent={newUpdateARTextbook}/>
-                        <Route path="weArrPayment" getComponent={weArrPayment}/>
-                        <Route path="ARTagList" getComponent={ARTagList}/>
-                        <Route path="updateARTag" getComponent={updateARTag}/>
-                        <Route path="addARTag" getComponent={addARTag}/>
-                        <Route path="New" getComponent={New}/>
-                        <Route path="wxBindProperly" getComponent={wxBindProperly}/>
-                        <Route path="classListMobile" getComponent={classListMobile}/>
-                        <Route path="studentList" getComponent={studentList}/>
-                        <Route path="classListDetail" getComponent={classListDetail}/>
-                        <Route path="studentDetail" getComponent={studentDetail}/>
-                        <Route path="stuAttendance" getComponent={stuAttendance}/>
-                        <Route path="stuState" getComponent={stuState}/>
-                        <Route path="stuRanking" getComponent={stuRanking}/>
-                        <Route path="stuList" getComponent={stuList}/>
-                        <Route path="classRoomList" getComponent={classRoomList}/>
-                        <Route path="courseRecListst" getComponent={courseRecListst}/>
-                        <Route path="addRecCourse" getComponent={addRecCourse}/>
-                        <Route path="litleantTeacher" getComponent={litleantTeacher}/>
-                        <Route path="youyang" getComponent={youyang}/>
-                        <Route path="yunxiao" getComponent={yunxiao}/>
-                        <Route path="ringIntroduce" getComponent={ringIntroduce}/>
-                        <Route path="chatLogin" getComponent={chatLogin}/>
-                        <Route path="antPlate" getComponent={antPlate}/>
-                        <Route path="KnowledgeStatic" getComponent={KnowledgeStatic}/>
-                        <Route path="pushVideo" getComponent={pushVideo}/>
-                        <Route path="KnowledgeList" getComponent={KnowledgeList}/>
-                        <Route path="topicList" getComponent={topicList}/>
-                        <Route path="classTimingList" getComponent={ClassTimingList}/>
-                        <Route path="ClassTimingItem" getComponent={ClassTimingItem}/>
-                        <Route path="addClassTimingItem" getComponent={addClassTimingItem}/>
-                        <Route path="updateClassTimingItem" getComponent={updateClassTimingItem}/>
-                        <Route path="KnowledgeLogin" getComponent={KnowledgeLogin}/>
-                        <Route path="teachingSpaceTeacher" getComponent={teachingSpaceTeacher}/>
-                        <Route path="verifyPhoneNum" getComponent={verifyPhoneNum}/>
-                        <Route path="classPractice" getComponent={classPractice}/>
-                        </Route>
-                        </Router>,document.getElementById('example')
-                        );
+ReactDOM.render(
+    <Router history={hashHistory}>
+        <Route path="/" component={App}>
+            <IndexRoute component={Index} />
+            {/*<Route path="s1" component={Stage1}/>*/}
+            {/*<Route path="s3" component={Stage3}/>*/}
+            {/*<Route path="s4" component={Stage4}/>*/}
+            {/*<Route path="s5" component={Stage5}/>*/}
+            <Route path="teachingSpaceStudent" getComponent={teachingSpaceStudent} />
+            <Route path="questionBank" getComponent={questionBank} />
+            <Route path="questionDetil" getComponent={questionDetil} />
+            <Route path="analysisList" getComponent={analysisList} />
+            <Route path="resultAnalysis" getComponent={resultAnalysis} />
+            <Route path="classReaultAnalysis" getComponent={classReaultAnalysis} />
+            <Route path="searchUserLocationInfo" getComponent={searchUserLocationInfo} />
+            <Route path="studentFaceStatistics" getComponent={studentFaceStatistics} />
+            <Route path="termitePlateLibrary" getComponent={termitePlateLibrary} />
+            <Route path="pushSubjectsFromTLibrary" getComponent={pushSubjectsFromTLibrary} />
+            <Route path="arrangementWork" getComponent={arrangementWork} />
+            <Route path="fileShareLink" getComponent={fileShareLink} />
+            <Route path="webMiddlePage" getComponent={webMiddlePage} />
+            <Route path="previewFile" getComponent={previewFile} />
+            <Route path="ringBinding" getComponent={ringBinding} />
+            <Route path="clazzOfRingBinding" getComponent={clazzOfRingBinding} />
+            <Route path="bindingBracelet" getComponent={bindingBracelet} />
+            <Route path="boxBracelet" getComponent={boxBracelet} />
+            <Route path="personalSettings" getComponent={personalSettings} />
+            <Route path="groupSetting" getComponent={groupSetting} />
+            <Route path="chatMsg" getComponent={chatMsg} />
+            <Route path="longList" getComponent={longList} />
+            <Route path="homeWorkUnderstandAnalysisByClass"
+                getComponent={homeWorkUnderstandAnalysisByClass} />
+            <Route path="homeWorkUnderstandAnalysisByStudent"
+                getComponent={homeWorkUnderstandAnalysisByStudent} />
+            <Route path="homeWorkUnderstandAnalysisByClassSubject"
+                getComponent={homeWorkUnderstandAnalysisByClassSubject} />
+            <Route path="homeWorkUnderstandAnalysisGuide"
+                getComponent={homeWorkUnderstandAnalysisGuide} />
+            <Route path="m3u8Player" getComponent={m3u8Player} />
+            <Route path="HomeWorkUnderstandAnalysisGuideByNoom"
+                getComponent={HomeWorkUnderstandAnalysisGuideByNoom} />
+            <Route path="brotherXu" getComponent={brotherXu} />
+            <Route path="homeworkModule" getComponent={homeworkModule} />
+            <Route path="curriculumSchedule" getComponent={curriculumSchedule} />
+            <Route path="workAttendance" getComponent={workAttendance} />
+            <Route path="noticeReadMore" getComponent={noticeReadMore} />
+            <Route path="classroomManage" getComponent={classroomManage} />
+            <Route path="addClassroomManage" getComponent={addClassroomManage} />
+            <Route path="addTeachBuild" getComponent={addTeachBuild} />
+            <Route path="workAttendance" getComponent={workAttendance} />
+            <Route path="noticeReadMore" getComponent={noticeReadMore} />
+            <Route path="addCurriculumSchedule" getComponent={addCurriculumSchedule} />
+            <Route path="updateCurriculumSchedule" getComponent={updateCurriculumSchedule} />
+            <Route path="definedTerm" getComponent={definedTerm} />
+            <Route path="classDemeanor" getComponent={classDemeanor} />
+            <Route path="classCardHomePage" getComponent={classCardHomePage} />
+            <Route path="publicClassCardHomePage" getComponent={publicClassCardHomePage} />
+            <Route path="moralEducation" getComponent={moralEducation} />
+            <Route path="addMoralEducation" getComponent={addMoralEducation} />
+            <Route path="updateMoralEducation" getComponent={updateMoralEducation} />
+            <Route path="assessMoralEducation" getComponent={assessMoralEducation} />
+            <Route path="updateClassroom" getComponent={updateClassroom} />
+            <Route path="notifyBack" getComponent={notifyBack} />
+            <Route path="addNotify" getComponent={addNotify} />
+            <Route path="notifyDetail" getComponent={notifyDetail} />
+            <Route path="studentDutyList" getComponent={studentDutyList} />
+            <Route path="addStudentDuty" getComponent={addStudentDuty} />
+            <Route path="editStudentDuty" getComponent={editStudentDuty} />
+            <Route path="currentAttendanceList" getComponent={currentAttendanceList} />
+            <Route path="classHonor" getComponent={classHonor} />
+            <Route path="tableItemDetil" getComponent={tableItemDetil} />
+            <Route path="comments" getComponent={comments} />
+            <Route path="classCardHomePageDoor" getComponent={classCardHomePageDoor} />
+            <Route path="fileAnalysis" getComponent={fileAnalysis} />
+            <Route path="studentSelectCourse" getComponent={studentSelectCourse} />
+            <Route path="getClassRoomList" getComponent={getClassRoomList} />
+            <Route path="getClassTableList" getComponent={getClassTableList} />
+            <Route path="newCurriculumSchedule" getComponent={newCurriculumSchedule} />
+            <Route path="newAddCurriculumSchedule" getComponent={newAddCurriculumSchedule} />
+            <Route path="newUpdateCurriculumSchedule" getComponent={newUpdateCurriculumSchedule} />
+            <Route path="classDemeanorList" getComponent={classDemeanorList} />
+            <Route path="classHonorList" getComponent={classHonorList} />
+            <Route path="clazzDutyList" getComponent={clazzDutyList} />
+            <Route path="particlePath" getComponent={particlePath} />
+            <Route path="dashboard" getComponent={dashboard} />
+            <Route path="dashboardByCity" getComponent={dashboardByCity} />
+            <Route path="healthList" getComponent={healthList} />
+            <Route path="warning" getComponent={warning} />
+            <Route path="health" getComponent={health} />
+            <Route path="warnList" getComponent={warnList} />
+            <Route path="studentMovement" getComponent={studentMovement} />
+            <Route path="schoolPlan" getComponent={schoolPlan} />
+            <Route path="littleAntPolicy" getComponent={littleAntPolicy} />
+            <Route path="wxLogin" getComponent={wxLogin} />
+            <Route path="warningAdminList" getComponent={warningAdminList} />
+            <Route path="addWarnAdmin" getComponent={addWarnAdmin} />
+            <Route path="waterWork" getComponent={waterWork} />
+            <Route path="attendanceTime" getComponent={attendanceTime} />
+            <Route path="newAttendanceTime" getComponent={newAttendanceTime} />
+            <Route path="updateAttendanceTime" getComponent={updateAttendanceTime} />
+            <Route path="answerFormStudent" getComponent={answerFormStudent} />
+            <Route path="answerListFormTeacher" getComponent={answerListFormTeacher} />
+            <Route path="lookAtTheAnswer" getComponent={LookAtTheAnswer} />
+            <Route path="waterWork" getComponent={waterWork} />
+            <Route path="attendanceStatistical" getComponent={attendanceStatistical} />
+            <Route path="attendanceSatisticaForClass" getComponent={attendanceSatisticaForClass} />
+            <Route path="inAndOutSchool" getComponent={inAndOutSchool} />
+            <Route path="classAttendance" getComponent={classAttendance} />
+            <Route path="wxTemplate" getComponent={wxTemplate} />
+            <Route path="ARTextbookList" getComponent={ARTextbookList} />
+            <Route path="addARTextbook" getComponent={addARTextbook} />
+            <Route path="UpdateARTextbook" getComponent={UpdateARTextbook} />
+            <Route path="groupList" getComponent={groupList} />
+            <Route path="ArIndex" getComponent={ArIndex} />
+            <Route path="wxBindIndex" getComponent={wxBindIndex} />
+            <Route path="contactsList" getComponent={contactsList} />
+            <Route path="chatDetil" getComponent={chatDetil} />
+            <Route path="arDoor" getComponent={arDoor} />
+            <Route path="excellentStu" getComponent={excellentStu} />
+            <Route path="classBrandTemplateList" getComponent={classBrandTemplateList} />
+            <Route path="addClassBrandTemplate" getComponent={addClassBrandTemplate} />
+            <Route path="updateClassBrandTemplate" getComponent={updateClassBrandTemplate} />
+            <Route path="classBrandTemplateSkin" getComponent={classBrandTemplateSkin} />
+            <Route path="bindPeopleList" getComponent={bindPeopleList} />
+            <Route path="addOldPeople" getComponent={addOldPeople} />
+            <Route path="healthDetail" getComponent={healthDetail} />
+            <Route path="friendList" getComponent={friendList} />
+            <Route path="classList" getComponent={classList} />
+            <Route path="groupChatList" getComponent={groupChatList} />
+            <Route path="originationList" getComponent={originationList} />
+            <Route path="searchFromOrigination" getComponent={searchFromOrigination} />
+            <Route path="newUpdateARTextbook" getComponent={newUpdateARTextbook} />
+            <Route path="weArrPayment" getComponent={weArrPayment} />
+            <Route path="ARTagList" getComponent={ARTagList} />
+            <Route path="updateARTag" getComponent={updateARTag} />
+            <Route path="addARTag" getComponent={addARTag} />
+            <Route path="New" getComponent={New} />
+            <Route path="wxBindProperly" getComponent={wxBindProperly} />
+            <Route path="classListMobile" getComponent={classListMobile} />
+            <Route path="studentList" getComponent={studentList} />
+            <Route path="classListDetail" getComponent={classListDetail} />
+            <Route path="studentDetail" getComponent={studentDetail} />
+            <Route path="stuAttendance" getComponent={stuAttendance} />
+            <Route path="stuState" getComponent={stuState} />
+            <Route path="stuRanking" getComponent={stuRanking} />
+            <Route path="stuList" getComponent={stuList} />
+            <Route path="classRoomList" getComponent={classRoomList} />
+            <Route path="courseRecListst" getComponent={courseRecListst} />
+            <Route path="addRecCourse" getComponent={addRecCourse} />
+            <Route path="litleantTeacher" getComponent={litleantTeacher} />
+            <Route path="youyang" getComponent={youyang} />
+            <Route path="yunxiao" getComponent={yunxiao} />
+            <Route path="ringIntroduce" getComponent={ringIntroduce} />
+            <Route path="chatLogin" getComponent={chatLogin} />
+            <Route path="antPlate" getComponent={antPlate} />
+            <Route path="KnowledgeStatic" getComponent={KnowledgeStatic} />
+            <Route path="pushVideo" getComponent={pushVideo} />
+            <Route path="KnowledgeList" getComponent={KnowledgeList} />
+            <Route path="topicList" getComponent={topicList} />
+            <Route path="classTimingList" getComponent={ClassTimingList} />
+            <Route path="ClassTimingItem" getComponent={ClassTimingItem} />
+            <Route path="addClassTimingItem" getComponent={addClassTimingItem} />
+            <Route path="updateClassTimingItem" getComponent={updateClassTimingItem} />
+            <Route path="KnowledgeLogin" getComponent={KnowledgeLogin} />
+            <Route path="teachingSpaceTeacher" getComponent={teachingSpaceTeacher} />
+            <Route path="verifyPhoneNum" getComponent={verifyPhoneNum} />
+            <Route path="classPractice" getComponent={classPractice} />
+            <Route path="classLogin" getComponent={classLogin} />
+            <Route path="classSortPage" getComponent={classSortPage} />
+            <Route path="fileDetail" getComponent={fileDetail} />
+            <Route path="moreReview" getComponent={moreReview} />
+            <Route path="joinClass" getComponent={joinClass} />
+        </Route>
+    </Router>, document.getElementById('example')
+);
