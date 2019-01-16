@@ -997,12 +997,22 @@ export default class classSortPage extends React.Component {
                                 });
                             }}
                         >
-                            <div>
-                                <img src={this.state.users.avatar} alt="" />
-                                <span>{this.state.users.userName}</span>
+                            <div id="classSortPage">
+                                <div className="personal-center">
+                                    <div className="user-photo">
+                                        <img src={this.state.users.avatar} alt="" />
+                                    </div>
+                                    <div className="user-name">{this.state.users.userName}</div>
+                                </div>
+                                <div className="personal-cont">
+                                    <div className="personal-item line_public">清除缓存</div>
+                                    <div className="personal-item">
+                                        <span>版本号</span>
+                                        <span className="light-gray">{this.state.version}</span>
+                                    </div>
+                                    <div className="log-out" onClick={this.toExit}>退出登录</div>
+                                </div>
                             </div>
-                            <span>{this.state.version}</span>
-                            <span onClick={this.toExit}>退出登录</span>
                         </TabBar.Item>
                     </TabBar>
                 </div>
