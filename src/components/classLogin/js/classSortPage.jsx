@@ -805,7 +805,7 @@ export default class classSortPage extends React.Component {
                         >
                             <div  className='classList'>
                                 <div>
-                                    <h5>正在开课</h5>
+                                    <h5>正在直播</h5>
                                     <div>
                                         {
                                             this.state.courseData.map((v, i) => {
@@ -813,7 +813,7 @@ export default class classSortPage extends React.Component {
                                                 if(v.openTeacher.colUid == this.state.ident){
                                                     return (
                                                         <div className='item'>
-                                                            <div className='courseName text_hidden'>{v.title}</div>
+                                                            <div className='courseName text_hidden'><img src={require('../imgs/icon_livePlay.gif')} alt=""/>{v.title}</div>
                                                             <div className='classBtn' onClick={this.continueClass.bind(this, v.vid,v.password)}>继续上课</div>
                                                             <div className='time'>开课时间：{WebServiceUtil.formatAllTime(v.startTime)}</div>
                                                             <div className="leftCont my_flex">
@@ -839,7 +839,7 @@ export default class classSortPage extends React.Component {
                                                 }else {
                                                     return (
                                                         <div className='item'>
-                                                            <div className='courseName text_hidden'>{v.title}</div>
+                                                            <div className='courseName text_hidden'><img src={require('../imgs/icon_livePlay.gif')} alt=""/>{v.title}</div>
                                                             <div className='classBtn' onClick={this.joinClass.bind(this, v.vid,v.password)}>加入课堂</div>
                                                             <div className='time'>开课时间：{WebServiceUtil.formatAllTime(v.startTime)}</div>
                                                             <div className='leftCont my_flex'>
@@ -870,7 +870,7 @@ export default class classSortPage extends React.Component {
                                     </div>
                                 </div>
                                 <div>
-                                    <h5>历史回顾  <span onClick={this.seeMoreReview}>更多</span></h5>
+                                    <h5>历史回顾  <span className='more' onClick={this.seeMoreReview}>更多 ></span></h5>
                                     <div>
                                         {
                                             this.state.reviewData.map((v, i) => {
