@@ -113,7 +113,7 @@ export default class classLogin extends React.Component {
                         accountArr:this.state.accountArr.concat(accountArr)
                     },()=>{
                     })
-                    var url = WebServiceUtil.mobileServiceURL + 'classSortPage?teacherId=' + res.response.colUid + '&fileId=-1&title=蚁盘题目&phoneType=0';
+                    var url = WebServiceUtil.mobileServiceURL + 'classSortPage?teacherId=' + res.response.colUid + '&fileId=-1&title=蚁盘题目&phoneType=0&version=1.0.0';
                     var data = {
                         method: 'openNewPage',
                         url: url,
