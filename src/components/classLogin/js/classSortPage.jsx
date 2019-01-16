@@ -713,10 +713,10 @@ export default class classSortPage extends React.Component {
                         break;
                 }
                 headDivItem = <ul className="my_flex ul_list_del flex_align_center">
-                    <li className="flex_1" onClick={this.reNameAntFile.bind(this, rowData)}>
+                    <li onClick={this.reNameAntFile.bind(this, rowData)}>
                         <img className="icon_small_del" src={require('../imgs/icon_edit01.png')} alt="" />
                     </li>
-                    <li className="flex_1" onClick={this.showAlert.bind(this, rowData)}>
+                    <li onClick={this.showAlert.bind(this, rowData)}>
                         <img className="icon_small_del" src={require('../imgs/icon_delete01.png')} alt="" />
                     </li>
 
@@ -738,10 +738,10 @@ export default class classSortPage extends React.Component {
 
             } else {
                 headDivItem = <ul className="my_flex ul_list_del flex_align_center">
-                    <li className="flex_1" onClick={this.reNameAntFile.bind(this, rowData)}>
+                    <li onClick={this.reNameAntFile.bind(this, rowData)}>
                         <img className="icon_small_del" src={require('../imgs/icon_edit01.png')} alt="" />
                     </li>
-                    <li className="flex_1" onClick={this.showAlert.bind(this, rowData)}>
+                    <li onClick={this.showAlert.bind(this, rowData)}>
                         <img className="icon_small_del" src={require('../imgs/icon_delete01.png')} alt="" />
                     </li>
                 </ul>;
@@ -947,21 +947,6 @@ export default class classSortPage extends React.Component {
                                         <span className="ant_btn_list upload_file" onClick={this.upLoadQue}>上传文件</span>
                                     </div>
                                 </div>
-                                <div className='progress' style={{ display: this.state.progressState }}>
-                                    <img src={require('../imgs/icon_loading.gif')} /><br />
-                                    正在上传 <span>{this.state.uploadPercent}%</span>
-                                </div>
-                                <div className='emptyCont' style={{ display: _this.state.dataNone ? 'none' : '' }}>
-                                    <img src={require('../imgs/icon_empty.png')} alt="" /><br />
-                                    暂无数据
-                                </div>
-                               {/* <div className='tableTitle my_flex'>
-                                    <div className='noomWidth'>
-                                        <span>名称</span>
-                                        <span>创建时间</span>
-                                    </div>
-                                    <span className='option'>操作</span>
-                                </div>*/}
                                 <ListView
                                     ref={el => this.lv = el}
                                     dataSource={this.state.dataSource}    //数据类型是 ListViewDataSource
