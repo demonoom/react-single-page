@@ -98,16 +98,25 @@
       width: 70px;
     }
     .noomWidth {
-      padding-left: 30px;
+      padding-left: 20px;
       width: calc(~"100% - 70px");
       box-sizing: border-box;
+      flex-direction: column;
+      > div{
+        width: calc(100% - 65px);
+        position: absolute;
+        right: 0;
+        top: 0;
+      }
       > span {
         display: inline-block;
         &:first-child {
-          width: 60%;
+          width: 100%;
         }
         &:last-child {
-          width: 40%;
+          width: 100%;
+          padding-left: 45px;
+          box-sizing: border-box;
         }
       }
     }
@@ -119,10 +128,8 @@
       &.add_file {
         font-size: 14px;
         padding: 0 9px 0 29px;
-        height: 34px;
-        line-height: 34px;
         color: #fff;
-        background: #4285F4 url("../imgs/icon_add_course1.png") no-repeat 11px 11px;
+        background: #4285F4 url("../imgs/icon_add_course1New.png") no-repeat 19px 15px;
         background-size: 12px;
         -webkit-border-radius: 17px;
         -moz-border-radius: 17px;
@@ -181,14 +188,14 @@
     }
     .ant_list_title {
       font-size: 15px;
-      color: #333;
+      color: #424242;
       text-overflow: ellipsis;
       overflow: hidden;
       white-space: nowrap;
     }
     .ant_list_time {
-      color: #888;
-      font-size: 14px;
+      color: #999;
+      font-size: 12px;
       text-overflow: ellipsis;
       overflow: hidden;
       white-space: nowrap;
