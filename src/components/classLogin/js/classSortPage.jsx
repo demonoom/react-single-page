@@ -814,7 +814,10 @@ export default class classSortPage extends React.Component {
                         >
                             {
                                 !this.state.review && !this.state.currentUnion ?
-                                    <div>空页面</div>
+                                    <div className="empty-wrap"><div className="emptyCont">
+                                        <img src={require('../imgs/icon_empty.png')} /><br />
+                                        暂无数据</div>
+                                    </div>
                                     :
                                     <div className='classList'>
                                         <div>
@@ -956,8 +959,10 @@ export default class classSortPage extends React.Component {
                                 </div>
                                 {
                                     !this.state.fileList ?
-                                        <div>
-                                            空页面</div>
+                                        <div className="empty-wrap"><div className="emptyCont">
+                                            <img src={require('../imgs/icon_empty.png')} /><br />
+                                            暂无数据</div>
+                                        </div>
                                         : <ListView
                                             ref={el => this.lv = el}
                                             dataSource={this.state.dataSource}    //数据类型是 ListViewDataSource
@@ -1017,7 +1022,10 @@ export default class classSortPage extends React.Component {
                                     <div className="user-name">{this.state.users.userName}</div>
                                 </div>
                                 <div className="personal-cont">
-                                    <div className="personal-item line_public" onClick={this.clearCache}>清除缓存</div>
+                                    <div className="personal-item line_public">
+                                        <span>清除缓存</span>
+                                        <span className="light-gray"></span>
+                                    </div>
                                     <div className="personal-item">
                                         <span>版本号</span>
                                         <span className="light-gray">{this.state.version}</span>

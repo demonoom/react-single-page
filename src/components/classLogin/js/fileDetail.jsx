@@ -510,10 +510,10 @@ export default class fileDetail extends React.Component {
                         break;
                 }
                 headDivItem = <ul className="my_flex ul_list_del flex_align_center">
-                    <li className="flex_1" onClick={this.reNameAntFile.bind(this, rowData)}>
+                    <li onClick={this.reNameAntFile.bind(this, rowData)}>
                         <img className="icon_small_del" src={require('../imgs/icon_edit01.png')} alt="" />
                     </li>
-                    <li className="flex_1" onClick={this.showAlert.bind(this, rowData)}>
+                    <li onClick={this.showAlert.bind(this, rowData)}>
                         <img className="icon_small_del" src={require('../imgs/icon_delete01.png')} alt="" />
                     </li>
 
@@ -534,10 +534,10 @@ export default class fileDetail extends React.Component {
 
             } else {
                 headDivItem = <ul className="my_flex ul_list_del flex_align_center">
-                    <li className="flex_1" onClick={this.reNameAntFile.bind(this, rowData)}>
+                    <li onClick={this.reNameAntFile.bind(this, rowData)}>
                         <img className="icon_small_del" src={require('../imgs/icon_edit01.png')} alt="" />
                     </li>
-                    <li className="flex_1" onClick={this.showAlert.bind(this, rowData)}>
+                    <li onClick={this.showAlert.bind(this, rowData)}>
                         <img className="icon_small_del" src={require('../imgs/icon_delete01.png')} alt="" />
                     </li>
                 </ul>;
@@ -598,8 +598,9 @@ export default class fileDetail extends React.Component {
                                 }}
                             />
                             :
-                            <div>
-                                空页面
+                            <div className="empty-wrap"><div className="emptyCont">
+                                <img src={require('../imgs/icon_empty.png')} /><br />
+                                暂无数据</div>
                             </div>
                             }
                            
