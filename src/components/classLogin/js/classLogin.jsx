@@ -33,15 +33,8 @@ export default class classLogin extends React.Component {
                     var data = info.data;
                     var uuid = data.uuid;
                     if (uuid == machineId) {
-                        // var url = WebServiceUtil.mobileServiceURL + 'classSortPage?teacherId=' + data.user.colUid + '&teacherName=' + data.user.userName + '';
                         var url = WebServiceUtil.mobileServiceURL + 'classSortPage?teacherId=' + data.user.colUid + '&fileId=-1&title=蚁盘题目&phoneType=0';
-                        var data = {
-                            method: 'openNewPage',
-                            url: url,
-                        };
-                        Bridge.callHandler(data, null, function (error) {
-                            window.location.href = url;
-                        });
+                        window.location.href = url;
                     } else {
                     }
                 }
@@ -102,7 +95,7 @@ export default class classLogin extends React.Component {
             "password": $('#pwd').val().trim()
         };
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
-            onResponse: (res)=> {
+            onResponse: (res) => {
                 if (res.success) {
                     if ($("#act").val() !== "" && $("#pwd").val() !== "") {
                         var accountArr = [];
@@ -116,17 +109,11 @@ export default class classLogin extends React.Component {
                     accountArr = _this.makeArr(accountArr, "account");
                     localStorage.setItem('accountData', JSON.stringify(accountArr));
                     this.setState({
-                        accountArr:this.state.accountArr.concat(accountArr)
-                    },()=>{
+                        accountArr: this.state.accountArr.concat(accountArr)
+                    }, () => {
                     })
-                    var url = WebServiceUtil.mobileServiceURL + 'classSortPage?teacherId=' + res.response.colUid + '&fileId=-1&title=蚁盘题目&phoneType=0&version='+this.state.version;
-                    var data = {
-                        method: 'openNewPage',
-                        url: url,
-                    };
-                    Bridge.callHandler(data, null, function (error) {
-                        window.location.href = url;
-                    });
+                    var url = WebServiceUtil.mobileServiceURL + 'classSortPage?teacherId=' + res.response.colUid + '&fileId=-1&title=蚁盘题目&phoneType=0&version=' + this.state.version;
+                    window.location.href = url;
                 } else {
                     Toast.fail(res.msg);
                 }
@@ -139,7 +126,7 @@ export default class classLogin extends React.Component {
     /**
      * 账户失去聚焦
      */
-    accountOnBlur=()=>{
+    accountOnBlur = () => {
         setTimeout(function () {
             $("#actData").css("display", "none");
         }, 300)
@@ -147,59 +134,59 @@ export default class classLogin extends React.Component {
     /**
      * 账户聚焦
      */
-    accountFocus=()=>{
+    accountFocus = () => {
         var accountArr = [];
         accountArr = JSON.parse(localStorage.getItem("accountData")) == null ? accountArr : JSON.parse(localStorage.getItem("accountData"));
         this.setState({
             accountArr: this.makeArr(accountArr, "account")
-        },()=>{
+        }, () => {
             $("#actData").css("display", "block");
         })
     }
     /**
      * 选择账户
      */
-    getAccount = (account,password)=>{
+    getAccount = (account, password) => {
         $("#act").val(account);
         $("#pwd").val(password);
     }
     /**
      * 删除账户
      */
-    deleteAccount = (index)=>{
-        this.state.accountArr = JSON.parse(localStorage.getItem("accountData")) == null ?  this.state.accountArr : JSON.parse(localStorage.getItem("accountData"));
-        this.state.accountArr.forEach((v,i)=>{
-            if(i == index){
-                this.state.accountArr.splice(i,1);
+    deleteAccount = (index) => {
+        this.state.accountArr = JSON.parse(localStorage.getItem("accountData")) == null ? this.state.accountArr : JSON.parse(localStorage.getItem("accountData"));
+        this.state.accountArr.forEach((v, i) => {
+            if (i == index) {
+                this.state.accountArr.splice(i, 1);
                 this.setState({
-                    accountArr:this.state.accountArr
-                },()=>{
+                    accountArr: this.state.accountArr
+                }, () => {
                     localStorage.setItem('accountData', JSON.stringify(this.state.accountArr));
 
                 })
             }
         })
-     
+
     }
     render() {
         return (
             <div>
                 <div>
                     <div className="logo">
-                        <img src={require('../imgs/icon_classLogo.png')}/>
+                        <img src={require('../imgs/icon_classLogo.png')} />
                     </div>
                 </div>
                 <div className="account">
                     <div className="inputWrap">
-                        <input id='act' onBlur={this.accountOnBlur} onFocus={this.accountFocus} type="text"  placeholder="请输入小蚂蚁账号" />
+                        <input id='act' onBlur={this.accountOnBlur} onFocus={this.accountFocus} type="text" placeholder="请输入小蚂蚁账号" />
                         <div style={{ display: "none" }} id="actData">
                             <div className='cont'>
                                 {
-                                    this.state.accountArr.map((v,i)=>{
-                                        return(
+                                    this.state.accountArr.map((v, i) => {
+                                        return (
                                             <div className='item'>
-                                                <span onClick={this.getAccount.bind(this,v.account,v.password)}>{v.account}</span>
-                                                <span className='close' onClick={this.deleteAccount.bind(this,i)}>删除</span>
+                                                <span onClick={this.getAccount.bind(this, v.account, v.password)}>{v.account}</span>
+                                                <span className='close' onClick={this.deleteAccount.bind(this, i)}>删除</span>
                                             </div>
                                         )
                                     })
@@ -211,8 +198,8 @@ export default class classLogin extends React.Component {
                     <button id="login" onClick={this.login}>登录</button>
                 </div>
                 {/*<div className="scan">*/}
-                    {/*<img id="scan_image" src="./img/school.png" alt="" />*/}
-                    {/*<div>打开手机小蚂蚁教师端扫一扫</div>*/}
+                {/*<img id="scan_image" src="./img/school.png" alt="" />*/}
+                {/*<div>打开手机小蚂蚁教师端扫一扫</div>*/}
                 {/*</div>*/}
             </div>
         )

@@ -37,7 +37,7 @@ export default class classSortPage extends React.Component {
         };
     }
     componentDidMount() {
-        Bridge.setShareAble("false");
+        Bridge.setRefreshAble("true");
         var locationHref = decodeURI(window.location.href);
         var locationSearch = locationHref.substr(locationHref.indexOf("?") + 1);
         var searchArray = locationSearch.split("&");
@@ -571,7 +571,14 @@ export default class classSortPage extends React.Component {
         this.setState({
             selectedTab: 'greenTab',
         });
-        this.getUserRootCloudSubjects()
+        this.initData = [];
+        this.setState({
+            defaultPageNo: 1,
+            dataSource: this.state.dataSource.cloneWithRows(this.initData),
+            isLoadingLeft: true,
+        }, () => {
+            this.getUserRootCloudSubjects()
+        })
     }
 
     /**
