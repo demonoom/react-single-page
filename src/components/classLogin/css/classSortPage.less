@@ -445,7 +445,7 @@ ul, li {
     margin: 10px 9px 0;
     box-shadow: 0 2px 5px #3672ed20;
     border-radius: 5px;
-    padding: 18px 7px 18px 14px;
+    padding: 18px 7px 15px 14px;
     position: relative;
     &:first-child{
       margin-top: 0;
@@ -453,28 +453,38 @@ ul, li {
   }
   .classBtn{
     position: absolute;
-    line-height: 1;
     color: #3672ED;
-    font-size: 13px;
-    padding: 6px 11px;
+    font-size: 12px;
+    padding: 0 11px;
     border: 1px #3672ED solid;
-    border-radius: 4px;
+    border-radius:2px;
     right: 7px;
-    top: 17px;
+    top: 19px;
+    height: 25px;
+    line-height: 25px;
+    text-align: center;
+    box-sizing: border-box;
+  }
+  .clear{
+    overflow: hidden;
   }
   .courseName{
+    line-height: 25px;
     font-size: 15px;
     font-weight: bold;
+    vertical-align: middle;
     width: calc(~'100% - 88px');
-    img{
-      vertical-align: bottom;
-      margin-right: 3px;
-    }
+  }
+  .liveClass .courseName{
+      background: url("../imgs/icon_livePlay.gif") no-repeat left -2px;
+      background-size: 24px;
+      padding-left:27px;
+
   }
   .time{
     font-size: 12px;
     color: #888888;
-    padding: 10px 0 13px;
+    padding: 5px 0 13px;
   }
   .leftCont{
     width: 100%;
@@ -576,4 +586,9 @@ ul, li {
 input, textarea {
   border: 0; /* 方法1 */
   -webkit-appearance: none; /* 方法2 */
+}
+.empty-wrap{
+  position: relative;
+  width: 100%;
+  height: calc(~'100% - 60px');
 }
