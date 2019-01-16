@@ -1,5 +1,4 @@
 #classSortPage {
-  background-color: #ECEFF8;
   font-family: "Microsoft YaHei", "Hiragino Sans GB", Helvetica, Arial;
   /*  @media only screen and (max-width: 768px) {
       .iframeDiv {
@@ -64,7 +63,8 @@
   font-size: 14px;
   overflow: hidden;
   position: relative;
-  height: 34px;
+  height: 57px;
+  background: #fff;
 }
 #classSortPage .ant_title .btns {
   float: right;

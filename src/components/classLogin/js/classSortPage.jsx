@@ -847,7 +847,7 @@ export default class classSortPage extends React.Component {
                         >
                             <div id="classSortPage" className={this.state.phoneType == '0' ? 'Android_wrap' : ''}
                                 style={{ height: this.state.clientHeight }}>
-                                <div className="ant_title">
+                                <div className="ant_title line_public">
                                     {/* <span style={{ display: parentId == -1 ? '' : 'none' }} className="ant_btn_list icon_back"
                                     >我的课件</span> */}
                                     {/* <span style={{ display: parentId == -1 ? 'none' : '' }} className="ant_btn_list icon_back icon_arrow"
