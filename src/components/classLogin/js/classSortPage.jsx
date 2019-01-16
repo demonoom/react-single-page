@@ -42,9 +42,10 @@ export default class classSortPage extends React.Component {
         var fileId = searchArray[1].split('=')[1];
         var fileName = searchArray[2].split('=')[1];
         var phoneType = searchArray[3].split('=')[1];
+        var version = searchArray[4].split('=')[1];
         this.setState({ phoneType });     //phoneType = 0 安卓,  phoneType = -1 ios,
         document.title = fileName;   //设置title
-        this.setState({ parentCloudFileId: fileId, ident });
+        this.setState({ parentCloudFileId: fileId, ident,version});
 
         var loginUser = {
             "ident": ident,
@@ -471,10 +472,10 @@ export default class classSortPage extends React.Component {
     }
 
     //点击加入课堂
-    joinClass = (v) => {
+    joinClass = (v,pwd) => {
         console.log(v, "v")
         // userId,userName,vid,
-        var url = WebServiceUtil.mobileServiceURL + 'joinClass?ident=' + this.state.ident + "&userName=" + this.state.users.userName + "&vid=" + v;
+        var url = WebServiceUtil.mobileServiceURL + 'joinClass?ident=' + this.state.ident + "&userName=" + this.state.users.userName + "&vid=" + v+"&pwd="+pwd;
         var data = {
             method: 'openNewPage',
             url: url,
@@ -781,7 +782,7 @@ export default class classSortPage extends React.Component {
                                                 <div>{v.title}</div>
                                                 <div>主讲老师：{v.openTeacher.userName}</div>
                                                 <div>开课时间：{WebServiceUtil.formatAllTime(v.startTime)}</div>
-                                                <b onClick={this.joinClass.bind(this, v.vid)}>加入课堂</b>
+                                                <b onClick={this.joinClass.bind(this, v.vid,v.password)}>加入课堂</b>
                                             </div>
                                         )
                                     })
@@ -912,6 +913,7 @@ export default class classSortPage extends React.Component {
                             <div>
                                 <img src={this.state.users.avatar} alt="" />
                                 <span>{this.state.users.userName}</span>
+                                <span>{this.state.version}</span>
                             </div>
                         </TabBar.Item>
                     </TabBar>

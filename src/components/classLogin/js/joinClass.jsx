@@ -18,10 +18,12 @@ export default class joinClass extends React.Component {
         var ident = searchArray[0].split('=')[1];
         var userName = searchArray[1].split('=')[1];
         var vid = searchArray[2].split('=')[1];
+        var pwd = searchArray[3].split('=')[1];
         this.setState({
             ident,
             userName,
-            vid
+            vid,
+            pwd
         })
         this.getTeacherClasses(ident)
     }
@@ -72,10 +74,12 @@ export default class joinClass extends React.Component {
      */
     toJoinClass = () => {
         console.log(this.state.classId)
-        console.log(this.state.inputValue)
-        var password = "jjj"
-        if (password == this.state.inputValue) {
-            
+        console.log(this.state.pwd)
+        if (this.state.pwd == this.state.inputValue) {
+            console.log("0000")
+            /**
+             * 进入正在开课的页面
+             */
         }
     }
     render() {
