@@ -179,32 +179,35 @@ export default class classLogin extends React.Component {
         return (
             <div>
                 <div>
-                    <div id="account">账号登录</div>
+                    <div className="logo">
+                        <img src={require('../imgs/icon_classLogo.png')}/>
+                    </div>
                 </div>
                 <div className="account">
                     <div className="inputWrap">
                         <input id='act' onBlur={this.accountOnBlur} onFocus={this.accountFocus} type="text"  placeholder="请输入小蚂蚁账号" />
                         <div style={{ display: "none" }} id="actData">
-                        {
-                            this.state.accountArr.map((v,i)=>{
-                                return(
-                                    <div>
-                                    <span onClick={this.getAccount.bind(this,v.account,v.password)}>{v.account}</span>
-                                    <span onClick={this.deleteAccount.bind(this,i)}>删除</span>
-
-                                    </div>
-                                )
-                            })
-                        }
+                            <div className='cont'>
+                                {
+                                    this.state.accountArr.map((v,i)=>{
+                                        return(
+                                            <div className='item'>
+                                                <span onClick={this.getAccount.bind(this,v.account,v.password)}>{v.account}</span>
+                                                <span className='close' onClick={this.deleteAccount.bind(this,i)}>删除</span>
+                                            </div>
+                                        )
+                                    })
+                                }
+                            </div>
                         </div>
                     </div>
                     <input id="pwd" type="password" placeholder="请输入密码" />
                     <button id="login" onClick={this.login}>登录</button>
                 </div>
-                <div className="scan">
-                    <img id="scan_image" src="./img/school.png" alt="" />
-                    <div>打开手机小蚂蚁教师端扫一扫</div>
-                </div>
+                {/*<div className="scan">*/}
+                    {/*<img id="scan_image" src="./img/school.png" alt="" />*/}
+                    {/*<div>打开手机小蚂蚁教师端扫一扫</div>*/}
+                {/*</div>*/}
             </div>
         )
     }
