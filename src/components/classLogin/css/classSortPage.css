@@ -20,6 +20,9 @@
 #classSortPage .am-list-body::after {
   background-color: #fff;
 }
+#classSortPage .am-tab-bar-bar .am-tab-bar-tab-title {
+  margin: 5px 0 0 0 ;
+}
 #classSortPage.moreReview .classList {
   padding-bottom: 0;
 }
