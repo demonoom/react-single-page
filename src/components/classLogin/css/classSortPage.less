@@ -423,11 +423,12 @@ ul, li {
     font-size: 17px;
     padding: 14px 16px;
     margin: 0;
+    overflow: hidden;
   }
   .item{
     background-color: white;
     margin: 10px 9px 0;
-    box-shadow: 0 2px 5px #3672ed40;
+    box-shadow: 0 2px 5px #3672ed20;
     border-radius: 5px;
     padding: 18px 7px 18px 14px;
     position: relative;
@@ -444,12 +445,16 @@ ul, li {
     border: 1px #3672ED solid;
     border-radius: 4px;
     right: 7px;
-    top: 13px;
+    top: 17px;
   }
   .courseName{
     font-size: 15px;
     font-weight: bold;
-    width: calc(~'100% - 90px');
+    width: calc(~'100% - 88px');
+    img{
+      vertical-align: bottom;
+      margin-right: 3px;
+    }
   }
   .time{
     font-size: 12px;
@@ -481,6 +486,12 @@ ul, li {
         color: #999;
         padding-top: 5px;
     }
+  }
+  .more{
+    float: right;
+    color: #666;
+    font-size: 13px;
+    font-weight: normal;
   }
 
 }
