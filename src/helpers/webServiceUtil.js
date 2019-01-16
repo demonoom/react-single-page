@@ -1,5 +1,5 @@
-var isDebug = false;
-var localDomain = "192.168.43.210";   //请求地址
+var isDebug = true;
+var localDomain = "192.168.50.71";   //请求地址
 var isDebugLocal = false;
 var localUrl = "192.168.43.169";    //跳转地址http:
 
