@@ -30,7 +30,10 @@ export default class classSortPage extends React.Component {
             selectedTab: 'blueTab',
             courseData: [],
             reviewData: [],
-            users: {}
+            users: {},
+            currentUnion: true,
+            review: true,
+            fileList: true
         };
     }
     componentDidMount() {
@@ -45,7 +48,7 @@ export default class classSortPage extends React.Component {
         var version = searchArray[4].split('=')[1];
         this.setState({ phoneType });     //phoneType = 0 安卓,  phoneType = -1 ios,
         document.title = fileName;   //设置title
-        this.setState({ parentCloudFileId: fileId, ident,version});
+        this.setState({ parentCloudFileId: fileId, ident, version });
 
         var loginUser = {
             "ident": ident,
@@ -267,33 +270,33 @@ export default class classSortPage extends React.Component {
         var data = {
             method: 'upLoadFile'
         }
-        console.log(data, "data")
         Bridge.callHandler(data, (res) => {
-            // var res = "http://60.205.86.217/upload8/2018-10-30/13/bb67bfb7-f04f-42f5-8435-fc8659c96cc1.jpeg";
-            // var obj = {
-            //     name: "jjj.jpg",
-            //     size: 4
-            // }
-            this.createCloudFile(res, obj);
+            var arr = res.split("},")
+            arr.forEach((v, i) => {
+                if (i == arr.length - 1) {
+                    var item = JSON.parse(v);
+                    var obj = {
+                        name: item.filename,
+                        size: parseInt(item.size)
+                    }
+                    this.createCloudFile(item.path, obj);
+                } else {
+                    var item = v + "}";
+                    item = JSON.parse(item)
+                    obj = {
+                        name: item.filename,
+                        size: parseInt(item.size)
+                    }
+                    this.createCloudFile(item.path, obj)
+                }
+            })
         })
-        // success: function (responseStr) {
-        //     var arr = responseStr.split(',');
-        //     arr.forEach(function (v, i) {
-        //         _this.createCloudFile(v, fileArr[i]);
-        //     });
-        // },
-        // error: function (responseStr) {
-
-        // }
-
     };
 
     /**
      * 向指定文件夹上传文件
      */
     createCloudFile = (fileUrl, fileObj) => {
-        console.log("diaoypnog ", fileUrl)
-        console.log("diaoypnog ", fileObj)
         var _this = this;
         this.state.defaultPageNo = 1;
         var param = {
@@ -304,9 +307,6 @@ export default class classSortPage extends React.Component {
             "path": fileUrl,
             "length": fileObj.size
         };
-
-        console.log(param, "lll")
-
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
             onResponse: function (result) {
                 if (result.msg == '调用成功' || result.success == true) {
@@ -335,7 +335,6 @@ export default class classSortPage extends React.Component {
             "operateUserId": JSON.parse(localStorage.getItem('loginUserTLibrary')).ident,
             "cloudFileIds": obj.id,
         };
-
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
             onResponse: function (result) {
                 if (result.msg == '调用成功' || result.success == true) {
@@ -460,6 +459,11 @@ export default class classSortPage extends React.Component {
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
             onResponse: (result) => {
                 if (result.msg == '调用成功' || result.success == true) {
+                    if (result.response.length == 0) {
+                        this.setState({
+                            currentUnion: false
+                        })
+                    }
                     this.setState({
                         courseData: result.response
                     })
@@ -472,10 +476,9 @@ export default class classSortPage extends React.Component {
     }
 
     //点击加入课堂
-    joinClass = (v,pwd) => {
-        console.log(v, "v")
+    joinClass = (v, pwd) => {
         // userId,userName,vid,
-        var url = WebServiceUtil.mobileServiceURL + 'joinClass?ident=' + this.state.ident + "&userName=" + this.state.users.userName + "&vid=" + v+"&pwd="+pwd;
+        var url = WebServiceUtil.mobileServiceURL + 'joinClass?ident=' + this.state.ident + "&userName=" + this.state.users.userName + "&vid=" + v + "&pwd=" + pwd;
         var data = {
             method: 'openNewPage',
             url: url,
@@ -486,7 +489,7 @@ export default class classSortPage extends React.Component {
     }
 
     //点击继续上课
-    continueClass = (v,pwd) => {
+    continueClass = (v, pwd) => {
         /**
          * 直接跳客户端
          */
@@ -505,7 +508,6 @@ export default class classSortPage extends React.Component {
      * 获取回顾列表
      */
     toReview = (v) => {
-        console.log(v.vid, "V")
         var url = "https://jiaoxue.maaee.com:9093/#/cloundSchoolDetail?vId=" + v.courseId + "&userId=" + this.state.ident + "&type=3&name=" + v.name + "&judgeFlag=''"
         var data = {
             method: 'openNewPage',
@@ -532,6 +534,11 @@ export default class classSortPage extends React.Component {
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
             onResponse: (result) => {
                 if (result.msg == '调用成功' || result.success == true) {
+                    if (result.response.length == 0) {
+                        this.setState({
+                            review: false
+                        })
+                    }
                     this.setState({
                         reviewData: result.response
                     })
@@ -584,9 +591,9 @@ export default class classSortPage extends React.Component {
             onResponse: function (result) {
                 if (result.msg == '调用成功' || result.success == true) {
                     if (result.response.length === 0 && result.pager.rsCount === 0) {
-                        _this.setState({ dataNone: false })
+                        _this.setState({ fileList: false })
                     } else {
-                        _this.setState({ dataNone: true })
+                        _this.setState({ fileList: true })
                     }
                     var response = result.response;
                     var pager = result.pager;
@@ -632,16 +639,11 @@ export default class classSortPage extends React.Component {
         if (obj.fileType === 0) {
             var data = {
                 method: 'watchFiles',
-                data: obj
+                data: obj.path
             }
             Bridge.callHandler(data, null, function (error) {
             });
         } else {
-            // _this.setState({defaultPageNo: 1}, () => {
-            //     this.setState({parentId: obj.parentId}, () => {
-            //         _this.listCloudSubject(obj.id, true, obj.name)
-            //     })
-            // })
             var url = WebServiceUtil.mobileServiceURL + 'fileDetail?parentId=' + obj.id + '&parentName=' + obj.name + "&ident=" + this.state.ident;
             var data = {
                 method: 'openNewPage',
@@ -657,13 +659,20 @@ export default class classSortPage extends React.Component {
     /**
      * 退出登录
      */
-    toExit =()=>{
+    toExit = () => {
         var url = WebServiceUtil.mobileServiceURL + 'classLogin';
-        window.location.href=url;
+        window.location.href = url;
+    }
+
+
+    clearCache = () => {
+        var data = {
+            method: 'clearCache',
+        };
+        Bridge.callHandler(data, null, function (error) {
+        });
     }
     render() {
-        console.log(this.state.users)
-
         var _this = this;
         var parentId = this.state.parentId
         const row = (rowData, sectionID, rowID) => {
@@ -768,7 +777,6 @@ export default class classSortPage extends React.Component {
         };
         return (
             <div>
-
                 <div style={{ position: 'fixed', height: '100%', width: '100%', top: 0 }}>
                     <TabBar
                         unselectedTintColor="#949494"
@@ -803,112 +811,116 @@ export default class classSortPage extends React.Component {
                             }}
                             data-seed="logId"
                         >
-                            <div  className='classList'>
-                                <div>
-                                    <h5>正在直播</h5>
-                                    <div className='liveClass'>
-                                        {
-                                            this.state.courseData.map((v, i) => {
-                                                console.log(v,"ttt")
-                                                if(v.openTeacher.colUid == this.state.ident){
-                                                    return (
-                                                        <div className='item'>
-                                                            <div className='courseName text_hidden'>{v.title}</div>
-                                                            <div className='classBtn' onClick={this.continueClass.bind(this, v.vid,v.password)}>继续上课</div>
-                                                            <div className='time'>开课时间：{WebServiceUtil.formatAllTime(v.startTime)}</div>
-                                                            <div className="leftCont my_flex">
-                                                                <div>
-                                                                    <img src={v.openTeacher.avatar} alt=""/>
-                                                                    <div className='teacherName text_hidden'>
-                                                                        {v.openTeacher.userName}
-                                                                    </div>
-                                                                </div>
-                                                                {v.unionTeachers.map((v,i)=>{
-                                                                    return(
+                            {
+                                !this.state.review && !this.state.currentUnion ?
+                                    <div>空页面</div>
+                                    :
+                                    <div className='classList'>
+                                        <div>
+                                            <h5 style={{ display: this.state.currentUnion ? "block" : "none" }}>正在直播</h5>
+                                            <div className='liveClass'>
+                                                {
+                                                    this.state.courseData.map((v, i) => {
+                                                        if (v.openTeacher.colUid == this.state.ident) {
+                                                            return (
+                                                                <div className='item'>
+                                                                    <div className='courseName text_hidden'>{v.title}</div>
+                                                                    <div className='classBtn' onClick={this.continueClass.bind(this, v.vid, v.password)}>继续上课</div>
+                                                                    <div className='time'>开课时间：{WebServiceUtil.formatAllTime(v.startTime)}</div>
+                                                                    <div className="leftCont my_flex">
                                                                         <div>
-                                                                            <img src={v.avatar} alt=""/>
+                                                                            <img src={v.openTeacher.avatar} alt="" />
                                                                             <div className='teacherName text_hidden'>
-                                                                                {v.userName}
+                                                                                {v.openTeacher.userName}
                                                                             </div>
                                                                         </div>
-                                                                    )
-                                                                })}
-                                                            </div>
-                                                        </div>
-                                                    )
-                                                }else {
-                                                    return (
-                                                        <div className='item'>
-                                                            <div className='courseName text_hidden'>{v.title}</div>
-                                                            <div className='classBtn' onClick={this.joinClass.bind(this, v.vid,v.password)}>加入课堂</div>
-                                                            <div className='time'>开课时间：{WebServiceUtil.formatAllTime(v.startTime)}</div>
-                                                            <div className='leftCont my_flex'>
-                                                                <div>
-                                                                    <img src={v.openTeacher.avatar} alt=""/>
-                                                                    <div className='teacherName text_hidden'>
-                                                                        {v.openTeacher.userName}
+                                                                        {v.unionTeachers.map((v, i) => {
+                                                                            return (
+                                                                                <div>
+                                                                                    <img src={v.avatar} alt="" />
+                                                                                    <div className='teacherName text_hidden'>
+                                                                                        {v.userName}
+                                                                                    </div>
+                                                                                </div>
+                                                                            )
+                                                                        })}
                                                                     </div>
                                                                 </div>
-                                                                {v.unionTeachers.map((v,i)=>{
-                                                                    return(
+                                                            )
+                                                        } else {
+                                                            return (
+                                                                <div className='item'>
+                                                                    <div className='courseName text_hidden'>{v.title}</div>
+                                                                    <div className='classBtn' onClick={this.joinClass.bind(this, v.vid, v.password)}>加入课堂</div>
+                                                                    <div className='time'>开课时间：{WebServiceUtil.formatAllTime(v.startTime)}</div>
+                                                                    <div className='leftCont my_flex'>
                                                                         <div>
-                                                                            <img src={v.avatar} alt=""/>
+                                                                            <img src={v.openTeacher.avatar} alt="" />
                                                                             <div className='teacherName text_hidden'>
-                                                                                {v.userName}
+                                                                                {v.openTeacher.userName}
                                                                             </div>
                                                                         </div>
-                                                                    )
-                                                                })}
-                                                            </div>
+                                                                        {v.unionTeachers.map((v, i) => {
+                                                                            return (
+                                                                                <div>
+                                                                                    <img src={v.avatar} alt="" />
+                                                                                    <div className='teacherName text_hidden'>
+                                                                                        {v.userName}
+                                                                                    </div>
+                                                                                </div>
+                                                                            )
+                                                                        })}
+                                                                    </div>
 
-                                                        </div>
-                                                    )
+                                                                </div>
+                                                            )
+                                                        }
+
+                                                    })
                                                 }
-
-                                            })
-                                        }
-                                    </div>
-                                </div>
-                                <div>
-                                    <h5>历史回顾  <span className='more' onClick={this.seeMoreReview}>更多 ></span></h5>
-                                    <div>
-                                        {
-                                            this.state.reviewData.map((v, i) => {
-                                                if (i >= 6) {
-                                                    return
-                                                } else {
-                                                    return (
-                                                        <div className='item'>
-                                                            <div className='courseName text_hidden'>
-                                                                {
-                                                                    v.name
-                                                                }
-                                                            </div>
-                                                            <div className='classBtn' onClick={this.toReview.bind(this, v)}>查看回顾</div>
-                                                            <div className='time'>开课时间：
-                                                                {
-                                                                    v.openTime
-                                                                }
-                                                            </div>
-                                                            <div className='leftCont my_flex'>
-                                                                <div>
-                                                                    <img src={v.teacher.avatar} alt=""/>
-                                                                    <div className='teacherName text_hidden'>
+                                            </div>
+                                        </div>
+                                        <div>
+                                            <h5 style={{ display: this.state.review ? "block" : "none" }}>历史回顾  <span className='more' onClick={this.seeMoreReview}>更多 ></span></h5>
+                                            <div>
+                                                {
+                                                    this.state.reviewData.map((v, i) => {
+                                                        if (i >= 6) {
+                                                            return
+                                                        } else {
+                                                            return (
+                                                                <div className='item'>
+                                                                    <div className='courseName text_hidden'>
                                                                         {
-                                                                            v.teacher.userName
+                                                                            v.name
                                                                         }
                                                                     </div>
+                                                                    <div className='classBtn' onClick={this.toReview.bind(this, v)}>查看回顾</div>
+                                                                    <div className='time'>开课时间：
+                                                                {
+                                                                            v.openTime
+                                                                        }
+                                                                    </div>
+                                                                    <div className='leftCont my_flex'>
+                                                                        <div>
+                                                                            <img src={v.teacher.avatar} alt="" />
+                                                                            <div className='teacherName text_hidden'>
+                                                                                {
+                                                                                    v.teacher.userName
+                                                                                }
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
                                                                 </div>
-                                                            </div>
-                                                        </div>
-                                                    )
-                                                }
+                                                            )
+                                                        }
 
-                                            })
-                                        }
+                                                    })
+                                                }
+                                            </div>
+                                        </div>
                                     </div>
-                                </div>
-                            </div>
+                            }
                         </TabBar.Item>
                         <TabBar.Item
                             icon={
@@ -935,40 +947,40 @@ export default class classSortPage extends React.Component {
                             <div id="classSortPage" className={this.state.phoneType == '0' ? 'Android_wrap' : ''}
                                 style={{ height: this.state.clientHeight - 50 }}>
                                 <div className="ant_title line_public">
-                                    {/* <span style={{ display: parentId == -1 ? '' : 'none' }} className="ant_btn_list icon_back"
-                                    >我的课件</span> */}
-                                    {/* <span style={{ display: parentId == -1 ? 'none' : '' }} className="ant_btn_list icon_back icon_arrow"
-                                        onClick={this.returnParentAtMoveModal}><Icon type='left' /></span>
-                                    <span style={{ display: parentId == -1 ? 'none' : '' }} className="ant_btn_list icon_back ant_text"
-                                    >{this.state.fileName}</span> */}
                                     <div className='btns'>
                                         <span className="ant_btn_list add_file" onClick={this.creatNewFile}>新建文件夹</span>
                                         <input style={{ display: 'none' }} type="file" id="upload" multiple="multiple" />
                                         <span className="ant_btn_list upload_file" onClick={this.upLoadQue}>上传文件</span>
                                     </div>
                                 </div>
-                                <ListView
-                                    ref={el => this.lv = el}
-                                    dataSource={this.state.dataSource}    //数据类型是 ListViewDataSource
-                                    renderFooter={() => (
-                                        <div style={{ paddingTop: 5, textAlign: 'center' }}>
-                                            {this.state.isLoadingLeft ? '正在加载' : '已经全部加载完毕'}
-                                        </div>)}
-                                    renderRow={row}   //需要的参数包括一行数据等,会返回一个可渲染的组件为这行数据渲染  返回renderable
-                                    className="am-list"
-                                    pageSize={30}    //每次事件循环（每帧）渲染的行数
-                                    //useBodyScroll  //使用 html 的 body 作为滚动容器   bool类型   不应这么写  否则无法下拉刷新
-                                    scrollRenderAheadDistance={200}   //当一个行接近屏幕范围多少像素之内的时候，就开始渲染这一行
-                                    onEndReached={this.onEndReached}  //当所有的数据都已经渲染过，并且列表被滚动到距离最底部不足onEndReachedThreshold个像素的距离时调用
-                                    onEndReachedThreshold={10}  //调用onEndReached之前的临界值，单位是像素  number类型
-                                    initialListSize={30}   //指定在组件刚挂载的时候渲染多少行数据，用这个属性来确保首屏显示合适数量的数据
-                                    scrollEventThrottle={20}     //控制在滚动过程中，scroll事件被调用的频率
-                                    style={{
-                                        height: this.state.clientHeight - 107,
-                                        display: _this.state.dataNone ? "" : "none"
-                                    }}
-                                />
+                                {
+                                    !this.state.fileList ?
+                                        <div>
+                                            空页面</div>
+                                        : <ListView
+                                            ref={el => this.lv = el}
+                                            dataSource={this.state.dataSource}    //数据类型是 ListViewDataSource
+                                            renderFooter={() => (
+                                                <div style={{ paddingTop: 5, textAlign: 'center' }}>
+                                                    {this.state.isLoadingLeft ? '正在加载' : '已经全部加载完毕'}
+                                                </div>)}
+                                            renderRow={row}   //需要的参数包括一行数据等,会返回一个可渲染的组件为这行数据渲染  返回renderable
+                                            className="am-list"
+                                            pageSize={30}    //每次事件循环（每帧）渲染的行数
+                                            //useBodyScroll  //使用 html 的 body 作为滚动容器   bool类型   不应这么写  否则无法下拉刷新
+                                            scrollRenderAheadDistance={200}   //当一个行接近屏幕范围多少像素之内的时候，就开始渲染这一行
+                                            onEndReached={this.onEndReached}  //当所有的数据都已经渲染过，并且列表被滚动到距离最底部不足onEndReachedThreshold个像素的距离时调用
+                                            onEndReachedThreshold={10}  //调用onEndReached之前的临界值，单位是像素  number类型
+                                            initialListSize={30}   //指定在组件刚挂载的时候渲染多少行数据，用这个属性来确保首屏显示合适数量的数据
+                                            scrollEventThrottle={20}     //控制在滚动过程中，scroll事件被调用的频率
+                                            style={{
+                                                height: this.state.clientHeight - 107,
+                                            }}
+                                        />
+                                }
+
                             </div>
+
                         </TabBar.Item>
                         <TabBar.Item
                             icon={
@@ -1004,7 +1016,7 @@ export default class classSortPage extends React.Component {
                                     <div className="user-name">{this.state.users.userName}</div>
                                 </div>
                                 <div className="personal-cont">
-                                    <div className="personal-item line_public">清除缓存</div>
+                                    <div className="personal-item line_public" onClick={this.clearCache}>清除缓存</div>
                                     <div className="personal-item">
                                         <span>版本号</span>
                                         <span className="light-gray">{this.state.version}</span>
