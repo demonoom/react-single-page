@@ -20,6 +20,15 @@
 #classSortPage .am-list-body::after {
   background-color: #fff;
 }
+#classSortPage.moreReview .classList {
+  padding-bottom: 0;
+}
+#classSortPage.moreReview .am-list-body {
+  background-color: #f5f5f9;
+}
+#classSortPage.moreReview .am-list-body .item:first-child {
+  margin-top: 10px;
+}
 #classSortPage ul,
 #classSortPage li {
   margin: 0;
