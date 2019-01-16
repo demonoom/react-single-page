@@ -1000,9 +1000,9 @@ export default class classSortPage extends React.Component {
                             <div>
                                 <img src={this.state.users.avatar} alt="" />
                                 <span>{this.state.users.userName}</span>
-                                <span>{this.state.version}</span>
-                                <span onClick={this.toExit}>退出登录</span>
                             </div>
+                            <span>{this.state.version}</span>
+                            <span onClick={this.toExit}>退出登录</span>
                         </TabBar.Item>
                     </TabBar>
                 </div>
