@@ -814,7 +814,10 @@ export default class classSortPage extends React.Component {
                         >
                             {
                                 !this.state.review && !this.state.currentUnion ?
-                                    <div>空页面</div>
+                                    <div className="empty-wrap"><div className="emptyCont">
+                                        <img src={require('../imgs/icon_empty.png')} /><br />
+                                        暂无数据</div>
+                                    </div>
                                     :
                                     <div className='classList'>
                                         <div>
@@ -958,7 +961,7 @@ export default class classSortPage extends React.Component {
                                     !this.state.fileList ?
                                         <div className="empty-wrap"><div className="emptyCont">
                                             <img src={require('../imgs/icon_empty.png')} /><br />
-                                            空页面</div>
+                                            暂无数据</div>
                                         </div>
                                         : <ListView
                                             ref={el => this.lv = el}
