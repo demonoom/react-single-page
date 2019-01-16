@@ -28,7 +28,7 @@ export default class fileDetail extends React.Component {
             isLoadingLeft: true,
             parentId: -1,
             progressState: 'none',
-            dataNone: "",
+            dataNone: true,
             fileName: ''
         };
     }
@@ -569,23 +569,15 @@ export default class fileDetail extends React.Component {
                         <div id="classSortPage" className={this.state.phoneType == '0' ? 'Android_wrap' : ''}
                             style={{ height: this.state.clientHeight }}>
                             <div className="ant_title line_public">
-                                {/* <span style={{ display: parentId == -1 ? '' : 'none' }} className="ant_btn_list icon_back"
-                                    >我的课件</span> */}
-                                {/* <span style={{ display: parentId == -1 ? 'none' : '' }} className="ant_btn_list icon_back icon_arrow"
-                                    onClick={this.returnParentAtMoveModal}><Icon type='left' /></span>
-                                <span style={{ display: parentId == -1 ? 'none' : '' }} className="ant_btn_list icon_back ant_text"
-                                >{this.state.fileName}</span> */}
                                 <div className='btns'>
                                     <span className="ant_btn_list add_file" onClick={this.creatNewFile}>新建文件夹</span>
                                     <input style={{ display: 'none' }} type="file" id="upload" multiple="multiple" />
                                     <span className="ant_btn_list upload_file" onClick={this.upLoadQue}>上传文件</span>
                                 </div>
                             </div>
-                            <div className='emptyCont' style={{ display: _this.state.dataNone ? 'none' : '' }}>
-                                <img src={require('../imgs/icon_empty.png')} alt="" /><br />
-                                暂无数据
-                                </div>
-                            <ListView
+                            {
+                                this.state.dataNone ? 
+                                <ListView
                                 ref={el => this.lv = el}
                                 dataSource={this.state.dataSource}    //数据类型是 ListViewDataSource
                                 renderFooter={() => (
@@ -605,6 +597,12 @@ export default class fileDetail extends React.Component {
                                     height: this.state.clientHeight - 57,
                                 }}
                             />
+                            :
+                            <div>
+                                空页面
+                            </div>
+                            }
+                           
                         </div>
                     </div>
                     <WhiteSpace />
