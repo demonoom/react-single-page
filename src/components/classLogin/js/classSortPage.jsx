@@ -652,6 +652,15 @@ export default class classSortPage extends React.Component {
             });
         }
     };
+
+
+    /**
+     * 退出登录
+     */
+    toExit =()=>{
+        var url = WebServiceUtil.mobileServiceURL + 'classLogin';
+        window.location.href=url;
+    }
     render() {
         console.log(this.state.users)
 
@@ -800,7 +809,19 @@ export default class classSortPage extends React.Component {
                                             return (
                                                 <div>
                                                     <div>{v.title}</div>
-                                                    <div>主讲老师：{v.openTeacher.userName}</div>
+                                                    <div><img src={v.openTeacher.avatar} alt=""/>
+                                                        主讲老师：{v.openTeacher.userName}</div>
+                                                      <div>
+                                                          联合老师：
+                                                          {v.unionTeachers.map((v,i)=>{
+                                                            return(
+                                                                <div>
+                                                                    {v.avatar}
+                                                                    {v.userName}
+                                                                </div>
+                                                            )
+                                                        })}
+                                                      </div>
                                                     <div>开课时间：{WebServiceUtil.formatAllTime(v.startTime)}</div>
                                                     <b onClick={this.continueClass.bind(this, v.vid,v.password)}>继续上课</b>
                                                 </div>
@@ -809,7 +830,19 @@ export default class classSortPage extends React.Component {
                                             return (
                                                 <div>
                                                     <div>{v.title}</div>
-                                                    <div>主讲老师：{v.openTeacher.userName}</div>
+                                                    <div><img src={v.openTeacher.avatar} alt=""/>
+                                                        主讲老师：{v.openTeacher.userName}</div>
+                                                        <div>
+                                                          联合老师：
+                                                          {v.unionTeachers.map((v,i)=>{
+                                                            return(
+                                                                <div>
+                                                                    <img src={v.avatar} alt=""/>
+                                                                    {v.userName}
+                                                                </div>
+                                                            )
+                                                        })}
+                                                      </div>
                                                     <div>开课时间：{WebServiceUtil.formatAllTime(v.startTime)}</div>
                                                     
                                                     <b onClick={this.joinClass.bind(this, v.vid,v.password)}>加入课堂</b>
@@ -829,12 +862,12 @@ export default class classSortPage extends React.Component {
                                             return (
                                                 <div>
                                                     <div>
-
                                                         {
                                                             v.name
                                                         }
                                                     </div>
                                                     <div>
+                                                        <img src={v.teacher.avatar} alt=""/>
                                                         主讲老师：
                                                         {
                                                             v.teacher.userName
@@ -946,6 +979,7 @@ export default class classSortPage extends React.Component {
                                 <img src={this.state.users.avatar} alt="" />
                                 <span>{this.state.users.userName}</span>
                                 <span>{this.state.version}</span>
+                                <span onClick={this.toExit}>退出登录</span>
                             </div>
                         </TabBar.Item>
                     </TabBar>
