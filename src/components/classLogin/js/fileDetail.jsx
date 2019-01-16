@@ -265,12 +265,15 @@ export default class fileDetail extends React.Component {
         }
         console.log(data, "data")
         Bridge.callHandler(data, (res) => {
-            var res = "http://60.205.86.217/upload8/2018-10-30/13/bb67bfb7-f04f-42f5-8435-fc8659c96cc1.jpeg";
-            var obj = {
-                name: "jjj.jpg",
-                size: 4
-            }
-            this.createCloudFile(res, obj);
+            arr.forEach( (v, i) =>{
+                this.createCloudFile(v, obj);
+            });
+            // var res = "http://60.205.86.217/upload8/2018-10-30/13/bb67bfb7-f04f-42f5-8435-fc8659c96cc1.jpeg";
+            // var obj = {
+            //     name: "jjj.jpg",
+            //     size: 4
+            // }
+            // this.createCloudFile(res, obj);
         })
     };
 

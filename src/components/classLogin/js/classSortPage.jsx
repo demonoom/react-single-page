@@ -45,7 +45,7 @@ export default class classSortPage extends React.Component {
         var version = searchArray[4].split('=')[1];
         this.setState({ phoneType });     //phoneType = 0 安卓,  phoneType = -1 ios,
         document.title = fileName;   //设置title
-        this.setState({ parentCloudFileId: fileId, ident,version});
+        this.setState({ parentCloudFileId: fileId, ident, version });
 
         var loginUser = {
             "ident": ident,
@@ -264,18 +264,50 @@ export default class classSortPage extends React.Component {
      * 上传文件  ---客户端
      */
     upLoadQue = () => {
-        var data = {
+
+         var data = {
             method: 'upLoadFile'
         }
         console.log(data, "data")
         Bridge.callHandler(data, (res) => {
-            // var res = "http://60.205.86.217/upload8/2018-10-30/13/bb67bfb7-f04f-42f5-8435-fc8659c96cc1.jpeg";
+            var arr = responseStr.split(',');
+            arr.forEach((v, i)=> {
+                this.createCloudFile(v, obj);
+            });
+        })
+        console.log(JSON.parse(str))
+        // var str = 
+        // var arr = [{
+        //     path: "http://60.205.86.217/upload8/2018-10-30/13/bb67bfb7-f04f-42f5-8435-fc8659c96cc1.jpeg",
+        //     filename: "111.jpg", size: 4
+        // }, {
+        //     path: "http://60.205.86.217/upload8/2018-10-30/13/bb67bfb7-f04f-42f5-8435-fc8659c96cc1.jpeg",
+        //     filename: "222.jpg", size: 3
+        // }]
+        // arr.forEach((v, i) => {
+        //     var obj = {
+        //         name:v.filename,
+        //         size:v.size
+        //     }
+        //     this.createCloudFile(v.path, obj);
+        // });
+        // var data = {
+        //     method: 'upLoadFile'
+        // }
+        // console.log(data, "data")
+        // Bridge.callHandler(data, (res) => {
+            // var arr = responseStr.split(',');
+            // arr.forEach((v, i)=> {
+            //     this.createCloudFile(v, obj);
+            // });
+
+            // var res = "http://60.205.86.217/upload8/2018-10-30/13/bb67bfb7-f04f-42f5-8435-fc8659c96cc1.jpeg?fileName=XXX&fileSize=3kb";
             // var obj = {
             //     name: "jjj.jpg",
             //     size: 4
             // }
-            this.createCloudFile(res, obj);
-        })
+            // this.createCloudFile(res, obj);
+        // })
         // success: function (responseStr) {
         //     var arr = responseStr.split(',');
         //     arr.forEach(function (v, i) {
@@ -472,10 +504,10 @@ export default class classSortPage extends React.Component {
     }
 
     //点击加入课堂
-    joinClass = (v,pwd) => {
+    joinClass = (v, pwd) => {
         console.log(v, "v")
         // userId,userName,vid,
-        var url = WebServiceUtil.mobileServiceURL + 'joinClass?ident=' + this.state.ident + "&userName=" + this.state.users.userName + "&vid=" + v+"&pwd="+pwd;
+        var url = WebServiceUtil.mobileServiceURL + 'joinClass?ident=' + this.state.ident + "&userName=" + this.state.users.userName + "&vid=" + v + "&pwd=" + pwd;
         var data = {
             method: 'openNewPage',
             url: url,
@@ -486,7 +518,7 @@ export default class classSortPage extends React.Component {
     }
 
     //点击继续上课
-    continueClass = (v,pwd) => {
+    continueClass = (v, pwd) => {
         /**
          * 直接跳客户端
          */
@@ -657,9 +689,9 @@ export default class classSortPage extends React.Component {
     /**
      * 退出登录
      */
-    toExit =()=>{
+    toExit = () => {
         var url = WebServiceUtil.mobileServiceURL + 'classLogin';
-        window.location.href=url;
+        window.location.href = url;
     }
     render() {
         console.log(this.state.users)
@@ -803,30 +835,30 @@ export default class classSortPage extends React.Component {
                             }}
                             data-seed="logId"
                         >
-                            <div  className='classList'>
+                            <div className='classList'>
                                 <div>
                                     <h5>正在开课</h5>
                                     <div>
                                         {
                                             this.state.courseData.map((v, i) => {
-                                                console.log(v,"ttt")
-                                                if(v.openTeacher.colUid == this.state.ident){
+                                                console.log(v, "ttt")
+                                                if (v.openTeacher.colUid == this.state.ident) {
                                                     return (
                                                         <div className='item'>
                                                             <div className='courseName text_hidden'>{v.title}</div>
-                                                            <div className='classBtn' onClick={this.continueClass.bind(this, v.vid,v.password)}>继续上课</div>
+                                                            <div className='classBtn' onClick={this.continueClass.bind(this, v.vid, v.password)}>继续上课</div>
                                                             <div className='time'>开课时间：{WebServiceUtil.formatAllTime(v.startTime)}</div>
                                                             <div className="leftCont my_flex">
                                                                 <div>
-                                                                    <img src={v.openTeacher.avatar} alt=""/>
+                                                                    <img src={v.openTeacher.avatar} alt="" />
                                                                     <div className='teacherName text_hidden'>
                                                                         {v.openTeacher.userName}
                                                                     </div>
                                                                 </div>
-                                                                {v.unionTeachers.map((v,i)=>{
-                                                                    return(
+                                                                {v.unionTeachers.map((v, i) => {
+                                                                    return (
                                                                         <div>
-                                                                            <img src={v.avatar} alt=""/>
+                                                                            <img src={v.avatar} alt="" />
                                                                             <div className='teacherName text_hidden'>
                                                                                 {v.userName}
                                                                             </div>
@@ -836,23 +868,23 @@ export default class classSortPage extends React.Component {
                                                             </div>
                                                         </div>
                                                     )
-                                                }else {
+                                                } else {
                                                     return (
                                                         <div className='item'>
                                                             <div className='courseName text_hidden'>{v.title}</div>
-                                                            <div className='classBtn' onClick={this.joinClass.bind(this, v.vid,v.password)}>加入课堂</div>
+                                                            <div className='classBtn' onClick={this.joinClass.bind(this, v.vid, v.password)}>加入课堂</div>
                                                             <div className='time'>开课时间：{WebServiceUtil.formatAllTime(v.startTime)}</div>
                                                             <div className='leftCont my_flex'>
                                                                 <div>
-                                                                    <img src={v.openTeacher.avatar} alt=""/>
+                                                                    <img src={v.openTeacher.avatar} alt="" />
                                                                     <div className='teacherName text_hidden'>
                                                                         {v.openTeacher.userName}
                                                                     </div>
                                                                 </div>
-                                                                {v.unionTeachers.map((v,i)=>{
-                                                                    return(
+                                                                {v.unionTeachers.map((v, i) => {
+                                                                    return (
                                                                         <div>
-                                                                            <img src={v.avatar} alt=""/>
+                                                                            <img src={v.avatar} alt="" />
                                                                             <div className='teacherName text_hidden'>
                                                                                 {v.userName}
                                                                             </div>
@@ -892,7 +924,7 @@ export default class classSortPage extends React.Component {
                                                             </div>
                                                             <div className='leftCont my_flex'>
                                                                 <div>
-                                                                    <img src={v.teacher.avatar} alt=""/>
+                                                                    <img src={v.teacher.avatar} alt="" />
                                                                     <div className='teacherName text_hidden'>
                                                                         {
                                                                             v.teacher.userName
@@ -955,7 +987,7 @@ export default class classSortPage extends React.Component {
                                     <img src={require('../imgs/icon_empty.png')} alt="" /><br />
                                     暂无数据
                                 </div>
-                               {/* <div className='tableTitle my_flex'>
+                                {/* <div className='tableTitle my_flex'>
                                     <div className='noomWidth'>
                                         <span>名称</span>
                                         <span>创建时间</span>
