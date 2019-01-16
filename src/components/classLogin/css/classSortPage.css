@@ -120,12 +120,12 @@
   color: #333;
 }
 #classSortPage .option {
-  width: 60px;
+  width: 65px;
 }
 #classSortPage .noomWidth {
   padding-left: 15px;
   padding-right: 20px;
-  width: calc(100% - 60px);
+  width: calc(100% - 65px);
   box-sizing: border-box;
   flex-direction: column;
   position: relative;
@@ -253,10 +253,13 @@
   text-align: left;
   color: #666;
   font-size: 0;
-  width: 60px;
+  width: 65px;
 }
 #classSortPage .ul_list_del li {
   padding: 5px 0;
+}
+#classSortPage .ul_list_del li:first-child {
+  margin-right: 18px;
 }
 #classSortPage .icon_small_del {
   height: 16px;
