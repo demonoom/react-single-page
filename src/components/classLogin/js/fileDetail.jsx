@@ -596,8 +596,9 @@ export default class fileDetail extends React.Component {
                                 }}
                             />
                             :
-                            <div>
-                                空页面
+                            <div className="empty-wrap"><div className="emptyCont">
+                                <img src={require('../imgs/icon_empty.png')} /><br />
+                                暂无数据</div>
                             </div>
                             }
                            
