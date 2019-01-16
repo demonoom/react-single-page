@@ -2,7 +2,7 @@
 #classSortPage {
     font-family: "Microsoft YaHei", "Hiragino Sans GB", Helvetica, Arial;
     overflow: hidden;
-    .am-list-body::before{
+    .am-list-body::before, .am-list-body::after{
         background-color: #fff;
     }
 ul, li {
@@ -58,6 +58,7 @@ ul, li {
       height: 57px;
       background: #fff;
       padding: 20px 0 20px 15px;
+      box-sizing: border-box;
       .btns {
         /*float: right;*/
       }
@@ -112,9 +113,9 @@ ul, li {
       height: 40px;
       justify-content: center;
       > div{
-        width: calc(~"100% - 65px");
+        width: calc(~"100% - 80px");
         position: absolute;
-        right: 0;
+        left: 65px;
         top: 0;
         line-height: 20px;
       }
