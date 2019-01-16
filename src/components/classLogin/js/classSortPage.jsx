@@ -776,11 +776,11 @@ export default class classSortPage extends React.Component {
             )
         };
         return (
-            <div>
+            <div  id="classSortPage">
                 <div style={{ position: 'fixed', height: '100%', width: '100%', top: 0 }}>
                     <TabBar
                         unselectedTintColor="#949494"
-                        tintColor="#33A3F4"
+                        tintColor="#3672ED"
                         barTintColor="white"
                         tabBarPosition="bottom"
                         hidden={this.state.hidden}
@@ -790,19 +790,20 @@ export default class classSortPage extends React.Component {
                             title="课程"
                             key="Life"
                             icon={<div style={{
-                                width: '22px',
-                                height: '22px',
+                                width: '20px',
+                                height: '20px',
                                 background: 'url(http://60.205.111.227/upload2/common/img/Live-icon_class.png) center center /  20px 18px no-repeat'
                             }}
                             />
                             }
                             selectedIcon={<div style={{
-                                width: '22px',
-                                height: '22px',
+                                width: '20px',
+                                height: '20px',
                                 background: 'url(http://60.205.111.227/upload2/common/img/Live-icon_classActive.png) center center /  20px 18px no-repeat'
                             }}
                             />
                             }
+                            className={this.state.selectedTab === 'blueTab' ? 'blueTab' : ''}
                             selected={this.state.selectedTab === 'blueTab'}
                             onPress={() => {
                                 this.setState({
@@ -1008,7 +1009,7 @@ export default class classSortPage extends React.Component {
                                 });
                             }}
                         >
-                            <div id="classSortPage">
+                            <div>
                                 <div className="personal-center">
                                     <div className="user-photo">
                                         <img src={this.state.users.avatar} alt="" />
