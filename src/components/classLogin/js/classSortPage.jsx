@@ -485,6 +485,22 @@ export default class classSortPage extends React.Component {
         });
     }
 
+    //点击继续上课
+    continueClass = (v,pwd) => {
+        /**
+         * 直接跳客户端
+         */
+        console.log("客户端")
+        // var url = WebServiceUtil.mobileServiceURL + 'joinClass?ident=' + this.state.ident + "&userName=" + this.state.users.userName + "&vid=" + v+"&pwd="+pwd;
+        // var data = {
+        //     method: 'openNewPage',
+        //     url: url,
+        // };
+        // Bridge.callHandler(data, null, function (error) {
+        //     window.location.href = url;
+        // });
+    }
+
     /**
      * 获取回顾列表
      */
@@ -777,14 +793,28 @@ export default class classSortPage extends React.Component {
                                 <h5>正在开课</h5>
                                 {
                                     this.state.courseData.map((v, i) => {
-                                        return (
-                                            <div>
-                                                <div>{v.title}</div>
-                                                <div>主讲老师：{v.openTeacher.userName}</div>
-                                                <div>开课时间：{WebServiceUtil.formatAllTime(v.startTime)}</div>
-                                                <b onClick={this.joinClass.bind(this, v.vid,v.password)}>加入课堂</b>
-                                            </div>
-                                        )
+                                        console.log(v,"ttt")
+                                        if(v.openTeacher.colUid == this.state.ident){
+                                            return (
+                                                <div>
+                                                    <div>{v.title}</div>
+                                                    <div>主讲老师：{v.openTeacher.userName}</div>
+                                                    <div>开课时间：{WebServiceUtil.formatAllTime(v.startTime)}</div>
+                                                    <b onClick={this.continueClass.bind(this, v.vid,v.password)}>继续上课</b>
+                                                </div>
+                                            )
+                                        }else {
+                                            return (
+                                                <div>
+                                                    <div>{v.title}</div>
+                                                    <div>主讲老师：{v.openTeacher.userName}</div>
+                                                    <div>开课时间：{WebServiceUtil.formatAllTime(v.startTime)}</div>
+                                                    
+                                                    <b onClick={this.joinClass.bind(this, v.vid,v.password)}>加入课堂</b>
+                                                </div>
+                                            )
+                                        }
+                                     
                                     })
                                 }</div>
                             <div>
