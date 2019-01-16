@@ -1,0 +1,34 @@
+#joinClass {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+#joinClass .am-list-header {
+  font-size: 16px;
+  padding: 11px 15px 11px 15px;
+}
+#joinClass .am-list-line:after,
+#joinClass .am-list-body:before,
+#joinClass .am-list-body:after {
+  display: none;
+}
+#joinClass .am-list {
+  height: calc(100% - 119px);
+}
+#joinClass .am-list-body {
+  height: calc(100% - 40px);
+  overflow-y: auto;
+}
+#joinClass .am-list-item .am-list-line .am-list-content {
+  font-size: 16px;
+}
+#joinClass .submitBtn span {
+  display: block;
+  background-color: #3672ED;
+  font-size: 18px;
+  color: white;
+  height: 45px;
+  line-height: 45px;
+  text-align: center;
+  border-radius: 2px;
+}
