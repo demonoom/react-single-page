@@ -1,5 +1,6 @@
 #classSortPage {
   font-family: "Microsoft YaHei", "Hiragino Sans GB", Helvetica, Arial;
+  overflow: hidden;
   /*  @media only screen and (max-width: 768px) {
       .iframeDiv {
         top: auto;
@@ -14,6 +15,9 @@
         transform: none;
       }
     }*/
+}
+#classSortPage .am-list-body::before {
+  background-color: #fff;
 }
 #classSortPage ul,
 #classSortPage li {
@@ -35,8 +39,8 @@
   flex-flow: row nowrap;
   position: relative;
   align-items: center;
-  border-bottom: 1px #ebebeb solid;
-  padding-left: 0;
+  /*      border-bottom: 1px #ebebeb solid;*/
+  padding: 15px 0;
 }
 #classSortPage .noom-accordion .am-accordion-item {
   width: 100%;
@@ -65,9 +69,10 @@
   position: relative;
   height: 57px;
   background: #fff;
+  padding: 20px 0 20px 15px;
 }
 #classSortPage .ant_title .btns {
-  float: right;
+  /*float: right;*/
 }
 #classSortPage .ant_title .am-icon-md {
   color: #999;
@@ -108,9 +113,11 @@
 }
 #classSortPage .noomWidth {
   padding-left: 20px;
+  padding-right: 20px;
   width: calc(100% - 70px);
   box-sizing: border-box;
   flex-direction: column;
+  position: relative;
 }
 #classSortPage .noomWidth > div {
   width: calc(100% - 65px);
@@ -138,24 +145,22 @@
 #classSortPage .ant_btn_list.add_file {
   font-size: 14px;
   padding: 0 9px 0 29px;
-  color: #fff;
-  background: #4285F4 url("../imgs/icon_add_course1New.png") no-repeat 19px 15px;
-  background-size: 12px;
-  -webkit-border-radius: 17px;
-  -moz-border-radius: 17px;
+  color: #424242;
+  background: url("../imgs/icon_add_course1New.png") no-repeat;
+  background-size: 19px 15px;
+  -webkit-border-radius: 4px;
+  -moz-border-radius: 4px;
   border-radius: 4px;
   margin-right: 20px;
 }
 #classSortPage .ant_btn_list.upload_file {
   font-size: 14px;
-  padding: 0 16px 0 36px;
-  height: 34px;
-  line-height: 34px;
-  color: #fff;
-  background: #4285F4 url("../imgs/icon_upload.png") no-repeat 16px 10px;
-  background-size: 12px;
-  -webkit-border-radius: 17px;
-  -moz-border-radius: 17px;
+  padding: 0 16px 0 29px;
+  color: #424242;
+  background: url("../imgs/icon_uploadNew.png") no-repeat;
+  background-size: 19px 14px;
+  -webkit-border-radius: 4px;
+  -moz-border-radius: 4px;
   border-radius: 4px;
 }
 #classSortPage .ant_btn_line {
@@ -219,7 +224,7 @@
   margin-right: 8px;
 }
 #classSortPage .ul_list_del {
-  padding: 10px 0;
+  padding: 0;
   text-align: left;
   color: #666;
   font-size: 0;
