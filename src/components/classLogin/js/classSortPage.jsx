@@ -990,7 +990,10 @@ export default class classSortPage extends React.Component {
                                     <div className="user-name">{this.state.users.userName}</div>
                                 </div>
                                 <div className="personal-cont">
-                                    <div className="personal-item line_public">清除缓存</div>
+                                    <div className="personal-item line_public">
+                                        <span>清除缓存</span>
+                                        <span className="light-gray"></span>
+                                    </div>
                                     <div className="personal-item">
                                         <span>版本号</span>
                                         <span className="light-gray">{this.state.version}</span>

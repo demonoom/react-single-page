@@ -557,3 +557,17 @@
 .personal-cont .light-gray {
   color: #666;
 }
+.am-modal-input input {
+  border: 1px solid #eee;
+  width: 100%;
+}
+.am-modal-input-container::after {
+  background: #fff !important;
+}
+input,
+textarea {
+  border: 0;
+  /* 方法1 */
+  -webkit-appearance: none;
+  /* 方法2 */
+}
