@@ -723,12 +723,14 @@ export default class classSortPage extends React.Component {
                 </ul>;
                 //文件
                 headDiv = <div className="am-accordion-item my_flex flex_align_center">
-                    <div className="noomWidth my_flex flex_align_center"
+                    <div className="noomWidth my_flex"
                         onClick={_this.fileClicked.bind(this, rowData)}>
-                        <span className="ant_list_title">{fileTypeLog}{rowData.name}</span>
-                        <span className="ant_list_time">
-                            <span>{time}</span>
-                        </span>
+                        <div>
+                            <div className="ant_list_title">{fileTypeLog}{rowData.name}</div>
+                            <span className="ant_list_time">
+                                <span>{time}</span>
+                            </span>
+                        </div>
                     </div>
                     <div className='option'>{headDivItem}</div>
                 </div>

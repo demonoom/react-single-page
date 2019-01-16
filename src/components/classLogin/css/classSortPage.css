@@ -34,7 +34,7 @@
 #classSortPage .noom-accordion {
   box-sizing: border-box;
   cursor: pointer;
-  height: 63px;
+  height: 70px;
   display: flex;
   flex-flow: row nowrap;
   position: relative;
@@ -118,12 +118,15 @@
   box-sizing: border-box;
   flex-direction: column;
   position: relative;
+  height: 40px;
+  justify-content: center;
 }
 #classSortPage .noomWidth > div {
   width: calc(100% - 65px);
   position: absolute;
   right: 0;
   top: 0;
+  line-height: 20px;
 }
 #classSortPage .noomWidth > span {
   display: inline-block;
