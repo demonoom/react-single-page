@@ -1115,7 +1115,7 @@ class Index extends React.Component {
                         to="/teachingSpaceTeacher?access_user=23836"
                         style={{ fontSize: '24px' }}>教学空间老师</Link></li>
                     <li><Link
-                        to="/classLogin"
+                        to="/classLogin?version=1.0.0"
                         style={{ fontSize: '24px' }}>课堂登录</Link></li>
                     {/*<li><Link
                         to="/teachingSpaceStudent?access_user=23836"

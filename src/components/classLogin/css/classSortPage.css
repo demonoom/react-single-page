@@ -34,7 +34,7 @@
 #classSortPage .noom-accordion {
   box-sizing: border-box;
   cursor: pointer;
-  height: 63px;
+  height: 70px;
   display: flex;
   flex-flow: row nowrap;
   position: relative;
@@ -118,12 +118,15 @@
   box-sizing: border-box;
   flex-direction: column;
   position: relative;
+  height: 40px;
+  justify-content: center;
 }
 #classSortPage .noomWidth > div {
   width: calc(100% - 65px);
   position: absolute;
   right: 0;
   top: 0;
+  line-height: 20px;
 }
 #classSortPage .noomWidth > span {
   display: inline-block;
@@ -144,14 +147,24 @@
 }
 #classSortPage .ant_btn_list.add_file {
   font-size: 14px;
-  padding: 0 9px 0 29px;
+  padding: 0 0 0 29px;
   color: #424242;
   background: url("../imgs/icon_add_course1New.png") no-repeat;
   background-size: 19px 15px;
   -webkit-border-radius: 4px;
   -moz-border-radius: 4px;
   border-radius: 4px;
-  margin-right: 20px;
+  margin-right: 25px;
+  position: relative;
+}
+#classSortPage .ant_btn_list.add_file:after {
+  content: "";
+  width: 1px;
+  height: 20px;
+  position: absolute;
+  background: #E5E5E5;
+  right: -25px;
+  top: -2px;
 }
 #classSortPage .ant_btn_list.upload_file {
   font-size: 14px;
@@ -162,6 +175,7 @@
   -webkit-border-radius: 4px;
   -moz-border-radius: 4px;
   border-radius: 4px;
+  margin-left: 25px;
 }
 #classSortPage .ant_btn_line {
   margin: 0 15px;
