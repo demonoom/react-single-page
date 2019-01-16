@@ -11,6 +11,13 @@ export default class classLogin extends React.Component {
     }
     componentDidMount() {
         document.title = "登录页面";
+        var locationHref = decodeURI(window.location.href);
+        var locationSearch = locationHref.substr(locationHref.indexOf("?") + 1);
+        var searchArray = locationSearch.split("&");
+        var version = searchArray[0].split('=')[1];
+        this.setState({
+            version
+        })
         var machineId = '';
         var simple = new SimpleWebsocketConnection();
         simple.connect();
@@ -113,7 +120,7 @@ export default class classLogin extends React.Component {
                         accountArr:this.state.accountArr.concat(accountArr)
                     },()=>{
                     })
-                    var url = WebServiceUtil.mobileServiceURL + 'classSortPage?teacherId=' + res.response.colUid + '&fileId=-1&title=蚁盘题目&phoneType=0&version=1.0.0';
+                    var url = WebServiceUtil.mobileServiceURL + 'classSortPage?teacherId=' + res.response.colUid + '&fileId=-1&title=蚁盘题目&phoneType=0&version='+this.state.version;
                     var data = {
                         method: 'openNewPage',
                         url: url,
