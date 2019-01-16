@@ -455,6 +455,7 @@
   height: 25px;
   line-height: 25px;
   text-align: center;
+  box-sizing: border-box;
 }
 .classList .clear {
   overflow: hidden;
