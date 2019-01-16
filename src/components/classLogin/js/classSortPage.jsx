@@ -264,68 +264,36 @@ export default class classSortPage extends React.Component {
      * 上传文件  ---客户端
      */
     upLoadQue = () => {
-
-         var data = {
+        var data = {
             method: 'upLoadFile'
         }
-        console.log(data, "data")
         Bridge.callHandler(data, (res) => {
-            var arr = responseStr.split(',');
-            arr.forEach((v, i)=> {
-                this.createCloudFile(v, obj);
-            });
+            var arr = res.split("},")
+            arr.forEach((v, i) => {
+                if (i == arr.length - 1) {
+                    var item = JSON.parse(v);
+                    var obj = {
+                        name: item.filename,
+                        size: parseInt(item.size)
+                    }
+                    this.createCloudFile(item.path, obj);
+                } else {
+                    var item = v + "}";
+                    item = JSON.parse(item)
+                    obj = {
+                        name: item.filename,
+                        size:  parseInt(item.size)
+                    }
+                    this.createCloudFile(item.path, obj)
+                }
+            })
         })
-        console.log(JSON.parse(str))
-        // var str = 
-        // var arr = [{
-        //     path: "http://60.205.86.217/upload8/2018-10-30/13/bb67bfb7-f04f-42f5-8435-fc8659c96cc1.jpeg",
-        //     filename: "111.jpg", size: 4
-        // }, {
-        //     path: "http://60.205.86.217/upload8/2018-10-30/13/bb67bfb7-f04f-42f5-8435-fc8659c96cc1.jpeg",
-        //     filename: "222.jpg", size: 3
-        // }]
-        // arr.forEach((v, i) => {
-        //     var obj = {
-        //         name:v.filename,
-        //         size:v.size
-        //     }
-        //     this.createCloudFile(v.path, obj);
-        // });
-        // var data = {
-        //     method: 'upLoadFile'
-        // }
-        // console.log(data, "data")
-        // Bridge.callHandler(data, (res) => {
-            // var arr = responseStr.split(',');
-            // arr.forEach((v, i)=> {
-            //     this.createCloudFile(v, obj);
-            // });
-
-            // var res = "http://60.205.86.217/upload8/2018-10-30/13/bb67bfb7-f04f-42f5-8435-fc8659c96cc1.jpeg?fileName=XXX&fileSize=3kb";
-            // var obj = {
-            //     name: "jjj.jpg",
-            //     size: 4
-            // }
-            // this.createCloudFile(res, obj);
-        // })
-        // success: function (responseStr) {
-        //     var arr = responseStr.split(',');
-        //     arr.forEach(function (v, i) {
-        //         _this.createCloudFile(v, fileArr[i]);
-        //     });
-        // },
-        // error: function (responseStr) {
-
-        // }
-
     };
 
     /**
      * 向指定文件夹上传文件
      */
     createCloudFile = (fileUrl, fileObj) => {
-        console.log("diaoypnog ", fileUrl)
-        console.log("diaoypnog ", fileObj)
         var _this = this;
         this.state.defaultPageNo = 1;
         var param = {
@@ -336,9 +304,6 @@ export default class classSortPage extends React.Component {
             "path": fileUrl,
             "length": fileObj.size
         };
-
-        console.log(param, "lll")
-
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
             onResponse: function (result) {
                 if (result.msg == '调用成功' || result.success == true) {
@@ -367,7 +332,6 @@ export default class classSortPage extends React.Component {
             "operateUserId": JSON.parse(localStorage.getItem('loginUserTLibrary')).ident,
             "cloudFileIds": obj.id,
         };
-
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
             onResponse: function (result) {
                 if (result.msg == '调用成功' || result.success == true) {
@@ -664,8 +628,9 @@ export default class classSortPage extends React.Component {
         if (obj.fileType === 0) {
             var data = {
                 method: 'watchFiles',
-                data: obj
+                data: obj.path
             }
+            console.log(data)
             Bridge.callHandler(data, null, function (error) {
             });
         } else {
@@ -695,7 +660,6 @@ export default class classSortPage extends React.Component {
     }
     render() {
         console.log(this.state.users)
-
         var _this = this;
         var parentId = this.state.parentId
         const row = (rowData, sectionID, rowID) => {
@@ -837,7 +801,7 @@ export default class classSortPage extends React.Component {
                         >
                             <div className='classList'>
                                 <div>
-                                    <h5>正在开课</h5>
+                                    <h5>正在直播</h5>
                                     <div>
                                         {
                                             this.state.courseData.map((v, i) => {
@@ -845,7 +809,7 @@ export default class classSortPage extends React.Component {
                                                 if (v.openTeacher.colUid == this.state.ident) {
                                                     return (
                                                         <div className='item'>
-                                                            <div className='courseName text_hidden'>{v.title}</div>
+                                                            <div className='courseName text_hidden'><img src={require('../imgs/icon_livePlay.gif')} alt="" />{v.title}</div>
                                                             <div className='classBtn' onClick={this.continueClass.bind(this, v.vid, v.password)}>继续上课</div>
                                                             <div className='time'>开课时间：{WebServiceUtil.formatAllTime(v.startTime)}</div>
                                                             <div className="leftCont my_flex">
@@ -871,7 +835,7 @@ export default class classSortPage extends React.Component {
                                                 } else {
                                                     return (
                                                         <div className='item'>
-                                                            <div className='courseName text_hidden'>{v.title}</div>
+                                                            <div className='courseName text_hidden'><img src={require('../imgs/icon_livePlay.gif')} alt="" />{v.title}</div>
                                                             <div className='classBtn' onClick={this.joinClass.bind(this, v.vid, v.password)}>加入课堂</div>
                                                             <div className='time'>开课时间：{WebServiceUtil.formatAllTime(v.startTime)}</div>
                                                             <div className='leftCont my_flex'>
@@ -902,7 +866,7 @@ export default class classSortPage extends React.Component {
                                     </div>
                                 </div>
                                 <div>
-                                    <h5>历史回顾  <span onClick={this.seeMoreReview}>更多</span></h5>
+                                    <h5>历史回顾  <span className='more' onClick={this.seeMoreReview}>更多 ></span></h5>
                                     <div>
                                         {
                                             this.state.reviewData.map((v, i) => {
