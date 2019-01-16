@@ -784,14 +784,14 @@ export default class classSortPage extends React.Component {
                             icon={<div style={{
                                 width: '22px',
                                 height: '22px',
-                                background: 'url(https://zos.alipayobjects.com/rmsportal/sifuoDUQdAFKAVcFGROC.svg) center center /  21px 21px no-repeat'
+                                background: 'url(http://60.205.111.227/upload2/common/img/Live-icon_class.png) center center /  20px 18px no-repeat'
                             }}
                             />
                             }
                             selectedIcon={<div style={{
                                 width: '22px',
                                 height: '22px',
-                                background: 'url(https://zos.alipayobjects.com/rmsportal/iSrlOTqrKddqbOmlvUfq.svg) center center /  21px 21px no-repeat'
+                                background: 'url(http://60.205.111.227/upload2/common/img/Live-icon_classActive.png) center center /  20px 18px no-repeat'
                             }}
                             />
                             }
@@ -913,17 +913,17 @@ export default class classSortPage extends React.Component {
                         <TabBar.Item
                             icon={
                                 <div style={{
-                                    width: '22px',
-                                    height: '22px',
-                                    background: 'url(https://zos.alipayobjects.com/rmsportal/psUFoAMjkCcjqtUCNPxB.svg) center center /  21px 21px no-repeat'
+                                    width: '20px',
+                                    height: '20px',
+                                    background: 'url(http://60.205.111.227/upload2/common/img/Live-icon_file.png) center center /  20px 19px no-repeat'
                                 }}
                                 />
                             }
                             selectedIcon={
                                 <div style={{
-                                    width: '22px',
-                                    height: '22px',
-                                    background: 'url(https://zos.alipayobjects.com/rmsportal/IIRLrXXrFAhXVdhMWgUI.svg) center center /  21px 21px no-repeat'
+                                    width: '20px',
+                                    height: '20px',
+                                    background: 'url(http://60.205.111.227/upload2/common/img/Live-icon_fileActive.png) center center /  20px 19px no-repeat'
                                 }}
                                 />
                             }
@@ -971,8 +971,22 @@ export default class classSortPage extends React.Component {
                             </div>
                         </TabBar.Item>
                         <TabBar.Item
-                            icon={{ uri: 'https://zos.alipayobjects.com/rmsportal/asJMfBrNqpMMlVpeInPQ.svg' }}
-                            selectedIcon={{ uri: 'https://zos.alipayobjects.com/rmsportal/gjpzzcrPMkhfEqgbYvmN.svg' }}
+                            icon={
+                                <div style={{
+                                    width: '22px',
+                                    height: '22px',
+                                    background: 'url(http://60.205.111.227/upload2/common/img/Live-icon_person.png) center center /  20px 20px no-repeat'
+                                }}
+                                />
+                            }
+                            selectedIcon={
+                                <div style={{
+                                    width: '20px',
+                                    height: '20px',
+                                    background: 'url(http://60.205.111.227/upload2/common/img/Live-icon_personActive.png) center center /  20px 20px no-repeat'
+                                }}
+                                />
+                            }
                             title="我的"
                             key="my"
                             selected={this.state.selectedTab === 'yellowTab'}
