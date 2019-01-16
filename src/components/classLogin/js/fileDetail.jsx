@@ -180,16 +180,13 @@ export default class fileDetail extends React.Component {
         if (obj.fileType === 0) {
             var data = {
                 method: 'watchFiles',
-                data: obj
+                data: obj.path,
+                fileId: obj.id,
+                userId:this.state.ident,
             }
             Bridge.callHandler(data, null, function (error) {
             });
         } else {
-            // _this.setState({defaultPageNo: 1}, () => {
-            //     this.setState({parentId: obj.parentId}, () => {
-            //         _this.listCloudSubject(obj.id, true, obj.name)
-            //     })
-            // })
             var url = WebServiceUtil.mobileServiceURL + 'fileDetail?parentId=' + obj.id + '&parentName=' + obj.name + "&ident=" + this.state.ident;
             var data = {
                 method: 'openNewPage',

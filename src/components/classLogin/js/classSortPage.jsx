@@ -642,12 +642,15 @@ export default class classSortPage extends React.Component {
     /**
      * 文件夹被点击
      */
-    fileClicked(obj, event) {
+    fileClicked=(obj, event)=> {
         if (obj.fileType === 0) {
             var data = {
                 method: 'watchFiles',
-                data: obj.path
+                data: obj.path,
+                fileId: obj.id,
+                userId:this.state.ident,
             }
+            console.log(data)
             Bridge.callHandler(data, null, function (error) {
             });
         } else {
