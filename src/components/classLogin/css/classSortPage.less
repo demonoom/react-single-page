@@ -2,7 +2,7 @@
 #classSortPage {
     font-family: "Microsoft YaHei", "Hiragino Sans GB", Helvetica, Arial;
     overflow: hidden;
-    .am-list-body::before{
+    .am-list-body::before, .am-list-body::after{
         background-color: #fff;
     }
 ul, li {
@@ -58,6 +58,7 @@ ul, li {
       height: 57px;
       background: #fff;
       padding: 20px 0 20px 15px;
+      box-sizing: border-box;
       .btns {
         /*float: right;*/
       }
@@ -112,9 +113,9 @@ ul, li {
       height: 40px;
       justify-content: center;
       > div{
-        width: calc(~"100% - 65px");
+        width: calc(~"100% - 80px");
         position: absolute;
-        right: 0;
+        left: 65px;
         top: 0;
         line-height: 20px;
       }
@@ -414,6 +415,87 @@ ul, li {
   .termite_popover .am-popover-item-container {
     justify-content: center;
   }
+
+
+  /*课程*/
+.classList{
+  padding-bottom: 10px;
+  h5{
+    font-size: 17px;
+    padding: 14px 16px;
+    margin: 0;
+    overflow: hidden;
+  }
+  .item{
+    background-color: white;
+    margin: 10px 9px 0;
+    box-shadow: 0 2px 5px #3672ed20;
+    border-radius: 5px;
+    padding: 18px 7px 18px 14px;
+    position: relative;
+    &:first-child{
+      margin-top: 0;
+    }
+  }
+  .classBtn{
+    position: absolute;
+    line-height: 1;
+    color: #3672ED;
+    font-size: 13px;
+    padding: 6px 11px;
+    border: 1px #3672ED solid;
+    border-radius: 4px;
+    right: 7px;
+    top: 17px;
+  }
+  .courseName{
+    font-size: 15px;
+    font-weight: bold;
+    width: calc(~'100% - 88px');
+    img{
+      vertical-align: bottom;
+      margin-right: 3px;
+    }
+  }
+  .time{
+    font-size: 12px;
+    color: #888888;
+    padding: 10px 0 13px;
+  }
+  .leftCont{
+    width: 100%;
+    overflow-x: auto;
+    &::-webkit-scrollbar{
+      display: none !important;
+    }
+    img{
+      width: 22px;
+      height: 22px;
+      border-radius: 50%;
+      display: block;
+      margin: 0 auto;
+    }
+    &>div{
+      padding: 5px 2px 0;
+      margin-right: 10px;
+      &:first-child img{
+        box-shadow: 0 0 5px #3672ED;
+      }
+    }
+    .teacherName{
+        font-size: 11px;
+        color: #999;
+        padding-top: 5px;
+    }
+  }
+  .more{
+    float: right;
+    color: #666;
+    font-size: 13px;
+    font-weight: normal;
+  }
+
+}
   
   
   

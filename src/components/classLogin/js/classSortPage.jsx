@@ -803,92 +803,111 @@ export default class classSortPage extends React.Component {
                             }}
                             data-seed="logId"
                         >
-                            <div>
-                                <h5>正在开课</h5>
-                                {
-                                    this.state.courseData.map((v, i) => {
-                                        console.log(v,"ttt")
-                                        if(v.openTeacher.colUid == this.state.ident){
-                                            return (
-                                                <div>
-                                                    <div>{v.title}</div>
-                                                    <div><img src={v.openTeacher.avatar} alt=""/>
-                                                        主讲老师：{v.openTeacher.userName}</div>
-                                                      <div>
-                                                          联合老师：
-                                                          {v.unionTeachers.map((v,i)=>{
-                                                            return(
+                            <div  className='classList'>
+                                <div>
+                                    <h5>正在直播</h5>
+                                    <div>
+                                        {
+                                            this.state.courseData.map((v, i) => {
+                                                console.log(v,"ttt")
+                                                if(v.openTeacher.colUid == this.state.ident){
+                                                    return (
+                                                        <div className='item'>
+                                                            <div className='courseName text_hidden'><img src={require('../imgs/icon_livePlay.gif')} alt=""/>{v.title}</div>
+                                                            <div className='classBtn' onClick={this.continueClass.bind(this, v.vid,v.password)}>继续上课</div>
+                                                            <div className='time'>开课时间：{WebServiceUtil.formatAllTime(v.startTime)}</div>
+                                                            <div className="leftCont my_flex">
                                                                 <div>
-                                                                    {v.avatar}
-                                                                    {v.userName}
+                                                                    <img src={v.openTeacher.avatar} alt=""/>
+                                                                    <div className='teacherName text_hidden'>
+                                                                        {v.openTeacher.userName}
+                                                                    </div>
                                                                 </div>
-                                                            )
-                                                        })}
-                                                      </div>
-                                                    <div>开课时间：{WebServiceUtil.formatAllTime(v.startTime)}</div>
-                                                    <b onClick={this.continueClass.bind(this, v.vid,v.password)}>继续上课</b>
-                                                </div>
-                                            )
-                                        }else {
-                                            return (
-                                                <div>
-                                                    <div>{v.title}</div>
-                                                    <div><img src={v.openTeacher.avatar} alt=""/>
-                                                        主讲老师：{v.openTeacher.userName}</div>
-                                                        <div>
-                                                          联合老师：
-                                                          {v.unionTeachers.map((v,i)=>{
-                                                            return(
+                                                                {v.unionTeachers.map((v,i)=>{
+                                                                    return(
+                                                                        <div>
+                                                                            <img src={v.avatar} alt=""/>
+                                                                            <div className='teacherName text_hidden'>
+                                                                                {v.userName}
+                                                                            </div>
+                                                                        </div>
+                                                                    )
+                                                                })}
+                                                            </div>
+                                                        </div>
+                                                    )
+                                                }else {
+                                                    return (
+                                                        <div className='item'>
+                                                            <div className='courseName text_hidden'><img src={require('../imgs/icon_livePlay.gif')} alt=""/>{v.title}</div>
+                                                            <div className='classBtn' onClick={this.joinClass.bind(this, v.vid,v.password)}>加入课堂</div>
+                                                            <div className='time'>开课时间：{WebServiceUtil.formatAllTime(v.startTime)}</div>
+                                                            <div className='leftCont my_flex'>
                                                                 <div>
-                                                                    <img src={v.avatar} alt=""/>
-                                                                    {v.userName}
+                                                                    <img src={v.openTeacher.avatar} alt=""/>
+                                                                    <div className='teacherName text_hidden'>
+                                                                        {v.openTeacher.userName}
+                                                                    </div>
                                                                 </div>
-                                                            )
-                                                        })}
-                                                      </div>
-                                                    <div>开课时间：{WebServiceUtil.formatAllTime(v.startTime)}</div>
-                                                    
-                                                    <b onClick={this.joinClass.bind(this, v.vid,v.password)}>加入课堂</b>
-                                                </div>
-                                            )
-                                        }
-                                     
-                                    })
-                                }</div>
-                            <div>
-                                <h5>历史回顾  <span onClick={this.seeMoreReview}>更多</span></h5>
-                                {
-                                    this.state.reviewData.map((v, i) => {
-                                        if (i >= 6) {
-                                            return
-                                        } else {
-                                            return (
-                                                <div>
-                                                    <div>
-                                                        {
-                                                            v.name
-                                                        }
-                                                    </div>
-                                                    <div>
-                                                        <img src={v.teacher.avatar} alt=""/>
-                                                        主讲老师：
-                                                        {
-                                                            v.teacher.userName
-                                                        }
-                                                    </div>
-                                                    <div>开课时间：
-                                                        {
-                                                            v.openTime
-                                                        }
-                                                    </div>
-                                                    <b onClick={this.toReview.bind(this, v)}>查看回顾</b>
-                                                </div>
-                                            )
-                                        }
+                                                                {v.unionTeachers.map((v,i)=>{
+                                                                    return(
+                                                                        <div>
+                                                                            <img src={v.avatar} alt=""/>
+                                                                            <div className='teacherName text_hidden'>
+                                                                                {v.userName}
+                                                                            </div>
+                                                                        </div>
+                                                                    )
+                                                                })}
+                                                            </div>
 
-                                    })
-                                }
+                                                        </div>
+                                                    )
+                                                }
 
+                                            })
+                                        }
+                                    </div>
+                                </div>
+                                <div>
+                                    <h5>历史回顾  <span className='more' onClick={this.seeMoreReview}>更多 ></span></h5>
+                                    <div>
+                                        {
+                                            this.state.reviewData.map((v, i) => {
+                                                if (i >= 6) {
+                                                    return
+                                                } else {
+                                                    return (
+                                                        <div className='item'>
+                                                            <div className='courseName text_hidden'>
+                                                                {
+                                                                    v.name
+                                                                }
+                                                            </div>
+                                                            <div className='classBtn' onClick={this.toReview.bind(this, v)}>查看回顾</div>
+                                                            <div className='time'>开课时间：
+                                                                {
+                                                                    v.openTime
+                                                                }
+                                                            </div>
+                                                            <div className='leftCont my_flex'>
+                                                                <div>
+                                                                    <img src={v.teacher.avatar} alt=""/>
+                                                                    <div className='teacherName text_hidden'>
+                                                                        {
+                                                                            v.teacher.userName
+                                                                        }
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    )
+                                                }
+
+                                            })
+                                        }
+                                    </div>
+                                </div>
                             </div>
                         </TabBar.Item>
                         <TabBar.Item

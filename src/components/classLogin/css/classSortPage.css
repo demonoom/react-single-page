@@ -16,7 +16,8 @@
       }
     }*/
 }
-#classSortPage .am-list-body::before {
+#classSortPage .am-list-body::before,
+#classSortPage .am-list-body::after {
   background-color: #fff;
 }
 #classSortPage ul,
@@ -70,6 +71,7 @@
   height: 57px;
   background: #fff;
   padding: 20px 0 20px 15px;
+  box-sizing: border-box;
 }
 #classSortPage .ant_title .btns {
   /*float: right;*/
@@ -122,9 +124,9 @@
   justify-content: center;
 }
 #classSortPage .noomWidth > div {
-  width: calc(100% - 65px);
+  width: calc(100% - 80px);
   position: absolute;
-  right: 0;
+  left: 65px;
   top: 0;
   line-height: 20px;
 }
@@ -407,4 +409,82 @@
 }
 .termite_popover .am-popover-item-container {
   justify-content: center;
+}
+/*课程*/
+.classList {
+  padding-bottom: 10px;
+}
+.classList h5 {
+  font-size: 17px;
+  padding: 14px 16px;
+  margin: 0;
+  overflow: hidden;
+}
+.classList .item {
+  background-color: white;
+  margin: 10px 9px 0;
+  box-shadow: 0 2px 5px #3672ed20;
+  border-radius: 5px;
+  padding: 18px 7px 18px 14px;
+  position: relative;
+}
+.classList .item:first-child {
+  margin-top: 0;
+}
+.classList .classBtn {
+  position: absolute;
+  line-height: 1;
+  color: #3672ED;
+  font-size: 13px;
+  padding: 6px 11px;
+  border: 1px #3672ED solid;
+  border-radius: 4px;
+  right: 7px;
+  top: 17px;
+}
+.classList .courseName {
+  font-size: 15px;
+  font-weight: bold;
+  width: calc(100% - 88px);
+}
+.classList .courseName img {
+  vertical-align: bottom;
+  margin-right: 3px;
+}
+.classList .time {
+  font-size: 12px;
+  color: #888888;
+  padding: 10px 0 13px;
+}
+.classList .leftCont {
+  width: 100%;
+  overflow-x: auto;
+}
+.classList .leftCont::-webkit-scrollbar {
+  display: none !important;
+}
+.classList .leftCont img {
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  display: block;
+  margin: 0 auto;
+}
+.classList .leftCont > div {
+  padding: 5px 2px 0;
+  margin-right: 10px;
+}
+.classList .leftCont > div:first-child img {
+  box-shadow: 0 0 5px #3672ED;
+}
+.classList .leftCont .teacherName {
+  font-size: 11px;
+  color: #999;
+  padding-top: 5px;
+}
+.classList .more {
+  float: right;
+  color: #666;
+  font-size: 13px;
+  font-weight: normal;
 }
