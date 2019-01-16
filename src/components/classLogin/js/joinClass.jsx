@@ -1,5 +1,6 @@
 import React from "react";
 import { List, InputItem, Radio, Flex, WhiteSpace } from "antd-mobile";
+import "../css/joinClass.less"
 const RadioItem = Radio.RadioItem;
 export default class joinClass extends React.Component {
     constructor(props) {
@@ -85,13 +86,13 @@ export default class joinClass extends React.Component {
     render() {
         const { value } = this.state;
         return (
-            <div>
+            <div id='joinClass'>
                 <InputItem
                     clear
                     placeholder="请输入邀请码"
                     ref={el => this.autoFocusInst = el}
                     onChange={this.inputOnchange.bind(this)}
-                >邀请码</InputItem>
+                ></InputItem>
                 <List renderHeader={() => '选择班级'}>
                     {this.state.classData.map(i => (
                         <RadioItem key={i.value} checked={value === i.value} onChange={() => this.onChange(i)}>
@@ -100,7 +101,7 @@ export default class joinClass extends React.Component {
                     ))}
                 </List>
 
-                <button onClick={this.toJoinClass}>提交</button>
+                <div className='submitBtn' onClick={this.toJoinClass}>提交</div>
             </div>
         )
     }
