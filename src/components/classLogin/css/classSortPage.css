@@ -16,7 +16,8 @@
       }
     }*/
 }
-#classSortPage .am-list-body::before {
+#classSortPage .am-list-body::before,
+#classSortPage .am-list-body::after {
   background-color: #fff;
 }
 #classSortPage ul,
@@ -70,6 +71,7 @@
   height: 57px;
   background: #fff;
   padding: 20px 0 20px 15px;
+  box-sizing: border-box;
 }
 #classSortPage .ant_title .btns {
   /*float: right;*/
@@ -122,9 +124,9 @@
   justify-content: center;
 }
 #classSortPage .noomWidth > div {
-  width: calc(100% - 65px);
+  width: calc(100% - 80px);
   position: absolute;
-  right: 0;
+  left: 65px;
   top: 0;
   line-height: 20px;
 }

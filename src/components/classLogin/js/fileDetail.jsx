@@ -508,12 +508,14 @@ export default class fileDetail extends React.Component {
                 </ul>;
                 //文件
                 headDiv = <div className="am-accordion-item my_flex flex_align_center">
-                    <div className="noomWidth my_flex flex_align_center"
-                        onClick={_this.fileClicked.bind(this, rowData)}>
-                        <span className="ant_list_title">{fileTypeLog}{rowData.name}</span>
-                        <span className="ant_list_time">
-                            <span>{time}</span>
-                        </span>
+                    <div className="noomWidth my_flex" onClick={_this.fileClicked.bind(this, rowData)}>
+                        {fileTypeLog}
+                        <div>
+                            <div className="ant_list_title">{rowData.name}</div>
+                            <span className="ant_list_time">
+                                <span>{time}</span>
+                            </span>
+                        </div>
                     </div>
                     <div className='option'>{headDivItem}</div>
                 </div>
@@ -529,19 +531,21 @@ export default class fileDetail extends React.Component {
                 </ul>;
                 //文件夹
                 headDiv = <div className="am-accordion-item my_flex flex_align_center">
-                    <div className="my_flex flex_align_center noomWidth"
+                    <div className="my_flex noomWidth"
                         onClick={_this.fileClicked.bind(this, rowData)}>
-                        <span className="ant_list_title"><img className="filePic" src={require('../imgs/file.png')}
-                            alt="" />{rowData.name}</span>
-                        <span className="ant_list_time">
-                            <span>{time}</span>
-                        </span>
+                        <img className="filePic" src={require('../imgs/file.png')} alt="" />
+                        <div>
+                            <div className="ant_list_title">{rowData.name}</div>
+                            <span className="ant_list_time">
+                                <span>{time}</span>
+                            </span>
+                        </div>
                     </div>
                     <div className='option'> {headDivItem}</div>
                 </div>;
             }
             return (
-                <div className="noom-accordion my_flex flex_align_center">
+                <div className="noom-accordion line_public my_flex flex_align_center">
                     {headDiv}
                 </div>
             )
@@ -549,11 +553,10 @@ export default class fileDetail extends React.Component {
         return (
             <div>
                 <div>
-                    <WhiteSpace />
                     <div style={{ height: '100%', backgroundColor: '#fff' }}>
                         <div id="classSortPage" className={this.state.phoneType == '0' ? 'Android_wrap' : ''}
                             style={{ height: this.state.clientHeight }}>
-                            <div className="ant_title">
+                            <div className="ant_title line_public">
                                 {/* <span style={{ display: parentId == -1 ? '' : 'none' }} className="ant_btn_list icon_back"
                                     >我的课件</span> */}
                                 {/* <span style={{ display: parentId == -1 ? 'none' : '' }} className="ant_btn_list icon_back icon_arrow"
@@ -574,13 +577,6 @@ export default class fileDetail extends React.Component {
                                 <img src={require('../imgs/icon_empty.png')} alt="" /><br />
                                 暂无数据
                                 </div>
-                            <div className='tableTitle my_flex'>
-                                <div className='noomWidth'>
-                                    <span>名称</span>
-                                    <span>创建时间</span>
-                                </div>
-                                <span className='option'>操作</span>
-                            </div>
                             <ListView
                                 ref={el => this.lv = el}
                                 dataSource={this.state.dataSource}    //数据类型是 ListViewDataSource
@@ -598,7 +594,7 @@ export default class fileDetail extends React.Component {
                                 initialListSize={30}   //指定在组件刚挂载的时候渲染多少行数据，用这个属性来确保首屏显示合适数量的数据
                                 scrollEventThrottle={20}     //控制在滚动过程中，scroll事件被调用的频率
                                 style={{
-                                    height: this.state.clientHeight - 64 - 46,
+                                    height: this.state.clientHeight - 57,
                                     display: _this.state.dataNone ? "" : "none"
                                 }}
                             />
