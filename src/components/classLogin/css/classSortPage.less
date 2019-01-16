@@ -1,8 +1,11 @@
 
 #classSortPage {
-    background-color: #ECEFF8;
     font-family: "Microsoft YaHei", "Hiragino Sans GB", Helvetica, Arial;
-    ul, li {
+    overflow: hidden;
+    .am-list-body::before{
+        background-color: #fff;
+    }
+ul, li {
       margin: 0;
       padding: 0;
       list-style: none;
@@ -22,8 +25,8 @@
       align-items: center;
       position: relative;
       align-items: center;
-      border-bottom: 1px #ebebeb solid;
-      padding-left: 0;
+/*      border-bottom: 1px #ebebeb solid;*/
+      padding: 15px 0;
     //   padding-right: 36px;
       .am-accordion-item {
         width: 100%;
@@ -52,9 +55,11 @@
       font-size: 14px;
       overflow: hidden;
       position: relative;
-      height: 34px;
+      height: 57px;
+      background: #fff;
+      padding: 20px 0 20px 15px;
       .btns {
-        float: right;
+        /*float: right;*/
       }
       .am-icon-md {
         color: #999;
@@ -98,16 +103,27 @@
       width: 70px;
     }
     .noomWidth {
-      padding-left: 30px;
+      padding-left: 20px;
+      padding-right: 20px;
       width: calc(~"100% - 70px");
       box-sizing: border-box;
+      flex-direction: column;
+      position: relative;
+      > div{
+        width: calc(~"100% - 65px");
+        position: absolute;
+        right: 0;
+        top: 0;
+      }
       > span {
         display: inline-block;
         &:first-child {
-          width: 60%;
+          width: 100%;
         }
         &:last-child {
-          width: 40%;
+          width: 100%;
+          padding-left: 45px;
+          box-sizing: border-box;
         }
       }
     }
@@ -119,26 +135,22 @@
       &.add_file {
         font-size: 14px;
         padding: 0 9px 0 29px;
-        height: 34px;
-        line-height: 34px;
-        color: #fff;
-        background: #4285F4 url("../imgs/icon_add_course1.png") no-repeat 11px 11px;
-        background-size: 12px;
-        -webkit-border-radius: 17px;
-        -moz-border-radius: 17px;
+        color: #424242;
+        background: url("../imgs/icon_add_course1New.png") no-repeat;
+        background-size: 19px 15px;
+        -webkit-border-radius: 4px;
+        -moz-border-radius: 4px;
         border-radius: 4px;
         margin-right: 20px;
       }
       &.upload_file {
         font-size: 14px;
-        padding: 0 16px 0 36px;
-        height: 34px;
-        line-height: 34px;
-        color: #fff;
-        background: #4285F4 url("../imgs/icon_upload.png") no-repeat 16px 10px;
-        background-size: 12px;
-        -webkit-border-radius: 17px;
-        -moz-border-radius: 17px;
+        padding: 0 16px 0 29px;
+        color: #424242;
+        background: url("../imgs/icon_uploadNew.png") no-repeat;
+        background-size: 19px 14px;
+        -webkit-border-radius: 4px;
+        -moz-border-radius: 4px;
         border-radius: 4px;
       }
     }
@@ -181,14 +193,14 @@
     }
     .ant_list_title {
       font-size: 15px;
-      color: #333;
+      color: #424242;
       text-overflow: ellipsis;
       overflow: hidden;
       white-space: nowrap;
     }
     .ant_list_time {
-      color: #888;
-      font-size: 14px;
+      color: #999;
+      font-size: 12px;
       text-overflow: ellipsis;
       overflow: hidden;
       white-space: nowrap;
@@ -200,7 +212,7 @@
       margin-right: 8px;
     }
     .ul_list_del {
-      padding: 10px 0;
+      padding: 0;
       text-align: left;
       color: #666;
       font-size: 0;
