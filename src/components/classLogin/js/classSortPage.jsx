@@ -718,10 +718,10 @@ export default class classSortPage extends React.Component {
                         break;
                 }
                 headDivItem = <ul className="my_flex ul_list_del flex_align_center">
-                    <li className="flex_1" onClick={this.reNameAntFile.bind(this, rowData)}>
+                    <li onClick={this.reNameAntFile.bind(this, rowData)}>
                         <img className="icon_small_del" src={require('../imgs/icon_edit01.png')} alt="" />
                     </li>
-                    <li className="flex_1" onClick={this.showAlert.bind(this, rowData)}>
+                    <li onClick={this.showAlert.bind(this, rowData)}>
                         <img className="icon_small_del" src={require('../imgs/icon_delete01.png')} alt="" />
                     </li>
 
@@ -743,10 +743,10 @@ export default class classSortPage extends React.Component {
 
             } else {
                 headDivItem = <ul className="my_flex ul_list_del flex_align_center">
-                    <li className="flex_1" onClick={this.reNameAntFile.bind(this, rowData)}>
+                    <li onClick={this.reNameAntFile.bind(this, rowData)}>
                         <img className="icon_small_del" src={require('../imgs/icon_edit01.png')} alt="" />
                     </li>
-                    <li className="flex_1" onClick={this.showAlert.bind(this, rowData)}>
+                    <li onClick={this.showAlert.bind(this, rowData)}>
                         <img className="icon_small_del" src={require('../imgs/icon_delete01.png')} alt="" />
                     </li>
                 </ul>;
@@ -810,14 +810,14 @@ export default class classSortPage extends React.Component {
                             <div className='classList'>
                                 <div>
                                     <h5>正在直播</h5>
-                                    <div>
+                                    <div className='liveClass'>
                                         {
                                             this.state.courseData.map((v, i) => {
                                                 if (v.openTeacher.colUid == this.state.ident) {
                                                     return (
                                                         <div className='item'>
-                                                            <div className='courseName text_hidden'><img src={require('../imgs/icon_livePlay.gif')} alt="" />{v.title}</div>
-                                                            <div className='classBtn' onClick={this.continueClass.bind(this, v.vid, v.password)}>继续上课</div>
+                                                            <div className='courseName text_hidden'>{v.title}</div>
+                                                            <div className='classBtn' onClick={this.continueClass.bind(this, v.vid,v.password)}>继续上课</div>
                                                             <div className='time'>开课时间：{WebServiceUtil.formatAllTime(v.startTime)}</div>
                                                             <div className="leftCont my_flex">
                                                                 <div>
@@ -842,8 +842,8 @@ export default class classSortPage extends React.Component {
                                                 } else {
                                                     return (
                                                         <div className='item'>
-                                                            <div className='courseName text_hidden'><img src={require('../imgs/icon_livePlay.gif')} alt="" />{v.title}</div>
-                                                            <div className='classBtn' onClick={this.joinClass.bind(this, v.vid, v.password)}>加入课堂</div>
+                                                            <div className='courseName text_hidden'>{v.title}</div>
+                                                            <div className='classBtn' onClick={this.joinClass.bind(this, v.vid,v.password)}>加入课堂</div>
                                                             <div className='time'>开课时间：{WebServiceUtil.formatAllTime(v.startTime)}</div>
                                                             <div className='leftCont my_flex'>
                                                                 <div>
@@ -943,10 +943,6 @@ export default class classSortPage extends React.Component {
                                         <input style={{ display: 'none' }} type="file" id="upload" multiple="multiple" />
                                         <span className="ant_btn_list upload_file" onClick={this.upLoadQue}>上传文件</span>
                                     </div>
-                                </div>
-                                <div className='emptyCont' style={{ display: _this.state.dataNone ? 'none' : '' }}>
-                                    <img src={require('../imgs/icon_empty.png')} alt="" /><br />
-                                    暂无数据
                                 </div>
                                 <ListView
                                     ref={el => this.lv = el}
