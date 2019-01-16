@@ -806,14 +806,14 @@ export default class classSortPage extends React.Component {
                             <div  className='classList'>
                                 <div>
                                     <h5>正在直播</h5>
-                                    <div>
+                                    <div className='liveClass'>
                                         {
                                             this.state.courseData.map((v, i) => {
                                                 console.log(v,"ttt")
                                                 if(v.openTeacher.colUid == this.state.ident){
                                                     return (
                                                         <div className='item'>
-                                                            <div className='courseName text_hidden'><img src={require('../imgs/icon_livePlay.gif')} alt=""/>{v.title}</div>
+                                                            <div className='courseName text_hidden'>{v.title}</div>
                                                             <div className='classBtn' onClick={this.continueClass.bind(this, v.vid,v.password)}>继续上课</div>
                                                             <div className='time'>开课时间：{WebServiceUtil.formatAllTime(v.startTime)}</div>
                                                             <div className="leftCont my_flex">
@@ -839,7 +839,7 @@ export default class classSortPage extends React.Component {
                                                 }else {
                                                     return (
                                                         <div className='item'>
-                                                            <div className='courseName text_hidden'><img src={require('../imgs/icon_livePlay.gif')} alt=""/>{v.title}</div>
+                                                            <div className='courseName text_hidden'>{v.title}</div>
                                                             <div className='classBtn' onClick={this.joinClass.bind(this, v.vid,v.password)}>加入课堂</div>
                                                             <div className='time'>开课时间：{WebServiceUtil.formatAllTime(v.startTime)}</div>
                                                             <div className='leftCont my_flex'>
