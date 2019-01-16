@@ -5,6 +5,9 @@
     .am-list-body::before, .am-list-body::after{
         background-color: #fff;
     }
+  .am-tab-bar-bar .am-tab-bar-tab-title{
+    margin: 5px 0 0 0 ;
+  }
   &.moreReview{
     .classList{
       padding-bottom: 0;
@@ -576,4 +579,19 @@ ul, li {
     color: #666;
   }
 }
-  
+.am-modal-input input{
+  border: 1px solid #eee;
+  width: 100%;
+}
+.am-modal-input-container::after{
+  background: #fff !important;
+}
+input, textarea {
+  border: 0; /* 方法1 */
+  -webkit-appearance: none; /* 方法2 */
+}
+.empty-wrap{
+  position: relative;
+  width: 100%;
+  height: calc(~'100% - 60px');
+}

@@ -783,11 +783,11 @@ export default class classSortPage extends React.Component {
             )
         };
         return (
-            <div>
+            <div  id="classSortPage">
                 <div style={{ position: 'fixed', height: '100%', width: '100%', top: 0 }}>
                     <TabBar
                         unselectedTintColor="#949494"
-                        tintColor="#33A3F4"
+                        tintColor="#3672ED"
                         barTintColor="white"
                         tabBarPosition="bottom"
                         hidden={this.state.hidden}
@@ -797,19 +797,20 @@ export default class classSortPage extends React.Component {
                             title="课程"
                             key="Life"
                             icon={<div style={{
-                                width: '22px',
-                                height: '22px',
-                                background: 'url(https://zos.alipayobjects.com/rmsportal/sifuoDUQdAFKAVcFGROC.svg) center center /  21px 21px no-repeat'
+                                width: '20px',
+                                height: '20px',
+                                background: 'url(http://60.205.111.227/upload2/common/img/Live-icon_class.png) center center /  20px 18px no-repeat'
                             }}
                             />
                             }
                             selectedIcon={<div style={{
-                                width: '22px',
-                                height: '22px',
-                                background: 'url(https://zos.alipayobjects.com/rmsportal/iSrlOTqrKddqbOmlvUfq.svg) center center /  21px 21px no-repeat'
+                                width: '20px',
+                                height: '20px',
+                                background: 'url(http://60.205.111.227/upload2/common/img/Live-icon_classActive.png) center center /  20px 18px no-repeat'
                             }}
                             />
                             }
+                            className={this.state.selectedTab === 'blueTab' ? 'blueTab' : ''}
                             selected={this.state.selectedTab === 'blueTab'}
                             onPress={() => {
                                 this.setState({
@@ -820,7 +821,10 @@ export default class classSortPage extends React.Component {
                         >
                             {
                                 !this.state.review && !this.state.currentUnion ?
-                                    <div>空页面</div>
+                                    <div className="empty-wrap"><div className="emptyCont">
+                                        <img src={require('../imgs/icon_empty.png')} /><br />
+                                        暂无数据</div>
+                                    </div>
                                     :
                                     <div className='classList'>
                                         <div>
@@ -932,17 +936,17 @@ export default class classSortPage extends React.Component {
                         <TabBar.Item
                             icon={
                                 <div style={{
-                                    width: '22px',
-                                    height: '22px',
-                                    background: 'url(https://zos.alipayobjects.com/rmsportal/psUFoAMjkCcjqtUCNPxB.svg) center center /  21px 21px no-repeat'
+                                    width: '20px',
+                                    height: '20px',
+                                    background: 'url(http://60.205.111.227/upload2/common/img/Live-icon_file.png) center center /  20px 19px no-repeat'
                                 }}
                                 />
                             }
                             selectedIcon={
                                 <div style={{
-                                    width: '22px',
-                                    height: '22px',
-                                    background: 'url(https://zos.alipayobjects.com/rmsportal/IIRLrXXrFAhXVdhMWgUI.svg) center center /  21px 21px no-repeat'
+                                    width: '20px',
+                                    height: '20px',
+                                    background: 'url(http://60.205.111.227/upload2/common/img/Live-icon_fileActive.png) center center /  20px 19px no-repeat'
                                 }}
                                 />
                             }
@@ -962,8 +966,10 @@ export default class classSortPage extends React.Component {
                                 </div>
                                 {
                                     !this.state.fileList ?
-                                        <div>
-                                            空页面</div>
+                                        <div className="empty-wrap"><div className="emptyCont">
+                                            <img src={require('../imgs/icon_empty.png')} /><br />
+                                            暂无数据</div>
+                                        </div>
                                         : <ListView
                                             ref={el => this.lv = el}
                                             dataSource={this.state.dataSource}    //数据类型是 ListViewDataSource
@@ -990,8 +996,22 @@ export default class classSortPage extends React.Component {
 
                         </TabBar.Item>
                         <TabBar.Item
-                            icon={{ uri: 'https://zos.alipayobjects.com/rmsportal/asJMfBrNqpMMlVpeInPQ.svg' }}
-                            selectedIcon={{ uri: 'https://zos.alipayobjects.com/rmsportal/gjpzzcrPMkhfEqgbYvmN.svg' }}
+                            icon={
+                                <div style={{
+                                    width: '22px',
+                                    height: '22px',
+                                    background: 'url(http://60.205.111.227/upload2/common/img/Live-icon_person.png) center center /  20px 20px no-repeat'
+                                }}
+                                />
+                            }
+                            selectedIcon={
+                                <div style={{
+                                    width: '20px',
+                                    height: '20px',
+                                    background: 'url(http://60.205.111.227/upload2/common/img/Live-icon_personActive.png) center center /  20px 20px no-repeat'
+                                }}
+                                />
+                            }
                             title="我的"
                             key="my"
                             selected={this.state.selectedTab === 'yellowTab'}
@@ -1001,7 +1021,7 @@ export default class classSortPage extends React.Component {
                                 });
                             }}
                         >
-                            <div id="classSortPage">
+                            <div>
                                 <div className="personal-center">
                                     <div className="user-photo">
                                         <img src={this.state.users.avatar} alt="" />
@@ -1009,7 +1029,10 @@ export default class classSortPage extends React.Component {
                                     <div className="user-name">{this.state.users.userName}</div>
                                 </div>
                                 <div className="personal-cont">
-                                    <div className="personal-item line_public" onClick={this.clearCache}>清除缓存</div>
+                                    <div className="personal-item line_public">
+                                        <span>清除缓存</span>
+                                        <span className="light-gray"></span>
+                                    </div>
                                     <div className="personal-item">
                                         <span>版本号</span>
                                         <span className="light-gray">{this.state.version}</span>
