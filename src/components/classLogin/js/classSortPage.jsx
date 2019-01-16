@@ -658,6 +658,15 @@ export default class classSortPage extends React.Component {
         var url = WebServiceUtil.mobileServiceURL + 'classLogin';
         window.location.href = url;
     }
+
+
+    clearCache=()=>{
+        var data = {
+            method: 'clearCache',
+        };
+        Bridge.callHandler(data, null, function (error) {
+        });
+    }
     render() {
         console.log(this.state.users)
         var _this = this;
@@ -764,7 +773,6 @@ export default class classSortPage extends React.Component {
         };
         return (
             <div>
-
                 <div style={{ position: 'fixed', height: '100%', width: '100%', top: 0 }}>
                     <TabBar
                         unselectedTintColor="#949494"
@@ -805,7 +813,6 @@ export default class classSortPage extends React.Component {
                                     <div>
                                         {
                                             this.state.courseData.map((v, i) => {
-                                                console.log(v, "ttt")
                                                 if (v.openTeacher.colUid == this.state.ident) {
                                                     return (
                                                         <div className='item'>
@@ -931,33 +938,16 @@ export default class classSortPage extends React.Component {
                             <div id="classSortPage" className={this.state.phoneType == '0' ? 'Android_wrap' : ''}
                                 style={{ height: this.state.clientHeight - 50 }}>
                                 <div className="ant_title line_public">
-                                    {/* <span style={{ display: parentId == -1 ? '' : 'none' }} className="ant_btn_list icon_back"
-                                    >我的课件</span> */}
-                                    {/* <span style={{ display: parentId == -1 ? 'none' : '' }} className="ant_btn_list icon_back icon_arrow"
-                                        onClick={this.returnParentAtMoveModal}><Icon type='left' /></span>
-                                    <span style={{ display: parentId == -1 ? 'none' : '' }} className="ant_btn_list icon_back ant_text"
-                                    >{this.state.fileName}</span> */}
                                     <div className='btns'>
                                         <span className="ant_btn_list add_file" onClick={this.creatNewFile}>新建文件夹</span>
                                         <input style={{ display: 'none' }} type="file" id="upload" multiple="multiple" />
                                         <span className="ant_btn_list upload_file" onClick={this.upLoadQue}>上传文件</span>
                                     </div>
                                 </div>
-                                <div className='progress' style={{ display: this.state.progressState }}>
-                                    <img src={require('../imgs/icon_loading.gif')} /><br />
-                                    正在上传 <span>{this.state.uploadPercent}%</span>
-                                </div>
                                 <div className='emptyCont' style={{ display: _this.state.dataNone ? 'none' : '' }}>
                                     <img src={require('../imgs/icon_empty.png')} alt="" /><br />
                                     暂无数据
                                 </div>
-                                {/* <div className='tableTitle my_flex'>
-                                    <div className='noomWidth'>
-                                        <span>名称</span>
-                                        <span>创建时间</span>
-                                    </div>
-                                    <span className='option'>操作</span>
-                                </div>*/}
                                 <ListView
                                     ref={el => this.lv = el}
                                     dataSource={this.state.dataSource}    //数据类型是 ListViewDataSource
@@ -1001,7 +991,7 @@ export default class classSortPage extends React.Component {
                                     <div className="user-name">{this.state.users.userName}</div>
                                 </div>
                                 <div className="personal-cont">
-                                    <div className="personal-item line_public">清除缓存</div>
+                                    <div className="personal-item line_public" onClick={this.clearCache}>清除缓存</div>
                                     <div className="personal-item">
                                         <span>版本号</span>
                                         <span className="light-gray">{this.state.version}</span>

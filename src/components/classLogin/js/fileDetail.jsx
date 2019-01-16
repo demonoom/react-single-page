@@ -581,10 +581,6 @@ export default class fileDetail extends React.Component {
                                     <span className="ant_btn_list upload_file" onClick={this.upLoadQue}>上传文件</span>
                                 </div>
                             </div>
-                            <div className='progress' style={{ display: this.state.progressState }}>
-                                <img src={require('../imgs/icon_loading.gif')} /><br />
-                                正在上传 <span>{this.state.uploadPercent}%</span>
-                            </div>
                             <div className='emptyCont' style={{ display: _this.state.dataNone ? 'none' : '' }}>
                                 <img src={require('../imgs/icon_empty.png')} alt="" /><br />
                                 暂无数据
@@ -607,7 +603,6 @@ export default class fileDetail extends React.Component {
                                 scrollEventThrottle={20}     //控制在滚动过程中，scroll事件被调用的频率
                                 style={{
                                     height: this.state.clientHeight - 57,
-                                    display: _this.state.dataNone ? "" : "none"
                                 }}
                             />
                         </div>
