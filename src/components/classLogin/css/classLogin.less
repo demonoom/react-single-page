@@ -1,0 +1,169 @@
+body,html{
+    margin: 0;
+    width: 100%;
+    height: 100vh;
+    overflow: hidden;
+    font-family: "Microsoft YaHei", "Hiragino Sans GB",  Arial,Helvetica;
+}
+input:-webkit-autofill{
+    box-shadow: 0 0 0px 1000px transparent inset !important;
+}
+:-webkit-autofill {
+    -webkit-text-fill-color: #000 !important;
+    transition: background-color 5000s ease-in-out 0s;
+}
+
+.logo{
+    font-size: 28px;
+    color: #666;
+    font-weight: bold;
+    margin: 60px 0 25px;
+    text-align: center;
+
+}
+.my_flex{
+    -webkit-display: flex;
+    -moz-display: flex;
+    -ms-display: flex;
+    -o-display: flex;
+    display: flex;
+}
+.logo img{
+    width: 75px;
+    height: 75px;
+    border-radius: 15px;
+    margin-right: 12px;
+    vertical-align: text-bottom;
+}
+.tab{
+    font-size: 19px;
+    cursor: pointer;
+}
+.tab > div{
+    width: 50%;
+    color: #666;
+    text-align: center;
+    padding-bottom: 15px;
+    border-bottom: 1px #E0E0E0 solid;
+}
+.right_font{
+    width: 100px;
+    height: 100px;
+    background: palevioletred;
+    position: absolute;
+    top: 0;
+    right: 0;
+    transform: translate(50%,-50%) rotate(45deg);
+}
+.inputWrap{
+    position: relative;
+    width: 100%;
+}
+.inputWrap #actData{
+    width: 100%;
+    position: absolute;
+    left: 0;
+    top: 71px;
+    z-index: 5;
+    .cont{
+        max-height: 132px;
+        overflow-y: auto;
+        //border: 1px #e5e5e5 solid;
+        box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+        box-sizing: border-box;
+        background: white;
+        .item{
+            position: relative;
+            padding: 8px 15px;
+            cursor: pointer;
+            font-size: 14px;
+            color: #666;
+            &:hover{
+                background-color: #edf2ff;
+                color: #333;
+            }
+            .close{
+                display: block;
+                width: 20px;
+                height: 20px;
+                background: url("../imgs/icon_close.png") no-repeat right center;
+                background-size: 12px;
+                position: absolute;
+                right: 10px;
+                top: 50%;
+                -webkit-transform: translateY(-50%);
+                -moz-transform: translateY(-50%);
+                -ms-transform: translateY(-50%);
+                -o-transform: translateY(-50%);
+                transform: translateY(-50%);
+                font-size: 0;
+            }
+        }
+    }
+}
+::-webkit-scrollbar {
+    width: 8px;
+    height: 12px;
+}
+
+/* 这是针对缺省样式 (必须的) */
+::-webkit-scrollbar-thumb {
+    background-color: #ccc;
+    border-radius: 9px;
+    -webkit-border-radius: 9px;
+}
+
+/* 滑块颜色 */
+::-webkit-scrollbar-button {
+    background-color: initial;
+}
+.account{
+    padding: 0 15px;
+}
+
+.account input{
+    padding: 12px 15px 12px 40px ;
+    margin-bottom: 24px;
+    outline: none;
+    width: 100%;
+    box-sizing: border-box;
+    font-size: 15PX;
+    border: 0;
+    border-radius: 2px;
+    color: #333;
+    font-family: "Microsoft YaHei", "Hiragino Sans GB", Arial, Helvetica;
+}
+
+//input:focus{
+//    box-shadow: 0px 0px 2px #215bef8a;
+//    border-color: #1757FB;
+//}
+.account input#act{
+    margin-top: 30px;
+    background:white url("../imgs/icon_account.png") no-repeat 15px center;
+    background-size: 15px;
+
+}
+.account input#pwd{
+    background:white url("../imgs/icon_pwd.png") no-repeat 15px center;
+    background-size: 14px;
+
+}
+#login{
+    line-height: 45px;
+    height: 45px;
+    background-color: #3672ED;
+    width: 100%;
+    color: #fff;
+    text-align: center;
+    outline: none;
+    border: 0;
+    cursor: pointer;
+    font-size: 18px;
+    margin-top: 40px;
+    border-radius: 2px
+}
+#login:hover{
+    opacity: 0.9;
+}
+
