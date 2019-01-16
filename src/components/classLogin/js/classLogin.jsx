@@ -101,7 +101,6 @@ export default class classLogin extends React.Component {
             "username": $('#act').val().trim(),
             "password": $('#pwd').val().trim()
         };
-        console.log(param)
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
             onResponse: (res)=> {
                 if (res.success) {

@@ -477,7 +477,6 @@ export default class classSortPage extends React.Component {
 
     //点击加入课堂
     joinClass = (v, pwd) => {
-        console.log(v, "v")
         // userId,userName,vid,
         var url = WebServiceUtil.mobileServiceURL + 'joinClass?ident=' + this.state.ident + "&userName=" + this.state.users.userName + "&vid=" + v + "&pwd=" + pwd;
         var data = {
@@ -509,7 +508,6 @@ export default class classSortPage extends React.Component {
      * 获取回顾列表
      */
     toReview = (v) => {
-        console.log(v.vid, "V")
         var url = "https://jiaoxue.maaee.com:9093/#/cloundSchoolDetail?vId=" + v.courseId + "&userId=" + this.state.ident + "&type=3&name=" + v.name + "&judgeFlag=''"
         var data = {
             method: 'openNewPage',
@@ -643,15 +641,9 @@ export default class classSortPage extends React.Component {
                 method: 'watchFiles',
                 data: obj.path
             }
-            console.log(data)
             Bridge.callHandler(data, null, function (error) {
             });
         } else {
-            // _this.setState({defaultPageNo: 1}, () => {
-            //     this.setState({parentId: obj.parentId}, () => {
-            //         _this.listCloudSubject(obj.id, true, obj.name)
-            //     })
-            // })
             var url = WebServiceUtil.mobileServiceURL + 'fileDetail?parentId=' + obj.id + '&parentName=' + obj.name + "&ident=" + this.state.ident;
             var data = {
                 method: 'openNewPage',
@@ -681,7 +673,6 @@ export default class classSortPage extends React.Component {
         });
     }
     render() {
-        console.log(this.state.users)
         var _this = this;
         var parentId = this.state.parentId
         const row = (rowData, sectionID, rowID) => {
