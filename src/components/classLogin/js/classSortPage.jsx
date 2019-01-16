@@ -652,6 +652,15 @@ export default class classSortPage extends React.Component {
             });
         }
     };
+
+
+    /**
+     * 退出登录
+     */
+    toExit =()=>{
+        var url = WebServiceUtil.mobileServiceURL + 'classLogin';
+        window.location.href=url;
+    }
     render() {
         console.log(this.state.users)
 
@@ -944,6 +953,7 @@ export default class classSortPage extends React.Component {
                                 <img src={this.state.users.avatar} alt="" />
                                 <span>{this.state.users.userName}</span>
                                 <span>{this.state.version}</span>
+                                <span onClick={this.toExit}>退出登录</span>
                             </div>
                         </TabBar.Item>
                     </TabBar>
