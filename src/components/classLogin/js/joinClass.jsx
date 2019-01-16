@@ -101,7 +101,7 @@ export default class joinClass extends React.Component {
                     ))}
                 </List>
 
-                <div className='submitBtn' onClick={this.toJoinClass}>提交</div>
+                <div className='submitBtn' onClick={this.toJoinClass}><span>提交</span></div>
             </div>
         )
     }
