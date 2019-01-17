@@ -1,5 +1,5 @@
 import React from "react";
-import { List, InputItem, Radio, Flex, WhiteSpace } from "antd-mobile";
+import { List, InputItem, Radio, Flex, WhiteSpace, Toast } from "antd-mobile";
 import "../css/joinClass.less"
 const RadioItem = Radio.RadioItem;
 export default class joinClass extends React.Component {
@@ -12,7 +12,7 @@ export default class joinClass extends React.Component {
         }
     }
     componentDidMount() {
-        document.title = "进入课堂页面";
+        document.title = "进入课堂";
         var locationHref = decodeURI(window.location.href);
         var locationSearch = locationHref.substr(locationHref.indexOf("?") + 1);
         var searchArray = locationSearch.split("&");
@@ -74,13 +74,21 @@ export default class joinClass extends React.Component {
      * 点击提交按钮
      */
     toJoinClass = () => {
-        console.log(this.state.classId)
-        console.log(this.state.pwd)
         if (this.state.pwd == this.state.inputValue) {
-            console.log("0000")
             /**
              * 进入正在开课的页面
              */
+            var data = {
+                method: 'joinClass',
+                userId:this.state.ident,
+                vid:this.state.vid,
+            }
+            console.log(data)
+            Bridge.callHandler(data, null, function (error) {
+            });
+
+        }else {
+            Toast.info("邀请码不正确～")
         }
     }
     render() {

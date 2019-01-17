@@ -129,6 +129,16 @@ export default class moreReview extends React.Component {
             }
         });
     }
+
+    historyGoBack() {
+        var data = {
+            method: 'finish',
+        };
+
+        Bridge.callHandler(data, null, function (error) {
+            console.log(error);
+        });
+    }
     render() {
         var _this = this;
         const row = (rowData, sectionID, rowID) => {
@@ -160,8 +170,11 @@ export default class moreReview extends React.Component {
                 </div>
             )
         };
+
+        
         return (
             <div id="classSortPage" className='moreReview'>
+            <div><span onClick={this.historyGoBack}>返回</span><span>历史回顾</span></div>
                 <ListView
                     ref={el => this.lv = el}
                     dataSource={this.state.dataSource}    //数据类型是 ListViewDataSource

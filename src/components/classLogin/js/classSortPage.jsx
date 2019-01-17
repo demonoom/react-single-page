@@ -493,15 +493,15 @@ export default class classSortPage extends React.Component {
         /**
          * 直接跳客户端
          */
-        console.log("客户端")
-        // var url = WebServiceUtil.mobileServiceURL + 'joinClass?ident=' + this.state.ident + "&userName=" + this.state.users.userName + "&vid=" + v+"&pwd="+pwd;
-        // var data = {
-        //     method: 'openNewPage',
-        //     url: url,
-        // };
-        // Bridge.callHandler(data, null, function (error) {
-        //     window.location.href = url;
-        // });
+
+        var data = {
+            method: 'joinClass',
+            userId:this.state.ident,
+            vid:this.state.vid,
+        }
+        console.log(data)
+        Bridge.callHandler(data, null, function (error) {
+        });
     }
 
     /**
@@ -822,6 +822,7 @@ export default class classSortPage extends React.Component {
                             }}
                             data-seed="logId"
                         >
+                        <div><span>我的课程</span></div>
                             {
                                 !this.state.review && !this.state.currentUnion ?
                                     <div className="empty-wrap"><div className="emptyCont">
@@ -958,6 +959,7 @@ export default class classSortPage extends React.Component {
                             selected={this.state.selectedTab === 'greenTab'}
                             onPress={this.clickClassFile}
                         >
+                          <div><span>我的课件</span></div>
                             <div id="classSortPage" className={this.state.phoneType == '0' ? 'Android_wrap' : ''}
                                 style={{ height: this.state.clientHeight - 50 }}>
                                 <div className="ant_title line_public">

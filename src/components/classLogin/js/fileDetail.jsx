@@ -42,7 +42,8 @@ export default class fileDetail extends React.Component {
         var parentName = searchArray[1].split('=')[1];
         var ident = searchArray[2].split('=')[1];
         this.setState({
-            ident
+            ident,
+            parentName
         })
         this.listCloudSubject(parentId, true, parentName)
         var phoneType = navigator.userAgent;
@@ -455,6 +456,16 @@ export default class fileDetail extends React.Component {
         }
     }
 
+    historyGoBack() {
+        var data = {
+            method: 'finish',
+        };
+
+        Bridge.callHandler(data, null, function (error) {
+            console.log(error);
+        });
+    }
+
 
     render() {
         var _this = this;
@@ -563,6 +574,7 @@ export default class fileDetail extends React.Component {
         return (
             <div>
                 <div>
+                <div><span onClick={this.historyGoBack}>返回</span><span>{this.state.parentName}</span></div>
                     <div style={{ height: '100%', backgroundColor: '#fff' }}>
                         <div id="classSortPage" className={this.state.phoneType == '0' ? 'Android_wrap' : ''}
                             style={{ height: this.state.clientHeight }}>
