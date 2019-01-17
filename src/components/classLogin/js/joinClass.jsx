@@ -91,10 +91,20 @@ export default class joinClass extends React.Component {
             Toast.info("邀请码不正确～")
         }
     }
+    historyGoBack() {
+        var data = {
+            method: 'finish',
+        };
+
+        Bridge.callHandler(data, null, function (error) {
+            console.log(error);
+        });
+    }
     render() {
         const { value } = this.state;
         return (
             <div id='joinClass'>
+                <div  className='topTitle line_public'><span className='icon_back' onClick={this.historyGoBack}>返回</span><span>历史回顾</span></div>
                 <InputItem
                     clear
                     placeholder="请输入邀请码"

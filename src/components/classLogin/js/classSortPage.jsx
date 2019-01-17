@@ -813,7 +813,6 @@ export default class classSortPage extends React.Component {
                             }}
                             />
                             }
-                            className={this.state.selectedTab === 'blueTab' ? 'blueTab' : ''}
                             selected={this.state.selectedTab === 'blueTab'}
                             onPress={() => {
                                 this.setState({
@@ -822,7 +821,7 @@ export default class classSortPage extends React.Component {
                             }}
                             data-seed="logId"
                         >
-                        <div><span>我的课程</span></div>
+                        <div className='topTitle line_public'><span>我的课程</span></div>
                             {
                                 !this.state.review && !this.state.currentUnion ?
                                     <div className="empty-wrap"><div className="emptyCont">
@@ -959,9 +958,9 @@ export default class classSortPage extends React.Component {
                             selected={this.state.selectedTab === 'greenTab'}
                             onPress={this.clickClassFile}
                         >
-                          <div><span>我的课件</span></div>
+                            <div className='topTitle line_public'><span>我的课件</span></div>
                             <div id="classSortPage" className={this.state.phoneType == '0' ? 'Android_wrap' : ''}
-                                style={{ height: this.state.clientHeight - 50 }}>
+                                style={{ height: this.state.clientHeight - 100 }}>
                                 <div className="ant_title line_public">
                                     <div className='btns'>
                                         <span className="ant_btn_list add_file" onClick={this.creatNewFile}>新建文件夹</span>
