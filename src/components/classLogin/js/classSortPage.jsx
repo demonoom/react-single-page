@@ -508,14 +508,24 @@ export default class classSortPage extends React.Component {
      * 获取回顾列表
      */
     toReview = (v) => {
-        var url = "https://jiaoxue.maaee.com:9093/#/cloundSchoolDetail?vId=" + v.courseId + "&userId=" + this.state.ident + "&type=3&name=" + v.name + "&judgeFlag=''"
+
+        var url = WebServiceUtil.mobileServiceURL + "anaPage?vId=" + v.courseId + "&userId=" + this.state.ident + "&type=3&name=" + v.name + "&judgeFlag=''"
         var data = {
             method: 'openNewPage',
             url: url,
         };
+        console.log(data)
         Bridge.callHandler(data, null, function (error) {
             window.location.href = url;
         });
+        // var url = "https://jiaoxue.maaee.com:9093/#/cloundSchoolDetail?vId=" + v.courseId + "&userId=" + this.state.ident + "&type=3&name=" + v.name + "&judgeFlag=''"
+        // var data = {
+        //     method: 'openNewPage',
+        //     url: url,
+        // };
+        // Bridge.callHandler(data, null, function (error) {
+        //     window.location.href = url;
+        // });
     }
 
     /**
