@@ -1058,6 +1058,12 @@ const joinClass = (location, cb) => {
     }
     )
 }
+const anaPage = (location, cb) => {
+    require.ensure([], require => {
+        cb(null, require("./components/classLogin/js/anaPage").default)
+    }
+    )
+}
 
 
 
@@ -1521,6 +1527,7 @@ ReactDOM.render(
             <Route path="fileDetail" getComponent={fileDetail} />
             <Route path="moreReview" getComponent={moreReview} />
             <Route path="joinClass" getComponent={joinClass} />
+            <Route path="anaPage" getComponent={anaPage} />
         </Route>
     </Router>, document.getElementById('example')
 );

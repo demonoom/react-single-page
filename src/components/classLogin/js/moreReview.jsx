@@ -159,8 +159,8 @@ export default class moreReview extends React.Component {
                     </div>
                     <div className='leftCont my_flex'>
                         <div>
-                            <img src={rowData.teacher.avatar} alt=""/>
-                            <div  className='teacherName text_hidden'>
+                            <img src={rowData.teacher.avatar} alt="" />
+                            <div className='teacherName text_hidden'>
                                 {
                                     rowData.teacher.userName
                                 }
@@ -171,10 +171,10 @@ export default class moreReview extends React.Component {
             )
         };
 
-        
+
         return (
             <div id="classSortPage" className='moreReview'>
-            <div><span onClick={this.historyGoBack}>返回</span><span>历史回顾</span></div>
+                <div><span onClick={this.historyGoBack}>返回</span><span>历史回顾</span></div>
                 <ListView
                     ref={el => this.lv = el}
                     dataSource={this.state.dataSource}    //数据类型是 ListViewDataSource
