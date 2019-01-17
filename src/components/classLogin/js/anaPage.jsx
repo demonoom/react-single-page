@@ -1,5 +1,4 @@
 import React from "react";
-var url;
 export default class anaPage extends React.Component {
     constructor(props) {
         super(props);
@@ -16,7 +15,7 @@ export default class anaPage extends React.Component {
         var type = searchArray[2].split('=')[1];
         var name = searchArray[3].split('=')[1];
         var judgeFlag = searchArray[4].split('=')[1];
-        url = "https://jiaoxue.maaee.com:9093/#/cloundSchoolDetail?vId=" +vId + "&userId=" + userId + "&type=3&name=" + name + "&judgeFlag=''"
+        var url = "https://jiaoxue.maaee.com:9093/#/cloundSchoolDetail?vId=" +vId + "&userId=" + userId + "&type=3&name=" + name + "&judgeFlag=''"
         this.setState({
             url
         })
