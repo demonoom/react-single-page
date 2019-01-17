@@ -33,10 +33,10 @@ export default class anaPage extends React.Component {
     }
     render() {
         return (
-            <div>
+            <div id='classSortPage'>
                 <div>
-                    <div><span onClick={this.historyGoBack}>返回</span><span>查看回顾</span></div>
-                    <iframe src={this.state.url} frameborder="0"></iframe>
+                    <div className='topTitle line_public'><span className='icon_back' onClick={this.historyGoBack}>返回</span><span>查看回顾</span></div>
+                    <iframe className='classFrame' src={this.state.url} frameborder="0"></iframe>
                 </div>
             </div>
         )
