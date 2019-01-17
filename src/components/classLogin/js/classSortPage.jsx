@@ -476,9 +476,8 @@ export default class classSortPage extends React.Component {
     }
 
     //点击加入课堂
-    joinClass = (v, pwd) => {
-        // userId,userName,vid,
-        var url = WebServiceUtil.mobileServiceURL + 'joinClass?ident=' + this.state.ident + "&userName=" + this.state.users.userName + "&vid=" + v + "&pwd=" + pwd;
+    joinClass = (v) => {
+        var url = WebServiceUtil.mobileServiceURL + 'joinClass?ident=' + this.state.ident + "&userName=" + this.state.users.userName + "&vid=" + v.vid + "&pwd=" + v.password+"&classId="+v.clazzId;
         var data = {
             method: 'openNewPage',
             url: url,
@@ -489,15 +488,16 @@ export default class classSortPage extends React.Component {
     }
 
     //点击继续上课
-    continueClass = (v, pwd) => {
+    continueClass = (v) => {
         /**
          * 直接跳客户端
          */
-
         var data = {
             method: 'joinClass',
             userId:this.state.ident,
-            vid:this.state.vid,
+            vid:v.vid,
+            classId:v.clazzId,
+            userName:this.state.users.userName,
         }
         console.log(data)
         Bridge.callHandler(data, null, function (error) {
@@ -850,7 +850,7 @@ export default class classSortPage extends React.Component {
                                                             return (
                                                                 <div className='item'>
                                                                     <div className='courseName text_hidden'>{v.title}</div>
-                                                                    <div className='classBtn' onClick={this.continueClass.bind(this, v.vid, v.password)}>继续上课</div>
+                                                                    <div className='classBtn' onClick={this.continueClass.bind(this, v)}>继续上课</div>
                                                                     <div className='time'>开课时间：{WebServiceUtil.formatAllTime(v.startTime)}</div>
                                                                     <div className="leftCont my_flex">
                                                                         <div>
@@ -876,7 +876,7 @@ export default class classSortPage extends React.Component {
                                                             return (
                                                                 <div className='item'>
                                                                     <div className='courseName text_hidden'>{v.title}</div>
-                                                                    <div className='classBtn' onClick={this.joinClass.bind(this, v.vid, v.password)}>加入课堂</div>
+                                                                    <div className='classBtn' onClick={this.joinClass.bind(this, v)}>加入课堂</div>
                                                                     <div className='time'>开课时间：{WebServiceUtil.formatAllTime(v.startTime)}</div>
                                                                     <div className='leftCont my_flex'>
                                                                         <div>

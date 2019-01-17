@@ -32,7 +32,6 @@ export default class anaPage extends React.Component {
         });
     }
     render() {
-        console.log(url)
         return (
             <div>
                 <div>

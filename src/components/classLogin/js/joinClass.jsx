@@ -20,11 +20,13 @@ export default class joinClass extends React.Component {
         var userName = searchArray[1].split('=')[1];
         var vid = searchArray[2].split('=')[1];
         var pwd = searchArray[3].split('=')[1];
+        var classId = searchArray[3].split('=')[1];
         this.setState({
             ident,
             userName,
             vid,
-            pwd
+            pwd,
+            classId
         })
         this.getTeacherClasses(ident)
     }
@@ -82,6 +84,8 @@ export default class joinClass extends React.Component {
                 method: 'joinClass',
                 userId:this.state.ident,
                 vid:this.state.vid,
+                userName:this.state.userName,
+                classId:this.state.classId,
             }
             console.log(data)
             Bridge.callHandler(data, null, function (error) {
