@@ -970,7 +970,7 @@ export default class classSortPage extends React.Component {
                         >
                             <div className='topTitle line_public'><span>我的课件</span></div>
                             <div id="classSortPage" className={this.state.phoneType == '0' ? 'Android_wrap' : ''}
-                                style={{ height: this.state.clientHeight - 100 }}>
+                                style={{ height: this.state.clientHeight - 95 }}>
                                 <div className="ant_title line_public">
                                     <div className='btns'>
                                         <span className="ant_btn_list add_file" onClick={this.creatNewFile}>新建文件夹</span>

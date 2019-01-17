@@ -20,7 +20,7 @@
 }
 #classSortPage .am-list-body::before,
 #classSortPage .am-list-body::after {
-  background-color: #fff;
+  display: none;
 }
 #classSortPage .am-tab-bar-bar .am-tab-bar-tab-title {
   margin: 5px 0 0 0 ;
@@ -31,8 +31,16 @@
 #classSortPage.moreReview .am-list-body {
   background-color: #f5f5f9;
 }
+#classSortPage.moreReview .am-list-body .item {
+  margin: 0 9px 10px;
+}
 #classSortPage.moreReview .am-list-body .item:first-child {
   margin-top: 10px;
+}
+#classSortPage .classFrame {
+  height: calc(100vh - 45px);
+  border: none;
+  width: 100%;
 }
 #classSortPage ul,
 #classSortPage li {
@@ -42,9 +50,27 @@
 }
 #classSortPage .topTitle {
   font-size: 17px;
-  line-height: 40px;
+  line-height: 45px;
   text-align: center;
   background: white;
+  position: relative;
+}
+#classSortPage .topTitle .icon_back {
+  width: 30px;
+  height: 30px;
+  display: block;
+  background: url("../imgs/icon_back.png") no-repeat center center;
+  background-size: 18px;
+  left: 3px;
+  position: absolute;
+  top: 50%;
+  font-size: 0;
+  -webkit-transform: translateY(-50%);
+  -moz-transform: translateY(-50%);
+  -ms-transform: translateY(-50%);
+  -o-transform: translateY(-50%);
+  transform: translateY(-50%);
+  cursor: pointer;
 }
 #classSortPage .am-accordion .am-accordion-item .am-accordion-content .am-accordion-content-box {
   border-bottom: 0;
@@ -438,7 +464,7 @@
   overflow: hidden !important;
 }
 #classSortPage .classList {
-  height: calc(100% - 40px);
+  height: calc(100% - 45px);
   box-sizing: border-box;
   overflow-y: auto;
   padding-bottom: 10px;
@@ -473,6 +499,7 @@
   line-height: 25px;
   text-align: center;
   box-sizing: border-box;
+  cursor: pointer;
 }
 #classSortPage .classList .clear {
   overflow: hidden;

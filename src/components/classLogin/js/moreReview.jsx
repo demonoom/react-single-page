@@ -174,7 +174,7 @@ export default class moreReview extends React.Component {
 
         return (
             <div id="classSortPage" className='moreReview'>
-                <div><span onClick={this.historyGoBack}>返回</span><span>历史回顾</span></div>
+                <div className='topTitle line_public'><span className='icon_back' onClick={this.historyGoBack}>返回</span><span>历史回顾</span></div>
                 <ListView
                     ref={el => this.lv = el}
                     dataSource={this.state.dataSource}    //数据类型是 ListViewDataSource
