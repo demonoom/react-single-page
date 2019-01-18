@@ -35,7 +35,6 @@ export default class joinClass extends React.Component {
         var param = { "method": "getTeacherClasses", "ident": ident }
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
             onResponse: (result) => {
-                console.log(result)
                 if (result.msg == '调用成功' || result.success == true) {
                     var arr = []
                     result.response.forEach((v, i) => {
@@ -56,7 +55,6 @@ export default class joinClass extends React.Component {
 
     }
     onChange = (value) => {
-        console.log(value.label.split("#"), "000")
         this.setState({
             value: value.value,
             classId: value.label.split("#")[0]
@@ -67,7 +65,6 @@ export default class joinClass extends React.Component {
      * 输入框改变
      */
     inputOnchange = (v) => {
-        console.log(v)
         this.setState({
             inputValue: v
         })
@@ -82,19 +79,22 @@ export default class joinClass extends React.Component {
              */
             var data = {
                 method: 'joinClass',
-                userId:this.state.ident,
-                vid:this.state.vid,
-                userName:this.state.userName,
-                classId:this.state.classId,
+                userId: this.state.ident,
+                vid: this.state.vid,
+                userName: this.state.userName,
+                classId: this.state.classId,
             }
             console.log(data)
             Bridge.callHandler(data, null, function (error) {
             });
 
-        }else {
+        } else {
             Toast.info("邀请码不正确～")
         }
     }
+    /**
+   * 返回箭头
+   */
     historyGoBack() {
         var data = {
             method: 'finish',
@@ -108,7 +108,7 @@ export default class joinClass extends React.Component {
         const { value } = this.state;
         return (
             <div id='joinClass'>
-                <div  className='topTitle line_public'><span className='icon_back' onClick={this.historyGoBack}>返回</span><span>历史回顾</span></div>
+                <div className='topTitle line_public'><span className='icon_back' onClick={this.historyGoBack}>返回</span><span>历史回顾</span></div>
                 <InputItem
                     clear
                     placeholder="请输入邀请码"

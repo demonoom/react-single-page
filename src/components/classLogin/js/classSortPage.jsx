@@ -477,7 +477,7 @@ export default class classSortPage extends React.Component {
 
     //点击加入课堂
     joinClass = (v) => {
-        var url = WebServiceUtil.mobileServiceURL + 'joinClass?ident=' + this.state.ident + "&userName=" + this.state.users.userName + "&vid=" + v.vid + "&pwd=" + v.password+"&classId="+v.clazzId;
+        var url = WebServiceUtil.mobileServiceURL + 'joinClass?ident=' + this.state.ident + "&userName=" + this.state.users.userName + "&vid=" + v.vid + "&pwd=" + v.password + "&classId=" + v.clazzId;
         var data = {
             method: 'openNewPage',
             url: url,
@@ -494,10 +494,10 @@ export default class classSortPage extends React.Component {
          */
         var data = {
             method: 'joinClass',
-            userId:this.state.ident,
-            vid:v.vid,
-            classId:v.clazzId,
-            userName:this.state.users.userName,
+            userId: this.state.ident,
+            vid: v.vid,
+            classId: v.clazzId,
+            userName: this.state.users.userName,
         }
         console.log(data)
         Bridge.callHandler(data, null, function (error) {
@@ -508,7 +508,6 @@ export default class classSortPage extends React.Component {
      * 获取回顾列表
      */
     toReview = (v) => {
-
         var url = WebServiceUtil.mobileServiceURL + "anaPage?vId=" + v.courseId + "&userId=" + this.state.ident + "&type=3&name=" + v.name + "&judgeFlag=''"
         var data = {
             method: 'openNewPage',
@@ -518,14 +517,6 @@ export default class classSortPage extends React.Component {
         Bridge.callHandler(data, null, function (error) {
             window.location.href = url;
         });
-        // var url = "https://jiaoxue.maaee.com:9093/#/cloundSchoolDetail?vId=" + v.courseId + "&userId=" + this.state.ident + "&type=3&name=" + v.name + "&judgeFlag=''"
-        // var data = {
-        //     method: 'openNewPage',
-        //     url: url,
-        // };
-        // Bridge.callHandler(data, null, function (error) {
-        //     window.location.href = url;
-        // });
     }
 
     /**
@@ -652,13 +643,13 @@ export default class classSortPage extends React.Component {
     /**
      * 文件夹被点击
      */
-    fileClicked=(obj, event)=> {
+    fileClicked = (obj, event) => {
         if (obj.fileType === 0) {
             var data = {
                 method: 'watchFiles',
                 data: obj.path,
                 fileId: obj.id,
-                userId:this.state.ident,
+                userId: this.state.ident,
             }
             console.log(data)
             Bridge.callHandler(data, null, function (error) {
@@ -796,7 +787,7 @@ export default class classSortPage extends React.Component {
             )
         };
         return (
-            <div  id="classSortPage">
+            <div id="classSortPage">
                 <div style={{ position: 'fixed', height: '100%', width: '100%', top: 0 }}>
                     <TabBar
                         unselectedTintColor="#949494"
@@ -831,7 +822,7 @@ export default class classSortPage extends React.Component {
                             }}
                             data-seed="logId"
                         >
-                        <div className='topTitle line_public'><span>我的课程</span></div>
+                            <div className='topTitle line_public'><span>我的课程</span></div>
                             {
                                 !this.state.review && !this.state.currentUnion ?
                                     <div className="empty-wrap"><div className="emptyCont">

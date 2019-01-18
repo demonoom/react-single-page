@@ -197,10 +197,6 @@ export default class classLogin extends React.Component {
                     <input id="pwd" type="password" placeholder="请输入密码" />
                     <button id="login" onClick={this.login}>登录</button>
                 </div>
-                {/*<div className="scan">*/}
-                {/*<img id="scan_image" src="./img/school.png" alt="" />*/}
-                {/*<div>打开手机小蚂蚁教师端扫一扫</div>*/}
-                {/*</div>*/}
             </div>
         )
     }

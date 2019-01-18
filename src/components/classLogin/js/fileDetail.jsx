@@ -183,7 +183,7 @@ export default class fileDetail extends React.Component {
                 method: 'watchFiles',
                 data: obj.path,
                 fileId: obj.id,
-                userId:this.state.ident,
+                userId: this.state.ident,
             }
             Bridge.callHandler(data, null, function (error) {
             });
@@ -244,7 +244,6 @@ export default class fileDetail extends React.Component {
                     // 刷新
                     if (_this.state.parentCloudFileId == -1) {
                     } else {
-                        console.log("chengg")
                         _this.listCloudSubject(_this.state.parentCloudFileId, true, value)
                     }
                 }
@@ -277,7 +276,7 @@ export default class fileDetail extends React.Component {
                     item = JSON.parse(item)
                     obj = {
                         name: item.filename,
-                        size:  parseInt(item.size)
+                        size: parseInt(item.size)
                     }
                     this.createCloudFile(item.path, obj)
                 }
@@ -359,7 +358,6 @@ export default class fileDetail extends React.Component {
      * phoneType = 0 安卓,  phoneType = -1 ios,
      */
     creatNewFile() {
-        console.log("新建文件夹")
         if (tLibrary.state.phoneType == '-1') {
             var phone = 'ios'
         } else {
@@ -444,18 +442,8 @@ export default class fileDetail extends React.Component {
     }
 
     /**
-     * 返回
+     * 返回箭头
      */
-    returnParentAtMoveModal = () => {
-        if (this.state.parentId === -1) {
-            return
-        } else if (this.state.parentId === 0) {
-            this.setState({ parentId: -1 })
-        } else {
-            this.listCloudSubject(this.state.parentId, true, false)
-        }
-    }
-
     historyGoBack() {
         var data = {
             method: 'finish',
@@ -574,7 +562,7 @@ export default class fileDetail extends React.Component {
         return (
             <div>
                 <div>
-                <div><span onClick={this.historyGoBack}>返回</span><span>{this.state.parentName}</span></div>
+                    <div><span onClick={this.historyGoBack}>返回</span><span>{this.state.parentName}</span></div>
                     <div style={{ height: '100%', backgroundColor: '#fff' }}>
                         <div id="classSortPage" className={this.state.phoneType == '0' ? 'Android_wrap' : ''}
                             style={{ height: this.state.clientHeight }}>
@@ -586,34 +574,34 @@ export default class fileDetail extends React.Component {
                                 </div>
                             </div>
                             {
-                                this.state.dataNone ? 
-                                <ListView
-                                ref={el => this.lv = el}
-                                dataSource={this.state.dataSource}    //数据类型是 ListViewDataSource
-                                renderFooter={() => (
-                                    <div style={{ paddingTop: 5, textAlign: 'center' }}>
-                                        {this.state.isLoadingLeft ? '正在加载' : '已经全部加载完毕'}
-                                    </div>)}
-                                renderRow={row}   //需要的参数包括一行数据等,会返回一个可渲染的组件为这行数据渲染  返回renderable
-                                className="am-list"
-                                pageSize={30}    //每次事件循环（每帧）渲染的行数
-                                //useBodyScroll  //使用 html 的 body 作为滚动容器   bool类型   不应这么写  否则无法下拉刷新
-                                scrollRenderAheadDistance={200}   //当一个行接近屏幕范围多少像素之内的时候，就开始渲染这一行
-                                onEndReached={this.onEndReached}  //当所有的数据都已经渲染过，并且列表被滚动到距离最底部不足onEndReachedThreshold个像素的距离时调用
-                                onEndReachedThreshold={10}  //调用onEndReached之前的临界值，单位是像素  number类型
-                                initialListSize={30}   //指定在组件刚挂载的时候渲染多少行数据，用这个属性来确保首屏显示合适数量的数据
-                                scrollEventThrottle={20}     //控制在滚动过程中，scroll事件被调用的频率
-                                style={{
-                                    height: this.state.clientHeight - 57,
-                                }}
-                            />
-                            :
-                            <div className="empty-wrap"><div className="emptyCont">
-                                <img src={require('../imgs/icon_empty.png')} /><br />
-                                暂无数据</div>
-                            </div>
+                                this.state.dataNone ?
+                                    <ListView
+                                        ref={el => this.lv = el}
+                                        dataSource={this.state.dataSource}    //数据类型是 ListViewDataSource
+                                        renderFooter={() => (
+                                            <div style={{ paddingTop: 5, textAlign: 'center' }}>
+                                                {this.state.isLoadingLeft ? '正在加载' : '已经全部加载完毕'}
+                                            </div>)}
+                                        renderRow={row}   //需要的参数包括一行数据等,会返回一个可渲染的组件为这行数据渲染  返回renderable
+                                        className="am-list"
+                                        pageSize={30}    //每次事件循环（每帧）渲染的行数
+                                        //useBodyScroll  //使用 html 的 body 作为滚动容器   bool类型   不应这么写  否则无法下拉刷新
+                                        scrollRenderAheadDistance={200}   //当一个行接近屏幕范围多少像素之内的时候，就开始渲染这一行
+                                        onEndReached={this.onEndReached}  //当所有的数据都已经渲染过，并且列表被滚动到距离最底部不足onEndReachedThreshold个像素的距离时调用
+                                        onEndReachedThreshold={10}  //调用onEndReached之前的临界值，单位是像素  number类型
+                                        initialListSize={30}   //指定在组件刚挂载的时候渲染多少行数据，用这个属性来确保首屏显示合适数量的数据
+                                        scrollEventThrottle={20}     //控制在滚动过程中，scroll事件被调用的频率
+                                        style={{
+                                            height: this.state.clientHeight - 57,
+                                        }}
+                                    />
+                                    :
+                                    <div className="empty-wrap"><div className="emptyCont">
+                                        <img src={require('../imgs/icon_empty.png')} /><br />
+                                        暂无数据</div>
+                                    </div>
                             }
-                           
+
                         </div>
                     </div>
                     <WhiteSpace />

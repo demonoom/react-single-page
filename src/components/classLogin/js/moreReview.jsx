@@ -129,7 +129,9 @@ export default class moreReview extends React.Component {
             }
         });
     }
-
+    /**
+   * 返回箭头
+   */
     historyGoBack() {
         var data = {
             method: 'finish',
@@ -142,7 +144,6 @@ export default class moreReview extends React.Component {
     render() {
         var _this = this;
         const row = (rowData, sectionID, rowID) => {
-            console.log(rowData, "rrr")
             return (
                 <div className='item'>
                     <div className='courseName text_hidden'>
