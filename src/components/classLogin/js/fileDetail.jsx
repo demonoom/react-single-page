@@ -559,11 +559,10 @@ export default class fileDetail extends React.Component {
             )
         };
         return (
-            <div>
-                <div>
-                    <div><span onClick={this.historyGoBack}>返回</span><span>{this.state.parentName}</span></div>
+                <div id="classSortPage">
+                    <div className="topTitle line_public"><span className="icon_back" onClick={this.historyGoBack}>返回</span><span>{this.state.parentName}</span></div>
                     <div style={{ height: '100%', backgroundColor: '#fff' }}>
-                        <div id="classSortPage" className={this.state.phoneType == '0' ? 'Android_wrap' : ''}
+                        <div className={this.state.phoneType == '0' ? 'Android_wrap' : ''}
                             style={{ height: this.state.clientHeight }}>
                             <div className="ant_title line_public">
                                 <div className='btns'>
@@ -605,8 +604,6 @@ export default class fileDetail extends React.Component {
                     </div>
                     <WhiteSpace />
                 </div>
-
-            </div>
         )
     }
 }
