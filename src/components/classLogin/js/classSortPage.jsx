@@ -50,7 +50,15 @@ export default class classSortPage extends React.Component {
         this.setState({ phoneType });     //phoneType = 0 安卓,  phoneType = -1 ios,
         document.title = fileName;   //设置title
         this.setState({ parentCloudFileId: fileId, ident, version });
-
+        var phoneType = navigator.userAgent;
+        var phone;
+        if (phoneType.indexOf('iPhone') > -1 || phoneType.indexOf('iPad') > -1) {
+            phone = 'ios'
+            this.setState({ phoneType: -1 });     //phoneType = 0 安卓,  phoneType = -1 ios,
+        } else {
+            phone = 'android'
+            this.setState({ phoneType: 0 });     //phoneType = 0 安卓,  phoneType = -1 ios,
+        }
         var loginUser = {
             "ident": ident,
         };
