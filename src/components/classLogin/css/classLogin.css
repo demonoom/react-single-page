@@ -74,10 +74,15 @@ input:-webkit-autofill {
 }
 .inputWrap #actData .cont .item {
   position: relative;
-  padding: 8px 15px;
+  padding: 2px 15px;
   cursor: pointer;
   font-size: 14px;
   color: #666;
+}
+.inputWrap #actData .cont .item span {
+  line-height: 28px;
+  display: block;
+  width: calc(100% - 30px);
 }
 .inputWrap #actData .cont .item:hover {
   background-color: #edf2ff;
@@ -85,12 +90,12 @@ input:-webkit-autofill {
 }
 .inputWrap #actData .cont .item .close {
   display: block;
-  width: 20px;
-  height: 20px;
-  background: url("../imgs/icon_close.png") no-repeat right center;
+  width: 28px;
+  height: 28px;
+  background: url("../imgs/icon_close.png") no-repeat center center;
   background-size: 12px;
   position: absolute;
-  right: 10px;
+  right: 0;
   top: 50%;
   -webkit-transform: translateY(-50%);
   -moz-transform: translateY(-50%);

@@ -1,5 +1,5 @@
 import React from "react";
-import { List, InputItem, Radio, Flex, WhiteSpace } from "antd-mobile";
+import { List, InputItem, Radio, Flex, WhiteSpace, Toast } from "antd-mobile";
 import "../css/joinClass.less"
 const RadioItem = Radio.RadioItem;
 export default class joinClass extends React.Component {
@@ -12,7 +12,8 @@ export default class joinClass extends React.Component {
         }
     }
     componentDidMount() {
-        document.title = "进入课堂页面";
+        Bridge.setRefreshAble(false);
+        document.title = "进入课堂";
         var locationHref = decodeURI(window.location.href);
         var locationSearch = locationHref.substr(locationHref.indexOf("?") + 1);
         var searchArray = locationSearch.split("&");
@@ -20,11 +21,13 @@ export default class joinClass extends React.Component {
         var userName = searchArray[1].split('=')[1];
         var vid = searchArray[2].split('=')[1];
         var pwd = searchArray[3].split('=')[1];
+        var classId = searchArray[3].split('=')[1];
         this.setState({
             ident,
             userName,
             vid,
-            pwd
+            pwd,
+            classId
         })
         this.getTeacherClasses(ident)
     }
@@ -33,7 +36,6 @@ export default class joinClass extends React.Component {
         var param = { "method": "getTeacherClasses", "ident": ident }
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
             onResponse: (result) => {
-                console.log(result)
                 if (result.msg == '调用成功' || result.success == true) {
                     var arr = []
                     result.response.forEach((v, i) => {
@@ -54,7 +56,6 @@ export default class joinClass extends React.Component {
 
     }
     onChange = (value) => {
-        console.log(value.label.split("#"), "000")
         this.setState({
             value: value.value,
             classId: value.label.split("#")[0]
@@ -65,7 +66,6 @@ export default class joinClass extends React.Component {
      * 输入框改变
      */
     inputOnchange = (v) => {
-        console.log(v)
         this.setState({
             inputValue: v
         })
@@ -74,19 +74,42 @@ export default class joinClass extends React.Component {
      * 点击提交按钮
      */
     toJoinClass = () => {
-        console.log(this.state.classId)
-        console.log(this.state.pwd)
         if (this.state.pwd == this.state.inputValue) {
-            console.log("0000")
             /**
              * 进入正在开课的页面
              */
+            var data = {
+                method: 'joinClass',
+                userId: this.state.ident,
+                vid: this.state.vid,
+                userName: this.state.userName,
+                classId: this.state.classId,
+            }
+            console.log(data)
+            Bridge.callHandler(data, null, function (error) {
+            });
+
+        } else {
+            Toast.info("邀请码不正确～")
         }
+    }
+    /**
+   * 返回箭头
+   */
+    historyGoBack() {
+        var data = {
+            method: 'finish',
+        };
+
+        Bridge.callHandler(data, null, function (error) {
+            console.log(error);
+        });
     }
     render() {
         const { value } = this.state;
         return (
             <div id='joinClass'>
+                <div className='topTitle line_public'><span className='icon_back' onClick={this.historyGoBack}>返回</span><span>历史回顾</span></div>
                 <InputItem
                     clear
                     placeholder="请输入邀请码"

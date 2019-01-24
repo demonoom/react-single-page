@@ -15,10 +15,12 @@
         transform: none;
       }
     }*/
+  /*课程*/
+  /* 个人中心*/
 }
 #classSortPage .am-list-body::before,
 #classSortPage .am-list-body::after {
-  background-color: #fff;
+  display: none;
 }
 #classSortPage .am-tab-bar-bar .am-tab-bar-tab-title {
   margin: 5px 0 0 0 ;
@@ -29,14 +31,46 @@
 #classSortPage.moreReview .am-list-body {
   background-color: #f5f5f9;
 }
+#classSortPage.moreReview .am-list-body .item {
+  margin: 0 9px 10px;
+}
 #classSortPage.moreReview .am-list-body .item:first-child {
   margin-top: 10px;
+}
+#classSortPage .classFrame {
+  height: calc(100vh - 45px);
+  border: none;
+  width: 100%;
 }
 #classSortPage ul,
 #classSortPage li {
   margin: 0;
   padding: 0;
   list-style: none;
+}
+#classSortPage .topTitle {
+  font-size: 17px;
+  line-height: 45px;
+  text-align: center;
+  background: white;
+  position: relative;
+}
+#classSortPage .topTitle .icon_back {
+  width: 30px;
+  height: 30px;
+  display: block;
+  background: url("../imgs/icon_back.png") no-repeat center center;
+  background-size: 18px;
+  left: 8px;
+  position: absolute;
+  top: 50%;
+  font-size: 0;
+  -webkit-transform: translateY(-50%);
+  -moz-transform: translateY(-50%);
+  -ms-transform: translateY(-50%);
+  -o-transform: translateY(-50%);
+  transform: translateY(-50%);
+  cursor: pointer;
 }
 #classSortPage .am-accordion .am-accordion-item .am-accordion-content .am-accordion-content-box {
   border-bottom: 0;
@@ -418,24 +452,30 @@
   z-index: 1000;
   opacity: 0;
 }
-.termite_popover {
+#classSortPage .termite_popover {
   width: 200px;
   top: 52px !important;
 }
-.termite_popover .am-popover-item-container {
+#classSortPage .termite_popover .am-popover-item-container {
   justify-content: center;
 }
-/*课程*/
-.classList {
+#classSortPage .am-tabs-horizontal .am-tabs-pane-wrap-active,
+#classSortPage .am-tabs-pane-wrap {
+  overflow: hidden !important;
+}
+#classSortPage .classList {
+  height: calc(100% - 45px);
+  box-sizing: border-box;
+  overflow-y: auto;
   padding-bottom: 10px;
 }
-.classList h5 {
+#classSortPage .classList h5 {
   font-size: 17px;
   padding: 14px 16px;
   margin: 0;
   overflow: hidden;
 }
-.classList .item {
+#classSortPage .classList .item {
   background-color: white;
   margin: 10px 9px 0;
   box-shadow: 0 2px 5px #3672ed20;
@@ -443,10 +483,10 @@
   padding: 18px 7px 15px 14px;
   position: relative;
 }
-.classList .item:first-child {
+#classSortPage .classList .item:first-child {
   margin-top: 0;
 }
-.classList .classBtn {
+#classSortPage .classList .classBtn {
   position: absolute;
   color: #3672ED;
   font-size: 12px;
@@ -454,72 +494,72 @@
   border: 1px #3672ED solid;
   border-radius: 2px;
   right: 7px;
-  top: 19px;
+  top: 18px;
   height: 25px;
   line-height: 25px;
   text-align: center;
   box-sizing: border-box;
+  cursor: pointer;
 }
-.classList .clear {
+#classSortPage .classList .clear {
   overflow: hidden;
 }
-.classList .courseName {
+#classSortPage .classList .courseName {
   line-height: 25px;
   font-size: 15px;
   font-weight: bold;
   vertical-align: middle;
   width: calc(100% - 88px);
 }
-.classList .liveClass .courseName {
+#classSortPage .classList .liveClass .courseName {
   background: url("../imgs/icon_livePlay.gif") no-repeat left -2px;
   background-size: 24px;
   padding-left: 27px;
 }
-.classList .time {
+#classSortPage .classList .time {
   font-size: 12px;
   color: #888888;
   padding: 5px 0 13px;
 }
-.classList .leftCont {
+#classSortPage .classList .leftCont {
   width: 100%;
   overflow-x: auto;
 }
-.classList .leftCont::-webkit-scrollbar {
+#classSortPage .classList .leftCont::-webkit-scrollbar {
   display: none !important;
 }
-.classList .leftCont img {
+#classSortPage .classList .leftCont img {
   width: 22px;
   height: 22px;
   border-radius: 50%;
   display: block;
   margin: 0 auto;
 }
-.classList .leftCont > div {
+#classSortPage .classList .leftCont > div {
   padding: 5px 2px 0;
   margin-right: 10px;
 }
-.classList .leftCont > div:first-child img {
+#classSortPage .classList .leftCont > div:first-child img {
   box-shadow: 0 0 5px #3672ED;
 }
-.classList .leftCont .teacherName {
+#classSortPage .classList .leftCont .teacherName {
   font-size: 11px;
   color: #999;
   padding-top: 5px;
 }
-.classList .more {
+#classSortPage .classList .more {
   float: right;
   color: #666;
   font-size: 13px;
   font-weight: normal;
 }
-/* 个人中心*/
-.personal-center {
+#classSortPage .personal-center {
   background: url("../imgs/personal-center.png") no-repeat;
   height: 279px;
   background-size: 100% 100%;
   text-align: center;
 }
-.user-photo {
+#classSortPage .user-photo {
   width: 80px;
   height: 80px;
   border-radius: 50%;
@@ -529,21 +569,21 @@
   display: inline-block;
   overflow: hidden;
 }
-.user-photo img {
+#classSortPage .user-photo img {
   width: 100%;
   height: 100%;
   object-fit: cover;
 }
-.user-name {
+#classSortPage .user-name {
   font-size: 15px;
   color: #fff;
   line-height: 1;
 }
-.personal-cont {
+#classSortPage .personal-cont {
   color: #333;
   font-size: 15px;
 }
-.personal-cont > div {
+#classSortPage .personal-cont > div {
   height: 46px;
   padding: 0 15px;
   background: #fff;
@@ -556,34 +596,34 @@
   -ms-flex-align: center;
   align-items: center;
 }
-.personal-cont .personal-item {
+#classSortPage .personal-cont .personal-item {
   -webkit-box-pack: justify;
   -webkit-justify-content: space-between;
   -ms-flex-pack: justify;
   justify-content: space-between;
 }
-.personal-cont .log-out {
+#classSortPage .personal-cont .log-out {
   justify-content: center;
   margin-top: 50px;
 }
-.personal-cont .light-gray {
+#classSortPage .personal-cont .light-gray {
   color: #666;
 }
-.am-modal-input input {
+#classSortPage .am-modal-input input {
   border: 1px solid #eee;
   width: 100%;
 }
-.am-modal-input-container::after {
+#classSortPage .am-modal-input-container::after {
   background: #fff !important;
 }
-input,
-textarea {
+#classSortPage input,
+#classSortPage textarea {
   border: 0;
   /* 方法1 */
   -webkit-appearance: none;
   /* 方法2 */
 }
-.empty-wrap {
+#classSortPage .empty-wrap {
   position: relative;
   width: 100%;
   height: calc(100% - 60px);

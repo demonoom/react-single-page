@@ -37,7 +37,8 @@ export default class classSortPage extends React.Component {
         };
     }
     componentDidMount() {
-        Bridge.setShareAble("false");
+        Bridge.setRefreshAble(false);
+        // Bridge.setRefreshAble("true");
         var locationHref = decodeURI(window.location.href);
         var locationSearch = locationHref.substr(locationHref.indexOf("?") + 1);
         var searchArray = locationSearch.split("&");
@@ -476,9 +477,8 @@ export default class classSortPage extends React.Component {
     }
 
     //点击加入课堂
-    joinClass = (v, pwd) => {
-        // userId,userName,vid,
-        var url = WebServiceUtil.mobileServiceURL + 'joinClass?ident=' + this.state.ident + "&userName=" + this.state.users.userName + "&vid=" + v + "&pwd=" + pwd;
+    joinClass = (v) => {
+        var url = WebServiceUtil.mobileServiceURL + 'joinClass?ident=' + this.state.ident + "&userName=" + this.state.users.userName + "&vid=" + v.vid + "&pwd=" + v.password + "&classId=" + v.clazzId;
         var data = {
             method: 'openNewPage',
             url: url,
@@ -489,30 +489,32 @@ export default class classSortPage extends React.Component {
     }
 
     //点击继续上课
-    continueClass = (v, pwd) => {
+    continueClass = (v) => {
         /**
          * 直接跳客户端
          */
-        console.log("客户端")
-        // var url = WebServiceUtil.mobileServiceURL + 'joinClass?ident=' + this.state.ident + "&userName=" + this.state.users.userName + "&vid=" + v+"&pwd="+pwd;
-        // var data = {
-        //     method: 'openNewPage',
-        //     url: url,
-        // };
-        // Bridge.callHandler(data, null, function (error) {
-        //     window.location.href = url;
-        // });
+        var data = {
+            method: 'joinClass',
+            userId: this.state.ident,
+            vid: v.vid,
+            classId: v.clazzId,
+            userName: this.state.users.userName,
+        }
+        console.log(data)
+        Bridge.callHandler(data, null, function (error) {
+        });
     }
 
     /**
      * 获取回顾列表
      */
     toReview = (v) => {
-        var url = "https://jiaoxue.maaee.com:9093/#/cloundSchoolDetail?vId=" + v.courseId + "&userId=" + this.state.ident + "&type=3&name=" + v.name + "&judgeFlag=''"
+        var url = WebServiceUtil.mobileServiceURL + "anaPage?vId=" + v.courseId + "&userId=" + this.state.ident + "&type=3&name=" + v.name + "&judgeFlag=''"
         var data = {
             method: 'openNewPage',
             url: url,
         };
+        console.log(data)
         Bridge.callHandler(data, null, function (error) {
             window.location.href = url;
         });
@@ -571,7 +573,14 @@ export default class classSortPage extends React.Component {
         this.setState({
             selectedTab: 'greenTab',
         });
-        this.getUserRootCloudSubjects()
+        this.initData = [];
+        this.setState({
+            defaultPageNo: 1,
+            dataSource: this.state.dataSource.cloneWithRows(this.initData),
+            isLoadingLeft: true,
+        }, () => {
+            this.getUserRootCloudSubjects()
+        })
     }
 
     /**
@@ -635,12 +644,15 @@ export default class classSortPage extends React.Component {
     /**
      * 文件夹被点击
      */
-    fileClicked(obj, event) {
+    fileClicked = (obj, event) => {
         if (obj.fileType === 0) {
             var data = {
                 method: 'watchFiles',
-                data: obj.path
+                data: obj.path,
+                fileId: obj.id,
+                userId: this.state.ident,
             }
+            console.log(data)
             Bridge.callHandler(data, null, function (error) {
             });
         } else {
@@ -664,13 +676,22 @@ export default class classSortPage extends React.Component {
         window.location.href = url;
     }
 
-
     clearCache = () => {
         var data = {
             method: 'clearCache',
         };
         Bridge.callHandler(data, null, function (error) {
         });
+    }
+    /**
+     * 点击课程
+     */
+    clickClass = () => {
+        this.setState({
+            selectedTab: 'blueTab',
+        });
+        this.getCurrentUnionClassList(this.state.ident);
+        this.viewCourseReviewPage(this.state.ident)
     }
     render() {
         var _this = this;
@@ -776,7 +797,7 @@ export default class classSortPage extends React.Component {
             )
         };
         return (
-            <div  id="classSortPage">
+            <div id="classSortPage">
                 <div style={{ position: 'fixed', height: '100%', width: '100%', top: 0 }}>
                     <TabBar
                         unselectedTintColor="#949494"
@@ -803,15 +824,12 @@ export default class classSortPage extends React.Component {
                             }}
                             />
                             }
-                            className={this.state.selectedTab === 'blueTab' ? 'blueTab' : ''}
                             selected={this.state.selectedTab === 'blueTab'}
-                            onPress={() => {
-                                this.setState({
-                                    selectedTab: 'blueTab',
-                                });
-                            }}
+                            onPress={this.clickClass}
+
                             data-seed="logId"
                         >
+                            <div className='topTitle line_public'><span>我的课程</span></div>
                             {
                                 !this.state.review && !this.state.currentUnion ?
                                     <div className="empty-wrap"><div className="emptyCont">
@@ -829,7 +847,7 @@ export default class classSortPage extends React.Component {
                                                             return (
                                                                 <div className='item'>
                                                                     <div className='courseName text_hidden'>{v.title}</div>
-                                                                    <div className='classBtn' onClick={this.continueClass.bind(this, v.vid, v.password)}>继续上课</div>
+                                                                    <div className='classBtn' onClick={this.continueClass.bind(this, v)}>继续上课</div>
                                                                     <div className='time'>开课时间：{WebServiceUtil.formatAllTime(v.startTime)}</div>
                                                                     <div className="leftCont my_flex">
                                                                         <div>
@@ -855,7 +873,7 @@ export default class classSortPage extends React.Component {
                                                             return (
                                                                 <div className='item'>
                                                                     <div className='courseName text_hidden'>{v.title}</div>
-                                                                    <div className='classBtn' onClick={this.joinClass.bind(this, v.vid, v.password)}>加入课堂</div>
+                                                                    <div className='classBtn' onClick={this.joinClass.bind(this, v)}>加入课堂</div>
                                                                     <div className='time'>开课时间：{WebServiceUtil.formatAllTime(v.startTime)}</div>
                                                                     <div className='leftCont my_flex'>
                                                                         <div>
@@ -948,8 +966,9 @@ export default class classSortPage extends React.Component {
                             selected={this.state.selectedTab === 'greenTab'}
                             onPress={this.clickClassFile}
                         >
+                            <div className='topTitle line_public'><span>我的课件</span></div>
                             <div id="classSortPage" className={this.state.phoneType == '0' ? 'Android_wrap' : ''}
-                                style={{ height: this.state.clientHeight - 50 }}>
+                                style={{ height: this.state.clientHeight - 95 }}>
                                 <div className="ant_title line_public">
                                     <div className='btns'>
                                         <span className="ant_btn_list add_file" onClick={this.creatNewFile}>新建文件夹</span>
@@ -980,7 +999,7 @@ export default class classSortPage extends React.Component {
                                             initialListSize={30}   //指定在组件刚挂载的时候渲染多少行数据，用这个属性来确保首屏显示合适数量的数据
                                             scrollEventThrottle={20}     //控制在滚动过程中，scroll事件被调用的频率
                                             style={{
-                                                height: this.state.clientHeight - 107,
+                                                height: this.state.clientHeight - 150,
                                             }}
                                         />
                                 }

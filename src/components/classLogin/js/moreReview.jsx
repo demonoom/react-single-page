@@ -21,7 +21,7 @@ export default class moreReview extends React.Component {
         };
     }
     componentDidMount() {
-        Bridge.setShareAble("false");
+        Bridge.setRefreshAble(false);
         var locationHref = decodeURI(window.location.href);
         var locationSearch = locationHref.substr(locationHref.indexOf("?") + 1);
         var searchArray = locationSearch.split("&");
@@ -50,12 +50,12 @@ export default class moreReview extends React.Component {
      * 去课堂回顾
      */
     toReview = (v) => {
-        console.log(v.vid, "V")
-        var url = "https://jiaoxue.maaee.com:9093/#/cloundSchoolDetail?vId=" + v.courseId + "&userId=" + this.state.ident + "&type=3&name=" + v.name + "&judgeFlag=''"
+        var url = WebServiceUtil.mobileServiceURL + "anaPage?vId=" + v.courseId + "&userId=" + this.state.ident + "&type=3&name=" + v.name + "&judgeFlag=''"
         var data = {
             method: 'openNewPage',
             url: url,
         };
+        console.log(data)
         Bridge.callHandler(data, null, function (error) {
             window.location.href = url;
         });
@@ -128,10 +128,21 @@ export default class moreReview extends React.Component {
             }
         });
     }
+    /**
+   * 返回箭头
+   */
+    historyGoBack() {
+        var data = {
+            method: 'finish',
+        };
+
+        Bridge.callHandler(data, null, function (error) {
+            console.log(error);
+        });
+    }
     render() {
         var _this = this;
         const row = (rowData, sectionID, rowID) => {
-            console.log(rowData, "rrr")
             return (
                 <div className='item'>
                     <div className='courseName text_hidden'>
@@ -148,8 +159,8 @@ export default class moreReview extends React.Component {
                     </div>
                     <div className='leftCont my_flex'>
                         <div>
-                            <img src={rowData.teacher.avatar} alt=""/>
-                            <div  className='teacherName text_hidden'>
+                            <img src={rowData.teacher.avatar} alt="" />
+                            <div className='teacherName text_hidden'>
                                 {
                                     rowData.teacher.userName
                                 }
@@ -159,8 +170,11 @@ export default class moreReview extends React.Component {
                 </div>
             )
         };
+
+
         return (
             <div id="classSortPage" className='moreReview'>
+                <div className='topTitle line_public'><span className='icon_back' onClick={this.historyGoBack}>返回</span><span>历史回顾</span></div>
                 <ListView
                     ref={el => this.lv = el}
                     dataSource={this.state.dataSource}    //数据类型是 ListViewDataSource
