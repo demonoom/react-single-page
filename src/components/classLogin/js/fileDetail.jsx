@@ -33,8 +33,7 @@ export default class fileDetail extends React.Component {
         };
     }
     componentDidMount() {
-        Bridge.setShareAble("false");
-        Bridge.setRefreshAble("true");
+        Bridge.setRefreshAble(false);
         var locationHref = decodeURI(window.location.href);
         var locationSearch = locationHref.substr(locationHref.indexOf("?") + 1);
         var searchArray = locationSearch.split("&");

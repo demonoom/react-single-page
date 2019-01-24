@@ -37,7 +37,8 @@ export default class classSortPage extends React.Component {
         };
     }
     componentDidMount() {
-        Bridge.setRefreshAble("true");
+        Bridge.setRefreshAble(false);
+        // Bridge.setRefreshAble("true");
         var locationHref = decodeURI(window.location.href);
         var locationSearch = locationHref.substr(locationHref.indexOf("?") + 1);
         var searchArray = locationSearch.split("&");
@@ -675,13 +676,22 @@ export default class classSortPage extends React.Component {
         window.location.href = url;
     }
 
-
     clearCache = () => {
         var data = {
             method: 'clearCache',
         };
         Bridge.callHandler(data, null, function (error) {
         });
+    }
+    /**
+     * 点击课程
+     */
+    clickClass = () => {
+        this.setState({
+            selectedTab: 'blueTab',
+        });
+        this.getCurrentUnionClassList(this.state.ident);
+        this.viewCourseReviewPage(this.state.ident)
     }
     render() {
         var _this = this;
@@ -815,11 +825,8 @@ export default class classSortPage extends React.Component {
                             />
                             }
                             selected={this.state.selectedTab === 'blueTab'}
-                            onPress={() => {
-                                this.setState({
-                                    selectedTab: 'blueTab',
-                                });
-                            }}
+                            onPress={this.clickClass}
+
                             data-seed="logId"
                         >
                             <div className='topTitle line_public'><span>我的课程</span></div>

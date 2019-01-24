@@ -12,6 +12,7 @@ export default class joinClass extends React.Component {
         }
     }
     componentDidMount() {
+        Bridge.setRefreshAble(false);
         document.title = "进入课堂";
         var locationHref = decodeURI(window.location.href);
         var locationSearch = locationHref.substr(locationHref.indexOf("?") + 1);

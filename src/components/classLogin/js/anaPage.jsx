@@ -7,6 +7,7 @@ export default class anaPage extends React.Component {
         }
     }
     componentDidMount() {
+        Bridge.setRefreshAble(false);
         var locationHref = decodeURI(window.location.href);
         var locationSearch = locationHref.substr(locationHref.indexOf("?") + 1);
         var searchArray = locationSearch.split("&");
