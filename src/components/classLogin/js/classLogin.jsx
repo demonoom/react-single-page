@@ -195,7 +195,9 @@ export default class classLogin extends React.Component {
                             </div>
                         </div>
                     </div>
-                    <input id="pwd" type="password" placeholder="请输入密码" />
+                    <div className="inputWrap">
+                        <input id="pwd" type="password" placeholder="请输入密码" />
+                    </div>
                     <button id="login" onClick={this.login}>登录</button>
                 </div>
             </div>
