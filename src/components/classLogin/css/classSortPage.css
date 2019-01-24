@@ -73,6 +73,15 @@
   transform: translateY(-50%);
   cursor: pointer;
 }
+#classSortPage .topTitle .icon_back + span {
+  width: 60%;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+  display: block;
+  background-color: white;
+  margin: 0 auto;
+}
 #classSortPage .am-accordion .am-accordion-item .am-accordion-content .am-accordion-content-box {
   border-bottom: 0;
 }
