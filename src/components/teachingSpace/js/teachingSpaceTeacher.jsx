@@ -238,7 +238,7 @@ export default class teachingSpaceTeacher extends React.Component {
                             <div>开启云课堂</div>
                         </li>
                         <li onClick={this.toClient.bind(this, "openNativePage_RealBooth")}>
-                            <i className="Icon-teacher Icon-teacher-eSchool"></i>
+                            <i className="Icon-teacher Icon-teacher-shiwu"></i>
                             <div>实物展台</div>
                         </li>
                     </ul>

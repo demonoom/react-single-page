@@ -7,6 +7,7 @@
   /*开启班级课堂*/
   /*开启直播*/
   /*开启云课堂*/
+  /*实物展台*/
   /*备课计划*/
   /*资源库*/
   /*题库*/
@@ -97,6 +98,10 @@
 }
 #teachingSpaceTeacher .Icon-teacher-eSchool {
   background: url("../images/icon-eSchool.png") no-repeat;
+  background-size: 100% 100%;
+}
+#teachingSpaceTeacher .Icon-teacher-shiwu {
+  background: url("../images/icon-shiwu.png") no-repeat;
   background-size: 100% 100%;
 }
 #teachingSpaceTeacher .Icon-teacher-plan {
