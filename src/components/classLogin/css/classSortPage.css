@@ -35,6 +35,9 @@
 #classSortPage.moreReview .am-list-body .item {
   margin: 10px 9px 0;
 }
+#classSortPage.moreReview .am-list-body .item:first-child {
+  margin-top: 10px;
+}
 #classSortPage .classFrame {
   height: calc(100vh - 45px);
   border: none;
@@ -478,9 +481,10 @@
 }
 #classSortPage .classList h5 {
   font-size: 17px;
-  padding: 14px 16px;
+  padding: 0 16px;
   margin: 0;
   overflow: hidden;
+  line-height: 44px;
 }
 #classSortPage .classList .item {
   background-color: white;
