@@ -11,7 +11,6 @@ export default class classLogin extends React.Component {
     }
     componentWillMount() {
         var obj = JSON.parse(localStorage.getItem("loginStatus")) == null ? {} : JSON.parse(localStorage.getItem("loginStatus"))
-        var ident = JSON.parse(localStorage.getItem("loginUserTLibrary")) == null ? {} : JSON.parse(localStorage.getItem("loginUserTLibrary"))
         var locationHref = decodeURI(window.location.href);
         var locationSearch = locationHref.substr(locationHref.indexOf("?") + 1);
         var searchArray = locationSearch.split("&");
@@ -19,10 +18,8 @@ export default class classLogin extends React.Component {
         this.setState({
             version
         })
-        console.log(ident, "ooo")
         if (obj.loginStatus == "ok") {
             var url = WebServiceUtil.mobileServiceURL + 'classSortPage?teacherId=' + obj.ident + '&fileId=-1&title=蚁盘题目&phoneType=0&version=' + version;
-            console.log(url)
             window.location.href = url;
         }
     }
@@ -52,8 +49,8 @@ export default class classLogin extends React.Component {
                     var data = info.data;
                     var uuid = data.uuid;
                     if (uuid == machineId) {
-                        var url = WebServiceUtil.mobileServiceURL + 'classSortPage?teacherId=' + data.user.colUid + '&fileId=-1&title=蚁盘题目&phoneType=0';
-                        window.location.href = url;
+                        // var url = WebServiceUtil.mobileServiceURL + 'classSortPage?teacherId=' + data.user.colUid + '&fileId=-1&title=蚁盘题目&phoneType=0';
+                        // window.location.href = url;
                     } else {
                     }
                 }
@@ -137,7 +134,6 @@ export default class classLogin extends React.Component {
                         loginStatus: "ok",
                         ident:res.response.colUid
                     }
-                    console.log(obj)
                     localStorage.setItem('loginStatus', JSON.stringify(obj));
                 } else {
                     Toast.fail(res.msg);
