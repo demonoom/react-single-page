@@ -674,7 +674,7 @@ export default class classSortPage extends React.Component {
             });
         }
     };
-    
+
 
     /**
      * 确定退出弹出框
@@ -699,7 +699,7 @@ export default class classSortPage extends React.Component {
             loginStatus: "false",
         }
         localStorage.setItem('loginStatus', JSON.stringify(obj));
-        var url = WebServiceUtil.mobileServiceURL + 'classLogin?version='+this.state.version;
+        var url = WebServiceUtil.mobileServiceURL + 'classLogin?version=' + this.state.version;
         window.location.href = url;
     }
 
@@ -865,6 +865,7 @@ export default class classSortPage extends React.Component {
                                     </div>
                                     :
                                     <div className='classList'>
+                                        下拉刷新
                                         <div>
                                             <h5 style={{ display: this.state.currentUnion ? "block" : "none" }}>正在直播</h5>
                                             <div className='liveClass'>
