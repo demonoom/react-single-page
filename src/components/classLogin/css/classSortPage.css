@@ -35,6 +35,9 @@
 #classSortPage.moreReview .am-list-body .item {
   margin: 10px 9px 0;
 }
+#classSortPage.moreReview .am-list-body .item:first-child {
+  margin-top: 10px;
+}
 #classSortPage .classFrame {
   height: calc(100vh - 45px);
   border: none;
