@@ -674,13 +674,32 @@ export default class classSortPage extends React.Component {
             });
         }
     };
+    
 
-
+    /**
+     * 确定退出弹出框
+     */
+    exitAlert = () => {
+        if (tLibrary.state.phoneType == '-1') {
+            var phone = 'ios'
+        } else {
+            var phone = 'android'
+        }
+        var _this = this;
+        const alertInstance = alert('确定退出登录？', '', [
+            { text: '取消', onPress: () => console.log('cancel'), style: 'default' },
+            { text: '确定', onPress: () => _this.toExit() },
+        ], phone);
+    };
     /**
      * 退出登录
      */
     toExit = () => {
-        var url = WebServiceUtil.mobileServiceURL + 'classLogin';
+        var obj = {
+            loginStatus: "false",
+        }
+        localStorage.setItem('loginStatus', JSON.stringify(obj));
+        var url = WebServiceUtil.mobileServiceURL + 'classLogin?version='+this.state.version;
         window.location.href = url;
     }
 
@@ -853,9 +872,9 @@ export default class classSortPage extends React.Component {
                                                     this.state.courseData.map((v, i) => {
                                                         if (v.openTeacher.colUid == this.state.ident) {
                                                             return (
-                                                                <div className='item'>
+                                                                <div className='item' onClick={this.continueClass.bind(this, v)}>
                                                                     <div className='courseName text_hidden'>{v.title}</div>
-                                                                    <div className='classBtn' onClick={this.continueClass.bind(this, v)}>继续上课</div>
+                                                                    <div className='classBtn' >继续上课</div>
                                                                     <div className='time'>开课时间：{WebServiceUtil.formatAllTime(v.startTime)}</div>
                                                                     <div className="leftCont my_flex">
                                                                         <div>
@@ -879,9 +898,9 @@ export default class classSortPage extends React.Component {
                                                             )
                                                         } else {
                                                             return (
-                                                                <div className='item'>
+                                                                <div className='item' onClick={this.joinClass.bind(this, v)}>
                                                                     <div className='courseName text_hidden'>{v.title}</div>
-                                                                    <div className='classBtn' onClick={this.joinClass.bind(this, v)}>加入课堂</div>
+                                                                    <div className='classBtn' >加入课堂</div>
                                                                     <div className='time'>开课时间：{WebServiceUtil.formatAllTime(v.startTime)}</div>
                                                                     <div className='leftCont my_flex'>
                                                                         <div>
@@ -919,13 +938,13 @@ export default class classSortPage extends React.Component {
                                                             return
                                                         } else {
                                                             return (
-                                                                <div className='item'>
+                                                                <div className='item' onClick={this.toReview.bind(this, v)}>
                                                                     <div className='courseName text_hidden'>
                                                                         {
                                                                             v.name
                                                                         }
                                                                     </div>
-                                                                    <div className='classBtn' onClick={this.toReview.bind(this, v)}>查看回顾</div>
+                                                                    <div className='classBtn' >查看回顾</div>
                                                                     <div className='time'>开课时间：
                                                                 {
                                                                             v.openTime
@@ -1057,7 +1076,7 @@ export default class classSortPage extends React.Component {
                                         <span>版本号</span>
                                         <span className="light-gray">{this.state.version}</span>
                                     </div>
-                                    <div className="log-out" onClick={this.toExit}>退出登录</div>
+                                    <div className="log-out" onClick={this.exitAlert}>退出登录</div>
                                 </div>
                             </div>
                         </TabBar.Item>

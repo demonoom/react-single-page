@@ -9,6 +9,23 @@ export default class classLogin extends React.Component {
             accountArr: []
         }
     }
+    componentWillMount() {
+        var obj = JSON.parse(localStorage.getItem("loginStatus")) == null ? {} : JSON.parse(localStorage.getItem("loginStatus"))
+        var ident = JSON.parse(localStorage.getItem("loginUserTLibrary")) == null ? {} : JSON.parse(localStorage.getItem("loginUserTLibrary"))
+        var locationHref = decodeURI(window.location.href);
+        var locationSearch = locationHref.substr(locationHref.indexOf("?") + 1);
+        var searchArray = locationSearch.split("&");
+        var version = searchArray[0].split('=')[1];
+        this.setState({
+            version
+        })
+        console.log(ident, "ooo")
+        if (obj.loginStatus == "ok") {
+            var url = WebServiceUtil.mobileServiceURL + 'classSortPage?teacherId=' + obj.ident + '&fileId=-1&title=蚁盘题目&phoneType=0&version=' + version;
+            console.log(url)
+            window.location.href = url;
+        }
+    }
     componentDidMount() {
         document.title = "登录页面";
         Bridge.setRefreshAble(false);
@@ -19,6 +36,7 @@ export default class classLogin extends React.Component {
         this.setState({
             version
         })
+
         var machineId = '';
         var simple = new SimpleWebsocketConnection();
         simple.connect();
@@ -115,6 +133,12 @@ export default class classLogin extends React.Component {
                     })
                     var url = WebServiceUtil.mobileServiceURL + 'classSortPage?teacherId=' + res.response.colUid + '&fileId=-1&title=蚁盘题目&phoneType=0&version=' + this.state.version;
                     window.location.href = url;
+                    var obj = {
+                        loginStatus: "ok",
+                        ident:res.response.colUid
+                    }
+                    console.log(obj)
+                    localStorage.setItem('loginStatus', JSON.stringify(obj));
                 } else {
                     Toast.fail(res.msg);
                 }
