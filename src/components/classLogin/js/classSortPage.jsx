@@ -704,7 +704,7 @@ export default class classSortPage extends React.Component {
         });
         var url = WebServiceUtil.mobileServiceURL + 'classLogin?version=' + this.state.version;
         window.location.href = url;
-        
+
     }
 
     clearCache = () => {
@@ -730,7 +730,6 @@ export default class classSortPage extends React.Component {
      */
     onRefresh = () => {
         var divPull = document.getElementsByClassName('am-pull-to-refresh-content');
-        console.log(divPull)
         divPull[1].style.transform = "translate3d(0px, 30px, 0px)";   //设置拉动后回到的位置
         this.setState({ defaultPageNo: 1, refreshing2: true, isLoadingLeft: true });
         if (this.state.parentCloudFileId == -1) {
@@ -883,29 +882,29 @@ export default class classSortPage extends React.Component {
                                         暂无数据</div>
                                     </div>
                                     :
+                                    <PullToRefresh
+                                        damping={30}
+                                        ref={el => this.ptr = el}
+                                        style={{
+                                            height: this.state.height,
+                                            overflow: 'auto',
+                                        }}
+                                        indicator={this.state.down ? {} : { deactivate: '上拉可以刷新' }}
+                                        direction={this.state.down ? 'up' : 'down'}
+                                        refreshing={this.state.refreshing}
+                                        onRefresh={() => {
+                                            this.setState({ refreshing: true });
+                                            setTimeout(() => {
+                                                this.setState({ refreshing: false }, () => {
+                                                    this.getCurrentUnionClassList(this.state.ident);
+                                                    this.viewCourseReviewPage(this.state.ident)
+                                                });
+                                            }, 1000);
+                                        }}
+                                    >
+                                        <div className='classList'>
+                                            <div>
 
-                                    <div className='classList'>
-                                        <div>
-                                            <PullToRefresh
-                                                damping={30}
-                                                ref={el => this.ptr = el}
-                                                style={{
-                                                    height: this.state.height,
-                                                    overflow: 'auto',
-                                                }}
-                                                indicator={this.state.down ? {} : { deactivate: '上拉可以刷新' }}
-                                                direction={this.state.down ? 'up' : 'down'}
-                                                refreshing={this.state.refreshing}
-                                                onRefresh={() => {
-                                                    this.setState({ refreshing: true });
-                                                    setTimeout(() => {
-                                                        this.setState({ refreshing: false }, () => {
-                                                            this.getCurrentUnionClassList(this.state.ident);
-                                                            this.viewCourseReviewPage(this.state.ident)
-                                                        });
-                                                    }, 1000);
-                                                }}
-                                            >
                                                 <h5 style={{ display: this.state.currentUnion ? "block" : "none" }}>正在直播</h5>
                                                 <div className='liveClass'>
                                                     {
@@ -969,49 +968,48 @@ export default class classSortPage extends React.Component {
                                                     }
 
                                                 </div>
-                                            </PullToRefresh>
-
-                                        </div>
-                                        <div>
-                                            <h5 style={{ display: this.state.review ? "block" : "none" }}>历史回顾  <span className='more' onClick={this.seeMoreReview}>更多 ></span></h5>
+                                            </div>
                                             <div>
-                                                {
-                                                    this.state.reviewData.map((v, i) => {
-                                                        if (i >= 6) {
-                                                            return
-                                                        } else {
-                                                            return (
-                                                                <div className='item' onClick={this.toReview.bind(this, v)}>
-                                                                    <div className='courseName text_hidden'>
-                                                                        {
-                                                                            v.name
-                                                                        }
-                                                                    </div>
-                                                                    <div className='classBtn' >查看回顾</div>
-                                                                    <div className='time'>开课时间：
+                                                <h5 style={{ display: this.state.review ? "block" : "none" }}>历史回顾  <span className='more' onClick={this.seeMoreReview}>更多 ></span></h5>
+                                                <div>
+                                                    {
+                                                        this.state.reviewData.map((v, i) => {
+                                                            if (i >= 6) {
+                                                                return
+                                                            } else {
+                                                                return (
+                                                                    <div className='item' onClick={this.toReview.bind(this, v)}>
+                                                                        <div className='courseName text_hidden'>
+                                                                            {
+                                                                                v.name
+                                                                            }
+                                                                        </div>
+                                                                        <div className='classBtn' >查看回顾</div>
+                                                                        <div className='time'>开课时间：
                                                                 {
-                                                                            v.openTime
-                                                                        }
-                                                                    </div>
-                                                                    <div className='leftCont my_flex'>
-                                                                        <div>
-                                                                            <img src={v.teacher.avatar} alt="" />
-                                                                            <div className='teacherName text_hidden'>
-                                                                                {
-                                                                                    v.teacher.userName
-                                                                                }
+                                                                                v.openTime
+                                                                            }
+                                                                        </div>
+                                                                        <div className='leftCont my_flex'>
+                                                                            <div>
+                                                                                <img src={v.teacher.avatar} alt="" />
+                                                                                <div className='teacherName text_hidden'>
+                                                                                    {
+                                                                                        v.teacher.userName
+                                                                                    }
+                                                                                </div>
                                                                             </div>
                                                                         </div>
                                                                     </div>
-                                                                </div>
-                                                            )
-                                                        }
+                                                                )
+                                                            }
 
-                                                    })
-                                                }
+                                                        })
+                                                    }
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
+                                    </PullToRefresh>
                             }
                         </TabBar.Item>
                         <TabBar.Item
