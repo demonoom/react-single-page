@@ -9,20 +9,7 @@ export default class classLogin extends React.Component {
             accountArr: []
         }
     }
-    componentWillMount() {
-        var obj = JSON.parse(localStorage.getItem("loginStatus")) == null ? {} : JSON.parse(localStorage.getItem("loginStatus"))
-        var locationHref = decodeURI(window.location.href);
-        var locationSearch = locationHref.substr(locationHref.indexOf("?") + 1);
-        var searchArray = locationSearch.split("&");
-        var version = searchArray[0].split('=')[1];
-        this.setState({
-            version
-        })
-        if (obj.loginStatus == "ok") {
-            var url = WebServiceUtil.mobileServiceURL + 'classSortPage?teacherId=' + obj.ident + '&fileId=-1&title=蚁盘题目&phoneType=0&version=' + version;
-            window.location.href = url;
-        }
-    }
+   
     componentDidMount() {
         document.title = "登录页面";
         Bridge.setRefreshAble(false);
@@ -113,6 +100,12 @@ export default class classLogin extends React.Component {
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
             onResponse: (res) => {
                 if (res.success) {
+                    var data = {
+                        method: 'loginSuccess',
+                        ident: res.response.colUid,
+                    };
+                    Bridge.callHandler(data, null, function (error) {
+                    });
                     if ($("#act").val() !== "" && $("#pwd").val() !== "") {
                         var accountArr = [];
                         accountArr.push({
@@ -130,11 +123,7 @@ export default class classLogin extends React.Component {
                     })
                     var url = WebServiceUtil.mobileServiceURL + 'classSortPage?teacherId=' + res.response.colUid + '&fileId=-1&title=蚁盘题目&phoneType=0&version=' + this.state.version;
                     window.location.href = url;
-                    var obj = {
-                        loginStatus: "ok",
-                        ident:res.response.colUid
-                    }
-                    localStorage.setItem('loginStatus', JSON.stringify(obj));
+                 
                 } else {
                     Toast.fail(res.msg);
                 }

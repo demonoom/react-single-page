@@ -657,7 +657,7 @@ export default class classSortPage extends React.Component {
         if (obj.fileType === 0) {
             var data = {
                 method: 'watchFiles',
-                data: obj.path,
+                data: obj.path.toLowerCase(),
                 fileId: obj.id,
                 userId: this.state.ident,
             }
@@ -696,12 +696,15 @@ export default class classSortPage extends React.Component {
      * 退出登录
      */
     toExit = () => {
-        var obj = {
-            loginStatus: "false",
-        }
-        localStorage.setItem('loginStatus', JSON.stringify(obj));
+        var data = {
+            method: 'logout',
+        };
+        console.log(data)
+        Bridge.callHandler(data, null, function (error) {
+        });
         var url = WebServiceUtil.mobileServiceURL + 'classLogin?version=' + this.state.version;
         window.location.href = url;
+        
     }
 
     clearCache = () => {
