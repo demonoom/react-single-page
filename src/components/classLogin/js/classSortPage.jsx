@@ -711,6 +711,7 @@ export default class classSortPage extends React.Component {
         var data = {
             method: 'clearCache',
         };
+        console.log(data)
         Bridge.callHandler(data, null, function (error) {
         });
     }
@@ -1113,7 +1114,7 @@ export default class classSortPage extends React.Component {
                                     <div className="user-name">{this.state.users.userName}</div>
                                 </div>
                                 <div className="personal-cont">
-                                    <div className="personal-item line_public">
+                                    <div className="personal-item line_public" onClick={this.clearCache}>
                                         <span>清除缓存</span>
                                         <span className="light-gray"></span>
                                     </div>
