@@ -914,7 +914,7 @@ export default class classSortPage extends React.Component {
                                                                     <div className='item' onClick={this.continueClass.bind(this, v)}>
                                                                         <div className='courseName text_hidden'>{v.title}</div>
                                                                         <div className='classBtn' >继续上课</div>
-                                                                        <div className='time'>开课时间：{WebServiceUtil.formatAllTime(v.startTime)}</div>
+                                                                        <div className='time'>开课时间：{WebServiceUtil.formatYMDHM(v.startTime)}</div>
                                                                         <div className="leftCont my_flex">
                                                                             <div>
                                                                                 <img src={v.openTeacher.avatar} alt="" />
@@ -940,7 +940,7 @@ export default class classSortPage extends React.Component {
                                                                     <div className='item' onClick={this.joinClass.bind(this, v)}>
                                                                         <div className='courseName text_hidden'>{v.title}</div>
                                                                         <div className='classBtn' >加入课堂</div>
-                                                                        <div className='time'>开课时间：{WebServiceUtil.formatAllTime(v.startTime)}</div>
+                                                                        <div className='time'>开课时间：{WebServiceUtil.formatYMDHM(v.startTime)}</div>
                                                                         <div className='leftCont my_flex'>
                                                                             <div>
                                                                                 <img src={v.openTeacher.avatar} alt="" />
