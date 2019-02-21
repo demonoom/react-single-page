@@ -63,8 +63,10 @@ export default class fileDetail extends React.Component {
         localStorage.setItem("loginUserTLibrary", JSON.stringify(loginUser));
         //添加对视窗大小的监听,在屏幕转换以及键盘弹起时重设各项高度
         window.addEventListener('resize', tLibrary.onWindowResize);
+        $(".am-pull-to-refresh-content-wrapper").css({
+            minHeight: this.state.clientHeight - 100
+        })
     }
-
     componentWillUnmount() {
         //解除监听
         window.removeEventListener('resize', tLibrary.onWindowResize)
@@ -604,11 +606,14 @@ export default class fileDetail extends React.Component {
                                     initialListSize={30}   //指定在组件刚挂载的时候渲染多少行数据，用这个属性来确保首屏显示合适数量的数据
                                     scrollEventThrottle={20}     //控制在滚动过程中，scroll事件被调用的频率
                                     style={{
-                                        height: this.state.clientHeight - 57,
+                                        height: this.state.clientHeight -100,
                                     }}
                                     pullToRefresh={<PullToRefresh
                                         onRefresh={this.onRefresh}
                                         distanceToRefresh={30}
+                                        style={{
+                                            height: this.state.clientHeight - 100,
+                                        }}
                                     />}
                                 />
                                 :
