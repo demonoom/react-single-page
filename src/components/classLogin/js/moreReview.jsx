@@ -1,6 +1,6 @@
 import React from "react";
 import {
-    ListView,PullToRefresh
+    ListView, PullToRefresh
 } from 'antd-mobile';
 import '../../../helpers/webServiceUtil'
 var tLibrary;
@@ -26,6 +26,10 @@ export default class moreReview extends React.Component {
         var locationSearch = locationHref.substr(locationHref.indexOf("?") + 1);
         var searchArray = locationSearch.split("&");
         var ident = searchArray[0].split('=')[1];
+        $(".am-pull-to-refresh-content-wrapper").css({
+            minHeight: this.state.clientHeight-20
+            })
+        // $(".am-pull-to-refresh-content-wrapper").css("overflow","auto");
         this.setState({
             ident
         })
@@ -141,9 +145,9 @@ export default class moreReview extends React.Component {
         });
     }
 
-     /**
-    * 下拉刷新
-     */
+    /**
+   * 下拉刷新
+    */
     onRefresh = () => {
         var divPull = document.getElementsByClassName('am-pull-to-refresh-content');
         divPull[0].style.transform = "translate3d(0px, 30px, 0px)";   //设置拉动后回到的位置
@@ -181,7 +185,7 @@ export default class moreReview extends React.Component {
             )
         };
 
-        
+
 
 
         return (

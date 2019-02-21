@@ -476,7 +476,6 @@
 #classSortPage .classList {
   height: calc(100% - 45px);
   box-sizing: border-box;
-  overflow-y: auto;
   padding-bottom: 10px;
 }
 #classSortPage .classList h5 {
@@ -637,4 +636,11 @@
   position: relative;
   width: 100%;
   height: calc(100% - 60px);
+}
+#classSortPage .overflowScroll {
+  overflow-y: auto;
+}
+#classSortPage .overflowScroll .classList {
+  overflow: hidden;
+  height: auto;
 }

@@ -5,6 +5,7 @@
     .am-list-body::before, .am-list-body::after{
         display: none;
     }
+   
   .am-tab-bar-bar .am-tab-bar-tab-title{
     margin: 5px 0 0 0 ;
     font-size: 12px;
@@ -480,7 +481,7 @@ ul, li {
   .classList{
     height: calc(~"100% - 45px");
     box-sizing: border-box;
-    overflow-y: auto;
+    // overflow-y: auto;
     padding-bottom: 10px;
     h5{
       font-size: 17px;
@@ -644,6 +645,16 @@ ul, li {
     position: relative;
     width: 100%;
     height: calc(~'100% - 60px');
+  }
+
+
+  .overflowScroll {
+    overflow-y: auto;
+    .classList{
+      overflow: hidden;
+      height: auto;
+   
+    }
   }
   }
 

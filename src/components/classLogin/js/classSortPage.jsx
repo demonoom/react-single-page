@@ -9,6 +9,7 @@ import '../../../helpers/webServiceUtil'
 const prompt = Modal.prompt;
 const alert = Modal.alert;
 var tLibrary;
+var hahah = true;
 export default class classSortPage extends React.Component {
     constructor(props) {
         super(props);
@@ -34,7 +35,9 @@ export default class classSortPage extends React.Component {
             currentUnion: true,
             review: true,
             fileList: true,
-            flag: true
+            flag: true,
+            scrollFlag: false,
+            refreshing: false
         };
     }
     componentDidMount() {
@@ -72,13 +75,42 @@ export default class classSortPage extends React.Component {
         this.viewCourseReviewPage(ident)
         //添加对视窗大小的监听,在屏幕转换以及键盘弹起时重设各项高度
         window.addEventListener('resize', tLibrary.onWindowResize);
+
+
     }
 
     componentWillUnmount() {
         //解除监听
         window.removeEventListener('resize', tLibrary.onWindowResize)
     }
+    componentDidUpdate() {
+        $(".classList").on('scroll', () => {
+            console.log($(".classList").scrollTop(), "ppp")
+            if ($(".classList").scrollTop() > 0) {
+                hahah = false;
+                if (this.state.scrollFlag) {
+                } else {
 
+
+                    // this.setState({ refreshing: false });
+                    // // this.setState({
+                    // //     scrollFlag: true,
+                    // // }, () => {
+                    // // })
+                }
+
+            } else {
+                hahah = true;
+                if (this.state.scrollFlag) {
+                    // this.setState({ refreshing: true });
+                    // // this.setState({
+                    // //     scrollFlag: false,
+                    // // })
+                }
+
+            }
+        })
+    }
     /**
      * 视窗改变时改变高度
      */
@@ -579,6 +611,7 @@ export default class classSortPage extends React.Component {
      * 点击课件
      */
     clickClassFile = () => {
+
         this.setState({
             selectedTab: 'greenTab',
         });
@@ -589,6 +622,10 @@ export default class classSortPage extends React.Component {
             isLoadingLeft: true,
         }, () => {
             this.getUserRootCloudSubjects()
+            $(".classFiles .am-pull-to-refresh-content-wrapper").css({
+                minHeight: this.state.clientHeight - 125
+            })
+
         })
     }
 
@@ -675,6 +712,16 @@ export default class classSortPage extends React.Component {
             });
         }
     };
+
+    pullToRefresh = () => {
+        // this.setState({ refreshing: true });
+        setTimeout(() => {
+            this.setState({ refreshing: false });
+        }, 1000)
+        this.getCurrentUnionClassList(this.state.ident);
+        this.viewCourseReviewPage(this.state.ident)
+
+    }
 
 
     /**
@@ -878,34 +925,46 @@ export default class classSortPage extends React.Component {
                             <div className='topTitle line_public'><span>我的课程</span></div>
                             {
                                 !this.state.review && !this.state.currentUnion ?
-                                    <div className="empty-wrap"><div className="emptyCont">
-                                        <img src={require('../imgs/icon_empty.png')} /><br />
-                                        暂无数据</div>
-                                    </div>
-                                    :
                                     <PullToRefresh
-                                        damping={30}
+                                        damping={130}
                                         ref={el => this.ptr = el}
                                         style={{
-                                            height: this.state.height,
-                                            overflow: 'auto',
+                                            height: this.state.clientHeight - 95,
+                                            overflow: "auto"
                                         }}
                                         indicator={this.state.down ? {} : { deactivate: '上拉可以刷新' }}
-                                        direction={this.state.down ? 'up' : 'down'}
+                                        direction={'down'}
+                                        refreshing={this.state.refreshing}
+                                        onRefresh={this.pullToRefresh}
+                                    >
+                                        <div style={{
+                                            height: this.state.clientHeight - 95,
+                                        }} className="empty-wrap"><div className="emptyCont">
+                                                <img src={require('../imgs/icon_empty.png')} /><br />
+                                                暂无数据</div>
+                                        </div>
+                                    </PullToRefresh>
+                                    :
+                                    <PullToRefresh
+                                        className='overflowScroll'
+                                        damping={130}
+                                        ref={el => this.ptr = el}
+                                        style={{
+                                            height: this.state.clientHeight - 95,
+                                        }}
+                                        indicator={this.state.down ? {} : { deactivate: '上拉可以刷新' }}
+                                        direction='down'
                                         refreshing={this.state.refreshing}
                                         onRefresh={() => {
-                                            this.setState({ refreshing: true });
-                                            setTimeout(() => {
-                                                this.setState({ refreshing: false }, () => {
-                                                    this.getCurrentUnionClassList(this.state.ident);
-                                                    this.viewCourseReviewPage(this.state.ident)
-                                                });
-                                            }, 1000);
+                                            this.setState({
+                                                refreshing: true
+                                            }, () => {
+                                                this.pullToRefresh()
+                                            })
                                         }}
                                     >
-                                        <div className='classList'>
+                                        <div className='classList' style={{minHeight: this.state.clientHeight - 95}}>
                                             <div>
-
                                                 <h5 style={{ display: this.state.currentUnion ? "block" : "none" }}>正在直播</h5>
                                                 <div className='liveClass'>
                                                     {
@@ -987,7 +1046,7 @@ export default class classSortPage extends React.Component {
                                                                         </div>
                                                                         <div className='classBtn' >查看回顾</div>
                                                                         <div className='time'>开课时间：
-                                                                {
+                                               {
                                                                                 v.openTime
                                                                             }
                                                                         </div>
@@ -1047,11 +1106,37 @@ export default class classSortPage extends React.Component {
                                 </div>
                                 {
                                     !this.state.fileList ?
-                                        <div className="empty-wrap"><div className="emptyCont">
-                                            <img src={require('../imgs/icon_empty.png')} /><br />
-                                            暂无数据</div>
-                                        </div>
-                                        : <ListView
+                                        <PullToRefresh
+                                            damping={30}
+                                            ref={el => this.ptr = el}
+                                            style={{
+                                                height: this.state.clientHeight - 150,
+                                            }}
+                                            indicator={this.state.down ? {} : { deactivate: '上拉可以刷新' }}
+                                            direction={this.state.down ? 'up' : 'down'}
+                                            refreshing={this.state.refreshing}
+                                            onRefresh={() => {
+                                                this.setState({ refreshing: true });
+                                                setTimeout(() => {
+                                                    this.setState({ refreshing: false }, () => {
+                                                        if (this.state.parentCloudFileId == -1) {
+                                                            this.getUserRootCloudSubjects(true)
+                                                        } else {
+                                                            this.listCloudSubject(this.state.parentCloudFileId, true)
+                                                        }
+                                                    });
+                                                }, 1000);
+                                            }}
+                                        >
+                                            <div style={{
+                                                height: this.state.clientHeight - 150,
+                                            }} className="empty-wrap"><div className="emptyCont">
+                                                    <img src={require('../imgs/icon_empty.png')} /><br />
+                                                    暂无数据</div>
+                                            </div>
+                                        </PullToRefresh>
+                                        :
+                                        <ListView
                                             ref={el => this.lv = el}
                                             dataSource={this.state.dataSource}    //数据类型是 ListViewDataSource
                                             renderFooter={() => (
@@ -1059,7 +1144,7 @@ export default class classSortPage extends React.Component {
                                                     {this.state.isLoadingLeft ? '正在加载' : '已经全部加载完毕'}
                                                 </div>)}
                                             renderRow={row}   //需要的参数包括一行数据等,会返回一个可渲染的组件为这行数据渲染  返回renderable
-                                            className="am-list"
+                                            className="am-list classFiles"
                                             pageSize={30}    //每次事件循环（每帧）渲染的行数
                                             //useBodyScroll  //使用 html 的 body 作为滚动容器   bool类型   不应这么写  否则无法下拉刷新
                                             scrollRenderAheadDistance={200}   //当一个行接近屏幕范围多少像素之内的时候，就开始渲染这一行
@@ -1073,6 +1158,9 @@ export default class classSortPage extends React.Component {
                                             pullToRefresh={<PullToRefresh
                                                 onRefresh={this.onRefresh}
                                                 distanceToRefresh={30}
+                                                style={{
+                                                    height: this.state.clientHeight - 150,
+                                                }}
                                             />}
                                         />
                                 }
