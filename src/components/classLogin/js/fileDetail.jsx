@@ -636,11 +636,12 @@ export default class fileDetail extends React.Component {
                                     direction='down'
                                     refreshing={this.state.refreshing}
                                     onRefresh={() => {
-                                        this.setState({
-                                            refreshing: true
-                                        }, () => {
-                                            this.pullToRefresh()
-                                        })
+                                        this.setState({ refreshing: true });
+                                        setTimeout(() => {
+                                            this.setState({ refreshing: false }, () => {
+                                                this.listCloudSubject(this.state.pId, true, this.state.parentName)
+                                            });
+                                        }, 1000);
                                     }}
                                 >
                                     <div style={{
