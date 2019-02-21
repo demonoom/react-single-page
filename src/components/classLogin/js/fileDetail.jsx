@@ -30,6 +30,7 @@ export default class fileDetail extends React.Component {
             progressState: 'none',
             dataNone: true,
             fileName: '',
+            refreshing: false
         };
     }
     componentDidMount() {
@@ -44,7 +45,7 @@ export default class fileDetail extends React.Component {
         this.setState({
             ident,
             parentName,
-            pId:parentId
+            pId: parentId
         })
         this.listCloudSubject(parentId, true, parentName)
 
@@ -466,9 +467,17 @@ export default class fileDetail extends React.Component {
         var divPull = document.getElementsByClassName('am-pull-to-refresh-content');
         divPull[0].style.transform = "translate3d(0px, 30px, 0px)";   //设置拉动后回到的位置
         this.setState({ defaultPageNo: 1, refreshing: true, isLoadingLeft: true });
-        this.listCloudSubject(this.state.pId, true,this.state.parentName)
+        this.listCloudSubject(this.state.pId, true, this.state.parentName)
     };
 
+
+    pullToRefresh = () => {
+        setTimeout(() => {
+            this.setState({ refreshing: false });
+        }, 1000)
+        this.listCloudSubject(this.state.pId, true, this.state.parentName)
+
+    }
 
     render() {
         var _this = this;
@@ -606,7 +615,7 @@ export default class fileDetail extends React.Component {
                                     initialListSize={30}   //指定在组件刚挂载的时候渲染多少行数据，用这个属性来确保首屏显示合适数量的数据
                                     scrollEventThrottle={20}     //控制在滚动过程中，scroll事件被调用的频率
                                     style={{
-                                        height: this.state.clientHeight -100,
+                                        height: this.state.clientHeight - 100,
                                     }}
                                     pullToRefresh={<PullToRefresh
                                         onRefresh={this.onRefresh}
@@ -617,10 +626,30 @@ export default class fileDetail extends React.Component {
                                     />}
                                 />
                                 :
-                                <div className="empty-wrap"><div className="emptyCont">
-                                    <img src={require('../imgs/icon_empty.png')} /><br />
-                                    暂无数据</div>
-                                </div>
+                                <PullToRefresh
+                                    damping={130}
+                                    ref={el => this.ptr = el}
+                                    style={{
+                                        height: this.state.clientHeight - 100,
+                                    }}
+                                    indicator={this.state.down ? {} : { deactivate: '上拉可以刷新' }}
+                                    direction='down'
+                                    refreshing={this.state.refreshing}
+                                    onRefresh={() => {
+                                        this.setState({
+                                            refreshing: true
+                                        }, () => {
+                                            this.pullToRefresh()
+                                        })
+                                    }}
+                                >
+                                    <div style={{
+                                        height: this.state.clientHeight - 100,
+                                    }} className="empty-wrap"><div className="emptyCont">
+                                        <img src={require('../imgs/icon_empty.png')} /><br />
+                                        暂无数据</div>
+                                    </div>
+                                </PullToRefresh>
                         }
 
                     </div>
