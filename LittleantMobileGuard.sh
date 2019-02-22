@@ -1,8 +1,8 @@
 #! /bin/bash
 while true; do
     {
-        node LittleantMobileServer.js & node LittleantMobileHttpsServer.js
+        node LittleantMobileServer.js
         echo "LittleantMobileServer stopped unexpected, restarting"
+        sleep 1
     }
-    sleep 1
 done
