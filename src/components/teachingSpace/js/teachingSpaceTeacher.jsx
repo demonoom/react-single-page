@@ -187,11 +187,11 @@ export default class teachingSpaceTeacher extends React.Component {
             // }
         } else if (type == "dutyManage") {
             //  值日管理
-            url = "https://jiaoxue.maaee.com:8091/#/clazzDutyList?access_user=" + this.state.ident
+            url = "https://jiaoxue.maaee.com:9091/#/clazzDutyList?access_user=" + this.state.ident
             // url = "https://192.168.50.29:9091/#/clazzDutyList?access_user=" + this.state.ident
         } else if (type == "notifyManage") {
             //  通知管理
-            url = "https://jiaoxue.maaee.com:8091/#/notifyBack?access_user=" + this.state.ident
+            url = "https://jiaoxue.maaee.com:9091/#/notifyBack?access_user=" + this.state.ident
             // url = "https://192.168.50.29:9091/#/notifyBack?access_user=" + this.state.ident
         }
         var data = {
