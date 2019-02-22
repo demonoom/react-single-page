@@ -1,6 +1,6 @@
 import React from "react";
 import {
-    Tabs, Modal, WhiteSpace, ListView, Toast, TabBar,
+    Tabs, Modal, PullToRefresh, ListView, Toast, TabBar,
     Icon
 } from 'antd-mobile';
 import "../css/classSortPage.less"
@@ -9,6 +9,7 @@ import '../../../helpers/webServiceUtil'
 const prompt = Modal.prompt;
 const alert = Modal.alert;
 var tLibrary;
+var hahah = true;
 export default class classSortPage extends React.Component {
     constructor(props) {
         super(props);
@@ -22,7 +23,7 @@ export default class classSortPage extends React.Component {
             defaultPageNo: 1,
             clicked: 'none',
             clientHeight: document.body.clientHeight,
-            isLoadingLeft: true,
+            isLoadingLeft: false,
             parentId: -1,
             progressState: 'none',
             dataNone: "",
@@ -33,7 +34,10 @@ export default class classSortPage extends React.Component {
             users: {},
             currentUnion: true,
             review: true,
-            fileList: true
+            fileList: true,
+            flag: true,
+            scrollFlag: false,
+            refreshing: false
         };
     }
     componentDidMount() {
@@ -70,14 +74,43 @@ export default class classSortPage extends React.Component {
         this.getCurrentUnionClassList(ident);
         this.viewCourseReviewPage(ident)
         //添加对视窗大小的监听,在屏幕转换以及键盘弹起时重设各项高度
-        window.addEventListener('resize', tLibrary.onWindowResize)
+        window.addEventListener('resize', tLibrary.onWindowResize);
+
+
     }
 
     componentWillUnmount() {
         //解除监听
         window.removeEventListener('resize', tLibrary.onWindowResize)
     }
+    componentDidUpdate() {
+        $(".classList").on('scroll', () => {
+            console.log($(".classList").scrollTop(), "ppp")
+            if ($(".classList").scrollTop() > 0) {
+                hahah = false;
+                if (this.state.scrollFlag) {
+                } else {
 
+
+                    // this.setState({ refreshing: false });
+                    // // this.setState({
+                    // //     scrollFlag: true,
+                    // // }, () => {
+                    // // })
+                }
+
+            } else {
+                hahah = true;
+                if (this.state.scrollFlag) {
+                    // this.setState({ refreshing: true });
+                    // // this.setState({
+                    // //     scrollFlag: false,
+                    // // })
+                }
+
+            }
+        })
+    }
     /**
      * 视窗改变时改变高度
      */
@@ -177,7 +210,7 @@ export default class classSortPage extends React.Component {
                     _this.setState({
                         dataSource: _this.state.dataSource.cloneWithRows(_this.initData),
                         isLoadingLeft: isLoading,
-                        refreshing: false
+                        refreshing2: false
                     })
                 }
             },
@@ -578,6 +611,7 @@ export default class classSortPage extends React.Component {
      * 点击课件
      */
     clickClassFile = () => {
+
         this.setState({
             selectedTab: 'greenTab',
         });
@@ -588,6 +622,10 @@ export default class classSortPage extends React.Component {
             isLoadingLeft: true,
         }, () => {
             this.getUserRootCloudSubjects()
+            $(".classFiles .am-pull-to-refresh-content-wrapper").css({
+                minHeight: this.state.clientHeight - 125
+            })
+
         })
     }
 
@@ -639,7 +677,7 @@ export default class classSortPage extends React.Component {
                     _this.setState({
                         dataSource: _this.state.dataSource.cloneWithRows(_this.initData),
                         isLoadingLeft: isLoading,
-                        refreshing: false
+                        refreshing2: false
                     })
                 }
             },
@@ -656,7 +694,7 @@ export default class classSortPage extends React.Component {
         if (obj.fileType === 0) {
             var data = {
                 method: 'watchFiles',
-                data: obj.path,
+                data: obj.path.toLowerCase(),
                 fileId: obj.id,
                 userId: this.state.ident,
             }
@@ -675,19 +713,52 @@ export default class classSortPage extends React.Component {
         }
     };
 
+    pullToRefresh = () => {
+        // this.setState({ refreshing: true });
+        setTimeout(() => {
+            this.setState({ refreshing: false });
+        }, 1000)
+        this.getCurrentUnionClassList(this.state.ident);
+        this.viewCourseReviewPage(this.state.ident)
 
+    }
+
+
+    /**
+     * 确定退出弹出框
+     */
+    exitAlert = () => {
+        if (tLibrary.state.phoneType == '-1') {
+            var phone = 'ios'
+        } else {
+            var phone = 'android'
+        }
+        var _this = this;
+        const alertInstance = alert('确定退出登录？', '', [
+            { text: '取消', onPress: () => console.log('cancel'), style: 'default' },
+            { text: '确定', onPress: () => _this.toExit() },
+        ], phone);
+    };
     /**
      * 退出登录
      */
     toExit = () => {
-        var url = WebServiceUtil.mobileServiceURL + 'classLogin';
+        var data = {
+            method: 'logout',
+        };
+        console.log(data)
+        Bridge.callHandler(data, null, function (error) {
+        });
+        var url = WebServiceUtil.mobileServiceURL + 'classLogin?version=' + this.state.version;
         window.location.href = url;
+
     }
 
     clearCache = () => {
         var data = {
             method: 'clearCache',
         };
+        console.log(data)
         Bridge.callHandler(data, null, function (error) {
         });
     }
@@ -701,6 +772,20 @@ export default class classSortPage extends React.Component {
         this.getCurrentUnionClassList(this.state.ident);
         this.viewCourseReviewPage(this.state.ident)
     }
+
+    /**
+    * 下拉刷新
+     */
+    onRefresh = () => {
+        var divPull = document.getElementsByClassName('am-pull-to-refresh-content');
+        divPull[1].style.transform = "translate3d(0px, 30px, 0px)";   //设置拉动后回到的位置
+        this.setState({ defaultPageNo: 1, refreshing2: true, isLoadingLeft: true });
+        if (this.state.parentCloudFileId == -1) {
+            this.getUserRootCloudSubjects(true)
+        } else {
+            this.listCloudSubject(this.state.parentCloudFileId, true)
+        }
+    };
     render() {
         var _this = this;
         var parentId = this.state.parentId
@@ -840,116 +925,151 @@ export default class classSortPage extends React.Component {
                             <div className='topTitle line_public'><span>我的课程</span></div>
                             {
                                 !this.state.review && !this.state.currentUnion ?
-                                    <div className="empty-wrap"><div className="emptyCont">
-                                        <img src={require('../imgs/icon_empty.png')} /><br />
-                                        暂无数据</div>
-                                    </div>
+                                    <PullToRefresh
+                                        damping={130}
+                                        ref={el => this.ptr = el}
+                                        style={{
+                                            height: this.state.clientHeight - 95,
+                                            overflow: "auto"
+                                        }}
+                                        indicator={this.state.down ? {} : { deactivate: '上拉可以刷新' }}
+                                        direction={'down'}
+                                        refreshing={this.state.refreshing}
+                                        onRefresh={this.pullToRefresh}
+                                    >
+                                        <div style={{
+                                            height: this.state.clientHeight - 95,
+                                        }} className="empty-wrap"><div className="emptyCont">
+                                                <img src={require('../imgs/icon_empty.png')} /><br />
+                                                暂无数据</div>
+                                        </div>
+                                    </PullToRefresh>
                                     :
-                                    <div className='classList'>
-                                        <div>
-                                            <h5 style={{ display: this.state.currentUnion ? "block" : "none" }}>正在直播</h5>
-                                            <div className='liveClass'>
-                                                {
-                                                    this.state.courseData.map((v, i) => {
-                                                        if (v.openTeacher.colUid == this.state.ident) {
-                                                            return (
-                                                                <div className='item'>
-                                                                    <div className='courseName text_hidden'>{v.title}</div>
-                                                                    <div className='classBtn' onClick={this.continueClass.bind(this, v)}>继续上课</div>
-                                                                    <div className='time'>开课时间：{WebServiceUtil.formatAllTime(v.startTime)}</div>
-                                                                    <div className="leftCont my_flex">
-                                                                        <div>
-                                                                            <img src={v.openTeacher.avatar} alt="" />
-                                                                            <div className='teacherName text_hidden'>
-                                                                                {v.openTeacher.userName}
-                                                                            </div>
-                                                                        </div>
-                                                                        {v.unionTeachers.map((v, i) => {
-                                                                            return (
-                                                                                <div>
-                                                                                    <img src={v.avatar} alt="" />
-                                                                                    <div className='teacherName text_hidden'>
-                                                                                        {v.userName}
-                                                                                    </div>
-                                                                                </div>
-                                                                            )
-                                                                        })}
-                                                                    </div>
-                                                                </div>
-                                                            )
-                                                        } else {
-                                                            return (
-                                                                <div className='item'>
-                                                                    <div className='courseName text_hidden'>{v.title}</div>
-                                                                    <div className='classBtn' onClick={this.joinClass.bind(this, v)}>加入课堂</div>
-                                                                    <div className='time'>开课时间：{WebServiceUtil.formatAllTime(v.startTime)}</div>
-                                                                    <div className='leftCont my_flex'>
-                                                                        <div>
-                                                                            <img src={v.openTeacher.avatar} alt="" />
-                                                                            <div className='teacherName text_hidden'>
-                                                                                {v.openTeacher.userName}
-                                                                            </div>
-                                                                        </div>
-                                                                        {v.unionTeachers.map((v, i) => {
-                                                                            return (
-                                                                                <div>
-                                                                                    <img src={v.avatar} alt="" />
-                                                                                    <div className='teacherName text_hidden'>
-                                                                                        {v.userName}
-                                                                                    </div>
-                                                                                </div>
-                                                                            )
-                                                                        })}
-                                                                    </div>
-
-                                                                </div>
-                                                            )
-                                                        }
-
-                                                    })
-                                                }
-                                            </div>
-                                        </div>
-                                        <div>
-                                            <h5 style={{ display: this.state.review ? "block" : "none" }}>历史回顾  <span className='more' onClick={this.seeMoreReview}>更多 ></span></h5>
+                                    <PullToRefresh
+                                        className='overflowScroll'
+                                        damping={130}
+                                        ref={el => this.ptr = el}
+                                        style={{
+                                            height: this.state.clientHeight - 95,
+                                        }}
+                                        indicator={this.state.down ? {} : { deactivate: '上拉可以刷新' }}
+                                        direction='down'
+                                        refreshing={this.state.refreshing}
+                                        onRefresh={() => {
+                                            this.setState({
+                                                refreshing: true
+                                            }, () => {
+                                                this.pullToRefresh()
+                                            })
+                                        }}
+                                    >
+                                        <div className='classList' style={{minHeight: this.state.clientHeight - 95}}>
                                             <div>
-                                                {
-                                                    this.state.reviewData.map((v, i) => {
-                                                        if (i >= 6) {
-                                                            return
-                                                        } else {
-                                                            return (
-                                                                <div className='item'>
-                                                                    <div className='courseName text_hidden'>
-                                                                        {
-                                                                            v.name
-                                                                        }
+                                                <h5 style={{ display: this.state.currentUnion ? "block" : "none" }}>正在直播</h5>
+                                                <div className='liveClass'>
+                                                    {
+                                                        this.state.courseData.map((v, i) => {
+                                                            if (v.openTeacher.colUid == this.state.ident) {
+                                                                return (
+                                                                    <div className='item' onClick={this.continueClass.bind(this, v)}>
+                                                                        <div className='courseName text_hidden'>{v.title}</div>
+                                                                        <div className='classBtn' >继续上课</div>
+                                                                        <div className='time'>开课时间：{WebServiceUtil.formatYMDHM(v.startTime)}</div>
+                                                                        <div className="leftCont my_flex">
+                                                                            <div>
+                                                                                <img src={v.openTeacher.avatar} alt="" />
+                                                                                <div className='teacherName text_hidden'>
+                                                                                    {v.openTeacher.userName}
+                                                                                </div>
+                                                                            </div>
+                                                                            {v.unionTeachers.map((v, i) => {
+                                                                                return (
+                                                                                    <div>
+                                                                                        <img src={v.avatar} alt="" />
+                                                                                        <div className='teacherName text_hidden'>
+                                                                                            {v.userName}
+                                                                                        </div>
+                                                                                    </div>
+                                                                                )
+                                                                            })}
+                                                                        </div>
                                                                     </div>
-                                                                    <div className='classBtn' onClick={this.toReview.bind(this, v)}>查看回顾</div>
-                                                                    <div className='time'>开课时间：
-                                                                {
-                                                                            v.openTime
-                                                                        }
+                                                                )
+                                                            } else {
+                                                                return (
+                                                                    <div className='item' onClick={this.joinClass.bind(this, v)}>
+                                                                        <div className='courseName text_hidden'>{v.title}</div>
+                                                                        <div className='classBtn' >加入课堂</div>
+                                                                        <div className='time'>开课时间：{WebServiceUtil.formatYMDHM(v.startTime)}</div>
+                                                                        <div className='leftCont my_flex'>
+                                                                            <div>
+                                                                                <img src={v.openTeacher.avatar} alt="" />
+                                                                                <div className='teacherName text_hidden'>
+                                                                                    {v.openTeacher.userName}
+                                                                                </div>
+                                                                            </div>
+                                                                            {v.unionTeachers.map((v, i) => {
+                                                                                return (
+                                                                                    <div>
+                                                                                        <img src={v.avatar} alt="" />
+                                                                                        <div className='teacherName text_hidden'>
+                                                                                            {v.userName}
+                                                                                        </div>
+                                                                                    </div>
+                                                                                )
+                                                                            })}
+                                                                        </div>
+
                                                                     </div>
-                                                                    <div className='leftCont my_flex'>
-                                                                        <div>
-                                                                            <img src={v.teacher.avatar} alt="" />
-                                                                            <div className='teacherName text_hidden'>
-                                                                                {
-                                                                                    v.teacher.userName
-                                                                                }
+                                                                )
+                                                            }
+
+                                                        })
+                                                    }
+
+                                                </div>
+                                            </div>
+                                            <div>
+                                                <h5 style={{ display: this.state.review ? "block" : "none" }}>历史回顾  <span className='more' onClick={this.seeMoreReview}>更多 ></span></h5>
+                                                <div>
+                                                    {
+                                                        this.state.reviewData.map((v, i) => {
+                                                            if (i >= 6) {
+                                                                return
+                                                            } else {
+                                                                return (
+                                                                    <div className='item' onClick={this.toReview.bind(this, v)}>
+                                                                        <div className='courseName text_hidden'>
+                                                                            {
+                                                                                v.name
+                                                                            }
+                                                                        </div>
+                                                                        <div className='classBtn' >查看回顾</div>
+                                                                        <div className='time'>开课时间：
+                                               {
+                                                                                v.openTime
+                                                                            }
+                                                                        </div>
+                                                                        <div className='leftCont my_flex'>
+                                                                            <div>
+                                                                                <img src={v.teacher.avatar} alt="" />
+                                                                                <div className='teacherName text_hidden'>
+                                                                                    {
+                                                                                        v.teacher.userName
+                                                                                    }
+                                                                                </div>
                                                                             </div>
                                                                         </div>
                                                                     </div>
-                                                                </div>
-                                                            )
-                                                        }
+                                                                )
+                                                            }
 
-                                                    })
-                                                }
+                                                        })
+                                                    }
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
+                                    </PullToRefresh>
                             }
                         </TabBar.Item>
                         <TabBar.Item
@@ -986,11 +1106,37 @@ export default class classSortPage extends React.Component {
                                 </div>
                                 {
                                     !this.state.fileList ?
-                                        <div className="empty-wrap"><div className="emptyCont">
-                                            <img src={require('../imgs/icon_empty.png')} /><br />
-                                            暂无数据</div>
-                                        </div>
-                                        : <ListView
+                                        <PullToRefresh
+                                            damping={30}
+                                            ref={el => this.ptr = el}
+                                            style={{
+                                                height: this.state.clientHeight - 150,
+                                            }}
+                                            indicator={this.state.down ? {} : { deactivate: '上拉可以刷新' }}
+                                            direction={this.state.down ? 'up' : 'down'}
+                                            refreshing={this.state.refreshing}
+                                            onRefresh={() => {
+                                                this.setState({ refreshing: true });
+                                                setTimeout(() => {
+                                                    this.setState({ refreshing: false }, () => {
+                                                        if (this.state.parentCloudFileId == -1) {
+                                                            this.getUserRootCloudSubjects(true)
+                                                        } else {
+                                                            this.listCloudSubject(this.state.parentCloudFileId, true)
+                                                        }
+                                                    });
+                                                }, 1000);
+                                            }}
+                                        >
+                                            <div style={{
+                                                height: this.state.clientHeight - 150,
+                                            }} className="empty-wrap"><div className="emptyCont">
+                                                    <img src={require('../imgs/icon_empty.png')} /><br />
+                                                    暂无数据</div>
+                                            </div>
+                                        </PullToRefresh>
+                                        :
+                                        <ListView
                                             ref={el => this.lv = el}
                                             dataSource={this.state.dataSource}    //数据类型是 ListViewDataSource
                                             renderFooter={() => (
@@ -998,7 +1144,7 @@ export default class classSortPage extends React.Component {
                                                     {this.state.isLoadingLeft ? '正在加载' : '已经全部加载完毕'}
                                                 </div>)}
                                             renderRow={row}   //需要的参数包括一行数据等,会返回一个可渲染的组件为这行数据渲染  返回renderable
-                                            className="am-list"
+                                            className="am-list classFiles"
                                             pageSize={30}    //每次事件循环（每帧）渲染的行数
                                             //useBodyScroll  //使用 html 的 body 作为滚动容器   bool类型   不应这么写  否则无法下拉刷新
                                             scrollRenderAheadDistance={200}   //当一个行接近屏幕范围多少像素之内的时候，就开始渲染这一行
@@ -1009,6 +1155,13 @@ export default class classSortPage extends React.Component {
                                             style={{
                                                 height: this.state.clientHeight - 150,
                                             }}
+                                            pullToRefresh={<PullToRefresh
+                                                onRefresh={this.onRefresh}
+                                                distanceToRefresh={30}
+                                                style={{
+                                                    height: this.state.clientHeight - 150,
+                                                }}
+                                            />}
                                         />
                                 }
 
@@ -1049,7 +1202,7 @@ export default class classSortPage extends React.Component {
                                     <div className="user-name">{this.state.users.userName}</div>
                                 </div>
                                 <div className="personal-cont">
-                                    <div className="personal-item line_public">
+                                    <div className="personal-item line_public" onClick={this.clearCache}>
                                         <span>清除缓存</span>
                                         <span className="light-gray"></span>
                                     </div>
@@ -1057,7 +1210,7 @@ export default class classSortPage extends React.Component {
                                         <span>版本号</span>
                                         <span className="light-gray">{this.state.version}</span>
                                     </div>
-                                    <div className="log-out" onClick={this.toExit}>退出登录</div>
+                                    <div className="log-out" onClick={this.exitAlert}>退出登录</div>
                                 </div>
                             </div>
                         </TabBar.Item>

@@ -29,7 +29,22 @@ export default class joinClass extends React.Component {
             pwd,
             classId
         })
-        this.getTeacherClasses(ident)
+        this.getTeacherClasses(ident);
+        var clientHeight = document.documentElement.clientHeight || document.body.clientHeight;
+        //手机软键盘弹出隐藏按钮修改页面高度
+        $(window).on('resize', function () {
+            var nowClientHeight = document.documentElement.clientHeight || document.body.clientHeight;
+            if (clientHeight > nowClientHeight) {
+                //键盘弹出的事件处理
+                $('.submitBtn').hide();
+                $('.am-list').height(nowClientHeight - 89);
+            }
+            else {
+                //键盘收起的事件处理
+                $('.submitBtn').show();
+                $('.am-list').height(nowClientHeight - 164);
+            }
+        });
     }
 
     getTeacherClasses = (ident) => {
