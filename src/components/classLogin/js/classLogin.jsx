@@ -20,7 +20,7 @@ export default class classLogin extends React.Component {
         this.setState({
             version
         })
-
+        
         var machineId = '';
         var simple = new SimpleWebsocketConnection();
         simple.connect();
@@ -43,6 +43,8 @@ export default class classLogin extends React.Component {
                 }
             }
         };
+
+       
     }
 
 

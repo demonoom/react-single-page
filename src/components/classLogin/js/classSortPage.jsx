@@ -75,6 +75,14 @@ export default class classSortPage extends React.Component {
         this.viewCourseReviewPage(ident)
         //添加对视窗大小的监听,在屏幕转换以及键盘弹起时重设各项高度
         window.addEventListener('resize', tLibrary.onWindowResize);
+        
+        if (window.location.href.indexOf("/classSortPage") > -1) {
+            //防止页面后退
+            history.pushState(null, null, document.URL);
+            window.addEventListener('popstate', function () {
+                history.pushState(null, null, document.URL);
+            });
+        }
 
 
     }
