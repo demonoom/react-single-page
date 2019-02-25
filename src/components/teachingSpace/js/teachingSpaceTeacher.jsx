@@ -154,7 +154,7 @@ export default class teachingSpaceTeacher extends React.Component {
         var url;
         // 回顾页面
         if (type == "ReviewStatistics") {
-            url = "http://jiaoxue.maaee.com:8093/#/cloudSchoolClassesStatistical?ident=" + this.state.ident + "&judgelag=1"
+            url = "https://jiaoxue.maaee.com:9093/#/cloudSchoolClassesStatistical?ident=" + this.state.ident + "&judgelag=1"
             // url = "http://192.168.43.169:7093/#/cloudSchoolClassesStatistical?ident=" + this.state.ident+"&judgelag=1"
         } else if (type == "Approval") {
             // 审批页面
@@ -164,9 +164,9 @@ export default class teachingSpaceTeacher extends React.Component {
             url = "https://www.maaee.com/Excoord_PhoneService/attendance/recordCard/" + this.state.ident
         } else if (type == "HomeworkFaceStatistics") {
             // 作业表情分析
-            url = "http://jiaoxue.maaee.com:8093/#/HomeWorkUnderstandAnalysisGuideByNoom?access_user=" + this.state.ident
+            url = "https://jiaoxue.maaee.com:9093/#/HomeWorkUnderstandAnalysisGuideByNoom?access_user=" + this.state.ident
         } else if (type == "openNativePage_RingDataStatistics") {
-            url = "http://jiaoxue.maaee.com:8093/#/analysisHomePage"
+            url = "https://jiaoxue.maaee.com:9093/#/analysisHomePage"
         } else if (type == "honorManage") {
             //  荣誉管理
             Toast.info('请在浏览器中的小蚂蚁教师端完成该功能', 3)
@@ -187,10 +187,12 @@ export default class teachingSpaceTeacher extends React.Component {
             // }
         } else if (type == "dutyManage") {
             //  值日管理
-            url = "http://jiaoxue.maaee.com:8091/#/clazzDutyList?access_user=" + this.state.ident
+            url = "https://jiaoxue.maaee.com:9091/#/clazzDutyList?access_user=" + this.state.ident
+            // url = "https://192.168.50.29:9091/#/clazzDutyList?access_user=" + this.state.ident
         } else if (type == "notifyManage") {
             //  通知管理
-            url = "http://jiaoxue.maaee.com:8091/#/notifyBack?access_user=" + this.state.ident
+            url = "https://jiaoxue.maaee.com:9091/#/notifyBack?access_user=" + this.state.ident
+            // url = "https://192.168.50.29:9091/#/notifyBack?access_user=" + this.state.ident
         }
         var data = {
             method: "openNewPage",
