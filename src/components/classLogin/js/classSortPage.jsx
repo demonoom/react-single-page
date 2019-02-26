@@ -979,9 +979,9 @@ export default class classSortPage extends React.Component {
                                                         this.state.courseData.map((v, i) => {
                                                             if (v.openTeacher.colUid == this.state.ident) {
                                                                 return (
-                                                                    <div className='item' onClick={this.continueClass.bind(this, v)}>
+                                                                    <div className='item' >
                                                                         <div className='courseName text_hidden'>{v.title}</div>
-                                                                        <div className='classBtn' >继续上课</div>
+                                                                        {/* <div className='classBtn' onClick={this.continueClass.bind(this, v)}>继续上课</div> */}
                                                                         <div className='time'>开课时间：{WebServiceUtil.formatYMDHM(v.startTime)}</div>
                                                                         <div className="leftCont my_flex">
                                                                             <div>
