@@ -9,6 +9,7 @@ export default class classLogin extends React.Component {
             accountArr: []
         }
     }
+   
     componentDidMount() {
         document.title = "登录页面";
         Bridge.setRefreshAble(false);
@@ -19,6 +20,7 @@ export default class classLogin extends React.Component {
         this.setState({
             version
         })
+        
         var machineId = '';
         var simple = new SimpleWebsocketConnection();
         simple.connect();
@@ -34,13 +36,15 @@ export default class classLogin extends React.Component {
                     var data = info.data;
                     var uuid = data.uuid;
                     if (uuid == machineId) {
-                        var url = WebServiceUtil.mobileServiceURL + 'classSortPage?teacherId=' + data.user.colUid + '&fileId=-1&title=蚁盘题目&phoneType=0';
-                        window.location.href = url;
+                        // var url = WebServiceUtil.mobileServiceURL + 'classSortPage?teacherId=' + data.user.colUid + '&fileId=-1&title=蚁盘题目&phoneType=0';
+                        // window.location.href = url;
                     } else {
                     }
                 }
             }
         };
+
+       
     }
 
 
@@ -98,6 +102,12 @@ export default class classLogin extends React.Component {
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
             onResponse: (res) => {
                 if (res.success) {
+                    var data = {
+                        method: 'loginSuccess',
+                        ident: res.response.colUid,
+                    };
+                    Bridge.callHandler(data, null, function (error) {
+                    });
                     if ($("#act").val() !== "" && $("#pwd").val() !== "") {
                         var accountArr = [];
                         accountArr.push({
@@ -115,6 +125,7 @@ export default class classLogin extends React.Component {
                     })
                     var url = WebServiceUtil.mobileServiceURL + 'classSortPage?teacherId=' + res.response.colUid + '&fileId=-1&title=蚁盘题目&phoneType=0&version=' + this.state.version;
                     window.location.href = url;
+                 
                 } else {
                     Toast.fail(res.msg);
                 }

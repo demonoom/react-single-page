@@ -1,7 +1,10 @@
 import React from 'react';
-import {Toast} from 'antd-mobile';
+import { Toast } from 'antd-mobile';
+import { SimpleWebsocketConnection } from '../../../helpers/simple_websocket_connection';
+
 import '../css/teachingSpaceTeacher.less'
 
+window.simpleMS = null;
 export default class teachingSpaceTeacher extends React.Component {
     constructor(props) {
         super(props);
@@ -10,7 +13,10 @@ export default class teachingSpaceTeacher extends React.Component {
             classTeacher: false,
         };
     }
-
+    componentWillMount() {
+        simpleMS = new SimpleWebsocketConnection();
+        simpleMS.connect();
+    }
     componentDidMount() {
         try {
             Bridge.setRefreshAble("false");
@@ -28,10 +34,25 @@ export default class teachingSpaceTeacher extends React.Component {
         this.getStructureRoleUserByUserId(ident)
         var phoneType = navigator.userAgent;
         if (phoneType.indexOf('iPhone') > -1 || phoneType.indexOf('iPad') > -1) {
-            this.setState({phone: 'IOS'})
+            this.setState({ phone: 'IOS' })
         } else {
-            this.setState({phone: 'Android'})
+            this.setState({ phone: 'Android' })
         }
+
+
+        this.simpleListener()
+    }
+
+    simpleListener = () => {
+        simpleMS.msgWsListener = {
+            onError: function (errorMsg) {
+
+            }, onWarn: function (warnMsg) {
+
+            }, onMessage: (info) => {
+                console.log(info, "info")
+            }
+        };
     }
 
     /**
@@ -54,7 +75,7 @@ export default class teachingSpaceTeacher extends React.Component {
                     })
 
                     if (res.length !== 0) {
-                        _this.setState({classTeacher: true})
+                        _this.setState({ classTeacher: true })
                     }
 
                 }
@@ -93,18 +114,37 @@ export default class teachingSpaceTeacher extends React.Component {
      * 跳转客户端
      */
     toClient = (method) => {
-        var data = {
-            method: method,
-            ident: this.state.ident
-        };
-        if (method == "openNativePage_Errorbook") {
-            data.href = 'http://jiaoxue.maaee.com:8094/#/topicWrongList?userId='
-            // data.href = 'http://192.168.50.72:7094/#/topicWrongList?userId='
-        }
-        console.log(data, "data")
-        Bridge.callHandler(data, null, function (error) {
-        });
+        if (method == "openNativePage_RealBooth") {
+            var obj = {
+                "command": "open_zhaitan_click",
+                "data": {
+                    "userId": this.state.ident
+                }
+            }
+            console.log("sendObj", obj);
+            simpleMS.send(obj);
+            var data = {
+                method: "local_class_open_zhaitan",
+                vid: this.state.ident
+            };
+            // alert(JSON.stringify(data))
+            console.log(data, "data")
+            Bridge.callHandler(data, null, function (error) {
 
+            });
+        } else {
+            var data = {
+                method: method,
+                ident: this.state.ident
+            };
+            if (method == "openNativePage_Errorbook") {
+                data.href = 'http://jiaoxue.maaee.com:8094/#/topicWrongList?userId='
+            }
+            console.log(data, "data")
+            Bridge.callHandler(data, null, function (error) {
+
+            });
+        }
     }
 
     /**
@@ -114,7 +154,7 @@ export default class teachingSpaceTeacher extends React.Component {
         var url;
         // 回顾页面
         if (type == "ReviewStatistics") {
-            url = "http://jiaoxue.maaee.com:8093/#/cloudSchoolClassesStatistical?ident=" + this.state.ident + "&judgelag=1"
+            url = "https://jiaoxue.maaee.com:9093/#/cloudSchoolClassesStatistical?ident=" + this.state.ident + "&judgelag=1"
             // url = "http://192.168.43.169:7093/#/cloudSchoolClassesStatistical?ident=" + this.state.ident+"&judgelag=1"
         } else if (type == "Approval") {
             // 审批页面
@@ -124,9 +164,9 @@ export default class teachingSpaceTeacher extends React.Component {
             url = "https://www.maaee.com/Excoord_PhoneService/attendance/recordCard/" + this.state.ident
         } else if (type == "HomeworkFaceStatistics") {
             // 作业表情分析
-            url = "http://jiaoxue.maaee.com:8093/#/HomeWorkUnderstandAnalysisGuideByNoom?access_user=" + this.state.ident
+            url = "https://jiaoxue.maaee.com:9093/#/HomeWorkUnderstandAnalysisGuideByNoom?access_user=" + this.state.ident
         } else if (type == "openNativePage_RingDataStatistics") {
-            url = "http://jiaoxue.maaee.com:8093/#/analysisHomePage"
+            url = "https://jiaoxue.maaee.com:9093/#/analysisHomePage"
         } else if (type == "honorManage") {
             //  荣誉管理
             Toast.info('请在浏览器中的小蚂蚁教师端完成该功能', 3)
@@ -147,10 +187,12 @@ export default class teachingSpaceTeacher extends React.Component {
             // }
         } else if (type == "dutyManage") {
             //  值日管理
-            url = "http://jiaoxue.maaee.com:8091/#/clazzDutyList?access_user=" + this.state.ident
+            url = "https://jiaoxue.maaee.com:9091/#/clazzDutyList?access_user=" + this.state.ident
+            // url = "https://192.168.50.29:9091/#/clazzDutyList?access_user=" + this.state.ident
         } else if (type == "notifyManage") {
             //  通知管理
-            url = "http://jiaoxue.maaee.com:8091/#/notifyBack?access_user=" + this.state.ident
+            url = "https://jiaoxue.maaee.com:9091/#/notifyBack?access_user=" + this.state.ident
+            // url = "https://192.168.50.29:9091/#/notifyBack?access_user=" + this.state.ident
         }
         var data = {
             method: "openNewPage",
@@ -197,6 +239,10 @@ export default class teachingSpaceTeacher extends React.Component {
                             <i className="Icon-teacher Icon-teacher-eSchool"></i>
                             <div>开启云课堂</div>
                         </li>
+                        <li onClick={this.toClient.bind(this, "openNativePage_RealBooth")}>
+                            <i className="Icon-teacher Icon-teacher-shiwu"></i>
+                            <div>实物展台</div>
+                        </li>
                     </ul>
                 </div>
                 <div className="teacher-item">
@@ -223,12 +269,12 @@ export default class teachingSpaceTeacher extends React.Component {
                             <div>手环户外助手</div>
                         </li>
                         <li onClick={this.toClient.bind(this, "openNativePage_FamousTeacherSpace")}
-                            style={{display: this.state.phone == "Android" ? "block" : "none"}}>
+                            style={{ display: this.state.phone == "Android" ? "block" : "none" }}>
                             <i className="Icon-teacher Icon-teacher-famousTeacher"></i>
                             <div>名师空间</div>
                         </li>
                         <li onClick={this.toClient.bind(this, "openNativePage_MicroClassRecord")}
-                            style={{display: this.state.phone == "Android" ? "block" : "none"}}>
+                            style={{ display: this.state.phone == "Android" ? "block" : "none" }}>
                             <i className="Icon-teacher Icon-teacher-SmallClass"></i>
                             <div>录制微课</div>
                         </li>
@@ -263,20 +309,20 @@ export default class teachingSpaceTeacher extends React.Component {
                             <div>作业表情统计</div>
                         </li>
                         <li onClick={this.toClient.bind(this, "openNativePage_HomeworkCorrecting")}
-                            style={{display: this.state.phone == "Android" ? "block" : "none"}}>
+                            style={{ display: this.state.phone == "Android" ? "block" : "none" }}>
                             <i className="Icon-teacher Icon-teacher-homeworkCorrecting"></i>
                             <div>批改作业</div>
                         </li>
-                        <li 
+                        <li
                             onClick={this.toClient.bind(this, "openNativePage_Errorbook")}>
                             <i className="Icon-teacher Icon-teacher-wrongBook"></i>
                             <div>错题本</div>
                         </li>
                     </ul>
                 </div>
-                <div className="teacher-item" 
-                    style={{display: this.state.phone == "Android" ? "block" : "none"}}
-                    >
+                <div className="teacher-item"
+                    style={{ display: this.state.phone == "Android" ? "block" : "none" }}
+                >
                     <h1>考试系统</h1>
                     <ul className="my_flex teacherUl">
                         <li onClick={this.toClient.bind(this, "openNativePage_TestPaper")}>
@@ -296,24 +342,24 @@ export default class teachingSpaceTeacher extends React.Component {
                             <i className="Icon-teacher Icon-teacher-EducationManage"></i>
                             <div>教务管理</div>
                         </li>
-                        <li style={{display: this.state.classTeacher ? '' : 'none'}}
+                        <li style={{ display: this.state.classTeacher ? '' : 'none' }}
                             onClick={this.toPage.bind(this, "honorManage")}>
                             <i className="Icon-teacher Icon-teacher-honorManage"></i>
                             <div>班牌荣誉</div>
                         </li>
-                        <li style={{display: this.state.classTeacher ? '' : 'none'}}
+                        <li style={{ display: this.state.classTeacher ? '' : 'none' }}
                             onClick={this.toPage.bind(this, "demeanorManage")}>
                             <i className="Icon-teacher Icon-teacher-demeanorManage"></i>
                             <div>班牌风采</div>
                         </li>
 
-                        <li style={{display: this.state.classTeacher ? '' : 'none'}}
+                        <li style={{ display: this.state.classTeacher ? '' : 'none' }}
                             onClick={this.toPage.bind(this, "notifyManage")}>
                             <i className="Icon-teacher Icon-teacher-notifyManage"></i>
                             <div>班牌通知</div>
                         </li>
 
-                        <li style={{display: this.state.classTeacher ? '' : 'none'}}
+                        <li style={{ display: this.state.classTeacher ? '' : 'none' }}
                             onClick={this.toPage.bind(this, "dutyManage")}>
                             <i className="Icon-teacher Icon-teacher-dutyManage"></i>
                             <div>班牌值日</div>

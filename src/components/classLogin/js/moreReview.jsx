@@ -1,6 +1,6 @@
 import React from "react";
 import {
-    ListView,
+    ListView, PullToRefresh
 } from 'antd-mobile';
 import '../../../helpers/webServiceUtil'
 var tLibrary;
@@ -26,6 +26,10 @@ export default class moreReview extends React.Component {
         var locationSearch = locationHref.substr(locationHref.indexOf("?") + 1);
         var searchArray = locationSearch.split("&");
         var ident = searchArray[0].split('=')[1];
+        $(".am-pull-to-refresh-content-wrapper").css({
+            minHeight: this.state.clientHeight-20
+            })
+        // $(".am-pull-to-refresh-content-wrapper").css("overflow","auto");
         this.setState({
             ident
         })
@@ -118,7 +122,7 @@ export default class moreReview extends React.Component {
                     _this.setState({
                         dataSource: _this.state.dataSource.cloneWithRows(_this.initData),
                         isLoadingLeft: isLoading,
-                        refreshing: false
+                        refreshing2: false
                     }, () => {
                     })
                 }
@@ -140,18 +144,28 @@ export default class moreReview extends React.Component {
             console.log(error);
         });
     }
+
+    /**
+   * 下拉刷新
+    */
+    onRefresh = () => {
+        var divPull = document.getElementsByClassName('am-pull-to-refresh-content');
+        divPull[0].style.transform = "translate3d(0px, 30px, 0px)";   //设置拉动后回到的位置
+        this.setState({ defaultPageNo: 1, refreshing2: true, isLoadingLeft: true });
+        this.seeMoreReview(this.state.ident, true)
+    };
     render() {
         var _this = this;
         const row = (rowData, sectionID, rowID) => {
             return (
-                <div className='item'>
+                <div className='item' onClick={this.toReview.bind(this, rowData)}>
                     <div className='courseName text_hidden'>
 
                         {
                             rowData.name
                         }
                     </div>
-                    <div className='classBtn' onClick={this.toReview.bind(this, rowData)}>查看回顾</div>
+                    <div className='classBtn' >查看回顾</div>
                     <div className='time'>开课时间：
                         {
                             rowData.openTime
@@ -170,6 +184,8 @@ export default class moreReview extends React.Component {
                 </div>
             )
         };
+
+
 
 
         return (
@@ -192,8 +208,12 @@ export default class moreReview extends React.Component {
                     initialListSize={30}   //指定在组件刚挂载的时候渲染多少行数据，用这个属性来确保首屏显示合适数量的数据
                     scrollEventThrottle={20}     //控制在滚动过程中，scroll事件被调用的频率
                     style={{
-                        height: this.state.clientHeight,
+                        height: this.state.clientHeight - 45,
                     }}
+                    pullToRefresh={<PullToRefresh
+                        onRefresh={this.onRefresh}
+                        distanceToRefresh={30}
+                    />}
                 />
             </div >
         )

@@ -15,7 +15,7 @@ const apiWebServiceURLOfLocals = "http://" + localDomain + ":9006/Excoord_ApiSer
 const apiWebServiceURLOfRemote = "https://www.maaee.com/Excoord_For_Education/webservice";
 var apiWebServiceURL = isDebug ? apiWebServiceURLOfLocals : apiWebServiceURLOfRemote;
 //小蚂蚁mobile地址
-const mobileURLOfLocal = "http://" + localUrl + ":8091/#/";
+const mobileURLOfLocal = "https://" + localUrl + ":8091/#/";
 const mobileURLOfRemote = "http://jiaoxue.maaee.com:8091/#/";
 
 
@@ -244,6 +244,24 @@ WebServiceUtil.formatAllTime = function (nS) {
     var sencond = da.getSeconds();
     var dayStr = [year, month, date].join('-');
     var dateStr = dayStr + " " + hour + minutes + sencond;
+    return dateStr;
+};
+
+
+/**
+ * 时间戳转年月日时分，完整时间显示
+ * @param nS
+ * @returns {string}
+ */
+WebServiceUtil.formatYMDHM = function (nS) {
+    var da = new Date(parseInt(nS));
+    var year = da.getFullYear();
+    var month = (da.getMonth() + 1)<10 ? "0"+(da.getMonth() + 1) : da.getMonth() + 1;
+    var date = da.getDate() < 10 ? "0"+(da.getDate()):da.getDate();
+    var hour = (da.getHours()<10?"0"+(da.getHours()):da.getHours()) + ":";
+    var minutes = da.getMinutes()<10 ? "0"+(da.getMinutes()):da.getMinutes();
+    var dayStr = [year, month, date].join('-');
+    var dateStr = dayStr + " " + hour + minutes;
     return dateStr;
 };
 /**

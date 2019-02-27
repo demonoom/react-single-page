@@ -5,6 +5,7 @@
     .am-list-body::before, .am-list-body::after{
         display: none;
     }
+   
   .am-tab-bar-bar .am-tab-bar-tab-title{
     margin: 5px 0 0 0 ;
     font-size: 12px;
@@ -16,10 +17,10 @@
     .am-list-body {
       background-color: #f5f5f9;
       .item{
-        margin: 0 9px 10px;
-      }
-      .item:first-child {
-        margin-top: 10px;
+        margin: 10px 9px 0;
+        &:first-child{
+          margin-top: 10px;
+        }
       }
     }
   }
@@ -480,13 +481,14 @@ ul, li {
   .classList{
     height: calc(~"100% - 45px");
     box-sizing: border-box;
-    overflow-y: auto;
+    // overflow-y: auto;
     padding-bottom: 10px;
     h5{
       font-size: 17px;
-      padding: 14px 16px;
+      padding: 0 16px;
       margin: 0;
       overflow: hidden;
+      line-height: 44px;
     }
     .item{
       background-color: white;
@@ -570,16 +572,20 @@ ul, li {
   /* 个人中心*/
   .personal-center{
     background: url("../imgs/personal-center.png") no-repeat;
-    height: 279px;
+    //height: 279px;
+    height: 200px;
     background-size: 100% 100%;
     text-align: center;
   }
   .user-photo{
-    width: 80px;
-    height: 80px;
+    //width: 80px;
+    //height: 80px;
+    width: 60px;
+    height: 60px;
     border-radius: 50%;
     border: 2px solid #fff;
-    margin: 74px auto 23px auto;
+    //margin: 74px auto 23px auto;
+    margin: 60px auto 10px auto;
     box-sizing: border-box;
     display: inline-block;
     overflow: hidden;
@@ -639,6 +645,16 @@ ul, li {
     position: relative;
     width: 100%;
     height: calc(~'100% - 60px');
+  }
+
+
+  .overflowScroll {
+    overflow-y: auto;
+    .classList{
+      overflow: hidden;
+      height: auto;
+   
+    }
   }
   }
 

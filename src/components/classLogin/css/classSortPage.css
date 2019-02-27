@@ -33,7 +33,7 @@
   background-color: #f5f5f9;
 }
 #classSortPage.moreReview .am-list-body .item {
-  margin: 0 9px 10px;
+  margin: 10px 9px 0;
 }
 #classSortPage.moreReview .am-list-body .item:first-child {
   margin-top: 10px;
@@ -476,14 +476,14 @@
 #classSortPage .classList {
   height: calc(100% - 45px);
   box-sizing: border-box;
-  overflow-y: auto;
   padding-bottom: 10px;
 }
 #classSortPage .classList h5 {
   font-size: 17px;
-  padding: 14px 16px;
+  padding: 0 16px;
   margin: 0;
   overflow: hidden;
+  line-height: 44px;
 }
 #classSortPage .classList .item {
   background-color: white;
@@ -564,16 +564,16 @@
 }
 #classSortPage .personal-center {
   background: url("../imgs/personal-center.png") no-repeat;
-  height: 279px;
+  height: 200px;
   background-size: 100% 100%;
   text-align: center;
 }
 #classSortPage .user-photo {
-  width: 80px;
-  height: 80px;
+  width: 60px;
+  height: 60px;
   border-radius: 50%;
   border: 2px solid #fff;
-  margin: 74px auto 23px auto;
+  margin: 60px auto 10px auto;
   box-sizing: border-box;
   display: inline-block;
   overflow: hidden;
@@ -636,4 +636,11 @@
   position: relative;
   width: 100%;
   height: calc(100% - 60px);
+}
+#classSortPage .overflowScroll {
+  overflow-y: auto;
+}
+#classSortPage .overflowScroll .classList {
+  overflow: hidden;
+  height: auto;
 }
