@@ -124,9 +124,9 @@
   font-size: 14px;
   overflow: hidden;
   position: relative;
-  height: 57px;
+  height: 45px;
   background: #fff;
-  padding: 20px 0 20px 15px;
+  padding: 14px 0 20px 14px;
   box-sizing: border-box;
 }
 #classSortPage .ant_title .btns {
