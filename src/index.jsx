@@ -1064,6 +1064,12 @@ const anaPage = (location, cb) => {
     }
     )
 }
+const welcome = (location, cb) => {
+    require.ensure([], require => {
+        cb(null, require("./components/welcome/welcome").default)
+    }
+    )
+}
 
 
 
@@ -1358,7 +1364,7 @@ class Index extends React.Component {
 ReactDOM.render(
     <Router history={hashHistory}>
         <Route path="/" component={App}>
-            <IndexRoute component={Index} />
+            <IndexRoute getComponent={welcome} />
             {/*<Route path="s1" component={Stage1}/>*/}
             {/*<Route path="s3" component={Stage3}/>*/}
             {/*<Route path="s4" component={Stage4}/>*/}
@@ -1528,6 +1534,7 @@ ReactDOM.render(
             <Route path="moreReview" getComponent={moreReview} />
             <Route path="joinClass" getComponent={joinClass} />
             <Route path="anaPage" getComponent={anaPage} />
+            <Route path="welcome" getComponent={welcome} />
         </Route>
     </Router>, document.getElementById('example')
 );
