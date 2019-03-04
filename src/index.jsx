@@ -1364,8 +1364,8 @@ class Index extends React.Component {
 ReactDOM.render(
     <Router history={hashHistory}>
         <Route path="/" component={App}>
-            {/* <IndexRoute component={Index} /> */}
-            <IndexRoute getComponent={welcome} />
+            <IndexRoute component={Index} />
+            {/* <IndexRoute getComponent={welcome} /> */}
             {/*<Route path="s1" component={Stage1}/>*/}
             {/*<Route path="s3" component={Stage3}/>*/}
             {/*<Route path="s4" component={Stage4}/>*/}

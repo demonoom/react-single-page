@@ -87,10 +87,10 @@ export default class classLogin extends React.Component {
      */
     login = () => {
         if ($('#act').val().trim() == '') {
-            alert('请输入账号');
+            Toast.info('请输入账号');
             return;
         } else if ($('#pwd').val().trim() == '') {
-            alert('请输入密码');
+            Toast.info('请输入密码');
             return;
         }
         var _this = this;
