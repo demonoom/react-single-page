@@ -1,7 +1,8 @@
 var isDebug = false;
 var localDomain = "192.168.50.71";   //请求地址
 var isDebugLocal = false;
-var localUrl = "192.168.50.72";    //跳转地址http:
+var localUrl = "192.168.50.72";    //跳转地址本地地址
+var isSafeDebug = false;     //false则为隐藏主页列表，本地调试改为true
 
 
 //云校本地测试webService地址
@@ -15,8 +16,7 @@ const apiWebServiceURLOfLocals = "http://" + localDomain + ":9006/Excoord_ApiSer
 const apiWebServiceURLOfRemote = "https://www.maaee.com/Excoord_For_Education/webservice";
 var apiWebServiceURL = isDebug ? apiWebServiceURLOfLocals : apiWebServiceURLOfRemote;
 //小蚂蚁mobile地址
-const mobileURLOfLocal = "https://" + localUrl + ":8091/#/";
-// const mobileURLOfLocal = "http://" + localUrl + ":8091/#/";
+const mobileURLOfLocal = (isSafeDebug ? "http://" : "https://") + localUrl + ":8091/#/";
 const mobileURLOfRemote = "http://jiaoxue.maaee.com:8091/#/";
 
 
