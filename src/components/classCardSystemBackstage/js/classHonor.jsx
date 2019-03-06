@@ -61,14 +61,14 @@ export default class classHonor extends React.Component {
         };
         Bridge.callHandler(data, function (res) {
             var newArr = res.split('.');
-            if(newArr[newArr.length-1] == "JPG"){
-                res = res.replace(/JPG/g,"jpg");;
+            if (newArr[newArr.length - 1] == "JPG") {
+                res = res.replace(/JPG/g, "jpg");;
             }
-            if(newArr[newArr.length-1] == "JPEG"){
-                res = res.replace(/JPEG/g,"jpeg");;
+            if (newArr[newArr.length - 1] == "JPEG") {
+                res = res.replace(/JPEG/g, "jpeg");;
             }
-            if(newArr[newArr.length-1] == "MP4"){
-                res = res.replace(/MP4/g,"mp4");;
+            if (newArr[newArr.length - 1] == "MP4") {
+                res = res.replace(/MP4/g, "mp4");;
             }
             //拿到图片地址,显示在页面等待上传
             var classDemeanors = res.split(',');
@@ -90,7 +90,7 @@ export default class classHonor extends React.Component {
                             canvas.height = video.videoHeight * 0.8;
                             canvas.getContext('2d').drawImage(video, 0, 0, canvas.width, canvas.height);
                             // var $Blob = canvas.toDataURL("image/png");
-                            var $Blob = demeanor.getBlobBydataURI(canvas.toDataURL("image/png"),'image/jpeg');
+                            var $Blob = demeanor.getBlobBydataURI(canvas.toDataURL("image/png"), 'image/jpeg');
 
                             var formData = new FormData();
                             formData.append("filePath", $Blob, "file_" + Date.parse(new Date()) + ".png");
@@ -107,7 +107,7 @@ export default class classHonor extends React.Component {
                                     classDemeanors[t] = classDemeanors[t] + '&' + res;
                                     resolve('成功');
                                 },
-                                error:function(res){
+                                error: function (res) {
                                     $('body').html(res);
                                 }
                             });
@@ -141,13 +141,14 @@ export default class classHonor extends React.Component {
         for (var i = 0; i < binary.length; i++) {
             array.push(binary.charCodeAt(i));
         }
-        return new Blob([new Uint8Array(array)], {type: type});
+        return new Blob([new Uint8Array(array)], { type: type });
     }
 
     /**
      * 本地上传照片
      */
     uploadImg = () => {
+        console.log(demeanor.state.imgFromAndArr, "imgFromAndArr")
         if (demeanor.state.imgFromAndArr.length == 0) {
             Toast.fail('请先选择照片', 2)
             return
@@ -260,7 +261,7 @@ export default class classHonor extends React.Component {
                             var extra = arr[0].split('.');
                             return <div className="listImg flex_center">
                                 {
-                                    extra[extra.length - 1] == "mp4" ? <video style={{ width: "100%",height:"100%" }} src={v.imagePath}></video> : <img className='uploadImgBtn' src={v.imagePath} alt="" />
+                                    extra[extra.length - 1] == "mp4" ? <video style={{ width: "100%", height: "100%" }} src={v.imagePath}></video> : <img className='uploadImgBtn' src={v.imagePath} alt="" />
                                 }
 
                                 <img onClick={this.deleteClassDemeanorInfo.bind(this, v.id)} className='delImgBtn'
@@ -283,7 +284,7 @@ export default class classHonor extends React.Component {
                                         extra[extra.length - 1] == "JPG" ? <img className='uploadImgBtn' src={v} alt="" /> : ""
                                 } */}
                                 {
-                                        extra[extra.length - 1] == "mp4" ? <video style={{ width: "100%",height:"100%" }} src={v}></video> : 
+                                    extra[extra.length - 1] == "mp4" ? <video style={{ width: "100%", height: "100%" }} src={v}></video> :
                                         <img className='uploadImgBtn' src={v} alt="" />
                                 }
                                 <img onClick={this.deleteimgFromAndArr.bind(this, i)} className='delImgBtn'
