@@ -100,7 +100,7 @@ export default class classDemeanor extends React.Component {
                                 // 告诉jQuery不要去设置Content-Type请求头
                                 contentType: false,
                                 success: function (res) {
-                                    console.log(res);
+                                    console.log(res,"ooo");
                                     if (res == '') {
                                         Toast.hide();
                                         Toast.fail('请转成标准视频格式')
@@ -157,6 +157,7 @@ export default class classDemeanor extends React.Component {
             Toast.fail('请先选择照片', 2)
             return
         }
+        console.log(demeanor.state.imgFromAndArr,"mgArri")
         demeanor.state.imgFromAndArr.forEach(function (v, i) {
             var param = {
                 "method": 'saveClassDemeanorInfo',

@@ -9,7 +9,7 @@ export default class classLogin extends React.Component {
             accountArr: []
         }
     }
-   
+
     componentDidMount() {
         document.title = "登录页面";
         Bridge.setRefreshAble(false);
@@ -20,7 +20,7 @@ export default class classLogin extends React.Component {
         this.setState({
             version
         })
-        
+
         var machineId = '';
         var simple = new SimpleWebsocketConnection();
         simple.connect();
@@ -44,7 +44,7 @@ export default class classLogin extends React.Component {
             }
         };
 
-       
+
     }
 
 
@@ -87,10 +87,10 @@ export default class classLogin extends React.Component {
      */
     login = () => {
         if ($('#act').val().trim() == '') {
-            alert('请输入账号');
+            Toast.info('请输入账号');
             return;
         } else if ($('#pwd').val().trim() == '') {
-            alert('请输入密码');
+            Toast.info('请输入密码');
             return;
         }
         var _this = this;
@@ -102,33 +102,37 @@ export default class classLogin extends React.Component {
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
             onResponse: (res) => {
                 if (res.success) {
-                    var data = {
-                        method: 'loginSuccess',
-                        ident: res.response.colUid,
-                    };
-                    Bridge.callHandler(data, null, function (error) {
-                    });
-                    if ($("#act").val() !== "" && $("#pwd").val() !== "") {
-                        var accountArr = [];
-                        accountArr.push({
-                            account: $("#act").val(),
-                            password: $("#pwd").val()
+                    if (res.response.colUtype == "TEAC") {
+                        var data = {
+                            method: 'loginSuccess',
+                            ident: res.response.colUid,
+                        };
+                        Bridge.callHandler(data, null, function (error) {
                         });
+                        if ($("#act").val() !== "" && $("#pwd").val() !== "") {
+                            var accountArr = [];
+                            accountArr.push({
+                                account: $("#act").val(),
+                                password: $("#pwd").val()
+                            });
+                        }
+                        var tempArr = JSON.parse(localStorage.getItem("accountData")) == null ? this.state.accountArr : JSON.parse(localStorage.getItem("accountData"));
+                        accountArr = accountArr.concat(tempArr);
+                        accountArr = _this.makeArr(accountArr, "account");
+                        localStorage.setItem('accountData', JSON.stringify(accountArr));
+                        this.setState({
+                            accountArr: this.state.accountArr.concat(accountArr)
+                        }, () => {
+                        })
+                        var url = WebServiceUtil.mobileServiceURL + 'classSortPage?teacherId=' + res.response.colUid + '&fileId=-1&title=蚁盘题目&phoneType=0&version=' + this.state.version;
+                        window.location.href = url;
+                    }else {
+                        Toast.info("仅支持老师登录！")
                     }
-                    var tempArr = JSON.parse(localStorage.getItem("accountData")) == null ? this.state.accountArr : JSON.parse(localStorage.getItem("accountData"));
-                    accountArr = accountArr.concat(tempArr);
-                    accountArr = _this.makeArr(accountArr, "account");
-                    localStorage.setItem('accountData', JSON.stringify(accountArr));
-                    this.setState({
-                        accountArr: this.state.accountArr.concat(accountArr)
-                    }, () => {
-                    })
-                    var url = WebServiceUtil.mobileServiceURL + 'classSortPage?teacherId=' + res.response.colUid + '&fileId=-1&title=蚁盘题目&phoneType=0&version=' + this.state.version;
-                    window.location.href = url;
-                 
                 } else {
                     Toast.fail(res.msg);
                 }
+
             },
             onError: function (error) {
                 // Toast.fail(error, 1);
