@@ -1055,8 +1055,8 @@ export default class classSortPage extends React.Component {
                                             </div>
                                         </PullToRefresh>
                                         :
-                                        <div style={{ width: '100%', height: '100%' }}>
-                                            <img style={{ width: "100%" }} src={require("../imgs/loading.png")} alt="" />
+                                        <div className="loadingDiv">
+                                            <img src={require("../imgs/loading.png")} alt="" />
                                         </div>
 
                             }

@@ -1,8 +1,8 @@
 var isDebug = false;
 var localDomain = "192.168.50.172";   //请求地址
-var isDebugLocal = false;
-var localUrl = "192.168.50.29";    //跳转地址本地地址
-var isSafeDebug = false;     //false则为隐藏主页列表，本地调试改为true
+var isDebugLocal = true;
+var localUrl = "192.168.50.72";    //跳转地址本地地址
+var isSafeDebug = true;     //false则为隐藏主页列表，本地调试改为true
 
 
 //云校本地测试webService地址
