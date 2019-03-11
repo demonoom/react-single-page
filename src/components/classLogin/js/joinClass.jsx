@@ -89,7 +89,7 @@ export default class joinClass extends React.Component {
      * 点击提交按钮
      */
     toJoinClass = () => {
-        if (this.state.inputValue == "wallacehao") {
+        if (this.state.inputValue.toLowerCase() == "wallacehao") {
             var data = {
                 method: 'joinClass',
                 userId: this.state.ident,
@@ -97,7 +97,6 @@ export default class joinClass extends React.Component {
                 userName: this.state.userName,
                 classId: this.state.classId,
             }
-            console.log(data,"hh")
             Bridge.callHandler(data, null, function (error) {
             });
         } else {
@@ -112,7 +111,6 @@ export default class joinClass extends React.Component {
                     userName: this.state.userName,
                     classId: this.state.classId,
                 }
-                console.log(data)
                 Bridge.callHandler(data, null, function (error) {
                 });
 
