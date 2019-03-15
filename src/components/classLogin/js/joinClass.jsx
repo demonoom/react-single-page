@@ -97,6 +97,7 @@ export default class joinClass extends React.Component {
                 userName: this.state.userName,
                 classId: this.state.classId,
             }
+            console.log("wallacehao")
             Bridge.callHandler(data, null, function (error) {
             });
         } else {
@@ -113,7 +114,6 @@ export default class joinClass extends React.Component {
                 }
                 Bridge.callHandler(data, null, function (error) {
                 });
-
             } else {
                 Toast.info("邀请码不正确～")
             }

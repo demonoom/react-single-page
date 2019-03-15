@@ -513,15 +513,19 @@ export default class classSortPage extends React.Component {
 
     //点击继续上课
     continueClass = (v) => {
+        console.log(v,"vvv")
         /**
          * 直接跳客户端
          */
         var data = {
-            method: 'joinClass',
+            method: 'continueClass',
             userId: this.state.ident,
             vid: v.vid,
             classId: v.clazzId,
             userName: this.state.users.userName,
+            userType:2,
+            livePassword:v.password,
+            liveTitle:v.title
         }
         console.log(data)
         Bridge.callHandler(data, null, function (error) {
@@ -957,7 +961,7 @@ export default class classSortPage extends React.Component {
                                                                     return (
                                                                         <div className='item' >
                                                                             <div className='courseName text_hidden'>{v.title}</div>
-                                                                            {/* <div className='classBtn' onClick={this.continueClass.bind(this, v)}>继续上课</div> */}
+                                                                            <div className='classBtn' onClick={this.continueClass.bind(this, v)}>继续上课</div>
                                                                             <div className='time'>开课时间：{WebServiceUtil.formatYMDHM(v.startTime)}</div>
                                                                             <div className="leftCont my_flex">
                                                                                 <div>
