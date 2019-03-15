@@ -271,8 +271,42 @@ export default class antPlate extends React.Component {
             var data = {
                 method: 'watchFiles',
                 data: obj
-            }
+            };
             window.parent.postMessage(data, '*');
+
+            if (this.state.phoneType === '3') {
+                if (obj.suffix === 'png' || obj.suffix === 'jpg') {
+                    layui.use(['layer', 'form'], function () {
+                        var layer = layui.layer
+                            , form = layui.form;
+
+                        layer.open({
+                            closeBtn:0,
+                            maxmin: true,
+                            shadeClose: true,
+                            title: false,
+                            type: 1,
+                            content: `<img style="display: block;max-width: 100%;max-height: 100%;margin: 0 auto" src="${obj.path}" alt="">`, //这里content是一个普通的String
+                            area: [document.body.clientWidth - 50 + "px", document.body.clientHeight - 50 + "px"]
+                        });
+                    });
+                } else {
+                    layui.use(['layer', 'form'], function () {
+                        var layer = layui.layer
+                            , form = layui.form;
+
+                        layer.open({
+                            closeBtn:0,
+                            maxmin: true,
+                            shadeClose: true,
+                            title: false,
+                            type: 2,
+                            content: 'http://www.maaee.com/Excoord_PhoneService/cloudFile/cloudFileShow/' + obj.id + '/' + obj.createUid,
+                            area: [document.body.clientWidth - 30 + "px", document.body.clientHeight - 60 + "px"]
+                        });
+                    });
+                }
+            }
         } else {
             _this.setState({defaultPageNo: 1}, () => {
                 this.setState({parentId: obj.parentId}, () => {
@@ -694,15 +728,17 @@ export default class antPlate extends React.Component {
                 </ul>;
                 //文件
                 headDiv = <div className="am-accordion-item my_flex flex_align_center">
-                    <div className="noomWidth my_flex flex_align_center"
-                         onClick={_this.fileClicked.bind(this, rowData)}>
+                    <div
+                        className={this.state.phoneType === '3' ? 'noomWidth_electron my_flex flex_align_center' : 'noomWidth my_flex flex_align_center'}
+                        onClick={_this.fileClicked.bind(this, rowData)}>
                         <span className="ant_list_title">{fileTypeLog}{rowData.name}</span>
                         <span className="ant_list_time">
                         {/*<span className="margin_right_8">{rowData.creator.userName}</span>*/}
                             <span>{time}</span>
                         </span>
                     </div>
-                    <div className='option'>{headDivItem}</div>
+                    <div className='option'
+                         style={{display: this.state.phoneType === '3' ? 'none' : ''}}>{headDivItem}</div>
                 </div>
 
             } else {
@@ -716,8 +752,9 @@ export default class antPlate extends React.Component {
                 </ul>;
                 //文件夹
                 headDiv = <div className="am-accordion-item my_flex flex_align_center">
-                    <div className="my_flex flex_align_center noomWidth"
-                         onClick={_this.fileClicked.bind(this, rowData)}>
+                    <div
+                        className={this.state.phoneType === '3' ? 'noomWidth_electron my_flex flex_align_center' : 'noomWidth my_flex flex_align_center'}
+                        onClick={_this.fileClicked.bind(this, rowData)}>
                         <span className="ant_list_title"><img className="filePic" src={require('../imgs/file.png')}
                                                               alt=""/>{rowData.name}</span>
                         <span className="ant_list_time">
@@ -725,7 +762,8 @@ export default class antPlate extends React.Component {
                             <span>{time}</span>
                         </span>
                     </div>
-                    <div className='option'> {headDivItem}</div>
+                    <div className='option'
+                         style={{display: this.state.phoneType === '3' ? 'none' : ''}}> {headDivItem}</div>
                 </div>;
             }
             return (
@@ -752,7 +790,7 @@ export default class antPlate extends React.Component {
                           onClick={this.returnParentAtMoveModal}><Icon type='left'/></span>
                     <span style={{display: parentId === -1 ? 'none' : ''}} className="ant_btn_list icon_back ant_text"
                     >{this.state.fileName}</span>
-                    <div className='btns'>
+                    <div className='btns' style={{display: this.state.phoneType === '3' ? 'none' : ''}}>
                         <span className="ant_btn_list add_file" onClick={this.creatNewFile}>新建文件夹</span>
                         <input style={{display: 'none'}} type="file" id="upload" multiple="multiple"/>
                         <span className="ant_btn_list upload_file" onClick={this.upLoadQue}>上传文件</span>
@@ -767,11 +805,11 @@ export default class antPlate extends React.Component {
                     暂无数据
                 </div>
                 <div className='tableTitle my_flex'>
-                    <div className='noomWidth'>
+                    <div className={this.state.phoneType === '3' ? 'noomWidth_electron' : 'noomWidth'}>
                         <span>名称</span>
                         <span>创建时间</span>
                     </div>
-                    <span className='option'>操作</span>
+                    <span className='option' style={{display: this.state.phoneType === '3' ? 'none' : ''}}>操作</span>
                 </div>
                 <ListView
                     ref={el => this.lv = el}
