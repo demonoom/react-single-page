@@ -513,7 +513,6 @@ export default class classSortPage extends React.Component {
 
     //点击继续上课
     continueClass = (v) => {
-        console.log(v,"vvv")
         /**
          * 直接跳客户端
          */
