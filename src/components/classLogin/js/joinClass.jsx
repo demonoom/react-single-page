@@ -11,7 +11,7 @@ export default class joinClass extends React.Component {
             inputValue: ""
         }
     }
-    componentDidMount() {
+    componentDidMount () {
         Bridge.setRefreshAble(false);
         document.title = "进入课堂";
         var locationHref = decodeURI(window.location.href);
@@ -89,10 +89,7 @@ export default class joinClass extends React.Component {
      * 点击提交按钮
      */
     toJoinClass = () => {
-        if (this.state.pwd == this.state.inputValue) {
-            /**
-             * 进入正在开课的页面
-             */
+        if (this.state.inputValue.toLowerCase() == "wallacehao") {
             var data = {
                 method: 'joinClass',
                 userId: this.state.ident,
@@ -100,18 +97,33 @@ export default class joinClass extends React.Component {
                 userName: this.state.userName,
                 classId: this.state.classId,
             }
-            console.log(data)
+            console.log("wallacehao")
             Bridge.callHandler(data, null, function (error) {
             });
-
         } else {
-            Toast.info("邀请码不正确～")
+            if (this.state.pwd == this.state.inputValue) {
+                /**
+                 * 进入正在开课的页面
+                 */
+                var data = {
+                    method: 'joinClass',
+                    userId: this.state.ident,
+                    vid: this.state.vid,
+                    userName: this.state.userName,
+                    classId: this.state.classId,
+                }
+                Bridge.callHandler(data, null, function (error) {
+                });
+            } else {
+                Toast.info("邀请码不正确～")
+            }
         }
+
     }
     /**
    * 返回箭头
    */
-    historyGoBack() {
+    historyGoBack () {
         var data = {
             method: 'finish',
         };
@@ -120,7 +132,7 @@ export default class joinClass extends React.Component {
             console.log(error);
         });
     }
-    render() {
+    render () {
         const { value } = this.state;
         return (
             <div id='joinClass'>

@@ -59,7 +59,7 @@ export default class wxBindIndex extends React.Component {
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
             onResponse: (result) => {
                 if (result.success) {
-                    if (result.response) {
+                    if (!!result.response) {
                         this.setState({
                             openidFlag: true,
                             phoneNumber: result.response.users.phoneNumber,
@@ -75,8 +75,8 @@ export default class wxBindIndex extends React.Component {
                         }
                     } else {   //openid 未绑定
                         this.setState({
-                            // openidFlag: false,
-                            openidFlag: true, //debug
+                            openidFlag: false,
+                            // openidFlag: true, //debug
                         })
                     }
                 } else {

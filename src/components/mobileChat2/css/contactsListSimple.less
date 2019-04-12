@@ -1,0 +1,225 @@
+#contactsListSimple {
+  height: 100%;
+  .inner {
+    overflow-y: auto;
+  }
+  .personTitle {
+    padding: 9px 15px 9px 15px;
+    font-size: 14px;
+    color: #888;
+    width: 100%;
+    box-sizing: border-box;
+  }
+  .maaee_group_face,
+  .maaee_group_face1,
+  .maaee_group_face2,
+  .maaee_group_face3 {
+    width: 40px !important;
+    height: 40px !important;
+    cursor: pointer;
+    padding: 0;
+    background: #eee;
+    display: inline-block;
+    margin-right: 15px;
+    vertical-align: middle;
+  }
+  // 一个人
+  .maaee_group_face1 {
+    padding: 0;
+    img {
+      width: 100%;
+      height: 100%;
+      background: #fff;
+    }
+  }
+  // 两个人
+  .maaee_group_face2 {
+    padding: 0;
+    img {
+      margin: 10px 0 0px 1px;
+      width: 19px;
+      height: 19px;
+      background: #fff;
+    }
+  }
+  // 三个人
+  .maaee_group_face3 {
+    padding: 0px;
+    img {
+      width: 19px;
+      height: 19px;
+      float: left;
+      background: #fff;
+    }
+    img:first-child {
+      margin: 1px 10px 0 10px;
+    }
+    img:nth-child(2), img:nth-child(3) {
+      margin-top: 1px;
+      margin-left: 1px;
+    }
+  }
+  // 四个人
+  .maaee_group_face {
+    padding: 0px;
+    img {
+      margin: 0;
+      width: 19px;
+      height: 19px;
+      float: left;
+      padding-top: 1px;
+      padding-left: 1px;
+      background: #fff;
+    }
+    img:first-child {
+      margin-left: 0;
+    }
+    img:nth-child(3) {
+      margin-left: 0;
+    }
+  }
+
+  .userImg {
+    width: 40px;
+    height: 40px;
+    vertical-align: middle;
+    margin-right: 15px;
+    display: inline-block;
+  }
+  .am-list-view-scrollview-content {
+    width: 100%;
+    .am-list-body::after {
+      background-color: transparent;
+    }
+  }
+  .am-list-item .am-list-line .am-list-content {
+    padding: 10px 0;
+    font-size: 15px;
+    span {
+      vertical-align: middle;
+      width: calc(~"100% - 56px");
+      line-height: 1;
+    }
+  }
+  .am-list-body {
+    border-bottom: none;
+    border-top: none;
+  }
+  .am-list-body::before {
+    background: none
+  }
+  .address_header {
+    height: 44px;
+    line-height: 44px;
+    font-size: 17px;
+    background: #fff;
+    position: relative;
+    span {
+      color: #666;
+      width: 50%;
+      display: inline-block;
+      text-align: center;
+    }
+    .select {
+      color: #F56A55;
+      position: relative;
+    }
+    .select:after {
+      content: '';
+      width: 20px;
+      height: 2PX;
+      background: #F56A55;
+      position: absolute;
+      left: 50%;
+      bottom: 0;
+      transform: translateX(-50%);
+    }
+  }
+  .address_header:after {
+    content: '';
+    position: absolute;
+    background-color: #c4c4c4;
+    display: block;
+    z-index: 1;
+    top: auto;
+    right: auto;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 1PX;
+    -webkit-transform-origin: 50% 50%;
+    -ms-transform-origin: 50% 50%;
+    transform-origin: 50% 50%;
+    -webkit-transform: scaleY(0.5);
+    -ms-transform: scaleY(0.5);
+    transform: scaleY(0.5);
+  }
+  .am-list-header {
+    padding: 9px 15px 9px 15px;
+  }
+  .message_group {
+    background: url("../img/message_group.png") no-repeat;
+    background-size: 100% 100%;
+  }
+  .message_class {
+    background: url("../img/message_class.png") no-repeat;
+    background-size: 100% 100%;
+  }
+  .stu_class {
+    background: url("../img/stuClassList.png") no-repeat;
+    background-size: 100% 100%;
+  }
+  .message_friend {
+    background: url("../img/message_friend.png") no-repeat;
+    background-size: 100% 100%;
+  }
+  .message_tissue {
+    background: url("../img/message_tissue.png") no-repeat;
+    background-size: 100% 100%;
+  }
+  .teacher-contact {
+    height: calc(~"100% - 49px");
+  }
+  .parents-contact {
+    height: calc(~"100% - 213px");
+  }
+  .myAccount {
+    background-color: white;
+    padding: 0 15px;
+    .inner {
+      padding: 6px 0;
+      height: 33px;
+      line-height: 33px;
+      overflow: hidden;
+      position: relative;
+    }
+    img {
+      width: 33px;
+      height: 33px;
+      border-radius: 50%;
+      overflow: hidden;
+      margin-right: 22px;
+    }
+    .userName {
+      font-size: 15px;
+      color: #999;
+      font-weight: bold;
+      line-height: 33px;
+      width: calc(~"100% - 135px");
+    }
+    .cancelBindBtn {
+      border: 1px #F56A55 solid;
+      color: #F56A55;
+      font-size: 12px;
+      border-radius: 4px;
+      line-height: 22px;
+      height: 22px;
+      padding: 0 7px;
+      display: block;
+      position: absolute;
+      right: 0;
+      top: 50%;
+      transform: translateY(-50%);
+    }
+  }
+}
