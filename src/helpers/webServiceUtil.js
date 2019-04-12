@@ -1,8 +1,8 @@
 var isDebug = false;
 var localDomain = "192.168.50.71";   //请求地址
-var isDebugLocal = true;
+var isDebugLocal = false;
 var localUrl = "192.168.50.30";    //跳转地址本地地址
-var isSafeDebug = true;     //false则为隐藏主页列表，本地调试改为true
+var isSafeDebug = false;     //false则为隐藏主页列表，本地调试改为true
 
 
 //云校本地测试webService地址
@@ -257,10 +257,10 @@ WebServiceUtil.formatAllTime = function (nS) {
 WebServiceUtil.formatYMDHM = function (nS) {
     var da = new Date(parseInt(nS));
     var year = da.getFullYear();
-    var month = (da.getMonth() + 1)<10 ? "0"+(da.getMonth() + 1) : da.getMonth() + 1;
-    var date = da.getDate() < 10 ? "0"+(da.getDate()):da.getDate();
-    var hour = (da.getHours()<10?"0"+(da.getHours()):da.getHours()) + ":";
-    var minutes = da.getMinutes()<10 ? "0"+(da.getMinutes()):da.getMinutes();
+    var month = (da.getMonth() + 1) < 10 ? "0" + (da.getMonth() + 1) : da.getMonth() + 1;
+    var date = da.getDate() < 10 ? "0" + (da.getDate()) : da.getDate();
+    var hour = (da.getHours() < 10 ? "0" + (da.getHours()) : da.getHours()) + ":";
+    var minutes = da.getMinutes() < 10 ? "0" + (da.getMinutes()) : da.getMinutes();
     var dayStr = [year, month, date].join('-');
     var dateStr = dayStr + " " + hour + minutes;
     return dateStr;
