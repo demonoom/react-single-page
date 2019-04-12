@@ -261,6 +261,13 @@ const loginWithoutWX = (location, cb) => {
     })
 }
 
+const contactsList2 = (location, cb) => {
+    require.ensure([], require => {
+            cb(null, require("./components/mobileChat2/js/contactsListSimple").default)
+        }
+    )
+}
+
 const assessMoralEducation = (location, cb) => {
     require.ensure([], require => {
         cb(null, require("./components/classCardSystemBackstage/js/assessMoralEducation").default)
@@ -1489,6 +1496,7 @@ ReactDOM.render(
             <Route path="ArIndex" getComponent={ArIndex} />
             <Route path="wxBindIndex" getComponent={wxBindIndex} />
             <Route path="contactsList" getComponent={contactsList} />
+            <Route path="contactsList2" getComponent={contactsList2} />
             <Route path="chatDetil" getComponent={chatDetil} />
             <Route path="arDoor" getComponent={arDoor} />
             <Route path="excellentStu" getComponent={excellentStu} />
