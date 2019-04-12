@@ -255,6 +255,12 @@ const updateMoralEducation = (location, cb) => {
     })
 }
 
+const loginWithoutWX = (location, cb) => {
+    require.ensure([], require => {
+        cb(null, require("./components/mobileChat2/js/loginWithoutWX").default)
+    })
+}
+
 const assessMoralEducation = (location, cb) => {
     require.ensure([], require => {
         cb(null, require("./components/classCardSystemBackstage/js/assessMoralEducation").default)
@@ -1541,6 +1547,7 @@ ReactDOM.render(
             <Route path="joinClass" getComponent={joinClass} />
             <Route path="anaPage" getComponent={anaPage} />
             <Route path="welcome" getComponent={welcome} />
+            <Route path="loginWithoutWX" getComponent={loginWithoutWX} />
         </Route>
     </Router>, document.getElementById('example')
 );

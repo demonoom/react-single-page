@@ -1,0 +1,221 @@
+#contactsListSimple {
+  height: 100%;
+}
+#contactsListSimple .inner {
+  overflow-y: auto;
+}
+#contactsListSimple .personTitle {
+  padding: 9px 15px 9px 15px;
+  font-size: 14px;
+  color: #888;
+  width: 100%;
+  box-sizing: border-box;
+}
+#contactsListSimple .maaee_group_face,
+#contactsListSimple .maaee_group_face1,
+#contactsListSimple .maaee_group_face2,
+#contactsListSimple .maaee_group_face3 {
+  width: 40px !important;
+  height: 40px !important;
+  cursor: pointer;
+  padding: 0;
+  background: #eee;
+  display: inline-block;
+  margin-right: 15px;
+  vertical-align: middle;
+}
+#contactsListSimple .maaee_group_face1 {
+  padding: 0;
+}
+#contactsListSimple .maaee_group_face1 img {
+  width: 100%;
+  height: 100%;
+  background: #fff;
+}
+#contactsListSimple .maaee_group_face2 {
+  padding: 0;
+}
+#contactsListSimple .maaee_group_face2 img {
+  margin: 10px 0 0px 1px;
+  width: 19px;
+  height: 19px;
+  background: #fff;
+}
+#contactsListSimple .maaee_group_face3 {
+  padding: 0px;
+}
+#contactsListSimple .maaee_group_face3 img {
+  width: 19px;
+  height: 19px;
+  float: left;
+  background: #fff;
+}
+#contactsListSimple .maaee_group_face3 img:first-child {
+  margin: 1px 10px 0 10px;
+}
+#contactsListSimple .maaee_group_face3 img:nth-child(2),
+#contactsListSimple .maaee_group_face3 img:nth-child(3) {
+  margin-top: 1px;
+  margin-left: 1px;
+}
+#contactsListSimple .maaee_group_face {
+  padding: 0px;
+}
+#contactsListSimple .maaee_group_face img {
+  margin: 0;
+  width: 19px;
+  height: 19px;
+  float: left;
+  padding-top: 1px;
+  padding-left: 1px;
+  background: #fff;
+}
+#contactsListSimple .maaee_group_face img:first-child {
+  margin-left: 0;
+}
+#contactsListSimple .maaee_group_face img:nth-child(3) {
+  margin-left: 0;
+}
+#contactsListSimple .userImg {
+  width: 40px;
+  height: 40px;
+  vertical-align: middle;
+  margin-right: 15px;
+  display: inline-block;
+}
+#contactsListSimple .am-list-view-scrollview-content {
+  width: 100%;
+}
+#contactsListSimple .am-list-view-scrollview-content .am-list-body::after {
+  background-color: transparent;
+}
+#contactsListSimple .am-list-item .am-list-line .am-list-content {
+  padding: 10px 0;
+  font-size: 15px;
+}
+#contactsListSimple .am-list-item .am-list-line .am-list-content span {
+  vertical-align: middle;
+  width: calc(100% - 56px);
+  line-height: 1;
+}
+#contactsListSimple .am-list-body {
+  border-bottom: none;
+  border-top: none;
+}
+#contactsListSimple .am-list-body::before {
+  background: none;
+}
+#contactsListSimple .address_header {
+  height: 44px;
+  line-height: 44px;
+  font-size: 17px;
+  background: #fff;
+  position: relative;
+}
+#contactsListSimple .address_header span {
+  color: #666;
+  width: 50%;
+  display: inline-block;
+  text-align: center;
+}
+#contactsListSimple .address_header .select {
+  color: #F56A55;
+  position: relative;
+}
+#contactsListSimple .address_header .select:after {
+  content: '';
+  width: 20px;
+  height: 2PX;
+  background: #F56A55;
+  position: absolute;
+  left: 50%;
+  bottom: 0;
+  transform: translateX(-50%);
+}
+#contactsListSimple .address_header:after {
+  content: '';
+  position: absolute;
+  background-color: #c4c4c4;
+  display: block;
+  z-index: 1;
+  top: auto;
+  right: auto;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 1PX;
+  -webkit-transform-origin: 50% 50%;
+  -ms-transform-origin: 50% 50%;
+  transform-origin: 50% 50%;
+  -webkit-transform: scaleY(0.5);
+  -ms-transform: scaleY(0.5);
+  transform: scaleY(0.5);
+}
+#contactsListSimple .am-list-header {
+  padding: 9px 15px 9px 15px;
+}
+#contactsListSimple .message_group {
+  background: url("../img/message_group.png") no-repeat;
+  background-size: 100% 100%;
+}
+#contactsListSimple .message_class {
+  background: url("../img/message_class.png") no-repeat;
+  background-size: 100% 100%;
+}
+#contactsListSimple .stu_class {
+  background: url("../img/stuClassList.png") no-repeat;
+  background-size: 100% 100%;
+}
+#contactsListSimple .message_friend {
+  background: url("../img/message_friend.png") no-repeat;
+  background-size: 100% 100%;
+}
+#contactsListSimple .message_tissue {
+  background: url("../img/message_tissue.png") no-repeat;
+  background-size: 100% 100%;
+}
+#contactsListSimple .teacher-contact {
+  height: calc(100% - 49px);
+}
+#contactsListSimple .parents-contact {
+  height: calc(100% - 213px);
+}
+#contactsListSimple .myAccount {
+  background-color: white;
+  padding: 0 15px;
+}
+#contactsListSimple .myAccount .inner {
+  padding: 6px 0;
+  height: 33px;
+  line-height: 33px;
+  overflow: hidden;
+  position: relative;
+}
+#contactsListSimple .myAccount img {
+  width: 33px;
+  height: 33px;
+  border-radius: 50%;
+  overflow: hidden;
+  margin-right: 22px;
+}
+#contactsListSimple .myAccount .userName {
+  font-size: 15px;
+  color: #999;
+  font-weight: bold;
+  line-height: 33px;
+  width: calc(100% - 135px);
+}
+#contactsListSimple .myAccount .cancelBindBtn {
+  border: 1px #F56A55 solid;
+  color: #F56A55;
+  font-size: 12px;
+  border-radius: 4px;
+  line-height: 22px;
+  height: 22px;
+  padding: 0 7px;
+  display: block;
+  position: absolute;
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%);
+}
