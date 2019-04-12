@@ -102,7 +102,7 @@ export default class searchFromOrigination extends React.Component {
 
             var colPasswd = search_FromOrigination.state.colPasswd
 
-            window.location.href = encodeURI(WebServiceUtil.mobileServiceURL + 'chatDetil?fromId=' + search_FromOrigination.state.userId + '&toId=' + v.teacher.user.colUid + '&choosePos=te&unionid=' + search_FromOrigination.state.unionid + '&colPasswd=' + colPasswd + '&toName=' + v.teacher.user.userName + '&mesType=0')
+            window.location.href = encodeURI(WebServiceUtil.mobileServiceURL + 'chatDetil2?fromId=' + search_FromOrigination.state.userId + '&toId=' + v.teacher.user.colUid + '&choosePos=te&unionid=' + search_FromOrigination.state.unionid + '&colPasswd=' + colPasswd + '&toName=' + v.teacher.user.userName + '&mesType=0')
         }
     }
 

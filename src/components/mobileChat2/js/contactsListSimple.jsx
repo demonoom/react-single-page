@@ -100,7 +100,7 @@ export default class contacts_ListS extends React.Component {
                         _this.setState({butFoot: false, schoolId: result.response[0].schoolId, missDistance: 240})
                         _this.getRecentShareUsers(result.response[0].colUid)
                     } else {
-                        _this.setState({butFoot: false, missDistance: 240});
+                        _this.setState({butFoot: false, missDistance: 240, schoolId: result.response.schoolId});
                         _this.getRecentShareUsers(result.response.colUid)
                     }
                     _this.setState({userData: [result.response], choosePos: 'te'})  //userData绑定用户数组,一个或两个
@@ -191,7 +191,7 @@ export default class contacts_ListS extends React.Component {
     turnToClass() {
         var colPasswd = contactsList.state.userData[0].colPasswd
         var unionid = contactsList.state.unionid
-        window.location.href = encodeURI(WebServiceUtil.mobileServiceURL + 'classList?fromId=' + contactsList.state.userId + '&colPasswd=' + colPasswd + '&unionid=' + unionid + '&type=te')
+        window.location.href = encodeURI(WebServiceUtil.mobileServiceURL + 'classList2?fromId=' + contactsList.state.userId + '&colPasswd=' + colPasswd + '&unionid=' + unionid + '&type=te')
     }
 
     /**
@@ -201,7 +201,7 @@ export default class contacts_ListS extends React.Component {
         localStorage.setItem("userType", type)
         var colPasswd = contactsList.state.userData[0].colPasswd
         var unionid = contactsList.state.unionid
-        window.location.href = encodeURI(WebServiceUtil.mobileServiceURL + 'friendList?fromId=' + contactsList.state.userId + '&colPasswd=' + colPasswd + '&unionid=' + unionid)
+        window.location.href = encodeURI(WebServiceUtil.mobileServiceURL + 'friendList2?fromId=' + contactsList.state.userId + '&colPasswd=' + colPasswd + '&unionid=' + unionid)
     }
 
     /**
@@ -340,31 +340,9 @@ export default class contacts_ListS extends React.Component {
         });
     }
 
-    getUserOpenIdInfoByOpenId = () => {
-        var _this = this;
-        var param = {
-            "method": 'getUserOpenIdInfoByOpenId',
-            "openId": this.state.unionid,
-            "userType": this.state.indexType == 'teacher' ? 'TEAC' : 'PAREN',
-            "weixinType": '1',
-        };
-        WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
-            onResponse: (result) => {
-                if (result.success) {
-                    if (result.response) {
-                        _this.unBindAccount(result.response.col_id)
-                    } else {   //openid 未绑定
-
-                    }
-                } else {
-
-                }
-            },
-            onError: function (error) {
-                Toast.info('验证用户类型请求失败');
-            },
-        });
-    }
+    quitLogin = () => {
+        location.replace(encodeURI(WebServiceUtil.mobileServiceURL + 'loginWithoutWX'))
+    };
 
     render() {
 
@@ -436,7 +414,7 @@ export default class contacts_ListS extends React.Component {
                                 this.state.indexType === 'teacher' ? this.state.userData[0].userName : this.state.userData[1].userName : ''
                         }
                     </span>
-                            <span className='cancelBindBtn' onClick={this.getUserOpenIdInfoByOpenId}>解绑账号</span>
+                            <span className='cancelBindBtn' onClick={this.quitLogin}>退出登录</span>
                         </div>
                     </div>
 

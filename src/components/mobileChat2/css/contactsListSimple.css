@@ -197,6 +197,7 @@
   border-radius: 50%;
   overflow: hidden;
   margin-right: 22px;
+  vertical-align: top;
 }
 #contactsListSimple .myAccount .userName {
   font-size: 15px;

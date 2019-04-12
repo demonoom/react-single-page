@@ -95,7 +95,7 @@ export default class classList extends React.Component {
             var colPasswd = class_List.state.colPasswd
             var unionid = class_List.state.unionid
 
-            window.location.href = encodeURI(WebServiceUtil.mobileServiceURL + 'friendList?fromId=' + class_List.state.userId + '&colPasswd=' + colPasswd + '&unionid=' + unionid + '&clazzId=' + rowData.id + '&clazzName=' + rowData.name + '&type=' + this.state.userType)
+            window.location.href = encodeURI(WebServiceUtil.mobileServiceURL + 'friendList2?fromId=' + class_List.state.userId + '&colPasswd=' + colPasswd + '&unionid=' + unionid + '&clazzId=' + rowData.id + '&clazzName=' + rowData.name + '&type=' + this.state.userType)
         }
     }
 

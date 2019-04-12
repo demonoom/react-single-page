@@ -215,7 +215,7 @@ export default class originationList extends React.Component {
             var colPasswd = origination_List.state.colPasswd;
             var unionid = origination_List.state.unionid;
 
-            window.location.href = encodeURI(WebServiceUtil.mobileServiceURL + 'originationList?fromId=' + origination_List.state.userId + '&colPasswd=' + colPasswd + '&unionid=' + unionid + '&structureId=' + v.id + '&schoolId=' + origination_List.state.schoolId)
+            window.location.href = encodeURI(WebServiceUtil.mobileServiceURL + 'originationList2?fromId=' + origination_List.state.userId + '&colPasswd=' + colPasswd + '&unionid=' + unionid + '&structureId=' + v.id + '&schoolId=' + origination_List.state.schoolId)
         }
     }
 
@@ -242,7 +242,7 @@ export default class originationList extends React.Component {
         var unionid = origination_List.state.unionid;
         var schoolId = origination_List.state.schoolId;
 
-        window.location.href = encodeURI(WebServiceUtil.mobileServiceURL + 'searchFromOrigination?fromId=' + origination_List.state.userId + '&colPasswd=' + colPasswd + '&unionid=' + unionid + '&schoolId=' + schoolId)
+        window.location.href = encodeURI(WebServiceUtil.mobileServiceURL + 'searchFromOrigination2?fromId=' + origination_List.state.userId + '&colPasswd=' + colPasswd + '&unionid=' + unionid + '&schoolId=' + schoolId)
     }
 
     /**
@@ -278,7 +278,7 @@ export default class originationList extends React.Component {
                 var colPasswd = origination_List.state.colPasswd;
                 var unionid = origination_List.state.unionid;
 
-                window.location.href = encodeURI(WebServiceUtil.mobileServiceURL + 'originationList?fromId=' + origination_List.state.userId + '&colPasswd=' + colPasswd + '&unionid=' + unionid + '&structureId=' + data.id + '&schoolId=' + origination_List.state.schoolId)
+                window.location.href = encodeURI(WebServiceUtil.mobileServiceURL + 'originationList2?fromId=' + origination_List.state.userId + '&colPasswd=' + colPasswd + '&unionid=' + unionid + '&structureId=' + data.id + '&schoolId=' + origination_List.state.schoolId)
             }
         }
     }

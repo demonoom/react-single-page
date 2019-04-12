@@ -156,7 +156,7 @@ export default class friendList extends React.Component {
 
     itemOnClick(rowData) {
         return () => {
-            window.location.href = encodeURI(WebServiceUtil.mobileServiceURL + 'chatDetil?fromId=' + this.state.userId + '&toId=' + rowData.colUid + '&choosePos=' + this.state.userType + '&unionid=' + this.state.unionid + '&colPasswd=' + this.state.colPasswd + '&toName=' + rowData.userName + '&mesType=0')
+            window.location.href = encodeURI(WebServiceUtil.mobileServiceURL + 'chatDetil2?fromId=' + this.state.userId + '&toId=' + rowData.colUid + '&choosePos=' + this.state.userType + '&unionid=' + this.state.unionid + '&colPasswd=' + this.state.colPasswd + '&toName=' + rowData.userName + '&mesType=0')
         }
     }
 

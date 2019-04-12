@@ -727,10 +727,24 @@ const friendList = (location, cb) => {
     }
     )
 }
+
+const friendList2 = (location, cb) => {
+    require.ensure([], require => {
+            cb(null, require("./components/mobileChat2/js/friendList").default)
+        }
+    )
+}
 const classList = (location, cb) => {
     require.ensure([], require => {
         cb(null, require("./components/mobileChat/js/classList").default)
     }
+    )
+}
+
+const classList2 = (location, cb) => {
+    require.ensure([], require => {
+            cb(null, require("./components/mobileChat2/js/classList").default)
+        }
     )
 }
 
@@ -795,6 +809,13 @@ const searchFromOrigination = (location, cb) => {
     require.ensure([], require => {
         cb(null, require("./components/mobileChat/js/searchFromOrigination").default)
     }
+    )
+}
+
+const searchFromOrigination2 = (location, cb) => {
+    require.ensure([], require => {
+            cb(null, require("./components/mobileChat2/js/searchFromOrigination").default)
+        }
     )
 }
 
@@ -1530,12 +1551,15 @@ ReactDOM.render(
             <Route path="addOldPeople" getComponent={addOldPeople} />
             <Route path="healthDetail" getComponent={healthDetail} />
             <Route path="friendList" getComponent={friendList} />
+            <Route path="friendList2" getComponent={friendList2} />
             <Route path="classList" getComponent={classList} />
+            <Route path="classList2" getComponent={classList2} />
             <Route path="groupChatList" getComponent={groupChatList} />
             <Route path="groupChatList2" getComponent={groupChatList2} />
             <Route path="originationList" getComponent={originationList} />
             <Route path="originationList2" getComponent={originationList2} />
             <Route path="searchFromOrigination" getComponent={searchFromOrigination} />
+            <Route path="searchFromOrigination2" getComponent={searchFromOrigination2} />
             <Route path="newUpdateARTextbook" getComponent={newUpdateARTextbook} />
             <Route path="weArrPayment" getComponent={weArrPayment} />
             <Route path="ARTagList" getComponent={ARTagList} />
