@@ -1,11 +1,6 @@
 import React from 'react';
-<<<<<<< HEAD
-import { Button, List, InputItem} from 'antd-mobile';
+import { Button, List, InputItem, Toast} from 'antd-mobile';
 import '../css/chatLogin.less'
-=======
-import {Button, InputItem, Toast} from 'antd-mobile';
->>>>>>> 8e776e8ac985ef65b5afedb17bb16e4ed4e1acc9
-
 export default class loginWithoutWX extends React.Component {
 
     constructor(props) {
@@ -103,6 +98,7 @@ export default class loginWithoutWX extends React.Component {
                 </div>
                 <div className='btn'>
                     <Button type="warning" onClick={this.login}>登录</Button>
+                    <div className='text'>支持教师端和家长端快捷通讯录同步使用</div>
                 </div>
             </div>
         );
