@@ -111,6 +111,20 @@
 #antPlate .option {
   width: 150px;
 }
+#antPlate .noomWidth_electron {
+  padding-left: 30px;
+  width: 100%;
+  box-sizing: border-box;
+}
+#antPlate .noomWidth_electron > span {
+  display: inline-block;
+}
+#antPlate .noomWidth_electron > span:first-child {
+  width: 70%;
+}
+#antPlate .noomWidth_electron > span:last-child {
+  width: 30%;
+}
 #antPlate .noomWidth {
   padding-left: 30px;
   width: calc(100% - 150px);
