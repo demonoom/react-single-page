@@ -89,7 +89,7 @@ export default class groupChatList extends React.Component {
 
             var colPasswd = this.state.colPasswd
 
-            window.location.href = encodeURI(WebServiceUtil.mobileServiceURL + 'chatDetil?fromId=' + this.state.userId + '&toId=' + rowData.chatGroupId + '&choosePos=te&unionid=' + this.state.unionid + '&colPasswd=' + colPasswd + '&toName=' + rowData.name + '&mesType=1')
+            window.location.href = encodeURI(WebServiceUtil.mobileServiceURL + 'chatDetil2?fromId=' + this.state.userId + '&toId=' + rowData.chatGroupId + '&choosePos=te&unionid=' + this.state.unionid + '&colPasswd=' + colPasswd + '&toName=' + rowData.name + '&mesType=1')
         }
     }
 

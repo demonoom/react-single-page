@@ -79,26 +79,17 @@ export default class chat_Detil extends React.Component {
          * @type {{method: string, openId: (string|string)}}
          */
         var param = {
-            "method": 'getUsersByOpenId',
-            "openId": unionid,
+            "method": 'getUserById',
+            "ident": unionid,
         };
 
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
             onResponse: function (result) {
                 if (result.success == true && result.msg == '调用成功') {
-                    if (choosePos == 'te') {
-                        chatDetil.setState({
-                            loginUser: result.response.filter((item) => {
-                                return (item.colUtype == 'TEAC')
-                            })[0]
-                        })
-                    } else {
-                        chatDetil.setState({
-                            loginUser: result.response.filter((item) => {
-                                return (item.colUtype == "PAREN")
-                            })[0]
-                        })
-                    }
+                    console.log(result.response);
+                    chatDetil.setState({
+                        loginUser: result.response
+                    })
                 } else {
                     Toast.fail(result.msg, 3);
                 }
@@ -208,19 +199,10 @@ export default class chat_Detil extends React.Component {
             var messageOfSinge = data.message;
             var fromUser = messageOfSinge.fromUser;
             var colUtype = fromUser.colUtype;
-            // var loginUser = JSON.parse(sessionStorage.getItem("loginUser"));
             var content = messageOfSinge.content;
 
             var isSend = false;
 
-            // if (colUtype == 'SGZH_WEB' && loginUser.colUid == 119665) {
-            //     content = JSON.parse(messageOfSinge.content).messageTip;
-            //     var flowTypeObj = JSON.parse(messageOfSinge.content);
-            //     delete flowTypeObj.messageTip;
-            //     antGroup.setState({FlowType: flowTypeObj});
-            // }
-
-            // var uuidsArray = [];
             var uuid = messageOfSinge.uuid;
             var toId = messageOfSinge.toId;
 
@@ -546,34 +528,10 @@ export default class chat_Detil extends React.Component {
                     var isCurrentDay = isToday(messageOfSinge.createTime);
                     var mesTime;
                     var timeSignForTime;
-                    // if (isCurrentDay) {
-                    //     //如果是当天的消息，只显示时间
-                    //     mesTime = WebServiceUtil.formatHM(messageOfSinge.createTime);
-                    //     timeSignForTime = WebServiceUtil.formatHM(timeSign);
-                    // } else {
-                    //     //非当天时间，显示的是月-日
-                    //     mesTime = WebServiceUtil.formatMD(messageOfSinge.createTime) + ' ' + WebServiceUtil.formatHM(messageOfSinge.createTime);
-                    //     timeSignForTime = WebServiceUtil.formatMD(timeSign) + ' ' + WebServiceUtil.formatHM(timeSign);
-                    // }
+
                     var colUtype = fromUser.colUtype;
                     var loginUser = _this.state.userId;
-                    // if (messageOfSinge.createTime - timeSign != messageOfSinge.createTime && timeSign - messageOfSinge.createTime > 300000) {
-                    //     var messageShow = {
-                    //         'fromUser': {
-                    //             "avatar": "http://www.maaee.com:80/Excoord_For_Education/userPhoto/default_avatar.png",
-                    //             "colUid": 120024,
-                    //             "userName": "群通知者",
-                    //         },
-                    //         'content': timeSignForTime,
-                    //         "messageType": "getMessage",
-                    //         "showType": 1,
-                    //         "messageReturnJson": {
-                    //             messageType: "text",
-                    //         },
-                    //     };
-                    //     messageList.push(messageShow);
-                    // }
-                    // ;
+
                     timeSign = messageOfSinge.createTime;
                     if (messageOfSinge.toType == 4) {
                         var uuid = messageOfSinge.uuid;

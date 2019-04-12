@@ -229,7 +229,7 @@ export default class originationList extends React.Component {
 
             var colPasswd = this.state.colPasswd
 
-            window.location.href = encodeURI(WebServiceUtil.mobileServiceURL + 'chatDetil?fromId=' + this.state.userId + '&toId=' + v.user.colUid + '&choosePos=' + this.state.choosePos + '&unionid=' + this.state.unionid + '&colPasswd=' + colPasswd + '&toName=' + v.user.userName + '&mesType=0')
+            window.location.href = encodeURI(WebServiceUtil.mobileServiceURL + 'chatDetil2?fromId=' + this.state.userId + '&toId=' + v.user.colUid + '&choosePos=' + this.state.choosePos + '&unionid=' + this.state.unionid + '&colPasswd=' + colPasswd + '&toName=' + v.user.userName + '&mesType=0')
         }
     }
 

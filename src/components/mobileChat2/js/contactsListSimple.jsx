@@ -63,20 +63,15 @@ export default class contacts_ListS extends React.Component {
         this.setState({
             phone: phone
         })
-        // this.setState({unionid: 'o-w611FMw4s8WtiCwNqD1Ltr9w2w'});
     }
 
     componentDidMount() {
 
         var _this = this;
 
-        /**
-         * 根据unionid获取绑定的小蚂蚁用户信息
-         * @type {{method: string, openId: (string|string)}}
-         */
         var param = {
-            "method": 'getUsersByOpenId',
-            "openId": contactsList.state.unionid,
+            "method": 'getUserById',
+            "ident": contactsList.state.unionid,
         };
 
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
@@ -104,19 +99,11 @@ export default class contacts_ListS extends React.Component {
                         // butFoot控制下面的老师,家长的显示隐藏
                         _this.setState({butFoot: false, schoolId: result.response[0].schoolId, missDistance: 240})
                         _this.getRecentShareUsers(result.response[0].colUid)
-                    } else if (result.response.length == 0) {
-                        //跳转至登录页面
-                        _this.setState({topDis: false});
-                        location.replace(encodeURI(WebServiceUtil.mobileServiceURL + 'chatLogin?unionid=' + _this.state.unionid))
                     } else {
-                        _this.setState({butFoot: true, missDistance: 284});
-                        result.response.forEach(function (v, i) {
-                            if (v.colUtype == "TEAC") {
-                                _this.getRecentShareUsers(v.colUid)
-                            }
-                        })
+                        _this.setState({butFoot: false, missDistance: 240});
+                        _this.getRecentShareUsers(result.response.colUid)
                     }
-                    _this.setState({userData: result.response, choosePos: 'te'})  //userData绑定用户数组,一个或两个
+                    _this.setState({userData: [result.response], choosePos: 'te'})  //userData绑定用户数组,一个或两个
                 } else {
                     Toast.fail(result.msg, 3);
                 }
@@ -184,7 +171,7 @@ export default class contacts_ListS extends React.Component {
         var colPasswd = contactsList.state.userData[0].colPasswd
         var unionid = contactsList.state.unionid
 
-        window.location.href = encodeURI(WebServiceUtil.mobileServiceURL + 'groupChatList?fromId=' + contactsList.state.userId + '&colPasswd=' + colPasswd + '&unionid=' + unionid)
+        window.location.href = encodeURI(WebServiceUtil.mobileServiceURL + 'groupChatList2?fromId=' + contactsList.state.userId + '&colPasswd=' + colPasswd + '&unionid=' + unionid)
     }
 
     /**
@@ -195,7 +182,7 @@ export default class contacts_ListS extends React.Component {
         var colPasswd = contactsList.state.userData[0].colPasswd;
         var unionid = contactsList.state.unionid;
 
-        window.location.href = encodeURI(WebServiceUtil.mobileServiceURL + 'originationList?fromId=' + contactsList.state.userId + '&colPasswd=' + colPasswd + '&unionid=' + unionid + '&structureId=-1' + '&schoolId=' + contactsList.state.schoolId)
+        window.location.href = encodeURI(WebServiceUtil.mobileServiceURL + 'originationList2?fromId=' + contactsList.state.userId + '&colPasswd=' + colPasswd + '&unionid=' + unionid + '&structureId=-1' + '&schoolId=' + contactsList.state.schoolId)
     }
 
     /**
@@ -242,10 +229,10 @@ export default class contacts_ListS extends React.Component {
 
             if (rowData.type == 0) {
                 //个人
-                window.location.href = encodeURI(WebServiceUtil.mobileServiceURL + 'chatDetil?fromId=' + this.state.userId + '&toId=' + rowData.user.colUid + '&choosePos=' + this.state.choosePos + '&unionid=' + this.state.unionid + '&colPasswd=' + colPasswd + '&toName=' + rowData.user.userName + '&mesType=0')
+                window.location.href = encodeURI(WebServiceUtil.mobileServiceURL + 'chatDetil2?fromId=' + this.state.userId + '&toId=' + rowData.user.colUid + '&choosePos=' + this.state.choosePos + '&unionid=' + this.state.unionid + '&colPasswd=' + colPasswd + '&toName=' + rowData.user.userName + '&mesType=0')
             } else {
                 //群
-                window.location.href = encodeURI(WebServiceUtil.mobileServiceURL + 'chatDetil?fromId=' + this.state.userId + '&toId=' + rowData.chatGroup.chatGroupId + '&choosePos=' + this.state.choosePos + '&unionid=' + this.state.unionid + '&colPasswd=' + colPasswd + '&toName=' + rowData.chatGroup.name + '&mesType=1')
+                window.location.href = encodeURI(WebServiceUtil.mobileServiceURL + 'chatDetil2?fromId=' + this.state.userId + '&toId=' + rowData.chatGroup.chatGroupId + '&choosePos=' + this.state.choosePos + '&unionid=' + this.state.unionid + '&colPasswd=' + colPasswd + '&toName=' + rowData.chatGroup.name + '&mesType=1')
             }
         }
     }

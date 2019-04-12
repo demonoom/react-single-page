@@ -669,6 +669,13 @@ const chatDetil = (location, cb) => {
     )
 }
 
+const chatDetil2 = (location, cb) => {
+    require.ensure([], require => {
+            cb(null, require("./components/mobileChat2/js/chatDetil").default)
+        }
+    )
+}
+
 //微信绑定页面
 const arDoor = (location, cb) => {
     require.ensure([], require => {
@@ -734,10 +741,24 @@ const groupChatList = (location, cb) => {
     )
 }
 
+const groupChatList2 = (location, cb) => {
+    require.ensure([], require => {
+            cb(null, require("./components/mobileChat2/js/groupList").default)
+        }
+    )
+}
+
 const originationList = (location, cb) => {
     require.ensure([], require => {
         cb(null, require("./components/mobileChat/js/originationList").default)
     }
+    )
+}
+
+const originationList2 = (location, cb) => {
+    require.ensure([], require => {
+            cb(null, require("./components/mobileChat2/js/originationList").default)
+        }
     )
 }
 
@@ -1498,6 +1519,7 @@ ReactDOM.render(
             <Route path="contactsList" getComponent={contactsList} />
             <Route path="contactsList2" getComponent={contactsList2} />
             <Route path="chatDetil" getComponent={chatDetil} />
+            <Route path="chatDetil2" getComponent={chatDetil2} />
             <Route path="arDoor" getComponent={arDoor} />
             <Route path="excellentStu" getComponent={excellentStu} />
             <Route path="classBrandTemplateList" getComponent={classBrandTemplateList} />
@@ -1510,7 +1532,9 @@ ReactDOM.render(
             <Route path="friendList" getComponent={friendList} />
             <Route path="classList" getComponent={classList} />
             <Route path="groupChatList" getComponent={groupChatList} />
+            <Route path="groupChatList2" getComponent={groupChatList2} />
             <Route path="originationList" getComponent={originationList} />
+            <Route path="originationList2" getComponent={originationList2} />
             <Route path="searchFromOrigination" getComponent={searchFromOrigination} />
             <Route path="newUpdateARTextbook" getComponent={newUpdateARTextbook} />
             <Route path="weArrPayment" getComponent={weArrPayment} />
