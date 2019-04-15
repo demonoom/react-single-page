@@ -392,7 +392,7 @@ export default class classCardHomePageDoor extends React.Component {
                     <div className="teacher-item">
                         <h1>其它</h1>
                         <ul className="classCardHomePageDoor my_flex">
-                            <li onClick={this.turnToRingManage}><i className="icon icon_time"></i>
+                            <li onClick={this.turnToRingManage}><i className="icon icon_BraceletManagement"></i>
                                 <div>手环管理</div>
                             </li>
 
