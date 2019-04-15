@@ -522,9 +522,9 @@ export default class classSortPage extends React.Component {
             vid: v.vid,
             classId: v.clazzId,
             userName: this.state.users.userName,
-            userType:2,
-            livePassword:v.password,
-            liveTitle:v.title
+            userType: 2,
+            livePassword: v.password,
+            liveTitle: v.title
         }
         console.log(data)
         Bridge.callHandler(data, null, function (error) {
@@ -597,7 +597,6 @@ export default class classSortPage extends React.Component {
      * 点击课件
      */
     clickClassFile = () => {
-
         this.setState({
             selectedTab: 'greenTab',
         });
@@ -1033,7 +1032,7 @@ export default class classSortPage extends React.Component {
                                                                             </div>
                                                                             <div className='classBtn' >查看回顾</div>
                                                                             <div className='time'>开课时间：
-                                               {
+                                                                                {
                                                                                     v.openTime
                                                                                 }
                                                                             </div>
