@@ -257,10 +257,10 @@ WebServiceUtil.formatAllTime = function (nS) {
 WebServiceUtil.formatYMDHM = function (nS) {
     var da = new Date(parseInt(nS));
     var year = da.getFullYear();
-    var month = (da.getMonth() + 1)<10 ? "0"+(da.getMonth() + 1) : da.getMonth() + 1;
-    var date = da.getDate() < 10 ? "0"+(da.getDate()):da.getDate();
-    var hour = (da.getHours()<10?"0"+(da.getHours()):da.getHours()) + ":";
-    var minutes = da.getMinutes()<10 ? "0"+(da.getMinutes()):da.getMinutes();
+    var month = (da.getMonth() + 1) < 10 ? "0" + (da.getMonth() + 1) : da.getMonth() + 1;
+    var date = da.getDate() < 10 ? "0" + (da.getDate()) : da.getDate();
+    var hour = (da.getHours() < 10 ? "0" + (da.getHours()) : da.getHours()) + ":";
+    var minutes = da.getMinutes() < 10 ? "0" + (da.getMinutes()) : da.getMinutes();
     var dayStr = [year, month, date].join('-');
     var dateStr = dayStr + " " + hour + minutes;
     return dateStr;

@@ -375,6 +375,8 @@ export default class boxBracelet extends React.Component {
         const boxType = [
             {value: 1, label: '绑定为班牌'},
             {value: 3, label: '绑定为盒子'},
+            {value: 4, label: '绑定为共享班牌'},
+            {value: 5, label: '绑定为蓝牙网关'},
         ];
 
         const row = (rowData, sectionID, rowID) => {

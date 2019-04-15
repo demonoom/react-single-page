@@ -106,10 +106,10 @@ export default class contacts_ListS extends React.Component {
                         _this.getRecentShareUsers(result.response[0].colUid)
                     } else if (result.response.length == 0) {
                         //跳转至登录页面
-                        _this.setState({topDis: false})
+                        _this.setState({topDis: false});
                         location.replace(encodeURI(WebServiceUtil.mobileServiceURL + 'chatLogin?unionid=' + _this.state.unionid))
                     } else {
-                        _this.setState({butFoot: true, missDistance: 284})
+                        _this.setState({butFoot: true, missDistance: 284});
                         result.response.forEach(function (v, i) {
                             if (v.colUtype == "TEAC") {
                                 _this.getRecentShareUsers(v.colUid)

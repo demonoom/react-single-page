@@ -255,6 +255,19 @@ const updateMoralEducation = (location, cb) => {
     })
 }
 
+const loginWithoutWX = (location, cb) => {
+    require.ensure([], require => {
+        cb(null, require("./components/mobileChat2/js/loginWithoutWX").default)
+    })
+}
+
+const contactsList2 = (location, cb) => {
+    require.ensure([], require => {
+            cb(null, require("./components/mobileChat2/js/contactsListSimple").default)
+        }
+    )
+}
+
 const assessMoralEducation = (location, cb) => {
     require.ensure([], require => {
         cb(null, require("./components/classCardSystemBackstage/js/assessMoralEducation").default)
@@ -656,6 +669,13 @@ const chatDetil = (location, cb) => {
     )
 }
 
+const chatDetil2 = (location, cb) => {
+    require.ensure([], require => {
+            cb(null, require("./components/mobileChat2/js/chatDetil").default)
+        }
+    )
+}
+
 //微信绑定页面
 const arDoor = (location, cb) => {
     require.ensure([], require => {
@@ -707,10 +727,24 @@ const friendList = (location, cb) => {
     }
     )
 }
+
+const friendList2 = (location, cb) => {
+    require.ensure([], require => {
+            cb(null, require("./components/mobileChat2/js/friendList").default)
+        }
+    )
+}
 const classList = (location, cb) => {
     require.ensure([], require => {
         cb(null, require("./components/mobileChat/js/classList").default)
     }
+    )
+}
+
+const classList2 = (location, cb) => {
+    require.ensure([], require => {
+            cb(null, require("./components/mobileChat2/js/classList").default)
+        }
     )
 }
 
@@ -721,10 +755,24 @@ const groupChatList = (location, cb) => {
     )
 }
 
+const groupChatList2 = (location, cb) => {
+    require.ensure([], require => {
+            cb(null, require("./components/mobileChat2/js/groupList").default)
+        }
+    )
+}
+
 const originationList = (location, cb) => {
     require.ensure([], require => {
         cb(null, require("./components/mobileChat/js/originationList").default)
     }
+    )
+}
+
+const originationList2 = (location, cb) => {
+    require.ensure([], require => {
+            cb(null, require("./components/mobileChat2/js/originationList").default)
+        }
     )
 }
 
@@ -761,6 +809,13 @@ const searchFromOrigination = (location, cb) => {
     require.ensure([], require => {
         cb(null, require("./components/mobileChat/js/searchFromOrigination").default)
     }
+    )
+}
+
+const searchFromOrigination2 = (location, cb) => {
+    require.ensure([], require => {
+            cb(null, require("./components/mobileChat2/js/searchFromOrigination").default)
+        }
     )
 }
 
@@ -1483,7 +1538,9 @@ ReactDOM.render(
             <Route path="ArIndex" getComponent={ArIndex} />
             <Route path="wxBindIndex" getComponent={wxBindIndex} />
             <Route path="contactsList" getComponent={contactsList} />
+            <Route path="contactsList2" getComponent={contactsList2} />
             <Route path="chatDetil" getComponent={chatDetil} />
+            <Route path="chatDetil2" getComponent={chatDetil2} />
             <Route path="arDoor" getComponent={arDoor} />
             <Route path="excellentStu" getComponent={excellentStu} />
             <Route path="classBrandTemplateList" getComponent={classBrandTemplateList} />
@@ -1494,10 +1551,15 @@ ReactDOM.render(
             <Route path="addOldPeople" getComponent={addOldPeople} />
             <Route path="healthDetail" getComponent={healthDetail} />
             <Route path="friendList" getComponent={friendList} />
+            <Route path="friendList2" getComponent={friendList2} />
             <Route path="classList" getComponent={classList} />
+            <Route path="classList2" getComponent={classList2} />
             <Route path="groupChatList" getComponent={groupChatList} />
+            <Route path="groupChatList2" getComponent={groupChatList2} />
             <Route path="originationList" getComponent={originationList} />
+            <Route path="originationList2" getComponent={originationList2} />
             <Route path="searchFromOrigination" getComponent={searchFromOrigination} />
+            <Route path="searchFromOrigination2" getComponent={searchFromOrigination2} />
             <Route path="newUpdateARTextbook" getComponent={newUpdateARTextbook} />
             <Route path="weArrPayment" getComponent={weArrPayment} />
             <Route path="ARTagList" getComponent={ARTagList} />
@@ -1541,6 +1603,7 @@ ReactDOM.render(
             <Route path="joinClass" getComponent={joinClass} />
             <Route path="anaPage" getComponent={anaPage} />
             <Route path="welcome" getComponent={welcome} />
+            <Route path="loginWithoutWX" getComponent={loginWithoutWX} />
         </Route>
     </Router>, document.getElementById('example')
 );

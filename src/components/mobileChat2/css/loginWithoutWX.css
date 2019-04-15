@@ -1,0 +1,20 @@
+#loginWithoutWX {
+  background: #fff;
+  padding: 0 15px;
+  height: 100%;
+  overflow: hidden;
+}
+#loginWithoutWX .login-header {
+  padding: 20px 0 50px 0;
+}
+#loginWithoutWX .inputItem .line_public:after {
+  background-color: #e5e5e5;
+}
+#loginWithoutWX .login-btn {
+  background: #F56A55;
+  font-size: 17px;
+  color: #fff;
+  border-radius: 4px;
+  line-height: 44px;
+  margin-top: 55px;
+}
