@@ -199,6 +199,7 @@ export default class boxBracelet extends React.Component {
     scanMac() {
         var data = {
             method: 'ringBinding'
+            
         };
         Bridge.callHandler(data, function (mes) {
             //获取二维码MAC地址
