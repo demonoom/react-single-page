@@ -327,63 +327,82 @@ export default class classCardHomePageDoor extends React.Component {
         }
         return (
             <div id="classCardHomePageDoor" style={{ height: document.body.clientHeight, overflow: 'auto' }}>
-                <ul className="classCardHomePageDoor my_flex">
-                    <div>教室管理</div>
-                    <li onClick={this.turnToClassroomManage}><i className="icon icon_ClassroomManagement"></i>
-                        <div>教室编辑</div>
-                    </li>
-                    <li onClick={this.turnToRingBinding}><i className="icon icon_bracelet"></i>
-                        <div>教室环境设置</div>
-                    </li>
-                    <li onClick={this.turnToCurriculumSchedule.bind(this, 1)}><i
-                        className="icon icon_course"></i>
-                        <div>教室课程表管理</div>
-                    </li>
-                    <div>班级管理</div>
-                    <li onClick={this.turnToNotifyBack}><i className="icon icon_notify"></i>
-                        <div>班级通知管理</div>
-                    </li>
-                    {/*<li onClick={this.turnToCurriculumSchedule.bind(this, 2)}><i className="icon icon_publiCourse"></i><div>公共教室课程表</div></li>*/}
-                    <li onClick={this.turnToClassDemeanor.bind(this, 1)}><i className="icon icon_classDemeanor"></i>
-                        <div>班级风采管理</div>
-                    </li>
-                    <li onClick={this.turnToClassDemeanor.bind(this, 2)}><i className="icon icon_honor"></i>
-                        <div>班级荣誉管理</div>
-                    </li>
-                    <li onClick={this.turnToStudentDutyList}><i className="icon icon_studentOnDuty"></i>
-                        <div>班级值日表管理</div>
-                    </li>
-                    <li onClick={this.turnToMoralEducation}><i className="icon icon_moralEducationScore"></i>
-                        <div>班级德育评价管理</div>
-                    </li>
+                    <div className="teacher-item">
+                        <h1>教室管理</h1>
+                        <ul className="classCardHomePageDoor my_flex">
+                            <li onClick={this.turnToClassroomManage}><i className="icon icon_ClassroomManagement"></i>
+                                <div>教室编辑</div>
+                            </li>
+                            <li onClick={this.turnToRingBinding}><i className="icon icon_bracelet"></i>
+                                <div>教室环境设置</div>
+                            </li>
+                            <li onClick={this.turnToCurriculumSchedule.bind(this, 1)}><i
+                                className="icon icon_course"></i>
+                                <div>教室课程表管理</div>
+                            </li>
+                        </ul>
+                    </div>
+                    <div className="teacher-item">
+                    <h1>班级管理</h1>
+                    <ul className="classCardHomePageDoor my_flex">
+                        <li onClick={this.turnToNotifyBack}><i className="icon icon_notify"></i>
+                            <div>班级通知管理</div>
+                        </li>
+                        {/*<li onClick={this.turnToCurriculumSchedule.bind(this, 2)}><i className="icon icon_publiCourse"></i><div>公共教室课程表</div></li>*/}
+                        <li onClick={this.turnToClassDemeanor.bind(this, 1)}><i className="icon icon_classDemeanor"></i>
+                            <div>班级风采管理</div>
+                        </li>
+                        <li onClick={this.turnToClassDemeanor.bind(this, 2)}><i className="icon icon_honor"></i>
+                            <div>班级荣誉管理</div>
+                        </li>
+                        <li onClick={this.turnToStudentDutyList}><i className="icon icon_studentOnDuty"></i>
+                            <div>班级值日表管理</div>
+                        </li>
+                        <li onClick={this.turnToMoralEducation}><i className="icon icon_moralEducationScore"></i>
+                            <div>班级德育评价管理</div>
+                        </li>
+                    </ul>
+                    </div>
                     {/*<li onClick={this.turnToWarnList}><i className="icon icon_earlyWarning"></i><div>课堂预警</div></li>
                     <li onClick={this.turnToStudentMovement}><i className="icon icon_exercise"></i><div>学生运动轨迹</div></li>*/}
-                    <div>校园管理</div>
-                    <li onClick={this.turnWarningAdminList}><i className="icon icon_warning"></i>
-                        <div>校园预警人员管理</div>
-                    </li>
-                    <li onClick={this.turnToAttendanceTime}><i className="icon icon_attendanceTime"></i>
-                        <div>校园考勤时段设置</div>
-                    </li>
+                    <div className="teacher-item">
+                        <h1>校园管理</h1>
+                        <ul className="classCardHomePageDoor my_flex">
+                            <li onClick={this.turnToAttendanceTime}><i className="icon icon_attendanceTime"></i>
+                                <div>校园考勤时段设置</div>
+                            </li>
+                            <li onClick={this.turnWarningAdminList}><i className="icon icon_warning"></i>
+                                <div>校园预警人员管理</div>
+                            </li>
+                        </ul>
+                    </div>
                     {/*<li onClick={this.toAttendanceStatistical}><i className="icon icon_moralEducationScore"></i><div>出勤率统计(饼图)</div></li>
                     <li onClick={this.toAttendanceSatisticaForClass}><i className="icon icon_moralEducationScore"></i><div>出勤率统计(柱状图)</div></li>*/}
-                    <div>班牌管理</div>
-                    <li onClick={this.turnToSetSkin}><i className="icon icon_skin"></i>
-                        <div>班牌皮肤设置</div>
-                    </li>
-                    <li onClick={this.turnToSetTime}><i className="icon icon_time"></i>
-                        <div>班牌定时开关机</div>
-                    </li>
-                    <div>其它</div>
-                    <li onClick={this.turnToRingManage}><i className="icon icon_time"></i>
-                        <div>手环管理</div>
-                    </li>
-                    {
-                        isManager == true ? <li onClick={this.refreshClassCardPage}><i className="icon icon_refresh"></i>
-                            <div>班牌统一刷新</div>
-                        </li> : null
-                    }
-                </ul>
+                    <div className="teacher-item">
+                        <h1>班牌管理</h1>
+                        <ul className="classCardHomePageDoor my_flex">
+                            <li onClick={this.turnToSetSkin}><i className="icon icon_skin"></i>
+                                <div>班牌皮肤设置</div>
+                            </li>
+                            <li onClick={this.turnToSetTime}><i className="icon icon_time"></i>
+                                <div>班牌定时开关机</div>
+                            </li>
+                        </ul>
+                    </div>
+                    <div className="teacher-item">
+                        <h1>其它</h1>
+                        <ul className="classCardHomePageDoor my_flex">
+                            <li onClick={this.turnToRingManage}><i className="icon icon_time"></i>
+                                <div>手环管理</div>
+                            </li>
+
+                        {
+                            isManager == true ? <li onClick={this.refreshClassCardPage}><i className="icon icon_refresh"></i>
+                                <div>班牌统一刷新</div>
+                            </li> : null
+                        }
+                        </ul>
+                    </div>
             </div>
         );
     }
