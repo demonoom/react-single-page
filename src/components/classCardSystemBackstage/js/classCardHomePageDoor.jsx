@@ -289,6 +289,18 @@ export default class classCardHomePageDoor extends React.Component {
             window.location.href = url;
         });
     }
+    //学校简介管理
+    turnToAddSchoolInfo = () => {
+        // var url = WebServiceUtil.mobileServiceURL + "classTimingList?uid=" + this.state.ident + "&sid=" + this.state.schoolId;
+        var url = WebServiceUtil.mobileServiceURL + "addSchoolInfo?schoolId=" + + this.state.schoolId;
+        var data = {
+            method: 'openNewPage',
+            url: url
+        };
+        Bridge.callHandler(data, null, function (error) {
+            window.location.href = url;
+        });
+    }
 
     /**
      * 刷新班牌页面
@@ -378,24 +390,15 @@ export default class classCardHomePageDoor extends React.Component {
                 </div>
                 {/*<li onClick={this.toAttendanceStatistical}><i className="icon icon_moralEducationScore"></i><div>出勤率统计(饼图)</div></li>
                     <li onClick={this.toAttendanceSatisticaForClass}><i className="icon icon_moralEducationScore"></i><div>出勤率统计(柱状图)</div></li>*/}
-                    <div className="teacher-item">
-                        <h1>班牌管理</h1>
-                        <ul className="classCardHomePageDoor my_flex">
-                            <li onClick={this.turnToSetSkin}><i className="icon icon_skin"></i>
-                                <div>班牌皮肤设置</div>
-                            </li>
-                            <li onClick={this.turnToSetTime}><i className="icon icon_time"></i>
-                                <div>班牌定时开关机</div>
-                            </li>
-                        </ul>
-                    </div>
-                    <div className="teacher-item">
-                        <h1>其它</h1>
-                        <ul className="classCardHomePageDoor my_flex">
-                            <li onClick={this.turnToRingManage}><i className="icon icon_BraceletManagement"></i>
-                                <div>手环管理</div>
-                            </li>
-
+                <div className="teacher-item">
+                    <h1>班牌管理</h1>
+                    <ul className="classCardHomePageDoor my_flex">
+                        <li onClick={this.turnToSetSkin}><i className="icon icon_skin"></i>
+                            <div>班牌皮肤设置</div>
+                        </li>
+                        <li onClick={this.turnToSetTime}><i className="icon icon_time"></i>
+                            <div>班牌定时开关机</div>
+                        </li>
                         {
                             isManager == true ? <li onClick={this.refreshClassCardPage}><i className="icon icon_refresh"></i>
                                 <div>班牌统一刷新</div>
@@ -406,8 +409,11 @@ export default class classCardHomePageDoor extends React.Component {
                 <div className="teacher-item">
                     <h1>其它</h1>
                     <ul className="classCardHomePageDoor my_flex">
-                        <li onClick={this.turnToRingManage}><i className="icon icon_time"></i>
+                        <li onClick={this.turnToRingManage}><i className="icon icon_BraceletManagement"></i>
                             <div>手环管理</div>
+                        </li>
+                        <li onClick={this.turnToAddSchoolInfo}><i className="icon icon_BraceletManagement"></i>
+                            <div>学校简介管理</div>
                         </li>
                     </ul>
                 </div>

@@ -19,10 +19,10 @@ export default class addSchoolInfo extends React.Component {
         document.title = '添加学校简介';
         var locationHref = window.location.href;
         var locationSearch = locationHref.substr(locationHref.indexOf("?") + 1);
+        var schoolId = locationSearch.split("&")[0].split('=')[1];
+        this.setState({ schoolId })
         window.addEventListener('resize', this.onWindwoResize);
-        var clazzroomId = locationSearch.split("&")[0].split('=')[1];
-        var classTableId = locationSearch.split("&")[1].split('=')[1];
-        this.setState({ clazzroomId, classTableId })
+
     }
 
     componentWillUnmount () {
