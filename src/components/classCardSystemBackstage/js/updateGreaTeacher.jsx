@@ -1,6 +1,6 @@
 import React from "react";
 import {Toast, InputItem, List, TextareaItem, Button} from "antd-mobile"
-import '../css/addGreaTeacher.less'
+import '../css/updateGreaTeacher.less'
 
 export default class updateGreaTeacher extends React.Component {
     constructor(props) {
@@ -9,6 +9,7 @@ export default class updateGreaTeacher extends React.Component {
             teaName: '',
             teaNote: '',
             teaPic: '',
+            teaPicSrc: '',
         }
     }
 
@@ -25,28 +26,34 @@ export default class updateGreaTeacher extends React.Component {
     }
 
     findGreaTeacherById = () => {
+        var _this = this;
         var param = {
             "method": 'getTeacherStyle',
             "actionName": "sharedClassAction",
-            "id": parseFloat(this.state.id),
+            "id": this.state.id,
         };
         console.log(param);
         debugger
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
             onResponse: function (result) {
                 console.log(result)
-                // if (result.success == true && result.msg == '调用成功') {
-                //     if (result.response) {
-                //         // window.location.href = 'https://172.16.2.128:6443/arBook/'
-                //         window.location.href = 'https://www.maaee.com:6443/arBook/';
-                //         localStorage.setItem('loginAr', 'success');
-                //     } else {
-                //         Toast.info('您还未购买,无法使用', 2)
-                //     }
-                //
-                // } else {
-                //     Toast.fail(result.msg, 3);
-                // }
+                if (result.success == true && result.msg == '调用成功') {
+                    if (result.response) {
+                        var teaPic = <img src={result.response.avatar} alt=""/>
+                        _this.setState({
+                            "teaPicSrc":result.response.avatar,
+                            "teaNote":result.response.content,
+                            "teaName":result.response.teacherName,
+                            teaPic
+                        })
+
+                    } else {
+                        Toast.info('您还未购买,无法使用', 2)
+                    }
+
+                } else {
+                    Toast.fail(result.msg, 3);
+                }
             },
             onError: function (error) {
                 // message.error(error);
@@ -130,7 +137,7 @@ export default class updateGreaTeacher extends React.Component {
 
     render() {
         return (
-            <div id='addGreaTeacher'>
+            <div id='updateGreaTeacher'>
                 <div className="ListItem line_public">
                     <List renderHeader={() => '姓名'}>
                         <InputItem
