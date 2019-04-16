@@ -111,7 +111,7 @@ export default class addGreaTeacher extends React.Component {
                         />
                     </List>
                 </div>
-                <div className="ListItem-teacher">
+                <div className="ListItem-teacher list-textarea">
                     <List renderHeader={() => '简介'}>
                         <TextareaItem
                             rows={5}
@@ -135,9 +135,10 @@ export default class addGreaTeacher extends React.Component {
                         />
                     </List>
                 </div>
-                <div>
-                    <Button type='primary' onClick={this.saveTeacherStyle}>保存</Button>
+                <div className="submitBtn">
+                    <Button type='warning' onClick={this.saveTeacherStyle}>保存</Button>
                 </div>
+
             </div>
         )
     }

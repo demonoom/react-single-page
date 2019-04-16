@@ -142,12 +142,11 @@ export default class greaTeacherList extends React.Component {
      *　删除教师风采个人
      */
     delAttendanceTime(data) {
-        return
         var _this = this;
         var param = {
-            "method": 'changeSchoolAttendanceStatus',
-            "condition": 0,
-            "aId": data.id,
+            "method": 'deleteTeacherStyle',
+            "actionName":"sharedClassAction",
+            "styleId": data.id,
         };
 
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
