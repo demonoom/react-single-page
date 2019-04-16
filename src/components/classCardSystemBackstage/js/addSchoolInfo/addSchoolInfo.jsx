@@ -1,6 +1,6 @@
 import React from 'react';
 import {
-    TextareaItem, List, Toast
+    TextareaItem, List, Toast,Button
 } from 'antd-mobile';
 import "./addSchoolInfo.less"
 var teacherV;
@@ -112,14 +112,18 @@ export default class addSchoolInfo extends React.Component {
                     <List renderHeader={() => '学校简介'}>
                         <TextareaItem
                             placeholder="请输入学校简介"
-                            autoHeight
                             value={this.state.schoolInfo}
                             labelNumber={5}
                             onChange={this.textareaOnChange.bind(this)}
+                            count={10000}
+                            rows={9}
                         />
                     </List>
                 </div>
-                <div className="btn-save" onClick={this.toSaveSchoolInfo}>保存</div>
+                <div className='submitBtn'>
+                    <Button type="warning" onClick={this.toSaveSchoolInfo}>提交</Button>
+                </div>
+
             </div>
         );
     }

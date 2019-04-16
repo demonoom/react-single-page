@@ -289,10 +289,9 @@ export default class classCardHomePageDoor extends React.Component {
             window.location.href = url;
         });
     }
-    //学校简介管理
-    turnToAddSchoolInfo = () => {
-        // var url = WebServiceUtil.mobileServiceURL + "classTimingList?uid=" + this.state.ident + "&sid=" + this.state.schoolId;
-        var url = WebServiceUtil.mobileServiceURL + "addSchoolInfo?schoolId=" + + this.state.schoolId;
+    
+    turnToSchoolManage = () => {
+        var url = WebServiceUtil.mobileServiceURL + "schoolInfoManage?schoolId=" + + this.state.schoolId;
         var data = {
             method: 'openNewPage',
             url: url
@@ -386,6 +385,9 @@ export default class classCardHomePageDoor extends React.Component {
                         <li onClick={this.turnWarningAdminList}><i className="icon icon_warning"></i>
                             <div>校园预警人员管理</div>
                         </li>
+                        <li onClick={this.turnToSchoolManage}><i className="icon icon_warning"></i>
+                            <div>校园信息管理</div>
+                        </li>
                     </ul>
                 </div>
                 {/*<li onClick={this.toAttendanceStatistical}><i className="icon icon_moralEducationScore"></i><div>出勤率统计(饼图)</div></li>
@@ -411,9 +413,6 @@ export default class classCardHomePageDoor extends React.Component {
                     <ul className="classCardHomePageDoor my_flex">
                         <li onClick={this.turnToRingManage}><i className="icon icon_BraceletManagement"></i>
                             <div>手环管理</div>
-                        </li>
-                        <li onClick={this.turnToAddSchoolInfo}><i className="icon icon_BraceletManagement"></i>
-                            <div>学校简介管理</div>
                         </li>
                     </ul>
                 </div>

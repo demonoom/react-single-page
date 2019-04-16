@@ -1148,6 +1148,13 @@ const addSchoolInfo = (location, cb) => {
     )
 }
 
+const schoolInfoManage = (location, cb) => {
+    require.ensure([], require => {
+        cb(null, require("./components/classCardSystemBackstage/js/schoolInfoManage").default)
+    }
+    )
+}
+
 
 
 import './index.less';
@@ -1631,6 +1638,7 @@ ReactDOM.render(
             <Route path="addSchoolInfo" getComponent={addSchoolInfo} />
             <Route path="greaTeacherList" getComponent={greaTeacherList} />
             <Route path="addGreaTeacher" getComponent={addGreaTeacher} />
+            <Route path="schoolInfoManage" getComponent={schoolInfoManage} />
         </Route>
     </Router>, document.getElementById('example')
 );

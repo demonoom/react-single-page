@@ -1,4 +1,3 @@
-(node) util.print is deprecated. Use console.log instead.
 #getClassRoomList {
   font-size: 17px;
 }
@@ -11,7 +10,7 @@
   position: relative;
 }
 #getClassRoomList .search-nav i {
-  background: url("../../imgs/search-icon.png") no-repeat center center #ffffff;
+  background: url("../../imgs/search-icon.png") no-repeat center center #fff;
   font-size: 0;
   width: 20px;
   height: 34px;
@@ -57,7 +56,6 @@
 }
 #getClassRoomList .am-pull-to-refresh-content-wrapper {
   height: 100%;
-  overflow-y: auto;
 }
 #getClassRoomList .am-pull-to-refresh-indicator {
   font-size: 1rem !important;
@@ -278,7 +276,7 @@
   text-align: center;
   font-size: 16px;
   display: inline-block;
-  background: url("../../imgs/edit_coordinate.png") no-repeat;
+  background: url("../../imgs/edit_coordinate.png") no-repeat left center;
   background-size: 18px ;
   text-indent: 15px;
 }
