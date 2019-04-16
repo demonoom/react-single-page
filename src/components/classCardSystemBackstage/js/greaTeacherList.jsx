@@ -128,8 +128,7 @@ export default class greaTeacherList extends React.Component {
      * @param name
      */
     updateAttendanceTime(data, event) {
-        return
-        var url = WebServiceUtil.mobileServiceURL + "updateAttendanceTime?uid=" + AttenT.state.uid + "&id=" + data.id;
+        var url = WebServiceUtil.mobileServiceURL + "updateGreaTeacher?uid=" + AttenT.state.uid + "&id=" + data.id;
         var data = {
             method: 'openNewPage',
             url: url,
