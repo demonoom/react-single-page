@@ -31,9 +31,9 @@ export default class greaTeacherList extends React.Component {
         var locationSearch = locationHref.substr(locationHref.indexOf("?") + 1);
         var uid = locationSearch.split("&")[0].split("=")[1];
         this.setState({"uid": uid});
-        this.viewSchoolAttendancePage(uid);
         //添加对视窗大小的监听,在屏幕转换以及键盘弹起时重设各项高度
-        window.addEventListener('resize', AttenT.onWindowResize)
+        window.addEventListener('resize', AttenT.onWindowResize);
+        this.getUserById(uid)
     }
 
     componentWillUnmount() {
@@ -50,10 +50,30 @@ export default class greaTeacherList extends React.Component {
         }, 100)
     }
 
+    getUserById = (uid) => {
+        var _this = this;
+        var param = {
+            "method": 'getUserById',
+            "ident": uid,
+        };
+
+        WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
+            onResponse: function (result) {
+                if (result.msg == '调用成功' && result.success == true) {
+                    var res = result.response;
+                    _this.setState({schoolId: res.schoolId});
+                    _this.getAllTeacherStyleList(res.schoolId)
+                }
+            },
+            onError: function (error) {
+            }
+        });
+    };
+
     /**
      * 查看教室的所有课表
      */
-    viewSchoolAttendancePage(uid) {
+    getAllTeacherStyleList(schoolId) {
         var _this = this;
         _this.initData.splice(0);
         _this.state.dataSource = [];
@@ -62,8 +82,10 @@ export default class greaTeacherList extends React.Component {
         });
         const dataBlob = {};
         var param = {
-            "method": 'viewSchoolAttendancePage',
-            "adminId": uid,
+            "method": 'getAllTeacherStyleList',
+            "schoolId": schoolId,
+            "actionName":"sharedClassAction",
+            "pageNo": -1,
         };
 
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
@@ -91,7 +113,7 @@ export default class greaTeacherList extends React.Component {
      * 去添加教师风采页面
      **/
     turnToNewAttendanceTime(rowData) {
-        var url = WebServiceUtil.mobileServiceURL + "addGreaTeacher?uid=" + AttenT.state.uid;
+        var url = WebServiceUtil.mobileServiceURL + "addGreaTeacher?schoolId=" + AttenT.state.schoolId;
         var data = {
             method: 'openNewPage',
             url: url,
@@ -178,7 +200,8 @@ export default class greaTeacherList extends React.Component {
                 <div className="classInfo line_public attendanceCont">
                     <div>
                         <div className="title textOver">
-                            {rowData.name}
+                            <img src={rowData.avatar} alt=""/>
+                            {rowData.teacherName}
                         </div>
                     </div>
                     <div className="amList_cont">

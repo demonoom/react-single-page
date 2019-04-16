@@ -14,7 +14,11 @@ export default class addGreaTeacher extends React.Component {
     }
 
     componentDidMount() {
-
+        var locationHref = window.location.href;
+        var locationSearch = locationHref.substr(locationHref.indexOf("?") + 1);
+        var schoolId = locationSearch.split("&")[0].split("=")[1];
+        console.log(schoolId);
+        this.setState({schoolId})
     }
 
     teaNameOnChange = (e) => {
@@ -52,11 +56,12 @@ export default class addGreaTeacher extends React.Component {
     }
 
     /**
-     * {"method":"saveTeacherStyle",
+     *{"method":"saveTeacherStyle",
         "actionName":"sharedClassAction",
         "content":"测试侧测试",
         "teacherName":"拿铁城",
-        "avatar":"2"}
+        "avatar":"2",
+        "schoolId":"22222"}
      */
     saveTeacherStyle = () => {
         if (this.state.teaName.trim() === '') {
@@ -77,20 +82,13 @@ export default class addGreaTeacher extends React.Component {
             "content": this.state.teaNote,
             "teacherName": this.state.teaName,
             "avatar": this.state.teaPicSrc,
+            "schoolId": this.state.schoolId
         };
-        console.log(param);
-        debugger
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
             onResponse: function (result) {
+                console.log(result);
                 if (result.success == true && result.msg == '调用成功') {
-                    if (result.response) {
-                        // window.location.href = 'https://172.16.2.128:6443/arBook/'
-                        window.location.href = 'https://www.maaee.com:6443/arBook/';
-                        localStorage.setItem('loginAr', 'success');
-                    } else {
-                        Toast.info('您还未购买,无法使用', 2)
-                    }
-
+                    Toast.success('保存成功')
                 } else {
                     Toast.fail(result.msg, 3);
                 }
