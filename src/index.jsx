@@ -1628,12 +1628,9 @@ ReactDOM.render(
             <Route path="anaPage" getComponent={anaPage} />
             <Route path="welcome" getComponent={welcome} />
             <Route path="loginWithoutWX" getComponent={loginWithoutWX} />
-<<<<<<< HEAD
             <Route path="addSchoolInfo" getComponent={addSchoolInfo} />
-=======
             <Route path="greaTeacherList" getComponent={greaTeacherList} />
             <Route path="addGreaTeacher" getComponent={addGreaTeacher} />
->>>>>>> f5f0bf84a63e27173c7faf43fabc25ce830cee6d
         </Route>
     </Router>, document.getElementById('example')
 );
