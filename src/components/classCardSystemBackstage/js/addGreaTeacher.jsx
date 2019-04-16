@@ -50,34 +50,39 @@ export default class addGreaTeacher extends React.Component {
     render() {
         return (
             <div id='addGreaTeacher'>
-                <List renderHeader={() => '请输入教师姓名'}>
-                    <InputItem
-                        placeholder='请输入教师姓名'
-                        value={this.state.teaName}
-                        onChange={this.teaNameOnChange}
-                    />
-                </List>
-                <List renderHeader={() => '请输入教师简介'}>
-                    <TextareaItem
-                        rows={5}
-                        count={200}
-                        placeholder='请输入教师简介'
-                        value={this.state.teaNote}
-                        onChange={this.teaNoteOnChange}
-                    />
-                </List>
-                <List renderHeader={() => '请上传半身照'}>
-                    <div className='uploadImgCont'>
-                        {this.state.teaPic}
-                    </div>
-                    <img
-                        className='uploadImgBtn'
-                        src={require('../imgs/addPic.png')}
-                        alt=""
-                        onClick={this.uploadImgBtn}
-                    />
-                </List>
-
+                <div className="ListItem line_public">
+                    <List renderHeader={() => '姓名'}>
+                        <InputItem
+                            placeholder='请输入教师姓名'
+                            value={this.state.teaName}
+                            onChange={this.teaNameOnChange}
+                        />
+                    </List>
+                </div>
+                <div className="ListItem-teacher">
+                    <List renderHeader={() => '简介'}>
+                        <TextareaItem
+                            rows={5}
+                            count={200}
+                            placeholder='请输入该教师简介'
+                            value={this.state.teaNote}
+                            onChange={this.teaNoteOnChange}
+                        />
+                    </List>
+                </div>
+                <div className="ListItem-teacher">
+                    <List renderHeader={() => '添加照片'}>
+                        <div className='uploadImgCont'>
+                            {this.state.teaPic}
+                        </div>
+                        <img
+                            className='uploadImgBtn'
+                            src={require('../imgs/addPic.png')}
+                            alt=""
+                            onClick={this.uploadImgBtn}
+                        />
+                    </List>
+                </div>
                 <div>
                     <Button type='primary'>保存</Button>
                 </div>
