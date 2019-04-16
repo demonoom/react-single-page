@@ -327,22 +327,22 @@ export default class classCardHomePageDoor extends React.Component {
         }
         return (
             <div id="classCardHomePageDoor" style={{ height: document.body.clientHeight, overflow: 'auto' }}>
-                    <div className="teacher-item">
-                        <h1>教室管理</h1>
-                        <ul className="classCardHomePageDoor my_flex">
-                            <li onClick={this.turnToClassroomManage}><i className="icon icon_ClassroomManagement"></i>
-                                <div>教室编辑</div>
-                            </li>
-                            <li onClick={this.turnToRingBinding}><i className="icon icon_bracelet"></i>
-                                <div>教室环境设置</div>
-                            </li>
-                            <li onClick={this.turnToCurriculumSchedule.bind(this, 1)}><i
-                                className="icon icon_course"></i>
-                                <div>教室课程表管理</div>
-                            </li>
-                        </ul>
-                    </div>
-                    <div className="teacher-item">
+                <div className="teacher-item">
+                    <h1>教室管理</h1>
+                    <ul className="classCardHomePageDoor my_flex">
+                        <li onClick={this.turnToClassroomManage}><i className="icon icon_ClassroomManagement"></i>
+                            <div>教室编辑</div>
+                        </li>
+                        <li onClick={this.turnToRingBinding}><i className="icon icon_bracelet"></i>
+                            <div>教室环境设置</div>
+                        </li>
+                        <li onClick={this.turnToCurriculumSchedule.bind(this, 1)}><i
+                            className="icon icon_course"></i>
+                            <div>教室课程表管理</div>
+                        </li>
+                    </ul>
+                </div>
+                <div className="teacher-item">
                     <h1>班级管理</h1>
                     <ul className="classCardHomePageDoor my_flex">
                         <li onClick={this.turnToNotifyBack}><i className="icon icon_notify"></i>
@@ -362,21 +362,21 @@ export default class classCardHomePageDoor extends React.Component {
                             <div>班级德育评价管理</div>
                         </li>
                     </ul>
-                    </div>
-                    {/*<li onClick={this.turnToWarnList}><i className="icon icon_earlyWarning"></i><div>课堂预警</div></li>
+                </div>
+                {/*<li onClick={this.turnToWarnList}><i className="icon icon_earlyWarning"></i><div>课堂预警</div></li>
                     <li onClick={this.turnToStudentMovement}><i className="icon icon_exercise"></i><div>学生运动轨迹</div></li>*/}
-                    <div className="teacher-item">
-                        <h1>校园管理</h1>
-                        <ul className="classCardHomePageDoor my_flex">
-                            <li onClick={this.turnToAttendanceTime}><i className="icon icon_attendanceTime"></i>
-                                <div>校园考勤时段设置</div>
-                            </li>
-                            <li onClick={this.turnWarningAdminList}><i className="icon icon_warning"></i>
-                                <div>校园预警人员管理</div>
-                            </li>
-                        </ul>
-                    </div>
-                    {/*<li onClick={this.toAttendanceStatistical}><i className="icon icon_moralEducationScore"></i><div>出勤率统计(饼图)</div></li>
+                <div className="teacher-item">
+                    <h1>校园管理</h1>
+                    <ul className="classCardHomePageDoor my_flex">
+                        <li onClick={this.turnToAttendanceTime}><i className="icon icon_attendanceTime"></i>
+                            <div>校园考勤时段设置</div>
+                        </li>
+                        <li onClick={this.turnWarningAdminList}><i className="icon icon_warning"></i>
+                            <div>校园预警人员管理</div>
+                        </li>
+                    </ul>
+                </div>
+                {/*<li onClick={this.toAttendanceStatistical}><i className="icon icon_moralEducationScore"></i><div>出勤率统计(饼图)</div></li>
                     <li onClick={this.toAttendanceSatisticaForClass}><i className="icon icon_moralEducationScore"></i><div>出勤率统计(柱状图)</div></li>*/}
                     <div className="teacher-item">
                         <h1>班牌管理</h1>
@@ -401,8 +401,16 @@ export default class classCardHomePageDoor extends React.Component {
                                 <div>班牌统一刷新</div>
                             </li> : null
                         }
-                        </ul>
-                    </div>
+                    </ul>
+                </div>
+                <div className="teacher-item">
+                    <h1>其它</h1>
+                    <ul className="classCardHomePageDoor my_flex">
+                        <li onClick={this.turnToRingManage}><i className="icon icon_time"></i>
+                            <div>手环管理</div>
+                        </li>
+                    </ul>
+                </div>
             </div>
         );
     }
