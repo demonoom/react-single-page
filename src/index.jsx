@@ -1126,6 +1126,12 @@ const welcome = (location, cb) => {
     }
     )
 }
+const addSchoolInfo = (location, cb) => {
+    require.ensure([], require => {
+        cb(null, require("./components/classCardSystemBackstage/js/addSchoolInfo/addSchoolInfo").default)
+    }
+    )
+}
 
 
 
@@ -1185,6 +1191,9 @@ class Index extends React.Component {
                     <li><Link
                         to="/classLogin?version=1.0.0"
                         style={{ fontSize: '24px' }}>课堂登录</Link></li>
+                    <li><Link
+                        to="/addSchoolInfo?userId=23836&vid=35153"
+                        style={{ fontSize: '24px' }}>添加学校信息</Link></li>
                     {/*<li><Link
                         to="/teachingSpaceStudent?access_user=23836"
                         style={{fontSize: '24px'}}>教学空学生</Link></li>
@@ -1604,6 +1613,7 @@ ReactDOM.render(
             <Route path="anaPage" getComponent={anaPage} />
             <Route path="welcome" getComponent={welcome} />
             <Route path="loginWithoutWX" getComponent={loginWithoutWX} />
+            <Route path="addSchoolInfo" getComponent={addSchoolInfo} />
         </Route>
     </Router>, document.getElementById('example')
 );
