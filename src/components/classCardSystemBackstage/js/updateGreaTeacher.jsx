@@ -16,9 +16,86 @@ export default class updateGreaTeacher extends React.Component {
         this.findGreaTeacherById();
     }
 
-    findGreaTeacherById = () => {
-
+    /*从地址栏获取id*/
+    componentWillMount() {
+        var locationHref = decodeURI(window.location.href);
+        var locationSearch = locationHref.substr(locationHref.indexOf("?") + 1);
+        var id = locationSearch.split("&")[1].split('=')[1];
+        this.setState({id});
     }
+
+    findGreaTeacherById = () => {
+        var param = {
+            "method": 'getTeacherStyle',
+            "actionName": "sharedClassAction",
+            "id": parseFloat(this.state.id),
+        };
+        console.log(param);
+        debugger
+        WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
+            onResponse: function (result) {
+                console.log(result)
+                // if (result.success == true && result.msg == '调用成功') {
+                //     if (result.response) {
+                //         // window.location.href = 'https://172.16.2.128:6443/arBook/'
+                //         window.location.href = 'https://www.maaee.com:6443/arBook/';
+                //         localStorage.setItem('loginAr', 'success');
+                //     } else {
+                //         Toast.info('您还未购买,无法使用', 2)
+                //     }
+                //
+                // } else {
+                //     Toast.fail(result.msg, 3);
+                // }
+            },
+            onError: function (error) {
+                // message.error(error);
+            }
+        });
+    }
+
+    updateTeacherStyle = () => {
+        if (this.state.teaName.trim() === '') {
+            Toast.fail('请输入教师姓名');
+            return
+        }
+        if (this.state.teaNote.trim() === '') {
+            Toast.fail('请输入教师简介');
+            return
+        }
+        if (this.state.teaPicSrc.trim() === '') {
+            Toast.fail('请上传半身照');
+            return
+        }
+        var param = {
+            "method": 'updateTeacherStyle',
+            "actionName": "sharedClassAction",
+            "content": this.state.teaNote,
+            "teacherName": this.state.teaName,
+            "avatar": this.state.teaPicSrc,
+        };
+        console.log(param);
+        debugger
+        WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
+            onResponse: function (result) {
+                if (result.success == true && result.msg == '调用成功') {
+                    if (result.response) {
+                        // window.location.href = 'https://172.16.2.128:6443/arBook/'
+                        window.location.href = 'https://www.maaee.com:6443/arBook/';
+                        localStorage.setItem('loginAr', 'success');
+                    } else {
+                        Toast.info('您还未购买,无法使用', 2)
+                    }
+
+                } else {
+                    Toast.fail(result.msg, 3);
+                }
+            },
+            onError: function (error) {
+                // message.error(error);
+            }
+        });
+    };
 
     teaNameOnChange = (e) => {
         this.setState({teaName: e})
@@ -88,7 +165,7 @@ export default class updateGreaTeacher extends React.Component {
                     </List>
                 </div>
                 <div>
-                    <Button type='primary'>修改</Button>
+                    <Button type='primary' onClick={this.updateTeacherStyle}>修改</Button>
                 </div>
             </div>
         )
