@@ -1,6 +1,6 @@
 import React from 'react';
 import {
-    TextareaItem,List
+    TextareaItem, List, Toast
 } from 'antd-mobile';
 import "./addSchoolInfo.less"
 var teacherV;
@@ -22,6 +22,7 @@ export default class addSchoolInfo extends React.Component {
         var schoolId = locationSearch.split("&")[0].split('=')[1];
         this.setState({ schoolId })
         window.addEventListener('resize', this.onWindwoResize);
+        this.getSchoolById(schoolId)
 
     }
 
@@ -39,6 +40,38 @@ export default class addSchoolInfo extends React.Component {
     }
 
     /**
+      * 获取校园简介
+      */
+    getSchoolById = (schoolId) => {
+        var param = {
+            "method": 'getSchoolById',
+            "id": schoolId,
+            "actionName": "sharedClassAction",
+        };
+        WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
+            onResponse:  (result)=> {
+                console.log(result, "result")
+                if (result.msg == '调用成功') {
+                    if (result.response.synopsis) {
+                        this.setState({
+                            schoolInfo: result.response.synopsis
+                        })
+                    } else {
+                        this.setState({
+                            schoolInfo: ""
+                        })
+                    }
+                } else {
+                    Toast.fail(result.msg, 1);
+                }
+            },
+            onError: function (error) {
+                Toast.info(error);
+            }
+        });
+    }
+
+    /**
      * 简介变化
      */
     textareaOnChange = (value) => {
@@ -49,8 +82,28 @@ export default class addSchoolInfo extends React.Component {
 
     //保存学校简介
     toSaveSchoolInfo = () => {
-        console.log(this.state.schoolInfo, "schoolInfo")
+        var param = {
+            "method": 'updateSchool',
+            "id": this.state.schoolId,
+            "content": this.state.schoolInfo,
+            "actionName": "sharedClassAction",
+        };
+        WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
+            onResponse:  (result)=> {
+                console.log(result, "result")
+                if (result.msg == '调用成功') {
+
+                } else {
+                    Toast.fail(result.msg, 1);
+                }
+            },
+            onError: function (error) {
+                Toast.info(error);
+            }
+        });
     }
+
+    
 
     render () {
         return (
