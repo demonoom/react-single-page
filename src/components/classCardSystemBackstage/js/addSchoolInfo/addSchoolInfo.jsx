@@ -69,7 +69,7 @@ export default class addSchoolInfo extends React.Component {
                     </List>
                 </div>
                 <div className='submitBtn'>
-                    <Button type="warning" onClick={this.toSaveSchoolInfo}>保存</Button>
+                    <Button type="warning" onClick={this.toSaveSchoolInfo}>提交</Button>
                 </div>
 
             </div>
