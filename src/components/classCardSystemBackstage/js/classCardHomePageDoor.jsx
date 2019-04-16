@@ -291,7 +291,7 @@ export default class classCardHomePageDoor extends React.Component {
     }
     
     turnToSchoolManage = () => {
-        var url = WebServiceUtil.mobileServiceURL + "schoolInfoManage?schoolId=" + + this.state.schoolId;
+        var url = WebServiceUtil.mobileServiceURL + "schoolInfoManage?ident=" + this.state.ident+"&schoolId"+this.state.schoolId;
         var data = {
             method: 'openNewPage',
             url: url

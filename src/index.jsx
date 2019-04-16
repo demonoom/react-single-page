@@ -749,6 +749,13 @@ const addGreaTeacher = (location, cb) => {
     )
 }
 
+const updateGreaTeacher = (location, cb) => {
+    require.ensure([], require => {
+            cb(null, require("./components/classCardSystemBackstage/js/updateGreaTeacher").default)
+        }
+    )
+}
+
 const classList = (location, cb) => {
     require.ensure([], require => {
         cb(null, require("./components/mobileChat/js/classList").default)
@@ -1639,6 +1646,7 @@ ReactDOM.render(
             <Route path="greaTeacherList" getComponent={greaTeacherList} />
             <Route path="addGreaTeacher" getComponent={addGreaTeacher} />
             <Route path="schoolInfoManage" getComponent={schoolInfoManage} />
+            <Route path="updateGreaTeacher" getComponent={updateGreaTeacher} />
         </Route>
     </Router>, document.getElementById('example')
 );
