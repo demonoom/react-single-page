@@ -1,22 +1,128 @@
 #addSchoolInfo {
     height: 100%;
+    width: 100%;
+    overflow: hidden;
+    background-color: white;
     position: relative;
+    .am-list-body{
+        border: 0;
+    }
+    .am-list-body::before,.am-list-body::after{
+        background-color: #e5e5e5;
+    }
+    .am-list-body::before{
+        content: '';
+        position: absolute;
+        background-color: #e5e5e5;
+        display: block;
+        z-index: 1;
+        top: 0;
+        right: auto;
+        bottom: auto;
+        left: 0;
+        width: 100%;
+        height: 1PX;
+        -webkit-transform-origin: 50% 50%;
+        -ms-transform-origin: 50% 50%;
+        transform-origin: 50% 50%;
+        -webkit-transform: scaleY(0.5);
+        -ms-transform: scaleY(0.5);
+        transform: scaleY(0.5);
+    }
+    .am-list-body::after{
+        content: '';
+        position: absolute;
+        background-color: #e5e5e5;
+        display: block;
+        z-index: 1;
+        top: auto;
+        right: auto;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        height: 1PX;
+        -webkit-transform-origin: 50% 100%;
+        -ms-transform-origin: 50% 100%;
+        transform-origin: 50% 100%;
+        -webkit-transform: scaleY(0.5);
+        -ms-transform: scaleY(0.5);
+        transform: scaleY(0.5);
+    }
+    .am-list-header{
+        font-size: 14px;
+        color: #333;
+        padding: 20px 0;
+    }
     .school-info {
-        height: 100px;
+        padding: 0 15px;
+        .am-list-body{
+            border-radius: 3px;
+            background-color: #F5F5F5;
+            overflow: hidden;
+        }
+        .am-textarea-control{
+            padding-bottom: 32px;
+        }
+        .am-list .am-list-item.am-textarea-item{
+            background-color: #F5F5F5;
+            padding: 0;
+            position: relative;
+            &::before{
+                content: '';
+                position: absolute;
+                background-color: #e5e5e5;
+                display: block;
+                z-index: 1;
+                top: 0;
+                left: 0;
+                width: 1px;
+                height: 100%;
+                -webkit-transform-origin: 50% 50%;
+                -ms-transform-origin: 50% 50%;
+                transform-origin: 50% 50%;
+                -webkit-transform: scaleX(0.5);
+                -ms-transform: scaleX(0.5);
+                transform: scaleX(0.5);
+            }
+            &::after{
+                display: block !important;
+                content: '';
+                position: absolute;
+                background-color: #e5e5e5;
+                display: block;
+                z-index: 1;
+                left: auto;
+                bottom: auto;
+                top: 0;
+                right: 0;
+                width: 1px;
+                height: 100%;
+                -webkit-transform-origin: 50% 50%;
+                -ms-transform-origin: 50% 50%;
+                transform-origin: 50% 50%;
+                -webkit-transform: scaleX(0.5);
+                -ms-transform: scaleX(0.5);
+                transform: scaleX(0.5);
+            }
+        }
         textarea{
-            height: 100px;
+            height: 189px;
+            font-size: 14px;
+            max-height: 380px;
+            padding: 0 10px;
+            width: 100%;
+            box-sizing: border-box;
         }
     }
 
-    .btn-save {
-        position: absolute;
-        bottom: 15px;
-        left: 50%;
-        padding: 10px 70px;
-        text-align: center;
-        background: skyblue;
-        color: white;
-        font-size: 16px;
-        transform: translateX(-50%)
+    .submitBtn {
+        bottom: 32px;
+        .am-button{
+            border: 0;
+            height: 44px;
+            line-height: 44px;
+            border-radius: 5px !important;
+            font-size: 15px;
+        }
     }
 }
