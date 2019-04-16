@@ -279,13 +279,13 @@ export default class getClassRoomList extends React.Component {
                 } className="edit_coordinateLi line_public" onClick={this.addMoreClassTable}>
                     <span className="edit_coordinate">批量上传课程表</span>
                 </div>
-                <div className='tableDiv' style={{ height: classBinding.state.clientHeight }}>
+                <div className='tableDiv'>
                     {/*这是列表数据,包括添加按钮*/}
                     <ListView
                         ref={el => this.lv = el}
                         dataSource={this.state.dataSource}    //数据类型是 ListViewDataSource
                         renderFooter={() => (
-                            <div style={{ paddingTop: 5, paddingBottom: 40, textAlign: 'center' }}>
+                            <div style={{ paddingTop: 5, paddingBottom: 5, textAlign: 'center' }}>
                                 {this.state.isLoadingLeft ? '正在加载' : '已经全部加载完毕'}
                             </div>)}
                         renderRow={row}   //需要的参数包括一行数据等,会返回一个可渲染的组件为这行数据渲染  返回renderable
@@ -298,7 +298,7 @@ export default class getClassRoomList extends React.Component {
                         initialListSize={15}   //指定在组件刚挂载的时候渲染多少行数据，用这个属性来确保首屏显示合适数量的数据
                         scrollEventThrottle={20}     //控制在滚动过程中，scroll事件被调用的频率
                         style={{
-                            height: classBinding.state.clientHeight - 52,
+                            height: classBinding.state.clientHeight - 52 - 52,
                         }}
                         pullToRefresh={<PullToRefresh
                             onRefresh={this.onRefresh}
