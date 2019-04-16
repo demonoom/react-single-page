@@ -1,0 +1,56 @@
+#addGreaTeacher {
+  background: #fff;
+  font-size: 14px;
+}
+#addGreaTeacher .uploadImgCont img,
+#addGreaTeacher .uploadImgBtn {
+  width: 50px;
+  height: 50px;
+  margin-right: 15px;
+  margin-top: 10px;
+  object-fit: cover;
+  float: left;
+}
+#addGreaTeacher .am-list-body::before,
+#addGreaTeacher .am-list-body::after {
+  background: transparent;
+}
+#addGreaTeacher .am-list-header {
+  color: #333;
+  padding: 15px 0 9px 0px;
+}
+#addGreaTeacher .am-list-item .am-input-control input,
+#addGreaTeacher .am-textarea-control textarea {
+  font-size: 14px;
+}
+#addGreaTeacher .ListItem,
+#addGreaTeacher .ListItem-teacher {
+  margin: 0 15px;
+}
+#addGreaTeacher .ListItem .am-list,
+#addGreaTeacher .ListItem-teacher .am-list {
+  padding: 5px 0;
+}
+#addGreaTeacher .ListItem .am-list-header,
+#addGreaTeacher .ListItem-teacher .am-list-header {
+  width: 30px;
+  display: inline-block;
+}
+#addGreaTeacher .ListItem .am-list-body,
+#addGreaTeacher .ListItem-teacher .am-list-body {
+  width: calc(100% - 30px);
+  display: inline-block;
+}
+#addGreaTeacher .ListItem-teacher .am-list-header {
+  padding: 15px 0;
+  width: 100%;
+  line-height: 1;
+}
+#addGreaTeacher .ListItem-teacher .am-list-body {
+  width: 100%;
+}
+#addGreaTeacher .ListItem-teacher .am-list-body .am-textarea-item {
+  background: #F5F5F5;
+  border-radius: 3px;
+  border: 1px solid #E5E5E5;
+}
