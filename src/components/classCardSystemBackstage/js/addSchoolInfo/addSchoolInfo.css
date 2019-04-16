@@ -75,6 +75,9 @@
   width: 100%;
   box-sizing: border-box;
 }
+#addSchoolInfo .submitBtn {
+  bottom: 32px;
+}
 #addSchoolInfo .submitBtn .am-button {
   height: 44px;
   line-height: 44px;
