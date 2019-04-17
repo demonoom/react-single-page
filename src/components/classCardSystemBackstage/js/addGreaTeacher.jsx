@@ -33,16 +33,16 @@ export default class addGreaTeacher extends React.Component {
      * 原生上传照片返回地址
      */
     uploadImgBtn = () => {
-        var teaPic = <img className='uploadImgBtn'
-                          src='http://60.205.86.217/upload8/2018-11-08/10/f43b56b7-5a6f-4aa8-8468-fdd24f438a58.jpg'
-                          alt=""/>;
-        this.setState({
-            teaPic,
-            teaPicSrc: 'http://60.205.86.217/upload8/2018-11-08/10/f43b56b7-5a6f-4aa8-8468-fdd24f438a58.jpg'
-        });
+        // var teaPic = <img className='uploadImgBtn'
+        //                   src='http://60.205.86.217/upload8/2018-11-08/10/f43b56b7-5a6f-4aa8-8468-fdd24f438a58.jpg'
+        //                   alt=""/>;
+        // this.setState({
+        //     teaPic,
+        //     teaPicSrc: 'http://60.205.86.217/upload8/2018-11-08/10/f43b56b7-5a6f-4aa8-8468-fdd24f438a58.jpg'
+        // });
 
 
-        return
+        // return
         var _this = this;
         var data = {
             method: 'selectImages',

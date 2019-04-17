@@ -1,6 +1,6 @@
 import React from 'react';
 import {
-    TextareaItem, List, Toast,Button
+    TextareaItem, List, Toast, Button
 } from 'antd-mobile';
 import "./addSchoolInfo.less"
 var teacherV;
@@ -49,7 +49,7 @@ export default class addSchoolInfo extends React.Component {
             "actionName": "sharedClassAction",
         };
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
-            onResponse:  (result)=> {
+            onResponse: (result) => {
                 console.log(result, "result")
                 if (result.msg == '调用成功') {
                     if (result.response.synopsis) {
@@ -59,6 +59,15 @@ export default class addSchoolInfo extends React.Component {
                     } else {
                         this.setState({
                             schoolInfo: ""
+                        })
+                    }
+                    if (result.response.avatar) {
+                        var teaPic = <img src={result.response.avatar} alt="" />;
+                        _this.setState({ teaPic, teaPicSrc: result.response.avatar })
+                    } else {
+                        this.setState({
+                            teaPic: "",
+                            teaPicSrc:""
                         })
                     }
                 } else {
@@ -89,10 +98,17 @@ export default class addSchoolInfo extends React.Component {
             "actionName": "sharedClassAction",
         };
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
-            onResponse:  (result)=> {
+            onResponse: (result) => {
                 console.log(result, "result")
                 if (result.msg == '调用成功') {
-
+                    Toast.info("保存成功",1);
+                    var data = {
+                        method: 'finish',
+                    };
+            
+                    Bridge.callHandler(data, null, function (error) {
+                        console.log(error);
+                    });
                 } else {
                     Toast.fail(result.msg, 1);
                 }
@@ -103,7 +119,23 @@ export default class addSchoolInfo extends React.Component {
         });
     }
 
-    
+    /**
+    * 原生上传照片返回地址
+    */
+    uploadImgBtn = () => {
+        var _this = this;
+        var data = {
+            method: 'selectImages',
+        };
+        Bridge.callHandler(data, function (res) {
+            console.log(res.split("?"), "res")
+            var teaPic = <img src={res} alt="" />;
+            _this.setState({ teaPic, teaPicSrc: res })
+        }, function (error) {
+            console.log(error);
+        });
+    }
+
 
     render () {
         return (
@@ -117,6 +149,19 @@ export default class addSchoolInfo extends React.Component {
                             onChange={this.textareaOnChange.bind(this)}
                             count={10000}
                             rows={9}
+                        />
+                    </List>
+                </div>
+                <div className="ListItem-teacher">
+                    <List renderHeader={() => '添加校徽'}>
+                        <div className='uploadImgCont'>
+                            {this.state.teaPic}
+                        </div>
+                        <img
+                            className='uploadImgBtn'
+                            src={require('../../imgs/addPic.png')}
+                            alt=""
+                            onClick={this.uploadImgBtn}
                         />
                     </List>
                 </div>
