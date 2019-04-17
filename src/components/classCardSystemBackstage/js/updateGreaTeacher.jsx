@@ -32,8 +32,6 @@ export default class updateGreaTeacher extends React.Component {
             "actionName": "sharedClassAction",
             "id": this.state.id,
         };
-        console.log(param);
-        debugger
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
             onResponse: function (result) {
                 console.log(result)
@@ -41,9 +39,9 @@ export default class updateGreaTeacher extends React.Component {
                     if (result.response) {
                         var teaPic = <img src={result.response.avatar} alt=""/>
                         _this.setState({
-                            "teaPicSrc":result.response.avatar,
-                            "teaNote":result.response.content,
-                            "teaName":result.response.teacherName,
+                            "teaPicSrc": result.response.avatar,
+                            "teaNote": result.response.content,
+                            "teaName": result.response.teacherName,
                             teaPic
                         })
 
@@ -80,18 +78,23 @@ export default class updateGreaTeacher extends React.Component {
             "content": this.state.teaNote,
             "teacherName": this.state.teaName,
             "avatar": this.state.teaPicSrc,
+            "id": this.state.id
         };
-        console.log(param);
-        debugger
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
             onResponse: function (result) {
                 if (result.success == true && result.msg == '调用成功') {
                     if (result.response) {
-                        // window.location.href = 'https://172.16.2.128:6443/arBook/'
-                        window.location.href = 'https://www.maaee.com:6443/arBook/';
-                        localStorage.setItem('loginAr', 'success');
+                        Toast.success('保存成功')
+                        setTimeout(function () {
+                            var data = {
+                                method: 'finishForRefresh',
+                            };
+                            Bridge.callHandler(data, null, function (error) {
+                                console.log(error);
+                            });
+                        }, 1000)
                     } else {
-                        Toast.info('您还未购买,无法使用', 2)
+                        Toast.fail(result.msg, 3);
                     }
 
                 } else {
@@ -116,20 +119,14 @@ export default class updateGreaTeacher extends React.Component {
      * 原生上传照片返回地址
      */
     uploadImgBtn = () => {
-        var teaPic = <img className='uploadImgBtn'
-                          src='http://60.205.86.217/upload8/2018-11-08/10/f43b56b7-5a6f-4aa8-8468-fdd24f438a58.jpg'
-                          alt=""/>;
-        this.setState({teaPic})
-
-
-        return
         var _this = this;
         var data = {
             method: 'selectImages',
         };
         Bridge.callHandler(data, function (res) {
-            var teaPic = <img src={res} alt=""/>;
-            _this.setState({teaPic})
+            var src = res.split('?')[0];
+            var teaPic = <img src={src} alt=""/>;
+            _this.setState({teaPic, teaPicSrc: src})
         }, function (error) {
             console.log(error);
         });

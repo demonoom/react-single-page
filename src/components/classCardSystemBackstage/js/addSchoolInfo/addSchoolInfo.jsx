@@ -61,9 +61,10 @@ export default class addSchoolInfo extends React.Component {
                             schoolInfo: ""
                         })
                     }
+                    console.log(result.response.avatar,"result.response.avatar")
                     if (result.response.avatar) {
                         var teaPic = <img src={result.response.avatar} alt="" />;
-                        _this.setState({ teaPic, teaPicSrc: result.response.avatar })
+                        this.setState({ teaPic, teaPicSrc: result.response.avatar })
                     } else {
                         this.setState({
                             teaPic: "",
@@ -95,6 +96,7 @@ export default class addSchoolInfo extends React.Component {
             "method": 'updateSchool',
             "id": this.state.schoolId,
             "content": this.state.schoolInfo,
+            "avatar":this.state.teaPicSrc,
             "actionName": "sharedClassAction",
         };
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
@@ -129,8 +131,9 @@ export default class addSchoolInfo extends React.Component {
         };
         Bridge.callHandler(data, function (res) {
             console.log(res.split("?"), "res")
-            var teaPic = <img src={res} alt="" />;
-            _this.setState({ teaPic, teaPicSrc: res })
+            var src = res.split('?')[0];
+            var teaPic = <img src={src} alt="" />;
+            _this.setState({ teaPic, teaPicSrc: src })
         }, function (error) {
             console.log(error);
         });
