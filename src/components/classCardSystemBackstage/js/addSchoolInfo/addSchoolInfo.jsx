@@ -105,9 +105,8 @@ export default class addSchoolInfo extends React.Component {
                 if (result.msg == '调用成功') {
                     Toast.info("保存成功",1);
                     var data = {
-                        method: 'finish',
+                        method: 'finishForRefresh',
                     };
-            
                     Bridge.callHandler(data, null, function (error) {
                         console.log(error);
                     });
