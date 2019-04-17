@@ -203,7 +203,7 @@ export default class greaTeacherList extends React.Component {
                         </span>
                         <div className="textOver teacher-name">{rowData.teacherName}</div>
                     </div>
-                    <div className="amList_cont">
+                    <div className="amList_cont teacher-amList_cont">
                         <Button className="modifyBtn_common" type="primary" size="small"
                                 onClick={this.updateAttendanceTime.bind(this, rowData)}></Button>
                         <Button type="primary" size="small" className="btn_del deleteBtn_common"

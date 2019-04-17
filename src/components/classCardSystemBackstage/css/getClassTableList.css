@@ -21,7 +21,7 @@
   line-height: 40px;
   margin-left: 10px;
 }
-#getClassTableList .amList_cont {
+#getClassTableList .teacher-amList_cont {
   width: calc(100% - 245px);
   display: inline-block;
 }
