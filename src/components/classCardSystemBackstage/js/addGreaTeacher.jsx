@@ -33,23 +33,14 @@ export default class addGreaTeacher extends React.Component {
      * 原生上传照片返回地址
      */
     uploadImgBtn = () => {
-        var teaPic = <img className='uploadImgBtn'
-                          src='http://60.205.86.217/upload8/2018-11-08/10/f43b56b7-5a6f-4aa8-8468-fdd24f438a58.jpg'
-                          alt=""/>;
-        this.setState({
-            teaPic,
-            teaPicSrc: 'http://60.205.86.217/upload8/2018-11-08/10/f43b56b7-5a6f-4aa8-8468-fdd24f438a58.jpg'
-        });
-
-
-        return
         var _this = this;
         var data = {
             method: 'selectImages',
         };
         Bridge.callHandler(data, function (res) {
-            var teaPic = <img src={res} alt=""/>;
-            _this.setState({teaPic, teaPicSrc: res})
+            var src = res.split('?')[0];
+            var teaPic = <img src={src} alt=""/>;
+            _this.setState({teaPic, teaPicSrc: src})
         }, function (error) {
             console.log(error);
         });
@@ -89,6 +80,14 @@ export default class addGreaTeacher extends React.Component {
                 console.log(result);
                 if (result.success == true && result.msg == '调用成功') {
                     Toast.success('保存成功')
+                    setTimeout(function () {
+                        var data = {
+                            method: 'finishForRefresh',
+                        };
+                        Bridge.callHandler(data, null, function (error) {
+                            console.log(error);
+                        });
+                    }, 1000)
                 } else {
                     Toast.fail(result.msg, 3);
                 }
