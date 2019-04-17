@@ -6,8 +6,15 @@
     height: 50px;
     margin-right: 15px;
     margin-top: 10px;
+    -o-object-fit: cover;
     object-fit: cover;
     float: left;
+    border-radius: 5px;
+  }
+  .uploadImgCont img{
+    width: 84px;
+    height: 111px;
+    border: 1px solid #DCDCDC;
   }
   .am-list-body::before, .am-list-body::after{
     background: transparent;
@@ -46,6 +53,16 @@
         border-radius: 3px;
         border: 1px solid #E5E5E5;
       }
+    }
+  }
+  .submitBtn{
+    bottom: 32px;
+    .am-button{
+      line-height: 44px;
+      height: 44px;
+      border-radius: 5px !important;
+      font-size: 15px;
+      border: none;
     }
   }
 }

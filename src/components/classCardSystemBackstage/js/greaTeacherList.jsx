@@ -5,7 +5,7 @@ import {
     Toast,
     Button
 } from 'antd-mobile';
-
+import '../css/getClassTableList.less'
 var AttenT;
 const alert = Modal.alert;
 
@@ -197,11 +197,11 @@ export default class greaTeacherList extends React.Component {
 
             return (
                 <div className="classInfo line_public attendanceCont">
-                    <div>
-                        <div className="title textOver">
+                    <div className="teacher-item">
+                        <span className="teacher-avatar">
                             <img src={rowData.avatar} alt=""/>
-                            {rowData.teacherName}
-                        </div>
+                        </span>
+                        <div className="textOver teacher-name">{rowData.teacherName}</div>
                     </div>
                     <div className="amList_cont">
                         <Button className="modifyBtn_common" type="primary" size="small"

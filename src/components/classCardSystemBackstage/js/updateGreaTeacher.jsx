@@ -171,8 +171,8 @@ export default class updateGreaTeacher extends React.Component {
                         />
                     </List>
                 </div>
-                <div>
-                    <Button type='primary' onClick={this.updateTeacherStyle}>修改</Button>
+                <div className="submitBtn">
+                    <Button type='warning' onClick={this.updateTeacherStyle}>修改</Button>
                 </div>
             </div>
         )
