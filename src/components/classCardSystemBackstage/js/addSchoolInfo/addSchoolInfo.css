@@ -111,7 +111,6 @@
 #addSchoolInfo .school-info textarea {
   height: 189px;
   font-size: 14px;
-  max-height: 380px;
   padding: 0 10px;
   width: 100%;
   box-sizing: border-box;
@@ -126,4 +125,26 @@
   line-height: 44px;
   border-radius: 5px !important;
   font-size: 15px;
+}
+#addSchoolInfo .uploadImgCont img,
+#addSchoolInfo .uploadImgBtn {
+  width: 50px;
+  height: 50px;
+  margin-right: 15px;
+  -o-object-fit: cover;
+  object-fit: cover;
+  float: left;
+  border-radius: 5px;
+}
+#addSchoolInfo .uploadImgCont img {
+  width: 84px;
+  height: 111px;
+  border: 1px solid #DCDCDC;
+}
+#addSchoolInfo .ListItem-teacher {
+  padding: 0 15px;
+}
+#addSchoolInfo .ListItem-teacher .am-list-body::before,
+#addSchoolInfo .ListItem-teacher .am-list-body::after {
+  display: none;
 }
