@@ -389,7 +389,7 @@ export default class classCardHomePageDoor extends React.Component {
                         <li onClick={this.turnWarningAdminList}><i className="icon icon_warning"></i>
                             <div>校园预警人员管理</div>
                         </li>
-                        <li onClick={this.turnToSchoolManage}><i className="icon icon_warning"></i>
+                        <li onClick={this.turnToSchoolManage}><i className="icon icon_InformationManagement"></i>
                             <div>校园信息管理</div>
                         </li>
                     </ul>

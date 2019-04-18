@@ -160,17 +160,17 @@ export default class schoolInfoManage extends React.Component {
             <div id="classCardHomePageDoor" style={{ height: document.body.clientHeight, overflow: 'auto' }}>
                 <div className="teacher-item">
                     <ul className="classCardHomePageDoor my_flex">
-                        <li onClick={this.turnToAddSchoolInfo}><i className="icon icon_BraceletManagement"></i>
+                        <li onClick={this.turnToAddSchoolInfo}><i className="icon icon_SchoolProfile"></i>
                             <div>学校简介管理</div>
                         </li>
                         <li onClick={this.turnToNotifyBack}><i className="icon icon_notify"></i>
                             <div>校园通知管理</div>
                         </li>
                         {/*<li onClick={this.turnToCurriculumSchedule.bind(this, 2)}><i className="icon icon_publiCourse"></i><div>公共教室课程表</div></li>*/}
-                        <li onClick={this.turnToClassDemeanor.bind(this, 1)}><i className="icon icon_classDemeanor"></i>
+                        <li onClick={this.turnToClassDemeanor.bind(this, 1)}><i className="icon icon_SchoolStyle"></i>
                             <div>校园风采管理</div>
                         </li>
-                        <li onClick={this.turnTogreaTeacherList.bind(this, 1)}><i className="icon icon_classDemeanor"></i>
+                        <li onClick={this.turnTogreaTeacherList.bind(this, 1)}><i className="icon icon_teacherStyle"></i>
                             <div>教师风采管理</div>
                         </li>
                     </ul>
