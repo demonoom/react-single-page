@@ -11,6 +11,7 @@
   /*班级值日表管理*/
   /*校园预警人员管理*/
   /*校园考勤时段设置*/
+  /*校园信息管理*/
   /*班牌皮肤设置*/
   /*班牌定时开关机*/
   /*班牌统一刷新*/
@@ -120,6 +121,10 @@
 }
 #classCardHomePageDoor .icon_attendanceTime {
   background: url("../imgs/icon_attendanceTime.png") no-repeat center center;
+  background-size: contain;
+}
+#classCardHomePageDoor .icon_InformationManagement {
+  background: url("../imgs/icon_InformationManagement.png") no-repeat center center;
   background-size: contain;
 }
 #classCardHomePageDoor .icon_skin {
