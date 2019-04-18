@@ -1,6 +1,7 @@
 #classCardHomePageDoor {
   height: 100%;
   overflow-y: auto;
+  background: #fff;
   /*教室环境设置*/
   /*班级风采管理*/
   /*教室编辑*/
@@ -16,6 +17,9 @@
   /*班牌定时开关机*/
   /*班牌统一刷新*/
   /*手环管理*/
+  /*学校风采管理*/
+  /*学校简介管理*/
+  /*教师风采管理*/
 }
 #classCardHomePageDoor .teacher-item {
   margin: 0;
@@ -141,5 +145,17 @@
 }
 #classCardHomePageDoor .icon_BraceletManagement {
   background: url("../imgs/icon_BraceletManagement.png") no-repeat center center;
+  background-size: contain;
+}
+#classCardHomePageDoor .icon_SchoolStyle {
+  background: url("../imgs/icon_SchoolStyle.png") no-repeat center center;
+  background-size: contain;
+}
+#classCardHomePageDoor .icon_SchoolProfile {
+  background: url("../imgs/icon_SchoolProfile.png") no-repeat center center;
+  background-size: contain;
+}
+#classCardHomePageDoor .icon_teacherStyle {
+  background: url("../imgs/icon_teacherStyle.png") no-repeat center center;
   background-size: contain;
 }
