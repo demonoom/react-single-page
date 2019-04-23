@@ -17,6 +17,10 @@ export default class classCardHomePageDoor extends React.Component {
         var locationSearch = locationHref.substr(locationHref.indexOf("?") + 1);
         var searchArray = locationSearch.split("&");
         var ident = searchArray[0].split('=')[1];
+        var loginUser = {
+            "ident": ident,
+        };
+        localStorage.setItem("loginUserRingBind", JSON.stringify(loginUser));
         this.setState({ ident })
         this.getUserByAccount(ident)
         simpleMS = new SimpleWebsocketConnection();

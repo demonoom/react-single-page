@@ -18,7 +18,7 @@ export default class schoolInfoManage extends React.Component {
         var searchArray = locationSearch.split("&");
         var ident = searchArray[0].split('=')[1];
         var schoolId = searchArray[1].split('=')[1];
-        this.setState({ ident,schoolId })
+        this.setState({ ident, schoolId })
         this.getUserByAccount(ident)
         simpleMS = new SimpleWebsocketConnection();
         simpleMS.connect();
@@ -68,25 +68,38 @@ export default class schoolInfoManage extends React.Component {
 
     //学校简介管理
     turnToAddSchoolInfo = () => {
-        var url = WebServiceUtil.mobileServiceURL + "addSchoolInfo?schoolId=" + + this.state.schoolId;
-        var data = {
-            method: 'openNewPage',
-            url: url
-        };
-        Bridge.callHandler(data, null, function (error) {
-            window.location.href = url;
-        });
+        var isPc = WebServiceUtil.isPC();
+        if (isPc == true) {
+            var url = WebServiceUtil.mobileServiceURL + "addSchoolInfo?schoolId=" + + this.state.schoolId;
+            var data = {
+                method: 'openNewPage',
+                url: url
+            };
+            Bridge.callHandler(data, null, function (error) {
+                window.location.href = url;
+            });
+        } else {
+            Toast.fail("请在电脑端操作,谢谢!", 3);
+        }
+
+
     }
     //列表
     turnTogreaTeacherList = () => {
-        var url = WebServiceUtil.mobileServiceURL + "greaTeacherList?ident=" + + this.state.ident;
-        var data = {
-            method: 'openNewPage',
-            url: url
-        };
-        Bridge.callHandler(data, null, function (error) {
-            window.location.href = url;
-        });
+        var isPc = WebServiceUtil.isPC();
+        if (isPc == true) {
+            var url = WebServiceUtil.mobileServiceURL + "greaTeacherList?ident=" + + this.state.ident;
+            var data = {
+                method: 'openNewPage',
+                url: url
+            };
+            Bridge.callHandler(data, null, function (error) {
+                window.location.href = url;
+            });
+        } else {
+            Toast.fail("请在电脑端操作,谢谢!", 3);
+        }
+
     }
 
     /**

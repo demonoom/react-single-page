@@ -19,6 +19,7 @@ export default class updateGreaTeacher extends React.Component {
 
     /*从地址栏获取id*/
     componentWillMount() {
+        document.title = '编辑教师风采';
         var locationHref = decodeURI(window.location.href);
         var locationSearch = locationHref.substr(locationHref.indexOf("?") + 1);
         var id = locationSearch.split("&")[1].split('=')[1];

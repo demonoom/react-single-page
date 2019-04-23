@@ -26,7 +26,7 @@ export default class greaTeacherList extends React.Component {
 
     componentDidMount() {
         Bridge.setShareAble("false");
-        document.title = '考勤时段列表';
+        document.title = '教师风采列表';
         var locationHref = window.location.href;
         var locationSearch = locationHref.substr(locationHref.indexOf("?") + 1);
         var uid = locationSearch.split("&")[0].split("=")[1];

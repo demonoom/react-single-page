@@ -14,6 +14,7 @@ export default class addGreaTeacher extends React.Component {
     }
 
     componentDidMount() {
+        document.title = '添加教师风采';
         var locationHref = window.location.href;
         var locationSearch = locationHref.substr(locationHref.indexOf("?") + 1);
         var schoolId = locationSearch.split("&")[0].split("=")[1];

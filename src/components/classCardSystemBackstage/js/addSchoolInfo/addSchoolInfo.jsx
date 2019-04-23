@@ -92,6 +92,14 @@ export default class addSchoolInfo extends React.Component {
 
     //保存学校简介
     toSaveSchoolInfo = () => {
+        if(this.state.schoolInfo == ""){
+            Toast.info("学校简介不能为空哦",1)
+            return
+        }
+        if(this.state.teaPicSrc == ""){
+            Toast.info("学校校徽不能为空哦",1)
+            return
+        }
         var param = {
             "method": 'updateSchool',
             "id": this.state.schoolId,
@@ -99,15 +107,15 @@ export default class addSchoolInfo extends React.Component {
             "avatar":this.state.teaPicSrc,
             "actionName": "sharedClassAction",
         };
+        console.log(JSON.stringify(param),"param")
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
             onResponse: (result) => {
                 console.log(result, "result")
                 if (result.msg == '调用成功') {
                     Toast.info("保存成功",1);
                     var data = {
-                        method: 'finish',
+                        method: 'finishForRefresh',
                     };
-            
                     Bridge.callHandler(data, null, function (error) {
                         console.log(error);
                     });
