@@ -289,7 +289,7 @@ export default class teachingSpaceTeacher extends React.Component {
                         </li>
                         <li onClick={this.toPage.bind(this, "openNativePage_RingDataStatistics")}>
                             <i className="Icon-teacher Icon-teacher-braceletData"></i>
-                            <div>手环数据统计</div>
+                            <div>物联校园数据统计中心</div>
                         </li>
                     </ul>
                 </div>
