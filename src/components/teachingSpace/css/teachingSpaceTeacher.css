@@ -33,6 +33,7 @@
   /*学生问卷调查*/
   /*学生直播回顾*/
   /*学生出入学校*/
+  /*AR教材*/
 }
 #teachingSpaceTeacher .teacher-item {
   margin: 0;
@@ -203,4 +204,8 @@
 #teachingSpaceTeacher .Icon-student-turnover {
   background: url("../images/icon-studenttTurnover.png") no-repeat;
   background-size: 100% 100%;
+}
+#teachingSpaceTeacher .Icon-teacher-ARmaterial {
+  background: url("../images/icon-teacher-ARmaterial.png") no-repeat;
+  background-size: 90% 90%;
 }
