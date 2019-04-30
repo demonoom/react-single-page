@@ -192,8 +192,8 @@ export default class teachingSpaceTeacher extends React.Component {
             url = "https://jiaoxue.maaee.com:9091/#/notifyBack?access_user=" + this.state.ident
             // url = "https://192.168.50.29:9091/#/notifyBack?access_user=" + this.state.ident
         } else if (type = "Errorbook") {
-            // url = 'http://jiaoxue.maaee.com:8094/#/wrongQuestionList?userId=' + this.state.ident+"&pwd="+this.state.pwd
-            url = 'http://192.168.50.72:7094/#/wrongQuestionList?uid='+this.state.ident + '&pwd=' + this.state.pwd
+            url = 'http://jiaoxue.maaee.com:8094/#/wrongQuestionList?userId=' + this.state.ident+"&pwd="+this.state.pwd
+            // url = 'http://192.168.50.72:7094/#/wrongQuestionList?uid='+this.state.ident + '&pwd=' + this.state.pwd
         }
         var data = {
             method: "openNewPage",
