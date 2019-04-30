@@ -27,8 +27,9 @@ export default class teachingSpaceTeacher extends React.Component {
         var locationSearch = locationHref.substr(locationHref.indexOf("?") + 1);
         var locationSearchArray = locationSearch.split("&");
         var ident = decodeURI(locationSearchArray[0].split("=")[1]);
+        var pwd = decodeURI(locationSearchArray[1].split("=")[1]);
         this.setState({
-            ident
+            ident,pwd
         })
         this.getUserById(ident)
         this.getStructureRoleUserByUserId(ident)
@@ -137,9 +138,7 @@ export default class teachingSpaceTeacher extends React.Component {
                 method: method,
                 ident: this.state.ident
             };
-            if (method == "openNativePage_Errorbook") {
-                data.href = 'http://jiaoxue.maaee.com:8094/#/topicWrongList?userId='
-            }
+           
             console.log(data, "data")
             Bridge.callHandler(data, null, function (error) {
 
@@ -193,6 +192,9 @@ export default class teachingSpaceTeacher extends React.Component {
             //  通知管理
             url = "https://jiaoxue.maaee.com:9091/#/notifyBack?access_user=" + this.state.ident
             // url = "https://192.168.50.29:9091/#/notifyBack?access_user=" + this.state.ident
+        }else if(type = "Errorbook"){
+            // url = 'http://jiaoxue.maaee.com:8094/#/wrongQuestionList?userId=' + this.state.ident+"&pwd="+this.state.pwd
+            url = 'http://192.168.50.72:7094/#/wrongQuestionList?uid=23836&pwd=xmy00000000'
         }
         var data = {
             method: "openNewPage",
@@ -314,7 +316,7 @@ export default class teachingSpaceTeacher extends React.Component {
                             <div>批改作业</div>
                         </li>
                         <li
-                            onClick={this.toClient.bind(this, "openNativePage_Errorbook")}>
+                            onClick={this.toPage.bind(this, "Errorbook")}>
                             <i className="Icon-teacher Icon-teacher-wrongBook"></i>
                             <div>错题本</div>
                         </li>
