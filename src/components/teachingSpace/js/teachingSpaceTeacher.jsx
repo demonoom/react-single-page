@@ -145,7 +145,6 @@ export default class teachingSpaceTeacher extends React.Component {
             });
         }
     }
-
     /**
      * 跳转网页
      */
@@ -244,6 +243,10 @@ export default class teachingSpaceTeacher extends React.Component {
                         <li onClick={this.toClient.bind(this, "openNativePage_RealBooth")}>
                             <i className="Icon-teacher Icon-teacher-shiwu"></i>
                             <div>实物展台</div>
+                        </li>
+                        <li  style={{ display: this.state.phone == "Android" ? "none" : "block" }} onClick={this.toClient.bind(this, "openNativePage_ARTextbook")}>
+                            <i className="Icon-teacher Icon-teacher-shiwu"></i>
+                            <div>AR教材</div>
                         </li>
                     </ul>
                 </div>
