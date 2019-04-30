@@ -13,11 +13,11 @@ export default class teachingSpaceTeacher extends React.Component {
             classTeacher: false,
         };
     }
-    componentWillMount() {
+    componentWillMount () {
         simpleMS = new SimpleWebsocketConnection();
         simpleMS.connect();
     }
-    componentDidMount() {
+    componentDidMount () {
         try {
             Bridge.setRefreshAble("false");
         } catch (e) {
@@ -29,7 +29,7 @@ export default class teachingSpaceTeacher extends React.Component {
         var ident = decodeURI(locationSearchArray[0].split("=")[1]);
         var pwd = decodeURI(locationSearchArray[1].split("=")[1]);
         this.setState({
-            ident,pwd
+            ident, pwd
         })
         this.getUserById(ident)
         this.getStructureRoleUserByUserId(ident)
@@ -90,7 +90,7 @@ export default class teachingSpaceTeacher extends React.Component {
     /**
      * 获取用户信息
      */
-    getUserById(ident) {
+    getUserById (ident) {
         var _this = this;
         var param = {
             "method": 'getUserById',
@@ -138,7 +138,7 @@ export default class teachingSpaceTeacher extends React.Component {
                 method: method,
                 ident: this.state.ident
             };
-           
+
             console.log(data, "data")
             Bridge.callHandler(data, null, function (error) {
 
@@ -191,9 +191,9 @@ export default class teachingSpaceTeacher extends React.Component {
             //  通知管理
             url = "https://jiaoxue.maaee.com:9091/#/notifyBack?access_user=" + this.state.ident
             // url = "https://192.168.50.29:9091/#/notifyBack?access_user=" + this.state.ident
-        }else if(type = "Errorbook"){
+        } else if (type = "Errorbook") {
             // url = 'http://jiaoxue.maaee.com:8094/#/wrongQuestionList?userId=' + this.state.ident+"&pwd="+this.state.pwd
-            url = 'http://192.168.50.72:7094/#/wrongQuestionList?uid=23836&pwd=xmy00000000'
+            url = 'http://192.168.50.72:7094/#/wrongQuestionList?uid='+this.state.ident + '&pwd=' + this.state.pwd
         }
         var data = {
             method: "openNewPage",
@@ -205,7 +205,7 @@ export default class teachingSpaceTeacher extends React.Component {
         });
     }
 
-    render() {
+    render () {
         return (
             <div id="teachingSpaceTeacher">
                 <div className="teacher-item">
@@ -244,7 +244,7 @@ export default class teachingSpaceTeacher extends React.Component {
                             <i className="Icon-teacher Icon-teacher-shiwu"></i>
                             <div>实物展台</div>
                         </li>
-                        <li  style={{ display: this.state.phone == "Android" ? "none" : "block" }} onClick={this.toClient.bind(this, "openNativePage_ARTextbook")}>
+                        <li style={{ display: this.state.phone == "Android" ? "none" : "block" }} onClick={this.toClient.bind(this, "openNativePage_ARTextbook")}>
                             <i className="Icon-teacher Icon-teacher-shiwu"></i>
                             <div>AR教材</div>
                         </li>
