@@ -262,11 +262,11 @@ export default class teachingSpaceTeacher extends React.Component {
                             <i className="Icon-teacher Icon-teacher-shiwu"></i>
                             <div>实物展台</div>
                         </li>
-                        <li style={{display: this.state.phone == "Android" ? "none" : "block"}}
+                        {/*<li style={{display: this.state.phone == "Android" ? "none" : "block"}}
                             onClick={this.toClient.bind(this, "openNativePage_ARTextbook")}>
                             <i className="Icon-teacher Icon-teacher-ARmaterial"></i>
                             <div>AR教材</div>
-                        </li>
+                        </li>*/}
                     </ul>
                 </div>
                 <div className="teacher-item">
