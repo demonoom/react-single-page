@@ -1,6 +1,6 @@
 import React from 'react';
-import { Toast } from 'antd-mobile';
-import { SimpleWebsocketConnection } from '../../../helpers/simple_websocket_connection';
+import {Toast} from 'antd-mobile';
+import {SimpleWebsocketConnection} from '../../../helpers/simple_websocket_connection';
 
 import '../css/teachingSpaceTeacher.less'
 
@@ -13,11 +13,13 @@ export default class teachingSpaceTeacher extends React.Component {
             classTeacher: false,
         };
     }
-    componentWillMount () {
+
+    componentWillMount() {
         simpleMS = new SimpleWebsocketConnection();
         simpleMS.connect();
     }
-    componentDidMount () {
+
+    componentDidMount() {
         try {
             Bridge.setRefreshAble("false");
         } catch (e) {
@@ -29,16 +31,16 @@ export default class teachingSpaceTeacher extends React.Component {
         var ident = decodeURI(locationSearchArray[0].split("=")[1]);
         // var pwd = decodeURI(locationSearchArray[1].split("=")[1]);
         this.setState({
-            ident, 
+            ident,
             // pwd
         })
         this.getUserById(ident)
         this.getStructureRoleUserByUserId(ident)
         var phoneType = navigator.userAgent;
         if (phoneType.indexOf('iPhone') > -1 || phoneType.indexOf('iPad') > -1) {
-            this.setState({ phone: 'IOS' })
+            this.setState({phone: 'IOS'})
         } else {
-            this.setState({ phone: 'Android' })
+            this.setState({phone: 'Android'})
         }
 
 
@@ -77,7 +79,7 @@ export default class teachingSpaceTeacher extends React.Component {
                     })
 
                     if (res.length !== 0) {
-                        _this.setState({ classTeacher: true })
+                        _this.setState({classTeacher: true})
                     }
 
                 }
@@ -91,7 +93,7 @@ export default class teachingSpaceTeacher extends React.Component {
     /**
      * 获取用户信息
      */
-    getUserById (ident) {
+    getUserById(ident) {
         var _this = this;
         var param = {
             "method": 'getUserById',
@@ -131,6 +133,21 @@ export default class teachingSpaceTeacher extends React.Component {
             };
             // alert(JSON.stringify(data))
             console.log(data, "data")
+            Bridge.callHandler(data, null, function (error) {
+
+            });
+        } else if (method == 'openNativePage_ARTextbook') {
+            var obj = {
+                "command": "arsyc_play_inited",
+                "data": {
+                    "userId": this.state.ident
+                }
+            }
+            simpleMS.send(obj);
+            var data = {
+                method: method,
+                vid: this.state.ident
+            };
             Bridge.callHandler(data, null, function (error) {
 
             });
@@ -206,7 +223,7 @@ export default class teachingSpaceTeacher extends React.Component {
         });
     }
 
-    render () {
+    render() {
         return (
             <div id="teachingSpaceTeacher">
                 <div className="teacher-item">
@@ -245,10 +262,11 @@ export default class teachingSpaceTeacher extends React.Component {
                             <i className="Icon-teacher Icon-teacher-shiwu"></i>
                             <div>实物展台</div>
                         </li>
-                        {/* <li style={{ display: this.state.phone == "Android" ? "none" : "block" }} onClick={this.toClient.bind(this, "openNativePage_ARTextbook")}>
+                        <li style={{display: this.state.phone == "Android" ? "none" : "block"}}
+                            onClick={this.toClient.bind(this, "openNativePage_ARTextbook")}>
                             <i className="Icon-teacher Icon-teacher-ARmaterial"></i>
                             <div>AR教材</div>
-                        </li> */}
+                        </li>
                     </ul>
                 </div>
                 <div className="teacher-item">
@@ -275,12 +293,12 @@ export default class teachingSpaceTeacher extends React.Component {
                             <div>手环户外助手</div>
                         </li>
                         <li onClick={this.toClient.bind(this, "openNativePage_FamousTeacherSpace")}
-                            style={{ display: this.state.phone == "Android" ? "block" : "none" }}>
+                            style={{display: this.state.phone == "Android" ? "block" : "none"}}>
                             <i className="Icon-teacher Icon-teacher-famousTeacher"></i>
                             <div>名师空间</div>
                         </li>
                         <li onClick={this.toClient.bind(this, "openNativePage_MicroClassRecord")}
-                            style={{ display: this.state.phone == "Android" ? "block" : "none" }}>
+                            style={{display: this.state.phone == "Android" ? "block" : "none"}}>
                             <i className="Icon-teacher Icon-teacher-SmallClass"></i>
                             <div>录制微课</div>
                         </li>
@@ -315,7 +333,7 @@ export default class teachingSpaceTeacher extends React.Component {
                             <div>作业表情统计</div>
                         </li>
                         <li onClick={this.toClient.bind(this, "openNativePage_HomeworkCorrecting")}
-                            style={{ display: this.state.phone == "Android" ? "block" : "none" }}>
+                            style={{display: this.state.phone == "Android" ? "block" : "none"}}>
                             <i className="Icon-teacher Icon-teacher-homeworkCorrecting"></i>
                             <div>批改作业</div>
                         </li>
@@ -327,7 +345,7 @@ export default class teachingSpaceTeacher extends React.Component {
                     </ul>
                 </div>
                 <div className="teacher-item"
-                    style={{ display: this.state.phone == "Android" ? "block" : "none" }}
+                     style={{display: this.state.phone == "Android" ? "block" : "none"}}
                 >
                     <h1>考试系统</h1>
                     <ul className="my_flex teacherUl">
@@ -348,24 +366,24 @@ export default class teachingSpaceTeacher extends React.Component {
                             <i className="Icon-teacher Icon-teacher-EducationManage"></i>
                             <div>教务管理</div>
                         </li>
-                        <li style={{ display: this.state.classTeacher ? '' : 'none' }}
+                        <li style={{display: this.state.classTeacher ? '' : 'none'}}
                             onClick={this.toPage.bind(this, "honorManage")}>
                             <i className="Icon-teacher Icon-teacher-honorManage"></i>
                             <div>班牌荣誉</div>
                         </li>
-                        <li style={{ display: this.state.classTeacher ? '' : 'none' }}
+                        <li style={{display: this.state.classTeacher ? '' : 'none'}}
                             onClick={this.toPage.bind(this, "demeanorManage")}>
                             <i className="Icon-teacher Icon-teacher-demeanorManage"></i>
                             <div>班牌风采</div>
                         </li>
 
-                        <li style={{ display: this.state.classTeacher ? '' : 'none' }}
+                        <li style={{display: this.state.classTeacher ? '' : 'none'}}
                             onClick={this.toPage.bind(this, "notifyManage")}>
                             <i className="Icon-teacher Icon-teacher-notifyManage"></i>
                             <div>班牌通知</div>
                         </li>
 
-                        <li style={{ display: this.state.classTeacher ? '' : 'none' }}
+                        <li style={{display: this.state.classTeacher ? '' : 'none'}}
                             onClick={this.toPage.bind(this, "dutyManage")}>
                             <i className="Icon-teacher Icon-teacher-dutyManage"></i>
                             <div>班牌值日</div>
